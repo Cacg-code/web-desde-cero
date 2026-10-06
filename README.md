@@ -13,7 +13,7 @@ Curso gratuito en español para aprender HTML paso a paso. Cada lección incluye
 |---|---------|--------|
 | 01 | [Primeros pasos](01-primeros-pasos/index.html) | Disponible |
 | 02 | [Texto, títulos y enlaces](02-texto-y-enlaces/index.html) | Disponible |
-| 03 | Imágenes y listas | Próximamente |
+| 03 | [Imágenes y listas](03-imagenes-y-listas/index.html) | Disponible |
 | 04 | Tablas | Próximamente |
 | 05 | Formularios | Próximamente |
 | 06 | HTML semántico | Próximamente |

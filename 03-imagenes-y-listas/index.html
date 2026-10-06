@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lección 3: Imágenes y listas · Curso de HTML</title>
+  <meta name="description" content="Cómo insertar imágenes accesibles y organizar la información en listas." />
+  <link rel="stylesheet" href="../assets/estilos.css" />
+  <style>
+    .demo { margin: 1.25rem 0; padding: 1.25rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); }
+    .demo-label { margin: 0 0 .5rem; font-size: .8rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+    .demo img { border-radius: 10px; }
+    .demo figure { margin: 0; }
+    .demo figcaption { margin-top: .5rem; font-size: .9rem; color: var(--muted); }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de HTML</a>
+    <div class="topbar-actions">
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <div class="wrap lesson-layout">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol>
+        <li><a href="#imagenes">Insertar imágenes</a></li>
+        <li><a href="#alt">El texto alternativo</a></li>
+        <li><a href="#tamano">Tamaño y formatos</a></li>
+        <li><a href="#figure">Imagen con pie de foto</a></li>
+        <li><a href="#listas">Listas</a></li>
+        <li><a href="#anidadas">Listas anidadas</a></li>
+        <li><a href="#descripcion">Listas de descripción</a></li>
+        <li><a href="#errores">Errores frecuentes</a></li>
+        <li><a href="#apuntes">Apuntes para llevar</a></li>
+        <li><a href="#glosario">Glosario</a></li>
+      </ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Inicio</a> › Lección 3</div>
+        <h1>Imágenes y listas</h1>
+        <ul class="meta"><li>⏱ 25 minutos</li><li>📶 Nivel: principiante</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+
+      <div class="callout consejo">
+        <p class="callout-title">🎯 Al terminar esta lección podrás…</p>
+        <ul>
+          <li>Insertar imágenes y describirlas para que todos las entiendan.</li>
+          <li>Elegir el formato y el tamaño adecuados.</li>
+          <li>Crear listas ordenadas, no ordenadas y anidadas.</li>
+        </ul>
+      </div>
+
+      <h2 id="imagenes"><span class="n">1.</span>Insertar imágenes</h2>
+      <p>La etiqueta <code>&lt;img&gt;</code> muestra una imagen. Es una <strong>etiqueta vacía</strong>: no lleva contenido ni etiqueta de cierre, y toda su información va en atributos.</p>
+      <div class="code">
+        <div class="code-head"><span>Una imagen</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">&lt;img</span> <span class="tk-attr">src</span>=<span class="tk-val">"img/paisaje.svg"</span> <span class="tk-attr">alt</span>=<span class="tk-val">"Montañas con un sol al atardecer"</span><span class="tk-tag">&gt;</span></code></pre>
+      </div>
+      <ul>
+        <li><code>src</code> (<em>source</em>): la <strong>ruta</strong> del archivo de imagen. Funciona igual que el <code>href</code> de los enlaces que viste en la <a href="../02-texto-y-enlaces/#rutas">lección 2</a>.</li>
+        <li><code>alt</code>: el <strong>texto alternativo</strong>, que describe la imagen con palabras.</li>
+      </ul>
+      <div class="demo">
+        <p class="demo-label">Así se ve</p>
+        <img src="../assets/img/paisaje.svg" alt="Montañas azules con un sol al atardecer" width="480" height="288" style="max-width:100%;height:auto" />
+      </div>
+      <div class="callout nota">
+        <p class="callout-title">📌 Nota · Organiza tus archivos</p>
+        <p>Guarda las imágenes en una carpeta propia, por ejemplo <code>img/</code>, junto a tu <code>index.html</code>. Usa nombres en minúsculas, sin espacios ni tildes: <code>mi-foto.jpg</code> y no <code>Mi Foto.JPG</code>.</p>
+      </div>
+
+      <h2 id="alt"><span class="n">2.</span>El texto alternativo</h2>
+      <p>El atributo <code>alt</code> es obligatorio y cumple tres funciones:</p>
+      <ul>
+        <li>Lo <strong>leen en voz alta</strong> los lectores de pantalla que usan personas ciegas o con baja visión.</li>
+        <li>Se <strong>muestra en su lugar</strong> si la imagen no carga (mala conexión, ruta equivocada).</li>
+        <li>Ayuda a los <strong>buscadores</strong> a entender de qué trata la imagen.</li>
+      </ul>
+      <h3>Cómo escribir un buen <code>alt</code></h3>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Situación</th><th>Mal</th><th>Bien</th></tr></thead>
+        <tbody>
+          <tr><td>Foto de un perro</td><td><code>alt="imagen1"</code></td><td><code>alt="Perro labrador corriendo en la playa"</code></td></tr>
+          <tr><td>Logotipo con enlace</td><td><code>alt="logo"</code></td><td><code>alt="Ir al inicio de Mi Sitio"</code></td></tr>
+          <tr><td>Imagen solo decorativa</td><td><code>alt="adorno azul"</code></td><td><code>alt=""</code> (vacío a propósito)</td></tr>
+        </tbody>
+      </table></div>
+      <div class="callout consejo">
+        <p class="callout-title">💡 Consejo</p>
+        <p>Describe lo que <em>aporta</em> la imagen, en una frase breve. No empieces con «imagen de…»: el lector de pantalla ya anuncia que es una imagen. Si la imagen es puramente decorativa, deja <code>alt=""</code> para que se omita.</p>
+      </div>
+
+      <h2 id="tamano"><span class="n">3.</span>Tamaño y formatos</h2>
+      <h3>Ancho y alto</h3>
+      <p>Los atributos <code>width</code> y <code>height</code> indican el tamaño en píxeles. Ponerlos evita que el contenido «salte» mientras la imagen carga, porque el navegador reserva el espacio desde el principio.</p>
+      <div class="code">
+        <div class="code-head"><span>Con tamaño y carga diferida</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">&lt;img</span> <span class="tk-attr">src</span>=<span class="tk-val">"img/paisaje.jpg"</span> <span class="tk-attr">alt</span>=<span class="tk-val">"Montañas al atardecer"</span>
+     <span class="tk-attr">width</span>=<span class="tk-val">"600"</span> <span class="tk-attr">height</span>=<span class="tk-val">"360"</span> <span class="tk-attr">loading</span>=<span class="tk-val">"lazy"</span><span class="tk-tag">&gt;</span></code></pre>
+      </div>
+      <p><code>loading="lazy"</code> hace que las imágenes lejos de la pantalla se descarguen solo cuando el visitante se acerca. Ahorra datos en páginas largas.</p>
+
+      <h3>Qué formato elegir</h3>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Formato</th><th>Úsalo para</th><th>Característica</th></tr></thead>
+        <tbody>
+          <tr><td><strong>JPG</strong></td><td>Fotografías</td><td>Pesa poco; no admite transparencia.</td></tr>
+          <tr><td><strong>PNG</strong></td><td>Capturas, logotipos, transparencias</td><td>Mejor calidad en bordes nítidos; pesa más.</td></tr>
+          <tr><td><strong>WebP</strong></td><td>Casi todo, en sitios modernos</td><td>Pesa menos que JPG y PNG con buena calidad.</td></tr>
+          <tr><td><strong>SVG</strong></td><td>Iconos, logotipos, ilustraciones</td><td>Se ve nítido a cualquier tamaño.</td></tr>
+        </tbody>
+      </table></div>
+      <div class="callout importante">
+        <p class="callout-title">⚠️ Importante · No uses imágenes enormes</p>
+        <p>Una foto de 8 MB tomada con el celular hará lenta tu página aunque la muestres pequeña. Redúcela antes de subirla (por ejemplo, a unos 1200 píxeles de ancho). Usa solo imágenes propias o con licencia que permita su uso.</p>
+      </div>
+
+      <h2 id="figure"><span class="n">4.</span>Imagen con pie de foto</h2>
+      <p>Cuando la imagen necesita una leyenda, agrúpala con <code>&lt;figure&gt;</code> y <code>&lt;figcaption&gt;</code>. Así la imagen y su descripción quedan unidas por significado.</p>
+      <div class="code">
+        <div class="code-head"><span>figure y figcaption</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">&lt;figure&gt;</span>
+  <span class="tk-tag">&lt;img</span> <span class="tk-attr">src</span>=<span class="tk-val">"img/paisaje.svg"</span> <span class="tk-attr">alt</span>=<span class="tk-val">"Montañas con un sol al atardecer"</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;figcaption&gt;</span>Ilustración del paisaje de ejemplo del curso.<span class="tk-tag">&lt;/figcaption&gt;</span>
+<span class="tk-tag">&lt;/figure&gt;</span></code></pre>
+      </div>
+      <div class="demo">
+        <p class="demo-label">Así se ve</p>
+        <figure>
+          <img src="../assets/img/paisaje.svg" alt="Montañas con un sol al atardecer" width="320" height="192" style="max-width:100%;height:auto" />
+          <figcaption>Ilustración del paisaje de ejemplo del curso.</figcaption>
+        </figure>
+      </div>
+      <div class="callout nota">
+        <p class="callout-title">📌 Nota</p>
+        <p>El pie de foto y el <code>alt</code> no son lo mismo. El <code>alt</code> describe lo que se ve para quien no puede verlo; el <code>figcaption</code> es una leyenda visible para todos.</p>
+      </div>
+
+      <h2 id="listas"><span class="n">5.</span>Listas</h2>
+      <p>Las listas agrupan elementos relacionados. Hay dos tipos principales, y cada elemento de la lista va en una etiqueta <code>&lt;li&gt;</code> (<em>list item</em>).</p>
+
+      <h3>Lista no ordenada: <code>&lt;ul&gt;</code></h3>
+      <p>Para elementos donde el <strong>orden no importa</strong>. Se muestra con viñetas.</p>
+      <div class="code">
+        <div class="code-head"><span>ul</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">&lt;ul&gt;</span>
+  <span class="tk-tag">&lt;li&gt;</span>Pan<span class="tk-tag">&lt;/li&gt;</span>
+  <span class="tk-tag">&lt;li&gt;</span>Leche<span class="tk-tag">&lt;/li&gt;</span>
+  <span class="tk-tag">&lt;li&gt;</span>Huevos<span class="tk-tag">&lt;/li&gt;</span>
+<span class="tk-tag">&lt;/ul&gt;</span></code></pre>
+      </div>
+      <div class="demo"><p class="demo-label">Así se ve</p><ul><li>Pan</li><li>Leche</li><li>Huevos</li></ul></div>
+
+      <h3>Lista ordenada: <code>&lt;ol&gt;</code></h3>
+      <p>Para pasos o rankings donde el <strong>orden sí importa</strong>. Se numera automáticamente.</p>
+      <div class="code">
+        <div class="code-head"><span>ol</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">&lt;ol&gt;</span>
+  <span class="tk-tag">&lt;li&gt;</span>Abre el editor.<span class="tk-tag">&lt;/li&gt;</span>
+  <span class="tk-tag">&lt;li&gt;</span>Escribe el código.<span class="tk-tag">&lt;/li&gt;</span>
+  <span class="tk-tag">&lt;li&gt;</span>Guarda y revisa en el navegador.<span class="tk-tag">&lt;/li&gt;</span>
+<span class="tk-tag">&lt;/ol&gt;</span></code></pre>
+      </div>
+      <div class="demo"><p class="demo-label">Así se ve</p><ol><li>Abre el editor.</li><li>Escribe el código.</li><li>Guarda y revisa en el navegador.</li></ol></div>
+
+      <p>La lista ordenada admite atributos útiles:</p>
+      <ul>
+        <li><code>start="5"</code>: empieza a contar desde 5.</li>
+        <li><code>reversed</code>: cuenta hacia atrás, ideal para cuentas regresivas y «Top 10».</li>
+        <li><code>type="a"</code>: usa letras (<code>a, b, c</code>) o números romanos (<code>type="I"</code>).</li>
+      </ul>
+      <div class="callout importante">
+        <p class="callout-title">⚠️ Importante · Dentro de <code>ul</code> y <code>ol</code> solo van <code>li</code></p>
+        <p>No pongas texto suelto ni otras etiquetas directamente dentro de la lista. El contenido siempre va dentro de un <code>&lt;li&gt;</code>.</p>
+      </div>
+
+      <h2 id="anidadas"><span class="n">6.</span>Listas anidadas</h2>
+      <p>Una lista puede contener otra. La lista interna va <strong>dentro del <code>&lt;li&gt;</code></strong> al que pertenece, no entre dos <code>&lt;li&gt;</code>.</p>
+      <div class="code">
+        <div class="code-head"><span>Anidación correcta</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">&lt;ul&gt;</span>
+  <span class="tk-tag">&lt;li&gt;</span>Frutas
+    <span class="tk-tag">&lt;ul&gt;</span>
+      <span class="tk-tag">&lt;li&gt;</span>Manzana<span class="tk-tag">&lt;/li&gt;</span>
+      <span class="tk-tag">&lt;li&gt;</span>Mango<span class="tk-tag">&lt;/li&gt;</span>
+    <span class="tk-tag">&lt;/ul&gt;</span>
+  <span class="tk-tag">&lt;/li&gt;</span>
+  <span class="tk-tag">&lt;li&gt;</span>Verduras<span class="tk-tag">&lt;/li&gt;</span>
+<span class="tk-tag">&lt;/ul&gt;</span></code></pre>
+      </div>
+      <div class="demo"><p class="demo-label">Así se ve</p><ul><li>Frutas<ul><li>Manzana</li><li>Mango</li></ul></li><li>Verduras</li></ul></div>
+      <div class="callout ejemplo">
+        <p class="callout-title">🔍 Ejemplo · Los menús son listas</p>
+        <p>Los menús de navegación de casi todos los sitios son una lista de enlaces: <code>&lt;ul&gt;</code> con <code>&lt;li&gt;&lt;a href="…"&gt;…&lt;/a&gt;&lt;/li&gt;</code>. Más adelante les darás estilo con CSS para que se vean como una barra horizontal.</p>
+      </div>
+
+      <h2 id="descripcion"><span class="n">7.</span>Listas de descripción</h2>
+      <p>Sirven para pares de <strong>término y definición</strong>, como un glosario o una ficha de datos. Usan tres etiquetas: <code>&lt;dl&gt;</code> (la lista), <code>&lt;dt&gt;</code> (el término) y <code>&lt;dd&gt;</code> (su descripción).</p>
+      <div class="code">
+        <div class="code-head"><span>dl, dt y dd</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">&lt;dl&gt;</span>
+  <span class="tk-tag">&lt;dt&gt;</span>HTML<span class="tk-tag">&lt;/dt&gt;</span>
+  <span class="tk-tag">&lt;dd&gt;</span>Lenguaje que estructura el contenido.<span class="tk-tag">&lt;/dd&gt;</span>
+  <span class="tk-tag">&lt;dt&gt;</span>CSS<span class="tk-tag">&lt;/dt&gt;</span>
+  <span class="tk-tag">&lt;dd&gt;</span>Lenguaje que da estilo visual.<span class="tk-tag">&lt;/dd&gt;</span>
+<span class="tk-tag">&lt;/dl&gt;</span></code></pre>
+      </div>
+      <div class="demo"><p class="demo-label">Así se ve</p><dl><dt><strong>HTML</strong></dt><dd>Lenguaje que estructura el contenido.</dd><dt><strong>CSS</strong></dt><dd>Lenguaje que da estilo visual.</dd></dl></div>
+
+      <h2 id="errores"><span class="n">8.</span>Errores frecuentes</h2>
+      <ul>
+        <li><strong>Olvidar el <code>alt</code></strong> o escribir nombres de archivo como «IMG_2043».</li>
+        <li><strong>Ruta equivocada</strong>: si ves el texto alternativo o un icono roto, revisa carpeta, mayúsculas y extensión.</li>
+        <li><strong>Usar <code>&lt;br&gt;</code> y guiones para hacer listas</strong> en vez de <code>ul</code> y <code>li</code>.</li>
+        <li><strong>Elegir <code>ol</code> cuando el orden no importa</strong>, o <code>ul</code> cuando sí.</li>
+        <li><strong>Poner la lista anidada fuera del <code>li</code></strong> que la contiene.</li>
+        <li><strong>Imágenes demasiado pesadas</strong> que ralentizan la página.</li>
+      </ul>
+
+      <section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+        <h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+        <ul>
+          <li><code>&lt;img src="ruta" alt="descripción"&gt;</code> inserta una imagen; <code>src</code> y <code>alt</code> son indispensables.</li>
+          <li>El <code>alt</code> describe lo que aporta la imagen; si es decorativa, <code>alt=""</code>.</li>
+          <li><code>width</code> y <code>height</code> reservan espacio; <code>loading="lazy"</code> retrasa la descarga.</li>
+          <li>JPG para fotos, PNG para transparencias, WebP para casi todo y SVG para iconos.</li>
+          <li><code>&lt;figure&gt;</code> y <code>&lt;figcaption&gt;</code> unen una imagen con su leyenda.</li>
+          <li><code>&lt;ul&gt;</code> es una lista con viñetas; <code>&lt;ol&gt;</code>, una lista numerada.</li>
+          <li>Cada elemento va en un <code>&lt;li&gt;</code>; las listas anidadas van dentro de un <code>&lt;li&gt;</code>.</li>
+          <li><code>&lt;dl&gt;</code>, <code>&lt;dt&gt;</code> y <code>&lt;dd&gt;</code> forman listas de término y descripción.</li>
+        </ul>
+      </section>
+
+      <h2 id="glosario"><span class="n">9.</span>Glosario</h2>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Término</th><th>Significado</th></tr></thead>
+        <tbody>
+          <tr><td><code>src</code></td><td>Atributo con la ruta del archivo de una imagen.</td></tr>
+          <tr><td>Texto alternativo (<code>alt</code>)</td><td>Descripción en texto de una imagen, para accesibilidad y respaldo.</td></tr>
+          <tr><td>Lector de pantalla</td><td>Programa que lee en voz alta el contenido de una página.</td></tr>
+          <tr><td>Carga diferida</td><td>Descargar una imagen solo cuando está por verse.</td></tr>
+          <tr><td>Lista ordenada</td><td>Lista numerada, en la que el orden importa.</td></tr>
+          <tr><td>Lista no ordenada</td><td>Lista con viñetas, en la que el orden no importa.</td></tr>
+          <tr><td>Lista anidada</td><td>Lista contenida dentro de un elemento de otra lista.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="callout consejo">
+        <p class="callout-title">🚀 ¡Ahora te toca!</p>
+        <p>Crea una página con tu «Top 5» de algo que te guste, con imagen y listas.</p>
+        <p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p>
+      </div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../02-texto-y-enlaces/ejercicio.html"><small>← Anterior</small>Ejercicio de la lección 2</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de la lección 3</a>
+      </nav>
+    </article>
+  </div>
+
+  <footer class="site-footer">Curso de HTML · Lección 3</footer>
+  <script src="../assets/curso.js"></script>
+</body>
+</html>
