@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lección 2: Texto, títulos y enlaces · Curso de HTML</title>
+  <meta name="description" content="Párrafos, encabezados, énfasis y enlaces: los bloques básicos para escribir contenido en HTML." />
+  <link rel="stylesheet" href="../assets/estilos.css" />
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de HTML</a>
+    <div class="topbar-actions">
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <div class="wrap lesson-layout">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol>
+        <li><a href="#parrafos">Párrafos</a></li>
+        <li><a href="#titulos">Títulos y jerarquía</a></li>
+        <li><a href="#enfasis">Énfasis y formato</a></li>
+        <li><a href="#enlaces">Enlaces</a></li>
+        <li><a href="#rutas">Rutas: dónde está el archivo</a></li>
+        <li><a href="#especiales">Caracteres especiales</a></li>
+        <li><a href="#errores">Errores frecuentes</a></li>
+        <li><a href="#apuntes">Apuntes para llevar</a></li>
+        <li><a href="#glosario">Glosario</a></li>
+      </ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Inicio</a> › Lección 2</div>
+        <h1>Texto, títulos y enlaces</h1>
+        <ul class="meta"><li>⏱ 25 minutos</li><li>📶 Nivel: principiante</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+
+      <div class="callout consejo">
+        <p class="callout-title">🎯 Al terminar esta lección podrás…</p>
+        <ul>
+          <li>Escribir párrafos y organizarlos con títulos de distintos niveles.</li>
+          <li>Resaltar texto con significado: importancia y énfasis.</li>
+          <li>Crear enlaces a otras páginas, a secciones y a correos.</li>
+        </ul>
+      </div>
+
+      <div class="callout nota">
+        <p class="callout-title">📌 Antes de empezar</p>
+        <p>Esta lección continúa la <a href="../01-primeros-pasos/">lección 1</a>. Todo el código de los ejemplos va dentro de <code>&lt;body&gt;</code>, en tu archivo <code>index.html</code>.</p>
+      </div>
+
+      <h2 id="parrafos"><span class="n">1.</span>Párrafos</h2>
+      <p>La etiqueta <code>&lt;p&gt;</code> define un <strong>párrafo</strong>. Cada párrafo empieza en una línea nueva y deja un espacio antes y después.</p>
+      <div class="code">
+        <div class="code-head"><span>Dos párrafos</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">&lt;p&gt;</span>Este es el primer párrafo de mi página.<span class="tk-tag">&lt;/p&gt;</span>
+<span class="tk-tag">&lt;p&gt;</span>Este es el segundo párrafo.<span class="tk-tag">&lt;/p&gt;</span></code></pre>
+      </div>
+
+      <div class="callout importante">
+        <p class="callout-title">⚠️ Importante · El navegador ignora los espacios extra</p>
+        <p>Da igual cuántos espacios o saltos de línea escribas en el código: el navegador los reduce a un solo espacio. Si quieres separar bloques de texto, usa párrafos distintos.</p>
+      </div>
+
+      <h3>Salto de línea y línea divisoria</h3>
+      <ul>
+        <li><code>&lt;br&gt;</code> inserta un <strong>salto de línea</strong> dentro de un párrafo (útil en direcciones o versos).</li>
+        <li><code>&lt;hr&gt;</code> dibuja una <strong>línea horizontal</strong> que separa temas.</li>
+      </ul>
+      <p>Ambas son etiquetas vacías: no tienen contenido ni etiqueta de cierre.</p>
+      <div class="code">
+        <div class="code-head"><span>Salto de línea y separador</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">&lt;p&gt;</span>Calle Principal 123<span class="tk-tag">&lt;br&gt;</span>Ciudad de México<span class="tk-tag">&lt;/p&gt;</span>
+<span class="tk-tag">&lt;hr&gt;</span>
+<span class="tk-tag">&lt;p&gt;</span>Otro tema distinto empieza aquí.<span class="tk-tag">&lt;/p&gt;</span></code></pre>
+      </div>
+
+      <h2 id="titulos"><span class="n">2.</span>Títulos y jerarquía</h2>
+      <p>HTML ofrece seis niveles de encabezados, de <code>&lt;h1&gt;</code> (el más importante) a <code>&lt;h6&gt;</code> (el menos importante).</p>
+      <div class="code">
+        <div class="code-head"><span>Los seis niveles</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">&lt;h1&gt;</span>Título principal<span class="tk-tag">&lt;/h1&gt;</span>
+<span class="tk-tag">&lt;h2&gt;</span>Sección<span class="tk-tag">&lt;/h2&gt;</span>
+<span class="tk-tag">&lt;h3&gt;</span>Subsección<span class="tk-tag">&lt;/h3&gt;</span>
+<span class="tk-tag">&lt;h4&gt;</span>Apartado<span class="tk-tag">&lt;/h4&gt;</span>
+<span class="tk-tag">&lt;h5&gt;</span>Detalle<span class="tk-tag">&lt;/h5&gt;</span>
+<span class="tk-tag">&lt;h6&gt;</span>Detalle menor<span class="tk-tag">&lt;/h6&gt;</span></code></pre>
+      </div>
+      <p>Piensa en ellos como el <strong>índice de un libro</strong>: el <code>h1</code> es el título de la obra, los <code>h2</code> son los capítulos y los <code>h3</code> los apartados de cada capítulo.</p>
+
+      <div class="callout consejo">
+        <p class="callout-title">💡 Buenas prácticas con los títulos</p>
+        <ul>
+          <li>Usa <strong>un solo</strong> <code>&lt;h1&gt;</code> por página.</li>
+          <li>No saltes niveles: después de un <code>h2</code> viene un <code>h3</code>, no un <code>h5</code>.</li>
+          <li>Elige el nivel por su <strong>significado</strong>, no por el tamaño de la letra. El tamaño se cambia después con CSS.</li>
+        </ul>
+        <p>Los lectores de pantalla y los buscadores usan los títulos para entender y recorrer la página.</p>
+      </div>
+
+      <h2 id="enfasis"><span class="n">3.</span>Énfasis y formato</h2>
+      <p>Algunas etiquetas dan un <em>significado</em> al texto, además de cambiar su apariencia:</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Etiqueta</th><th>Significado</th><th>Aspecto habitual</th></tr></thead>
+        <tbody>
+          <tr><td><code>&lt;strong&gt;</code></td><td>Importancia fuerte</td><td><strong>negrita</strong></td></tr>
+          <tr><td><code>&lt;em&gt;</code></td><td>Énfasis, como al hablar</td><td><em>cursiva</em></td></tr>
+          <tr><td><code>&lt;mark&gt;</code></td><td>Texto resaltado por relevancia</td><td><mark>fondo amarillo</mark></td></tr>
+          <tr><td><code>&lt;small&gt;</code></td><td>Letra pequeña (avisos, derechos)</td><td><small>texto menor</small></td></tr>
+          <tr><td><code>&lt;code&gt;</code></td><td>Fragmento de código</td><td><code>monoespaciado</code></td></tr>
+        </tbody>
+      </table></div>
+      <div class="code">
+        <div class="code-head"><span>Ejemplo</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">&lt;p&gt;</span>Guarda el archivo <span class="tk-tag">&lt;strong&gt;</span>antes<span class="tk-tag">&lt;/strong&gt;</span> de abrirlo. ¿<span class="tk-tag">&lt;em&gt;</span>Seguro<span class="tk-tag">&lt;/em&gt;</span> que lo guardaste?<span class="tk-tag">&lt;/p&gt;</span></code></pre>
+      </div>
+      <div class="callout nota">
+        <p class="callout-title">📌 Nota · ¿Y <code>&lt;b&gt;</code> e <code>&lt;i&gt;</code>?</p>
+        <p>Existen, y también ponen negrita y cursiva, pero <strong>no aportan significado</strong>. Prefiere <code>&lt;strong&gt;</code> y <code>&lt;em&gt;</code> salvo que solo busques un efecto visual (y para eso, lo ideal es CSS).</p>
+      </div>
+
+      <h2 id="enlaces"><span class="n">4.</span>Enlaces</h2>
+      <p>Los enlaces son lo que hace de la web una «red». Se crean con la etiqueta <code>&lt;a&gt;</code> (de <em>anchor</em>, «ancla») y su atributo <code>href</code> (<em>hypertext reference</em>), que indica el destino.</p>
+
+      <div class="anatomy" role="img" aria-label="Diagrama de un enlace: etiqueta a, atributo href con la dirección, texto visible y cierre">
+        <div class="part" style="--c:#ff8fa3"><span>&lt;a</span><span class="lbl">etiqueta</span></div>
+        <div class="part" style="--c:#ffd479"><span>href="https://ejemplo.com"</span><span class="lbl">destino</span></div>
+        <div class="part" style="--c:#ff8fa3"><span>&gt;</span><span class="lbl">&nbsp;</span></div>
+        <div class="part" style="--c:#8ee6a0"><span>Visitar el sitio</span><span class="lbl">texto visible</span></div>
+        <div class="part" style="--c:#ff8fa3"><span>&lt;/a&gt;</span><span class="lbl">cierre</span></div>
+      </div>
+
+      <h3>Tipos de enlace</h3>
+      <div class="code">
+        <div class="code-head"><span>Cuatro enlaces distintos</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-com">&lt;!-- 1. A otro sitio web (dirección completa) --&gt;</span>
+<span class="tk-tag">&lt;a</span> <span class="tk-attr">href</span>=<span class="tk-val">"https://developer.mozilla.org/es/"</span> <span class="tk-attr">target</span>=<span class="tk-val">"_blank"</span> <span class="tk-attr">rel</span>=<span class="tk-val">"noopener"</span><span class="tk-tag">&gt;</span>Documentación de MDN<span class="tk-tag">&lt;/a&gt;</span>
+
+<span class="tk-com">&lt;!-- 2. A otra página de tu propio sitio --&gt;</span>
+<span class="tk-tag">&lt;a</span> <span class="tk-attr">href</span>=<span class="tk-val">"contacto.html"</span><span class="tk-tag">&gt;</span>Contacto<span class="tk-tag">&lt;/a&gt;</span>
+
+<span class="tk-com">&lt;!-- 3. A una sección de la misma página --&gt;</span>
+<span class="tk-tag">&lt;a</span> <span class="tk-attr">href</span>=<span class="tk-val">"#resumen"</span><span class="tk-tag">&gt;</span>Ir al resumen<span class="tk-tag">&lt;/a&gt;</span>
+<span class="tk-tag">&lt;h2</span> <span class="tk-attr">id</span>=<span class="tk-val">"resumen"</span><span class="tk-tag">&gt;</span>Resumen<span class="tk-tag">&lt;/h2&gt;</span>
+
+<span class="tk-com">&lt;!-- 4. A un correo electrónico --&gt;</span>
+<span class="tk-tag">&lt;a</span> <span class="tk-attr">href</span>=<span class="tk-val">"mailto:hola@ejemplo.com"</span><span class="tk-tag">&gt;</span>Escríbeme<span class="tk-tag">&lt;/a&gt;</span></code></pre>
+      </div>
+      <ul>
+        <li><strong>Enlace externo:</strong> lleva la dirección completa, con <code>https://</code>.</li>
+        <li><strong>Enlace interno:</strong> apunta a otro archivo de tu proyecto.</li>
+        <li><strong>Ancla:</strong> el <code>#</code> salta a un elemento que tenga ese <code>id</code> en la misma página.</li>
+        <li><strong>Correo:</strong> <code>mailto:</code> abre el programa de correo del visitante.</li>
+      </ul>
+
+      <div class="callout importante">
+        <p class="callout-title">⚠️ Importante · <code>target="_blank"</code> y <code>rel="noopener"</code></p>
+        <p><code>target="_blank"</code> abre el enlace en una pestaña nueva. Al usarlo con sitios externos, agrega <code>rel="noopener"</code> por seguridad: evita que la página abierta pueda controlar la tuya.</p>
+      </div>
+      <div class="callout consejo">
+        <p class="callout-title">💡 Consejo · Escribe textos de enlace que se entiendan solos</p>
+        <p>Evita «haz clic aquí». Mejor: «Consulta la <a href="https://developer.mozilla.org/es/docs/Web/HTML" target="_blank" rel="noopener">guía de HTML de MDN</a>». Quien navega con lector de pantalla suele recorrer solo los enlaces, y «aquí» no le dice nada.</p>
+      </div>
+
+      <h2 id="rutas"><span class="n">5.</span>Rutas: dónde está el archivo</h2>
+      <p>En un enlace interno, el valor de <code>href</code> es una <strong>ruta</strong>: el camino hasta el archivo. Imagina esta carpeta:</p>
+      <div class="code">
+        <div class="code-head"><span>Estructura del proyecto</span></div>
+<pre><code>mi-sitio/
+├── index.html
+├── contacto.html
+└── cursos/
+    ├── html.html
+    └── css.html</code></pre>
+      </div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Desde</th><th>Hacia</th><th>Ruta en <code>href</code></th></tr></thead>
+        <tbody>
+          <tr><td><code>index.html</code></td><td><code>contacto.html</code></td><td><code>contacto.html</code> (misma carpeta)</td></tr>
+          <tr><td><code>index.html</code></td><td><code>cursos/html.html</code></td><td><code>cursos/html.html</code> (entra a una carpeta)</td></tr>
+          <tr><td><code>cursos/html.html</code></td><td><code>index.html</code></td><td><code>../index.html</code> (sube una carpeta)</td></tr>
+          <tr><td><code>cursos/html.html</code></td><td><code>css.html</code></td><td><code>css.html</code> (misma carpeta)</td></tr>
+        </tbody>
+      </table></div>
+      <div class="callout nota">
+        <p class="callout-title">📌 Nota</p>
+        <p><code>../</code> significa «sube una carpeta». Esta lección usa justo eso: el enlace «Inicio» de arriba apunta a <code>../</code>. Si un enlace no funciona, revisa primero mayúsculas, minúsculas y la extensión: <code>Contacto.html</code> y <code>contacto.html</code> son nombres distintos en muchos servidores.</p>
+      </div>
+
+      <h2 id="especiales"><span class="n">6.</span>Caracteres especiales</h2>
+      <p>Los símbolos <code>&lt;</code> y <code>&gt;</code> forman parte de la sintaxis. Si quieres <em>mostrarlos</em> como texto, escribe su <strong>entidad</strong>:</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Quieres mostrar</th><th>Escribe</th></tr></thead>
+        <tbody>
+          <tr><td><code>&lt;</code></td><td><code>&amp;lt;</code></td></tr>
+          <tr><td><code>&gt;</code></td><td><code>&amp;gt;</code></td></tr>
+          <tr><td><code>&amp;</code></td><td><code>&amp;amp;</code></td></tr>
+          <tr><td>© (derechos de autor)</td><td><code>&amp;copy;</code></td></tr>
+        </tbody>
+      </table></div>
+      <p>Con <code>charset="UTF-8"</code> puedes escribir directamente tildes, eñes y signos como ¿ ¡ sin entidades.</p>
+
+      <h2 id="errores"><span class="n">7.</span>Errores frecuentes</h2>
+      <ul>
+        <li><strong>Usar títulos para agrandar letra.</strong> Los títulos son estructura; el tamaño es tarea de CSS.</li>
+        <li><strong>Varios <code>&lt;h1&gt;</code></strong> o saltos de nivel (<code>h2</code> → <code>h4</code>).</li>
+        <li><strong>Olvidar las comillas</strong> en <code>href="…"</code>.</li>
+        <li><strong>Enlaces sin <code>https://</code></strong>: <code>href="google.com"</code> se interpreta como un archivo de tu carpeta, no como un sitio web.</li>
+        <li><strong>Poner espacios o mayúsculas distintas</strong> en el nombre del archivo enlazado.</li>
+        <li><strong>Escribir varios espacios</strong> esperando que se vean: el navegador los junta.</li>
+      </ul>
+
+      <section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+        <h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+        <ul>
+          <li><code>&lt;p&gt;</code> crea un párrafo; <code>&lt;br&gt;</code> un salto de línea; <code>&lt;hr&gt;</code> una línea divisoria.</li>
+          <li>Los títulos van de <code>&lt;h1&gt;</code> a <code>&lt;h6&gt;</code>: un solo <code>h1</code> y sin saltar niveles.</li>
+          <li><code>&lt;strong&gt;</code> indica importancia y <code>&lt;em&gt;</code> énfasis; ambos tienen significado, no solo estilo.</li>
+          <li>Un enlace es <code>&lt;a href="destino"&gt;texto&lt;/a&gt;</code>.</li>
+          <li>Enlaces externos con <code>https://</code>; internos con la ruta del archivo; anclas con <code>#id</code>; correos con <code>mailto:</code>.</li>
+          <li><code>target="_blank"</code> se acompaña de <code>rel="noopener"</code>.</li>
+          <li><code>../</code> sube una carpeta en una ruta.</li>
+          <li>Para mostrar <code>&lt;</code>, <code>&gt;</code> o <code>&amp;</code> usa <code>&amp;lt;</code>, <code>&amp;gt;</code> y <code>&amp;amp;</code>.</li>
+        </ul>
+      </section>
+
+      <h2 id="glosario"><span class="n">8.</span>Glosario</h2>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Término</th><th>Significado</th></tr></thead>
+        <tbody>
+          <tr><td>Encabezado</td><td>Título de una sección, de <code>h1</code> a <code>h6</code>.</td></tr>
+          <tr><td>Enlace (hipervínculo)</td><td>Elemento que lleva a otro lugar al hacer clic.</td></tr>
+          <tr><td><code>href</code></td><td>Atributo que guarda la dirección de destino de un enlace.</td></tr>
+          <tr><td>Ancla</td><td>Enlace a una parte concreta de la misma página, mediante <code>#id</code>.</td></tr>
+          <tr><td><code>id</code></td><td>Atributo que da un nombre único a un elemento.</td></tr>
+          <tr><td>Ruta relativa</td><td>Dirección de un archivo calculada desde el archivo actual.</td></tr>
+          <tr><td>Entidad</td><td>Código como <code>&amp;lt;</code> para mostrar un carácter especial.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="callout consejo">
+        <p class="callout-title">🚀 ¡Ahora te toca!</p>
+        <p>Pon todo esto en práctica creando una pequeña página de «recomendaciones» con títulos, texto y enlaces.</p>
+        <p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p>
+      </div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../01-primeros-pasos/ejercicio.html"><small>← Anterior</small>Ejercicio de la lección 1</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de la lección 2</a>
+      </nav>
+    </article>
+  </div>
+
+  <footer class="site-footer">Curso de HTML · Lección 2</footer>
+  <script src="../assets/curso.js"></script>
+</body>
+</html>

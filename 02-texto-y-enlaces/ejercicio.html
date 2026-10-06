@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ejercicio de la lección 2 · Curso de HTML</title>
+  <meta name="description" content="Ejercicio práctico: crea una página de recomendaciones con títulos, texto y enlaces." />
+  <link rel="stylesheet" href="../assets/estilos.css" />
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de HTML</a>
+    <div class="topbar-actions">
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap" style="max-width:820px;padding-top:2rem;padding-bottom:3rem">
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Inicio</a> › <a href="./">Lección 2</a> › Ejercicio</div>
+        <h1>Ejercicio: página de recomendaciones</h1>
+        <ul class="meta"><li>⏱ 20 minutos</li><li>📶 Nivel: principiante</li></ul>
+      </header>
+
+      <h2>Objetivo</h2>
+      <p>Crear una página sobre un tema que te guste (libros, series, música, recetas…) usando títulos jerarquizados, párrafos, texto con énfasis y distintos tipos de enlaces.</p>
+
+      <h2>Pasos</h2>
+      <p>Parte del esqueleto de la lección 1. Tu avance se guarda en este navegador.</p>
+      <div class="progress" aria-hidden="true"><div></div></div>
+      <p id="progreso-texto" style="color:var(--muted);font-size:.9rem" aria-live="polite"></p>
+
+      <ul class="checklist">
+        <li><label><input type="checkbox" id="p1" /><span>Crea <code>recomendaciones.html</code> con el esqueleto completo y un <code>title</code> adecuado.</span></label></li>
+        <li><label><input type="checkbox" id="p2" /><span>Escribe un único <code>&lt;h1&gt;</code> con el tema de tu página.</span></label></li>
+        <li><label><input type="checkbox" id="p3" /><span>Crea al menos dos secciones con <code>&lt;h2&gt;</code> y, en una de ellas, un <code>&lt;h3&gt;</code>.</span></label></li>
+        <li><label><input type="checkbox" id="p4" /><span>Escribe un párrafo debajo de cada título.</span></label></li>
+        <li><label><input type="checkbox" id="p5" /><span>Usa <code>&lt;strong&gt;</code> y <code>&lt;em&gt;</code> al menos una vez cada uno, con intención.</span></label></li>
+        <li><label><input type="checkbox" id="p6" /><span>Agrega un enlace externo con <code>target="_blank"</code> y <code>rel="noopener"</code>.</span></label></li>
+        <li><label><input type="checkbox" id="p7" /><span>Agrega un índice al inicio con enlaces ancla (<code>#id</code>) a tus secciones.</span></label></li>
+        <li><label><input type="checkbox" id="p8" /><span>Agrega un enlace <code>mailto:</code> y una línea <code>&lt;hr&gt;</code> antes del pie.</span></label></li>
+        <li><label><input type="checkbox" id="p9" /><span>Prueba todos los enlaces en el navegador.</span></label></li>
+      </ul>
+
+      <details>
+        <summary>💡 Pista 1: mi ancla no funciona</summary>
+        <p>Comprueba que el <code>id</code> del título y el valor del <code>href</code> coincidan exactamente, sin <code>#</code> en el <code>id</code> y con <code>#</code> en el <code>href</code>. Por ejemplo: <code>id="libros"</code> y <code>href="#libros"</code>.</p>
+      </details>
+      <details>
+        <summary>💡 Pista 2: mi enlace externo no abre el sitio</summary>
+        <p>Asegúrate de escribir la dirección completa con <code>https://</code>. Sin eso, el navegador busca un archivo local con ese nombre.</p>
+      </details>
+
+      <details>
+        <summary>✅ Ver una solución de ejemplo</summary>
+        <p>Intenta resolverlo antes de mirar. Tu tema y tus textos serán distintos, y eso está bien.</p>
+        <div class="code">
+          <div class="code-head"><span>recomendaciones.html</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">&lt;!doctype html&gt;</span>
+<span class="tk-tag">&lt;html</span> <span class="tk-attr">lang</span>=<span class="tk-val">"es"</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;head&gt;</span>
+    <span class="tk-tag">&lt;meta</span> <span class="tk-attr">charset</span>=<span class="tk-val">"UTF-8"</span> <span class="tk-tag">/&gt;</span>
+    <span class="tk-tag">&lt;meta</span> <span class="tk-attr">name</span>=<span class="tk-val">"viewport"</span> <span class="tk-attr">content</span>=<span class="tk-val">"width=device-width, initial-scale=1.0"</span> <span class="tk-tag">/&gt;</span>
+    <span class="tk-tag">&lt;title&gt;</span>Mis recomendaciones de libros<span class="tk-tag">&lt;/title&gt;</span>
+  <span class="tk-tag">&lt;/head&gt;</span>
+  <span class="tk-tag">&lt;body&gt;</span>
+    <span class="tk-tag">&lt;h1&gt;</span>Mis recomendaciones de libros<span class="tk-tag">&lt;/h1&gt;</span>
+
+    <span class="tk-tag">&lt;p&gt;</span>Índice:
+      <span class="tk-tag">&lt;a</span> <span class="tk-attr">href</span>=<span class="tk-val">"#novela"</span><span class="tk-tag">&gt;</span>Novela<span class="tk-tag">&lt;/a&gt;</span> ·
+      <span class="tk-tag">&lt;a</span> <span class="tk-attr">href</span>=<span class="tk-val">"#ciencia"</span><span class="tk-tag">&gt;</span>Divulgación<span class="tk-tag">&lt;/a&gt;</span>
+    <span class="tk-tag">&lt;/p&gt;</span>
+
+    <span class="tk-tag">&lt;h2</span> <span class="tk-attr">id</span>=<span class="tk-val">"novela"</span><span class="tk-tag">&gt;</span>Novela<span class="tk-tag">&lt;/h2&gt;</span>
+    <span class="tk-tag">&lt;p&gt;</span>Si buscas una historia <span class="tk-tag">&lt;em&gt;</span>entretenida<span class="tk-tag">&lt;/em&gt;</span>, empieza por aquí.<span class="tk-tag">&lt;/p&gt;</span>
+    <span class="tk-tag">&lt;h3&gt;</span>Mi favorito<span class="tk-tag">&lt;/h3&gt;</span>
+    <span class="tk-tag">&lt;p&gt;</span>Lo recomiendo <span class="tk-tag">&lt;strong&gt;</span>sin dudarlo<span class="tk-tag">&lt;/strong&gt;</span>.<span class="tk-tag">&lt;/p&gt;</span>
+
+    <span class="tk-tag">&lt;h2</span> <span class="tk-attr">id</span>=<span class="tk-val">"ciencia"</span><span class="tk-tag">&gt;</span>Divulgación<span class="tk-tag">&lt;/h2&gt;</span>
+    <span class="tk-tag">&lt;p&gt;</span>Más lecturas en
+      <span class="tk-tag">&lt;a</span> <span class="tk-attr">href</span>=<span class="tk-val">"https://es.wikipedia.org/"</span> <span class="tk-attr">target</span>=<span class="tk-val">"_blank"</span> <span class="tk-attr">rel</span>=<span class="tk-val">"noopener"</span><span class="tk-tag">&gt;</span>Wikipedia<span class="tk-tag">&lt;/a&gt;</span>.
+    <span class="tk-tag">&lt;/p&gt;</span>
+
+    <span class="tk-tag">&lt;hr&gt;</span>
+    <span class="tk-tag">&lt;p&gt;</span><span class="tk-tag">&lt;a</span> <span class="tk-attr">href</span>=<span class="tk-val">"mailto:hola@ejemplo.com"</span><span class="tk-tag">&gt;</span>Escríbeme tus recomendaciones<span class="tk-tag">&lt;/a&gt;</span><span class="tk-tag">&lt;/p&gt;</span>
+  <span class="tk-tag">&lt;/body&gt;</span>
+<span class="tk-tag">&lt;/html&gt;</span></code></pre>
+        </div>
+      </details>
+
+      <div class="callout consejo">
+        <p class="callout-title">🏁 Reto extra (opcional)</p>
+        <p>Crea una segunda página, <code>sobre-mi.html</code>, en la misma carpeta. Enlaza ambas páginas entre sí. Luego colócalas en carpetas distintas y ajusta las rutas con <code>../</code>.</p>
+      </div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="./"><small>← Anterior</small>Volver a la lección 2</a>
+        <a class="next" href="../"><small>Siguiente →</small>Índice del curso (lección 3 próximamente)</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de HTML · Ejercicio de la lección 2</footer>
+  <script src="../assets/curso.js"></script>
+</body>
+</html>
