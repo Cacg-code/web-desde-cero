@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lección 1: Primeros pasos · Curso de HTML</title>
+  <meta name="description" content="Qué es HTML, qué herramientas necesitas y cómo se estructura una página web." />
+  <link rel="stylesheet" href="../assets/estilos.css" />
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de HTML</a>
+    <div class="topbar-actions">
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <div class="wrap lesson-layout">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol>
+        <li><a href="#que-es">Qué es HTML</a></li>
+        <li><a href="#herramientas">Herramientas</a></li>
+        <li><a href="#estructura">Estructura de una página</a></li>
+        <li><a href="#anatomia">Anatomía de una etiqueta</a></li>
+        <li><a href="#comentarios">Comentarios</a></li>
+        <li><a href="#errores">Errores frecuentes</a></li>
+        <li><a href="#apuntes">Apuntes para llevar</a></li>
+        <li><a href="#glosario">Glosario</a></li>
+      </ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Inicio</a> › Lección 1</div>
+        <h1>Primeros pasos</h1>
+        <ul class="meta"><li>⏱ 20 minutos</li><li>📶 Nivel: principiante</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+
+      <div class="callout consejo">
+        <p class="callout-title">🎯 Al terminar esta lección podrás…</p>
+        <ul>
+          <li>Explicar qué es HTML y para qué sirve.</li>
+          <li>Preparar tu editor y crear tu primer archivo.</li>
+          <li>Reconocer las partes de una página y de una etiqueta.</li>
+        </ul>
+      </div>
+
+      <h2 id="que-es"><span class="n">1.</span>Qué es HTML</h2>
+      <p><strong>HTML</strong> (<em>HyperText Markup Language</em>, «lenguaje de marcado de hipertexto») es el lenguaje con el que se define el <strong>contenido y la estructura</strong> de una página web: qué es un título, qué es un párrafo, dónde va una imagen o un enlace.</p>
+      <p>HTML no es un lenguaje de programación: no calcula ni toma decisiones. Solo <em>describe</em> el contenido mediante <strong>etiquetas</strong>, y el navegador se encarga de mostrarlo.</p>
+
+      <div class="callout nota">
+        <p class="callout-title">📌 Nota · Los tres lenguajes de la web</p>
+        <p>Una página web se construye con tres piezas que se complementan:</p>
+      </div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Lenguaje</th><th>Función</th><th>Analogía con una casa</th></tr></thead>
+        <tbody>
+          <tr><td><strong>HTML</strong></td><td>Estructura y contenido</td><td>Los muros y las habitaciones</td></tr>
+          <tr><td><strong>CSS</strong></td><td>Aspecto visual</td><td>La pintura y la decoración</td></tr>
+          <tr><td><strong>JavaScript</strong></td><td>Comportamiento e interacción</td><td>La instalación eléctrica</td></tr>
+        </tbody>
+      </table></div>
+      <p>En este curso empezamos por el cimiento: HTML.</p>
+
+      <h2 id="herramientas"><span class="n">2.</span>Herramientas que necesitas</h2>
+      <p>Para escribir HTML basta con dos programas, y ambos son gratuitos:</p>
+      <ul>
+        <li><strong>Un editor de código.</strong> Recomendamos <a href="https://code.visualstudio.com/" target="_blank" rel="noopener">Visual Studio Code</a>, porque resalta el código con colores y avisa de errores. También sirve cualquier editor de texto simple.</li>
+        <li><strong>Un navegador web.</strong> Chrome, Firefox, Edge o Safari. Con él verás el resultado.</li>
+      </ul>
+
+      <h3>Crea tu primer archivo</h3>
+      <ol>
+        <li>Crea una carpeta llamada <code>mi-curso-html</code>.</li>
+        <li>Dentro, crea un archivo llamado <code>index.html</code>.</li>
+        <li>Pega el código de la siguiente sección y guárdalo con <kbd>Ctrl</kbd> + <kbd>S</kbd>.</li>
+        <li>Haz doble clic en el archivo: se abrirá en tu navegador.</li>
+      </ol>
+      <div class="callout importante">
+        <p class="callout-title">⚠️ Importante · La extensión</p>
+        <p>El archivo debe terminar en <code>.html</code>. Si lo guardas como <code>index.html.txt</code>, el navegador lo mostrará como texto plano. En Windows, activa «Extensiones de nombre de archivo» en el Explorador para verlo.</p>
+      </div>
+
+      <h2 id="estructura"><span class="n">3.</span>Estructura de una página</h2>
+      <p>Toda página HTML comparte el mismo esqueleto básico. Este es el mínimo que debes memorizar:</p>
+
+      <div class="code">
+        <div class="code-head"><span>index.html</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">&lt;!doctype html&gt;</span>
+<span class="tk-tag">&lt;html</span> <span class="tk-attr">lang</span>=<span class="tk-val">"es"</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;head&gt;</span>
+    <span class="tk-tag">&lt;meta</span> <span class="tk-attr">charset</span>=<span class="tk-val">"UTF-8"</span> <span class="tk-tag">/&gt;</span>
+    <span class="tk-tag">&lt;meta</span> <span class="tk-attr">name</span>=<span class="tk-val">"viewport"</span> <span class="tk-attr">content</span>=<span class="tk-val">"width=device-width, initial-scale=1.0"</span> <span class="tk-tag">/&gt;</span>
+    <span class="tk-tag">&lt;title&gt;</span>Mi primera página<span class="tk-tag">&lt;/title&gt;</span>
+  <span class="tk-tag">&lt;/head&gt;</span>
+  <span class="tk-tag">&lt;body&gt;</span>
+    <span class="tk-tag">&lt;h1&gt;</span>¡Hola, mundo!<span class="tk-tag">&lt;/h1&gt;</span>
+    <span class="tk-tag">&lt;p&gt;</span>Esta es mi primera página web.<span class="tk-tag">&lt;/p&gt;</span>
+  <span class="tk-tag">&lt;/body&gt;</span>
+<span class="tk-tag">&lt;/html&gt;</span></code></pre>
+      </div>
+
+      <p>Veamos qué hace cada parte:</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Etiqueta</th><th>Para qué sirve</th></tr></thead>
+        <tbody>
+          <tr><td><code>&lt;!doctype html&gt;</code></td><td>Indica al navegador que el documento usa HTML moderno (HTML5). Va siempre primero.</td></tr>
+          <tr><td><code>&lt;html lang="es"&gt;</code></td><td>Contiene toda la página. El atributo <code>lang</code> declara el idioma, útil para lectores de pantalla y buscadores.</td></tr>
+          <tr><td><code>&lt;head&gt;</code></td><td>Información <em>sobre</em> la página que no se muestra en pantalla: título, codificación, configuración.</td></tr>
+          <tr><td><code>&lt;meta charset="UTF-8"&gt;</code></td><td>Permite mostrar correctamente tildes, eñes y símbolos.</td></tr>
+          <tr><td><code>&lt;meta name="viewport"…&gt;</code></td><td>Hace que la página se adapte bien a pantallas de móvil.</td></tr>
+          <tr><td><code>&lt;title&gt;</code></td><td>El texto de la pestaña del navegador y el título en los resultados de búsqueda.</td></tr>
+          <tr><td><code>&lt;body&gt;</code></td><td>Todo lo que el visitante <strong>sí ve</strong>: textos, imágenes, enlaces.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="callout consejo">
+        <p class="callout-title">💡 Consejo · Head y body</p>
+        <p>Una forma fácil de recordarlo: el <code>head</code> es la «cabeza» que piensa y se prepara; el <code>body</code> es el «cuerpo» que se muestra al mundo.</p>
+      </div>
+
+      <h2 id="anatomia"><span class="n">4.</span>Anatomía de una etiqueta</h2>
+      <p>El HTML se compone de <strong>elementos</strong>. La mayoría tiene una etiqueta de apertura, un contenido y una etiqueta de cierre:</p>
+
+      <div class="anatomy" role="img" aria-label="Diagrama: etiqueta de apertura, atributo, contenido y etiqueta de cierre">
+        <div class="part" style="--c:#ff8fa3"><span>&lt;a</span><span class="lbl">apertura</span></div>
+        <div class="part" style="--c:#ffd479"><span>href="pagina.html"</span><span class="lbl">atributo</span></div>
+        <div class="part" style="--c:#ff8fa3"><span>&gt;</span><span class="lbl">&nbsp;</span></div>
+        <div class="part" style="--c:#8ee6a0"><span>Visitar</span><span class="lbl">contenido</span></div>
+        <div class="part" style="--c:#ff8fa3"><span>&lt;/a&gt;</span><span class="lbl">cierre</span></div>
+      </div>
+
+      <ul>
+        <li><strong>Etiqueta de apertura</strong> <code>&lt;a&gt;</code>: indica qué tipo de elemento comienza.</li>
+        <li><strong>Atributo</strong> <code>href="…"</code>: añade información extra con el formato <code>nombre="valor"</code>. Va dentro de la etiqueta de apertura.</li>
+        <li><strong>Contenido</strong>: lo que el visitante ve.</li>
+        <li><strong>Etiqueta de cierre</strong> <code>&lt;/a&gt;</code>: igual que la de apertura, pero con una barra <code>/</code>.</li>
+      </ul>
+
+      <h3>Etiquetas anidadas</h3>
+      <p>Los elementos pueden contener otros elementos. Eso se llama <strong>anidar</strong>, y exige cerrar primero lo que se abrió al final, como cajas dentro de cajas:</p>
+      <div class="code">
+        <div class="code-head"><span>Anidación correcta</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">&lt;p&gt;</span>Este texto tiene una palabra <span class="tk-tag">&lt;strong&gt;</span>importante<span class="tk-tag">&lt;/strong&gt;</span>.<span class="tk-tag">&lt;/p&gt;</span></code></pre>
+      </div>
+
+      <h3>Etiquetas vacías</h3>
+      <p>Algunos elementos no tienen contenido ni etiqueta de cierre, por ejemplo <code>&lt;br&gt;</code> (salto de línea), <code>&lt;hr&gt;</code> (línea horizontal) e <code>&lt;img&gt;</code> (imagen). Los veremos en las próximas lecciones.</p>
+
+      <h2 id="comentarios"><span class="n">5.</span>Comentarios</h2>
+      <p>Los comentarios son notas para ti y para otras personas que lean el código. El navegador los ignora y no se muestran en la página.</p>
+      <div class="code">
+        <div class="code-head"><span>Comentario</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-com">&lt;!-- Esto es un comentario: el navegador no lo muestra --&gt;</span>
+<span class="tk-tag">&lt;p&gt;</span>Este texto sí se ve.<span class="tk-tag">&lt;/p&gt;</span></code></pre>
+      </div>
+      <div class="callout nota">
+        <p class="callout-title">📌 Nota</p>
+        <p>Los comentarios son visibles para cualquiera que inspeccione el código de la página. Nunca escribas en ellos contraseñas ni datos privados.</p>
+      </div>
+
+      <h2 id="errores"><span class="n">6.</span>Errores frecuentes</h2>
+      <p>Todos los cometemos al empezar. Si algo no se ve como esperabas, revisa esta lista:</p>
+      <ul>
+        <li><strong>Olvidar cerrar una etiqueta</strong> (<code>&lt;p&gt;</code> sin <code>&lt;/p&gt;</code>): el resto de la página puede verse alterado.</li>
+        <li><strong>Anidar mal</strong>: <code>&lt;p&gt;&lt;strong&gt;texto&lt;/p&gt;&lt;/strong&gt;</code> es incorrecto; se cierra en orden inverso.</li>
+        <li><strong>Olvidar las comillas</strong> en los valores de atributos.</li>
+        <li><strong>No guardar el archivo</strong> antes de recargar el navegador (<kbd>F5</kbd>).</li>
+        <li><strong>Extensión equivocada</strong>: <code>.txt</code> en lugar de <code>.html</code>.</li>
+      </ul>
+      <div class="callout ejemplo">
+        <p class="callout-title">🔍 Ejemplo · Cómo se ve un error</p>
+        <p>Si escribes <code>&lt;h1&gt;Hola&lt;/h2&gt;</code>, la etiqueta de cierre no coincide con la de apertura. HTML suele ser «tolerante» y no muestra un aviso, pero el resultado puede ser impredecible. Un buen editor te lo señalará.</p>
+      </div>
+
+      <section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+        <h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+        <ul>
+          <li>HTML describe la <strong>estructura y el contenido</strong>; CSS da el aspecto y JavaScript el comportamiento.</li>
+          <li>Un archivo HTML necesita la extensión <code>.html</code> y se abre en el navegador.</li>
+          <li>El esqueleto básico es <code>doctype</code> → <code>html</code> → <code>head</code> + <code>body</code>.</li>
+          <li>Lo que está en <code>head</code> no se ve; lo que está en <code>body</code> sí.</li>
+          <li>Un elemento = etiqueta de apertura + contenido + etiqueta de cierre.</li>
+          <li>Los atributos tienen la forma <code>nombre="valor"</code> y van en la etiqueta de apertura.</li>
+          <li>Las etiquetas se anidan y se cierran en orden inverso al que se abrieron.</li>
+          <li>Los comentarios <code>&lt;!-- … --&gt;</code> no se muestran en la página.</li>
+        </ul>
+      </section>
+
+      <h2 id="glosario"><span class="n">7.</span>Glosario</h2>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Término</th><th>Significado</th></tr></thead>
+        <tbody>
+          <tr><td>Etiqueta</td><td>Marca entre <code>&lt; &gt;</code> que indica el tipo de contenido.</td></tr>
+          <tr><td>Elemento</td><td>Conjunto de etiqueta de apertura, contenido y etiqueta de cierre.</td></tr>
+          <tr><td>Atributo</td><td>Dato adicional de un elemento, con formato <code>nombre="valor"</code>.</td></tr>
+          <tr><td>Anidar</td><td>Colocar un elemento dentro de otro.</td></tr>
+          <tr><td>Navegador</td><td>Programa que interpreta el HTML y lo muestra como página.</td></tr>
+          <tr><td>Editor de código</td><td>Programa donde escribes y guardas tus archivos.</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="callout consejo">
+        <p class="callout-title">🚀 ¡Ahora te toca!</p>
+        <p>La práctica es lo que fija lo aprendido. Pasa al ejercicio y crea tu primera página.</p>
+        <p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p>
+      </div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../"><small>← Volver</small>Índice del curso</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de la lección 1</a>
+      </nav>
+    </article>
+  </div>
+
+  <footer class="site-footer">Curso de HTML · Lección 1</footer>
+  <script src="../assets/curso.js"></script>
+</body>
+</html>

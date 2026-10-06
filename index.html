@@ -1,9 +1,61 @@
 <!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>hello world</title>
-  </head>
-  <body></body>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Curso de HTML desde cero</title>
+  <meta name="description" content="Curso gratuito de HTML en español: lecciones con apuntes, ejemplos y ejercicios prácticos para aprender desde cero." />
+  <link rel="stylesheet" href="assets/estilos.css" />
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="./"><span class="brand-logo">&lt;/&gt;</span> Curso de HTML</a>
+    <div class="topbar-actions">
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <span class="eyebrow">Gratis · En español · Para principiantes</span>
+      <h1>Aprende HTML desde cero, paso a paso</h1>
+      <p>Un curso claro y ordenado para construir tus primeras páginas web. Cada lección incluye apuntes, ejemplos y un ejercicio práctico.</p>
+      <a class="btn" href="01-primeros-pasos/">Empezar la lección 1</a>
+      <a class="btn secondary" href="#temario">Ver el temario</a>
+    </section>
+
+    <section class="features" aria-label="Qué incluye el curso">
+      <div class="feature"><div class="emoji">📝</div><h3>Apuntes claros</h3><p>Explicaciones breves, con recuadros de notas, advertencias y consejos.</p></div>
+      <div class="feature"><div class="emoji">💻</div><h3>Ejemplos de código</h3><p>Fragmentos listos para copiar y probar en tu propio editor.</p></div>
+      <div class="feature"><div class="emoji">🧩</div><h3>Ejercicios prácticos</h3><p>Aprendes haciendo, con pistas y solución para comprobar tu trabajo.</p></div>
+      <div class="feature"><div class="emoji">🌗</div><h3>Cómodo de leer</h3><p>Tema claro y oscuro, y diseño adaptado a móvil y computadora.</p></div>
+    </section>
+
+    <h2 class="section-title" id="temario">Temario</h2>
+    <ul class="lessons">
+      <li><a class="lesson-card" href="01-primeros-pasos/">
+        <span class="lesson-num">LECCIÓN 01</span><h3>Primeros pasos</h3>
+        <p>Qué es HTML, qué herramientas necesitas y cómo se estructura una página.</p><span class="tag open">Disponible</span></a></li>
+      <li><a class="lesson-card" href="02-texto-y-enlaces/">
+        <span class="lesson-num">LECCIÓN 02</span><h3>Texto, títulos y enlaces</h3>
+        <p>Párrafos, encabezados, énfasis y cómo conectar páginas entre sí.</p><span class="tag open">Disponible</span></a></li>
+      <li><a class="lesson-card" href="03-imagenes-y-listas/">
+        <span class="lesson-num">LECCIÓN 03</span><h3>Imágenes y listas</h3>
+        <p>Insertar imágenes accesibles y organizar información en listas.</p><span class="tag open">Disponible</span></a></li>
+      <li><div class="lesson-card disabled"><span class="lesson-num">LECCIÓN 04</span><h3>Tablas</h3>
+        <p>Presentar datos en filas y columnas de forma ordenada.</p><span class="tag soon">Próximamente</span></div></li>
+      <li><div class="lesson-card disabled"><span class="lesson-num">LECCIÓN 05</span><h3>Formularios</h3>
+        <p>Campos de texto, selecciones y botones para recoger información.</p><span class="tag soon">Próximamente</span></div></li>
+      <li><div class="lesson-card disabled"><span class="lesson-num">LECCIÓN 06</span><h3>HTML semántico</h3>
+        <p>Dar estructura con <code>header</code>, <code>main</code> y <code>footer</code>.</p><span class="tag soon">Próximamente</span></div></li>
+      <li><div class="lesson-card disabled"><span class="lesson-num">LECCIÓN 07</span><h3>Introducción a CSS</h3>
+        <p>Colores, tipografía y espacios para dar estilo a tus páginas.</p><span class="tag soon">Próximamente</span></div></li>
+      <li><div class="lesson-card disabled"><span class="lesson-num">PROYECTO</span><h3>Tu página personal</h3>
+        <p>Pones en práctica todo lo aprendido creando tu propio sitio.</p><span class="tag soon">Próximamente</span></div></li>
+    </ul>
+  </main>
+
+  <footer class="site-footer">Curso de HTML · Material libre para aprender y compartir.</footer>
+  <script src="assets/curso.js"></script>
+</body>
 </html>
