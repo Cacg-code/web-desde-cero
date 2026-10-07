@@ -40,60 +40,30 @@
 
 Sigue el orden: cada curso se apoya en el anterior.
 
-<table>
-<tr>
-<td align="center" width="33%">
+<div align="center">
 
-### 1 · HTML
-**Estructura**<br>
-<sub>11 lecciones + proyecto · ≈ 10 h</sub>
+<img src="assets/readme/cursos.svg" alt="Tres cursos: HTML, CSS y JavaScript" width="100%">
 
-Texto, enlaces, tablas, formularios, accesibilidad, SEO y Git.
+**[▶ Empezar HTML](https://cacg-code.github.io/PRACTICAS-HTML/html/)** &nbsp;·&nbsp; **[▶ Empezar CSS](https://cacg-code.github.io/PRACTICAS-HTML/css/)** &nbsp;·&nbsp; **[▶ Empezar JavaScript](https://cacg-code.github.io/PRACTICAS-HTML/javascript/)**
 
-🏆 *Tu página personal publicada*
-
-**[▶ Empezar](https://cacg-code.github.io/PRACTICAS-HTML/html/)**
-</td>
-<td align="center" width="33%">
-
-### 2 · CSS
-**Estilo**<br>
-<sub>11 lecciones + proyecto · ≈ 12 h</sub>
-
-Selectores, Flexbox, Grid, responsivo, animaciones y modo oscuro.
-
-🏆 *Una landing page responsiva*
-
-**[▶ Empezar](https://cacg-code.github.io/PRACTICAS-HTML/css/)**
-</td>
-<td align="center" width="33%">
-
-### 3 · JavaScript
-**Lógica**<br>
-<sub>11 lecciones + proyecto · ≈ 14 h</sub>
-
-Variables, funciones, DOM, eventos, asincronía y almacenamiento.
-
-🏆 *Una app de tareas*
-
-**[▶ Empezar](https://cacg-code.github.io/PRACTICAS-HTML/javascript/)**
-</td>
-</tr>
-</table>
+</div>
 
 ## 🎬 Míralo en acción
 
 <div align="center">
-<table>
-<tr>
-<td align="center"><b>✏️ Práctica en vivo</b><br><img src="assets/gif/practica-en-vivo.gif" alt="Editor con resultado instantáneo" width="100%"></td>
-<td align="center"><b>🎨 Flexbox interactivo</b><br><img src="assets/gif/flexbox.gif" alt="Demostración interactiva de Flexbox" width="100%"></td>
-</tr>
-<tr>
-<td align="center"><b>⚡ JavaScript con consola</b><br><img src="assets/gif/js-consola.gif" alt="Editor de JavaScript con consola" width="100%"></td>
-<td align="center"><b>✅ Comprobador de ejercicios</b><br><img src="assets/gif/comprobador.gif" alt="Comprobador que revisa tu código" width="100%"></td>
-</tr>
-</table>
+
+<img src="assets/gif/practica-en-vivo.gif" alt="Editor con resultado instantáneo" width="48%">&nbsp;
+<img src="assets/gif/flexbox.gif" alt="Demostración interactiva de Flexbox" width="48%">
+
+<sub><b>✏️ Práctica en vivo</b> — escribes y ves el resultado &nbsp;·&nbsp; <b>🎨 Flexbox interactivo</b> — juega con las propiedades</sub>
+
+<br><br>
+
+<img src="assets/gif/js-consola.gif" alt="Editor de JavaScript con consola" width="48%">&nbsp;
+<img src="assets/gif/comprobador.gif" alt="Comprobador que revisa tu código" width="48%">
+
+<sub><b>⚡ JavaScript con consola</b> — ejecuta código real &nbsp;·&nbsp; <b>✅ Comprobador</b> — te dice qué cumples y qué falta</sub>
+
 </div>
 
 ## 🗺️ Ruta
@@ -104,20 +74,15 @@ Variables, funciones, DOM, eventos, asincronía y almacenamiento.
 
 ## 🔁 Cada lección
 
-```text
-  📖 LEE  →  ⚡ PRUEBA  →  ✅ EVALÚATE  →  🛠️ PRACTICA  →  🔍 COMPRUEBA
- apuntes     editor en     preguntas con    ejercicio       te dice qué
- cortos      vivo          explicación      con pistas      cumples
-```
+<div align="center">
 
-| | Incluye |
-|:-:|---|
-| ⚡ | Editores en vivo (y **consola** en JavaScript) |
-| 🔍 | **Comprobador** que revisa tu código punto por punto |
-| 💾 | Borrador y **progreso guardados** en tu navegador |
-| 🌗 | Modo claro y oscuro |
-| ♿ | Accesible: teclado, contraste y «reducir movimiento» |
-| 📱 | Se ve bien en celular, tableta y escritorio |
+<img src="assets/readme/leccion.svg" alt="Cada lección: lee, prueba, evalúate, practica y comprueba" width="100%">
+
+⚡ Editores en vivo y **consola** en JavaScript &nbsp;·&nbsp; 🔍 **Comprobador** de ejercicios<br>
+💾 Borrador y progreso guardados &nbsp;·&nbsp; 🌗 Modo claro y oscuro<br>
+♿ Accesible (teclado, contraste) &nbsp;·&nbsp; 📱 Celular, tableta y escritorio
+
+</div>
 
 <details>
 <summary><b>📚 Ver temario completo (33 lecciones)</b></summary>
@@ -144,21 +109,69 @@ Variables, funciones, DOM, eventos, asincronía y almacenamiento.
 ## 🧾 Chuleta
 
 <details>
-<summary><b>📋 Las etiquetas que más usarás</b></summary>
+<summary><b>📋 Abrir la chuleta (HTML · CSS · JavaScript · Git)</b></summary>
 
 <br>
 
-| Etiqueta | Para qué sirve |
+### 🟠 HTML
+
+| Para… | Usa | Ejemplo |
+|---|---|---|
+| 🏗️ Estructura base | `<!DOCTYPE html>` `<html lang>` `<head>` `<body>` | `<html lang="es">` |
+| 🔤 Títulos y texto | `<h1>`–`<h6>` `<p>` `<strong>` `<em>` | `<h1>Mi web</h1>` |
+| 🔗 Enlaces e imágenes | `<a href>` `<img src alt>` | `<img src="foto.jpg" alt="Mi foto">` |
+| 📃 Listas | `<ul>` `<ol>` `<li>` | `<ul><li>Uno</li></ul>` |
+| 📊 Tablas | `<table>` `<tr>` `<th>` `<td>` | `<tr><td>Dato</td></tr>` |
+| 📝 Formularios | `<form>` `<label>` `<input>` `<button>` | `<input type="email" required>` |
+| 🧱 Semántica | `<header>` `<nav>` `<main>` `<section>` `<footer>` | `<nav aria-label="Principal">` |
+| 🎬 Multimedia | `<audio>` `<video>` `<track>` `<picture>` | `<video controls src="a.mp4">` |
+| ♿ Accesibilidad | `alt` `aria-label` `role` `tabindex` | `<button aria-label="Cerrar">` |
+| 🔍 SEO | `<title>` `<meta name="description">` `og:*` | `<meta name="description" content="…">` |
+
+### 🔵 CSS
+
+| Para… | Usa | Ejemplo |
+|---|---|---|
+| 🎯 Seleccionar | `p` `.clase` `#id` `a:hover` | `.tarjeta { … }` |
+| 🎨 Color y texto | `color` `background` `font-size` `line-height` | `color: #4f46e5;` |
+| 📦 La caja | `margin` `padding` `border` `box-sizing` | `box-sizing: border-box;` |
+| ↔️ Flexbox | `display:flex` `justify-content` `align-items` `gap` | `display:flex; gap:1rem;` |
+| ▦ Grid | `display:grid` `grid-template-columns` | `grid-template-columns: repeat(3, 1fr);` |
+| 📱 Responsivo | `@media` `clamp()` `max-width` | `@media (max-width: 600px) { … }` |
+| ✨ Efectos | `transition` `animation` `box-shadow` `linear-gradient` | `transition: .3s;` |
+| 🌗 Variables | `--nombre` `var()` | `:root { --color: teal; }` |
+
+### 🟡 JavaScript
+
+| Para… | Usa | Ejemplo |
+|---|---|---|
+| 📌 Guardar datos | `const` `let` | `const nombre = "Ana";` |
+| 🔀 Decidir | `if` `else` `switch` | `if (edad >= 18) { … }` |
+| 🔁 Repetir | `for` `while` `for…of` | `for (const x of lista) { … }` |
+| 🧩 Funciones | `function` `=>` | `const doble = n => n * 2;` |
+| 📚 Arrays | `push` `map` `filter` `find` | `lista.filter(n => n > 2)` |
+| 🗂️ Objetos y JSON | `{}` `JSON.parse` `JSON.stringify` | `persona.nombre` |
+| 🖱️ DOM y eventos | `querySelector` `addEventListener` | `btn.addEventListener("click", f)` |
+| 🌐 Asincronía | `fetch` `async` `await` | `const r = await fetch(url);` |
+| 💾 Almacenar | `localStorage` `try…catch` | `localStorage.setItem("k", "v")` |
+
+### ⚫ Git
+
+| Para… | Comando |
 |---|---|
-| `<h1>`–`<h6>` · `<p>` | Títulos y párrafos |
-| `<a href>` · `<img src alt>` | Enlaces e imágenes |
-| `<ul>` `<ol>` `<li>` | Listas |
-| `<table>` `<tr>` `<td>` | Tablas |
-| `<form>` `<input>` `<button>` | Formularios |
-| `<header>` `<main>` `<footer>` | Estructura con significado |
-| `<audio>` `<video>` `<track>` | Multimedia y subtítulos |
-| `aria-label` · `role` | Accesibilidad |
-| `<meta>` · `<link rel>` | SEO y vista previa al compartir |
+| Empezar un repositorio | `git init` |
+| Ver qué cambió | `git status` |
+| Preparar y guardar cambios | `git add .` → `git commit -m "mensaje"` |
+| Conectar con GitHub y subir | `git remote add origin URL` → `git push -u origin main` |
+| Traer cambios | `git pull` |
+
+### ⌨️ Atajos del navegador
+
+| Atajo | Qué hace |
+|---|---|
+| `F12` | Abre las herramientas de desarrollo (consola, elementos) |
+| `Ctrl` + `U` | Muestra el código fuente de cualquier página |
+| `Ctrl` + `Shift` + `M` | Modo dispositivo: simula celular y tableta (con F12 abierto) |
 
 </details>
 
@@ -171,25 +184,57 @@ Variables, funciones, DOM, eventos, asincronía y almacenamiento.
 <details>
 <summary><b>¿Necesito saber programar?</b></summary>
 
-<br>No. Empieza desde cero.
+<br>No. El curso de HTML empieza desde cero y no asume nada. CSS pide haber hecho HTML, y JavaScript pide saber maquetar una página; ambos lo indican al inicio.
 </details>
 
 <details>
-<summary><b>¿Qué necesito?</b></summary>
+<summary><b>¿Qué necesito para empezar?</b></summary>
 
-<br>Un navegador. Para tus propios proyectos, un editor como [VS Code](https://code.visualstudio.com/).
+<br>Solo un navegador moderno (Chrome, Firefox, Edge o Safari). Los editores y la consola están dentro de cada lección. Cuando quieras trabajar en tus propios proyectos, instala un editor como [VS Code](https://code.visualstudio.com/).
 </details>
 
 <details>
-<summary><b>¿Se guarda mi progreso?</b></summary>
+<summary><b>¿Se guarda mi progreso? ¿Es fiable?</b></summary>
 
-<br>Sí, en tu navegador. Sin cuentas ni servidores. Si borras los datos del sitio, se reinicia.
+<br>Sí, pero **vive solo en tu navegador** (almacenamiento local del sitio), no en un servidor. Eso significa:
+
+- ✅ Funciona sin cuentas y nadie más ve tu avance.
+- ✅ Se conserva aunque cierres la pestaña o apagues la computadora.
+- ⚠️ **No se sincroniza**: si cambias de navegador, dispositivo o perfil, empiezas de cero.
+- ⚠️ **Se borra** si limpias los datos del sitio o las cookies, o si usas una ventana privada.
+- ⚠️ Si abres el curso desde tu carpeta (`file://`) y desde la web, son dos progresos distintos.
+
+Si el navegador bloquea el almacenamiento, el curso sigue funcionando; solo que no recordará tu avance.
 </details>
 
 <details>
 <summary><b>¿Funciona sin internet?</b></summary>
 
-<br>Sí: clona el repo y abre `index.html`.
+<br>Sí. Clona el repositorio (o descárgalo en ZIP) y abre `index.html` con doble clic. Solo los ejemplos que consultan una API externa (lección de asincronía) necesitan conexión.
+</details>
+
+<details>
+<summary><b>¿Cómo funciona el comprobador de ejercicios?</b></summary>
+
+<br>Pegas tu código y el curso lo analiza **en tu navegador**: comprueba requisitos concretos (por ejemplo, «tiene un `<h1>`» o «la imagen tiene `alt`») y marca cuáles cumples y cuáles faltan, con una pista. No envía tu código a ningún sitio.
+</details>
+
+<details>
+<summary><b>¿Cuánto tarda cada curso?</b></summary>
+
+<br>HTML ≈ 10 h, CSS ≈ 12 h y JavaScript ≈ 14 h. Lo ideal es **una lección al día**: mejor constancia que maratones.
+</details>
+
+<details>
+<summary><b>¿Cuánto cuesta y puedo usarlo en clase?</b></summary>
+
+<br>Es gratis y de código abierto. El código va con licencia MIT y el contenido educativo va con [CC BY 4.0](LICENSE-CONTENIDO.md): puedes usarlo y compartirlo en clase citando la fuente.
+</details>
+
+<details>
+<summary><b>Encontré un error o algo no se entiende</b></summary>
+
+<br>Avísame con un [reporte de error](https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml) o una [duda](https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=duda.yml). Es la mejor forma de mejorar el curso.
 </details>
 
 ## 💻 En tu computadora
