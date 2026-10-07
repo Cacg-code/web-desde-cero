@@ -937,6 +937,7 @@
     };
     var closePanel = function () { if (panel) panel.classList.remove('open'); if (chip) paintChip(false); };
     var dailyHtml = function () {
+      if (window.__comunidad && window.__comunidad.enabled) return '<div id="pp-com"></div>';
       var q = dailyQ(), st = store.get('diario:' + ymd());
       var h = '<div class="pp-daily"><p><b>' + esc(q[0]) + '</b></p><div class="pp-dopts">';
       q[1].forEach(function (o, i) { h += '<button type="button" class="chip' + (st && i === q[2] ? ' on' : '') + '" data-d="' + i + '"' + (st ? ' disabled' : '') + '>' + esc(o) + '</button>'; });
@@ -971,6 +972,12 @@
         setTimeout(function () { var b = $('#pp-xpbar', panel); if (b) b.style.width = Math.round((xp - base) / (nxt - base) * 100) + '%'; $$('.pp-course .progress > div', panel).forEach(function (x) { x.style.transition = 'width 1s'; }); }, 60);
       });
       $('.pp-close', panel).addEventListener('click', closePanel);
+      var com = $('#pp-com', panel);
+      if (com && window.__comunidad) {
+        var dn = Math.floor(new Date(ymd() + 'T00:00:00') / 864e5);
+        window.__comunidad.render(com, { q: dailyQ(), dia: dn % DAILY.length, avatar: +(store.get('avatar') || 0), avatars: AVATARS, say: say,
+          onReto: function (ok) { store.set('diario:' + ymd(), ok ? '1' : 'x'); if (ok) say('🎯 +25 XP · reto del día'); paintChip(ok); checkLogros(); } });
+      }
       $$('.pp-dopts .chip', panel).forEach(function (b) { b.addEventListener('click', function () {
         var ok = +b.getAttribute('data-d') === dailyQ()[2]; store.set('diario:' + ymd(), ok ? '1' : 'x');
         if (ok) say('🎯 +25 XP · reto del día'); paintChip(ok); checkLogros(); renderPanel();
@@ -1077,6 +1084,7 @@
     applySkin();
     load().then(function () { checkShield(); applySkin(); paintChip(false); checkLogros(); });
     window.__progreso = { open: openPanel };
+    var cm = document.createElement('script'); cm.src = BASE + 'comunidad.js'; document.head.appendChild(cm);
   } catch (err) { /* opcional */ }
 })();
 

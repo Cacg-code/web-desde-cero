@@ -1,9 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="150" viewBox="0 0 1000 150" role="img" aria-label="4 cursos, 44 lecciones, 4 proyectos, unas 50 horas, gratis">
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="150" viewBox="0 0 1000 150" role="img" aria-label="6 cursos, 60 lecciones, 6 proyectos, unas 75 horas, gratis">
 <style>.t{font-family:Segoe UI,Helvetica,Arial,sans-serif;text-anchor:middle}.v{font-size:44px;font-weight:800}.l{font-size:15px;fill:#9aa1c4}.c{animation:u 4s ease-in-out infinite}@keyframes u{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}</style>
 <rect width="1000" height="150" rx="20" fill="#14172b"/>
-<g class="c" style="animation-delay:0.0s"><text class="t v" x="100" y="80" fill="#e34f26">4</text><text class="t l" x="100" y="112">cursos</text></g>
-<g class="c" style="animation-delay:0.4s"><text class="t v" x="300" y="80" fill="#6366f1">44</text><text class="t l" x="300" y="112">lecciones</text></g>
-<g class="c" style="animation-delay:0.8s"><text class="t v" x="500" y="80" fill="#16a34a">4</text><text class="t l" x="500" y="112">proyectos</text></g>
-<g class="c" style="animation-delay:1.2000000000000002s"><text class="t v" x="700" y="80" fill="#f0b90b">≈50 h</text><text class="t l" x="700" y="112">de práctica</text></g>
+<g class="c" style="animation-delay:0.0s"><text class="t v" x="100" y="80" fill="#e34f26">6</text><text class="t l" x="100" y="112">cursos</text></g>
+<g class="c" style="animation-delay:0.4s"><text class="t v" x="300" y="80" fill="#6366f1">60</text><text class="t l" x="300" y="112">lecciones</text></g>
+<g class="c" style="animation-delay:0.8s"><text class="t v" x="500" y="80" fill="#16a34a">6</text><text class="t l" x="500" y="112">proyectos</text></g>
+<g class="c" style="animation-delay:1.2000000000000002s"><text class="t v" x="700" y="80" fill="#f0b90b">≈75 h</text><text class="t l" x="700" y="112">de práctica</text></g>
 <g class="c" style="animation-delay:1.6s"><text class="t v" x="900" y="80" fill="#f43f5e">0 $</text><text class="t l" x="900" y="112">y sin cuentas</text></g>
 </svg>
