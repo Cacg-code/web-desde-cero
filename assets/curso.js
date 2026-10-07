@@ -646,3 +646,82 @@
     }
   } catch (err) { /* los efectos son opcionales */ }
 })();
+
+// ---------- UI v4 · símbolos, cursor luminoso, cinta, XP y racha ----------
+(function () {
+  try {
+    var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
+    var $ = function (s) { return document.querySelector(s); };
+    var store = {
+      get: function (k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+      set: function (k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+    };
+
+    // Símbolos flotantes en el hero
+    var hero = $('.hero-grid') || $('section.hero');
+    if (hero && !reduce) {
+      var fs = document.createElement('div'); fs.className = 'float-syms'; fs.setAttribute('aria-hidden', 'true');
+      var syms = ['</>', '{ }', '#', '()', '=>', '<p>', '.css', 'JS', '[ ]', '&&'];
+      fs.innerHTML = syms.map(function (t, i) {
+        return '<span style="--x:' + (4 + (i * 37) % 90) + '%;--y:' + (6 + (i * 53) % 80) + '%;--s:' + (1.1 + (i % 4) * .5) + 'rem;--d:' + (7 + (i % 5) * 2) + 's;--dl:-' + (i * 1.3) + 's">' + t.replace(/</g, '&lt;') + '</span>';
+      }).join('');
+      hero.appendChild(fs);
+    }
+
+    // Cinta de tecnologías (en portadas con hero)
+    var feat = $('.features');
+    if (feat && hero) {
+      var words = ['HTML', 'CSS', 'JavaScript', 'React', 'Git', 'Accesibilidad', 'SEO', 'Flexbox', 'Grid', 'Hooks', 'DOM', 'Responsivo'];
+      var row = words.map(function (w) { return '<span>' + w + '</span>'; }).join('');
+      var tk = document.createElement('div'); tk.className = 'ticker'; tk.setAttribute('aria-hidden', 'true');
+      tk.innerHTML = '<div class="ticker-track">' + row + row + '</div>';
+      feat.parentNode.insertBefore(tk, feat);
+    }
+
+    // Luz que sigue al cursor y botones magnéticos (solo con ratón)
+    if (fine && !reduce) {
+      var gl = document.createElement('div'); gl.className = 'cursor-glow'; gl.setAttribute('aria-hidden', 'true'); document.body.appendChild(gl);
+      var gx = 0, gy = 0, pend = false;
+      addEventListener('pointermove', function (e) {
+        gx = e.clientX; gy = e.clientY; gl.classList.add('on');
+        if (!pend) { pend = true; requestAnimationFrame(function () { gl.style.transform = 'translate(' + gx + 'px,' + gy + 'px)'; pend = false; }); }
+      }, { passive: true });
+      document.documentElement.addEventListener('pointerleave', function () { gl.classList.remove('on'); });
+      document.querySelectorAll('.hero .btn, .complete .btn').forEach(function (b) {
+        b.classList.add('mag');
+        b.addEventListener('pointermove', function (e) { var r = b.getBoundingClientRect(); b.style.transform = 'translate(' + ((e.clientX - r.left - r.width / 2) * .18) + 'px,' + ((e.clientY - r.top - r.height / 2) * .28 - 2) + 'px)'; });
+        b.addEventListener('pointerleave', function () { b.style.transform = ''; });
+      });
+    }
+
+    // XP, nivel y racha (se calcula con las lecciones que ya guardas en tu navegador)
+    var count = function () { var n = 0; try { for (var i = 0; i < localStorage.length; i++) { var k = localStorage.key(i); if (k.indexOf('leccion:') === 0 && localStorage.getItem(k) === '1') n++; } } catch (e) {} return n; };
+    var streakInfo = function () { try { return JSON.parse(store.get('racha') || '{}'); } catch (e) { return {}; } };
+    var bar = $('.topbar-actions');
+    if (bar) {
+      var chip = document.createElement('div'); chip.className = 'xp'; bar.insertBefore(chip, bar.firstChild);
+      var paint = function (bump) {
+        var xp = count() * 100, lvl = Math.floor(xp / 300) + 1, into = (xp % 300) / 300, s = streakInfo(), days = s.n || 0;
+        var today = new Date().toDateString(), y = new Date(Date.now() - 864e5).toDateString();
+        if (s.d && s.d !== today && s.d !== y) days = 0;
+        chip.title = 'Nivel ' + lvl + ' · ' + xp + ' XP · cada lección completada suma 100 XP';
+        chip.innerHTML = '⚡ Nv <b>' + lvl + '</b><span class="xp-bar"><i style="width:' + Math.round(into * 100) + '%"></i></span><span class="xp-streak">🔥 ' + days + '</span>';
+        if (bump) { chip.classList.remove('bump'); void chip.offsetWidth; chip.classList.add('bump'); }
+        return lvl;
+      };
+      var lvl0 = paint(false);
+      document.querySelectorAll('[data-complete]').forEach(function (b) {
+        b.addEventListener('click', function () {
+          if (b.classList.contains('done')) {
+            var s = streakInfo(), today = new Date().toDateString(), y = new Date(Date.now() - 864e5).toDateString();
+            if (s.d !== today) { store.set('racha', JSON.stringify({ d: today, n: s.d === y ? (s.n || 0) + 1 : 1 })); }
+          }
+          var l = paint(true);
+          if (l > lvl0) { var t = document.createElement('div'); t.className = 'toast'; t.textContent = '🚀 ¡Subiste al nivel ' + l + '!'; var box = document.querySelector('.toasts'); if (box) box.appendChild(t); setTimeout(function () { t.remove(); }, 2800); }
+          lvl0 = l;
+        });
+      });
+    }
+  } catch (err) { /* opcional */ }
+})();

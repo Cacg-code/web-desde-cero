@@ -614,3 +614,58 @@ h2.section-title:hover::after { width: 5rem; }
 }
 @media print { .aurora, .to-top, .toasts, .confetti, .pal { display: none !important; } .hero h1, .lesson-head h1 { -webkit-text-fill-color: currentColor; background: none; color: #000; } }
 @media (max-width: 520px) { .icon-btn .lbl { display: none; } .topbar .brand { min-width: 0; overflow: hidden; text-overflow: ellipsis; } }
+
+/* ==========================================================
+   UI v4 · símbolos flotantes, cursor luminoso, cinta, XP/racha,
+   botones magnéticos, bordes con degradado giratorio
+   ========================================================== */
+@property --ang { syntax: "<angle>"; initial-value: 0deg; inherits: false; }
+body, .topbar, .feature, .lesson-card, .course-card, .quiz, .callout, .widget, .playground, .checker, .demo, details, .pager a { transition-property: background-color, color, border-color, box-shadow, transform, opacity; transition-duration: .35s; }
+
+/* Símbolos de código flotando detrás del hero */
+.float-syms { position: absolute; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+.float-syms span { position: absolute; font-family: var(--mono); font-weight: 800; color: color-mix(in srgb, var(--accent) 20%, transparent); animation: bob var(--d, 9s) ease-in-out infinite alternate; animation-delay: var(--dl, 0s); left: var(--x); top: var(--y); font-size: var(--s, 2rem); }
+@keyframes bob { from { transform: translateY(0) rotate(-8deg); } to { transform: translateY(-26px) rotate(10deg); } }
+
+/* Luz que sigue al cursor */
+.cursor-glow { position: fixed; left: 0; top: 0; z-index: 0; width: 520px; height: 520px; margin: -260px 0 0 -260px; border-radius: 50%; pointer-events: none; background: radial-gradient(circle, color-mix(in srgb, var(--accent) 16%, transparent), transparent 65%); opacity: 0; transition: opacity .4s; will-change: transform; }
+.cursor-glow.on { opacity: 1; }
+
+/* Cinta de tecnologías */
+.ticker { overflow: hidden; margin: 1.5rem 0; padding: .7rem 0; border-block: 1px solid var(--border); -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); }
+.ticker-track { display: flex; gap: 2.5rem; width: max-content; animation: marquee 32s linear infinite; font-family: var(--mono); font-weight: 700; color: var(--muted); }
+.ticker:hover .ticker-track { animation-play-state: paused; }
+.ticker-track span::before { content: "◆"; margin-right: 2.5rem; color: var(--accent); }
+@keyframes marquee { to { transform: translateX(-50%); } }
+
+/* Borde con degradado giratorio al pasar el ratón */
+.course-card, .feature { --ang: 0deg; }
+.course-card::after, .feature::after { content: ""; position: absolute; inset: -1px; border-radius: inherit; padding: 2px; pointer-events: none; opacity: 0; transition: opacity .3s;
+  background: conic-gradient(from var(--ang), var(--accent), var(--accent-2), var(--accent-3), var(--accent));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0); }
+a.course-card:hover::after, .feature:hover::after { opacity: 1; animation: spin 3s linear infinite; }
+@keyframes spin { to { --ang: 360deg; } }
+
+/* Botones magnéticos */
+.btn.mag { transition: transform .15s ease-out, box-shadow .2s; }
+
+/* Insignia de XP / racha */
+.xp { display: inline-flex; align-items: center; gap: .45rem; padding: .3rem .75rem; border: 1px solid var(--border); border-radius: 999px; background: var(--surface); font-size: .82rem; font-weight: 700; color: var(--text); white-space: nowrap; cursor: default; }
+.xp b { color: var(--accent); }
+.xp .xp-bar { width: 3.2rem; height: .4rem; border-radius: 99px; background: var(--surface-2); overflow: hidden; }
+.xp .xp-bar i { display: block; height: 100%; width: 0; border-radius: inherit; background: linear-gradient(90deg, var(--accent), var(--accent-2)); transition: width .8s cubic-bezier(.2, .8, .2, 1); }
+.xp.bump { animation: pop .6s cubic-bezier(.2, 1.6, .4, 1); }
+@media (max-width: 700px) { .xp .xp-bar, .xp .xp-streak { display: none; } }
+@media (max-width: 520px) { .xp { display: none; } }
+
+/* Microinteracciones */
+a.lesson-card:hover .lesson-num { animation: beat .8s ease-in-out infinite; }
+@keyframes beat { 50% { transform: scale(1.12); transform-origin: left; } }
+.opt.ok::after { content: " ✓"; font-weight: 800; color: var(--consejo-t); }
+.opt.bad::after { content: " ✗"; font-weight: 800; color: var(--importante-t); }
+article p a, article li a { text-decoration: none; background: linear-gradient(var(--accent), var(--accent)) 0 100% / 0 2px no-repeat; transition: background-size .3s; }
+article p a:hover, article li a:hover { background-size: 100% 2px; }
+
+@media (prefers-reduced-motion: reduce) { .float-syms span, .ticker-track, .cursor-glow, a.lesson-card:hover .lesson-num, a.course-card:hover::after, .feature:hover::after { animation: none !important; } .cursor-glow { display: none; } }
+@media print { .float-syms, .cursor-glow, .ticker, .xp { display: none !important; } }
+.course-card { position: relative; }
