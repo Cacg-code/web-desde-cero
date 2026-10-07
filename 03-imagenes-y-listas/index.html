@@ -37,6 +37,7 @@
         <li><a href="#errores">Errores frecuentes</a></li>
         <li><a href="#apuntes">Apuntes para llevar</a></li>
         <li><a href="#glosario">Glosario</a></li>
+        <li><a href="#quiz">Comprueba lo aprendido</a></li>
       </ol>
     </nav>
 
@@ -142,6 +143,19 @@
         <p>El pie de foto y el <code>alt</code> no son lo mismo. El <code>alt</code> describe lo que se ve para quien no puede verlo; el <code>figcaption</code> es una leyenda visible para todos.</p>
       </div>
 
+      <h3>✏️ Practica en vivo</h3>
+<div class="playground">
+  <div class="pg-head"><span>✏️ Imagen con pie de foto</span><button type="button" data-reset>Restablecer</button></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;figure&gt;
+  &lt;img src="../assets/img/paisaje.svg" alt="Montañas con un sol al atardecer" width="300"&gt;
+  &lt;figcaption&gt;Cambia el &lt;code&gt;alt&lt;/code&gt;, el ancho o el pie de foto.&lt;/figcaption&gt;
+&lt;/figure&gt;</textarea></div>
+    <div><label>Resultado</label><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div>
+  </div>
+</div>
+<p>Prueba cambiar el nombre del archivo a uno que no existe (por ejemplo <code>foto-falsa.png</code>): verás cómo se comporta el navegador cuando la imagen no carga.</p>
+
       <h2 id="listas"><span class="n">5.</span>Listas</h2>
       <p>Las listas agrupan elementos relacionados. Hay dos tipos principales, y cada elemento de la lista va en una etiqueta <code>&lt;li&gt;</code> (<em>list item</em>).</p>
 
@@ -179,6 +193,31 @@
         <p class="callout-title">⚠️ Importante · Dentro de <code>ul</code> y <code>ol</code> solo van <code>li</code></p>
         <p>No pongas texto suelto ni otras etiquetas directamente dentro de la lista. El contenido siempre va dentro de un <code>&lt;li&gt;</code>.</p>
       </div>
+
+      <h3>✏️ Practica en vivo</h3>
+<div class="playground">
+  <div class="pg-head"><span>✏️ Listas: crea la tuya</span><button type="button" data-reset>Restablecer</button></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;h3&gt;Mi lista de compras&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;Frutas
+    &lt;ul&gt;
+      &lt;li&gt;Manzana&lt;/li&gt;
+      &lt;li&gt;Mango&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Pan&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Pasos&lt;/h3&gt;
+&lt;ol reversed&gt;
+  &lt;li&gt;Hornear&lt;/li&gt;
+  &lt;li&gt;Mezclar&lt;/li&gt;
+  &lt;li&gt;Comprar ingredientes&lt;/li&gt;
+&lt;/ol&gt;</textarea></div>
+    <div><label>Resultado</label><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div>
+  </div>
+</div>
+<p>Añade una lista numerada dentro de otra, cambia <code>reversed</code> por <code>start="5"</code> y observa el efecto.</p>
 
       <h2 id="anidadas"><span class="n">6.</span>Listas anidadas</h2>
       <p>Una lista puede contener otra. La lista interna va <strong>dentro del <code>&lt;li&gt;</code></strong> al que pertenece, no entre dos <code>&lt;li&gt;</code>.</p>
@@ -250,6 +289,17 @@
           <tr><td>Lista anidada</td><td>Lista contenida dentro de un elemento de otra lista.</td></tr>
         </tbody>
       </table></div>
+
+      <section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>¿Qué atributo de <code>&lt;img&gt;</code> es indispensable para accesibilidad?</p><ul class="opts"><li><button type="button" class="opt" data-ok><code>alt</code></button></li><li><button type="button" class="opt"><code>title</code></button></li><li><button type="button" class="opt"><code>lazy</code></button></li><li><button type="button" class="opt"><code>border</code></button></li></ul><p class="explain" hidden><code>alt</code> describe la imagen para quien no la ve y se muestra si la imagen no carga.</p></div>
+<div class="quiz-q"><p>Una imagen puramente decorativa debería llevar…</p><ul class="opts"><li><button type="button" class="opt"><code>alt="imagen"</code></button></li><li><button type="button" class="opt" data-ok><code>alt=""</code></button></li><li><button type="button" class="opt">Ningún <code>alt</code></button></li><li><button type="button" class="opt"><code>alt="decoración"</code></button></li></ul><p class="explain" hidden>Un <code>alt</code> vacío le indica al lector de pantalla que la omita.</p></div>
+<div class="quiz-q"><p>Quieres una lista de pasos donde el orden importa. ¿Cuál usas?</p><ul class="opts"><li><button type="button" class="opt"><code>&lt;ul&gt;</code></button></li><li><button type="button" class="opt" data-ok><code>&lt;ol&gt;</code></button></li><li><button type="button" class="opt"><code>&lt;dl&gt;</code></button></li><li><button type="button" class="opt"><code>&lt;li&gt;</code> sin lista</button></li></ul><p class="explain" hidden><code>&lt;ol&gt;</code> numera automáticamente; <code>&lt;ul&gt;</code> usa viñetas.</p></div>
+<div class="quiz-q"><p>¿Dónde va una lista anidada?</p><ul class="opts"><li><button type="button" class="opt">Entre dos <code>&lt;li&gt;</code></button></li><li><button type="button" class="opt" data-ok>Dentro del <code>&lt;li&gt;</code> al que pertenece</button></li><li><button type="button" class="opt">Fuera de la lista</button></li><li><button type="button" class="opt">Dentro de <code>&lt;head&gt;</code></button></li></ul><p class="explain" hidden>La lista interna forma parte del elemento al que complementa, antes de su <code>&lt;/li&gt;</code>.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+<div class="complete"><button class="btn" type="button" data-complete="03">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
 
       <div class="callout consejo">
         <p class="callout-title">🚀 ¡Ahora te toca!</p>

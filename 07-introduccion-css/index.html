@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lección 7: Introducción a CSS · Curso de HTML</title>
+  <meta name="description" content="Introducción a CSS: selectores, colores, tipografía, modelo de caja, flexbox y diseño adaptable." />
+  <link rel="stylesheet" href="../assets/estilos.css" />
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de HTML</a>
+    <div class="topbar-actions">
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <div class="wrap lesson-layout">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#que-es">Qué es CSS</a></li><li><a href="#donde">Dónde se escribe el CSS</a></li><li><a href="#selectores">Selectores</a></li><li><a href="#texto-color">Color y texto</a></li><li><a href="#caja">El modelo de caja</a></li><li><a href="#layout">Colocar elementos: flexbox</a></li><li><a href="#estados">Estados y transiciones</a></li><li><a href="#responsivo">Diseño adaptable</a></li><li><a href="#variables">Variables y orden</a></li><li><a href="#errores">Errores frecuentes</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Inicio</a> › Lección 7</div>
+        <h1>Introducción a CSS</h1>
+        <ul class="meta"><li>⏱ 45 minutos</li><li>📶 Nivel: principiante</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Escribir reglas CSS con selector, propiedad y valor.</li><li>Enlazar un archivo de estilos a tus páginas.</li><li>Aplicar color, tipografía, espacios y bordes con el modelo de caja.</li><li>Acomodar elementos con flexbox y adaptar el diseño a pantallas pequeñas.</li></ul>
+</div>
+
+<h2 id="que-es"><span class="n">1.</span>Qué es CSS</h2>
+<p><strong>CSS</strong> (<em>Cascading Style Sheets</em>, «hojas de estilo en cascada») es el lenguaje que define <strong>cómo se ve</strong> el HTML: colores, tipografía, tamaños, espacios y posición. HTML dice <strong>qué es</strong> cada cosa; CSS dice <strong>cómo luce</strong>.</p>
+<p>Una regla de CSS se compone de un <strong>selector</strong> (a qué elementos se aplica) y un <strong>bloque de declaraciones</strong> (qué cambios se hacen):</p>
+<div class="anatomy" role="img" aria-label="Anatomía de una regla CSS: selector, propiedad y valor"><div class="part" style="--c:#7cc4ff"><span>h1</span><span class="lbl">selector</span></div><div class="part" style="--c:#ff8fa3"><span> { </span><span class="lbl">&nbsp;</span></div><div class="part" style="--c:#ffd479"><span>color</span><span class="lbl">propiedad</span></div><div class="part" style="--c:#ff8fa3"><span>: </span><span class="lbl">&nbsp;</span></div><div class="part" style="--c:#8ee6a0"><span>navy</span><span class="lbl">valor</span></div><div class="part" style="--c:#ff8fa3"><span>; }</span><span class="lbl">&nbsp;</span></div></div>
+<ul><li><strong>Selector:</strong> <code>h1</code> elige todos los títulos de nivel 1.</li><li><strong>Propiedad:</strong> <code>color</code> es lo que quieres cambiar.</li><li><strong>Valor:</strong> <code>navy</code> es el cambio concreto.</li><li>Cada declaración termina en <code>;</code> y todo el bloque va entre llaves <code>{ }</code>.</li></ul>
+<div class="playground">
+  <div class="pg-head"><span>✏️ Tu primera regla CSS</span><button type="button" data-reset>Restablecer</button></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;style&gt;
+  h1 {
+    color: #4f46e5;
+  }
+  p {
+    font-size: 18px;
+  }
+&lt;/style&gt;
+&lt;h1&gt;Hola, CSS&lt;/h1&gt;
+&lt;p&gt;Cambia el color del título o el tamaño del texto.&lt;/p&gt;</textarea></div>
+    <div><label>Resultado</label><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div>
+  </div>
+</div>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Prueba valores</p>
+<p>Cambia <code>#4f46e5</code> por <code>crimson</code>, <code>teal</code> o <code>#ff8800</code>. Los colores pueden escribirse con nombres (<code>red</code>), con código hexadecimal (<code>#ff0000</code>) o con <code>rgb(255, 0, 0)</code>.</p>
+</div>
+
+<h2 id="donde"><span class="n">2.</span>Dónde se escribe el CSS</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Forma</th><th>Cómo se ve</th><th>Cuándo usarla</th></tr></thead>
+<tbody><tr><td><strong>Archivo externo</strong></td><td><code>&lt;link rel="stylesheet" href="estilos.css"&gt;</code></td><td><strong>La recomendada.</strong> Un archivo sirve a todas las páginas</td></tr><tr><td><strong>Etiqueta <code>&lt;style&gt;</code></strong></td><td><code>&lt;style&gt; h1 { color: red; } &lt;/style&gt;</code></td><td>Pruebas rápidas o una sola página</td></tr><tr><td><strong>En línea</strong></td><td><code>&lt;p style="color: red;"&gt;</code></td><td>Casos puntuales; evítala por norma</td></tr></tbody>
+</table></div>
+<div class="code">
+  <div class="code-head"><span>Enlazar un archivo CSS (en el head)</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">&lt;head</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;meta</span> <span class="tk-attr">charset</span>=<span class="tk-val">"UTF-8"</span><span class="tk-tag"> /&gt;</span>
+  <span class="tk-tag">&lt;title</span><span class="tk-tag">&gt;</span>Mi página<span class="tk-tag">&lt;/title</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;link</span> <span class="tk-attr">rel</span>=<span class="tk-val">"stylesheet"</span> <span class="tk-attr">href</span>=<span class="tk-val">"estilos.css"</span><span class="tk-tag"> /&gt;</span>
+<span class="tk-tag">&lt;/head</span><span class="tk-tag">&gt;</span></code></pre>
+</div>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · El mismo principio que <code>src</code> y <code>href</code></p>
+<p>La ruta de <code>href</code> funciona igual que en los enlaces: si <code>estilos.css</code> está en una carpeta <code>css/</code>, escribirías <code>href="css/estilos.css"</code>. Este curso hace justamente eso con <code>assets/estilos.css</code>.</p>
+</div>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · Cascada y orden</p>
+<p>Si dos reglas cambian lo mismo, gana la más <strong>específica</strong> y, si empatan, la que aparece <strong>después</strong>. De ahí lo de «en cascada». Por eso las reglas generales van arriba y las particulares abajo.</p>
+</div>
+
+<h2 id="selectores"><span class="n">3.</span>Selectores</h2>
+<p>Los selectores deciden <strong>a qué elementos</strong> afecta una regla. Estos son los cuatro que usarás el 90% del tiempo:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Selector</th><th>Elige</th><th>Ejemplo</th></tr></thead>
+<tbody><tr><td>Elemento</td><td>Todas las etiquetas de ese tipo</td><td><code>p { … }</code></td></tr><tr><td>Clase</td><td>Los elementos con <code>class="aviso"</code></td><td><code>.aviso { … }</code></td></tr><tr><td>Identificador</td><td>El elemento con <code>id="portada"</code></td><td><code>#portada { … }</code></td></tr><tr><td>Descendiente</td><td>Etiquetas dentro de otras</td><td><code>nav a { … }</code></td></tr></tbody>
+</table></div>
+<div class="playground">
+  <div class="pg-head"><span>✏️ Clases e identificadores</span><button type="button" data-reset>Restablecer</button></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;style&gt;
+  p { color: #333; }
+  .aviso { background: #fff3cd; padding: 8px; border-radius: 6px; }
+  #principal { font-weight: bold; }
+  nav a { margin-right: 10px; }
+&lt;/style&gt;
+&lt;nav&gt;&lt;a href="#"&gt;Inicio&lt;/a&gt;&lt;a href="#"&gt;Cursos&lt;/a&gt;&lt;/nav&gt;
+&lt;p id="principal"&gt;Párrafo con id.&lt;/p&gt;
+&lt;p&gt;Párrafo normal.&lt;/p&gt;
+&lt;p class="aviso"&gt;Párrafo con la clase aviso.&lt;/p&gt;
+&lt;p class="aviso"&gt;Otro con la misma clase.&lt;/p&gt;</textarea></div>
+    <div><label>Resultado</label><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div>
+  </div>
+</div>
+<ul><li>Una <strong>clase</strong> se puede repetir en muchos elementos; es la herramienta principal de estilo.</li><li>Un <strong>id</strong> debe ser único en la página; se reserva para enlaces ancla y casos especiales.</li><li>Un elemento puede tener varias clases separadas por espacio: <code>class="aviso grande"</code>.</li></ul>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Nombres de clase con sentido</p>
+<p>Nombra por el <strong>papel</strong> que cumple, no por su aspecto: <code>.aviso</code> es mejor que <code>.caja-amarilla</code>, porque si mañana el aviso se vuelve rojo el nombre sigue teniendo sentido.</p>
+</div>
+
+<h2 id="texto-color"><span class="n">4.</span>Color y texto</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Propiedad</th><th>Qué controla</th><th>Ejemplo</th></tr></thead>
+<tbody><tr><td><code>color</code></td><td>Color del texto</td><td><code>color: #1e2235;</code></td></tr><tr><td><code>background-color</code></td><td>Color de fondo</td><td><code>background-color: #f7f8fc;</code></td></tr><tr><td><code>font-family</code></td><td>Tipo de letra</td><td><code>font-family: Georgia, serif;</code></td></tr><tr><td><code>font-size</code></td><td>Tamaño</td><td><code>font-size: 1.1rem;</code></td></tr><tr><td><code>font-weight</code></td><td>Grosor (negrita)</td><td><code>font-weight: 700;</code></td></tr><tr><td><code>line-height</code></td><td>Espacio entre líneas</td><td><code>line-height: 1.7;</code></td></tr><tr><td><code>text-align</code></td><td>Alineación</td><td><code>text-align: center;</code></td></tr><tr><td><code>text-decoration</code></td><td>Subrayado</td><td><code>text-decoration: none;</code></td></tr></tbody>
+</table></div>
+<div class="playground">
+  <div class="pg-head"><span>✏️ Estilo de texto</span><button type="button" data-reset>Restablecer</button></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;style&gt;
+  body { font-family: Georgia, serif; line-height: 1.7; background: #fdfaf3; }
+  h1 { color: #7c2d12; text-align: center; }
+  p { font-size: 18px; }
+  a { color: #b45309; text-decoration: none; font-weight: 700; }
+&lt;/style&gt;
+&lt;h1&gt;Mi diario&lt;/h1&gt;
+&lt;p&gt;Un texto cómodo de leer necesita buen interlineado y un tamaño suficiente.
+   Prueba cambiar la tipografía a &lt;a href="#"&gt;sans-serif&lt;/a&gt;.&lt;/p&gt;</textarea></div>
+    <div><label>Resultado</label><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div>
+  </div>
+</div>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · Unidades</p>
+<p>Tienes dos familias: <strong>absolutas</strong> (<code>px</code>, píxeles) y <strong>relativas</strong> (<code>rem</code>, <code>em</code>, <code>%</code>). Las relativas se adaptan a las preferencias de la persona (por ejemplo, si agranda su letra), por eso son mejores para texto. <code>1rem</code> equivale al tamaño base del navegador, normalmente 16 px.</p>
+</div>
+<div class="callout ejemplo">
+<p class="callout-title">🔍 Ejemplo · Pila de tipografías</p>
+<p><code>font-family: "Segoe UI", Arial, sans-serif;</code> es una <strong>pila</strong>: el navegador usa la primera disponible y, si no la tiene, pasa a la siguiente. Termina siempre con una familia genérica (<code>serif</code>, <code>sans-serif</code>, <code>monospace</code>).</p>
+</div>
+
+<h2 id="caja"><span class="n">5.</span>El modelo de caja</h2>
+<p>En CSS, <strong>todo elemento es una caja rectangular</strong>, formada por cuatro capas, de adentro hacia afuera:</p>
+<div class="boxmodel"><div class="bm"><span class="t">margin (margen)</span><div class="bm-b"><span class="t">border (borde)</span><div class="bm-p"><span class="t">padding (relleno)</span><div class="bm-c">contenido</div></div></div></div></div>
+<div class="table-wrap"><table>
+<thead><tr><th>Capa</th><th>Qué es</th><th>Propiedad</th></tr></thead>
+<tbody><tr><td>Contenido</td><td>El texto o imagen</td><td><code>width</code>, <code>height</code></td></tr><tr><td>Relleno</td><td>Espacio <strong>dentro</strong> de la caja, entre el contenido y el borde</td><td><code>padding</code></td></tr><tr><td>Borde</td><td>La línea que rodea la caja</td><td><code>border</code></td></tr><tr><td>Margen</td><td>Espacio <strong>fuera</strong> de la caja, que la separa de las vecinas</td><td><code>margin</code></td></tr></tbody>
+</table></div>
+<div class="playground">
+  <div class="pg-head"><span>✏️ Juega con la caja</span><button type="button" data-reset>Restablecer</button></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;style&gt;
+  .tarjeta {
+    background: #eef2ff;
+    border: 3px solid #4f46e5;
+    padding: 16px;
+    margin: 20px;
+    border-radius: 12px;
+    width: 220px;
+  }
+&lt;/style&gt;
+&lt;div class="tarjeta"&gt;
+  &lt;strong&gt;Una tarjeta&lt;/strong&gt;
+  &lt;p&gt;Cambia padding, margin y border para ver cómo crece cada capa.&lt;/p&gt;
+&lt;/div&gt;</textarea></div>
+    <div><label>Resultado</label><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div>
+  </div>
+</div>
+<div class="code">
+  <div class="code-head"><span>Atajos de padding y margin</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-sel">.caja</span> { <span class="tk-attr">padding</span>: <span class="tk-val">10px</span>; }               <span class="tk-com">/* los cuatro lados */</span>
+<span class="tk-sel">.caja</span> { <span class="tk-attr">padding</span>: <span class="tk-val">10px 20px</span>; }          <span class="tk-com">/* arriba-abajo | izquierda-derecha */</span>
+<span class="tk-sel">.caja</span> { <span class="tk-attr">padding</span>: <span class="tk-val">10px 20px 5px 0</span>; }    <span class="tk-com">/* arriba, derecha, abajo, izquierda */</span>
+<span class="tk-sel">.caja</span> { <span class="tk-attr">margin</span>: <span class="tk-val">0 auto</span>; }              <span class="tk-com">/* centra horizontalmente un bloque con ancho */</span></code></pre>
+</div>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Un truco que ahorra dolores de cabeza</p>
+<p>Añade al inicio de tu CSS <code>* { box-sizing: border-box; }</code>. Así el <code>padding</code> y el <code>border</code> quedan <strong>dentro</strong> del <code>width</code> declarado, en vez de sumarse. Todo cuadra mejor.</p>
+</div>
+
+<h2 id="layout"><span class="n">6.</span>Colocar elementos: flexbox</h2>
+<p><strong>Flexbox</strong> es la herramienta moderna para acomodar elementos en fila o columna. Se activa en el <strong>contenedor</strong> con <code>display: flex</code> y reparte a sus hijos.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Propiedad (en el contenedor)</th><th>Qué hace</th></tr></thead>
+<tbody><tr><td><code>display: flex</code></td><td>Activa flexbox; los hijos se colocan en una fila</td></tr><tr><td><code>flex-direction</code></td><td><code>row</code> (fila) o <code>column</code> (columna)</td></tr><tr><td><code>gap</code></td><td>Espacio entre los hijos</td></tr><tr><td><code>justify-content</code></td><td>Alinea en el eje principal: <code>flex-start</code>, <code>center</code>, <code>space-between</code>…</td></tr><tr><td><code>align-items</code></td><td>Alinea en el eje transversal: <code>center</code>, <code>stretch</code>…</td></tr><tr><td><code>flex-wrap: wrap</code></td><td>Permite que los hijos pasen a otra línea si no caben</td></tr></tbody>
+</table></div>
+<div class="playground">
+  <div class="pg-head"><span>✏️ Tu primera barra de navegación</span><button type="button" data-reset>Restablecer</button></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;style&gt;
+  nav ul {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    list-style: none;
+    padding: 12px;
+    margin: 0;
+    background: #4f46e5;
+    border-radius: 10px;
+  }
+  nav a { color: white; text-decoration: none; font-weight: 600; }
+  nav a:hover { text-decoration: underline; }
+&lt;/style&gt;
+&lt;nav&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;a href="#"&gt;Inicio&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="#"&gt;Cursos&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="#"&gt;Contacto&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/nav&gt;</textarea></div>
+    <div><label>Resultado</label><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div>
+  </div>
+</div>
+<p>Recuerdas el menú de la lección 6, una lista dentro de un <code>&lt;nav&gt;</code>? Con <strong>cuatro propiedades</strong> pasó de lista vertical a barra horizontal. Prueba cambiar <code>justify-content</code> a <code>space-between</code> o <code>flex-direction</code> a <code>column</code>.</p>
+<div class="callout ejemplo">
+<p class="callout-title">🔍 Ejemplo · Tarjetas que se acomodan solas</p>
+<p>Con <code>display: flex; flex-wrap: wrap; gap: 16px;</code> en el contenedor, y <code>flex: 1 1 200px;</code> en cada tarjeta, obtienes una cuadrícula que pasa de 3 columnas a 1 en el celular, sin escribir nada más.</p>
+</div>
+
+<h2 id="estados"><span class="n">7.</span>Estados y transiciones</h2>
+<p>CSS no solo da forma: también reacciona a lo que hace la persona. Las <strong>pseudoclases</strong> aplican estilos en ciertos estados:</p>
+<ul><li><code>:hover</code>: cuando el cursor está encima.</li><li><code>:focus</code>: cuando el elemento está seleccionado con el teclado o con clic.</li><li><code>:active</code>: mientras se pulsa.</li><li><code>:first-child</code> y <code>:nth-child(n)</code>: por posición.</li></ul>
+<p>Con <code>transition</code> el cambio se vuelve <strong>suave</strong> en lugar de brusco:</p>
+<div class="playground">
+  <div class="pg-head"><span>✏️ Un botón con animación</span><button type="button" data-reset>Restablecer</button></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;style&gt;
+  .boton {
+    padding: 10px 22px;
+    border: 0;
+    border-radius: 10px;
+    background: #4f46e5;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: transform .2s, background .2s;
+  }
+  .boton:hover {
+    background: #3730a3;
+    transform: translateY(-3px);
+  }
+  .boton:focus-visible { outline: 3px solid #fbbf24; outline-offset: 3px; }
+&lt;/style&gt;
+&lt;button class="boton"&gt;Pásame el cursor&lt;/button&gt;</textarea></div>
+    <div><label>Resultado</label><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div>
+  </div>
+</div>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · No quites el foco</p>
+<p>Nunca escribas <code>outline: none</code> sin poner algo equivalente. Quien navega con teclado necesita ver dónde está. <code>:focus-visible</code> muestra el contorno solo cuando hace falta.</p>
+</div>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · Respeta a quien no quiere animaciones</p>
+<p>Algunas personas se marean con el movimiento. El bloque <code>@media (prefers-reduced-motion: reduce) { … }</code> permite desactivarlo. Este curso lo hace con todas sus animaciones.</p>
+</div>
+
+<h2 id="responsivo"><span class="n">8.</span>Diseño adaptable</h2>
+<p>Tu página se verá en pantallas de todo tamaño. Una <strong>media query</strong> aplica estilos solo si se cumple una condición:</p>
+<div class="code">
+  <div class="code-head"><span>Media query</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-sel">.tarjetas</span> { <span class="tk-attr">display</span>: <span class="tk-val">flex</span>; <span class="tk-attr">gap</span>: <span class="tk-val">16px</span>; }
+
+<span class="tk-sel">@media (max-width: 600px)</span> {
+<span class="tk-sel">  .tarjetas</span> { <span class="tk-attr">flex-direction</span>: <span class="tk-val">column</span>; }
+}</code></pre>
+</div>
+<p>Lee: «si la pantalla mide <strong>600 px o menos</strong>, apila las tarjetas en columna». Recuerda que para que funcione en celulares necesitas la línea <code>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</code> en el <code>&lt;head&gt;</code>, que ya incluyes desde la lección 1.</p>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Diseña primero para el celular</p>
+<p>Escribe los estilos base pensando en una pantalla pequeña y usa <code>min-width</code> en las media queries para añadir mejoras en pantallas grandes. Es más sencillo que quitar cosas después.</p>
+</div>
+
+<h2 id="variables"><span class="n">9.</span>Variables y orden</h2>
+<p>Las <strong>variables CSS</strong> guardan un valor para reutilizarlo. Si cambias la variable, cambia todo el sitio:</p>
+<div class="code">
+  <div class="code-head"><span>Variables en :root</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>:<span class="tk-sel">root</span> {
+  <span class="tk-attr">--color-principal</span>: <span class="tk-val">#4f46e5</span>;
+  <span class="tk-attr">--radio</span>: <span class="tk-val">12px</span>;
+}
+
+<span class="tk-sel">.boton</span> {
+  <span class="tk-attr">background</span>: <span class="tk-val">var(--color-principal)</span>;
+  <span class="tk-attr">border-radius</span>: <span class="tk-val">var(--radio)</span>;
+}</code></pre>
+</div>
+<p>Así está hecho el tema claro y oscuro de este curso: al activar el modo oscuro solo cambian los valores de las variables; el resto del CSS no se toca.</p>
+<h3>Un orden recomendado para tu CSS</h3>
+<ol class="steps"><li>Variables y reglas globales (<code>:root</code>, <code>* { box-sizing }</code>, <code>body</code>).</li><li>Elementos generales: <code>h1</code>, <code>p</code>, <code>a</code>, <code>img</code>.</li><li>Componentes con clase: <code>.tarjeta</code>, <code>.boton</code>, <code>.menu</code>.</li><li>Media queries al final.</li></ol>
+
+<h2 id="errores"><span class="n">10.</span>Errores frecuentes</h2>
+<ul><li><strong>Olvidar el <code>;</code></strong> al final de una declaración, o una llave <code>}</code>: el resto de las reglas deja de funcionar.</li><li><strong>Escribir mal una propiedad</strong> (<code>colour</code>, <code>font-colour</code>): el navegador la ignora sin avisar.</li><li><strong>Usar <code>id</code> en vez de <code>class</code></strong> para estilos repetidos.</li><li><strong>Ruta incorrecta en <code>&lt;link&gt;</code></strong>: si la página no cambia de aspecto, revisa que el archivo CSS se encuentre donde dice <code>href</code>.</li><li><strong>Usar <code>px</code> en todo</strong>: prefiere <code>rem</code> y <code>%</code> para tamaños de texto y espacios.</li><li><strong>Quitar el contorno de foco</strong> sin reemplazarlo.</li><li><strong>Depender solo del color</strong> para transmitir información: añade texto o íconos.</li><li><strong>No usar la herramienta de inspección.</strong> Pulsa <kbd>F12</kbd> en el navegador, haz clic derecho sobre cualquier elemento y elige <em>Inspeccionar</em>: verás qué reglas se aplican y podrás probar cambios al instante.</li></ul>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li>CSS define el <strong>aspecto</strong>; HTML define el contenido y la estructura.</li><li>Una regla es <code>selector { propiedad: valor; }</code>.</li><li>Lo ideal es un archivo <code>.css</code> enlazado con <code>&lt;link rel="stylesheet" href="…"&gt;</code> en el <code>&lt;head&gt;</code>.</li><li>Selectores principales: elemento (<code>p</code>), clase (<code>.aviso</code>), id (<code>#portada</code>) y descendiente (<code>nav a</code>).</li><li>Todo elemento es una caja: contenido, <code>padding</code>, <code>border</code> y <code>margin</code>. Usa <code>box-sizing: border-box</code>.</li><li><code>display: flex</code>, <code>gap</code>, <code>justify-content</code> y <code>align-items</code> acomodan elementos en fila o columna.</li><li><code>:hover</code>, <code>:focus-visible</code> y <code>transition</code> dan interactividad; respeta <code>prefers-reduced-motion</code>.</li><li>Las media queries adaptan el diseño al tamaño de pantalla y las variables CSS reutilizan valores.</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">11.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td>Selector</td><td>Parte de una regla que indica a qué elementos se aplica.</td></tr><tr><td>Propiedad</td><td>Característica que se modifica (<code>color</code>, <code>margin</code>…).</td></tr><tr><td>Declaración</td><td>Pareja <code>propiedad: valor;</code>.</td></tr><tr><td>Clase</td><td>Nombre reutilizable que se asigna con <code>class</code> y se selecciona con <code>.</code>.</td></tr><tr><td>Modelo de caja</td><td>Idea de que todo elemento tiene contenido, relleno, borde y margen.</td></tr><tr><td>Flexbox</td><td>Sistema para acomodar elementos en una dimensión (fila o columna).</td></tr><tr><td>Media query</td><td>Condición que activa estilos solo en ciertas pantallas.</td></tr><tr><td>Pseudoclase</td><td>Estado de un elemento (<code>:hover</code>, <code>:focus</code>…).</td></tr></tbody>
+</table></div>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>¿Qué parte de <code>h1 { color: red; }</code> es el <strong>selector</strong>?</p><ul class="opts"><li><button type="button" class="opt"><code>color</code></button></li><li><button type="button" class="opt"><code>red</code></button></li><li><button type="button" class="opt" data-ok><code>h1</code></button></li><li><button type="button" class="opt"><code>{ }</code></button></li></ul><p class="explain" hidden><code>h1</code> indica a qué elementos se aplica la regla. <code>color</code> es la propiedad y <code>red</code> el valor.</p></div>
+<div class="quiz-q"><p>¿Cuál es la forma recomendada de aplicar CSS a varias páginas?</p><ul class="opts"><li><button type="button" class="opt">Escribirlo en <code>style</code> dentro de cada etiqueta</button></li><li><button type="button" class="opt" data-ok>Un archivo <code>.css</code> enlazado con <code>&lt;link&gt;</code></button></li><li><button type="button" class="opt">Copiarlo en el <code>&lt;body&gt;</code> de cada página</button></li><li><button type="button" class="opt">Usar <code>&lt;b&gt;</code> y <code>&lt;i&gt;</code></button></li></ul><p class="explain" hidden>Un archivo externo se escribe una vez y todas las páginas lo comparten.</p></div>
+<div class="quiz-q"><p>En el modelo de caja, ¿qué crea espacio <strong>dentro</strong> de la caja, entre el contenido y el borde?</p><ul class="opts"><li><button type="button" class="opt"><code>margin</code></button></li><li><button type="button" class="opt" data-ok><code>padding</code></button></li><li><button type="button" class="opt"><code>gap</code></button></li><li><button type="button" class="opt"><code>outline</code></button></li></ul><p class="explain" hidden><code>padding</code> es el relleno interior; <code>margin</code> separa la caja de las demás.</p></div>
+<div class="quiz-q"><p>¿Cómo conviertes una lista de enlaces en una barra horizontal?</p><ul class="opts"><li><button type="button" class="opt" data-ok><code>display: flex</code> en la lista</button></li><li><button type="button" class="opt"><code>color: horizontal</code></button></li><li><button type="button" class="opt"><code>&lt;hr&gt;</code></button></li><li><button type="button" class="opt">No se puede</button></li></ul><p class="explain" hidden><code>display: flex</code> en el contenedor coloca a sus hijos en una fila.</p></div>
+<div class="quiz-q"><p>¿Qué selector elige elementos con <code>class="aviso"</code>?</p><ul class="opts"><li><button type="button" class="opt"><code>#aviso</code></button></li><li><button type="button" class="opt"><code>aviso</code></button></li><li><button type="button" class="opt" data-ok><code>.aviso</code></button></li><li><button type="button" class="opt"><code>*aviso</code></button></li></ul><p class="explain" hidden>Las clases se seleccionan con un punto. El <code>#</code> es para identificadores.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="07">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../06-html-semantico/ejercicio.html"><small>← Anterior</small>Ejercicio: HTML semántico</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </div>
+
+  <footer class="site-footer">Curso de HTML · Lección 7</footer>
+  <script src="../assets/curso.js"></script>
+</body>
+</html>

@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lección 6: HTML semántico · Curso de HTML</title>
+  <meta name="description" content="Etiquetas semánticas de HTML para estructurar una página: header, nav, main, section, article, aside y footer." />
+  <link rel="stylesheet" href="../assets/estilos.css" />
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de HTML</a>
+    <div class="topbar-actions">
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <div class="wrap lesson-layout">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#que-es">Qué significa «semántico»</a></li><li><a href="#estructura">Las partes de una página</a></li><li><a href="#practica1">Practica en vivo: de div a semántico</a></li><li><a href="#section-article">Section, article y aside</a></li><li><a href="#figure-otros">Más etiquetas con significado</a></li><li><a href="#pagina-completa">Una página completa y semántica</a></li><li><a href="#errores">Errores frecuentes</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Inicio</a> › Lección 6</div>
+        <h1>HTML semántico</h1>
+        <ul class="meta"><li>⏱ 30 minutos</li><li>📶 Nivel: principiante</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Explicar qué es la semántica y por qué importa.</li><li>Dividir una página con <code>header</code>, <code>nav</code>, <code>main</code> y <code>footer</code>.</li><li>Distinguir entre <code>section</code>, <code>article</code> y <code>aside</code>.</li><li>Reconocer cuándo usar <code>div</code> y cuándo una etiqueta con significado.</li></ul>
+</div>
+
+<h2 id="que-es"><span class="n">1.</span>Qué significa «semántico»</h2>
+<p><em>Semántica</em> es el significado de las palabras. En HTML, una etiqueta <strong>semántica</strong> es la que, solo con leer su nombre, te dice <strong>qué contenido tiene</strong>: <code>&lt;nav&gt;</code> es una navegación, <code>&lt;footer&gt;</code> es un pie, <code>&lt;article&gt;</code> es un artículo.</p>
+<p>Hasta ahora has visto etiquetas semánticas sin llamarlas así: <code>&lt;h1&gt;</code>, <code>&lt;p&gt;</code>, <code>&lt;ul&gt;</code>, <code>&lt;table&gt;</code>. En esta lección conoces las que describen <strong>las partes grandes de una página</strong>.</p>
+<h3>La alternativa: div y span</h3>
+<p><code>&lt;div&gt;</code> (bloque) y <code>&lt;span&gt;</code> (en línea) son contenedores <strong>sin significado</strong>. Sirven para agrupar cuando ninguna otra etiqueta encaja, pero si todo es <code>&lt;div&gt;</code>, la página es una sopa de cajas que nadie entiende.</p>
+<div class="code">
+  <div class="code-head"><span>Sin semántica vs. con semántica</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-com">&lt;!-- Antes: todo son div --&gt;</span>
+<span class="tk-tag">&lt;div</span> <span class="tk-attr">class</span>=<span class="tk-val">"encabezado"</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;div</span> <span class="tk-attr">class</span>=<span class="tk-val">"menu"</span><span class="tk-tag">&gt;</span>…<span class="tk-tag">&lt;/div</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;/div</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;div</span> <span class="tk-attr">class</span>=<span class="tk-val">"contenido"</span><span class="tk-tag">&gt;</span>…<span class="tk-tag">&lt;/div</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;div</span> <span class="tk-attr">class</span>=<span class="tk-val">"pie"</span><span class="tk-tag">&gt;</span>…<span class="tk-tag">&lt;/div</span><span class="tk-tag">&gt;</span>
+
+<span class="tk-com">&lt;!-- Ahora: cada parte dice qué es --&gt;</span>
+<span class="tk-tag">&lt;header</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;nav</span><span class="tk-tag">&gt;</span>…<span class="tk-tag">&lt;/nav</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;/header</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;main</span><span class="tk-tag">&gt;</span>…<span class="tk-tag">&lt;/main</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;footer</span><span class="tk-tag">&gt;</span>…<span class="tk-tag">&lt;/footer</span><span class="tk-tag">&gt;</span></code></pre>
+</div>
+<p><strong>¿Por qué importa?</strong> Tres razones concretas:</p>
+<ol class="steps"><li><strong>Accesibilidad:</strong> los lectores de pantalla permiten saltar directo a «navegación» o «contenido principal». Con <code>&lt;div&gt;</code> no pueden.</li><li><strong>Buscadores:</strong> entienden mejor cuál es el contenido importante de tu página.</li><li><strong>Mantenimiento:</strong> tú (y otras personas) leen el código y saben dónde está cada cosa.</li></ol>
+
+<h2 id="estructura"><span class="n">2.</span>Las partes de una página</h2>
+<p>Casi todas las páginas se dividen en las mismas zonas. HTML tiene una etiqueta para cada una:</p>
+<div class="demo"><p class="demo-label">Mapa de una página</p><div style="font:13px system-ui;border:2px solid #4f46e5;border-radius:10px;overflow:hidden;color:#1e2235;background:#fff">
+<div style="background:#c7d2fe;padding:10px;text-align:center"><strong>&lt;header&gt;</strong> logo y título del sitio</div>
+<div style="background:#a5b4fc;padding:8px;text-align:center"><strong>&lt;nav&gt;</strong> Inicio · Cursos · Contacto</div>
+<div style="display:flex;min-height:110px">
+ <div style="flex:3;padding:10px;background:#e0f2fe;border-right:2px solid #4f46e5"><strong>&lt;main&gt;</strong> contenido principal<div style="margin-top:6px;background:#bae6fd;padding:6px;border-radius:6px"><strong>&lt;article&gt;</strong> una entrada</div><div style="margin-top:6px;background:#bae6fd;padding:6px;border-radius:6px"><strong>&lt;section&gt;</strong> un tema</div></div>
+ <div style="flex:1;padding:10px;background:#fef3c7"><strong>&lt;aside&gt;</strong> contenido relacionado</div>
+</div>
+<div style="background:#c7d2fe;padding:10px;text-align:center"><strong>&lt;footer&gt;</strong> derechos, contacto, enlaces</div>
+</div></div>
+<div class="table-wrap"><table>
+<thead><tr><th>Etiqueta</th><th>Qué contiene</th><th>Cuántas veces</th></tr></thead>
+<tbody><tr><td><code>&lt;header&gt;</code></td><td>Cabecera de la página o de una sección: logo, título, a veces el menú</td><td>Puede haber varias</td></tr><tr><td><code>&lt;nav&gt;</code></td><td>Enlaces de navegación principales</td><td>Una o pocas</td></tr><tr><td><code>&lt;main&gt;</code></td><td>El contenido principal y único de la página</td><td><strong>Solo una vez</strong></td></tr><tr><td><code>&lt;section&gt;</code></td><td>Un apartado temático, normalmente con su título</td><td>Muchas</td></tr><tr><td><code>&lt;article&gt;</code></td><td>Contenido que tiene sentido por sí solo: noticia, entrada de blog, tarjeta de producto</td><td>Muchas</td></tr><tr><td><code>&lt;aside&gt;</code></td><td>Contenido relacionado pero secundario: barra lateral, anuncios, datos curiosos</td><td>Varias</td></tr><tr><td><code>&lt;footer&gt;</code></td><td>Pie de la página o de una sección: autoría, contacto, enlaces legales</td><td>Puede haber varios</td></tr></tbody>
+</table></div>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · Un solo <code>&lt;main&gt;</code></p>
+<p>La página debe tener un único <code>&lt;main&gt;</code>, y no puede estar dentro de <code>&lt;header&gt;</code>, <code>&lt;nav&gt;</code>, <code>&lt;footer&gt;</code>, <code>&lt;article&gt;</code> ni <code>&lt;aside&gt;</code>. Es el punto al que un lector de pantalla salta para llegar directo al contenido.</p>
+</div>
+
+<h2 id="practica1"><span class="n">3.</span>Practica en vivo: de div a semántico</h2>
+<p>Esta página está hecha con <code>&lt;div&gt;</code>. Reemplaza cada <code>&lt;div&gt;</code> por la etiqueta semántica que corresponda y comprueba que el resultado se vea igual.</p>
+<div class="playground">
+  <div class="pg-head"><span>✏️ Cambia los div por etiquetas semánticas</span><button type="button" data-reset>Restablecer</button></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;style&gt;
+  body &gt; * { border: 2px dashed #4f46e5; margin: 6px 0; padding: 6px; }
+&lt;/style&gt;
+&lt;div&gt;Logo y título del sitio&lt;/div&gt;
+&lt;div&gt;Inicio · Cursos · Contacto&lt;/div&gt;
+&lt;div&gt;
+  &lt;h1&gt;Bienvenida&lt;/h1&gt;
+  &lt;p&gt;Este es el contenido principal.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div&gt;Aviso de derechos reservados&lt;/div&gt;</textarea></div>
+    <div><label>Resultado</label><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div>
+  </div>
+</div>
+<p>Respuesta: <code>header</code>, <code>nav</code>, <code>main</code> y <code>footer</code>. Si ves que el recuadro de cada zona se conserva al cambiar la etiqueta, lo hiciste bien: la apariencia no cambia, pero el <strong>significado</strong> sí.</p>
+
+<h2 id="section-article"><span class="n">4.</span>Section, article y aside</h2>
+<p>Son las que más confunden. Una forma de decidir:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Pregunta</th><th>Etiqueta</th></tr></thead>
+<tbody><tr><td>¿Podría publicarse <strong>por sí solo</strong> (en un lector de noticias, en otra web) y seguir teniendo sentido?</td><td><code>&lt;article&gt;</code></td></tr><tr><td>¿Es un <strong>apartado temático</strong> de la página, que normalmente lleva un título (<code>h2</code>)?</td><td><code>&lt;section&gt;</code></td></tr><tr><td>¿Es contenido <strong>relacionado pero no esencial</strong>, que podrías quitar sin perder el hilo?</td><td><code>&lt;aside&gt;</code></td></tr><tr><td>¿Solo necesitas <strong>agrupar</strong> para dar estilo y nada de lo anterior aplica?</td><td><code>&lt;div&gt;</code></td></tr></tbody>
+</table></div>
+<div class="code">
+  <div class="code-head"><span>Un blog sencillo</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">&lt;main</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;h1</span><span class="tk-tag">&gt;</span>Mi blog de viajes<span class="tk-tag">&lt;/h1</span><span class="tk-tag">&gt;</span>
+
+  <span class="tk-tag">&lt;article</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;h2</span><span class="tk-tag">&gt;</span>Tres días en Oaxaca<span class="tk-tag">&lt;/h2</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;p</span><span class="tk-tag">&gt;</span>Publicado el <span class="tk-tag">&lt;time</span> <span class="tk-attr">datetime</span>=<span class="tk-val">"2026-09-14"</span><span class="tk-tag">&gt;</span>14 de septiembre de 2026<span class="tk-tag">&lt;/time</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;/p</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;p</span><span class="tk-tag">&gt;</span>Llegamos por la mañana…<span class="tk-tag">&lt;/p</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;/article</span><span class="tk-tag">&gt;</span>
+
+  <span class="tk-tag">&lt;article</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;h2</span><span class="tk-tag">&gt;</span>Guía rápida de Lisboa<span class="tk-tag">&lt;/h2</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;p</span><span class="tk-tag">&gt;</span>Lo primero que debes saber…<span class="tk-tag">&lt;/p</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;/article</span><span class="tk-tag">&gt;</span>
+
+  <span class="tk-tag">&lt;aside</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;h2</span><span class="tk-tag">&gt;</span>Dato curioso<span class="tk-tag">&lt;/h2</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;p</span><span class="tk-tag">&gt;</span>Oaxaca tiene siete moles tradicionales.<span class="tk-tag">&lt;/p</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;/aside</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;/main</span><span class="tk-tag">&gt;</span></code></pre>
+</div>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · <code>&lt;time&gt;</code></p>
+<p>La etiqueta <code>&lt;time&gt;</code> marca fechas y horas. El atributo <code>datetime</code> guarda la fecha en formato universal (año-mes-día) para que las máquinas la entiendan, aunque el texto visible esté escrito de otra forma.</p>
+</div>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Cada <code>section</code> y <code>article</code> debería tener un título</p>
+<p>Si no encuentras un buen título para una <code>&lt;section&gt;</code>, probablemente deberías usar un <code>&lt;div&gt;</code>.</p>
+</div>
+
+<h2 id="figure-otros"><span class="n">5.</span>Más etiquetas con significado</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Etiqueta</th><th>Para qué sirve</th><th>Ejemplo</th></tr></thead>
+<tbody><tr><td><code>&lt;figure&gt;</code> y <code>&lt;figcaption&gt;</code></td><td>Imagen, gráfico o código con su leyenda</td><td>Ya la usaste en la lección 3</td></tr><tr><td><code>&lt;time&gt;</code></td><td>Fechas y horas</td><td><code>&lt;time datetime="2026-10-06"&gt;6 de octubre&lt;/time&gt;</code></td></tr><tr><td><code>&lt;address&gt;</code></td><td>Datos de contacto de la persona o entidad autora</td><td><code>&lt;address&gt;hola@ejemplo.com&lt;/address&gt;</code></td></tr><tr><td><code>&lt;blockquote&gt;</code></td><td>Cita larga de otra fuente</td><td>Con <code>cite="url"</code> para indicar el origen</td></tr><tr><td><code>&lt;q&gt;</code></td><td>Cita corta dentro de un párrafo</td><td>Pone comillas automáticamente</td></tr><tr><td><code>&lt;abbr&gt;</code></td><td>Abreviatura con su significado</td><td><code>&lt;abbr title="HyperText Markup Language"&gt;HTML&lt;/abbr&gt;</code></td></tr><tr><td><code>&lt;mark&gt;</code></td><td>Texto resaltado por relevancia</td><td>Resultados de búsqueda</td></tr><tr><td><code>&lt;details&gt;</code> y <code>&lt;summary&gt;</code></td><td>Contenido que se despliega al hacer clic</td><td>Preguntas frecuentes</td></tr></tbody>
+</table></div>
+<div class="playground">
+  <div class="pg-head"><span>✏️ Pruébalas</span><button type="button" data-reset>Restablecer</button></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;blockquote cite="https://es.wikipedia.org/wiki/HTML"&gt;
+  HTML es el lenguaje de marcado estándar para páginas web.
+&lt;/blockquote&gt;
+&lt;p&gt;El &lt;abbr title="World Wide Web Consortium"&gt;W3C&lt;/abbr&gt; define el estándar.&lt;/p&gt;
+&lt;p&gt;Como dijo alguien: &lt;q&gt;la web es para todos&lt;/q&gt;.&lt;/p&gt;
+&lt;details&gt;
+  &lt;summary&gt;¿Qué es HTML?&lt;/summary&gt;
+  &lt;p&gt;Es el lenguaje que estructura el contenido de una página.&lt;/p&gt;
+&lt;/details&gt;
+&lt;address&gt;Escríbeme a hola@ejemplo.com&lt;/address&gt;</textarea></div>
+    <div><label>Resultado</label><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div>
+  </div>
+</div>
+<p>Observa que <code>&lt;details&gt;</code> ya funciona sin escribir nada de JavaScript. Todas las lecciones de este curso usan esa etiqueta en las pistas y soluciones de los ejercicios.</p>
+
+<h2 id="pagina-completa"><span class="n">6.</span>Una página completa y semántica</h2>
+<p>Juntando todo, este es el esqueleto que puedes usar como base para casi cualquier sitio:</p>
+<div class="code">
+  <div class="code-head"><span>Plantilla semántica</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">&lt;!doctype html&gt;</span>
+<span class="tk-tag">&lt;html</span> <span class="tk-attr">lang</span>=<span class="tk-val">"es"</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;head</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;meta</span> <span class="tk-attr">charset</span>=<span class="tk-val">"UTF-8"</span><span class="tk-tag"> /&gt;</span>
+    <span class="tk-tag">&lt;meta</span> <span class="tk-attr">name</span>=<span class="tk-val">"viewport"</span> <span class="tk-attr">content</span>=<span class="tk-val">"width=device-width, initial-scale=1.0"</span><span class="tk-tag"> /&gt;</span>
+    <span class="tk-tag">&lt;title</span><span class="tk-tag">&gt;</span>Nombre del sitio<span class="tk-tag">&lt;/title</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;/head</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;body</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;header</span><span class="tk-tag">&gt;</span>
+      <span class="tk-tag">&lt;h1</span><span class="tk-tag">&gt;</span>Nombre del sitio<span class="tk-tag">&lt;/h1</span><span class="tk-tag">&gt;</span>
+      <span class="tk-tag">&lt;nav</span> <span class="tk-attr">aria-label</span>=<span class="tk-val">"Principal"</span><span class="tk-tag">&gt;</span>
+        <span class="tk-tag">&lt;ul</span><span class="tk-tag">&gt;</span>
+          <span class="tk-tag">&lt;li</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;a</span> <span class="tk-attr">href</span>=<span class="tk-val">"index.html"</span><span class="tk-tag">&gt;</span>Inicio<span class="tk-tag">&lt;/a</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;/li</span><span class="tk-tag">&gt;</span>
+          <span class="tk-tag">&lt;li</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;a</span> <span class="tk-attr">href</span>=<span class="tk-val">"cursos.html"</span><span class="tk-tag">&gt;</span>Cursos<span class="tk-tag">&lt;/a</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;/li</span><span class="tk-tag">&gt;</span>
+          <span class="tk-tag">&lt;li</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;a</span> <span class="tk-attr">href</span>=<span class="tk-val">"contacto.html"</span><span class="tk-tag">&gt;</span>Contacto<span class="tk-tag">&lt;/a</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;/li</span><span class="tk-tag">&gt;</span>
+        <span class="tk-tag">&lt;/ul</span><span class="tk-tag">&gt;</span>
+      <span class="tk-tag">&lt;/nav</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;/header</span><span class="tk-tag">&gt;</span>
+
+    <span class="tk-tag">&lt;main</span><span class="tk-tag">&gt;</span>
+      <span class="tk-tag">&lt;section</span><span class="tk-tag">&gt;</span>
+        <span class="tk-tag">&lt;h2</span><span class="tk-tag">&gt;</span>Bienvenida<span class="tk-tag">&lt;/h2</span><span class="tk-tag">&gt;</span>
+        <span class="tk-tag">&lt;p</span><span class="tk-tag">&gt;</span>Texto de presentación.<span class="tk-tag">&lt;/p</span><span class="tk-tag">&gt;</span>
+      <span class="tk-tag">&lt;/section</span><span class="tk-tag">&gt;</span>
+      <span class="tk-tag">&lt;section</span><span class="tk-tag">&gt;</span>
+        <span class="tk-tag">&lt;h2</span><span class="tk-tag">&gt;</span>Novedades<span class="tk-tag">&lt;/h2</span><span class="tk-tag">&gt;</span>
+        <span class="tk-tag">&lt;article</span><span class="tk-tag">&gt;</span>
+          <span class="tk-tag">&lt;h3</span><span class="tk-tag">&gt;</span>Primera noticia<span class="tk-tag">&lt;/h3</span><span class="tk-tag">&gt;</span>
+          <span class="tk-tag">&lt;p</span><span class="tk-tag">&gt;</span>Resumen…<span class="tk-tag">&lt;/p</span><span class="tk-tag">&gt;</span>
+        <span class="tk-tag">&lt;/article</span><span class="tk-tag">&gt;</span>
+      <span class="tk-tag">&lt;/section</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;/main</span><span class="tk-tag">&gt;</span>
+
+    <span class="tk-tag">&lt;footer</span><span class="tk-tag">&gt;</span>
+      <span class="tk-tag">&lt;p</span><span class="tk-tag">&gt;</span>© 2026 Nombre del sitio<span class="tk-tag">&lt;/p</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;/footer</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;/body</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;/html</span><span class="tk-tag">&gt;</span></code></pre>
+</div>
+<div class="callout ejemplo">
+<p class="callout-title">🔍 Ejemplo · El menú es una lista dentro de nav</p>
+<p>Fíjate en que el menú combina lo que ya aprendiste: un <code>&lt;nav&gt;</code> que contiene una lista <code>&lt;ul&gt;</code> de enlaces <code>&lt;a&gt;</code>. Con CSS lo convertirás en una barra horizontal.</p>
+</div>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · <code>aria-label</code></p>
+<p><code>aria-label="Principal"</code> da un nombre a la navegación. Es útil cuando hay más de un <code>&lt;nav&gt;</code> (por ejemplo, uno principal y otro en el pie) para que se distingan al navegar con lector de pantalla.</p>
+</div>
+
+<h2 id="errores"><span class="n">7.</span>Errores frecuentes</h2>
+<ul><li><strong>Más de un <code>&lt;main&gt;</code></strong> en la página.</li><li><strong>Usar <code>&lt;section&gt;</code> como sustituto de <code>&lt;div&gt;</code></strong> para cualquier agrupación.</li><li><strong>Usar etiquetas por su apariencia</strong> (por ejemplo, <code>&lt;header&gt;</code> solo para agrandar texto): el significado es lo que cuenta.</li><li><strong>Saltarse niveles de título</strong> dentro de las secciones, o usar varios <code>&lt;h1&gt;</code>.</li><li><strong>Poner todo el menú en <code>&lt;div&gt;</code> en lugar de <code>&lt;nav&gt;</code> con una lista.</strong></li><li><strong>Olvidar <code>lang</code></strong> en la etiqueta <code>&lt;html&gt;</code>.</li></ul>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li>Las etiquetas semánticas describen <strong>qué es</strong> el contenido, no cómo se ve.</li><li><code>&lt;header&gt;</code>, <code>&lt;nav&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;aside&gt;</code> y <code>&lt;footer&gt;</code> dividen la página en zonas.</li><li><code>&lt;main&gt;</code> aparece <strong>una sola vez</strong> y contiene el contenido principal.</li><li><code>&lt;article&gt;</code> es contenido independiente; <code>&lt;section&gt;</code> es un apartado temático con título.</li><li><code>&lt;aside&gt;</code> es contenido relacionado pero secundario.</li><li><code>&lt;div&gt;</code> y <code>&lt;span&gt;</code> son contenedores sin significado: úsalos solo cuando nada más encaje.</li><li><code>&lt;time&gt;</code>, <code>&lt;address&gt;</code>, <code>&lt;blockquote&gt;</code>, <code>&lt;abbr&gt;</code> y <code>&lt;details&gt;</code> añaden significado a detalles concretos.</li><li>La semántica mejora la accesibilidad, el posicionamiento en buscadores y el mantenimiento del código.</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">8.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td>Semántica</td><td>El significado que transmite una etiqueta sobre su contenido.</td></tr><tr><td>Landmark (punto de referencia)</td><td>Zona de la página que un lector de pantalla puede saltar directamente: <code>header</code>, <code>nav</code>, <code>main</code>, <code>footer</code>.</td></tr><tr><td><code>div</code></td><td>Contenedor de bloque sin significado.</td></tr><tr><td><code>span</code></td><td>Contenedor en línea sin significado.</td></tr><tr><td><code>article</code></td><td>Contenido autónomo que podría publicarse por separado.</td></tr><tr><td><code>aside</code></td><td>Contenido tangencial o complementario.</td></tr><tr><td>ARIA</td><td>Conjunto de atributos (como <code>aria-label</code>) que mejoran la accesibilidad.</td></tr></tbody>
+</table></div>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>¿Cuántas veces puede aparecer <code>&lt;main&gt;</code> en una página?</p><ul class="opts"><li><button type="button" class="opt">Todas las que quieras</button></li><li><button type="button" class="opt" data-ok>Solo una</button></li><li><button type="button" class="opt">Una por sección</button></li><li><button type="button" class="opt">Dos</button></li></ul><p class="explain" hidden><code>&lt;main&gt;</code> marca el contenido principal y único de la página.</p></div>
+<div class="quiz-q"><p>¿Cuál etiqueta usarías para el <strong>menú de navegación</strong>?</p><ul class="opts"><li><button type="button" class="opt"><code>&lt;div class="menu"&gt;</code></button></li><li><button type="button" class="opt" data-ok><code>&lt;nav&gt;</code></button></li><li><button type="button" class="opt"><code>&lt;section&gt;</code></button></li><li><button type="button" class="opt"><code>&lt;aside&gt;</code></button></li></ul><p class="explain" hidden><code>&lt;nav&gt;</code> indica navegación; así los lectores de pantalla permiten saltar directo a ella.</p></div>
+<div class="quiz-q"><p>Una noticia que tiene sentido por sí sola, aunque se copie a otra web, va en…</p><ul class="opts"><li><button type="button" class="opt"><code>&lt;aside&gt;</code></button></li><li><button type="button" class="opt" data-ok><code>&lt;article&gt;</code></button></li><li><button type="button" class="opt"><code>&lt;footer&gt;</code></button></li><li><button type="button" class="opt"><code>&lt;span&gt;</code></button></li></ul><p class="explain" hidden><code>&lt;article&gt;</code> es para contenido independiente y reutilizable.</p></div>
+<div class="quiz-q"><p>¿Por qué es mejor <code>&lt;header&gt;</code> que <code>&lt;div class="encabezado"&gt;</code>?</p><ul class="opts"><li><button type="button" class="opt">Porque se ve más grande</button></li><li><button type="button" class="opt" data-ok>Porque su nombre indica su significado a navegadores, buscadores y lectores de pantalla</button></li><li><button type="button" class="opt">Porque es más rápido</button></li><li><button type="button" class="opt">No hay diferencia</button></li></ul><p class="explain" hidden>La apariencia puede ser idéntica, pero <code>&lt;header&gt;</code> comunica <strong>qué es</strong> el contenido.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="06">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../05-formularios/ejercicio.html"><small>← Anterior</small>Ejercicio: Formularios</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </div>
+
+  <footer class="site-footer">Curso de HTML · Lección 6</footer>
+  <script src="../assets/curso.js"></script>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ejercicio · HTML semántico · Curso de HTML</title>
+  <meta name="description" content="Ejercicio práctico de: HTML semántico." />
+  <link rel="stylesheet" href="../assets/estilos.css" />
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de HTML</a>
+    <div class="topbar-actions">
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap" style="max-width:820px;padding-top:2rem;padding-bottom:3rem">
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Inicio</a> › <a href="./">Lección 6</a> › Ejercicio</div>
+        <h1>Ejercicio: HTML semántico</h1>
+        <ul class="meta"><li>⏱ 25 minutos</li><li>📶 Nivel: principiante</li></ul>
+      </header>
+
+      <h2>Objetivo</h2>
+      <p>Estructurar una página de inicio completa usando solo etiquetas semánticas, sin <code>&lt;div&gt;</code>.</p>
+
+      <h2>Pasos</h2>
+      <p>Marca cada paso a medida que lo completes. Tu avance se guarda en este navegador.</p>
+      <div class="progress" aria-hidden="true"><div></div></div>
+      <p id="progreso-texto" style="color:var(--muted);font-size:.9rem" aria-live="polite"></p>
+      <ul class="checklist"><li><label><input type="checkbox" id="p1" /><span>Crea <code>inicio.html</code> con el esqueleto completo, <code>lang="es"</code> y un <code>title</code>.</span></label></li><li><label><input type="checkbox" id="p2" /><span>Agrega un <code>&lt;header&gt;</code> con el nombre de tu sitio en un <code>&lt;h1&gt;</code>.</span></label></li><li><label><input type="checkbox" id="p3" /><span>Dentro del <code>&lt;header&gt;</code>, crea un <code>&lt;nav&gt;</code> con <code>aria-label="Principal"</code> y una lista de 3 enlaces.</span></label></li><li><label><input type="checkbox" id="p4" /><span>Agrega un único <code>&lt;main&gt;</code> con dos <code>&lt;section&gt;</code>, cada una con su <code>&lt;h2&gt;</code>.</span></label></li><li><label><input type="checkbox" id="p5" /><span>En una de las secciones, agrega dos <code>&lt;article&gt;</code> con título <code>&lt;h3&gt;</code>, párrafo y una fecha con <code>&lt;time datetime&gt;</code>.</span></label></li><li><label><input type="checkbox" id="p6" /><span>Agrega un <code>&lt;aside&gt;</code> con un dato curioso o un enlace relacionado.</span></label></li><li><label><input type="checkbox" id="p7" /><span>Agrega un <code>&lt;footer&gt;</code> con <code>© año</code>, tu nombre y una <code>&lt;address&gt;</code> con un correo.</span></label></li><li><label><input type="checkbox" id="p8" /><span>Revisa que no haya <code>&lt;div&gt;</code> innecesarios y que exista un solo <code>&lt;main&gt;</code> y un solo <code>&lt;h1&gt;</code>.</span></label></li></ul>
+      <details><summary>💡 Pista 1: no sé si usar section o article</summary><p>Pregúntate: ¿esto podría publicarse solo y seguir teniendo sentido? Si sí, es <code>article</code>. Si es un apartado de la página con un tema propio, es <code>section</code>.</p>
+</details>
+<details><summary>💡 Pista 2: ¿dónde va el aside?</summary><p>Puede ir dentro de <code>&lt;main&gt;</code> si se relaciona con ese contenido, o junto a <code>&lt;main&gt;</code> si es una barra lateral general. En este ejercicio, déjalo dentro de <code>&lt;main&gt;</code>.</p>
+</details>
+
+      <details>
+        <summary>✅ Ver una solución de ejemplo</summary>
+        <p>Intenta resolverlo antes de mirar. Tu versión puede ser distinta y también correcta.</p>
+        <div class="code">
+  <div class="code-head"><span>inicio.html (dentro de body)</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">&lt;header</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;h1</span><span class="tk-tag">&gt;</span>Diario de aprendizaje<span class="tk-tag">&lt;/h1</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;nav</span> <span class="tk-attr">aria-label</span>=<span class="tk-val">"Principal"</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;ul</span><span class="tk-tag">&gt;</span>
+      <span class="tk-tag">&lt;li</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;a</span> <span class="tk-attr">href</span>=<span class="tk-val">"inicio.html"</span><span class="tk-tag">&gt;</span>Inicio<span class="tk-tag">&lt;/a</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;/li</span><span class="tk-tag">&gt;</span>
+      <span class="tk-tag">&lt;li</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;a</span> <span class="tk-attr">href</span>=<span class="tk-val">"notas.html"</span><span class="tk-tag">&gt;</span>Notas<span class="tk-tag">&lt;/a</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;/li</span><span class="tk-tag">&gt;</span>
+      <span class="tk-tag">&lt;li</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;a</span> <span class="tk-attr">href</span>=<span class="tk-val">"contacto.html"</span><span class="tk-tag">&gt;</span>Contacto<span class="tk-tag">&lt;/a</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;/li</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;/ul</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;/nav</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;/header</span><span class="tk-tag">&gt;</span>
+
+<span class="tk-tag">&lt;main</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;section</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;h2</span><span class="tk-tag">&gt;</span>Bienvenida<span class="tk-tag">&lt;/h2</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;p</span><span class="tk-tag">&gt;</span>Aquí registro lo que voy aprendiendo de HTML.<span class="tk-tag">&lt;/p</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;/section</span><span class="tk-tag">&gt;</span>
+
+  <span class="tk-tag">&lt;section</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;h2</span><span class="tk-tag">&gt;</span>Últimas entradas<span class="tk-tag">&lt;/h2</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;article</span><span class="tk-tag">&gt;</span>
+      <span class="tk-tag">&lt;h3</span><span class="tk-tag">&gt;</span>Mi primera tabla<span class="tk-tag">&lt;/h3</span><span class="tk-tag">&gt;</span>
+      <span class="tk-tag">&lt;p</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;time</span> <span class="tk-attr">datetime</span>=<span class="tk-val">"2026-10-04"</span><span class="tk-tag">&gt;</span>4 de octubre de 2026<span class="tk-tag">&lt;/time</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;/p</span><span class="tk-tag">&gt;</span>
+      <span class="tk-tag">&lt;p</span><span class="tk-tag">&gt;</span>Hoy aprendí a combinar celdas.<span class="tk-tag">&lt;/p</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;/article</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;article</span><span class="tk-tag">&gt;</span>
+      <span class="tk-tag">&lt;h3</span><span class="tk-tag">&gt;</span>Formularios<span class="tk-tag">&lt;/h3</span><span class="tk-tag">&gt;</span>
+      <span class="tk-tag">&lt;p</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;time</span> <span class="tk-attr">datetime</span>=<span class="tk-val">"2026-10-05"</span><span class="tk-tag">&gt;</span>5 de octubre de 2026<span class="tk-tag">&lt;/time</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;/p</span><span class="tk-tag">&gt;</span>
+      <span class="tk-tag">&lt;p</span><span class="tk-tag">&gt;</span>Descubrí que cada campo necesita su etiqueta.<span class="tk-tag">&lt;/p</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;/article</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;/section</span><span class="tk-tag">&gt;</span>
+
+  <span class="tk-tag">&lt;aside</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;h2</span><span class="tk-tag">&gt;</span>Dato curioso<span class="tk-tag">&lt;/h2</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;p</span><span class="tk-tag">&gt;</span>HTML fue creado en 1991.<span class="tk-tag">&lt;/p</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;/aside</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;/main</span><span class="tk-tag">&gt;</span>
+
+<span class="tk-tag">&lt;footer</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;p</span><span class="tk-tag">&gt;</span>© 2026 Diario de aprendizaje<span class="tk-tag">&lt;/p</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;address</span><span class="tk-tag">&gt;</span>Contacto: <span class="tk-tag">&lt;a</span> <span class="tk-attr">href</span>=<span class="tk-val">"mailto:hola@ejemplo.com"</span><span class="tk-tag">&gt;</span>hola@ejemplo.com<span class="tk-tag">&lt;/a</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;/address</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;/footer</span><span class="tk-tag">&gt;</span></code></pre>
+</div>
+
+      </details>
+      <div class="callout consejo">
+<p class="callout-title">💡 🏁 Reto extra (opcional)</p>
+<p>Toma la página de recomendaciones de la lección 2 o el Top 5 de la lección 3 y conviértela a una estructura semántica completa. ¿Qué cambió en el código? ¿Y en lo que ve la persona?</p>
+</div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="./"><small>← Anterior</small>Volver a lección 6</a>
+        <a class="next" href="../07-introduccion-css/"><small>Siguiente →</small>Introducción a CSS</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de HTML · Ejercicio de lección 6</footer>
+  <script src="../assets/curso.js"></script>
+</body>
+</html>

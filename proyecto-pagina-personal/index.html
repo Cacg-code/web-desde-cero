@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Proyecto final: Proyecto: tu página personal · Curso de HTML</title>
+  <meta name="description" content="Proyecto final: crea y publica tu propia página personal usando todo lo aprendido en el curso." />
+  <link rel="stylesheet" href="../assets/estilos.css" />
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de HTML</a>
+    <div class="topbar-actions">
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <div class="wrap lesson-layout">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#que">Qué vas a construir</a></li><li><a href="#planifica">Planifica antes de escribir</a></li><li><a href="#carpeta">Prepara la carpeta</a></li><li><a href="#html">Escribe el HTML</a></li><li><a href="#css">Dale estilo con CSS</a></li><li><a href="#revision">Revisión de calidad</a></li><li><a href="#publicar">Publica tu página</a></li><li><a href="#siguiente">Qué sigue</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Inicio</a> › Proyecto final</div>
+        <h1>Proyecto: tu página personal</h1>
+        <ul class="meta"><li>⏱ 90 minutos</li><li>📶 Nivel: principiante</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Planificar un sitio antes de escribir código.</li><li>Construir una página completa con HTML semántico y CSS.</li><li>Revisar su calidad y accesibilidad antes de publicarla.</li><li>Publicarla en línea con GitHub Pages.</li></ul>
+</div>
+
+<h2 id="que"><span class="n">1.</span>Qué vas a construir</h2>
+<p>Llegó el momento de juntar todo. Vas a crear <strong>tu propia página personal</strong>: un sitio de una sola página, con tu presentación, tus intereses, tus proyectos y un formulario de contacto. Será el primer trabajo real de tu portafolio.</p>
+<p>Cada parte usa algo que ya practicaste:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Parte de la página</th><th>Lo que usas</th><th>Lección</th></tr></thead>
+<tbody><tr><td>Estructura general</td><td><code>header</code>, <code>nav</code>, <code>main</code>, <code>section</code>, <code>footer</code></td><td>6</td></tr><tr><td>Presentación y textos</td><td>Títulos, párrafos, <code>strong</code>, <code>em</code></td><td>1 y 2</td></tr><tr><td>Menú con enlaces internos</td><td>Lista de enlaces con <code>#id</code></td><td>2 y 3</td></tr><tr><td>Foto de perfil</td><td><code>img</code> con <code>alt</code>, <code>figure</code></td><td>3</td></tr><tr><td>Intereses</td><td>Lista <code>ul</code></td><td>3</td></tr><tr><td>Habilidades</td><td>Tabla con <code>caption</code> y <code>scope</code></td><td>4</td></tr><tr><td>Contacto</td><td>Formulario con <code>label</code>, <code>required</code></td><td>5</td></tr><tr><td>Diseño</td><td>CSS externo, flexbox, tarjetas, responsive</td><td>7</td></tr></tbody>
+</table></div>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Hazlo tuyo</p>
+<p>No copies el ejemplo palabra por palabra. Cambia el tema: puede ser tu portafolio, la página de un hobby, un negocio pequeño o una fan page. Un proyecto sobre algo que te importa se termina con más ganas.</p>
+</div>
+
+<h2 id="planifica"><span class="n">2.</span>Planifica antes de escribir</h2>
+<p>Dedica diez minutos con papel y lápiz. Es lo que más ahorra tiempo después.</p>
+<ol class="steps"><li><strong>Define el propósito.</strong> ¿Quién la visitará y qué debe encontrar? («Quiero que quien me contacte sepa qué hago»).</li><li><strong>Lista las secciones.</strong> Ordénalas como las leería un visitante: primero quién eres, al final cómo contactarte.</li><li><strong>Reúne el contenido.</strong> Escribe los textos y prepara una o dos imágenes (redúcelas a menos de 300 KB y ponles nombres en minúsculas).</li><li><strong>Dibuja un boceto.</strong> Cuadros para cada sección, sin detalles. Marca dónde van el menú, las imágenes y el formulario.</li></ol>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · Contenido real primero</p>
+<p>Escribir con textos de relleno («lorem ipsum») oculta problemas de diseño. Con tu contenido verdadero verás enseguida si un título es muy largo o si falta una sección.</p>
+</div>
+
+<h2 id="carpeta"><span class="n">3.</span>Prepara la carpeta</h2>
+<p>Organiza tu proyecto así. Las rutas del HTML que escribirás después dependen de esta estructura:</p>
+<div class="code">
+  <div class="code-head"><span>Estructura del proyecto</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>mi-pagina/
+├── index.html
+├── css/
+│   └── estilos.css
+└── img/
+    └── ana.jpg</code></pre>
+</div>
+<ul><li>El archivo principal se llama <strong><code>index.html</code></strong>: es el que los servidores muestran por defecto.</li><li>CSS e imágenes van en carpetas propias.</li><li>Usa nombres en minúsculas, sin espacios ni tildes.</li><li>Abre la carpeta completa en tu editor para que reconozca todos los archivos.</li></ul>
+
+<h2 id="html"><span class="n">4.</span>Escribe el HTML</h2>
+<p>Empieza por el HTML, sin preocuparte todavía por el aspecto. Si la página se lee bien sin estilos, estás construyendo bien la base. Este es un ejemplo completo; úsalo como guía para estructurar el tuyo:</p>
+<div class="code">
+  <div class="code-head"><span>index.html</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">&lt;!doctype html&gt;</span>
+<span class="tk-tag">&lt;html</span> <span class="tk-attr">lang</span>=<span class="tk-val">"es"</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;head</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;meta</span> <span class="tk-attr">charset</span>=<span class="tk-val">"UTF-8"</span><span class="tk-tag"> /&gt;</span>
+  <span class="tk-tag">&lt;meta</span> <span class="tk-attr">name</span>=<span class="tk-val">"viewport"</span> <span class="tk-attr">content</span>=<span class="tk-val">"width=device-width, initial-scale=1.0"</span><span class="tk-tag"> /&gt;</span>
+  <span class="tk-tag">&lt;title</span><span class="tk-tag">&gt;</span>Ana Pérez · Mi página personal<span class="tk-tag">&lt;/title</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;meta</span> <span class="tk-attr">name</span>=<span class="tk-val">"description"</span> <span class="tk-attr">content</span>=<span class="tk-val">"Página personal de Ana Pérez: quién soy, qué me gusta y cómo contactarme."</span><span class="tk-tag"> /&gt;</span>
+  <span class="tk-tag">&lt;link</span> <span class="tk-attr">rel</span>=<span class="tk-val">"stylesheet"</span> <span class="tk-attr">href</span>=<span class="tk-val">"css/estilos.css"</span><span class="tk-tag"> /&gt;</span>
+<span class="tk-tag">&lt;/head</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;body</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;header</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;h1</span><span class="tk-tag">&gt;</span>Ana Pérez<span class="tk-tag">&lt;/h1</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;p</span><span class="tk-tag">&gt;</span>Estudiante, curiosa y aprendiendo a crear páginas web.<span class="tk-tag">&lt;/p</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;nav</span> <span class="tk-attr">aria-label</span>=<span class="tk-val">"Principal"</span><span class="tk-tag">&gt;</span>
+      <span class="tk-tag">&lt;ul</span><span class="tk-tag">&gt;</span>
+        <span class="tk-tag">&lt;li</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;a</span> <span class="tk-attr">href</span>=<span class="tk-val">"#sobre-mi"</span><span class="tk-tag">&gt;</span>Sobre mí<span class="tk-tag">&lt;/a</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;/li</span><span class="tk-tag">&gt;</span>
+        <span class="tk-tag">&lt;li</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;a</span> <span class="tk-attr">href</span>=<span class="tk-val">"#intereses"</span><span class="tk-tag">&gt;</span>Intereses<span class="tk-tag">&lt;/a</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;/li</span><span class="tk-tag">&gt;</span>
+        <span class="tk-tag">&lt;li</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;a</span> <span class="tk-attr">href</span>=<span class="tk-val">"#proyectos"</span><span class="tk-tag">&gt;</span>Proyectos<span class="tk-tag">&lt;/a</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;/li</span><span class="tk-tag">&gt;</span>
+        <span class="tk-tag">&lt;li</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;a</span> <span class="tk-attr">href</span>=<span class="tk-val">"#contacto"</span><span class="tk-tag">&gt;</span>Contacto<span class="tk-tag">&lt;/a</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;/li</span><span class="tk-tag">&gt;</span>
+      <span class="tk-tag">&lt;/ul</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;/nav</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;/header</span><span class="tk-tag">&gt;</span>
+
+  <span class="tk-tag">&lt;main</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;section</span> <span class="tk-attr">id</span>=<span class="tk-val">"sobre-mi"</span><span class="tk-tag">&gt;</span>
+      <span class="tk-tag">&lt;h2</span><span class="tk-tag">&gt;</span>Sobre mí<span class="tk-tag">&lt;/h2</span><span class="tk-tag">&gt;</span>
+      <span class="tk-tag">&lt;figure</span><span class="tk-tag">&gt;</span>
+        <span class="tk-tag">&lt;img</span> <span class="tk-attr">src</span>=<span class="tk-val">"img/ana.jpg"</span> <span class="tk-attr">alt</span>=<span class="tk-val">"Ana sonriendo frente a un paisaje de montañas"</span> <span class="tk-attr">width</span>=<span class="tk-val">"240"</span> <span class="tk-attr">height</span>=<span class="tk-val">"240"</span><span class="tk-tag">&gt;</span>
+        <span class="tk-tag">&lt;figcaption</span><span class="tk-tag">&gt;</span>Una foto reciente.<span class="tk-tag">&lt;/figcaption</span><span class="tk-tag">&gt;</span>
+      <span class="tk-tag">&lt;/figure</span><span class="tk-tag">&gt;</span>
+      <span class="tk-tag">&lt;p</span><span class="tk-tag">&gt;</span>Hola, soy <span class="tk-tag">&lt;strong</span><span class="tk-tag">&gt;</span>Ana<span class="tk-tag">&lt;/strong</span><span class="tk-tag">&gt;</span>. Me gusta la tecnología y escribir.<span class="tk-tag">&lt;/p</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;/section</span><span class="tk-tag">&gt;</span>
+
+    <span class="tk-tag">&lt;section</span> <span class="tk-attr">id</span>=<span class="tk-val">"intereses"</span><span class="tk-tag">&gt;</span>
+      <span class="tk-tag">&lt;h2</span><span class="tk-tag">&gt;</span>Intereses<span class="tk-tag">&lt;/h2</span><span class="tk-tag">&gt;</span>
+      <span class="tk-tag">&lt;ul</span><span class="tk-tag">&gt;</span>
+        <span class="tk-tag">&lt;li</span><span class="tk-tag">&gt;</span>Fotografía<span class="tk-tag">&lt;/li</span><span class="tk-tag">&gt;</span>
+        <span class="tk-tag">&lt;li</span><span class="tk-tag">&gt;</span>Senderismo<span class="tk-tag">&lt;/li</span><span class="tk-tag">&gt;</span>
+        <span class="tk-tag">&lt;li</span><span class="tk-tag">&gt;</span>Programación web<span class="tk-tag">&lt;/li</span><span class="tk-tag">&gt;</span>
+      <span class="tk-tag">&lt;/ul</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;/section</span><span class="tk-tag">&gt;</span>
+
+    <span class="tk-tag">&lt;section</span> <span class="tk-attr">id</span>=<span class="tk-val">"proyectos"</span><span class="tk-tag">&gt;</span>
+      <span class="tk-tag">&lt;h2</span><span class="tk-tag">&gt;</span>Proyectos<span class="tk-tag">&lt;/h2</span><span class="tk-tag">&gt;</span>
+      <span class="tk-tag">&lt;article</span> <span class="tk-attr">class</span>=<span class="tk-val">"tarjeta"</span><span class="tk-tag">&gt;</span>
+        <span class="tk-tag">&lt;h3</span><span class="tk-tag">&gt;</span>Mi primera página<span class="tk-tag">&lt;/h3</span><span class="tk-tag">&gt;</span>
+        <span class="tk-tag">&lt;p</span><span class="tk-tag">&gt;</span>Una presentación hecha con HTML.<span class="tk-tag">&lt;/p</span><span class="tk-tag">&gt;</span>
+        <span class="tk-tag">&lt;a</span> <span class="tk-attr">href</span>=<span class="tk-val">"https://cacg-code.github.io/PRACTICAS-HTML/"</span><span class="tk-tag">&gt;</span>Ver el curso<span class="tk-tag">&lt;/a</span><span class="tk-tag">&gt;</span>
+      <span class="tk-tag">&lt;/article</span><span class="tk-tag">&gt;</span>
+      <span class="tk-tag">&lt;article</span> <span class="tk-attr">class</span>=<span class="tk-val">"tarjeta"</span><span class="tk-tag">&gt;</span>
+        <span class="tk-tag">&lt;h3</span><span class="tk-tag">&gt;</span>Top 5 de lugares<span class="tk-tag">&lt;/h3</span><span class="tk-tag">&gt;</span>
+        <span class="tk-tag">&lt;p</span><span class="tk-tag">&gt;</span>Mi ranking de destinos, con imágenes y listas.<span class="tk-tag">&lt;/p</span><span class="tk-tag">&gt;</span>
+      <span class="tk-tag">&lt;/article</span><span class="tk-tag">&gt;</span>
+      <span class="tk-tag">&lt;h3</span><span class="tk-tag">&gt;</span>Lo que sé hacer<span class="tk-tag">&lt;/h3</span><span class="tk-tag">&gt;</span>
+      <span class="tk-tag">&lt;table</span><span class="tk-tag">&gt;</span>
+        <span class="tk-tag">&lt;caption</span><span class="tk-tag">&gt;</span>Mis habilidades y su nivel<span class="tk-tag">&lt;/caption</span><span class="tk-tag">&gt;</span>
+        <span class="tk-tag">&lt;thead</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;tr</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;th</span> <span class="tk-attr">scope</span>=<span class="tk-val">"col"</span><span class="tk-tag">&gt;</span>Habilidad<span class="tk-tag">&lt;/th</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;th</span> <span class="tk-attr">scope</span>=<span class="tk-val">"col"</span><span class="tk-tag">&gt;</span>Nivel<span class="tk-tag">&lt;/th</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;/tr</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;/thead</span><span class="tk-tag">&gt;</span>
+        <span class="tk-tag">&lt;tbody</span><span class="tk-tag">&gt;</span>
+          <span class="tk-tag">&lt;tr</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;th</span> <span class="tk-attr">scope</span>=<span class="tk-val">"row"</span><span class="tk-tag">&gt;</span>HTML<span class="tk-tag">&lt;/th</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;td</span><span class="tk-tag">&gt;</span>Básico<span class="tk-tag">&lt;/td</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;/tr</span><span class="tk-tag">&gt;</span>
+          <span class="tk-tag">&lt;tr</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;th</span> <span class="tk-attr">scope</span>=<span class="tk-val">"row"</span><span class="tk-tag">&gt;</span>CSS<span class="tk-tag">&lt;/th</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;td</span><span class="tk-tag">&gt;</span>Aprendiendo<span class="tk-tag">&lt;/td</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;/tr</span><span class="tk-tag">&gt;</span>
+        <span class="tk-tag">&lt;/tbody</span><span class="tk-tag">&gt;</span>
+      <span class="tk-tag">&lt;/table</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;/section</span><span class="tk-tag">&gt;</span>
+
+    <span class="tk-tag">&lt;section</span> <span class="tk-attr">id</span>=<span class="tk-val">"contacto"</span><span class="tk-tag">&gt;</span>
+      <span class="tk-tag">&lt;h2</span><span class="tk-tag">&gt;</span>Contacto<span class="tk-tag">&lt;/h2</span><span class="tk-tag">&gt;</span>
+      <span class="tk-tag">&lt;form</span> <span class="tk-attr">action</span>=<span class="tk-val">"https://formspree.io/f/TU_CODIGO"</span> <span class="tk-attr">method</span>=<span class="tk-val">"post"</span><span class="tk-tag">&gt;</span>
+        <span class="tk-tag">&lt;p</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;label</span> <span class="tk-attr">for</span>=<span class="tk-val">"nombre"</span><span class="tk-tag">&gt;</span>Nombre<span class="tk-tag">&lt;/label</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;br</span><span class="tk-tag">&gt;</span>
+           <span class="tk-tag">&lt;input</span> <span class="tk-attr">type</span>=<span class="tk-val">"text"</span> <span class="tk-attr">id</span>=<span class="tk-val">"nombre"</span> <span class="tk-attr">name</span>=<span class="tk-val">"nombre"</span> <span class="tk-attr">required</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;/p</span><span class="tk-tag">&gt;</span>
+        <span class="tk-tag">&lt;p</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;label</span> <span class="tk-attr">for</span>=<span class="tk-val">"correo"</span><span class="tk-tag">&gt;</span>Correo<span class="tk-tag">&lt;/label</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;br</span><span class="tk-tag">&gt;</span>
+           <span class="tk-tag">&lt;input</span> <span class="tk-attr">type</span>=<span class="tk-val">"email"</span> <span class="tk-attr">id</span>=<span class="tk-val">"correo"</span> <span class="tk-attr">name</span>=<span class="tk-val">"correo"</span> <span class="tk-attr">required</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;/p</span><span class="tk-tag">&gt;</span>
+        <span class="tk-tag">&lt;p</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;label</span> <span class="tk-attr">for</span>=<span class="tk-val">"mensaje"</span><span class="tk-tag">&gt;</span>Mensaje<span class="tk-tag">&lt;/label</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;br</span><span class="tk-tag">&gt;</span>
+           <span class="tk-tag">&lt;textarea</span> <span class="tk-attr">id</span>=<span class="tk-val">"mensaje"</span> <span class="tk-attr">name</span>=<span class="tk-val">"mensaje"</span> <span class="tk-attr">rows</span>=<span class="tk-val">"4"</span> <span class="tk-attr">required</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;/textarea</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;/p</span><span class="tk-tag">&gt;</span>
+        <span class="tk-tag">&lt;button</span> <span class="tk-attr">type</span>=<span class="tk-val">"submit"</span><span class="tk-tag">&gt;</span>Enviar mensaje<span class="tk-tag">&lt;/button</span><span class="tk-tag">&gt;</span>
+      <span class="tk-tag">&lt;/form</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;/section</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;/main</span><span class="tk-tag">&gt;</span>
+
+  <span class="tk-tag">&lt;footer</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;p</span><span class="tk-tag">&gt;</span>© 2026 Ana Pérez<span class="tk-tag">&lt;/p</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;address</span><span class="tk-tag">&gt;</span>Escríbeme a <span class="tk-tag">&lt;a</span> <span class="tk-attr">href</span>=<span class="tk-val">"mailto:hola@ejemplo.com"</span><span class="tk-tag">&gt;</span>hola@ejemplo.com<span class="tk-tag">&lt;/a</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;/address</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;/footer</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;/body</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;/html</span><span class="tk-tag">&gt;</span></code></pre>
+</div>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · Cambia el <code>action</code> del formulario</p>
+<p>El formulario necesita un servicio que reciba los mensajes. Sitios como Formspree o Getform ofrecen un plan gratuito: te dan una dirección que pegas en <code>action</code>. <strong>Mientras no tengas una, el formulario no enviará nada.</strong> También puedes sustituirlo por un enlace <code>mailto:</code>.</p>
+</div>
+<div class="callout ejemplo">
+<p class="callout-title">🔍 Ejemplo · Enlaces internos</p>
+<p>El menú usa <code>href="#contacto"</code>, que lleva a la sección con <code>id="contacto"</code>. Con CSS puedes añadir <code>scroll-behavior: smooth;</code> en <code>html</code> para que el desplazamiento sea suave.</p>
+</div>
+<p>Abre el archivo en el navegador. Verifica que los enlaces del menú lleven a cada sección y que la imagen se vea.</p>
+
+<h2 id="css"><span class="n">5.</span>Dale estilo con CSS</h2>
+<p>Ahora crea <code>css/estilos.css</code>. Este arranque aplica lo que viste en la lección 7. Modifica colores, tipografías y medidas hasta que refleje tu personalidad:</p>
+<div class="code">
+  <div class="code-head"><span>css/estilos.css</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>:<span class="tk-sel">root</span> {
+  <span class="tk-attr">--principal</span>: <span class="tk-val">#4f46e5</span>;
+  <span class="tk-attr">--fondo</span>: <span class="tk-val">#f7f8fc</span>;
+  <span class="tk-attr">--texto</span>: <span class="tk-val">#1e2235</span>;
+  <span class="tk-attr">--tarjeta</span>: <span class="tk-val">#ffffff</span>;
+  <span class="tk-attr">--borde</span>: <span class="tk-val">#dde2ef</span>;
+}
+
+<span class="tk-sel">*</span> { <span class="tk-attr">box-sizing</span>: <span class="tk-val">border-box</span>; }
+<span class="tk-sel">html</span> { <span class="tk-attr">scroll-behavior</span>: <span class="tk-val">smooth</span>; }
+
+<span class="tk-sel">body</span> {
+  <span class="tk-attr">margin</span>: <span class="tk-val">0</span>;
+  <span class="tk-attr">background</span>: <span class="tk-val">var(--fondo)</span>;
+  <span class="tk-attr">color</span>: <span class="tk-val">var(--texto)</span>;
+  <span class="tk-attr">font-family</span>: <span class="tk-val">system-ui, sans-serif</span>;
+  <span class="tk-attr">line-height</span>: <span class="tk-val">1.7</span>;
+}
+
+<span class="tk-sel">header</span> {
+  <span class="tk-attr">padding</span>: <span class="tk-val">32px 20px</span>;
+  <span class="tk-attr">text-align</span>: <span class="tk-val">center</span>;
+  <span class="tk-attr">background</span>: <span class="tk-val">var(--principal)</span>;
+  <span class="tk-attr">color</span>: <span class="tk-val">white</span>;
+}
+<span class="tk-sel">header h1</span> { <span class="tk-attr">margin</span>: <span class="tk-val">0</span>; }
+
+<span class="tk-sel">nav ul</span> {
+  <span class="tk-attr">display</span>: <span class="tk-val">flex</span>;
+  <span class="tk-attr">gap</span>: <span class="tk-val">16px</span>;
+  <span class="tk-attr">justify-content</span>: <span class="tk-val">center</span>;
+  <span class="tk-attr">flex-wrap</span>: <span class="tk-val">wrap</span>;
+  <span class="tk-attr">list-style</span>: <span class="tk-val">none</span>;
+  <span class="tk-attr">padding</span>: <span class="tk-val">0</span>;
+  <span class="tk-attr">margin</span>: <span class="tk-val">16px 0 0</span>;
+}
+<span class="tk-sel">nav a</span> { <span class="tk-attr">color</span>: <span class="tk-val">white</span>; <span class="tk-attr">font-weight</span>: <span class="tk-val">600</span>; <span class="tk-attr">text-decoration</span>: <span class="tk-val">none</span>; }
+<span class="tk-sel">nav a:hover</span> { <span class="tk-attr">text-decoration</span>: <span class="tk-val">underline</span>; }
+
+<span class="tk-sel">main</span> { <span class="tk-attr">max-width</span>: <span class="tk-val">760px</span>; <span class="tk-attr">margin</span>: <span class="tk-val">0 auto</span>; <span class="tk-attr">padding</span>: <span class="tk-val">24px 20px</span>; }
+<span class="tk-sel">section</span> { <span class="tk-attr">margin-bottom</span>: <span class="tk-val">40px</span>; }
+<span class="tk-sel">h2</span> { <span class="tk-attr">color</span>: <span class="tk-val">var(--principal)</span>; }
+
+<span class="tk-sel">figure</span> { <span class="tk-attr">margin</span>: <span class="tk-val">0 0 16px</span>; }
+<span class="tk-sel">figure img</span> { <span class="tk-attr">border-radius</span>: <span class="tk-val">50%</span>; }
+
+<span class="tk-sel">.tarjeta</span> {
+  <span class="tk-attr">background</span>: <span class="tk-val">var(--tarjeta)</span>;
+  <span class="tk-attr">border</span>: <span class="tk-val">1px solid var(--borde)</span>;
+  <span class="tk-attr">border-radius</span>: <span class="tk-val">12px</span>;
+  <span class="tk-attr">padding</span>: <span class="tk-val">16px</span>;
+  <span class="tk-attr">margin-bottom</span>: <span class="tk-val">16px</span>;
+  <span class="tk-attr">transition</span>: <span class="tk-val">transform .2s, box-shadow .2s</span>;
+}
+<span class="tk-sel">.tarjeta:hover</span> { <span class="tk-attr">transform</span>: <span class="tk-val">translateY(-3px)</span>; <span class="tk-attr">box-shadow</span>: <span class="tk-val">0 8px 20px rgba(0, 0, 0, .08)</span>; }
+
+<span class="tk-sel">table</span> { <span class="tk-attr">border-collapse</span>: <span class="tk-val">collapse</span>; <span class="tk-attr">width</span>: <span class="tk-val">100%</span>; }
+<span class="tk-sel">th, td</span> { <span class="tk-attr">padding</span>: <span class="tk-val">8px 12px</span>; <span class="tk-attr">border</span>: <span class="tk-val">1px solid var(--borde)</span>; <span class="tk-attr">text-align</span>: <span class="tk-val">left</span>; }
+<span class="tk-sel">th</span> { <span class="tk-attr">background</span>: <span class="tk-val">#eef1f8</span>; }
+
+<span class="tk-sel">input, textarea</span> { <span class="tk-attr">width</span>: <span class="tk-val">100%</span>; <span class="tk-attr">padding</span>: <span class="tk-val">8px</span>; <span class="tk-attr">border</span>: <span class="tk-val">1px solid var(--borde)</span>; <span class="tk-attr">border-radius</span>: <span class="tk-val">8px</span>; <span class="tk-attr">font</span>: <span class="tk-val">inherit</span>; }
+<span class="tk-sel">button</span> {
+  <span class="tk-attr">padding</span>: <span class="tk-val">10px 22px</span>; <span class="tk-attr">border</span>: <span class="tk-val">0</span>; <span class="tk-attr">border-radius</span>: <span class="tk-val">10px</span>;
+  <span class="tk-attr">background</span>: <span class="tk-val">var(--principal)</span>; <span class="tk-attr">color</span>: <span class="tk-val">white</span>; <span class="tk-attr">font</span>: <span class="tk-val">inherit</span>; <span class="tk-attr">font-weight</span>: <span class="tk-val">600</span>; <span class="tk-attr">cursor</span>: <span class="tk-val">pointer</span>;
+}
+<span class="tk-attr">button</span>:<span class="tk-val">hover </span>{ <span class="tk-attr">opacity</span>: <span class="tk-val">.9</span>; }
+:<span class="tk-sel">focus-visible</span> { <span class="tk-attr">outline</span>: <span class="tk-val">3px solid #fbbf24</span>; <span class="tk-attr">outline-offset</span>: <span class="tk-val">2px</span>; }
+
+<span class="tk-sel">footer</span> { <span class="tk-attr">padding</span>: <span class="tk-val">24px 20px</span>; <span class="tk-attr">text-align</span>: <span class="tk-val">center</span>; <span class="tk-attr">border-top</span>: <span class="tk-val">1px solid var(--borde)</span>; }
+
+<span class="tk-sel">@media (max-width: 600px)</span> {
+<span class="tk-sel">  nav ul</span> { <span class="tk-attr">flex-direction</span>: <span class="tk-val">column</span>; <span class="tk-attr">align-items</span>: <span class="tk-val">center</span>; <span class="tk-attr">gap</span>: <span class="tk-val">8px</span>; }
+}
+<span class="tk-sel">@media (prefers-reduced-motion: reduce)</span> {
+<span class="tk-sel">  *</span> { <span class="tk-attr">transition</span>: <span class="tk-val">none !important</span>; <span class="tk-attr">scroll-behavior</span>: <span class="tk-val">auto !important</span>; }
+}</code></pre>
+</div>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Cambios pequeños y frecuentes</p>
+<p>Cambia una cosa, guarda y recarga. Si algo se rompe, sabrás exactamente qué fue. Tu mejor aliada es la herramienta de inspección: <kbd>F12</kbd> y clic derecho → <em>Inspeccionar</em>.</p>
+</div>
+
+<h2 id="revision"><span class="n">6.</span>Revisión de calidad</h2>
+<p>Antes de publicar, repasa esta lista. Cada punto corresponde a algo que aprendiste:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Revisión</th><th>Cómo comprobarlo</th></tr></thead>
+<tbody><tr><td><strong>Estructura</strong></td><td>Hay un solo <code>h1</code> y un solo <code>main</code>; los títulos no saltan de nivel.</td></tr><tr><td><strong>Imágenes</strong></td><td>Todas tienen <code>alt</code> útil (o <code>alt=""</code> si son decorativas) y pesan poco.</td></tr><tr><td><strong>Enlaces</strong></td><td>Cada enlace lleva a donde debe. Los externos abren con <code>rel="noopener"</code>.</td></tr><tr><td><strong>Formulario</strong></td><td>Cada campo tiene <code>label</code>, <code>id</code>, <code>name</code>; los obligatorios llevan <code>required</code>.</td></tr><tr><td><strong>Teclado</strong></td><td>Con <kbd>Tab</kbd> recorres todo y siempre ves dónde está el foco.</td></tr><tr><td><strong>Celular</strong></td><td>Reduce la ventana a unos 400 px: no hay desplazamiento horizontal y todo se lee.</td></tr><tr><td><strong>Contraste</strong></td><td>El texto se distingue bien del fondo, tanto en colores claros como oscuros.</td></tr><tr><td><strong>Validación</strong></td><td>Pega tu código en <a href="https://validator.w3.org/nu/" target="_blank" rel="noopener">validator.w3.org</a> y corrige los errores que indique.</td></tr></tbody>
+</table></div>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · El validador es un maestro</p>
+<p>No temas ver errores. Cada aviso del validador explica qué está mal y en qué línea. Corregirlos es de las formas más rápidas de aprender.</p>
+</div>
+
+<h2 id="publicar"><span class="n">7.</span>Publica tu página</h2>
+<p>Ya sabes cómo se hace, porque este curso está publicado de la misma forma. Con <strong>GitHub Pages</strong>:</p>
+<ol class="steps"><li>Crea un repositorio nuevo en GitHub (si quieres que sea tu sitio principal, llámalo <code>tu-usuario.github.io</code>).</li><li>Sube tus archivos: <code>index.html</code>, <code>css/</code> e <code>img/</code>.</li><li>Entra a <strong>Settings → Pages</strong>, elige <strong>Deploy from a branch</strong>, la rama <code>main</code> y la carpeta <code>/ (root)</code>. Guarda.</li><li>Espera uno o dos minutos y abre la dirección que te muestra GitHub. Prueba todos los enlaces desde ahí.</li></ol>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · Mayúsculas y rutas</p>
+<p>En GitHub Pages <code>Foto.jpg</code> y <code>foto.jpg</code> son archivos distintos. Si algo funciona en tu computadora pero no en línea, casi siempre es una diferencia de mayúsculas o de ruta.</p>
+</div>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Comparte con orgullo</p>
+<p>Pon el enlace de tu página en tus redes y en tu currículum. Una página sencilla pero tuya dice más que una lista de cursos terminados.</p>
+</div>
+
+<h2 id="siguiente"><span class="n">8.</span>Qué sigue</h2>
+<p>Terminar este curso es el comienzo. Algunas rutas posibles, de la más cercana a la más ambiciosa:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Tema</th><th>Qué aprenderás</th><th>Dónde empezar</th></tr></thead>
+<tbody><tr><td><strong>CSS avanzado</strong></td><td>Grid, animaciones, variables, diseño responsivo a fondo</td><td><a href="https://developer.mozilla.org/es/docs/Learn/CSS" target="_blank" rel="noopener">MDN: Aprende CSS</a></td></tr><tr><td><strong>JavaScript</strong></td><td>Dar comportamiento: menús que se abren, formularios que validan, juegos</td><td><a href="https://developer.mozilla.org/es/docs/Learn/JavaScript" target="_blank" rel="noopener">MDN: Aprende JavaScript</a></td></tr><tr><td><strong>Git y GitHub</strong></td><td>Guardar el historial de tu trabajo y colaborar</td><td><a href="https://docs.github.com/es" target="_blank" rel="noopener">Documentación de GitHub</a></td></tr><tr><td><strong>Accesibilidad</strong></td><td>Diseñar para que todas las personas puedan usar tu sitio</td><td><a href="https://developer.mozilla.org/es/docs/Learn/Accessibility" target="_blank" rel="noopener">MDN: Accesibilidad</a></td></tr></tbody>
+</table></div>
+<p>Y la mejor recomendación: <strong>construye cosas</strong>. Una página para tu familia, un portafolio, una carta de restaurante. Cada proyecto te enseña algo que ningún curso puede enseñarte.</p>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li>Un proyecto empieza con <strong>propósito, secciones, contenido y boceto</strong>, no con código.</li><li>Estructura de carpetas clara: <code>index.html</code>, <code>css/</code> e <code>img/</code>, con nombres en minúsculas y sin espacios.</li><li>Escribe primero el HTML semántico; el CSS viene después.</li><li>El menú de una página larga usa enlaces internos (<code>href="#id"</code>).</li><li>Un formulario necesita un servicio que reciba los datos; sin él solo se ve.</li><li>Antes de publicar: estructura, imágenes, enlaces, formulario, teclado, celular, contraste y validador.</li><li>GitHub Pages publica una carpeta de tu repositorio en línea de forma gratuita.</li><li>Seguir aprendiendo: CSS avanzado, JavaScript, Git y accesibilidad.</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">9.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td>Portafolio</td><td>Colección de tus mejores trabajos, para mostrarlos a otras personas.</td></tr><tr><td>Boceto</td><td>Dibujo rápido de cómo se organizará una página.</td></tr><tr><td><code>index.html</code></td><td>Archivo que un servidor muestra por defecto en una carpeta.</td></tr><tr><td>Validador</td><td>Herramienta que revisa que tu código HTML cumpla el estándar.</td></tr><tr><td>Despliegue</td><td>Publicar tu sitio para que cualquiera pueda verlo en internet.</td></tr><tr><td>Responsivo</td><td>Diseño que se adapta al tamaño de la pantalla.</td></tr></tbody>
+</table></div>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>¿Cuál es el primer paso de un proyecto web?</p><ul class="opts"><li><button type="button" class="opt">Escribir el CSS</button></li><li><button type="button" class="opt" data-ok>Definir el propósito y planificar las secciones</button></li><li><button type="button" class="opt">Subir los archivos a GitHub</button></li><li><button type="button" class="opt">Elegir una animación</button></li></ul><p class="explain" hidden>Planificar ahorra tiempo: sabes para quién es la página y qué debe contener antes de escribir código.</p></div>
+<div class="quiz-q"><p>¿Por qué el archivo principal se llama <code>index.html</code>?</p><ul class="opts"><li><button type="button" class="opt">Es obligatorio en HTML</button></li><li><button type="button" class="opt" data-ok>Porque los servidores lo muestran por defecto al abrir la carpeta</button></li><li><button type="button" class="opt">Porque es más rápido</button></li><li><button type="button" class="opt">Para que Google lo prefiera</button></li></ul><p class="explain" hidden>Cuando visitas una carpeta sin indicar archivo, el servidor busca <code>index.html</code>.</p></div>
+<div class="quiz-q"><p>Tu página funciona en tu PC pero en línea no se ve una imagen. ¿Qué revisas primero?</p><ul class="opts"><li><button type="button" class="opt">Si cambió el color de fondo</button></li><li><button type="button" class="opt" data-ok>Mayúsculas, minúsculas y la ruta del archivo</button></li><li><button type="button" class="opt">Si la página es demasiado larga</button></li><li><button type="button" class="opt">El tamaño del navegador</button></li></ul><p class="explain" hidden>Los servidores distinguen mayúsculas de minúsculas. <code>Foto.JPG</code> no es <code>foto.jpg</code>.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="P">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../07-introduccion-css/ejercicio.html"><small>← Anterior</small>Ejercicio: Introducción a CSS</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </div>
+
+  <footer class="site-footer">Curso de HTML · Proyecto final</footer>
+  <script src="../assets/curso.js"></script>
+</body>
+</html>
