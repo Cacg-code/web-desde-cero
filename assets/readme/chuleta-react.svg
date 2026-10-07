@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="84" viewBox="0 0 1000 84" role="img" aria-label="React: Interfaces con componentes">
+<style>.t{font-family:Segoe UI,Helvetica,Arial,sans-serif}.sh{animation:s 5s linear infinite}@keyframes s{0%{transform:translateX(-200px) skewX(-20deg)}100%{transform:translateX(1200px) skewX(-20deg)}}.pu{animation:p 3s ease-in-out infinite;transform-origin:52px 42px}@keyframes p{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}</style>
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#0ea5e9"/><stop offset="1" stop-color="#67e8f9"/></linearGradient><clipPath id="k"><rect width="1000" height="84" rx="18"/></clipPath></defs>
+<g clip-path="url(#k)"><rect width="1000" height="84" fill="#14172b"/><rect width="360" height="84" fill="url(#g)" opacity=".95"/><rect class="sh" y="0" width="70" height="84" fill="#fff" opacity=".14"/></g>
+<rect x="1.5" y="1.5" width="997" height="81" rx="17" fill="none" stroke="url(#g)" stroke-width="3"/>
+<g class="pu"><circle cx="52" cy="42" r="26" fill="#fff" opacity=".22"/><text class="t" x="52" y="54" font-size="30" font-weight="800" fill="#fff" text-anchor="middle">⚛</text></g>
+<text class="t" x="96" y="52" font-size="32" font-weight="800" fill="#fff">React</text>
+<text class="t" x="390" y="50" font-size="20" fill="#67e8f9" font-weight="600">Interfaces con componentes</text>
+<text class="t" x="972" y="50" font-size="14" fill="#9aa1c4" text-anchor="end">CHULETA</text>
+</svg>

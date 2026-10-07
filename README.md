@@ -115,7 +115,8 @@ Sigue el orden: cada curso se apoya en el anterior.
 
 <br>
 
-### 🟠 HTML
+<img src="assets/readme/chuleta-html.svg" alt="Chuleta de HTML" width="100%">
+
 
 | Para… | Usa | Ejemplo |
 |---|---|---|
@@ -130,7 +131,8 @@ Sigue el orden: cada curso se apoya en el anterior.
 | ♿ Accesibilidad | `alt` `aria-label` `role` `tabindex` | `<button aria-label="Cerrar">` |
 | 🔍 SEO | `<title>` `<meta name="description">` `og:*` | `<meta name="description" content="…">` |
 
-### 🔵 CSS
+<img src="assets/readme/chuleta-css.svg" alt="Chuleta de CSS" width="100%">
+
 
 | Para… | Usa | Ejemplo |
 |---|---|---|
@@ -143,7 +145,8 @@ Sigue el orden: cada curso se apoya en el anterior.
 | ✨ Efectos | `transition` `animation` `box-shadow` `linear-gradient` | `transition: .3s;` |
 | 🌗 Variables | `--nombre` `var()` | `:root { --color: teal; }` |
 
-### 🟡 JavaScript
+<img src="assets/readme/chuleta-js.svg" alt="Chuleta de JavaScript" width="100%">
+
 
 | Para… | Usa | Ejemplo |
 |---|---|---|
@@ -157,7 +160,8 @@ Sigue el orden: cada curso se apoya en el anterior.
 | 🌐 Asincronía | `fetch` `async` `await` | `const r = await fetch(url);` |
 | 💾 Almacenar | `localStorage` `try…catch` | `localStorage.setItem("k", "v")` |
 
-### 🔷 React
+<img src="assets/readme/chuleta-react.svg" alt="Chuleta de React" width="100%">
+
 
 | Para… | Usa | Ejemplo |
 |---|---|---|
@@ -171,7 +175,8 @@ Sigue el orden: cada curso se apoya en el anterior.
 | 🌍 Compartir datos | `createContext` · `useContext` | `const tema = useContext(Tema);` |
 | 🧠 Más hooks | `useRef` · `useReducer` | `const ref = useRef(null);` |
 
-### ⚫ Git
+<img src="assets/readme/chuleta-git.svg" alt="Chuleta de Git" width="100%">
+
 
 | Para… | Comando |
 |---|---|
@@ -181,7 +186,8 @@ Sigue el orden: cada curso se apoya en el anterior.
 | Conectar con GitHub y subir | `git remote add origin URL` → `git push -u origin main` |
 | Traer cambios | `git pull` |
 
-### ⌨️ Atajos del navegador
+<img src="assets/readme/chuleta-atajos.svg" alt="Chuleta de Atajos del navegador" width="100%">
+
 
 | Atajo | Qué hace |
 |---|---|
