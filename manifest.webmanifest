@@ -1,7 +1,7 @@
 {
   "name": "Desarrollo web desde cero",
   "short_name": "Web desde cero",
-  "description": "Cursos gratis de HTML, CSS, JavaScript y React en español.",
+  "description": "Cursos gratis de HTML, CSS, JavaScript, React, Node.js y bases de datos en español.",
   "lang": "es",
   "start_url": "./",
   "scope": "./",

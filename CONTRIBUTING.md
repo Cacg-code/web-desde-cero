@@ -8,7 +8,7 @@
 - Para cambios pequeños (erratas, enlaces, aclaraciones) puedes enviar directamente un *pull request*.
 
 ## Cómo está organizado
-- `NN-tema/`, `css/`, `javascript/`, `react/`: una carpeta por lección con `index.html` (apuntes) y `ejercicio.html`.
+- `NN-tema/`, `css/`, `javascript/`, `react/`, `node/`, `bd/`: una carpeta por lección con `index.html` (apuntes) y `ejercicio.html`.
 - `assets/estilos.css` y `assets/curso.js`: estilos y comportamiento compartidos por todas las páginas.
 - `assets/indice.json`: lista de lecciones del buscador (Ctrl+K).
 - `sitemap.xml`: mapa del sitio.

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Chuletas por curso</title>
-  <meta name="description" content="Chuletas imprimibles de HTML, CSS, JavaScript y React. Se desbloquean al completar las lecciones de cada curso.">
+  <meta name="description" content="Chuletas imprimibles de HTML, CSS, JavaScript, React, Node.js y SQL. Se desbloquean al completar las lecciones de cada curso.">
   <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/chuletas/">
   <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
   <link rel="manifest" href="../manifest.webmanifest">
@@ -37,7 +37,7 @@
   <main class="wrap" id="contenido">
     <span class="eyebrow">Recompensa · Imprimible</span>
     <h1>Chuletas por curso</h1>
-    <p class="route-intro">Cada chuleta se desbloquea al completar las 11 lecciones de su curso. Es un incentivo de motivación: tu progreso se guarda solo en tu navegador, así que no es una acreditación. Puedes imprimirla o guardarla como PDF.</p>
+    <p class="route-intro">Cada chuleta se desbloquea al completar las lecciones de su curso (11 en HTML, CSS, JavaScript y React; 8 en Node.js y Bases de datos). Es un incentivo de motivación: tu progreso se guarda solo en tu navegador, así que no es una acreditación. Puedes imprimirla o guardarla como PDF.</p>
     <p class="noprint"><button type="button" class="btn" onclick="window.print()">🖨️ Imprimir / guardar PDF</button></p>
 
     <section class="sheet" data-prefix="" data-name="HTML">
@@ -125,6 +125,43 @@
       </div>
       <div class="lock"><p>🔒 Completa las 11 lecciones de React para ver esta chuleta<br><small data-count></small></p></div>
     </section>
+    <section class="sheet" data-prefix="node-" data-name="Node.js" data-need="8">
+      <h2>🟢 Node.js</h2>
+      <div class="grid">
+        <dl>
+          <dt>node app.js</dt><dd>Ejecuta un archivo JavaScript fuera del navegador.</dd>
+          <dt>import fs from "node:fs"</dt><dd>Módulos: ES Modules (import) o CommonJS (require).</dd>
+          <dt>fs · path</dt><dd>Leer y escribir archivos; armar rutas sin errores.</dd>
+          <dt>npm init · npm install</dt><dd>Crea package.json e instala paquetes.</dd>
+        </dl>
+        <dl>
+          <dt>app.get("/", (req, res) =&gt; …)</dt><dd>Ruta de Express; app.listen(PORT) enciende el servidor.</dd>
+          <dt>GET · POST · PUT · DELETE</dt><dd>Verbos de una API REST y sus códigos (200, 201, 404).</dd>
+          <dt>process.env.PORT</dt><dd>Variables de entorno; nunca subas secretos a Git.</dd>
+          <dt>try…catch + middleware de errores</dt><dd>Valida la entrada y no muestres errores internos.</dd>
+        </dl>
+      </div>
+      <div class="lock"><p>🔒 Completa las 8 lecciones de Node.js para ver esta chuleta<br><small data-count></small></p></div>
+    </section>
+
+    <section class="sheet" data-prefix="bd-" data-name="SQL" data-need="8">
+      <h2>🟣 Bases de datos (SQL)</h2>
+      <div class="grid">
+        <dl>
+          <dt>SELECT … FROM … WHERE</dt><dd>Lee filas; ORDER BY ordena y LIMIT recorta.</dd>
+          <dt>INSERT INTO t (a) VALUES (…)</dt><dd>Agrega filas.</dd>
+          <dt>UPDATE t SET a = … WHERE …</dt><dd>Cambia filas; sin WHERE cambia TODAS.</dd>
+          <dt>DELETE FROM t WHERE …</dt><dd>Borra filas; sin WHERE las borra todas.</dd>
+        </dl>
+        <dl>
+          <dt>CREATE TABLE · PRIMARY KEY</dt><dd>Diseña tablas con tipos y clave primaria.</dd>
+          <dt>JOIN … ON a.id = b.a_id</dt><dd>Une tablas relacionadas por una clave.</dd>
+          <dt>GROUP BY · COUNT · SUM</dt><dd>Agrupa y resume datos.</dd>
+          <dt>Consultas con parámetros</dt><dd>Nunca pegues texto del usuario en el SQL: evita la inyección.</dd>
+        </dl>
+      </div>
+      <div class="lock"><p>🔒 Completa las 8 lecciones de Bases de datos para ver esta chuleta<br><small data-count></small></p></div>
+    </section>
   </main>
 
   <footer class="site-footer">Chuletas · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
@@ -132,9 +169,9 @@
   <script>
     (function () {
       document.querySelectorAll('.sheet').forEach(function (s) {
-        var pre = s.getAttribute('data-prefix'), n = 0;
-        for (var i = 1; i <= 11; i++) { try { if (localStorage.getItem('leccion:' + pre + ('0' + i).slice(-2)) === '1') n++; } catch (e) {} }
-        if (n < 11) { s.classList.add('locked'); s.querySelector('[data-count]').textContent = 'Llevas ' + n + ' de 11'; }
+        var pre = s.getAttribute('data-prefix'), need = +s.getAttribute('data-need') || 11, n = 0;
+        for (var i = 1; i <= need; i++) { try { if (localStorage.getItem('leccion:' + pre + ('0' + i).slice(-2)) === '1') n++; } catch (e) {} }
+        if (n < need) { s.classList.add('locked'); s.querySelector('[data-count]').textContent = 'Llevas ' + n + ' de ' + need; }
       });
     })();
   </script>

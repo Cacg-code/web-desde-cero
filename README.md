@@ -16,10 +16,12 @@
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
 ![React](https://img.shields.io/badge/React-087EA4?style=for-the-badge&logo=react&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node.js-15803d?style=for-the-badge&logo=nodedotjs&logoColor=white)
+![SQL](https://img.shields.io/badge/SQL-7c3aed?style=for-the-badge&logo=postgresql&logoColor=white)
 ![Gratis](https://img.shields.io/badge/100%25-Gratis-16a34a?style=for-the-badge)
 ![Sin instalación](https://img.shields.io/badge/Sin%20instalaci%C3%B3n-4f46e5?style=for-the-badge)
 
-*Se abre en tu navegador. Sin cuentas, sin descargas, sin instalar nada.*
+*Se abre en tu navegador. Sin cuentas, sin descargas, sin instalar nada. Instalable como app y con progreso, niveles y rachas.*
 
 <img src="assets/readme/cifras.svg" alt="6 cursos, 60 lecciones, 6 proyectos, unas 75 horas, gratis" width="100%">
 
@@ -30,6 +32,7 @@
   <a href="#-míralo-en-acción"><b>En acción</b></a> ·
   <a href="#️-ruta"><b>Ruta</b></a> ·
   <a href="#-cada-lección"><b>Lección</b></a> ·
+  <a href="#-progreso-y-recompensas"><b>Recompensas</b></a> ·
   <a href="#-chuleta"><b>Chuleta</b></a> ·
   <a href="#-faq"><b>FAQ</b></a> ·
   <a href="#-contribuir"><b>Contribuir</b></a>
@@ -65,6 +68,12 @@ Sigue el orden: cada curso se apoya en el anterior.
 
 <img src="assets/readme/demos3.svg" alt="React en vivo y estado con useState" width="100%">
 <img src="assets/gif/react-editor.gif" alt="Editor de React con resultado instantáneo" width="47%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="assets/gif/react-estado.gif" alt="Estado de React con useState" width="47%">
+
+<br><br><br>
+
+**🟣 SQL con simulador interactivo** &nbsp;·&nbsp; **🏅 Panel de progreso, retos y recompensas**
+
+<img src="assets/readme/captura-sql.png" alt="Simulador de consultas SELECT en el curso de Bases de datos" width="47%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="assets/readme/captura-progreso.png" alt="Panel Mi progreso con nivel, racha, reto del día y temas" width="47%">
 
 </div>
 
@@ -130,10 +139,22 @@ Sigue el orden: cada curso se apoya en el anterior.
 
 </details>
 
+## 🎮 Progreso y recompensas
+
+<div align="center">
+
+🏅 **XP y niveles** (8 títulos) &nbsp;·&nbsp; 🔥 **Rachas** con 🛡️ escudos &nbsp;·&nbsp; 🎯 **Meta semanal**<br>
+🧠 **Reto del día** (+25 XP) &nbsp;·&nbsp; 🎨 **Temas y avatares** que se desbloquean al subir de nivel<br>
+📄 **Chuletas imprimibles** al terminar un curso &nbsp;·&nbsp; 📤 **Insignia para compartir** &nbsp;·&nbsp; 💾 **Código de respaldo**
+
+</div>
+
+Pulsa el chip de XP de la barra superior para abrir **Mi progreso**. Todo se guarda en tu navegador: es motivación, **no una acreditación** ni un certificado.
+
 ## 🧾 Chuleta
 
 <details>
-<summary><b>📋 Abrir la chuleta (HTML · CSS · JavaScript · React · Git)</b></summary>
+<summary><b>📋 Abrir la chuleta (HTML · CSS · JavaScript · React · Node.js · SQL · Git)</b></summary>
 
 <br>
 
@@ -225,6 +246,32 @@ Sigue el orden: cada curso se apoya en el anterior.
 </details>
 
 
+### 🟢 Node.js
+
+| Para… | Usa | Ejemplo |
+|---|---|---|
+| ▶️ Ejecutar un archivo | `node` | `node app.js` |
+| 📦 Módulos | `require` · `import` | `import fs from "node:fs";` |
+| 📁 Archivos y rutas | `fs` · `path` | `fs.readFileSync("a.txt", "utf8")` |
+| 📚 Paquetes | `npm init` · `npm install` | `npm install express` |
+| 🌐 Servidor | `express()` · `app.listen` | `app.get("/", (req, res) => res.send("Hola"));` |
+| 🔌 API REST | `GET` `POST` `PUT` `DELETE` | `app.post("/tareas", crear);` |
+| 🔐 Variables secretas | `process.env` | `process.env.PORT` |
+| 🛡️ Errores | `try…catch` · middleware | `res.status(400).json({ error: "…" })` |
+
+### 🟣 SQL
+
+| Para… | Usa | Ejemplo |
+|---|---|---|
+| 🔎 Leer | `SELECT` `FROM` `WHERE` | `SELECT * FROM clientes WHERE edad > 18;` |
+| ➕ Insertar | `INSERT INTO` | `INSERT INTO clientes (nombre) VALUES ('Ana');` |
+| ✏️ Actualizar | `UPDATE` `SET` | `UPDATE clientes SET edad = 30 WHERE id = 1;` |
+| 🗑️ Borrar | `DELETE` | `DELETE FROM clientes WHERE id = 1;` |
+| 🧱 Crear tabla | `CREATE TABLE` `PRIMARY KEY` | `CREATE TABLE t (id INTEGER PRIMARY KEY);` |
+| 🔗 Unir tablas | `JOIN` `ON` | `SELECT * FROM pedidos p JOIN clientes c ON c.id = p.cliente_id;` |
+| 📊 Resumir | `GROUP BY` `COUNT` `SUM` | `SELECT cliente_id, COUNT(*) FROM pedidos GROUP BY cliente_id;` |
+| 🛡️ Evitar inyección | consultas con parámetros | `db.query("… WHERE id = $1", [id])` |
+
 <img src="assets/readme/chuleta-git.svg" alt="Chuleta de Git" width="100%">
 
 <img src="assets/readme/chuleta-git-tarjetas.svg" alt="Tarjetas de la chuleta de git" width="100%">
@@ -270,7 +317,7 @@ Sigue el orden: cada curso se apoya en el anterior.
 <details>
 <summary><b>¿Necesito saber programar?</b></summary>
 
-<br>No. El curso de HTML empieza desde cero y no asume nada. CSS pide haber hecho HTML, y JavaScript pide saber maquetar una página React pide saber JavaScript (funciones, arrays y objetos), Node.js pide JavaScript y Bases de datos solo pide ganas (conviene Node.js para la lección de SQLite); todos lo indican al inicio.
+<br>No. El curso de HTML empieza desde cero y no asume nada. CSS pide haber hecho HTML, JavaScript pide saber maquetar una página, React pide saber JavaScript (funciones, arrays y objetos), Node.js pide JavaScript y Bases de datos no exige nada previo (en la lección de SQLite se instala una herramienta); todos lo indican al inicio.
 </details>
 
 <details>
@@ -286,7 +333,7 @@ Sigue el orden: cada curso se apoya en el anterior.
 
 - ✅ Funciona sin cuentas y nadie más ve tu avance.
 - ✅ Se conserva aunque cierres la pestaña o apagues la computadora.
-- ⚠️ **No se sincroniza**: si cambias de navegador, dispositivo o perfil, empiezas de cero.
+- ⚠️ **No se sincroniza**: puedes pasarlo con el código de respaldo del panel «Mi progreso». Si cambias de navegador, dispositivo o perfil, empiezas de cero.
 - ⚠️ **Se borra** si limpias los datos del sitio o las cookies, o si usas una ventana privada.
 - ⚠️ Si abres el curso desde tu carpeta (`file://`) y desde la web, son dos progresos distintos.
 
@@ -296,7 +343,7 @@ Si el navegador bloquea el almacenamiento, el curso sigue funcionando; solo que 
 <details>
 <summary><b>¿Funciona sin internet?</b></summary>
 
-<br>Sí. Clona el repositorio (o descárgalo en ZIP) y abre `index.html` con doble clic. Solo los ejemplos que consultan una API externa (lección de asincronía) necesitan conexión.
+<br>En parte. El sitio se puede **instalar como app** (menú del navegador → «Instalar») y las páginas que ya visitaste se abren sin conexión. También puedes clonar el repositorio (o descargarlo en ZIP) y abrir `index.html` con doble clic. Los ejemplos que consultan una API externa y los ejercicios de Node.js y SQL en tu computadora necesitan conexión o instalar Node.js.
 </details>
 
 <details>
@@ -335,10 +382,14 @@ cd PRACTICAS-HTML
 <summary><b>📁 Estructura</b></summary>
 
 ```text
-index.html        Portada con los 6 cursos y la ruta
+index.html        Portada con los 6 cursos, la ruta y el panel de progreso
 html/ css/ javascript/ react/ node/ bd/   Una carpeta por curso (lecciones + proyecto)
+chuletas/         Chuletas imprimibles que se desbloquean al completar un curso
 NN-nombre/        Lecciones del curso de HTML
 assets/           Estilos, script, GIFs, imágenes y multimedia
+assets/curso.js   Editor, comprobador, progreso, niveles y rachas
+manifest.webmanifest · sw.js   App instalable y modo sin conexión
+scripts/revisar.py   Revisión automática (enlaces, títulos, mapa del sitio)
 404.html · sitemap.xml
 ```
 </details>
