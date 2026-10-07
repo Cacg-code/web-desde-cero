@@ -58,6 +58,8 @@ Al terminar habrás construido **tu propia página personal** desde cero: con ta
 | 💾 | **Borrador automático** | Tu código del ejercicio se guarda mientras escribes |
 | 📈 | **Progreso guardado** | Tu avance queda marcado en tu navegador |
 | 🌗 | **Modo claro y oscuro** | Se adapta a tu pantalla |
+| ♿ | **Accesible** | Navegable con teclado, con enlace para saltar al contenido y respeta «reducir movimiento» |
+| 📱 | **Adaptable a celular** | Se ve bien en móvil, tableta y escritorio |
 
 ## 📸 Míralo por dentro
 
@@ -229,7 +231,9 @@ cd PRACTICAS-HTML
 
 ```text
 index.html                  Portada con el temario y el avance
-assets/                     Estilos (estilos.css), script (curso.js), imágenes y multimedia (audio, video, subtítulos)
+404.html                    Página de error personalizada
+sitemap.xml                 Mapa del sitio para buscadores
+assets/                     Estilos (estilos.css), script (curso.js), favicon, imágenes y multimedia (audio, video, subtítulos)
 NN-nombre-leccion/          Una carpeta por lección (index.html + ejercicio.html)
 proyecto-pagina-personal/   Proyecto final
 ```
