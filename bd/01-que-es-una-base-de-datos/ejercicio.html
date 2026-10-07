@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ejercicio · Qué es una base de datos · Curso de Bases de datos con SQL</title>
+  <meta name="description" content="Ejercicio práctico de: Qué es una base de datos.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/bd/01-que-es-una-base-de-datos/ejercicio.html">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#0e7490">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Ejercicio · Qué es una base de datos · Curso de Bases de datos con SQL">
+  <meta property="og:description" content="Ejercicio práctico de: Qué es una base de datos.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/bd/01-que-es-una-base-de-datos/ejercicio.html">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+  <style>
+    .sqlsim select, .sqlsim input[type="number"] { padding: .5rem .6rem; border: 1px solid var(--border); border-radius: 8px; background: var(--bg); color: var(--text); font: inherit; max-width: 100%; }
+    .sqlsim .sql-out { margin: 0; padding: .8rem 1rem; border-radius: 10px; background: var(--code-bg); color: var(--code-text); font-family: var(--mono); font-size: .88rem; line-height: 1.6; white-space: pre-wrap; overflow-wrap: anywhere; }
+    .sqlsim .msg { margin: 0; font-weight: 600; }
+    .sqlsim .msg.err { color: #b91c1c; }
+    .sqlsim .msg.okk { color: #15803d; }
+    :root[data-theme="dark"] .sqlsim .msg.err { color: #fca5a5; }
+    :root[data-theme="dark"] .sqlsim .msg.okk { color: #86efac; }
+    @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .sqlsim .msg.err { color: #fca5a5; } :root:not([data-theme="light"]) .sqlsim .msg.okk { color: #86efac; } }
+    .sqlsim .w-row button { cursor: pointer; }
+    .sqlsim .w-row label { display: inline-flex; gap: .4rem; align-items: center; }
+    .sqlsim td.hl, .sqlsim th.hl, .sqlsim tr.hl td { background: color-mix(in srgb, var(--accent) 22%, transparent); }
+    .sqlsim tr.gone td { text-decoration: line-through; opacity: .5; }
+    .sqlsim tr.new td { background: color-mix(in srgb, #22c55e 22%, transparent); }
+    .sqlsim tr.chg td { background: color-mix(in srgb, #f59e0b 25%, transparent); }
+  </style>
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Bases de datos con SQL</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap" id="contenido" style="max-width:820px;padding-top:2rem;padding-bottom:3rem">
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de Bases de datos con SQL</a> › <a href="./">Lección 1</a> › Ejercicio</div>
+        <h1>Ejercicio: Qué es una base de datos</h1>
+        <ul class="meta"><li>⏱ 20 minutos</li><li>📶 Nivel: principiante</li></ul>
+      </header>
+
+      <h2>Objetivo</h2>
+      <p>Preparar SQLite, cargar la tabla <code>productos</code> y reconocer en ella tablas, filas, columnas y clave primaria.</p>
+
+      <h3>Cómo se trabaja</h3>
+      <p>Trabaja en una terminal con <code>sqlite3</code> (lección 1, apartado «Prepara tu entorno»). No hace falta escribir código complejo: se trata de explorar y de reconocer las piezas de una tabla.</p>
+
+      <h2>Pasos</h2>
+      <p>Marca cada paso a medida que lo completes. Tu avance se guarda en este navegador.</p>
+      <div class="progress" aria-hidden="true"><div></div></div>
+      <p id="progreso-texto" style="color:var(--muted);font-size:.9rem" aria-live="polite"></p>
+      <ul class="checklist"><li><label><input type="checkbox" id="p1"><span>Comprueba que tienes SQLite: escribe <code>sqlite3 --version</code> y apunta el número de versión.</span></label></li><li><label><input type="checkbox" id="p2"><span>Crea el archivo <code>tienda.sql</code> con la tabla de ejemplo y cárgalo con <code>sqlite3 tienda.db</code> y <code>.read tienda.sql</code>.</span></label></li><li><label><input type="checkbox" id="p3"><span>Activa los encabezados y el modo columna (<code>.headers on</code> y <code>.mode column</code>) y escribe <code>SELECT * FROM productos;</code>.</span></label></li><li><label><input type="checkbox" id="p4"><span>Con <code>.tables</code> y <code>.schema productos</code> comprueba el nombre de la tabla y la definición de sus columnas.</span></label></li><li><label><input type="checkbox" id="p5"><span>Responde por escrito: ¿cuántas filas y cuántas columnas tiene <code>productos</code>? ¿Cuál es la clave primaria? ¿Qué columnas guardan números y cuáles texto?</span></label></li><li><label><input type="checkbox" id="p6"><span>Para cada situación, decide si encaja mejor una base <strong>relacional</strong> o <strong>NoSQL</strong> y justifica en una frase: (a) pedidos y facturas de una tienda; (b) caché temporal de sesiones; (c) un catálogo donde cada producto tiene campos muy distintos.</span></label></li></ul>
+      <details><summary>💡 Pista 1: si no funciona <code>.read</code></summary><p>Abre <code>sqlite3</code> en la <strong>misma carpeta</strong> donde guardaste <code>tienda.sql</code>, o escribe la ruta completa del archivo.</p></details>
+      <details><summary>💡 Pista 2: qué ver en <code>.schema</code></summary><p>Muestra la instrucción <code>CREATE TABLE</code> con el tipo de cada columna. Busca <code>PRIMARY KEY</code>.</p></details>
+      <details>
+        <summary>✅ Ver una solución posible</summary>
+        <p>Intenta resolverlo antes de mirar. Tu versión puede ser distinta y también correcta.</p>
+<p>Resultados esperados y respuestas:</p>
+<ul>
+<li><strong>Filas y columnas:</strong> 8 filas y 5 columnas (<code>id</code>, <code>nombre</code>, <code>categoria</code>, <code>precio</code>, <code>stock</code>).</li>
+<li><strong>Clave primaria:</strong> <code>id</code>.</li>
+<li><strong>Números:</strong> <code>id</code>, <code>precio</code> y <code>stock</code>. <strong>Texto:</strong> <code>nombre</code> y <code>categoria</code>.</li>
+<li><strong>(a)</strong> Relacional: datos relacionados (clientes, pedidos, productos) que deben ser siempre correctos.</li>
+<li><strong>(b)</strong> NoSQL clave-valor (por ejemplo Redis): son datos temporales y se leen por una clave.</li>
+<li><strong>(c)</strong> Documentos (NoSQL) puede encajar bien por la estructura variable, aunque muchos equipos también lo resuelven con una base relacional.</li>
+</ul>
+<div class="code">
+  <div class="code-head"><span>Terminal · sesión de ejemplo</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>$ sqlite3 tienda.db
+sqlite&gt; .read tienda.sql
+sqlite&gt; .headers on
+sqlite&gt; .mode column
+sqlite&gt; SELECT * FROM productos;
+id  nombre       categoria    precio  stock
+--  -----------  -----------  ------  -----
+1   Teclado      Periféricos  120     15
+...
+sqlite&gt; .tables
+productos
+sqlite&gt; .quit</code></pre>
+</div>
+
+      </details>
+      <div class="callout consejo">
+<p class="callout-title">💡 🏁 Reto extra (opcional)</p>
+<p>Crea en papel el esquema de una tabla <code>clientes</code> (nombre de cada columna y su tipo) y decide cuál sería su clave primaria.</p>
+</div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="./"><small>← Anterior</small>Volver a lección 1</a>
+        <a class="next" href="../02-consultar-con-select/"><small>Siguiente →</small>Consultar con SELECT</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de Bases de datos con SQL · Ejercicio de lección 1 · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&title=%5BError%5D%20Ejercicio%20%C2%B7%20Qu%C3%A9%20es%20una%20base%20de%20datos%20%C2%B7%20Curso%20de%20Bases%20de%20datos%20con%20SQL&pagina=https%3A//cacg-code.github.io/PRACTICAS-HTML/bd/01-que-es-una-base-de-datos/ejercicio.html" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

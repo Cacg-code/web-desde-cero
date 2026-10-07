@@ -745,12 +745,12 @@
 
     // ----- Cursos y lecciones (se leen de assets/indice.json) -----
     var COURSES = [
-      { id: 'html', pre: '', name: 'HTML', dir: '', home: 'html/', emoji: '🧱' },
-      { id: 'css', pre: 'css-', name: 'CSS', dir: 'css/', home: 'css/', emoji: '🎨' },
-      { id: 'js', pre: 'js-', name: 'JavaScript', dir: 'javascript/', home: 'javascript/', emoji: '⚙️' },
-      { id: 'react', pre: 'react-', name: 'React', dir: 'react/', home: 'react/', emoji: '⚛️' },
-      { id: 'node', pre: 'node-', name: 'Node.js', dir: 'node/', home: 'node/', emoji: '🟢' },
-      { id: 'bd', pre: 'bd-', name: 'Bases de datos', dir: 'bd/', home: 'bd/', emoji: '🗄️' }
+      { tot: 12, id: 'html', pre: '', name: 'HTML', dir: '', home: 'html/', emoji: '🧱' },
+      { tot: 12, id: 'css', pre: 'css-', name: 'CSS', dir: 'css/', home: 'css/', emoji: '🎨' },
+      { tot: 12, id: 'js', pre: 'js-', name: 'JavaScript', dir: 'javascript/', home: 'javascript/', emoji: '⚙️' },
+      { tot: 12, id: 'react', pre: 'react-', name: 'React', dir: 'react/', home: 'react/', emoji: '⚛️' },
+      { tot: 9, id: 'node', pre: 'node-', name: 'Node.js', dir: 'node/', home: 'node/', emoji: '🟢' },
+      { tot: 9, id: 'bd', pre: 'bd-', name: 'Bases de datos', dir: 'bd/', home: 'bd/', emoji: '🗄️' }
     ];
     var DIRS = { css: 1, javascript: 1, react: 1, node: 1, bd: 1, html: 1 };
     var data = null; // { courses: [{...c, lessons:[{path,title,key}]}] }
@@ -773,25 +773,84 @@
     var ymd = function (d) { d = d || new Date(); return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2); };
     var addDays = function (n) { var d = new Date(); d.setDate(d.getDate() + n); return d; };
     var activity = function () { return json('actividad', {}); };
+    var dayOn = function (k) { return !!(activity()[k] || store.get('diario:' + k) === '1' || store.get('escudo:' + k) === '1'); };
     var streaks = function () {
       var a = activity(), cur = 0, d = 0;
-      if (!a[ymd(addDays(0))]) d = -1; // si hoy aún no estudias, la racha de ayer sigue viva
-      while (a[ymd(addDays(d))]) { cur++; d--; }
-      var days = Object.keys(a).sort(), best = 0, run = 0, prev = null;
+      if (!dayOn(ymd(addDays(0)))) d = -1; // si hoy aún no estudias, la racha de ayer sigue viva
+      while (dayOn(ymd(addDays(d)))) { cur++; d--; }
+      var days = store.keys().map(function (k) { var m = /^(?:diario|escudo):(\d{4}-\d\d-\d\d)$/.exec(k); return m ? m[1] : null; }).concat(Object.keys(a)).filter(function (k) { return k && dayOn(k); }).sort(), best = 0, run = 0, prev = null;
       days.forEach(function (k) {
         var t = new Date(k + 'T00:00:00');
         run = prev && Math.round((t - prev) / 864e5) === 1 ? run + 1 : 1; prev = t; if (run > best) best = run;
       });
-      return { cur: cur, best: Math.max(best, cur), todayDone: !!a[ymd()] };
+      return { cur: cur, best: Math.max(best, cur), todayDone: dayOn(ymd()) };
     };
+    var dailyWon = function () { return store.keys().filter(function (k) { return k.indexOf('diario:') === 0 && store.get(k) === '1'; }).length; };
     var lessonsDone = function () { return store.keys().filter(function (k) { return k.indexOf('leccion:') === 0 && store.get(k) === '1'; }).length; };
     var perfectQuizzes = function () { return store.keys().filter(function (k) { return k.indexOf('logro:quiz:') === 0; }).length; };
-    var courseStats = function (c) { var n = 0; c.lessons.forEach(function (l) { if (isDone(l.key)) n++; }); return { done: n, total: c.lessons.length, pct: c.lessons.length ? n / c.lessons.length : 0 }; };
-    var coursesFinished = function () { return data ? data.filter(function (c) { return courseStats(c).done === c.lessons.length; }) : []; };
-    var xpNow = function () { return lessonsDone() * 100 + perfectQuizzes() * 50 + coursesFinished().length * 300; };
+    var courseStats = function (c) { var n = 0; c.lessons.forEach(function (l) { if (isDone(l.key)) n++; }); var t = Math.max(c.tot || 0, c.lessons.length); return { done: n, total: t, pct: t ? n / t : 0 }; };
+    var coursesFinished = function () { return data ? data.filter(function (c) { return courseStats(c).done === courseStats(c).total; }) : []; };
+    var xpNow = function () { return lessonsDone() * 100 + perfectQuizzes() * 50 + coursesFinished().length * 300 + dailyWon() * 25; };
     var levelOf = function (xp) { return Math.floor(Math.sqrt(xp / 100)) + 1; };
     var TITLES = ['Curioso', 'Aprendiz', 'Explorador', 'Constructor', 'Dev junior', 'Dev', 'Maestro', 'Leyenda'];
     var AVATARS = ['🌱', '🔰', '🧭', '🛠️', '💻', '🚀', '🧙', '👑'];
+    // ----- Temas por nivel, avatares, escudos, reto diario, insignia -----
+    var SKINS = [{ id: 'base', n: 'Índigo', lv: 1, c: '#4f46e5' }, { id: 'oceano', n: 'Océano', lv: 2, c: '#0891b2' }, { id: 'atardecer', n: 'Atardecer', lv: 3, c: '#ea580c' }, { id: 'bosque', n: 'Bosque', lv: 5, c: '#15803d' }, { id: 'neon', n: 'Neón', lv: 7, c: '#c026d3' }];
+    var applySkin = function () {
+      var id = store.get('skin') || 'base', lv = levelOf(xpNow()), sk = SKINS.filter(function (x) { return x.id === id; })[0];
+      if (!sk || sk.lv > lv) id = 'base';
+      if (id === 'base') document.documentElement.removeAttribute('data-skin'); else document.documentElement.setAttribute('data-skin', id);
+    };
+    var shieldsAvail = function () { return Math.max(0, Math.floor(levelOf(xpNow()) / 3) - (+store.get('escudos_usados') || 0)); };
+    var checkShield = function () {
+      var y = ymd(addDays(-1)), yy = ymd(addDays(-2));
+      if (!dayOn(y) && dayOn(yy) && shieldsAvail() > 0) { store.set('escudo:' + y, '1'); store.set('escudos_usados', String((+store.get('escudos_usados') || 0) + 1)); say('🛡️ Tu escudo salvó tu racha de ayer'); }
+    };
+    var DAILY = [
+      ['¿Qué etiqueta HTML define el contenido principal de la página?', ['<main>', '<top>', '<body2>'], 0],
+      ['¿Qué atributo del <img> ayuda a la accesibilidad?', ['src', 'alt', 'width'], 1],
+      ['¿Qué propiedad CSS cambia el color del texto?', ['color', 'font-color', 'text-style'], 0],
+      ['¿Qué valor de display activa Flexbox?', ['block', 'flex', 'inline'], 1],
+      ['En CSS, ¿qué selector apunta a una clase?', ['#caja', '.caja', 'caja*'], 1],
+      ['¿Cómo se declara una constante en JavaScript?', ['let', 'var', 'const'], 2],
+      ['¿Qué devuelve typeof "hola"?', ['"string"', '"text"', '"char"'], 0],
+      ['¿Qué método añade un elemento al final de un array?', ['push()', 'pop()', 'shift()'], 0],
+      ['¿Qué operador compara valor y tipo en JavaScript?', ['==', '===', '='], 1],
+      ['¿Qué hook de React guarda estado en un componente?', ['useEffect', 'useState', 'useRef'], 1],
+      ['En React, ¿cómo se llama lo que recibe un componente desde fuera?', ['props', 'refs', 'hooks'], 0],
+      ['¿Qué comando de Git guarda tus cambios en el historial?', ['git push', 'git commit', 'git clone'], 1],
+      ['¿Qué comando de Git sube tus commits a GitHub?', ['git push', 'git add', 'git init'], 0],
+      ['¿Qué etiqueta crea un enlace?', ['<link>', '<a>', '<href>'], 1],
+      ['¿Qué meta es clave para que la página sea responsiva?', ['viewport', 'author', 'robots'], 0],
+      ['¿Qué método convierte un string JSON en objeto?', ['JSON.parse()', 'JSON.stringify()', 'JSON.map()'], 0],
+      ['¿Qué método de array crea un array nuevo transformando cada elemento?', ['forEach', 'map', 'find'], 1],
+      ['En SQL, ¿qué cláusula filtra filas?', ['ORDER BY', 'WHERE', 'LIMIT'], 1],
+      ['¿Qué comando de npm instala las dependencias del package.json?', ['npm install', 'npm run', 'npm init'], 0],
+      ['¿Qué código de estado HTTP significa «no encontrado»?', ['200', '404', '500'], 1],
+      ['¿Qué unidad CSS es relativa al tamaño de fuente raíz?', ['px', 'rem', 'pt'], 1],
+      ['¿Qué etiqueta es la más importante para SEO como título de la página?', ['<h1>', '<small>', '<br>'], 0]
+    ];
+    var dailyQ = function () { var n = Math.floor(new Date(ymd() + 'T00:00:00') / 864e5); return DAILY[n % DAILY.length]; };
+    var CHULETAS = BASE + '../chuletas/';
+    var titleIdx = function (lvl) { var av = store.get('avatar'); return av !== null && +av <= lvl - 1 ? +av : Math.min(lvl - 1, TITLES.length - 1); };
+    var shareImage = function () {
+      var xp = xpNow(), lvl = levelOf(xp), ti = titleIdx(lvl), s = streaks(), c = document.createElement('canvas'); c.width = 1080; c.height = 1080;
+      var g = c.getContext('2d'), ac = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#4f46e5';
+      if (ac.charAt(0) !== '#' || ac.length !== 7) ac = '#4f46e5';
+      var gr = g.createLinearGradient(0, 0, 1080, 1080); gr.addColorStop(0, '#0f1222'); gr.addColorStop(1, '#1f2440'); g.fillStyle = gr; g.fillRect(0, 0, 1080, 1080);
+      var rg = g.createRadialGradient(840, 220, 0, 840, 220, 600); rg.addColorStop(0, ac + '88'); rg.addColorStop(1, ac + '00'); g.fillStyle = rg; g.fillRect(0, 0, 1080, 1080);
+      g.fillStyle = '#fff'; g.textAlign = 'center';
+      g.font = '200px serif'; g.fillText(AVATARS[ti], 540, 330);
+      g.font = '800 64px system-ui, sans-serif'; g.fillText('Nivel ' + lvl + ' · ' + TITLES[ti], 540, 450);
+      g.font = '500 38px system-ui, sans-serif'; g.fillStyle = '#c9cdee'; g.fillText(xp + ' XP', 540, 515);
+      [[lessonsDone(), 'lecciones'], [s.best, 'mejor racha'], [unlocked().length, 'logros']].forEach(function (x, i) {
+        var cx = 240 + i * 300; g.fillStyle = 'rgba(255,255,255,.08)'; g.beginPath(); if (g.roundRect) g.roundRect(cx - 120, 600, 240, 190, 28); else g.rect(cx - 120, 600, 240, 190); g.fill();
+        g.fillStyle = '#fff'; g.font = '800 84px system-ui, sans-serif'; g.fillText(x[0], cx, 700); g.fillStyle = '#9aa1c4'; g.font = '500 30px system-ui, sans-serif'; g.fillText(x[1], cx, 755);
+      });
+      g.fillStyle = '#fff'; g.font = '800 46px system-ui, sans-serif'; g.fillText('Desarrollo web desde cero', 540, 920);
+      g.fillStyle = ac; g.font = '600 34px system-ui, sans-serif'; g.fillText('cacg-code.github.io/PRACTICAS-HTML', 540, 980);
+      return c;
+    };
     var weekCount = function () { var a = activity(), n = 0; for (var i = 0; i < 7; i++) n += a[ymd(addDays(-i))] || 0; return n; };
 
     var LOGROS = [
@@ -877,8 +936,14 @@
       });
     };
     var closePanel = function () { if (panel) panel.classList.remove('open'); if (chip) paintChip(false); };
+    var dailyHtml = function () {
+      var q = dailyQ(), st = store.get('diario:' + ymd());
+      var h = '<div class="pp-daily"><p><b>' + esc(q[0]) + '</b></p><div class="pp-dopts">';
+      q[1].forEach(function (o, i) { h += '<button type="button" class="chip' + (st && i === q[2] ? ' on' : '') + '" data-d="' + i + '"' + (st ? ' disabled' : '') + '>' + esc(o) + '</button>'; });
+      return h + '</div>' + (st === '1' ? '<p class="pp-small">✅ ¡Correcto! Vuelve mañana por otro.</p>' : st ? '<p class="pp-small">❌ La respuesta era «' + esc(q[1][q[2]]) + '». Mañana hay otro reto.</p>' : '') + '</div>';
+    };
     var renderPanel = function () {
-      var xp = xpNow(), lvl = levelOf(xp), base = Math.pow(lvl - 1, 2) * 100, nxt = Math.pow(lvl, 2) * 100, ti = Math.min(lvl - 1, TITLES.length - 1), s = streaks(), un = unlocked();
+      var xp = xpNow(), lvl = levelOf(xp), base = Math.pow(lvl - 1, 2) * 100, nxt = Math.pow(lvl, 2) * 100, ti = titleIdx(lvl), s = streaks(), un = unlocked();
       var meta = +store.get('meta') || 3, wk = weekCount(), a = activity(), nl = nextLesson();
       var week = '';
       for (var i = 6; i >= 0; i--) { var d = addDays(-i), n = a[ymd(d)] || 0; week += '<div class="pp-day' + (n ? ' on' : '') + (i === 0 ? ' today' : '') + '" title="' + n + ' lección(es)"><i style="height:' + Math.min(100, 18 + n * 28) + '%"></i><span>' + 'DLMMJVS'.charAt(d.getDay()) + '</span></div>'; }
@@ -892,15 +957,33 @@
         '<div class="progress"><div style="width:0" id="pp-xpbar"></div></div><p class="pp-small"><span id="pp-xp">0</span> XP · faltan ' + (nxt - xp) + ' para el nivel ' + (lvl + 1) + '</p></div></div>' +
         '<div class="pp-stats"><div><b id="pp-s1">0</b><span>lecciones</span></div><div><b>🔥 <span id="pp-s2">0</span></b><span>racha (días)</span></div><div><b id="pp-s3">0</b><span>mejor racha</span></div><div><b id="pp-s4">0</b><span>quizzes perfectos</span></div></div>' +
         (nl ? '<a class="btn pp-cta" href="' + BASE + '../' + nl.l.path + '">▶ Continuar: ' + esc(nl.l.title) + ' <small>(' + esc(nl.c.name) + ')</small></a>' : '<p class="pp-small">🎉 ¡Completaste todo lo disponible!</p>') +
+        '<h3>Reto del día <small>+25 XP · mantiene tu racha</small></h3>' + dailyHtml() +
+        '<h3>Apariencia <small>se desbloquea con el nivel</small></h3><div class="pp-skins">' + SKINS.map(function (k) { var ok = k.lv <= lvl; return '<button type="button" class="pp-skin' + ((store.get('skin') || 'base') === k.id && ok ? ' on' : '') + '" data-skin="' + k.id + '"' + (ok ? '' : ' disabled') + ' title="' + (ok ? k.n : 'Nivel ' + k.lv) + '"><i style="background:' + k.c + '"></i>' + (ok ? k.n : '🔒 Nv ' + k.lv) + '</button>'; }).join('') + '</div>' +
+        '<div class="pp-avs">' + AVATARS.map(function (e, i) { var ok = i <= lvl - 1; return '<button type="button" class="pp-avb' + (i === ti ? ' on' : '') + '" data-av="' + i + '"' + (ok ? '' : ' disabled') + ' title="' + (ok ? TITLES[i] : 'Nivel ' + (i + 1)) + '">' + (ok ? e : '🔒') + '</button>'; }).join('') + '</div>' +
         '<h3>Meta de la semana</h3><div class="pp-goal"><div class="pp-week">' + week + '</div><div><p><b>' + Math.min(wk, 99) + '</b> de <b>' + meta + '</b> lecciones en los últimos 7 días' + (wk >= meta ? ' ✅' : '') + '</p><label>Mi meta: <select id="pp-meta">' + [1, 2, 3, 5, 7, 10].map(function (n) { return '<option' + (n === meta ? ' selected' : '') + '>' + n + '</option>'; }).join('') + '</select> lecciones por semana</label>' + (s.todayDone ? '<p class="pp-small">✔ Hoy ya estudiaste. ¡Racha a salvo!</p>' : '<p class="pp-small">' + (s.cur ? '⚠ Completa una lección hoy para mantener tu racha de ' + s.cur + '.' : 'Completa una lección hoy para empezar tu racha.') + '</p>') + '</div></div>' +
+        '<p class="pp-small">🛡️ Escudos de racha: <b>' + shieldsAvail() + '</b> · ganas uno cada 3 niveles y se usa solo si fallas un día.</p>' +
         '<h3>Mis cursos</h3><div class="pp-courses">' + courses + '</div>' +
         '<h3>Logros <small>' + un.length + ' / ' + LOGROS.length + '</small></h3><ul class="pp-logros">' + logros + '</ul>' +
+        '<h3>Chuletas y compartir</h3><div class="pp-actions pp-act0"><a class="icon-btn" href="' + CHULETAS + '">📄 Chuletas por curso</a><button type="button" class="icon-btn" id="pp-share">📤 Compartir mi insignia</button></div>' +
         '<details class="pp-backup"><summary>Respaldar o pasar mi progreso a otro dispositivo</summary><p class="pp-small">Tu progreso vive solo en este navegador. Copia el código y pégalo en el otro dispositivo (o guárdalo como respaldo).</p><textarea id="pp-code" rows="3" readonly aria-label="Código de mi progreso"></textarea><div class="pp-actions"><button type="button" class="icon-btn" id="pp-copy">Copiar código</button><button type="button" class="icon-btn" id="pp-restore">Restaurar desde el código pegado</button></div></details></div>';
       requestAnimationFrame(function () {
         countUp($('#pp-lvl', panel), lvl); countUp($('#pp-xp', panel), xp); countUp($('#pp-s1', panel), lessonsDone()); countUp($('#pp-s2', panel), s.cur); countUp($('#pp-s3', panel), s.best); countUp($('#pp-s4', panel), perfectQuizzes());
         setTimeout(function () { var b = $('#pp-xpbar', panel); if (b) b.style.width = Math.round((xp - base) / (nxt - base) * 100) + '%'; $$('.pp-course .progress > div', panel).forEach(function (x) { x.style.transition = 'width 1s'; }); }, 60);
       });
       $('.pp-close', panel).addEventListener('click', closePanel);
+      $$('.pp-dopts .chip', panel).forEach(function (b) { b.addEventListener('click', function () {
+        var ok = +b.getAttribute('data-d') === dailyQ()[2]; store.set('diario:' + ymd(), ok ? '1' : 'x');
+        if (ok) say('🎯 +25 XP · reto del día'); paintChip(ok); checkLogros(); renderPanel();
+      }); });
+      $$('.pp-skin', panel).forEach(function (b) { b.addEventListener('click', function () { store.set('skin', b.getAttribute('data-skin')); applySkin(); renderPanel(); }); });
+      $$('.pp-avb', panel).forEach(function (b) { b.addEventListener('click', function () { store.set('avatar', b.getAttribute('data-av')); renderPanel(); paintChip(false); }); });
+      $('#pp-share', panel).addEventListener('click', function () {
+        shareImage().toBlob(function (bl) {
+          var f = new File([bl], 'mi-progreso.png', { type: 'image/png' });
+          if (navigator.canShare && navigator.canShare({ files: [f] })) navigator.share({ files: [f], text: 'Mi progreso en Desarrollo web desde cero' }).catch(function () {});
+          else { var a2 = document.createElement('a'); a2.href = URL.createObjectURL(bl); a2.download = 'mi-progreso.png'; a2.click(); say('🖼️ Insignia descargada'); }
+        });
+      });
       $('#pp-meta', panel).addEventListener('change', function (e) { store.set('meta', e.target.value); renderPanel(); checkLogros(); });
       var code = $('#pp-code', panel), snapshot = function () {
         var o = {}; store.keys().forEach(function (k) { if (/^(leccion:|logro:|actividad|meta|logros|racha|tema|check:)/.test(k)) o[k] = store.get(k); });
@@ -991,7 +1074,8 @@
       });
     }
 
-    load().then(function () { paintChip(false); checkLogros(); });
+    applySkin();
+    load().then(function () { checkShield(); applySkin(); paintChip(false); checkLogros(); });
     window.__progreso = { open: openPanel };
   } catch (err) { /* opcional */ }
 })();

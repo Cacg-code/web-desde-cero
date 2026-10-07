@@ -74,7 +74,7 @@ for p in paginas:
         continue
     m = re.search(r"<h1[^>]*>(.*?)</h1>", p.read_text(encoding="utf8"), re.S)
     titulo = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", "", m.group(1))).strip() if m else rel
-    curso = next((n for pre, n in (("css/", "CSS"), ("javascript/", "JavaScript"), ("react/", "React")) if rel.startswith(pre)), "HTML")
+    curso = next((n for pre, n in (("css/", "CSS"), ("javascript/", "JavaScript"), ("react/", "React"), ("node/", "Node.js"), ("bd/", "Bases de datos")) if rel.startswith(pre)), "HTML")
     indice.append([rel[: -len("index.html")], titulo, curso])
 destino = RAIZ / "assets" / "indice.json"
 nuevo = json.dumps(indice, ensure_ascii=False, separators=(",", ":"))

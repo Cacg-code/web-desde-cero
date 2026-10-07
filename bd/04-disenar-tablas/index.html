@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lección 4: Diseñar tablas · Curso de Bases de datos con SQL</title>
+  <meta name="description" content="Diseña tus propias tablas con CREATE TABLE: claves primarias, NOT NULL, UNIQUE, CHECK, DEFAULT, ALTER TABLE y normalización básica, con un laboratorio interactivo.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/bd/04-disenar-tablas/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#0e7490">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Lección 4: Diseñar tablas · Curso de Bases de datos con SQL">
+  <meta property="og:description" content="Diseña tus propias tablas con CREATE TABLE: claves primarias, NOT NULL, UNIQUE, CHECK, DEFAULT, ALTER TABLE y normalización básica, con un laboratorio interactivo.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/bd/04-disenar-tablas/">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+  <style>
+    .sqlsim select, .sqlsim input[type="number"] { padding: .5rem .6rem; border: 1px solid var(--border); border-radius: 8px; background: var(--bg); color: var(--text); font: inherit; max-width: 100%; }
+    .sqlsim .sql-out { margin: 0; padding: .8rem 1rem; border-radius: 10px; background: var(--code-bg); color: var(--code-text); font-family: var(--mono); font-size: .88rem; line-height: 1.6; white-space: pre-wrap; overflow-wrap: anywhere; }
+    .sqlsim .msg { margin: 0; font-weight: 600; }
+    .sqlsim .msg.err { color: #b91c1c; }
+    .sqlsim .msg.okk { color: #15803d; }
+    :root[data-theme="dark"] .sqlsim .msg.err { color: #fca5a5; }
+    :root[data-theme="dark"] .sqlsim .msg.okk { color: #86efac; }
+    @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .sqlsim .msg.err { color: #fca5a5; } :root:not([data-theme="light"]) .sqlsim .msg.okk { color: #86efac; } }
+    .sqlsim .w-row button { cursor: pointer; }
+    .sqlsim .w-row label { display: inline-flex; gap: .4rem; align-items: center; }
+    .sqlsim td.hl, .sqlsim th.hl, .sqlsim tr.hl td { background: color-mix(in srgb, var(--accent) 22%, transparent); }
+    .sqlsim tr.gone td { text-decoration: line-through; opacity: .5; }
+    .sqlsim tr.new td { background: color-mix(in srgb, #22c55e 22%, transparent); }
+    .sqlsim tr.chg td { background: color-mix(in srgb, #f59e0b 25%, transparent); }
+  </style>
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Bases de datos con SQL</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap lesson-layout" id="contenido">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#create">CREATE TABLE: crear una tabla</a></li><li><a href="#restricciones">Las restricciones de columna</a></li><li><a href="#claves">Elegir la clave primaria</a></li><li><a href="#alter">Modificar y eliminar tablas</a></li><li><a href="#normalizacion">Normalización básica: un dato, un lugar</a></li><li><a href="#nombres">Buenos nombres y hábitos</a></li><li><a href="#laboratorio">Pruébalo: laboratorio de restricciones</a></li><li><a href="#errores">Errores frecuentes</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de Bases de datos con SQL</a> › Lección 4</div>
+        <h1>Diseñar tablas</h1>
+        <ul class="meta"><li>⏱ 60 minutos</li><li>📶 Nivel: principiante</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Crear tablas con <code>CREATE TABLE</code>, eligiendo tipos y restricciones.</li><li>Usar <code>PRIMARY KEY</code>, <code>NOT NULL</code>, <code>UNIQUE</code>, <code>DEFAULT</code> y <code>CHECK</code>.</li><li>Modificar y eliminar tablas con <code>ALTER TABLE</code> y <code>DROP TABLE</code>.</li><li>Aplicar la normalización básica: «un dato, un lugar».</li></ul>
+</div>
+
+<h2 id="create"><span class="n">1.</span>CREATE TABLE: crear una tabla</h2>
+
+<p>Hasta ahora usábamos una tabla ya creada. <code>CREATE TABLE</code> define una nueva: su <strong>nombre</strong> y, para cada columna, su <strong>nombre</strong>, su <strong>tipo</strong> y sus <strong>restricciones</strong>.</p>
+<div class="code">
+  <div class="code-head"><span>Estructura general</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">CREATE</span> <span class="tk-tag">TABLE</span> nombre_tabla (
+  columna1  TIPO  restricciones,
+  columna2  TIPO  restricciones,
+  ...
+);</code></pre>
+</div>
+
+<p>Un ejemplo completo: la tabla de clientes de la tienda.</p>
+<div class="code">
+  <div class="code-head"><span>Tabla clientes</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">CREATE</span> <span class="tk-tag">TABLE</span> clientes (
+  id     <span class="tk-tag">INTEGER</span> <span class="tk-tag">PRIMARY</span> <span class="tk-tag">KEY</span>,
+  nombre <span class="tk-tag">TEXT</span>    <span class="tk-tag">NOT</span> <span class="tk-tag">NULL</span>,
+  email  <span class="tk-tag">TEXT</span>    <span class="tk-tag">NOT</span> <span class="tk-tag">NULL</span> <span class="tk-tag">UNIQUE</span>,
+  edad   <span class="tk-tag">INTEGER</span> <span class="tk-tag">CHECK</span> (edad &gt;= <span class="tk-attr">18</span>),
+  pais   <span class="tk-tag">TEXT</span>    <span class="tk-tag">DEFAULT</span> <span class="tk-val">'Perú'</span>
+);</code></pre>
+</div>
+
+<p>Lee cada línea como una frase:</p>
+<ul>
+<li><code>id INTEGER PRIMARY KEY</code>: número entero que identifica cada cliente.</li>
+<li><code>nombre TEXT NOT NULL</code>: texto obligatorio.</li>
+<li><code>email TEXT NOT NULL UNIQUE</code>: obligatorio y <strong>no repetible</strong> entre clientes.</li>
+<li><code>edad INTEGER CHECK (edad &gt;= 18)</code>: si se indica, debe ser 18 o más.</li>
+<li><code>pais TEXT DEFAULT 'Perú'</code>: si no se indica, vale <code>'Perú'</code>.</li>
+</ul>
+<p>Prueba a insertar un cliente indicando solo lo necesario:</p>
+<div class="code">
+  <div class="code-head"><span>Insertar</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">INSERT</span> <span class="tk-tag">INTO</span> clientes (nombre, email, edad)
+<span class="tk-tag">VALUES</span> (<span class="tk-val">'Ana Torres'</span>, <span class="tk-val">'ana@correo.com'</span>, <span class="tk-attr">25</span>);
+
+<span class="tk-tag">SELECT</span> * <span class="tk-tag">FROM</span> clientes;</code></pre>
+</div>
+<p><strong>Resultado esperado (el país se rellenó solo)</strong></p>
+<div class="table-wrap"><table>
+<thead><tr><th>id</th><th>nombre</th><th>email</th><th>edad</th><th>pais</th></tr></thead>
+<tbody><tr><td>1</td><td>Ana Torres</td><td>ana@correo.com</td><td>25</td><td>Perú</td></tr></tbody>
+</table></div>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · Una columna por cada dato simple</p>
+<p>Cada columna guarda <strong>un solo dato</strong> de un solo tipo. Si te encuentras guardando listas separadas por comas dentro de una celda, es señal de que necesitas otra tabla (más abajo, en normalización).</p>
+</div>
+
+<h2 id="restricciones"><span class="n">2.</span>Las restricciones de columna</h2>
+
+<div class="table-wrap"><table>
+<thead><tr><th>Restricción</th><th>Qué garantiza</th><th>Ejemplo</th></tr></thead>
+<tbody>
+<tr><td><code>PRIMARY KEY</code></td><td>Identifica la fila: único y nunca vacío</td><td><code>id INTEGER PRIMARY KEY</code></td></tr>
+<tr><td><code>NOT NULL</code></td><td>La columna siempre debe tener valor</td><td><code>nombre TEXT NOT NULL</code></td></tr>
+<tr><td><code>UNIQUE</code></td><td>No hay dos filas con el mismo valor</td><td><code>email TEXT UNIQUE</code></td></tr>
+<tr><td><code>DEFAULT</code></td><td>Valor que se usa si no se indica ninguno</td><td><code>pais TEXT DEFAULT 'Perú'</code></td></tr>
+<tr><td><code>CHECK</code></td><td>Una condición que el valor debe cumplir</td><td><code>CHECK (precio &gt; 0)</code></td></tr>
+<tr><td><code>FOREIGN KEY</code></td><td>El valor debe existir en otra tabla (lección 5)</td><td><code>REFERENCES clientes(id)</code></td></tr>
+</tbody>
+</table></div>
+<p>Si una instrucción rompe una restricción, la base de datos <strong>la rechaza</strong>. Estos son los mensajes reales de SQLite para nuestra tabla <code>clientes</code>:</p>
+<div class="code">
+  <div class="code-head"><span>Email repetido (UNIQUE)</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">INSERT</span> <span class="tk-tag">INTO</span> clientes (nombre, email)
+<span class="tk-tag">VALUES</span> (<span class="tk-val">'Otra Ana'</span>, <span class="tk-val">'ana@correo.com'</span>);</code></pre>
+</div>
+<div class="code">
+  <div class="code-head"><span>Error en SQLite</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>UNIQUE constraint failed: clientes.email</code></pre>
+</div>
+<div class="code">
+  <div class="code-head"><span>Edad no permitida (CHECK)</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">INSERT</span> <span class="tk-tag">INTO</span> clientes (nombre, email, edad)
+<span class="tk-tag">VALUES</span> (<span class="tk-val">'Luis'</span>, <span class="tk-val">'luis@correo.com'</span>, <span class="tk-attr">15</span>);</code></pre>
+</div>
+<div class="code">
+  <div class="code-head"><span>Error en SQLite</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>CHECK constraint failed: edad &gt;= 18</code></pre>
+</div>
+<div class="code">
+  <div class="code-head"><span>Sin nombre (NOT NULL)</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">INSERT</span> <span class="tk-tag">INTO</span> clientes (email)
+<span class="tk-tag">VALUES</span> (<span class="tk-val">'sin-nombre@correo.com'</span>);</code></pre>
+</div>
+<div class="code">
+  <div class="code-head"><span>Error en SQLite</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>NOT NULL constraint failed: clientes.nombre</code></pre>
+</div>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Deja que la base de datos valide</p>
+<p>Valida también en tu aplicación para dar mensajes amables, pero <strong>no confíes solo en eso</strong>: las restricciones de la tabla son la última defensa y protegen los datos aunque haya un error en el código o alguien escriba directamente en la base.</p>
+</div>
+
+<h3>Identificadores automáticos</h3>
+<p>Como vimos, las claves <code>id</code> suelen numerarse solas. La sintaxis depende del motor:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Motor</th><th>Cómo declararlo</th></tr></thead>
+<tbody>
+<tr><td><strong>SQLite</strong></td><td><code>id INTEGER PRIMARY KEY</code> (se autonumera). Añadir <code>AUTOINCREMENT</code> evita reutilizar ids borrados, pero rara vez hace falta.</td></tr>
+<tr><td><strong>PostgreSQL</strong></td><td><code>id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY</code> (o el clásico <code>SERIAL PRIMARY KEY</code>).</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="claves"><span class="n">3.</span>Elegir la clave primaria</h2>
+
+<p>Una buena clave primaria cumple tres cosas: es <strong>única</strong>, <strong>nunca está vacía</strong> y <strong>no cambia</strong>. Por eso suele usarse una <strong>clave sustituta</strong> (<em>surrogate key</em>): un número <code>id</code> sin significado propio, generado por la base de datos.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Opción</th><th>Problema o ventaja</th></tr></thead>
+<tbody>
+<tr><td>El <strong>email</strong> como clave</td><td>La gente cambia de correo; habría que actualizar todo lo que lo use</td></tr>
+<tr><td>El <strong>nombre</strong> como clave</td><td>Se repite («Ana Torres» puede haber dos) y puede tener erratas</td></tr>
+<tr><td>Un <strong><code>id</code> numérico</strong></td><td>Nunca cambia, es corto y rápido de comparar</td></tr>
+</tbody>
+</table></div>
+<p>Esto no impide que el correo siga siendo único: se consigue con <code>UNIQUE</code>, como en la tabla <code>clientes</code>. Clave primaria (identifica) y valor único (evita repetidos) son dos ideas distintas.</p>
+
+<h2 id="alter"><span class="n">4.</span>Modificar y eliminar tablas</h2>
+
+<p>El diseño cambia con el tiempo. Estas instrucciones funcionan en SQLite y en PostgreSQL:</p>
+<div class="code">
+  <div class="code-head"><span>ALTER TABLE y DROP TABLE</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-com">-- Añadir una columna</span>
+<span class="tk-tag">ALTER</span> <span class="tk-tag">TABLE</span> clientes <span class="tk-tag">ADD</span> <span class="tk-tag">COLUMN</span> telefono <span class="tk-tag">TEXT</span>;
+
+<span class="tk-com">-- Renombrar una tabla</span>
+<span class="tk-tag">ALTER</span> <span class="tk-tag">TABLE</span> clientes <span class="tk-tag">RENAME</span> <span class="tk-tag">TO</span> usuarios;
+
+<span class="tk-com">-- Eliminar la tabla y TODOS sus datos</span>
+<span class="tk-tag">DROP</span> <span class="tk-tag">TABLE</span> usuarios;
+
+<span class="tk-com">-- Variantes seguras: no fallan si ya existe / si no existe</span>
+<span class="tk-tag">CREATE</span> <span class="tk-tag">TABLE</span> <span class="tk-tag">IF</span> <span class="tk-tag">NOT</span> <span class="tk-tag">EXISTS</span> clientes (id <span class="tk-tag">INTEGER</span> <span class="tk-tag">PRIMARY</span> <span class="tk-tag">KEY</span>);
+<span class="tk-tag">DROP</span> <span class="tk-tag">TABLE</span> <span class="tk-tag">IF</span> <span class="tk-tag">EXISTS</span> clientes;</code></pre>
+</div>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · DROP TABLE no pregunta ni se deshace fácilmente</p>
+<p>Elimina la tabla completa con todos sus datos. Hazlo solo si estás seguro y con copia de seguridad (lección 8). Además, al <strong>añadir una columna</strong> a una tabla con filas, esta se rellena con <code>NULL</code> (o con su <code>DEFAULT</code>): si pones <code>NOT NULL</code> necesitas un <code>DEFAULT</code>.</p>
+</div>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · SQLite modifica menos que PostgreSQL</p>
+<p>SQLite solo permite cambios sencillos con <code>ALTER TABLE</code> (añadir, renombrar y, desde la versión 3.35, eliminar columnas). Cambiar el tipo de una columna o añadir restricciones a una existente suele exigir crear una tabla nueva y copiar los datos. PostgreSQL permite mucho más, por ejemplo <code>ALTER TABLE t ALTER COLUMN c TYPE …</code>.</p>
+</div>
+
+<h2 id="normalizacion"><span class="n">5.</span>Normalización básica: un dato, un lugar</h2>
+
+<p>Diseñar bien una tabla es decidir <strong>qué datos van en cada tabla</strong>. La <strong>normalización</strong> es un conjunto de reglas para evitar la repetición y los errores que causa. Veamos un diseño ingenuo: todo en una sola tabla de pedidos.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>pedido</th><th>cliente</th><th>email</th><th>productos</th><th>total</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>Ana Torres</td><td>ana@correo.com</td><td>Teclado, Ratón</td><td>165.50</td></tr>
+<tr><td>2</td><td>Ana Torres</td><td>ana@correo.com</td><td>Webcam</td><td>150.00</td></tr>
+<tr><td>3</td><td>Luis Pérez</td><td>luis@correo.com</td><td>Monitor 4K, Cable HDMI</td><td>914.00</td></tr>
+</tbody>
+</table></div>
+<p>Problemas de esta tabla:</p>
+<ul>
+<li><strong>Varios valores en una celda</strong> (<code>Teclado, Ratón</code>): no se puede buscar, contar ni sumar bien. Rompe la <strong>primera forma normal (1FN)</strong>: cada celda debe tener <em>un solo valor</em>.</li>
+<li><strong>Datos repetidos</strong>: el nombre y el correo de Ana están en dos filas. Si cambia de correo, hay que corregirlo en todas, y si se olvida una, los datos se contradicen.</li>
+<li><strong>Datos que dependen de otra cosa:</strong> el nombre y el correo dependen del <em>cliente</em>, no del pedido. Es lo que corrigen la <strong>2FN y 3FN</strong>: cada dato debe depender de la clave de <em>su</em> tabla y de nada más.</li>
+</ul>
+<p>La solución es repartir los datos en tablas, cada una sobre <strong>una sola cosa</strong>, enlazadas con claves:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Tabla</th><th>Columnas</th><th>Guarda</th></tr></thead>
+<tbody>
+<tr><td><code>clientes</code></td><td><code>id</code>, <code>nombre</code>, <code>email</code></td><td>Cada cliente, una sola vez</td></tr>
+<tr><td><code>productos</code></td><td><code>id</code>, <code>nombre</code>, <code>categoria</code>, <code>precio</code>, <code>stock</code></td><td>Cada producto, una sola vez</td></tr>
+<tr><td><code>pedidos</code></td><td><code>id</code>, <code>cliente_id</code>, <code>fecha</code></td><td>Cada pedido y quién lo hizo</td></tr>
+<tr><td><code>lineas_pedido</code></td><td><code>pedido_id</code>, <code>producto_id</code>, <code>cantidad</code></td><td>Qué productos tiene cada pedido, y cuántos</td></tr>
+</tbody>
+</table></div>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Regla práctica</p>
+<p>Si repites el mismo dato en muchas filas, o metes una lista en una celda, <strong>crea otra tabla</strong>. «Un dato, un lugar»: cada hecho se guarda una sola vez y se enlaza donde haga falta. En la próxima lección usaremos <code>JOIN</code> para volver a juntar estas tablas al consultar.</p>
+</div>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · No hace falta obsesionarse</p>
+<p>Las formas normales llegan hasta la 5FN, pero en la práctica cumplir hasta la <strong>tercera</strong> da diseños limpios para casi cualquier aplicación. En ocasiones se duplica un dato a propósito para acelerar consultas (<em>desnormalizar</em>), pero se hace con criterio, no por desorden.</p>
+</div>
+
+<h2 id="nombres"><span class="n">6.</span>Buenos nombres y hábitos</h2>
+
+<ul>
+<li><strong>Tablas en plural</strong> y en minúsculas: <code>clientes</code>, <code>productos</code>.</li>
+<li><strong>Columnas en minúsculas con guion bajo</strong>: <code>fecha_nacimiento</code>, <code>cliente_id</code>. Sin espacios ni tildes ni la letra «ñ», para evitar tener que usar comillas.</li>
+<li><strong>Evita palabras reservadas</strong> como <code>order</code>, <code>user</code> o <code>group</code> como nombre de tabla (por eso se usa <code>pedidos</code> y <code>usuarios</code>).</li>
+<li><strong>Clave foránea</strong>: <code>otra_tabla_en_singular_id</code>, como <code>cliente_id</code>.</li>
+<li><strong>Guarda el script</strong> de creación en un archivo <code>.sql</code> (como <code>tienda.sql</code>) y versiónalo con Git: es la documentación viva de tu diseño.</li>
+</ul>
+
+<h2 id="laboratorio"><span class="n">7.</span>Pruébalo: laboratorio de restricciones</h2>
+
+<p>Activa o desactiva restricciones en la tabla <code>usuarios</code> y mira cómo cambia la instrucción <code>CREATE TABLE</code>. Luego intenta insertar filas y observa cuándo la base de datos las rechaza. Hay ya un usuario guardado: <code>Ana</code> con id 1 y el correo <code>ana@mail.com</code>. (Es una simulación: usa los mismos mensajes de error que SQLite.)</p>
+<div class="widget sqlsim" data-sim="constraints">
+  <div class="w-head">🔒 Laboratorio de restricciones</div>
+  <div class="w-body">
+    <div class="w-row" role="group" aria-label="Restricciones de la tabla">
+      <label><input type="checkbox" id="k-pk" checked> id PRIMARY KEY</label>
+      <label><input type="checkbox" id="k-nn" checked> nombre NOT NULL</label>
+      <label><input type="checkbox" id="k-uq" checked> email UNIQUE</label>
+      <label><input type="checkbox" id="k-ck" checked> edad CHECK (edad &gt;= 18)</label>
+    </div>
+    <pre class="sql-out" id="k-create"></pre>
+    <div class="w-row">
+      <label for="k-id">id</label><input id="k-id" type="number" style="max-width:6rem" placeholder="auto">
+      <label for="k-nombre">nombre</label><input id="k-nombre" type="text" style="max-width:9rem" autocomplete="off">
+      <label for="k-email">email</label><input id="k-email" type="text" style="max-width:12rem" autocomplete="off" value="ana@mail.com">
+      <label for="k-edad">edad</label><input id="k-edad" type="number" style="max-width:6rem" value="15">
+    </div>
+    <div class="w-row"><button class="btn" type="button" id="k-ins">Insertar fila</button><button class="icon-btn" type="button" id="k-reset">Reiniciar</button></div>
+    <p class="msg" id="k-msg" aria-live="polite"></p>
+    <div class="table-wrap" style="margin:0"><table id="k-tabla"><thead><tr><th>id</th><th>nombre</th><th>email</th><th>edad</th></tr></thead><tbody></tbody></table></div>
+  </div>
+</div>
+<div class="callout ejemplo">
+<p class="callout-title">🧪 Ejemplo · Experimentos</p>
+<p>1) Con todo activado, inserta con el correo <code>ana@mail.com</code>: <code>UNIQUE</code> lo rechaza. 2) Desactiva <code>UNIQUE</code> y repite: ahora entra y tendrás dos usuarios con el mismo correo. 3) Deja el nombre vacío con <code>NOT NULL</code> activo y sin él. 4) Pon edad 15 con y sin <code>CHECK</code>. 5) Escribe <code>1</code> en id con y sin <code>PRIMARY KEY</code>.</p>
+</div>
+
+<h2 id="errores"><span class="n">8.</span>Errores frecuentes</h2>
+<ul><li><strong>Olvidar <code>NOT NULL</code> en columnas obligatorias:</strong> acaban entrando filas sin nombre o sin correo.</li><li><strong>Usar el email o el nombre como clave primaria</strong> en lugar de un <code>id</code>.</li><li><strong>Guardar listas separadas por comas en una celda</strong> (<code>'Teclado, Ratón'</code>): crea otra tabla.</li><li><strong>Repetir los datos del cliente en cada pedido:</strong> si cambian, quedan versiones contradictorias.</li><li><strong>Coma sobrante</strong> después de la última columna en <code>CREATE TABLE</code>, o falta de coma entre dos columnas: error de sintaxis.</li><li><strong>Ejecutar <code>CREATE TABLE</code> dos veces:</strong> la segunda falla porque la tabla ya existe; usa <code>IF NOT EXISTS</code> o <code>DROP TABLE IF EXISTS</code> antes.</li><li><strong>Usar <code>DROP TABLE</code> sin copia</strong>: elimina la tabla y todo su contenido.</li><li><strong>Copiar sintaxis de un motor a otro</strong> (<code>AUTOINCREMENT</code>, <code>SERIAL</code>…): comprueba la documentación del motor que usas.</li></ul>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li><code>CREATE TABLE nombre (columna TIPO restricciones, …);</code> define la estructura: columnas, tipos y reglas.</li><li><code>PRIMARY KEY</code> identifica la fila; <code>NOT NULL</code> obliga a dar valor; <code>UNIQUE</code> impide repetidos; <code>DEFAULT</code> da un valor inicial; <code>CHECK</code> exige una condición.</li><li>Usa un <code>id</code> numérico como clave primaria y <code>UNIQUE</code> para datos que no deben repetirse (como el email).</li><li><code>ALTER TABLE</code> modifica una tabla; <code>DROP TABLE</code> la elimina con todos sus datos.</li><li>Normalizar es repartir los datos en tablas: <strong>un dato, un lugar</strong>; sin listas en una celda ni datos repetidos.</li><li>La sintaxis de los identificadores automáticos difiere: <code>INTEGER PRIMARY KEY</code> en SQLite y <code>GENERATED ALWAYS AS IDENTITY</code> en PostgreSQL.</li><li>Nombres en minúsculas con guion bajo, tablas en plural y claves foráneas como <code>cliente_id</code>.</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">9.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td>CREATE TABLE</td><td>Instrucción que crea una tabla indicando sus columnas, tipos y restricciones.</td></tr><tr><td>PRIMARY KEY</td><td>Restricción que identifica cada fila: valor único y nunca vacío.</td></tr><tr><td>NOT NULL</td><td>Restricción que obliga a que la columna siempre tenga valor.</td></tr><tr><td>UNIQUE</td><td>Restricción que impide valores repetidos en una columna.</td></tr><tr><td>CHECK</td><td>Restricción con una condición que cada valor debe cumplir.</td></tr><tr><td>Clave sustituta</td><td>Identificador sin significado propio (un <code>id</code> numérico) que genera la base de datos.</td></tr><tr><td>Normalización</td><td>Proceso de organizar las tablas para evitar datos repetidos y contradictorios.</td></tr><tr><td>Primera forma normal (1FN)</td><td>Cada celda contiene un único valor, nunca una lista.</td></tr></tbody>
+</table></div>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>¿Qué restricción impide que dos clientes tengan el mismo email?</p><ul class="opts"><li><button type="button" class="opt"><code>NOT NULL</code></button></li><li><button type="button" class="opt" data-ok><code>UNIQUE</code></button></li><li><button type="button" class="opt"><code>DEFAULT</code></button></li><li><button type="button" class="opt"><code>CHECK</code></button></li></ul><p class="explain" hidden><code>UNIQUE</code> rechaza valores repetidos. <code>NOT NULL</code> solo obliga a que haya valor.</p></div>
+<div class="quiz-q"><p>¿Qué significa <code>precio NUMERIC CHECK (precio &gt; 0)</code>?</p><ul class="opts"><li><button type="button" class="opt">El precio puede ser negativo</button></li><li><button type="button" class="opt" data-ok>El precio debe ser mayor que 0</button></li><li><button type="button" class="opt">El precio es obligatorio, pero acepta cualquier valor</button></li><li><button type="button" class="opt">El precio se calcula solo</button></li></ul><p class="explain" hidden><code>CHECK</code> exige que la condición se cumpla al guardar el valor.</p></div>
+<div class="quiz-q"><p>¿Por qué es mala idea guardar <code>'Teclado, Ratón'</code> en una sola celda?</p><ul class="opts"><li><button type="button" class="opt">Porque es demasiado largo</button></li><li><button type="button" class="opt" data-ok>Porque no se puede buscar, contar ni relacionar bien: hay que usar otra tabla</button></li><li><button type="button" class="opt">Porque SQL no admite comas</button></li><li><button type="button" class="opt">No es mala idea</button></li></ul><p class="explain" hidden>Una celda debe tener un único valor (1FN). Las listas se guardan como filas en una tabla relacionada.</p></div>
+<div class="quiz-q"><p>¿Qué hace <code>DROP TABLE clientes;</code>?</p><ul class="opts"><li><button type="button" class="opt">Vacía la tabla pero la conserva</button></li><li><button type="button" class="opt" data-ok>Elimina la tabla y todos sus datos</button></li><li><button type="button" class="opt">Cambia el nombre de la tabla</button></li><li><button type="button" class="opt">Oculta la tabla</button></li></ul><p class="explain" hidden><code>DROP TABLE</code> borra la tabla entera. Para vaciar solo las filas se usa <code>DELETE FROM</code>.</p></div>
+<div class="quiz-q"><p>¿Cuál es la mejor clave primaria para <code>clientes</code>?</p><ul class="opts"><li><button type="button" class="opt">El nombre</button></li><li><button type="button" class="opt">El email</button></li><li><button type="button" class="opt" data-ok>Un <code>id</code> numérico generado por la base de datos</button></li><li><button type="button" class="opt">La fecha de alta</button></li></ul><p class="explain" hidden>Un <code>id</code> sustituto es único, no cambia y no depende de datos que puedan variar. El email se protege con <code>UNIQUE</code>.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="bd-04">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../03-insertar-actualizar-borrar/ejercicio.html"><small>← Anterior</small>Ejercicio de la lección 3</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de Bases de datos con SQL · Lección 4 · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&title=%5BError%5D%20Lecci%C3%B3n%204%3A%20Dise%C3%B1ar%20tablas%20%C2%B7%20Curso%20de%20Bases%20de%20datos%20con%20SQL&pagina=https%3A//cacg-code.github.io/PRACTICAS-HTML/bd/04-disenar-tablas/" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+  <script>
+
+(function () {
+  var w = document.querySelector('[data-sim="constraints"]'); if (!w) return;
+  var $ = function (s) { return w.querySelector(s); };
+  var rows;
+  function reset() { rows = [{ id: 1, nombre: 'Ana', email: 'ana@mail.com', edad: 25 }]; draw(); msg('', ''); }
+  function msg(t, c) { var m = $('#k-msg'); m.textContent = t; m.className = 'msg ' + c; }
+  function create() {
+    var pk = $('#k-pk').checked, nn = $('#k-nn').checked, uq = $('#k-uq').checked, ck = $('#k-ck').checked;
+    $('#k-create').textContent = 'CREATE TABLE usuarios (\n' +
+      '  id     INTEGER' + (pk ? ' PRIMARY KEY' : '') + ',\n' +
+      '  nombre TEXT' + (nn ? ' NOT NULL' : '') + ',\n' +
+      '  email  TEXT' + (uq ? ' UNIQUE' : '') + ',\n' +
+      '  edad   INTEGER' + (ck ? ' CHECK (edad >= 18)' : '') + '\n);';
+  }
+  function draw() {
+    $('#k-tabla tbody').innerHTML = rows.map(function (r) {
+      var c = function (v) { return v === null ? '<em>NULL</em>' : String(v).replace(/&/g, '&amp;').replace(/</g, '&lt;'); };
+      return '<tr><td>' + c(r.id) + '</td><td>' + c(r.nombre) + '</td><td>' + c(r.email) + '</td><td>' + c(r.edad) + '</td></tr>';
+    }).join('');
+  }
+  function insertar() {
+    var pk = $('#k-pk').checked, nn = $('#k-nn').checked, uq = $('#k-uq').checked, ck = $('#k-ck').checked;
+    var id = $('#k-id').value.trim(), nombre = $('#k-nombre').value.trim(), email = $('#k-email').value.trim(), edad = $('#k-edad').value.trim();
+    var f = { id: id === '' ? null : Number(id), nombre: nombre === '' ? null : nombre, email: email === '' ? null : email, edad: edad === '' ? null : Number(edad) };
+    if (f.id === null && pk) f.id = rows.reduce(function (m, r) { return Math.max(m, r.id || 0); }, 0) + 1;
+    if (nn && f.nombre === null) return msg('Error: NOT NULL constraint failed: usuarios.nombre', 'err');
+    if (pk && rows.some(function (r) { return r.id === f.id; })) return msg('Error: UNIQUE constraint failed: usuarios.id', 'err');
+    if (uq && f.email !== null && rows.some(function (r) { return r.email === f.email; })) return msg('Error: UNIQUE constraint failed: usuarios.email', 'err');
+    if (ck && f.edad !== null && !(f.edad >= 18)) return msg('Error: CHECK constraint failed: edad >= 18', 'err');
+    rows.push(f); draw();
+    msg('Fila insertada: ' + rows.length + (rows.length === 1 ? ' fila' : ' filas') + ' en la tabla.', 'okk');
+  }
+  ['#k-pk', '#k-nn', '#k-uq', '#k-ck'].forEach(function (s) { $(s).addEventListener('change', create); });
+  $('#k-ins').addEventListener('click', insertar);
+  $('#k-reset').addEventListener('click', reset);
+  create(); reset();
+})();
+
+  </script>
+</body>
+</html>

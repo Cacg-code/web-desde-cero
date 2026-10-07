@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lección 3: npm y package.json · Curso de Node.js y APIs</title>
+  <meta name="description" content="Aprende a usar npm: package.json, instalar y quitar paquetes, versiones con ^ y ~, scripts como npm run dev, package-lock.json, node_modules y .gitignore.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/node/03-npm-y-package-json/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Lección 3: npm y package.json · Curso de Node.js y APIs">
+  <meta property="og:description" content="Aprende a usar npm: package.json, instalar y quitar paquetes, versiones con ^ y ~, scripts como npm run dev, package-lock.json, node_modules y .gitignore.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/node/03-npm-y-package-json/">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de Node.js y APIs</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap lesson-layout" id="contenido">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#que-es-npm">Qué es npm y qué es un paquete</a></li><li><a href="#package-json">package.json por dentro</a></li><li><a href="#instalar">Instalar y quitar paquetes</a></li><li><a href="#versiones">Versiones: MAYOR.MENOR.PARCHE</a></li><li><a href="#scripts">Scripts: atajos para tus comandos</a></li><li><a href="#node-modules">node_modules y .gitignore</a></li><li><a href="#json">Leer un package.json con JavaScript</a></li><li><a href="#errores">Errores frecuentes</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de Node.js y APIs</a> › Lección 3</div>
+        <h1>npm y package.json</h1>
+        <ul class="meta"><li>⏱ 45 minutos</li><li>📶 Nivel: principiante</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Leer y entender un <code>package.json</code>.</li><li>Instalar y desinstalar paquetes y distinguir <code>dependencies</code> de <code>devDependencies</code>.</li><li>Interpretar versiones como <code>^5.1.0</code> y <code>~5.1.0</code>.</li><li>Crear scripts y ejecutarlos con <code>npm run</code>.</li><li>Saber qué se sube a Git y qué no (<code>node_modules</code>, <code>.env</code>).</li></ul>
+</div>
+
+<h2 id="que-es-npm"><span class="n">1.</span>Qué es npm y qué es un paquete</h2>
+
+<p>Casi nadie programa todo desde cero. Para casi cualquier necesidad (un servidor web, validar datos, manejar fechas) alguien ya escribió y publicó una biblioteca. Esas bibliotecas se llaman <strong>paquetes</strong> y viven en un registro público. <strong>npm</strong> (<em>Node Package Manager</em>) es la herramienta que viene con Node y que sirve para:</p>
+<ol class="steps"><li><strong>Descargar</strong> paquetes en tu proyecto (<code>npm install</code>).</li><li><strong>Anotar</strong> qué paquetes usa tu proyecto, y en qué versión, en <code>package.json</code>.</li><li><strong>Ejecutar comandos</strong> del proyecto con atajos (<code>npm run</code>).</li></ol>
+<p>Ya usaste npm en React cuando escribiste <code>npm install</code> y <code>npm run dev</code>: lo que aprendes aquí es lo que hay detrás de esos comandos.</p>
+
+<h2 id="package-json"><span class="n">2.</span>package.json por dentro</h2>
+
+<p>El <code>package.json</code> es la <strong>ficha del proyecto</strong>. Es un archivo JSON (comillas dobles, sin comas finales, sin comentarios) con esta pinta:</p>
+<div class="code">
+  <div class="code-head"><span>package.json</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>{
+  &quot;name&quot;: &quot;mi-api&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;description&quot;: &quot;Mi primera API con Node&quot;,
+  &quot;type&quot;: &quot;module&quot;,
+  &quot;main&quot;: &quot;index.js&quot;,
+  &quot;scripts&quot;: {
+    &quot;start&quot;: &quot;node index.js&quot;,
+    &quot;dev&quot;: &quot;node --watch index.js&quot;
+  },
+  &quot;dependencies&quot;: {
+    &quot;express&quot;: &quot;^5.1.0&quot;
+  },
+  &quot;devDependencies&quot;: {
+    &quot;prettier&quot;: &quot;^3.3.0&quot;
+  },
+  &quot;engines&quot;: {
+    &quot;node&quot;: &quot;&gt;=20&quot;
+  }
+}</code></pre>
+</div>
+
+<div class="table-wrap"><table>
+<thead><tr><th>Campo</th><th>Para qué sirve</th></tr></thead>
+<tbody><tr><td><code>name</code></td><td>Nombre del proyecto: en minúsculas, sin espacios</td></tr><tr><td><code>version</code></td><td>Versión del proyecto (<code>MAYOR.MENOR.PARCHE</code>)</td></tr><tr><td><code>type</code></td><td><code>"module"</code> para ES Modules; sin él, CommonJS</td></tr><tr><td><code>main</code></td><td>Archivo de entrada del proyecto</td></tr><tr><td><code>scripts</code></td><td>Atajos de comandos que se lanzan con <code>npm run</code></td></tr><tr><td><code>dependencies</code></td><td>Paquetes que el programa <strong>necesita para funcionar</strong></td></tr><tr><td><code>devDependencies</code></td><td>Paquetes que solo usas <strong>mientras desarrollas</strong> (formateadores, pruebas)</td></tr><tr><td><code>engines</code></td><td>Versiones de Node con las que funciona el proyecto</td></tr></tbody>
+</table></div>
+
+<div class="callout nota">
+<p class="callout-title">📌 Nota · Las versiones del ejemplo</p>
+<p>Los números de versión de <code>express</code> y <code>prettier</code> de arriba son ilustrativos. Al instalar un paquete, npm escribe <strong>la versión actual</strong> en tu <code>package.json</code>; no tienes que escribirla tú.</p>
+</div>
+
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · JSON es estricto</p>
+<p>En <code>package.json</code> una coma de más, una comilla simple o un comentario rompen el archivo y npm mostrará <code>EJSONPARSE</code>. Revisa las comas cuando lo edites a mano.</p>
+</div>
+
+
+<h2 id="instalar"><span class="n">3.</span>Instalar y quitar paquetes</h2>
+
+<p>Dentro de la carpeta del proyecto (donde está el <code>package.json</code>) instalas un paquete con:</p>
+<div class="code">
+  <div class="code-head"><span>Terminal</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>npm install express</code></pre>
+</div>
+<div class="code">
+  <div class="code-head"><span>Salida esperada</span></div>
+<pre><code>added 65 packages, and audited 66 packages in 2s
+
+found 0 vulnerabilities</code></pre>
+</div>
+
+<p>Tu número de paquetes será distinto: un paquete suele depender de otros, y npm los descarga todos. Después del comando ocurren <strong>tres cosas</strong>:</p>
+<ul><li>Aparece (o crece) la carpeta <code>node_modules/</code> con el código de todos los paquetes.</li><li>Se añade <code>express</code> a <code>dependencies</code> en <code>package.json</code>.</li><li>Se crea o actualiza <code>package-lock.json</code>, que fija la <strong>versión exacta</strong> de cada paquete instalado.</li></ul>
+<div class="table-wrap"><table>
+<thead><tr><th>Comando</th><th>Qué hace</th></tr></thead>
+<tbody><tr><td><code>npm install</code> (o <code>npm i</code>)</td><td>Instala todo lo que figura en <code>package.json</code> (lo que haces tras clonar un proyecto)</td></tr><tr><td><code>npm install paquete</code></td><td>Instala un paquete y lo añade a <code>dependencies</code></td></tr><tr><td><code>npm install -D paquete</code></td><td>Lo añade a <code>devDependencies</code> (solo desarrollo)</td></tr><tr><td><code>npm uninstall paquete</code></td><td>Lo quita del proyecto y de <code>package.json</code></td></tr><tr><td><code>npm ci</code></td><td>Instala exactamente lo que dice <code>package-lock.json</code> (útil en despliegues)</td></tr><tr><td><code>npm outdated</code></td><td>Muestra qué paquetes tienen versiones nuevas</td></tr><tr><td><code>npm audit</code></td><td>Revisa si tus dependencias tienen vulnerabilidades conocidas</td></tr></tbody>
+</table></div>
+
+<p>Una vez instalado, lo usas desde tu código con un import:</p>
+<div class="code">
+  <div class="code-head"><span>index.js</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>import express from &quot;express&quot;;
+
+console.log(typeof express);</code></pre>
+</div>
+<div class="code">
+  <div class="code-head"><span>Salida esperada</span></div>
+<pre><code>function</code></pre>
+</div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Elegir bien un paquete</p>
+<p>Antes de instalar algo, mira que esté <strong>mantenido</strong> (publicaciones recientes), que tenga un uso razonable y documentación clara. Cada dependencia es código ajeno que corre en tu programa: menos es más.</p>
+</div>
+
+
+<h2 id="versiones"><span class="n">4.</span>Versiones: MAYOR.MENOR.PARCHE</h2>
+
+<p>Los paquetes usan <strong>versionado semántico</strong>: tres números separados por puntos, por ejemplo <code>5.1.2</code>.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Número</th><th>Cambia cuando…</th><th>Ejemplo</th></tr></thead>
+<tbody><tr><td><strong>MAYOR</strong> (5.x.x)</td><td>Hay cambios que <strong>rompen</strong> la compatibilidad</td><td><code>4.21.2</code> → <code>5.0.0</code></td></tr><tr><td><strong>MENOR</strong> (x.1.x)</td><td>Se añaden funciones sin romper nada</td><td><code>5.0.0</code> → <code>5.1.0</code></td></tr><tr><td><strong>PARCHE</strong> (x.x.2)</td><td>Se corrigen errores</td><td><code>5.1.0</code> → <code>5.1.1</code></td></tr></tbody>
+</table></div>
+
+<p>En <code>package.json</code> las versiones llevan un símbolo delante que indica <strong>qué actualizaciones acepta</strong> npm:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Escrito</th><th>Acepta</th><th>Ejemplos que cumplen <code>5.1.0</code> como base</th></tr></thead>
+<tbody><tr><td><code>"^5.1.0"</code></td><td>Cualquier versión <strong>compatible</strong>: mismo MAYOR, igual o superior</td><td>5.1.0, 5.1.4, 5.9.0 (no 6.0.0)</td></tr><tr><td><code>"~5.1.0"</code></td><td>Solo parches: mismo MAYOR y MENOR</td><td>5.1.0, 5.1.9 (no 5.2.0)</td></tr><tr><td><code>"5.1.0"</code></td><td>Exactamente esa versión</td><td>5.1.0</td></tr></tbody>
+</table></div>
+
+<p>El símbolo <code>^</code> es el que npm escribe por defecto. Para ver la idea en acción, aquí tienes una versión simplificada de la comparación, en JavaScript puro:</p>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ Comparar versiones</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:440px">&lt;script&gt;
+function comparar(a, b) {
+  const x = a.split(".").map(Number);
+  const y = b.split(".").map(Number);
+  for (let i = 0; i &lt; 3; i++) {
+    if (x[i] &gt; y[i]) return 1;
+    if (x[i] &lt; y[i]) return -1;
+  }
+  return 0;
+}
+
+console.log(comparar("5.1.0", "5.0.9"));  // 1  (la primera es mayor)
+console.log(comparar("4.21.2", "5.0.0")); // -1 (la primera es menor)
+console.log(comparar("1.2.3", "1.2.3"));  // 0  (iguales)
+
+// ¿Acepta ^5.1.0 la versión 5.4.2? Mismo MAYOR y no menor que la base
+const acepta = (base, version) =&gt;
+  version.split(".")[0] === base.split(".")[0] &amp;&amp; comparar(version, base) &gt;= 0;
+
+console.log(acepta("5.1.0", "5.4.2")); // true
+console.log(acepta("5.1.0", "6.0.0")); // false
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+
+<div class="callout nota">
+<p class="callout-title">📌 Nota · El archivo package-lock.json</p>
+<p>Mientras que <code>package.json</code> dice «acepto versiones <code>^5.1.0</code>», <code>package-lock.json</code> dice «<strong>hoy</strong> instalé exactamente la 5.1.2». Así todas las personas del equipo (y el servidor) obtienen las mismas versiones. <strong>Se sube a Git y no se edita a mano.</strong></p>
+</div>
+
+
+<h2 id="scripts"><span class="n">5.</span>Scripts: atajos para tus comandos</h2>
+
+<p>Dentro de <code>scripts</code> defines nombres de comandos y lo que ejecutan. Así, quien llegue a tu proyecto no necesita saber cómo se arranca: solo escribe <code>npm run</code> más el nombre.</p>
+<div class="code">
+  <div class="code-head"><span>package.json (fragmento)</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>&quot;scripts&quot;: {
+  &quot;start&quot;: &quot;node index.js&quot;,
+  &quot;dev&quot;: &quot;node --watch index.js&quot;,
+  &quot;formatear&quot;: &quot;prettier --write .&quot;
+}</code></pre>
+</div>
+
+<div class="code">
+  <div class="code-head"><span>Terminal</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>npm run dev</code></pre>
+</div>
+<div class="code">
+  <div class="code-head"><span>Salida esperada</span></div>
+<pre><code>&gt; mi-api@1.0.0 dev
+&gt; node --watch index.js
+
+Servidor escuchando…</code></pre>
+</div>
+
+<p>Dos nombres tienen atajo y se pueden ejecutar sin <code>run</code>: <code>npm start</code> y <code>npm test</code>. Para cualquier otro nombre debes escribir <code>npm run nombre</code>. Y si escribes solo <code>npm run</code>, verás la lista de scripts disponibles.</p>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Convención habitual</p>
+<p><code>start</code> arranca el programa «de verdad» (producción) y <code>dev</code> arranca el modo desarrollo con recarga automática. Es la misma pareja que viste en los proyectos de Vite.</p>
+</div>
+
+<p>Los programas instalados como dependencia (por ejemplo <code>prettier</code>) están disponibles <strong>dentro de los scripts</strong> sin escribir su ruta. Fuera de un script, se ejecutan con <code>npx</code>:</p>
+<div class="code">
+  <div class="code-head"><span>Terminal</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>npx prettier --check .</code></pre>
+</div>
+
+<p><code>npx</code> ejecuta el programa de un paquete: si está en tu proyecto usa esa copia; si no, lo descarga temporalmente para esa ejecución.</p>
+
+<h2 id="node-modules"><span class="n">6.</span>node_modules y .gitignore</h2>
+
+<p>La carpeta <code>node_modules/</code> puede contener miles de archivos y pesar cientos de megabytes. Pero es <strong>totalmente reproducible</strong>: con <code>package.json</code> y <code>package-lock.json</code>, <code>npm install</code> la vuelve a crear. Por eso <strong>nunca se sube a Git</strong>. Se excluye con un archivo <code>.gitignore</code> en la raíz del proyecto:</p>
+<div class="code">
+  <div class="code-head"><span>.gitignore</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>node_modules/
+.env
+*.log</code></pre>
+</div>
+
+<p>Cada línea es un patrón de archivos que Git debe ignorar:</p>
+<ul><li><code>node_modules/</code>: las dependencias descargadas.</li><li><code>.env</code>: variables privadas como contraseñas o claves (lo verás en la lección 6).</li><li><code>*.log</code>: archivos de registro.</li></ul>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · Qué se sube y qué no</p>
+<p><strong>Sí</strong> se suben: tu código, <code>package.json</code>, <code>package-lock.json</code> y <code>.gitignore</code>. <strong>No</strong> se suben: <code>node_modules/</code> y cualquier archivo con secretos. Quien clone tu repositorio solo escribe <code>npm install</code> y recupera todo.</p>
+</div>
+
+<p>Si un día algo se comporta de forma extraña tras actualizar paquetes, el remedio clásico es borrar <code>node_modules</code> y ejecutar <code>npm install</code> otra vez.</p>
+
+<h2 id="json"><span class="n">7.</span>Leer un package.json con JavaScript</h2>
+
+<p>Como <code>package.json</code> es JSON, puedes leerlo con <code>JSON.parse</code> (lección 2) y trabajar con él como con cualquier objeto. Este editor lo hace en tu navegador con un texto de ejemplo:</p>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ Analizar un package.json</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:420px">&lt;script&gt;
+const texto = `{
+  "name": "mi-api",
+  "version": "1.0.0",
+  "scripts": { "start": "node index.js", "dev": "node --watch index.js" },
+  "dependencies": { "express": "^5.1.0" },
+  "devDependencies": { "prettier": "^3.3.0" }
+}`;
+
+const pkg = JSON.parse(texto);
+
+console.log("Proyecto:", pkg.name, "v" + pkg.version);
+
+for (const [nombre, comando] of Object.entries(pkg.scripts)) {
+  console.log(`npm run ${nombre}  →  ${comando}`);
+}
+
+const total = Object.keys(pkg.dependencies).length + Object.keys(pkg.devDependencies).length;
+console.log("Dependencias en total:", total);
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+
+
+<h2 id="errores"><span class="n">8.</span>Errores frecuentes</h2>
+<ul><li><strong>Subir <code>node_modules</code> a Git</strong>: engorda el repositorio sin necesidad. Añádelo a <code>.gitignore</code> <em>antes</em> de tu primer commit.</li><li><strong>Ejecutar <code>npm install</code> en la carpeta equivocada</strong>: crea otro <code>node_modules</code> y otro <code>package.json</code> donde no querías. Comprueba que estás junto al <code>package.json</code>.</li><li><strong>Una coma de más en <code>package.json</code></strong>: el archivo es JSON estricto y npm lo rechaza.</li><li><strong>Escribir <code>npm dev</code></strong>: solo <code>start</code> y <code>test</code> tienen atajo. Lo correcto es <code>npm run dev</code>.</li><li><strong>Editar <code>package-lock.json</code> a mano</strong>: lo gestiona npm; si lo rompes, bórralo y ejecuta <code>npm install</code>.</li><li><strong>Poner en <code>dependencies</code> algo que solo usas al desarrollar</strong>: usa <code>npm install -D</code> para las herramientas de desarrollo.</li><li><strong>Ignorar <code>npm audit</code></strong>: revísalo de vez en cuando; muchas vulnerabilidades se arreglan actualizando.</li></ul>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li><strong>npm</strong> instala paquetes y ejecuta comandos del proyecto; viene con Node.</li><li><code>package.json</code> es la ficha del proyecto: nombre, versión, <code>scripts</code> y dependencias.</li><li><code>npm install paquete</code> → <code>dependencies</code>; <code>npm install -D paquete</code> → <code>devDependencies</code>.</li><li>Versiones <code>MAYOR.MENOR.PARCHE</code>: <code>^</code> acepta menores y parches; <code>~</code>, solo parches.</li><li><code>package-lock.json</code> fija las versiones exactas y <strong>sí</strong> se sube a Git.</li><li><code>node_modules/</code> <strong>no</strong> se sube: se reconstruye con <code>npm install</code>.</li><li><code>npm run nombre</code> ejecuta un script; <code>npm start</code> y <code>npm test</code> no necesitan <code>run</code>.</li><li><code>npx programa</code> ejecuta el programa de un paquete.</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">9.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td>npm</td><td>Gestor de paquetes de Node: instala dependencias y ejecuta scripts.</td></tr><tr><td>Paquete</td><td>Biblioteca de código publicada en el registro de npm.</td></tr><tr><td>Dependencia</td><td>Paquete del que depende tu proyecto.</td></tr><tr><td><code>devDependencies</code></td><td>Dependencias solo necesarias durante el desarrollo.</td></tr><tr><td>Versionado semántico</td><td>Sistema <code>MAYOR.MENOR.PARCHE</code> que indica el tipo de cambio de cada versión.</td></tr><tr><td><code>package-lock.json</code></td><td>Registro de las versiones exactas instaladas.</td></tr><tr><td>Script</td><td>Atajo definido en <code>package.json</code> y lanzado con <code>npm run</code>.</td></tr><tr><td><code>.gitignore</code></td><td>Archivo que lista lo que Git no debe rastrear.</td></tr><tr><td><code>npx</code></td><td>Herramienta que ejecuta el programa de un paquete.</td></tr></tbody>
+</table></div>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>¿Para qué sirve el campo <code>scripts</code> de <code>package.json</code>?</p><ul class="opts"><li><button type="button" class="opt">Para guardar contraseñas</button></li><li><button type="button" class="opt" data-ok>Para definir atajos de comandos que se ejecutan con <code>npm run</code></button></li><li><button type="button" class="opt">Para listar los archivos del proyecto</button></li><li><button type="button" class="opt">Para escribir el HTML</button></li></ul><p class="explain" hidden>Cada entrada asocia un nombre con un comando, por ejemplo <code>"dev": "node --watch index.js"</code>.</p></div>
+<div class="quiz-q"><p>¿Qué significa <code>"^5.1.0"</code>?</p><ul class="opts"><li><button type="button" class="opt">Exactamente la versión 5.1.0</button></li><li><button type="button" class="opt" data-ok>Cualquier versión 5.x.x igual o superior a la 5.1.0</button></li><li><button type="button" class="opt">Cualquier versión, incluida la 6</button></li><li><button type="button" class="opt">Solo parches 5.1.x</button></li></ul><p class="explain" hidden>El símbolo <code>^</code> acepta versiones compatibles: el MAYOR no cambia, pero menor y parche pueden subir.</p></div>
+<div class="quiz-q"><p>¿Qué carpeta NO se sube a Git?</p><ul class="opts"><li><button type="button" class="opt"><code>src</code></button></li><li><button type="button" class="opt" data-ok><code>node_modules</code></button></li><li><button type="button" class="opt">La que contiene <code>package.json</code></button></li><li><button type="button" class="opt"><code>docs</code></button></li></ul><p class="explain" hidden>Se reconstruye con <code>npm install</code> y puede pesar cientos de megas.</p></div>
+<div class="quiz-q"><p>¿Cómo ejecutas el script <code>dev</code>?</p><ul class="opts"><li><button type="button" class="opt"><code>npm dev</code></button></li><li><button type="button" class="opt" data-ok><code>npm run dev</code></button></li><li><button type="button" class="opt"><code>node dev</code></button></li><li><button type="button" class="opt"><code>npx run dev</code></button></li></ul><p class="explain" hidden>Solo <code>start</code> y <code>test</code> tienen atajo; los demás necesitan <code>run</code>.</p></div>
+<div class="quiz-q"><p>¿Dónde instalas con <code>-D</code> una herramienta que solo usas al desarrollar?</p><ul class="opts"><li><button type="button" class="opt">En <code>dependencies</code></button></li><li><button type="button" class="opt" data-ok>En <code>devDependencies</code></button></li><li><button type="button" class="opt">En <code>scripts</code></button></li><li><button type="button" class="opt">No se guarda en ningún sitio</button></li></ul><p class="explain" hidden><code>-D</code> (o <code>--save-dev</code>) la registra en <code>devDependencies</code>.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="node-03">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../02-modulos/"><small>← Anterior</small>Módulos: CommonJS, ES Modules, fs y path</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de Node.js y APIs · Lección 3 · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&amp;title=%5BError%5D%20Lecci%C3%B3n%203%3A%20npm%20y%20package.json%20%C2%B7%20Curso%20de%20Node.js%20y%20APIs&amp;pagina=https://cacg-code.github.io/PRACTICAS-HTML/node/03-npm-y-package-json/" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

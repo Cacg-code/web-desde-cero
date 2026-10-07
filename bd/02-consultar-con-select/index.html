@@ -1,0 +1,468 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lección 2: Consultar con SELECT · Curso de Bases de datos con SQL</title>
+  <meta name="description" content="Aprende a leer datos con SQL: SELECT, FROM, WHERE, AND, OR, BETWEEN, IN, LIKE, NULL, ORDER BY, LIMIT y OFFSET, con ejemplos y un simulador interactivo.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/bd/02-consultar-con-select/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#0e7490">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Lección 2: Consultar con SELECT · Curso de Bases de datos con SQL">
+  <meta property="og:description" content="Aprende a leer datos con SQL: SELECT, FROM, WHERE, AND, OR, BETWEEN, IN, LIKE, NULL, ORDER BY, LIMIT y OFFSET, con ejemplos y un simulador interactivo.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/bd/02-consultar-con-select/">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+  <style>
+    .sqlsim select, .sqlsim input[type="number"] { padding: .5rem .6rem; border: 1px solid var(--border); border-radius: 8px; background: var(--bg); color: var(--text); font: inherit; max-width: 100%; }
+    .sqlsim .sql-out { margin: 0; padding: .8rem 1rem; border-radius: 10px; background: var(--code-bg); color: var(--code-text); font-family: var(--mono); font-size: .88rem; line-height: 1.6; white-space: pre-wrap; overflow-wrap: anywhere; }
+    .sqlsim .msg { margin: 0; font-weight: 600; }
+    .sqlsim .msg.err { color: #b91c1c; }
+    .sqlsim .msg.okk { color: #15803d; }
+    :root[data-theme="dark"] .sqlsim .msg.err { color: #fca5a5; }
+    :root[data-theme="dark"] .sqlsim .msg.okk { color: #86efac; }
+    @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .sqlsim .msg.err { color: #fca5a5; } :root:not([data-theme="light"]) .sqlsim .msg.okk { color: #86efac; } }
+    .sqlsim .w-row button { cursor: pointer; }
+    .sqlsim .w-row label { display: inline-flex; gap: .4rem; align-items: center; }
+    .sqlsim td.hl, .sqlsim th.hl, .sqlsim tr.hl td { background: color-mix(in srgb, var(--accent) 22%, transparent); }
+    .sqlsim tr.gone td { text-decoration: line-through; opacity: .5; }
+    .sqlsim tr.new td { background: color-mix(in srgb, #22c55e 22%, transparent); }
+    .sqlsim tr.chg td { background: color-mix(in srgb, #f59e0b 25%, transparent); }
+  </style>
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Bases de datos con SQL</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap lesson-layout" id="contenido">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#select">SELECT y FROM: pedir columnas</a></li><li><a href="#where">WHERE: filtrar filas</a></li><li><a href="#like">LIKE: buscar patrones de texto</a></li><li><a href="#orden">ORDER BY, LIMIT y OFFSET</a></li><li><a href="#orden-clausulas">El orden de las cláusulas</a></li><li><a href="#simulador">Pruébalo: simulador de consultas</a></li><li><a href="#errores">Errores frecuentes</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de Bases de datos con SQL</a> › Lección 2</div>
+        <h1>Consultar con SELECT</h1>
+        <ul class="meta"><li>⏱ 60 minutos</li><li>📶 Nivel: principiante</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Elegir columnas con <code>SELECT</code>, usar alias y quitar repetidos con <code>DISTINCT</code>.</li><li>Filtrar filas con <code>WHERE</code>, <code>AND</code>, <code>OR</code>, <code>BETWEEN</code>, <code>IN</code> y <code>LIKE</code>.</li><li>Ordenar resultados y limitarlos con <code>ORDER BY</code>, <code>LIMIT</code> y <code>OFFSET</code>.</li><li>Escribir las cláusulas en el orden correcto y manejar <code>NULL</code>.</li></ul>
+</div>
+
+<h2 id="select"><span class="n">1.</span>SELECT y FROM: pedir columnas</h2>
+
+<p><code>SELECT</code> es la instrucción que más usarás. Su forma mínima tiene dos partes: <strong>qué columnas</strong> quieres (<code>SELECT</code>) y <strong>de qué tabla</strong> (<code>FROM</code>). Un asterisco <code>*</code> significa «todas las columnas».</p>
+<div class="code">
+  <div class="code-head"><span>Todas las columnas</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">SELECT</span> * <span class="tk-tag">FROM</span> productos;</code></pre>
+</div>
+<p><strong>Resultado esperado</strong></p>
+<div class="table-wrap"><table>
+<thead><tr><th>id</th><th>nombre</th><th>categoria</th><th>precio</th><th>stock</th></tr></thead>
+<tbody><tr><td>1</td><td>Teclado</td><td>Periféricos</td><td>120.00</td><td>15</td></tr><tr><td>2</td><td>Ratón</td><td>Periféricos</td><td>45.50</td><td>40</td></tr><tr><td>3</td><td>Monitor FHD</td><td>Pantallas</td><td>650.00</td><td>8</td></tr><tr><td>4</td><td>Auriculares</td><td>Audio</td><td>89.90</td><td>0</td></tr><tr><td>5</td><td>Webcam</td><td>Periféricos</td><td>150.00</td><td>12</td></tr><tr><td>6</td><td>Altavoz</td><td>Audio</td><td>99.00</td><td>25</td></tr><tr><td>7</td><td>Monitor 4K</td><td>Pantallas</td><td>899.00</td><td>3</td></tr><tr><td>8</td><td>Cable HDMI</td><td>Accesorios</td><td>15.00</td><td>100</td></tr></tbody>
+</table></div>
+
+<p>Casi siempre conviene pedir <strong>solo las columnas que necesitas</strong>, separadas por comas:</p>
+<div class="code">
+  <div class="code-head"><span>Solo algunas columnas</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">SELECT</span> nombre, precio
+<span class="tk-tag">FROM</span> productos;</code></pre>
+</div>
+<p><strong>Resultado esperado</strong></p>
+<div class="table-wrap"><table>
+<thead><tr><th>nombre</th><th>precio</th></tr></thead>
+<tbody><tr><td>Teclado</td><td>120.00</td></tr><tr><td>Ratón</td><td>45.50</td></tr><tr><td>Monitor FHD</td><td>650.00</td></tr><tr><td>Auriculares</td><td>89.90</td></tr><tr><td>Webcam</td><td>150.00</td></tr><tr><td>Altavoz</td><td>99.00</td></tr><tr><td>Monitor 4K</td><td>899.00</td></tr><tr><td>Cable HDMI</td><td>15.00</td></tr></tbody>
+</table></div>
+
+<p>Dos herramientas muy útiles al elegir columnas:</p>
+<ul>
+<li><code>AS</code> pone un <strong>alias</strong> (otro nombre) a una columna o a un cálculo.</li>
+<li><code>DISTINCT</code> elimina los <strong>resultados repetidos</strong>.</li>
+</ul>
+<div class="code">
+  <div class="code-head"><span>Cálculos y valores únicos</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-com">-- Valor del inventario de cada producto</span>
+<span class="tk-tag">SELECT</span> nombre, precio * stock <span class="tk-tag">AS</span> valor
+<span class="tk-tag">FROM</span> productos;
+
+<span class="tk-com">-- ¿Qué categorías existen?</span>
+<span class="tk-tag">SELECT</span> <span class="tk-tag">DISTINCT</span> categoria
+<span class="tk-tag">FROM</span> productos;</code></pre>
+</div>
+<p><strong>Resultado esperado de la primera consulta</strong></p>
+<div class="table-wrap"><table>
+<thead><tr><th>nombre</th><th>valor</th></tr></thead>
+<tbody><tr><td>Teclado</td><td>1800.00</td></tr><tr><td>Ratón</td><td>1820.00</td></tr><tr><td>Monitor FHD</td><td>5200.00</td></tr><tr><td>Auriculares</td><td>0.00</td></tr><tr><td>Webcam</td><td>1800.00</td></tr><tr><td>Altavoz</td><td>2475.00</td></tr><tr><td>Monitor 4K</td><td>2697.00</td></tr><tr><td>Cable HDMI</td><td>1500.00</td></tr></tbody>
+</table></div>
+<p><strong>Resultado esperado de la segunda consulta</strong></p>
+<div class="table-wrap"><table>
+<thead><tr><th>categoria</th></tr></thead>
+<tbody><tr><td>Periféricos</td></tr><tr><td>Pantallas</td></tr><tr><td>Audio</td></tr><tr><td>Accesorios</td></tr></tbody>
+</table></div>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · Un SELECT no cambia nada</p>
+<p>Consultar es de solo lectura: ni <code>SELECT</code> ni los cálculos modifican los datos guardados. Puedes probar todo sin miedo. Los cambios llegan en la lección 3.</p>
+</div>
+
+<h2 id="where"><span class="n">2.</span>WHERE: filtrar filas</h2>
+
+<p>Sin <code>WHERE</code> obtienes todas las filas. Con <code>WHERE</code> indicas una <strong>condición</strong> y solo se devuelven las filas que la cumplen.</p>
+<div class="code">
+  <div class="code-head"><span>Productos de más de 100</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">SELECT</span> nombre, precio
+<span class="tk-tag">FROM</span> productos
+<span class="tk-tag">WHERE</span> precio &gt; <span class="tk-attr">100</span>;</code></pre>
+</div>
+<p><strong>Resultado esperado</strong></p>
+<div class="table-wrap"><table>
+<thead><tr><th>nombre</th><th>precio</th></tr></thead>
+<tbody><tr><td>Teclado</td><td>120.00</td></tr><tr><td>Monitor FHD</td><td>650.00</td></tr><tr><td>Webcam</td><td>150.00</td></tr><tr><td>Monitor 4K</td><td>899.00</td></tr></tbody>
+</table></div>
+
+<div class="table-wrap"><table>
+<thead><tr><th>Operador</th><th>Significado</th><th>Ejemplo</th></tr></thead>
+<tbody>
+<tr><td><code>=</code></td><td>igual a</td><td><code>categoria = 'Audio'</code></td></tr>
+<tr><td><code>&lt;&gt;</code> o <code>!=</code></td><td>distinto de</td><td><code>categoria &lt;&gt; 'Audio'</code></td></tr>
+<tr><td><code>&gt;</code> · <code>&gt;=</code></td><td>mayor que · mayor o igual</td><td><code>stock &gt;= 10</code></td></tr>
+<tr><td><code>&lt;</code> · <code>&lt;=</code></td><td>menor que · menor o igual</td><td><code>precio &lt; 50</code></td></tr>
+</tbody>
+</table></div>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · Texto entre comillas simples</p>
+<p>Los valores de texto van entre <strong>comillas simples</strong>: <code>'Audio'</code>. Las comillas dobles <code>"…"</code> son para <em>nombres</em> de tablas o columnas, y en PostgreSQL usarlas con un texto da error. Los números van sin comillas. Además, la comparación <code>=</code> con texto distingue mayúsculas de minúsculas: <code>'audio'</code> no es igual a <code>'Audio'</code>.</p>
+</div>
+
+<h3>Combinar condiciones: AND, OR, NOT</h3>
+<ul>
+<li><code>AND</code>: deben cumplirse <strong>las dos</strong> condiciones.</li>
+<li><code>OR</code>: basta con que se cumpla <strong>una</strong>.</li>
+<li><code>NOT</code>: invierte una condición.</li>
+</ul>
+<div class="code">
+  <div class="code-head"><span>Combinaciones</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-com">-- Periféricos que tengan stock</span>
+<span class="tk-tag">SELECT</span> nombre, categoria, stock
+<span class="tk-tag">FROM</span> productos
+<span class="tk-tag">WHERE</span> categoria = <span class="tk-val">'Periféricos'</span> <span class="tk-tag">AND</span> stock &gt; <span class="tk-attr">0</span>;
+
+<span class="tk-com">-- Con paréntesis, para que quede claro</span>
+<span class="tk-tag">SELECT</span> nombre, categoria, precio
+<span class="tk-tag">FROM</span> productos
+<span class="tk-tag">WHERE</span> (categoria = <span class="tk-val">'Audio'</span> <span class="tk-tag">OR</span> categoria = <span class="tk-val">'Pantallas'</span>)
+  <span class="tk-tag">AND</span> precio &lt; <span class="tk-attr">700</span>;</code></pre>
+</div>
+<p><strong>Resultado de la primera consulta</strong></p>
+<div class="table-wrap"><table>
+<thead><tr><th>nombre</th><th>categoria</th><th>stock</th></tr></thead>
+<tbody><tr><td>Teclado</td><td>Periféricos</td><td>15</td></tr><tr><td>Ratón</td><td>Periféricos</td><td>40</td></tr><tr><td>Webcam</td><td>Periféricos</td><td>12</td></tr></tbody>
+</table></div>
+<p><strong>Resultado de la segunda consulta</strong></p>
+<div class="table-wrap"><table>
+<thead><tr><th>nombre</th><th>categoria</th><th>precio</th></tr></thead>
+<tbody><tr><td>Monitor FHD</td><td>Pantallas</td><td>650.00</td></tr><tr><td>Auriculares</td><td>Audio</td><td>89.90</td></tr><tr><td>Altavoz</td><td>Audio</td><td>99.00</td></tr></tbody>
+</table></div>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Usa paréntesis cuando mezcles AND y OR</p>
+<p><code>AND</code> se evalúa antes que <code>OR</code>, como la multiplicación antes que la suma. Sin paréntesis, <code>a OR b AND c</code> significa <code>a OR (b AND c)</code>, y suele no ser lo que querías.</p>
+</div>
+
+<h3>BETWEEN e IN</h3>
+<p>Dos atajos que hacen las consultas más legibles: <code>BETWEEN</code> comprueba un <strong>rango</strong> (incluye los dos extremos) e <code>IN</code> comprueba si el valor está en una <strong>lista</strong>.</p>
+<div class="code">
+  <div class="code-head"><span>Rango y lista</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">SELECT</span> nombre, precio
+<span class="tk-tag">FROM</span> productos
+<span class="tk-tag">WHERE</span> precio <span class="tk-tag">BETWEEN</span> <span class="tk-attr">40</span> <span class="tk-tag">AND</span> <span class="tk-attr">100</span>;
+
+<span class="tk-tag">SELECT</span> nombre, categoria
+<span class="tk-tag">FROM</span> productos
+<span class="tk-tag">WHERE</span> categoria <span class="tk-tag">IN</span> (<span class="tk-val">'Audio'</span>, <span class="tk-val">'Accesorios'</span>);</code></pre>
+</div>
+<p><strong>Resultado de la primera consulta</strong></p>
+<div class="table-wrap"><table>
+<thead><tr><th>nombre</th><th>precio</th></tr></thead>
+<tbody><tr><td>Ratón</td><td>45.50</td></tr><tr><td>Auriculares</td><td>89.90</td></tr><tr><td>Altavoz</td><td>99.00</td></tr></tbody>
+</table></div>
+<p><strong>Resultado de la segunda consulta</strong></p>
+<div class="table-wrap"><table>
+<thead><tr><th>nombre</th><th>categoria</th></tr></thead>
+<tbody><tr><td>Auriculares</td><td>Audio</td></tr><tr><td>Altavoz</td><td>Audio</td></tr><tr><td>Cable HDMI</td><td>Accesorios</td></tr></tbody>
+</table></div>
+
+<h2 id="like"><span class="n">3.</span>LIKE: buscar patrones de texto</h2>
+
+<p><code>LIKE</code> busca texto que <strong>se parezca</strong> a un patrón. Tiene dos comodines:</p>
+<ul>
+<li><code>%</code> representa <strong>cualquier cantidad</strong> de caracteres (también ninguno).</li>
+<li><code>_</code> representa <strong>exactamente un</strong> carácter.</li>
+</ul>
+<div class="table-wrap"><table>
+<thead><tr><th>Patrón</th><th>Encuentra…</th></tr></thead>
+<tbody>
+<tr><td><code>'Monitor%'</code></td><td>Textos que <strong>empiezan</strong> por Monitor</td></tr>
+<tr><td><code>'%or'</code></td><td>Textos que <strong>terminan</strong> en «or»</td></tr>
+<tr><td><code>'%cam%'</code></td><td>Textos que <strong>contienen</strong> «cam»</td></tr>
+<tr><td><code>'Ca_le HDMI'</code></td><td>«Cable HDMI», pero el cuarto carácter puede ser cualquiera</td></tr>
+</tbody>
+</table></div>
+<div class="code">
+  <div class="code-head"><span>Buscar por nombre</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">SELECT</span> nombre, precio
+<span class="tk-tag">FROM</span> productos
+<span class="tk-tag">WHERE</span> nombre <span class="tk-tag">LIKE</span> <span class="tk-val">'Monitor%'</span>;
+
+<span class="tk-tag">SELECT</span> nombre
+<span class="tk-tag">FROM</span> productos
+<span class="tk-tag">WHERE</span> nombre <span class="tk-tag">LIKE</span> <span class="tk-val">'%cam%'</span>;</code></pre>
+</div>
+<p><strong>Resultado de la primera consulta</strong></p>
+<div class="table-wrap"><table>
+<thead><tr><th>nombre</th><th>precio</th></tr></thead>
+<tbody><tr><td>Monitor FHD</td><td>650.00</td></tr><tr><td>Monitor 4K</td><td>899.00</td></tr></tbody>
+</table></div>
+<p><strong>Resultado de la segunda consulta</strong></p>
+<div class="table-wrap"><table>
+<thead><tr><th>nombre</th></tr></thead>
+<tbody><tr><td>Webcam</td></tr></tbody>
+</table></div>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · Mayúsculas: SQLite y PostgreSQL difieren</p>
+<p>En <strong>SQLite</strong>, <code>LIKE</code> ignora mayúsculas y minúsculas para las letras ASCII (<code>'%cam%'</code> encuentra «Webcam»). En <strong>PostgreSQL</strong>, <code>LIKE</code> <em>sí</em> distingue mayúsculas: para ignorarlas se usa <code>ILIKE</code> (<code>nombre ILIKE '%cam%'</code>).</p>
+</div>
+
+<h3>Valores vacíos: NULL</h3>
+<p><code>NULL</code> significa «<strong>no hay valor</strong>» (dato desconocido o ausente). No es cero ni un texto vacío, y por eso no se compara con <code>=</code>: <code>precio = NULL</code> nunca es verdadero. Se usa <code>IS NULL</code> o <code>IS NOT NULL</code>.</p>
+<div class="code">
+  <div class="code-head"><span>Comparar con NULL</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">SELECT</span> * <span class="tk-tag">FROM</span> productos <span class="tk-tag">WHERE</span> precio <span class="tk-tag">IS</span> <span class="tk-tag">NULL</span>;      <span class="tk-com">-- correcto</span>
+<span class="tk-tag">SELECT</span> * <span class="tk-tag">FROM</span> productos <span class="tk-tag">WHERE</span> precio = <span class="tk-tag">NULL</span>;       <span class="tk-com">-- NO funciona: nunca devuelve filas</span></code></pre>
+</div>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · En nuestra tabla no hay NULL</p>
+<p>Las columnas de <code>productos</code> son <code>NOT NULL</code>, así que ninguna consulta de arriba devolvería filas. Lo verás en acción cuando diseñes tus propias tablas en la lección 4.</p>
+</div>
+
+<h2 id="orden"><span class="n">4.</span>ORDER BY, LIMIT y OFFSET</h2>
+
+<p>Una consulta no garantiza ningún orden salvo que lo pidas. <code>ORDER BY</code> ordena el resultado; <code>ASC</code> es ascendente (por defecto) y <code>DESC</code> descendente. Puedes ordenar por varias columnas separándolas con comas.</p>
+<div class="code">
+  <div class="code-head"><span>Ordenar</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-com">-- Del más caro al más barato</span>
+<span class="tk-tag">SELECT</span> nombre, precio
+<span class="tk-tag">FROM</span> productos
+<span class="tk-tag">ORDER</span> <span class="tk-tag">BY</span> precio <span class="tk-tag">DESC</span>;
+
+<span class="tk-com">-- Por categoría y, dentro de cada una, por precio</span>
+<span class="tk-tag">SELECT</span> categoria, nombre, precio
+<span class="tk-tag">FROM</span> productos
+<span class="tk-tag">ORDER</span> <span class="tk-tag">BY</span> categoria <span class="tk-tag">ASC</span>, precio <span class="tk-tag">DESC</span>;</code></pre>
+</div>
+<p><strong>Resultado de la primera consulta</strong></p>
+<div class="table-wrap"><table>
+<thead><tr><th>nombre</th><th>precio</th></tr></thead>
+<tbody><tr><td>Monitor 4K</td><td>899.00</td></tr><tr><td>Monitor FHD</td><td>650.00</td></tr><tr><td>Webcam</td><td>150.00</td></tr><tr><td>Teclado</td><td>120.00</td></tr><tr><td>Altavoz</td><td>99.00</td></tr><tr><td>Auriculares</td><td>89.90</td></tr><tr><td>Ratón</td><td>45.50</td></tr><tr><td>Cable HDMI</td><td>15.00</td></tr></tbody>
+</table></div>
+<p><strong>Resultado de la segunda consulta</strong></p>
+<div class="table-wrap"><table>
+<thead><tr><th>categoria</th><th>nombre</th><th>precio</th></tr></thead>
+<tbody><tr><td>Accesorios</td><td>Cable HDMI</td><td>15.00</td></tr><tr><td>Audio</td><td>Altavoz</td><td>99.00</td></tr><tr><td>Audio</td><td>Auriculares</td><td>89.90</td></tr><tr><td>Pantallas</td><td>Monitor 4K</td><td>899.00</td></tr><tr><td>Pantallas</td><td>Monitor FHD</td><td>650.00</td></tr><tr><td>Periféricos</td><td>Webcam</td><td>150.00</td></tr><tr><td>Periféricos</td><td>Teclado</td><td>120.00</td></tr><tr><td>Periféricos</td><td>Ratón</td><td>45.50</td></tr></tbody>
+</table></div>
+
+<p><code>LIMIT</code> restringe <strong>cuántas filas</strong> se devuelven y <code>OFFSET</code> indica <strong>cuántas saltar</strong> antes de empezar. Juntos sirven para <strong>paginar</strong> resultados.</p>
+<div class="code">
+  <div class="code-head"><span>Los tres más caros y la página siguiente</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">SELECT</span> nombre, precio <span class="tk-tag">FROM</span> productos
+<span class="tk-tag">ORDER</span> <span class="tk-tag">BY</span> precio <span class="tk-tag">DESC</span>
+<span class="tk-tag">LIMIT</span> <span class="tk-attr">3</span>;
+
+<span class="tk-com">-- Siguientes tres (página 2)</span>
+<span class="tk-tag">SELECT</span> nombre, precio <span class="tk-tag">FROM</span> productos
+<span class="tk-tag">ORDER</span> <span class="tk-tag">BY</span> precio <span class="tk-tag">DESC</span>
+<span class="tk-tag">LIMIT</span> <span class="tk-attr">3</span> <span class="tk-tag">OFFSET</span> <span class="tk-attr">3</span>;</code></pre>
+</div>
+<p><strong>Resultado de la primera consulta</strong></p>
+<div class="table-wrap"><table>
+<thead><tr><th>nombre</th><th>precio</th></tr></thead>
+<tbody><tr><td>Monitor 4K</td><td>899.00</td></tr><tr><td>Monitor FHD</td><td>650.00</td></tr><tr><td>Webcam</td><td>150.00</td></tr></tbody>
+</table></div>
+<p><strong>Resultado de la segunda consulta</strong></p>
+<div class="table-wrap"><table>
+<thead><tr><th>nombre</th><th>precio</th></tr></thead>
+<tbody><tr><td>Teclado</td><td>120.00</td></tr><tr><td>Altavoz</td><td>99.00</td></tr><tr><td>Auriculares</td><td>89.90</td></tr></tbody>
+</table></div>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · LIMIT casi siempre va con ORDER BY</p>
+<p>Sin <code>ORDER BY</code>, «las tres primeras filas» no significan nada concreto: el gestor puede devolverlas en cualquier orden. Para obtener «los tres más caros» ordena primero y limita después.</p>
+</div>
+
+<h2 id="orden-clausulas"><span class="n">5.</span>El orden de las cláusulas</h2>
+
+<p>Las cláusulas se escriben <strong>siempre en este orden</strong>. Todas son opcionales salvo <code>SELECT</code> (y <code>FROM</code> cuando se consulta una tabla):</p>
+<div class="code">
+  <div class="code-head"><span>Estructura completa</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">SELECT</span>   columnas
+<span class="tk-tag">FROM</span>     tabla
+<span class="tk-tag">WHERE</span>    condición
+<span class="tk-tag">ORDER</span> <span class="tk-tag">BY</span> columnas
+<span class="tk-tag">LIMIT</span>    cantidad <span class="tk-tag">OFFSET</span> saltar;</code></pre>
+</div>
+
+<ol class="steps"><li><strong>FROM</strong>: el gestor toma la tabla.</li><li><strong>WHERE</strong>: se quedan solo las filas que cumplen la condición.</li><li><strong>SELECT</strong>: se eligen y calculan las columnas.</li><li><strong>ORDER BY</strong>: se ordena el resultado.</li><li><strong>LIMIT / OFFSET</strong>: se recorta el resultado.</li></ol>
+<p>Esa es la secuencia en la que el gestor <em>piensa</em> la consulta, y explica por qué no puedes usar un alias de <code>SELECT</code> dentro de <code>WHERE</code>.</p>
+
+<h2 id="simulador"><span class="n">6.</span>Pruébalo: simulador de consultas</h2>
+
+<p>Este simulador funciona con la tabla <code>productos</code> y construye la consulta SQL mientras eliges. Cambia el filtro, el orden y el límite y observa tanto la consulta como las filas devueltas. (Es una simulación en tu navegador: no ejecuta SQL real, pero se comporta igual que SQLite con estas opciones.)</p>
+<div class="widget sqlsim" data-sim="select">
+  <div class="w-head">🧪 Simulador de SELECT</div>
+  <div class="w-body">
+    <div class="w-row">
+      <strong>WHERE</strong>
+      <label for="s-col">Columna</label><select id="s-col"><option value="">(sin filtro)</option><option value="nombre">nombre</option><option value="categoria">categoria</option><option value="precio" selected>precio</option><option value="stock">stock</option></select>
+      <label for="s-op">Operador</label><select id="s-op"></select>
+      <label for="s-val">Valor</label><input id="s-val" type="text" value="100" style="max-width:9rem" autocomplete="off">
+    </div>
+    <div class="w-row">
+      <strong>ORDER BY</strong>
+      <label for="s-ord">Columna</label><select id="s-ord"><option value="">(sin orden)</option><option value="id">id</option><option value="nombre">nombre</option><option value="categoria">categoria</option><option value="precio" selected>precio</option><option value="stock">stock</option></select>
+      <label for="s-dir">Sentido</label><select id="s-dir"><option value="ASC">ASC</option><option value="DESC" selected>DESC</option></select>
+      <strong>LIMIT</strong>
+      <label for="s-lim" class="sr-only">Límite de filas</label><input id="s-lim" type="number" min="1" max="8" placeholder="todas" style="max-width:6rem">
+    </div>
+    <pre class="sql-out" id="s-sql"></pre>
+    <p class="msg" id="s-aviso" aria-live="polite"></p>
+    <div class="table-wrap" style="margin:0"><table id="s-tabla"><thead></thead><tbody></tbody></table></div>
+  </div>
+</div>
+<div class="callout ejemplo">
+<p class="callout-title">🧪 Ejemplo · Experimentos para probar</p>
+<p>1) Columna <code>categoria</code>, operador <code>=</code>, valor <code>Audio</code>. 2) Columna <code>nombre</code>, operador <code>LIKE</code>, valor <code>%mon%</code>. 3) Columna <code>stock</code>, operador <code>&lt;=</code>, valor <code>10</code>, ordenando por <code>stock</code> ascendente. 4) Quita el filtro y pon <code>LIMIT 3</code> ordenando por precio descendente.</p>
+</div>
+
+<h2 id="errores"><span class="n">7.</span>Errores frecuentes</h2>
+<ul><li><strong>Comillas dobles en los textos:</strong> <code>WHERE categoria = "Audio"</code> funciona a veces en SQLite por tolerancia, pero en PostgreSQL falla. Usa siempre comillas simples.</li><li><strong>Comparar con NULL usando <code>=</code>:</strong> usa <code>IS NULL</code> o <code>IS NOT NULL</code>.</li><li><strong>Mezclar AND y OR sin paréntesis:</strong> el resultado cambia según la prioridad de los operadores.</li><li><strong>Usar <code>LIMIT</code> sin <code>ORDER BY</code>:</strong> «las primeras filas» no tienen un orden definido.</li><li><strong>Olvidar el punto y coma</strong> al final en la terminal: <code>sqlite3</code> se queda esperando más texto (aparece <code>...&gt;</code>). Escribe <code>;</code> y Enter.</li><li><strong>Escribir las cláusulas en otro orden:</strong> <code>WHERE</code> va antes de <code>ORDER BY</code>, y <code>LIMIT</code> al final.</li><li><strong>Esperar que <code>LIKE</code> distinga o ignore mayúsculas igual en todos los motores:</strong> SQLite lo ignora; PostgreSQL lo distingue (usa <code>ILIKE</code>).</li></ul>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li><code>SELECT columnas FROM tabla</code> lee datos y <strong>no modifica</strong> nada; <code>*</code> significa todas las columnas.</li><li><code>AS</code> pone un alias y <code>DISTINCT</code> quita los resultados repetidos.</li><li><code>WHERE</code> filtra filas con <code>=</code>, <code>&lt;&gt;</code>, <code>&gt;</code>, <code>&lt;</code>, <code>&gt;=</code>, <code>&lt;=</code>, <code>BETWEEN</code>, <code>IN</code> y <code>LIKE</code>.</li><li>El texto va entre <strong>comillas simples</strong>; los números, sin comillas.</li><li><code>AND</code> exige las dos condiciones, <code>OR</code> una de ellas; usa <strong>paréntesis</strong> para mezclarlas.</li><li><code>LIKE</code> usa <code>%</code> (cualquier cantidad de caracteres) y <code>_</code> (uno solo); con <code>NULL</code> se usa <code>IS NULL</code>.</li><li><code>ORDER BY col [ASC|DESC]</code> ordena; <code>LIMIT n OFFSET m</code> recorta y pagina.</li><li>Orden de escritura: <code>SELECT … FROM … WHERE … ORDER BY … LIMIT</code>.</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">8.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td>Consulta (query)</td><td>Instrucción SQL que pide datos a la base de datos.</td></tr><tr><td>Cláusula</td><td>Cada parte de una instrucción: <code>FROM</code>, <code>WHERE</code>, <code>ORDER BY</code>…</td></tr><tr><td>Alias</td><td>Nombre alternativo para una columna o un cálculo, creado con <code>AS</code>.</td></tr><tr><td>Condición</td><td>Expresión que es verdadera o falsa para cada fila y decide si entra en el resultado.</td></tr><tr><td>Comodín</td><td>Carácter especial de <code>LIKE</code>: <code>%</code> (cualquier cantidad) o <code>_</code> (uno).</td></tr><tr><td>NULL</td><td>Marca de «sin valor»; no es cero ni texto vacío.</td></tr><tr><td>Paginación</td><td>Dividir un resultado largo en páginas con <code>LIMIT</code> y <code>OFFSET</code>.</td></tr></tbody>
+</table></div>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>¿Qué devuelve <code>SELECT nombre FROM productos WHERE precio &lt; 50;</code> con la tabla de ejemplo?</p><ul class="opts"><li><button type="button" class="opt">Teclado y Ratón</button></li><li><button type="button" class="opt" data-ok>Ratón y Cable HDMI</button></li><li><button type="button" class="opt">Solo Cable HDMI</button></li><li><button type="button" class="opt">Todos los productos</button></li></ul><p class="explain" hidden>Los productos de menos de 50 son Ratón (45.50) y Cable HDMI (15.00).</p></div>
+<div class="quiz-q"><p>¿Cómo se escribe correctamente la condición para texto?</p><ul class="opts"><li><button type="button" class="opt"><code>WHERE categoria = Audio</code></button></li><li><button type="button" class="opt" data-ok><code>WHERE categoria = 'Audio'</code></button></li><li><button type="button" class="opt"><code>WHERE categoria == 'Audio'</code></button></li><li><button type="button" class="opt"><code>WHERE categoria := 'Audio'</code></button></li></ul><p class="explain" hidden>El texto va entre comillas simples y la igualdad se escribe con un solo <code>=</code>.</p></div>
+<div class="quiz-q"><p>¿Qué patrón encuentra los nombres que <strong>empiezan</strong> por «Mon»?</p><ul class="opts"><li><button type="button" class="opt"><code>LIKE '%Mon'</code></button></li><li><button type="button" class="opt" data-ok><code>LIKE 'Mon%'</code></button></li><li><button type="button" class="opt"><code>LIKE '_Mon_'</code></button></li><li><button type="button" class="opt"><code>= 'Mon*'</code></button></li></ul><p class="explain" hidden>El <code>%</code> detrás del texto significa «cualquier cosa a continuación»; delante significaría «termina en».</p></div>
+<div class="quiz-q"><p>¿Cómo se obtienen los 3 productos más baratos?</p><ul class="opts"><li><button type="button" class="opt"><code>ORDER BY precio DESC LIMIT 3</code></button></li><li><button type="button" class="opt" data-ok><code>ORDER BY precio ASC LIMIT 3</code></button></li><li><button type="button" class="opt"><code>LIMIT 3</code> sin más</button></li><li><button type="button" class="opt"><code>WHERE precio = 3</code></button></li></ul><p class="explain" hidden>Orden ascendente por precio y luego limitar a 3: sin ordenar o con <code>DESC</code> saldrían otros productos.</p></div>
+<div class="quiz-q"><p>¿Cómo se buscan las filas sin precio (valor <code>NULL</code>)?</p><ul class="opts"><li><button type="button" class="opt"><code>WHERE precio = NULL</code></button></li><li><button type="button" class="opt"><code>WHERE precio = 0</code></button></li><li><button type="button" class="opt" data-ok><code>WHERE precio IS NULL</code></button></li><li><button type="button" class="opt"><code>WHERE precio = ''</code></button></li></ul><p class="explain" hidden><code>NULL</code> no se compara con <code>=</code>; se usa <code>IS NULL</code>.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="bd-02">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../01-que-es-una-base-de-datos/ejercicio.html"><small>← Anterior</small>Ejercicio de la lección 1</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de Bases de datos con SQL · Lección 2 · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&title=%5BError%5D%20Lecci%C3%B3n%202%3A%20Consultar%20con%20SELECT%20%C2%B7%20Curso%20de%20Bases%20de%20datos%20con%20SQL&pagina=https%3A//cacg-code.github.io/PRACTICAS-HTML/bd/02-consultar-con-select/" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+  <script>
+
+(function () {
+  var w = document.querySelector('[data-sim="select"]'); if (!w) return;
+  var DATA = [
+    { id: 1, nombre: 'Teclado', categoria: 'Periféricos', precio: 120, stock: 15 },
+    { id: 2, nombre: 'Ratón', categoria: 'Periféricos', precio: 45.5, stock: 40 },
+    { id: 3, nombre: 'Monitor FHD', categoria: 'Pantallas', precio: 650, stock: 8 },
+    { id: 4, nombre: 'Auriculares', categoria: 'Audio', precio: 89.9, stock: 0 },
+    { id: 5, nombre: 'Webcam', categoria: 'Periféricos', precio: 150, stock: 12 },
+    { id: 6, nombre: 'Altavoz', categoria: 'Audio', precio: 99, stock: 25 },
+    { id: 7, nombre: 'Monitor 4K', categoria: 'Pantallas', precio: 899, stock: 3 },
+    { id: 8, nombre: 'Cable HDMI', categoria: 'Accesorios', precio: 15, stock: 100 }
+  ];
+  var COLS = ['id', 'nombre', 'categoria', 'precio', 'stock'];
+  var NUM = { id: 1, precio: 1, stock: 1 };
+  var $ = function (s) { return w.querySelector(s); };
+  var col = $('#s-col'), op = $('#s-op'), val = $('#s-val'), ord = $('#s-ord'), dir = $('#s-dir'), lim = $('#s-lim');
+  var OPS_N = ['=', '<>', '>', '>=', '<', '<='], OPS_T = ['=', '<>', 'LIKE'];
+  function ops() {
+    var c = col.value, lista = !c ? [] : NUM[c] ? OPS_N : OPS_T, prev = op.value;
+    op.innerHTML = ''; op.disabled = !c; val.disabled = !c;
+    lista.forEach(function (o) { var e = document.createElement('option'); e.value = o; e.textContent = o; op.appendChild(e); });
+    if (lista.indexOf(prev) > -1) op.value = prev;
+  }
+  function like(p) {
+    var re = '^' + p.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/%/g, '.*').replace(/_/g, '.') + '$';
+    return new RegExp(re, 'i');
+  }
+  function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;'); }
+  function run() {
+    var aviso = $('#s-aviso'), sql = 'SELECT * FROM productos', rows = DATA.slice(), c = col.value;
+    aviso.textContent = '';
+    if (c) {
+      var o = op.value, v = val.value.trim(), ok = true, t;
+      if (NUM[c]) {
+        if (v === '' || isNaN(Number(v))) { aviso.textContent = 'Escribe un número en «Valor» para filtrar por ' + c + '.'; ok = false; }
+        else { t = Number(v); sql += '\nWHERE ' + c + ' ' + o + ' ' + t;
+          rows = rows.filter(function (r) { var x = r[c]; return o === '=' ? x === t : o === '<>' ? x !== t : o === '>' ? x > t : o === '>=' ? x >= t : o === '<' ? x < t : x <= t; }); }
+      } else {
+        sql += "\nWHERE " + c + ' ' + o + " '" + v.replace(/'/g, "''") + "'";
+        rows = rows.filter(function (r) { var x = r[c]; return o === '=' ? x === v : o === '<>' ? x !== v : like(v).test(x); });
+      }
+      if (!ok) rows = DATA.slice();
+    }
+    if (ord.value) {
+      var k = ord.value, s = dir.value === 'DESC' ? -1 : 1;
+      sql += '\nORDER BY ' + k + ' ' + dir.value;
+      rows.sort(function (a, b) { var x = a[k], y = b[k]; return (x < y ? -1 : x > y ? 1 : 0) * s || a.id - b.id; });
+    }
+    var n = parseInt(lim.value, 10);
+    if (n > 0) { sql += '\nLIMIT ' + n; rows = rows.slice(0, n); }
+    $('#s-sql').textContent = sql + ';';
+    var thead = $('#s-tabla thead'), tbody = $('#s-tabla tbody');
+    thead.innerHTML = '<tr>' + COLS.map(function (k) { return '<th>' + k + '</th>'; }).join('') + '</tr>';
+    tbody.innerHTML = rows.length ? rows.map(function (r) { return '<tr>' + COLS.map(function (k) { return '<td>' + esc(k === 'precio' ? r[k].toFixed(2) : r[k]) + '</td>'; }).join('') + '</tr>'; }).join('') : '<tr><td colspan="5"><em>0 filas: ninguna cumple la condición.</em></td></tr>';
+    if (!aviso.textContent) aviso.textContent = rows.length + (rows.length === 1 ? ' fila devuelta.' : ' filas devueltas.');
+  }
+  var DEF = { precio: ['>', '100'], stock: ['<=', '10'], id: ['<', '4'], categoria: ['=', 'Audio'], nombre: ['LIKE', '%mon%'] };
+  col.addEventListener('change', function () { ops(); var d = DEF[col.value]; if (d) { op.value = d[0]; val.value = d[1]; } run(); });
+  [op, val, ord, dir, lim].forEach(function (e) { e.addEventListener('input', run); e.addEventListener('change', run); });
+  ops(); op.value = '>'; run();
+})();
+
+  </script>
+</body>
+</html>

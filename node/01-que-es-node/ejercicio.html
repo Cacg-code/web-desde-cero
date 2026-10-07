@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ejercicio · Qué es Node.js y tu primer script · Curso de Node.js y APIs</title>
+  <meta name="description" content="Ejercicio práctico de: Qué es Node.js y tu primer script.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/node/01-que-es-node/ejercicio.html">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Ejercicio · Qué es Node.js y tu primer script · Curso de Node.js y APIs">
+  <meta property="og:description" content="Ejercicio práctico de: Qué es Node.js y tu primer script.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/node/01-que-es-node/ejercicio.html">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de Node.js y APIs</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap" id="contenido" style="max-width:820px;padding-top:2rem;padding-bottom:3rem">
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de Node.js y APIs</a> › <a href="./">Lección 1</a> › Ejercicio</div>
+        <h1>Ejercicio: Qué es Node.js y tu primer script</h1>
+        <ul class="meta"><li>⏱ 30 minutos</li><li>📶 Nivel: principiante</li></ul>
+      </header>
+
+      <h2>Objetivo</h2>
+      <p>Instalar y probar Node en tu computadora y escribir cinco funciones de JavaScript puro que usarás después en scripts reales: un saludo, un resumen de números, un contador de palabras y dos funciones para leer versiones de Node.</p>
+
+      <h3>Cómo se trabaja</h3>
+      <p>Este ejercicio tiene dos partes. La <strong>parte A</strong> la haces en tu computadora, con una lista de verificación. La <strong>parte B</strong> son funciones de JavaScript puro: las pruebas en el editor de abajo (que corre en el navegador) y las compruebas pegando el código en el comprobador.</p><p>En el comprobador pega <strong>solo las funciones</strong>, sin las etiquetas <code>&lt;script&gt;</code>.</p>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ Prueba tu código aquí (opcional)</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:300px">&lt;script&gt;
+// Escribe aquí tus funciones y pruébalas con console.log
+function saludar(nombre) {
+  // ...
+}
+
+console.log(saludar("Ana"));
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+
+      <h2>Pasos</h2>
+      <p>Marca cada paso a medida que lo completes. Tu avance se guarda en este navegador.</p>
+      <div class="progress" aria-hidden="true"><div></div></div>
+      <p id="progreso-texto" style="color:var(--muted);font-size:.9rem" aria-live="polite"></p>
+      <ul class="checklist"><li><label><input type="checkbox" id="p1"><span><strong>Parte A.</strong> Instala Node.js LTS y comprueba que <code>node --version</code> y <code>npm --version</code> muestran un número.</span></label></li><li><label><input type="checkbox" id="p2"><span><strong>Parte A.</strong> Crea una carpeta <code>curso-node</code>, entra con <code>cd</code> y ejecuta <code>npm init -y</code>. Comprueba que apareció <code>package.json</code>.</span></label></li><li><label><input type="checkbox" id="p3"><span><strong>Parte A.</strong> Crea <code>hola.js</code> con tu saludo y un <code>console.log(process.version)</code>; ejecútalo con <code>node hola.js</code> y luego con <code>node --watch hola.js</code> (cambia el texto y mira cómo se reinicia).</span></label></li><li><label><input type="checkbox" id="p4"><span><strong>Parte B.</strong> Escribe <code>saludar(nombre)</code>, <code>resumir(numeros)</code> y <code>contarPalabras(texto)</code>.</span></label></li><li><label><input type="checkbox" id="p5"><span><strong>Parte B.</strong> Escribe <code>leerVersion(texto)</code> y <code>esSuficiente(texto, minimo)</code>.</span></label></li><li><label><input type="checkbox" id="p6"><span>Pega todo en el comprobador y consigue que los seis puntos salgan en verde.</span></label></li></ul>
+      <details><summary>💡 Pista 1: los textos exactos</summary><p><code>saludar("Ana")</code> debe devolver exactamente <code>¡Hola, Ana! Bienvenido a Node.js</code>, con los signos de apertura y la coma.</p>
+</details>
+<details><summary>💡 Pista 2: resumir</summary><p>Devuelve un objeto con tres propiedades: <code>min</code>, <code>max</code> y <code>promedio</code>. El promedio es la suma entre la cantidad de elementos.</p>
+</details>
+<details><summary>💡 Pista 3: leerVersion</summary><p><code>"v24.11.0".slice(1)</code> da <code>"24.11.0"</code>. Luego <code>.split(".")</code> da un array de tres textos y <code>.map(Number)</code> los convierte en números.</p>
+</details>
+
+      <section class="checker" id="comprobador" aria-labelledby="t-chk">
+        <h2 id="t-chk">🔎 Comprueba tu trabajo</h2>
+        <p>Pega tu código y pulsa <strong>Comprobar</strong>. La revisión ocurre en tu navegador; nada se envía a ningún sitio. Cada punto en rojo incluye una pista. Pega solo el JavaScript, <strong>sin</strong> las etiquetas <code>&lt;script&gt;</code>.</p>
+        <label for="chk-code">Tu código de JavaScript</label>
+        <textarea id="chk-code" rows="10" spellcheck="false" placeholder="Pega aquí tus funciones"></textarea>
+        <div class="chk-actions"><button class="btn" type="button" id="chk-run">Comprobar</button><button class="icon-btn" type="button" id="chk-clear">Limpiar</button></div>
+        <p class="chk-sum" id="chk-sum" aria-live="polite"></p>
+        <ul class="chk-list" id="chk-list"></ul>
+        <script type="application/json" id="checks">{"mode": "js", "scaffold": "", "width": 800, "checks": [{"d": "`saludar(\"Ana\")` devuelve el saludo exacto", "h": "Usa una plantilla: `¡Hola, ${nombre}! Bienvenido a Node.js`.", "t": "return saludar(\"Ana\")===\"¡Hola, Ana! Bienvenido a Node.js\" && saludar(\"Luis\")===\"¡Hola, Luis! Bienvenido a Node.js\""}, {"d": "`resumir([4, 8, 6])` devuelve `{ min: 4, max: 8, promedio: 6 }`", "h": "Usa `Math.min(...numeros)`, `Math.max(...numeros)` y un `reduce` para el promedio.", "t": "var r=resumir([4,8,6]);return r && r.min===4 && r.max===8 && r.promedio===6 && resumir([10]).promedio===10"}, {"d": "`resumir([])` devuelve `null`", "h": "Si el array está vacío, devuelve `null` antes de calcular.", "t": "return resumir([])===null"}, {"d": "`contarPalabras(\"  hola   mundo  \")` devuelve 2 y con texto vacío devuelve 0", "h": "Usa `trim()` y `split(/\\s+/)`; ojo con el texto vacío.", "t": "return contarPalabras(\"  hola   mundo  \")===2 && contarPalabras(\"uno dos tres\")===3 && contarPalabras(\"\")===0 && contarPalabras(\"   \")===0"}, {"d": "`leerVersion(\"v24.11.0\")` devuelve `{ mayor: 24, menor: 11, parche: 0 }`", "h": "Quita la «v» con `slice(1)`, separa por «.» y convierte con `Number`.", "t": "var r=leerVersion(\"v24.11.0\");var q=leerVersion(\"v20.5.1\");return r && r.mayor===24 && r.menor===11 && r.parche===0 && q.mayor===20 && q.menor===5 && q.parche===1"}, {"d": "`esSuficiente(\"v18.19.0\", 20)` es `false` y `esSuficiente(\"v24.11.0\", 20)` es `true`", "h": "Reutiliza `leerVersion` y compara `mayor` con el mínimo.", "t": "return esSuficiente(\"v18.19.0\",20)===false && esSuficiente(\"v24.11.0\",20)===true && esSuficiente(\"v20.0.0\",20)===true"}]}</script>
+      </section>
+      <details>
+        <summary>✅ Ver una solución posible</summary>
+        <p>Intenta resolverlo antes de mirar. Tu versión puede ser distinta y también correcta.</p>
+        <div class="code">
+  <div class="code-head"><span>soluciones.js</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>function saludar(nombre) {
+  return `¡Hola, ${nombre}! Bienvenido a Node.js`;
+}
+
+function resumir(numeros) {
+  if (numeros.length === 0) return null;
+  const total = numeros.reduce((suma, n) =&gt; suma + n, 0);
+  return {
+    min: Math.min(...numeros),
+    max: Math.max(...numeros),
+    promedio: total / numeros.length
+  };
+}
+
+function contarPalabras(texto) {
+  const limpio = texto.trim();
+  if (limpio === &quot;&quot;) return 0;
+  return limpio.split(/\s+/).length;
+}
+
+function leerVersion(texto) {
+  const [mayor, menor, parche] = texto.slice(1).split(&quot;.&quot;).map(Number);
+  return { mayor, menor, parche };
+}
+
+function esSuficiente(texto, minimo) {
+  return leerVersion(texto).mayor &gt;= minimo;
+}</code></pre>
+</div>
+
+      </details>
+      <div class="callout consejo">
+<p class="callout-title">💡 🏁 Reto extra (opcional)</p>
+<p>Escribe un script <code>version.js</code> que, con <code>process.version</code> y tu función <code>esSuficiente</code>, imprima «Tu Node es suficiente» o «Actualiza Node». Pruébalo en tu terminal con <code>node version.js</code>.</p>
+</div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="./"><small>← Anterior</small>Volver a lección 1</a>
+        <a class="next" href="../02-modulos/"><small>Siguiente →</small>Módulos: CommonJS y ES Modules</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de Node.js y APIs · Ejercicio de lección 1 · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&amp;title=%5BError%5D%20Ejercicio%20%C2%B7%20Qu%C3%A9%20es%20Node.js%20y%20tu%20primer%20script%20%C2%B7%20Curso%20de%20Node.js%20y%20APIs&amp;pagina=https://cacg-code.github.io/PRACTICAS-HTML/node/01-que-es-node/ejercicio.html" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

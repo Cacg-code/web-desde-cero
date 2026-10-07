@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ejercicio · Servidor HTTP con Express · Curso de Node.js y APIs</title>
+  <meta name="description" content="Ejercicio práctico de: Servidor HTTP con Express.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/node/04-servidor-express/ejercicio.html">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Ejercicio · Servidor HTTP con Express · Curso de Node.js y APIs">
+  <meta property="og:description" content="Ejercicio práctico de: Servidor HTTP con Express.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/node/04-servidor-express/ejercicio.html">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de Node.js y APIs</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap" id="contenido" style="max-width:820px;padding-top:2rem;padding-bottom:3rem">
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de Node.js y APIs</a> › <a href="./">Lección 4</a> › Ejercicio</div>
+        <h1>Ejercicio: Servidor HTTP con Express</h1>
+        <ul class="meta"><li>⏱ 60 minutos</li><li>📶 Nivel: intermedio</li></ul>
+      </header>
+
+      <h2>Objetivo</h2>
+      <p>Construir en tu computadora un servidor Express con rutas, parámetros, un <code>POST</code> con JSON, un middleware y un 404, y reproducir con JavaScript puro el mecanismo de rutas y de middleware.</p>
+
+      <h3>Cómo se trabaja</h3>
+      <p>La <strong>parte A</strong> es práctica real en tu terminal: es el corazón del ejercicio. La <strong>parte B</strong> son tres funciones de JavaScript puro que imitan cómo Express empareja rutas, encadena middlewares y nombra estados; las pruebas en el editor y las compruebas abajo. Pega solo el JavaScript, sin <code>&lt;script&gt;</code>.</p>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ Prueba tu código aquí (opcional)</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:300px">&lt;script&gt;
+// Escribe aquí tus funciones y pruébalas con console.log
+function coincide(patron, ruta) {
+  // ...
+}
+
+console.log(coincide("/usuarios/:id", "/usuarios/5"));
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+
+      <h2>Pasos</h2>
+      <p>Marca cada paso a medida que lo completes. Tu avance se guarda en este navegador.</p>
+      <div class="progress" aria-hidden="true"><div></div></div>
+      <p id="progreso-texto" style="color:var(--muted);font-size:.9rem" aria-live="polite"></p>
+      <ul class="checklist"><li><label><input type="checkbox" id="p1"><span><strong>Parte A.</strong> Crea un proyecto nuevo (<code>npm init -y</code>, <code>"type": "module"</code>, <code>npm install express</code>) y un script <code>dev</code> con <code>node --watch index.js</code>.</span></label></li><li><label><input type="checkbox" id="p2"><span><strong>Parte A.</strong> Crea las rutas <code>GET /</code> (texto), <code>GET /saludo/:nombre</code> (JSON) y <code>GET /suma?a=&amp;b=</code> (devuelve 400 si no son números).</span></label></li><li><label><input type="checkbox" id="p3"><span><strong>Parte A.</strong> Añade <code>express.json()</code> y <code>POST /eco</code>: responde 201 con el mensaje recibido o 400 si falta.</span></label></li><li><label><input type="checkbox" id="p4"><span><strong>Parte A.</strong> Añade un middleware que imprima método y URL de cada petición, y un 404 en JSON al final.</span></label></li><li><label><input type="checkbox" id="p5"><span><strong>Parte A.</strong> Prueba todas las rutas con el navegador y con <code>curl</code> (o Thunder Client). Comprueba los códigos de estado.</span></label></li><li><label><input type="checkbox" id="p6"><span><strong>Parte B.</strong> Escribe <code>coincide(patron, ruta)</code> y <code>describirEstado(codigo)</code>.</span></label></li><li><label><input type="checkbox" id="p7"><span><strong>Parte B.</strong> Escribe <code>ejecutar(middlewares, req)</code>. Pasa los ocho puntos del comprobador.</span></label></li></ul>
+      <details><summary>💡 Pista 1: ¿qué falla si la petición se queda colgada?</summary><p>Casi siempre es un middleware que no llama a <code>next()</code> y tampoco responde.</p>
+</details>
+<details><summary>💡 Pista 2: coincide</summary><p>Divide el patrón y la ruta con <code>split("/")</code>. Si tienen distinta longitud, no coinciden. Si una parte del patrón empieza por <code>:</code>, es un parámetro; si no, debe ser igual.</p>
+</details>
+<details><summary>💡 Pista 3: ejecutar</summary><p>Guarda un índice <code>i</code>. <code>next</code> toma <code>middlewares[i++]</code> y lo llama con <code>(req, res, next)</code>. Crea <code>res</code> con un <code>send</code> que guarde el texto en una variable.</p>
+</details>
+
+      <section class="checker" id="comprobador" aria-labelledby="t-chk">
+        <h2 id="t-chk">🔎 Comprueba tu trabajo</h2>
+        <p>Pega tu código y pulsa <strong>Comprobar</strong>. La revisión ocurre en tu navegador; nada se envía a ningún sitio. Cada punto en rojo incluye una pista. Pega solo el JavaScript, <strong>sin</strong> las etiquetas <code>&lt;script&gt;</code>.</p>
+        <label for="chk-code">Tu código de JavaScript</label>
+        <textarea id="chk-code" rows="10" spellcheck="false" placeholder="Pega aquí tus funciones"></textarea>
+        <div class="chk-actions"><button class="btn" type="button" id="chk-run">Comprobar</button><button class="icon-btn" type="button" id="chk-clear">Limpiar</button></div>
+        <p class="chk-sum" id="chk-sum" aria-live="polite"></p>
+        <ul class="chk-list" id="chk-list"></ul>
+        <script type="application/json" id="checks">{"mode": "js", "scaffold": "", "width": 800, "checks": [{"d": "`coincide(\"/usuarios/:id\", \"/usuarios/5\")` devuelve `{ id: \"5\" }`", "h": "Separa patrón y ruta con `split(\"/\")` y, donde el patrón empiece por `:`, guarda el valor.", "t": "var r=coincide(\"/usuarios/:id\",\"/usuarios/5\");return r && r.id===\"5\""}, {"d": "`coincide` acepta varios parámetros", "h": "Recorre todas las partes; cada `:nombre` añade una propiedad.", "t": "var r=coincide(\"/a/:x/b/:y\",\"/a/1/b/2\");return r && r.x===\"1\" && r.y===\"2\""}, {"d": "`coincide` devuelve `null` si la ruta no encaja", "h": "Si la cantidad de partes difiere o una parte fija no coincide, devuelve `null`.", "t": "return coincide(\"/usuarios/:id\",\"/productos/5\")===null && coincide(\"/usuarios/:id\",\"/usuarios\")===null && coincide(\"/a/:x\",\"/a/1/2\")===null"}, {"d": "`coincide` con una ruta fija idéntica devuelve un objeto vacío", "h": "Sin parámetros no hay nada que guardar, pero sí coincide: devuelve `{}`.", "t": "var r=coincide(\"/inicio\",\"/inicio\");return r!==null && typeof r===\"object\" && Object.keys(r).length===0"}, {"d": "`ejecutar` llama a los middlewares en orden y devuelve lo que se envió", "h": "Crea `res` con un método `send` que guarde el texto y una función `next` que avance el índice.", "t": "var log=[];var r=ejecutar([function(q,s,n){log.push(1);n()},function(q,s,n){log.push(2);n()},function(q,s){log.push(3);s.send(\"fin\")}],{});return r===\"fin\" && log.join(\",\")===\"1,2,3\""}, {"d": "`ejecutar` se detiene si un middleware responde sin llamar a `next`", "h": "No llames a `next` tú: solo se avanza cuando el middleware lo invoca.", "t": "var log=[];var r=ejecutar([function(q,s){log.push(1);s.send(\"corte\")},function(q,s){log.push(2);s.send(\"no\")}],{});return r===\"corte\" && log.length===1"}, {"d": "`ejecutar` devuelve `null` si nadie responde y deja pasar datos por `req`", "h": "Inicializa `enviado` en `null`. Los middlewares comparten el mismo objeto `req`.", "t": "var q={};var r=ejecutar([function(q,s,n){q.rol=\"admin\";n()},function(q,s){s.send(\"rol:\"+q.rol)}],q);return r===\"rol:admin\" && q.rol===\"admin\" && ejecutar([function(q,s,n){n()}],{})===null"}, {"d": "`describirEstado` traduce 200, 201, 400, 404 y 500", "h": "Usa un objeto o un `switch`; para otros códigos devuelve «Desconocido».", "t": "return describirEstado(200)===\"OK\" && describirEstado(201)===\"Creado\" && describirEstado(400)===\"Petición incorrecta\" && describirEstado(404)===\"No encontrado\" && describirEstado(500)===\"Error del servidor\" && describirEstado(418)===\"Desconocido\""}]}</script>
+      </section>
+      <details>
+        <summary>✅ Ver una solución posible</summary>
+        <p>Intenta resolverlo antes de mirar. Tu versión puede ser distinta y también correcta.</p>
+        <div class="code">
+  <div class="code-head"><span>funciones.js</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>function coincide(patron, ruta) {
+  const p = patron.split(&quot;/&quot;);
+  const r = ruta.split(&quot;/&quot;);
+  if (p.length !== r.length) return null;
+  const params = {};
+  for (let i = 0; i &lt; p.length; i++) {
+    if (p[i].startsWith(&quot;:&quot;)) {
+      params[p[i].slice(1)] = r[i];
+    } else if (p[i] !== r[i]) {
+      return null;
+    }
+  }
+  return params;
+}
+
+function ejecutar(middlewares, req) {
+  let enviado = null;
+  const res = { send(texto) { enviado = texto; } };
+  let i = 0;
+  const next = () =&gt; {
+    const mw = middlewares[i++];
+    if (mw) mw(req, res, next);
+  };
+  next();
+  return enviado;
+}
+
+function describirEstado(codigo) {
+  const estados = {
+    200: &quot;OK&quot;,
+    201: &quot;Creado&quot;,
+    400: &quot;Petición incorrecta&quot;,
+    404: &quot;No encontrado&quot;,
+    500: &quot;Error del servidor&quot;
+  };
+  return estados[codigo] ?? &quot;Desconocido&quot;;
+}</code></pre>
+</div>
+
+      </details>
+      <div class="callout consejo">
+<p class="callout-title">💡 🏁 Reto extra (opcional)</p>
+<p>Añade a tu servidor una ruta <code>GET /producto/:id</code> que devuelva uno de tres productos de un array y responda 404 si el id no existe. Después mejora <code>coincide</code> para que ignore una barra final (<code>/usuarios/5/</code>).</p>
+</div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="./"><small>← Anterior</small>Volver a lección 4</a>
+        <a class="next" href="../"><small>Siguiente →</small>Índice del curso</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de Node.js y APIs · Ejercicio de lección 4 · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&amp;title=%5BError%5D%20Ejercicio%20%C2%B7%20Servidor%20HTTP%20con%20Express%20%C2%B7%20Curso%20de%20Node.js%20y%20APIs&amp;pagina=https://cacg-code.github.io/PRACTICAS-HTML/node/04-servidor-express/ejercicio.html" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

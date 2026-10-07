@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chuletas por curso</title>
+  <meta name="description" content="Chuletas imprimibles de HTML, CSS, JavaScript y React. Se desbloquean al completar las lecciones de cada curso.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/chuletas/">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../manifest.webmanifest">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <link rel="stylesheet" href="../assets/estilos.css">
+  <style>
+    .sheet { margin: 1.5rem 0; padding: 1.2rem 1.4rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); position: relative; }
+    .sheet h2 { margin-top: 0; }
+    .sheet .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: .6rem 1.5rem; }
+    .sheet dl { margin: 0; } .sheet dt { font-family: var(--mono); font-size: .88rem; font-weight: 700; color: var(--accent); margin-top: .5rem; }
+    .sheet dd { margin: 0; color: var(--muted); font-size: .92rem; }
+    .sheet.locked .grid { filter: blur(6px); pointer-events: none; user-select: none; }
+    .sheet .lock { display: none; position: absolute; inset: 3.4rem 0 0; place-items: center; text-align: center; padding: 1rem; }
+    .sheet.locked .lock { display: grid; }
+    .lock p { margin: 0; padding: .8rem 1.2rem; border-radius: 12px; background: var(--surface); border: 1px solid var(--border); box-shadow: var(--shadow); font-weight: 600; }
+    @media print { .sheet.locked { display: none; } .topbar, .site-footer, .noprint { display: none !important; } }
+  </style>
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Desarrollo web desde cero</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../" style="text-decoration:none">Todos los cursos</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap" id="contenido">
+    <span class="eyebrow">Recompensa · Imprimible</span>
+    <h1>Chuletas por curso</h1>
+    <p class="route-intro">Cada chuleta se desbloquea al completar las 11 lecciones de su curso. Es un incentivo de motivación: tu progreso se guarda solo en tu navegador, así que no es una acreditación. Puedes imprimirla o guardarla como PDF.</p>
+    <p class="noprint"><button type="button" class="btn" onclick="window.print()">🖨️ Imprimir / guardar PDF</button></p>
+
+    <section class="sheet" data-prefix="" data-name="HTML">
+      <h2>🧱 HTML</h2>
+      <div class="grid">
+        <dl>
+          <dt>&lt;!doctype html&gt;</dt><dd>Declara que es HTML5; va siempre primero.</dd>
+          <dt>&lt;html lang="es"&gt;</dt><dd>Idioma de la página (lectores de pantalla y SEO).</dd>
+          <dt>&lt;meta name="viewport"&gt;</dt><dd>Imprescindible para que sea responsiva en el móvil.</dd>
+          <dt>&lt;h1&gt;…&lt;h6&gt;</dt><dd>Títulos. Un solo h1 por página y sin saltar niveles.</dd>
+          <dt>&lt;a href&gt;</dt><dd>Enlace. Usa rel="noopener" con target="_blank".</dd>
+          <dt>&lt;img src alt&gt;</dt><dd>Imagen; alt describe lo que se ve (vacío si es decorativa).</dd>
+        </dl>
+        <dl>
+          <dt>&lt;ul&gt; · &lt;ol&gt; · &lt;li&gt;</dt><dd>Listas sin orden, ordenadas e ítems.</dd>
+          <dt>&lt;table&gt; &lt;th scope&gt;</dt><dd>Tablas solo para datos; thead, tbody y caption.</dd>
+          <dt>&lt;label for&gt; + &lt;input id&gt;</dt><dd>Etiqueta enlazada a su campo del formulario.</dd>
+          <dt>&lt;header&gt; &lt;nav&gt; &lt;main&gt; &lt;footer&gt;</dt><dd>Semántica: da significado y mejora la accesibilidad.</dd>
+          <dt>&lt;title&gt; + description</dt><dd>Lo que se ve en Google: título y resumen.</dd>
+          <dt>git add · commit · push</dt><dd>Preparar, guardar y subir tus cambios.</dd>
+        </dl>
+      </div>
+      <div class="lock"><p>🔒 Completa las 11 lecciones de HTML para ver esta chuleta<br><small data-count></small></p></div>
+    </section>
+
+    <section class="sheet" data-prefix="css-" data-name="CSS">
+      <h2>🎨 CSS</h2>
+      <div class="grid">
+        <dl>
+          <dt>.clase · #id · etiqueta</dt><dd>Selectores básicos; la clase es el más usado.</dd>
+          <dt>:hover · :focus · ::before</dt><dd>Pseudoclases y pseudoelementos.</dd>
+          <dt>margin · border · padding</dt><dd>Modelo de caja; usa box-sizing: border-box.</dd>
+          <dt>rem · em · % · vw</dt><dd>Unidades relativas para diseños flexibles.</dd>
+          <dt>var(--color)</dt><dd>Variables CSS declaradas en :root.</dd>
+        </dl>
+        <dl>
+          <dt>display: flex</dt><dd>justify-content (eje principal), align-items (cruzado), gap.</dd>
+          <dt>display: grid</dt><dd>grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)).</dd>
+          <dt>position: relative / absolute / sticky</dt><dd>El hijo absoluto se ubica respecto al padre relativo.</dd>
+          <dt>@media (max-width: 600px)</dt><dd>Reglas solo para pantallas pequeñas.</dd>
+          <dt>transition · animation</dt><dd>Movimiento; respeta prefers-reduced-motion.</dd>
+        </dl>
+      </div>
+      <div class="lock"><p>🔒 Completa las 11 lecciones de CSS para ver esta chuleta<br><small data-count></small></p></div>
+    </section>
+
+    <section class="sheet" data-prefix="js-" data-name="JavaScript">
+      <h2>⚙️ JavaScript</h2>
+      <div class="grid">
+        <dl>
+          <dt>const · let</dt><dd>Variables. Evita var; usa const por defecto.</dd>
+          <dt>=== · !==</dt><dd>Comparan valor y tipo.</dd>
+          <dt>`Hola ${nombre}`</dt><dd>Plantillas de texto.</dd>
+          <dt>(a, b) =&gt; a + b</dt><dd>Función flecha.</dd>
+          <dt>if · else · switch</dt><dd>Condicionales.</dd>
+        </dl>
+        <dl>
+          <dt>arr.map · filter · find · reduce</dt><dd>Transforman arrays sin mutar el original.</dd>
+          <dt>{ a, b } = obj</dt><dd>Desestructuración.</dd>
+          <dt>document.querySelector</dt><dd>Selecciona un elemento del DOM.</dd>
+          <dt>el.addEventListener('click', fn)</dt><dd>Reacciona a eventos.</dd>
+          <dt>fetch(url).then(r =&gt; r.json())</dt><dd>Pide datos; con async/await y try/catch.</dd>
+          <dt>JSON.parse · JSON.stringify</dt><dd>Texto ↔ objeto.</dd>
+        </dl>
+      </div>
+      <div class="lock"><p>🔒 Completa las 11 lecciones de JavaScript para ver esta chuleta<br><small data-count></small></p></div>
+    </section>
+
+    <section class="sheet" data-prefix="react-" data-name="React">
+      <h2>⚛️ React</h2>
+      <div class="grid">
+        <dl>
+          <dt>function Tarjeta({ titulo })</dt><dd>Componente: función con mayúscula que devuelve JSX.</dd>
+          <dt>&lt;Tarjeta titulo="Hola" /&gt;</dt><dd>Props: datos de padre a hijo (solo lectura).</dd>
+          <dt>{expresion}</dt><dd>Inserta JavaScript dentro del JSX.</dd>
+          <dt>className · htmlFor</dt><dd>Nombres JSX de class y for.</dd>
+        </dl>
+        <dl>
+          <dt>const [n, setN] = useState(0)</dt><dd>Estado; cambia con setN, nunca directo.</dd>
+          <dt>useEffect(fn, [deps])</dt><dd>Efectos secundarios; limpia con return.</dd>
+          <dt>lista.map(x =&gt; &lt;li key={x.id}&gt;)</dt><dd>Listas con key estable.</dd>
+          <dt>useContext · useReducer</dt><dd>Estado compartido y lógica compleja.</dd>
+          <dt>npm create vite@latest</dt><dd>Proyecto real con Vite.</dd>
+        </dl>
+      </div>
+      <div class="lock"><p>🔒 Completa las 11 lecciones de React para ver esta chuleta<br><small data-count></small></p></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">Chuletas · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../assets/curso.js"></script>
+  <script>
+    (function () {
+      document.querySelectorAll('.sheet').forEach(function (s) {
+        var pre = s.getAttribute('data-prefix'), n = 0;
+        for (var i = 1; i <= 11; i++) { try { if (localStorage.getItem('leccion:' + pre + ('0' + i).slice(-2)) === '1') n++; } catch (e) {} }
+        if (n < 11) { s.classList.add('locked'); s.querySelector('[data-count]').textContent = 'Llevas ' + n + ' de 11'; }
+      });
+    })();
+  </script>
+</body>
+</html>

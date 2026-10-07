@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Curso de Bases de datos con SQL</title>
+  <meta name="description" content="Curso gratuito de bases de datos con SQL en español, desde cero: tablas, SELECT, INSERT, UPDATE, DELETE, diseño de tablas, JOIN, agrupaciones, SQLite, PostgreSQL y seguridad.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/bd/">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../manifest.webmanifest">
+  <meta name="theme-color" content="#0e7490">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Curso de Bases de datos con SQL">
+  <meta property="og:description" content="Curso gratuito de bases de datos con SQL en español, desde cero: tablas, SELECT, INSERT, UPDATE, DELETE, diseño de tablas, JOIN, agrupaciones, SQLite, PostgreSQL y seguridad.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/bd/">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../assets/estilos.css">
+  <style>
+    .sqlsim select, .sqlsim input[type="number"] { padding: .5rem .6rem; border: 1px solid var(--border); border-radius: 8px; background: var(--bg); color: var(--text); font: inherit; max-width: 100%; }
+    .sqlsim .sql-out { margin: 0; padding: .8rem 1rem; border-radius: 10px; background: var(--code-bg); color: var(--code-text); font-family: var(--mono); font-size: .88rem; line-height: 1.6; white-space: pre-wrap; overflow-wrap: anywhere; }
+    .sqlsim .msg { margin: 0; font-weight: 600; }
+    .sqlsim .msg.err { color: #b91c1c; }
+    .sqlsim .msg.okk { color: #15803d; }
+    :root[data-theme="dark"] .sqlsim .msg.err { color: #fca5a5; }
+    :root[data-theme="dark"] .sqlsim .msg.okk { color: #86efac; }
+    @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .sqlsim .msg.err { color: #fca5a5; } :root:not([data-theme="light"]) .sqlsim .msg.okk { color: #86efac; } }
+    .sqlsim .w-row button { cursor: pointer; }
+    .sqlsim .w-row label { display: inline-flex; gap: .4rem; align-items: center; }
+    .sqlsim td.hl, .sqlsim th.hl, .sqlsim tr.hl td { background: color-mix(in srgb, var(--accent) 22%, transparent); }
+    .sqlsim tr.gone td { text-decoration: line-through; opacity: .5; }
+    .sqlsim tr.new td { background: color-mix(in srgb, #22c55e 22%, transparent); }
+    .sqlsim tr.chg td { background: color-mix(in srgb, #f59e0b 25%, transparent); }
+  </style>
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="./"><span class="brand-logo">&lt;/&gt;</span> Bases de datos con SQL</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../" style="text-decoration:none">Todos los cursos</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap" id="contenido">
+    <div class="hero-grid">
+      <div class="hero">
+        <span class="eyebrow">Gratis · En español · Nivel 6</span>
+        <h1>Bases de datos con SQL: guarda y consulta información</h1>
+        <p>Aprende a organizar datos en tablas y a hacerles preguntas con SQL: consultar, insertar, modificar, relacionar y proteger la información de una aplicación. Practicas con SQLite, que se instala en un minuto, y todo lo aprendido sirve también en PostgreSQL.</p>
+        <a class="btn" href="01-que-es-una-base-de-datos/">Empezar la lección 1</a>
+        <a class="btn secondary" href="#temario">Ver el temario</a>
+        <div class="avance" id="avance"></div>
+      </div>
+      <div class="hero-demo" role="group" aria-label="Demostración: una consulta SQL que se escribe y su resultado">
+        <div class="win-bar"><i></i><i></i><i></i></div>
+        <pre id="typing" data-lines='["SELECT nombre, precio FROM productos", "WHERE categoria = &#39;Audio&#39;", "ORDER BY precio DESC", "LIMIT 2;"]' data-outs='["", "", "", "Altavoz 99.00 · Auriculares 89.90"]'></pre>
+        <div class="hero-out" id="typing-out"></div>
+      </div>
+    </div>
+
+    <section class="features" aria-label="Qué incluye el curso">
+      <div class="feature"><div class="emoji">🗄️</div><h2>Ejemplos con una tienda</h2><p>Una misma tabla de productos a lo largo del curso, con el resultado esperado de cada consulta.</p></div>
+      <div class="feature"><div class="emoji">🧪</div><h2>Simuladores interactivos</h2><p>Mini simuladores en la propia lección para ver cómo filtran, ordenan y cambian los datos.</p></div>
+      <div class="feature"><div class="emoji">📝</div><h2>Apuntes claros</h2><p>Explicaciones con recuadros de nota, advertencia y consejo, y un glosario en cada lección.</p></div>
+      <div class="feature"><div class="emoji">🧠</div><h2>Autoevaluación</h2><p>Preguntas con respuesta inmediata y explicación al final de cada lección.</p></div>
+    </section>
+
+    <div class="two-col">
+      <section><h2 class="section-title" style="margin-top:0">Antes de empezar</h2><ul class="checks-list"><li>Saber usar una <strong>terminal</strong> básica: abrirla y escribir comandos.</li><li>Conocer lo esencial de <strong>JavaScript</strong>: haz antes el <a href="../javascript/">curso de JavaScript</a>, sobre todo para la lección 7.</li><li>Instalar <strong>SQLite</strong> (lo explicamos paso a paso en la lección 1).</li></ul></section>
+      <section><h2 class="section-title" style="margin-top:0">Lo que aprenderás</h2><ul class="checks-list"><li>Qué es una base de datos relacional y cómo se organiza.</li><li>Consultar con <strong>SELECT</strong>, <strong>WHERE</strong>, <strong>ORDER BY</strong> y <strong>LIMIT</strong>.</li><li>Añadir, cambiar y borrar datos con seguridad.</li><li>Diseñar tablas con claves y restricciones.</li><li>Relacionar tablas, agrupar resultados y proteger tus datos.</li></ul></section>
+    </div>
+
+    <h2 class="section-title" id="temario">Temario · ≈ 12 horas</h2>
+    <ul class="lessons">
+      <li><a class="lesson-card" href="01-que-es-una-base-de-datos/" data-leccion="bd-01">
+        <span class="lesson-num">LECCIÓN 01</span><h3>Qué es una base de datos</h3>
+        <p>Tablas, filas, columnas y claves; qué es SQL, SQL frente a NoSQL y cómo preparar SQLite.</p><span class="tag open">Disponible</span></a></li>
+      <li><a class="lesson-card" href="02-consultar-con-select/" data-leccion="bd-02">
+        <span class="lesson-num">LECCIÓN 02</span><h3>Consultar con SELECT</h3>
+        <p>Leer datos con SELECT, filtrar con WHERE y LIKE, ordenar con ORDER BY y paginar con LIMIT.</p><span class="tag open">Disponible</span></a></li>
+      <li><a class="lesson-card" href="03-insertar-actualizar-borrar/" data-leccion="bd-03">
+        <span class="lesson-num">LECCIÓN 03</span><h3>Insertar, actualizar y borrar</h3>
+        <p>INSERT, UPDATE y DELETE, transacciones, tipos de datos y restricciones.</p><span class="tag open">Disponible</span></a></li>
+      <li><a class="lesson-card" href="04-disenar-tablas/" data-leccion="bd-04">
+        <span class="lesson-num">LECCIÓN 04</span><h3>Diseñar tablas</h3>
+        <p>CREATE TABLE, PRIMARY KEY, NOT NULL, UNIQUE, CHECK y normalización básica.</p><span class="tag open">Disponible</span></a></li>
+      <li><div class="lesson-card disabled" data-leccion="bd-05">
+        <span class="lesson-num">LECCIÓN 05</span><h3>Relaciones y JOIN</h3>
+        <p>Claves foráneas, relaciones uno a muchos y muchos a muchos, INNER JOIN y LEFT JOIN.</p><span class="tag soon">Próximamente</span></div></li>
+      <li><div class="lesson-card disabled" data-leccion="bd-06">
+        <span class="lesson-num">LECCIÓN 06</span><h3>Agrupar y resumir</h3>
+        <p>COUNT, SUM, AVG, MIN y MAX, GROUP BY y filtrar grupos con HAVING.</p><span class="tag soon">Próximamente</span></div></li>
+      <li><div class="lesson-card disabled" data-leccion="bd-07">
+        <span class="lesson-num">LECCIÓN 07</span><h3>SQLite y PostgreSQL en la práctica</h3>
+        <p>Instalar y usar ambos motores, sus diferencias y cómo conectarlos desde Node.js.</p><span class="tag soon">Próximamente</span></div></li>
+      <li><div class="lesson-card disabled" data-leccion="bd-08">
+        <span class="lesson-num">LECCIÓN 08</span><h3>Seguridad: inyección SQL, contraseñas y copias</h3>
+        <p>Consultas parametrizadas, contraseñas con hash, permisos y copias de seguridad.</p><span class="tag soon">Próximamente</span></div></li>
+      <li><div class="lesson-card disabled" data-leccion="bd-P">
+        <span class="lesson-num">PROYECTO FINAL</span><h3>Proyecto: base de datos de una tienda</h3>
+        <p>Diseña, crea y consulta la base de datos completa de una tienda: clientes, productos, pedidos e informes.</p><span class="tag soon">Próximamente</span></div></li>
+    </ul>
+  </main>
+
+  <footer class="site-footer">Curso de Bases de datos con SQL · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&title=%5BError%5D%20Curso%20de%20Bases%20de%20datos%20con%20SQL&pagina=https%3A//cacg-code.github.io/PRACTICAS-HTML/bd/" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../assets/curso.js"></script>
+</body>
+</html>

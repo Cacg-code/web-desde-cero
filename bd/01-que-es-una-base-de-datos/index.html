@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lección 1: Qué es una base de datos · Curso de Bases de datos con SQL</title>
+  <meta name="description" content="Qué es una base de datos, cómo se organizan los datos en tablas, filas y columnas, qué son las claves, qué es SQL, cuándo elegir SQL o NoSQL y cómo preparar SQLite.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/bd/01-que-es-una-base-de-datos/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#0e7490">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Lección 1: Qué es una base de datos · Curso de Bases de datos con SQL">
+  <meta property="og:description" content="Qué es una base de datos, cómo se organizan los datos en tablas, filas y columnas, qué son las claves, qué es SQL, cuándo elegir SQL o NoSQL y cómo preparar SQLite.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/bd/01-que-es-una-base-de-datos/">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+  <style>
+    .sqlsim select, .sqlsim input[type="number"] { padding: .5rem .6rem; border: 1px solid var(--border); border-radius: 8px; background: var(--bg); color: var(--text); font: inherit; max-width: 100%; }
+    .sqlsim .sql-out { margin: 0; padding: .8rem 1rem; border-radius: 10px; background: var(--code-bg); color: var(--code-text); font-family: var(--mono); font-size: .88rem; line-height: 1.6; white-space: pre-wrap; overflow-wrap: anywhere; }
+    .sqlsim .msg { margin: 0; font-weight: 600; }
+    .sqlsim .msg.err { color: #b91c1c; }
+    .sqlsim .msg.okk { color: #15803d; }
+    :root[data-theme="dark"] .sqlsim .msg.err { color: #fca5a5; }
+    :root[data-theme="dark"] .sqlsim .msg.okk { color: #86efac; }
+    @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .sqlsim .msg.err { color: #fca5a5; } :root:not([data-theme="light"]) .sqlsim .msg.okk { color: #86efac; } }
+    .sqlsim .w-row button { cursor: pointer; }
+    .sqlsim .w-row label { display: inline-flex; gap: .4rem; align-items: center; }
+    .sqlsim td.hl, .sqlsim th.hl, .sqlsim tr.hl td { background: color-mix(in srgb, var(--accent) 22%, transparent); }
+    .sqlsim tr.gone td { text-decoration: line-through; opacity: .5; }
+    .sqlsim tr.new td { background: color-mix(in srgb, #22c55e 22%, transparent); }
+    .sqlsim tr.chg td { background: color-mix(in srgb, #f59e0b 25%, transparent); }
+  </style>
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Bases de datos con SQL</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap lesson-layout" id="contenido">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#que-es">Qué es una base de datos</a></li><li><a href="#tablas">Tablas, filas y columnas</a></li><li><a href="#claves">Claves: cómo se identifica cada fila</a></li><li><a href="#sql">Qué es SQL</a></li><li><a href="#nosql">SQL frente a NoSQL</a></li><li><a href="#motores">Motores populares y cuál usaremos</a></li><li><a href="#practica">Prepara tu entorno con SQLite</a></li><li><a href="#errores">Errores frecuentes</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de Bases de datos con SQL</a> › Lección 1</div>
+        <h1>Qué es una base de datos</h1>
+        <ul class="meta"><li>⏱ 40 minutos</li><li>📶 Nivel: principiante</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Explicar qué es una base de datos y para qué se usa en una aplicación web.</li><li>Reconocer tablas, filas, columnas y claves en un ejemplo.</li><li>Distinguir SQL de NoSQL y SQLite de PostgreSQL.</li><li>Preparar SQLite con la tabla de ejemplo del curso.</li></ul>
+</div>
+
+<h2 id="que-es"><span class="n">1.</span>Qué es una base de datos</h2>
+
+<p>Una <strong>base de datos</strong> es una colección de información <strong>organizada</strong> para que se pueda guardar, buscar, modificar y proteger de forma fiable. Cada vez que inicias sesión en una web, compras algo o ves tu historial de pedidos, hay una base de datos detrás respondiendo.</p>
+<p>Podrías guardar los datos en un archivo de texto o en una hoja de cálculo, pero en cuanto la información crece o la usan varias personas a la vez aparecen los problemas: datos repetidos, errores al escribir, dos personas editando lo mismo y nadie que impida borrar algo importante. Una base de datos resuelve esto con reglas y herramientas propias.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Necesidad</th><th>Archivo de texto u hoja de cálculo</th><th>Base de datos</th></tr></thead>
+<tbody>
+<tr><td><strong>Buscar</strong> un dato entre millones</td><td>Lento: hay que leer todo</td><td>Rápido, con índices y consultas</td></tr>
+<tr><td><strong>Evitar errores</strong> (un precio escrito como «abc»)</td><td>Cualquiera escribe lo que quiera</td><td>Tipos de datos y restricciones que lo impiden</td></tr>
+<tr><td><strong>Varios usuarios</strong> a la vez</td><td>Conflictos y pérdidas</td><td>Control de acceso y transacciones</td></tr>
+<tr><td><strong>Relacionar</strong> datos (clientes y pedidos)</td><td>Se copian los datos a mano</td><td>Se enlazan entre tablas</td></tr>
+<tr><td><strong>Seguridad</strong> y copias</td><td>Depende de ti</td><td>Usuarios, permisos y copias de seguridad</td></tr>
+</tbody>
+</table></div>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · BD y SGBD no son lo mismo</p>
+<p>La <strong>base de datos</strong> son los datos guardados. El <strong>SGBD</strong> (sistema gestor de bases de datos, en inglés <em>DBMS</em>) es el programa que los administra: SQLite, PostgreSQL, MySQL… En el lenguaje cotidiano se dice «base de datos» para los dos, y en este curso también lo haremos cuando no haya confusión.</p>
+</div>
+
+<p>Casi todas las aplicaciones web siguen este esquema: el navegador pide algo al <strong>servidor</strong> (por ejemplo, un programa en Node.js), el servidor <strong>consulta la base de datos</strong> y devuelve la respuesta. El navegador nunca habla directamente con la base de datos: lo veremos en la lección 7.</p>
+<div class="flow"><div class="node"><strong>Navegador</strong><span>formulario, página</span></div><div class="arrow">→<code>petición</code></div><div class="node"><strong>Servidor</strong><span>Node.js u otro</span></div><div class="arrow">→<code>SQL</code></div><div class="node"><strong>Base de datos</strong><span>SQLite, PostgreSQL…</span></div></div>
+
+<h2 id="tablas"><span class="n">2.</span>Tablas, filas y columnas</h2>
+
+<p>En una base de datos <strong>relacional</strong> la información se guarda en <strong>tablas</strong>, parecidas a una hoja de cálculo. A lo largo del curso usaremos una tabla llamada <code>productos</code>, de una tienda de informática:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>id</th><th>nombre</th><th>categoria</th><th>precio</th><th>stock</th></tr></thead>
+<tbody><tr><td>1</td><td>Teclado</td><td>Periféricos</td><td>120.00</td><td>15</td></tr><tr><td>2</td><td>Ratón</td><td>Periféricos</td><td>45.50</td><td>40</td></tr><tr><td>3</td><td>Monitor FHD</td><td>Pantallas</td><td>650.00</td><td>8</td></tr><tr><td>4</td><td>Auriculares</td><td>Audio</td><td>89.90</td><td>0</td></tr><tr><td>5</td><td>Webcam</td><td>Periféricos</td><td>150.00</td><td>12</td></tr><tr><td>6</td><td>Altavoz</td><td>Audio</td><td>99.00</td><td>25</td></tr><tr><td>7</td><td>Monitor 4K</td><td>Pantallas</td><td>899.00</td><td>3</td></tr><tr><td>8</td><td>Cable HDMI</td><td>Accesorios</td><td>15.00</td><td>100</td></tr></tbody>
+</table></div>
+
+<ul>
+<li>La <strong>tabla</strong> (<code>productos</code>) agrupa datos de <strong>una misma cosa</strong>: aquí, productos.</li>
+<li>Cada <strong>fila</strong> (también «registro») es <strong>un elemento</strong>: un producto concreto.</li>
+<li>Cada <strong>columna</strong> (también «campo» o «atributo») es <strong>una característica</strong>: nombre, precio, stock…</li>
+<li>Una <strong>celda</strong> (un «valor») es el cruce de una fila y una columna: el precio del monitor 4K es <code>899.00</code>.</li>
+</ul>
+<p>Todas las filas de una tabla tienen las <strong>mismas columnas</strong>, y todos los valores de una columna son del <strong>mismo tipo</strong> (números en <code>precio</code>, texto en <code>nombre</code>). Esa regularidad es lo que permite consultar con precisión.</p>
+<div class="widget sqlsim" data-sim="explorar">
+  <div class="w-head">🔍 Explorador de la tabla productos</div>
+  <div class="w-body">
+    <div class="w-row" role="group" aria-label="Qué parte de la tabla resaltar">
+      <button class="icon-btn" type="button" data-m="tabla" aria-pressed="false">Tabla</button>
+      <button class="icon-btn" type="button" data-m="fila" aria-pressed="false">Fila</button>
+      <button class="icon-btn" type="button" data-m="columna" aria-pressed="false">Columna</button>
+      <button class="icon-btn" type="button" data-m="celda" aria-pressed="false">Celda</button>
+      <button class="icon-btn" type="button" data-m="clave" aria-pressed="false">Clave primaria</button>
+    </div>
+    <div class="table-wrap" style="margin:0"><table id="ex-tabla"><thead><tr><th>id</th><th>nombre</th><th>categoria</th><th>precio</th><th>stock</th></tr></thead><tbody><tr><td>1</td><td>Teclado</td><td>Periféricos</td><td>120.00</td><td>15</td></tr><tr><td>2</td><td>Ratón</td><td>Periféricos</td><td>45.50</td><td>40</td></tr><tr><td>3</td><td>Monitor FHD</td><td>Pantallas</td><td>650.00</td><td>8</td></tr><tr><td>4</td><td>Auriculares</td><td>Audio</td><td>89.90</td><td>0</td></tr></tbody></table></div>
+    <p class="msg" id="ex-txt" aria-live="polite">Pulsa un botón para ver qué parte de la tabla es.</p>
+  </div>
+</div>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Piensa en una hoja de cálculo</p>
+<p>Si sabes usar Excel o Google Sheets ya entiendes lo esencial: una tabla es una hoja, las filas son los registros y las columnas son los campos. La diferencia es que en una base de datos las columnas tienen <strong>tipo</strong> y <strong>reglas</strong>, y las consultas se hacen con un lenguaje, no a mano.</p>
+</div>
+
+<h2 id="claves"><span class="n">3.</span>Claves: cómo se identifica cada fila</h2>
+
+<p>Si dos productos se llamaran igual, ¿cómo distinguirías uno de otro? Para eso existe la <strong>clave primaria</strong> (<em>primary key</em>): una columna (o varias) cuyo valor <strong>identifica de forma única</strong> cada fila. En <code>productos</code> es la columna <code>id</code>.</p>
+<ul>
+<li>No puede repetirse: no habrá dos filas con <code>id = 3</code>.</li>
+<li>No puede estar vacía (<code>NULL</code>).</li>
+<li>Conviene que no cambie nunca, aunque cambie el nombre del producto.</li>
+</ul>
+<p>La <strong>clave foránea</strong> (<em>foreign key</em>) es una columna que guarda la clave primaria de <strong>otra tabla</strong> y así las relaciona. Por ejemplo, una tabla <code>pedidos</code> podría tener una columna <code>cliente_id</code> que apunta a una fila de <code>clientes</code>:</p>
+<div class="flow"><div class="node"><strong>clientes</strong><span>id (clave primaria)</span></div><div class="arrow">←<code>cliente_id</code></div><div class="node"><strong>pedidos</strong><span>cliente_id (clave foránea)</span></div></div>
+<p>Así el nombre del cliente se guarda <strong>una sola vez</strong> y cada pedido solo apunta a él. Las relaciones y el <code>JOIN</code> son el tema de la lección 5; por ahora quédate con la idea: <strong>primaria = identifica, foránea = enlaza</strong>.</p>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · No uses datos «reales» como clave</p>
+<p>El nombre, el correo o el DNI parecen únicos, pero cambian o se repiten. Es más seguro un número interno (<code>id</code>) que la propia base de datos genera. Lo verás en la lección 4.</p>
+</div>
+
+<h2 id="sql"><span class="n">4.</span>Qué es SQL</h2>
+
+<p><strong>SQL</strong> (<em>Structured Query Language</em>, «lenguaje de consulta estructurado») es el lenguaje para <strong>hablar con una base de datos relacional</strong>. Se parece a una frase en inglés y es <strong>declarativo</strong>: indicas <em>qué datos quieres</em>, no los pasos para encontrarlos; el gestor decide cómo hacerlo.</p>
+<div class="code">
+  <div class="code-head"><span>Tu primera consulta</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-com">-- «Muéstrame el nombre y el precio de los productos de Audio»</span>
+<span class="tk-tag">SELECT</span> nombre, precio
+<span class="tk-tag">FROM</span> productos
+<span class="tk-tag">WHERE</span> categoria = <span class="tk-val">'Audio'</span>;</code></pre>
+</div>
+<p><strong>Resultado esperado</strong> (la tabla de ejemplo está completa en la lección 2):</p>
+<div class="table-wrap"><table>
+<thead><tr><th>nombre</th><th>precio</th></tr></thead>
+<tbody><tr><td>Auriculares</td><td>89.90</td></tr><tr><td>Altavoz</td><td>99.00</td></tr></tbody>
+</table></div>
+
+<p>Las instrucciones de SQL se agrupan según lo que hacen:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Grupo</th><th>Para qué sirve</th><th>Ejemplos</th><th>Lección</th></tr></thead>
+<tbody>
+<tr><td><strong>Consultar</strong></td><td>Leer datos</td><td><code>SELECT</code></td><td>2, 5 y 6</td></tr>
+<tr><td><strong>Manipular</strong> datos</td><td>Añadir, cambiar o borrar filas</td><td><code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code></td><td>3</td></tr>
+<tr><td><strong>Definir</strong> estructura</td><td>Crear o modificar tablas</td><td><code>CREATE TABLE</code>, <code>ALTER TABLE</code>, <code>DROP TABLE</code></td><td>4</td></tr>
+<tr><td><strong>Permisos</strong> y control</td><td>Usuarios, transacciones</td><td><code>GRANT</code>, <code>BEGIN</code>, <code>COMMIT</code></td><td>3 y 8</td></tr>
+</tbody>
+</table></div>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · Mayúsculas, minúsculas y punto y coma</p>
+<p>SQL no distingue mayúsculas de minúsculas en las palabras clave: <code>select</code> y <code>SELECT</code> son lo mismo. Por convención se escriben <strong>en mayúsculas</strong> para distinguirlas de los nombres de tablas y columnas. Cada instrucción termina con <code>;</code>.</p>
+</div>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · SQL es un estándar con dialectos</p>
+<p>Hay un SQL estándar y cada motor añade variaciones. En este curso escribimos SQL que funciona en <strong>SQLite</strong> y en <strong>PostgreSQL</strong>; cuando la sintaxis difiere lo indicaremos con una nota.</p>
+</div>
+
+<h2 id="nosql"><span class="n">5.</span>SQL frente a NoSQL</h2>
+
+<p>Las bases de datos <strong>relacionales</strong> (SQL) guardan datos en tablas con estructura fija. Las llamadas <strong>NoSQL</strong> («no solo SQL») agrupan modelos distintos: documentos parecidos a JSON (MongoDB), pares clave-valor (Redis), grafos, etc.</p>
+<div class="table-wrap"><table>
+<thead><tr><th></th><th>Relacional (SQL)</th><th>Documentos (NoSQL)</th></tr></thead>
+<tbody>
+<tr><td><strong>Estructura</strong></td><td>Tablas con columnas definidas de antemano</td><td>Documentos flexibles, cada uno puede ser distinto</td></tr>
+<tr><td><strong>Relaciones</strong></td><td>Muy buenas: claves y <code>JOIN</code></td><td>Se suelen anidar o duplicar datos</td></tr>
+<tr><td><strong>Consistencia</strong></td><td>Transacciones fiables</td><td>Depende del producto</td></tr>
+<tr><td><strong>Ideal para</strong></td><td>Tiendas, facturación, usuarios, reservas</td><td>Catálogos muy variables, caché, registros masivos</td></tr>
+</tbody>
+</table></div>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · ¿Cuál elegir?</p>
+<p>No hay uno «mejor». Para la mayoría de aplicaciones web (usuarios, pedidos, productos) <strong>una base relacional es una excelente primera opción</strong>: los datos están relacionados y necesitas que sean correctos. Aprender SQL te sirve además en casi cualquier empresa.</p>
+</div>
+
+<h2 id="motores"><span class="n">6.</span>Motores populares y cuál usaremos</h2>
+
+<div class="table-wrap"><table>
+<thead><tr><th>Motor</th><th>Cómo funciona</th><th>Cuándo usarlo</th></tr></thead>
+<tbody>
+<tr><td><strong>SQLite</strong></td><td>Toda la base de datos es <strong>un solo archivo</strong>; no hay servidor que instalar</td><td>Aprender, apps pequeñas, móviles, prototipos</td></tr>
+<tr><td><strong>PostgreSQL</strong></td><td>Servidor completo, muy potente y estricto con los tipos</td><td>Aplicaciones web en producción</td></tr>
+<tr><td><strong>MySQL / MariaDB</strong></td><td>Servidor muy extendido en alojamientos web</td><td>Sitios con PHP, WordPress</td></tr>
+</tbody>
+</table></div>
+<p>Para practicar usaremos <strong>SQLite</strong>, porque se instala en un minuto. Todo lo que aprendas sirve en PostgreSQL con cambios mínimos. Puedes consultar la documentación oficial en <a href="https://www.sqlite.org/docs.html" target="_blank" rel="noopener">sqlite.org</a> y <a href="https://www.postgresql.org/docs/" target="_blank" rel="noopener">postgresql.org</a>.</p>
+
+<h2 id="practica"><span class="n">7.</span>Prepara tu entorno con SQLite</h2>
+
+<p>Necesitas el programa de línea de comandos <code>sqlite3</code>. Comprueba si ya lo tienes abriendo una terminal:</p>
+<div class="code">
+  <div class="code-head"><span>Terminal</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>sqlite3 --version</code></pre>
+</div>
+
+<p>Si muestra una versión, perfecto. Si no, descárgalo desde <a href="https://www.sqlite.org/download.html" target="_blank" rel="noopener">sqlite.org/download.html</a> (en Windows, el paquete «sqlite-tools»; en macOS ya suele venir instalado; en Linux, <code>sudo apt install sqlite3</code>).</p>
+<p>Ahora crea el archivo <code>tienda.sql</code> con la tabla de ejemplo que usaremos en todo el curso. No te preocupes por entender cada línea: <code>CREATE TABLE</code> y <code>INSERT</code> los estudiarás en las lecciones 3 y 4.</p>
+<div class="code">
+  <div class="code-head"><span>tienda.sql</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">CREATE</span> <span class="tk-tag">TABLE</span> productos (
+  id        <span class="tk-tag">INTEGER</span> <span class="tk-tag">PRIMARY</span> <span class="tk-tag">KEY</span>,
+  nombre    <span class="tk-tag">TEXT</span>    <span class="tk-tag">NOT</span> <span class="tk-tag">NULL</span>,
+  categoria <span class="tk-tag">TEXT</span>    <span class="tk-tag">NOT</span> <span class="tk-tag">NULL</span>,
+  precio    <span class="tk-tag">NUMERIC</span> <span class="tk-tag">NOT</span> <span class="tk-tag">NULL</span>,
+  stock     <span class="tk-tag">INTEGER</span> <span class="tk-tag">NOT</span> <span class="tk-tag">NULL</span> <span class="tk-tag">DEFAULT</span> <span class="tk-attr">0</span>
+);
+
+<span class="tk-tag">INSERT</span> <span class="tk-tag">INTO</span> productos (id, nombre, categoria, precio, stock) <span class="tk-tag">VALUES</span>
+  (<span class="tk-attr">1</span>, <span class="tk-val">'Teclado'</span>,     <span class="tk-val">'Periféricos'</span>, <span class="tk-attr">120.00</span>,  <span class="tk-attr">15</span>),
+  (<span class="tk-attr">2</span>, <span class="tk-val">'Ratón'</span>,       <span class="tk-val">'Periféricos'</span>,  <span class="tk-attr">45.50</span>,  <span class="tk-attr">40</span>),
+  (<span class="tk-attr">3</span>, <span class="tk-val">'Monitor FHD'</span>, <span class="tk-val">'Pantallas'</span>,   <span class="tk-attr">650.00</span>,   <span class="tk-attr">8</span>),
+  (<span class="tk-attr">4</span>, <span class="tk-val">'Auriculares'</span>, <span class="tk-val">'Audio'</span>,        <span class="tk-attr">89.90</span>,   <span class="tk-attr">0</span>),
+  (<span class="tk-attr">5</span>, <span class="tk-val">'Webcam'</span>,      <span class="tk-val">'Periféricos'</span>, <span class="tk-attr">150.00</span>,  <span class="tk-attr">12</span>),
+  (<span class="tk-attr">6</span>, <span class="tk-val">'Altavoz'</span>,     <span class="tk-val">'Audio'</span>,        <span class="tk-attr">99.00</span>,  <span class="tk-attr">25</span>),
+  (<span class="tk-attr">7</span>, <span class="tk-val">'Monitor 4K'</span>,  <span class="tk-val">'Pantallas'</span>,   <span class="tk-attr">899.00</span>,   <span class="tk-attr">3</span>),
+  (<span class="tk-attr">8</span>, <span class="tk-val">'Cable HDMI'</span>,  <span class="tk-val">'Accesorios'</span>,   <span class="tk-attr">15.00</span>, <span class="tk-attr">100</span>);</code></pre>
+</div>
+
+<p>Y cárgalo en una base de datos nueva:</p>
+<div class="code">
+  <div class="code-head"><span>Terminal</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>sqlite3 tienda.db
+
+sqlite&gt; .read tienda.sql
+sqlite&gt; .headers on
+sqlite&gt; .mode column
+sqlite&gt; SELECT * FROM productos;
+sqlite&gt; .tables
+sqlite&gt; .schema productos
+sqlite&gt; .quit</code></pre>
+</div>
+
+<ul>
+<li>Los comandos que empiezan por <strong>punto</strong> (<code>.read</code>, <code>.tables</code>, <code>.quit</code>…) son del programa <code>sqlite3</code>, no de SQL, y no llevan <code>;</code>.</li>
+<li><code>tienda.db</code> es tu base de datos: un archivo que puedes copiar o borrar.</li>
+<li>Si te equivocas y quieres empezar de cero, borra <code>tienda.db</code> y repite <code>.read tienda.sql</code>.</li>
+</ul>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · Sobre los números de los resultados</p>
+<p>En este curso mostramos los precios con dos decimales (<code>120.00</code>) para que se lean mejor. SQLite puede mostrar <code>120</code> o <code>45.5</code>; es el mismo valor.</p>
+</div>
+
+<h2 id="errores"><span class="n">8.</span>Errores frecuentes</h2>
+<ul><li><strong>Confundir la base de datos con el servidor o con SQL:</strong> los datos, el programa que los gestiona (SGBD) y el lenguaje (SQL) son tres cosas distintas.</li><li><strong>Pensar que NoSQL es «mejor» o «más moderno»:</strong> resuelve otros problemas; para datos relacionados, lo relacional suele ser la mejor opción.</li><li><strong>Escribir <code>.read tienda.sql;</code> con punto y coma:</strong> los comandos con punto del programa no llevan <code>;</code>.</li><li><strong>Usar el nombre o el correo como clave primaria:</strong> pueden cambiar o repetirse; usa un <code>id</code> numérico.</li><li><strong>Ejecutar <code>.read</code> dos veces:</strong> la segunda da error («table productos already exists») porque la tabla ya existe.</li></ul>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li>Una <strong>base de datos</strong> organiza información para guardarla, consultarla y protegerla; el <strong>SGBD</strong> es el programa que la gestiona.</li><li>En el modelo relacional los datos viven en <strong>tablas</strong>: cada <strong>fila</strong> es un registro y cada <strong>columna</strong> un campo con su tipo.</li><li>La <strong>clave primaria</strong> identifica cada fila; la <strong>clave foránea</strong> enlaza con otra tabla.</li><li><strong>SQL</strong> es un lenguaje declarativo para consultar (<code>SELECT</code>), modificar (<code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code>) y definir (<code>CREATE TABLE</code>) datos.</li><li>Relacional (SQL) y NoSQL resuelven problemas distintos; para datos relacionados, SQL es una gran primera opción.</li><li><strong>SQLite</strong> guarda todo en un archivo y es ideal para aprender; <strong>PostgreSQL</strong> es el servidor habitual en producción.</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">9.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td>Base de datos</td><td>Colección organizada de información que se puede consultar y modificar.</td></tr><tr><td>SGBD</td><td>Sistema gestor de bases de datos: el programa que administra los datos (SQLite, PostgreSQL…).</td></tr><tr><td>Tabla</td><td>Conjunto de filas y columnas sobre un mismo tema.</td></tr><tr><td>Fila / registro</td><td>Un elemento de la tabla; por ejemplo, un producto.</td></tr><tr><td>Columna / campo</td><td>Una característica de los elementos, con un tipo de dato.</td></tr><tr><td>Clave primaria</td><td>Columna que identifica de forma única cada fila.</td></tr><tr><td>Clave foránea</td><td>Columna que apunta a la clave primaria de otra tabla.</td></tr><tr><td>SQL</td><td>Lenguaje estándar para trabajar con bases de datos relacionales.</td></tr><tr><td>NoSQL</td><td>Familia de bases de datos que no usan el modelo de tablas relacionales.</td></tr></tbody>
+</table></div>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>¿Qué representa una <strong>fila</strong> de la tabla <code>productos</code>?</p><ul class="opts"><li><button type="button" class="opt">Una característica, como el precio</button></li><li><button type="button" class="opt" data-ok>Un producto concreto</button></li><li><button type="button" class="opt">Toda la base de datos</button></li><li><button type="button" class="opt">Un tipo de dato</button></li></ul><p class="explain" hidden>Cada fila es un registro: un elemento de la tabla. Las características son las columnas.</p></div>
+<div class="quiz-q"><p>¿Para qué sirve una <strong>clave primaria</strong>?</p><ul class="opts"><li><button type="button" class="opt">Para cifrar los datos</button></li><li><button type="button" class="opt" data-ok>Para identificar de forma única cada fila</button></li><li><button type="button" class="opt">Para ordenar la tabla alfabéticamente</button></li><li><button type="button" class="opt">Para poner contraseña a la base de datos</button></li></ul><p class="explain" hidden>La clave primaria no se repite ni puede estar vacía: así cada fila se distingue de las demás.</p></div>
+<div class="quiz-q"><p>¿Qué es SQLite?</p><ul class="opts"><li><button type="button" class="opt">Un navegador</button></li><li><button type="button" class="opt" data-ok>Un motor de bases de datos que guarda todo en un archivo</button></li><li><button type="button" class="opt">Una versión reducida del lenguaje SQL</button></li><li><button type="button" class="opt">Un editor de código</button></li></ul><p class="explain" hidden>SQLite es un motor (SGBD) sin servidor: toda la base de datos es un único archivo.</p></div>
+<div class="quiz-q"><p>«SQL» es…</p><ul class="opts"><li><button type="button" class="opt">El nombre de un programa gestor de bases de datos</button></li><li><button type="button" class="opt" data-ok>Un lenguaje para consultar y modificar bases de datos relacionales</button></li><li><button type="button" class="opt">Un tipo de tabla</button></li><li><button type="button" class="opt">Un formato de imagen</button></li></ul><p class="explain" hidden>SQL es el lenguaje; los programas que lo entienden son los SGBD, como SQLite o PostgreSQL.</p></div>
+<div class="quiz-q"><p>¿Qué columna de <code>pedidos</code> sería una <strong>clave foránea</strong> hacia <code>clientes</code>?</p><ul class="opts"><li><button type="button" class="opt"><code>fecha</code></button></li><li><button type="button" class="opt"><code>total</code></button></li><li><button type="button" class="opt" data-ok><code>cliente_id</code></button></li><li><button type="button" class="opt"><code>id</code> del pedido</button></li></ul><p class="explain" hidden>La clave foránea guarda el <code>id</code> de la fila de otra tabla (aquí, de <code>clientes</code>).</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="bd-01">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../"><small>← Anterior</small>Índice del curso</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de Bases de datos con SQL · Lección 1 · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&title=%5BError%5D%20Lecci%C3%B3n%201%3A%20Qu%C3%A9%20es%20una%20base%20de%20datos%20%C2%B7%20Curso%20de%20Bases%20de%20datos%20con%20SQL&pagina=https%3A//cacg-code.github.io/PRACTICAS-HTML/bd/01-que-es-una-base-de-datos/" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+  <script>
+
+(function () {
+  var w = document.querySelector('[data-sim="explorar"]'); if (!w) return;
+  var tb = w.querySelector('table'), txt = w.querySelector('#ex-txt'), btns = w.querySelectorAll('[data-m]');
+  var textos = {
+    tabla: 'La tabla completa: «productos». Agrupa todos los datos de una misma cosa.',
+    fila: 'Una fila (registro): el producto «Monitor FHD», con todos sus datos.',
+    columna: 'Una columna (campo): «precio». Todos sus valores son números.',
+    celda: 'Una celda (valor): el precio del Monitor FHD es 650.00.',
+    clave: 'La clave primaria: «id». Es distinta en cada fila y la identifica.'
+  };
+  function limpiar() { tb.querySelectorAll('.hl').forEach(function (e) { e.classList.remove('hl'); }); }
+  function marcar(m) {
+    limpiar();
+    var filas = tb.tBodies[0].rows, th = tb.tHead.rows[0].cells, i;
+    if (m === 'tabla') { tb.querySelectorAll('th,td').forEach(function (c) { c.classList.add('hl'); }); }
+    if (m === 'fila') { filas[2].classList.add('hl'); }
+    if (m === 'columna' || m === 'clave') {
+      var col = m === 'clave' ? 0 : 3; th[col].classList.add('hl');
+      for (i = 0; i < filas.length; i++) filas[i].cells[col].classList.add('hl');
+    }
+    if (m === 'celda') { filas[2].cells[3].classList.add('hl'); }
+    txt.textContent = textos[m];
+    btns.forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-m') === m ? 'true' : 'false'); });
+  }
+  btns.forEach(function (b) { b.addEventListener('click', function () { marcar(b.getAttribute('data-m')); }); });
+})();
+
+  </script>
+</body>
+</html>

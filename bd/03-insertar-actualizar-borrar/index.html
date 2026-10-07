@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lección 3: Insertar, actualizar y borrar · Curso de Bases de datos con SQL</title>
+  <meta name="description" content="Cómo añadir, modificar y borrar datos con INSERT, UPDATE y DELETE; transacciones, tipos de datos y restricciones, con un simulador interactivo.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/bd/03-insertar-actualizar-borrar/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#0e7490">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Lección 3: Insertar, actualizar y borrar · Curso de Bases de datos con SQL">
+  <meta property="og:description" content="Cómo añadir, modificar y borrar datos con INSERT, UPDATE y DELETE; transacciones, tipos de datos y restricciones, con un simulador interactivo.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/bd/03-insertar-actualizar-borrar/">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+  <style>
+    .sqlsim select, .sqlsim input[type="number"] { padding: .5rem .6rem; border: 1px solid var(--border); border-radius: 8px; background: var(--bg); color: var(--text); font: inherit; max-width: 100%; }
+    .sqlsim .sql-out { margin: 0; padding: .8rem 1rem; border-radius: 10px; background: var(--code-bg); color: var(--code-text); font-family: var(--mono); font-size: .88rem; line-height: 1.6; white-space: pre-wrap; overflow-wrap: anywhere; }
+    .sqlsim .msg { margin: 0; font-weight: 600; }
+    .sqlsim .msg.err { color: #b91c1c; }
+    .sqlsim .msg.okk { color: #15803d; }
+    :root[data-theme="dark"] .sqlsim .msg.err { color: #fca5a5; }
+    :root[data-theme="dark"] .sqlsim .msg.okk { color: #86efac; }
+    @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .sqlsim .msg.err { color: #fca5a5; } :root:not([data-theme="light"]) .sqlsim .msg.okk { color: #86efac; } }
+    .sqlsim .w-row button { cursor: pointer; }
+    .sqlsim .w-row label { display: inline-flex; gap: .4rem; align-items: center; }
+    .sqlsim td.hl, .sqlsim th.hl, .sqlsim tr.hl td { background: color-mix(in srgb, var(--accent) 22%, transparent); }
+    .sqlsim tr.gone td { text-decoration: line-through; opacity: .5; }
+    .sqlsim tr.new td { background: color-mix(in srgb, #22c55e 22%, transparent); }
+    .sqlsim tr.chg td { background: color-mix(in srgb, #f59e0b 25%, transparent); }
+  </style>
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Bases de datos con SQL</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap lesson-layout" id="contenido">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#insert">INSERT: añadir filas</a></li><li><a href="#update">UPDATE: modificar filas</a></li><li><a href="#delete">DELETE: borrar filas</a></li><li><a href="#transacciones">Trabajar con red: transacciones</a></li><li><a href="#tipos">Tipos de datos</a></li><li><a href="#restricciones">Las restricciones te protegen</a></li><li><a href="#simulador">Pruébalo: simulador de cambios</a></li><li><a href="#errores">Errores frecuentes</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de Bases de datos con SQL</a> › Lección 3</div>
+        <h1>Insertar, actualizar y borrar</h1>
+        <ul class="meta"><li>⏱ 60 minutos</li><li>📶 Nivel: principiante</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Añadir filas con <code>INSERT INTO</code>, una o varias a la vez.</li><li>Modificar y borrar filas con <code>UPDATE</code> y <code>DELETE</code> usando siempre <code>WHERE</code>.</li><li>Usar transacciones (<code>BEGIN</code>, <code>COMMIT</code>, <code>ROLLBACK</code>) para trabajar con seguridad.</li><li>Elegir tipos de datos y entender cómo las restricciones rechazan datos incorrectos.</li></ul>
+</div>
+
+<h2 id="insert"><span class="n">1.</span>INSERT: añadir filas</h2>
+
+<p><code>INSERT INTO</code> añade una fila nueva. Indicas <strong>la tabla</strong>, <strong>las columnas</strong> que vas a rellenar y los <strong>valores</strong> en el mismo orden.</p>
+<div class="code">
+  <div class="code-head"><span>Insertar un producto</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">INSERT</span> <span class="tk-tag">INTO</span> productos (nombre, categoria, precio, stock)
+<span class="tk-tag">VALUES</span> (<span class="tk-val">'Alfombrilla'</span>, <span class="tk-val">'Accesorios'</span>, <span class="tk-attr">19.90</span>, <span class="tk-attr">60</span>);</code></pre>
+</div>
+<p><strong>La tabla después del INSERT (solo la fila nueva)</strong></p>
+<div class="table-wrap"><table>
+<thead><tr><th>id</th><th>nombre</th><th>categoria</th><th>precio</th><th>stock</th></tr></thead>
+<tbody><tr><td>9</td><td>Alfombrilla</td><td>Accesorios</td><td>19.90</td><td>60</td></tr></tbody>
+</table></div>
+
+<ul>
+<li>No hemos escrito <code>id</code>: en SQLite una columna <code>INTEGER PRIMARY KEY</code> se numera sola (aquí, <code>9</code>). En PostgreSQL esto requiere declarar la columna como <code>GENERATED ALWAYS AS IDENTITY</code> (lo verás en la lección 4).</li>
+<li>Las columnas que no menciones reciben su valor por defecto (<code>DEFAULT</code>) o <code>NULL</code>. Así, <code>stock</code> valdrá <code>0</code> si lo omites.</li>
+<li>Escribe <strong>siempre la lista de columnas</strong>: el código seguirá funcionando si algún día la tabla cambia.</li>
+</ul>
+<p>Puedes insertar varias filas con una sola instrucción, separando las tuplas con comas:</p>
+<div class="code">
+  <div class="code-head"><span>Varias filas a la vez</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">INSERT</span> <span class="tk-tag">INTO</span> productos (nombre, categoria, precio)
+<span class="tk-tag">VALUES</span> (<span class="tk-val">'Micrófono'</span>, <span class="tk-val">'Audio'</span>, <span class="tk-attr">75.00</span>),
+       (<span class="tk-val">'Hub USB'</span>, <span class="tk-val">'Accesorios'</span>, <span class="tk-attr">29.50</span>);</code></pre>
+</div>
+<p><strong>Filas nuevas después del segundo INSERT</strong></p>
+<div class="table-wrap"><table>
+<thead><tr><th>id</th><th>nombre</th><th>categoria</th><th>precio</th><th>stock</th></tr></thead>
+<tbody><tr><td>9</td><td>Alfombrilla</td><td>Accesorios</td><td>19.90</td><td>60</td></tr><tr><td>10</td><td>Micrófono</td><td>Audio</td><td>75.00</td><td>0</td></tr><tr><td>11</td><td>Hub USB</td><td>Accesorios</td><td>29.50</td><td>0</td></tr></tbody>
+</table></div>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · Para qué sirve la omisión de stock</p>
+<p>Como no indicamos <code>stock</code>, ambas filas lo tienen en <code>0</code> gracias al <code>DEFAULT 0</code> de la tabla. Es una de las ventajas de definir bien las columnas.</p>
+</div>
+
+<h2 id="update"><span class="n">2.</span>UPDATE: modificar filas</h2>
+
+<p><code>UPDATE</code> cambia valores de filas que <strong>ya existen</strong>. <code>SET</code> indica las columnas nuevas y <code>WHERE</code> <strong>qué filas</strong> se cambian.</p>
+<div class="code">
+  <div class="code-head"><span>Subir un 10 % los precios de Audio</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">UPDATE</span> productos
+<span class="tk-tag">SET</span> precio = <span class="tk-tag">ROUND</span>(precio * <span class="tk-attr">1.10</span>, <span class="tk-attr">2</span>)
+<span class="tk-tag">WHERE</span> categoria = <span class="tk-val">'Audio'</span>;</code></pre>
+</div>
+<p><strong>Resultado esperado (incluye el Micrófono insertado antes)</strong></p>
+<div class="table-wrap"><table>
+<thead><tr><th>id</th><th>nombre</th><th>categoria</th><th>precio</th></tr></thead>
+<tbody><tr><td>4</td><td>Auriculares</td><td>Audio</td><td>98.89</td></tr><tr><td>6</td><td>Altavoz</td><td>Audio</td><td>108.90</td></tr><tr><td>10</td><td>Micrófono</td><td>Audio</td><td>82.50</td></tr></tbody>
+</table></div>
+
+<p>Puedes cambiar varias columnas a la vez separándolas con comas, y el valor nuevo puede calcularse a partir del actual:</p>
+<div class="code">
+  <div class="code-head"><span>Varias columnas</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">UPDATE</span> productos
+<span class="tk-tag">SET</span> stock = <span class="tk-attr">20</span>,
+    categoria = <span class="tk-val">'Audio'</span>
+<span class="tk-tag">WHERE</span> id = <span class="tk-attr">4</span>;</code></pre>
+</div>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · Sin WHERE se cambian TODAS las filas</p>
+<p><code>UPDATE productos SET precio = 0;</code> pone a cero el precio de <strong>cada</strong> producto, y SQL no pregunta «¿seguro?». Es el error más caro de un principiante. Escribe primero el <code>WHERE</code>, o prueba con un <code>SELECT</code> que lleve la misma condición.</p>
+</div>
+
+<h2 id="delete"><span class="n">3.</span>DELETE: borrar filas</h2>
+
+<p><code>DELETE FROM</code> elimina filas completas. Igual que en <code>UPDATE</code>, el <code>WHERE</code> decide cuáles; <strong>sin <code>WHERE</code> se borra toda la tabla</strong> (la tabla sigue existiendo, pero vacía).</p>
+<div class="code">
+  <div class="code-head"><span>Borrar los productos sin stock</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">DELETE</span> <span class="tk-tag">FROM</span> productos
+<span class="tk-tag">WHERE</span> stock = <span class="tk-attr">0</span>;</code></pre>
+</div>
+
+<p>Antes de borrar, mira qué filas serían afectadas con un <code>SELECT</code> de la misma condición:</p>
+<div class="code">
+  <div class="code-head"><span>Primero mirar, luego borrar</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">SELECT</span> id, nombre, stock <span class="tk-tag">FROM</span> productos <span class="tk-tag">WHERE</span> stock = <span class="tk-attr">0</span>;   <span class="tk-com">-- ¿son estas?</span>
+<span class="tk-tag">DELETE</span> <span class="tk-tag">FROM</span> productos <span class="tk-tag">WHERE</span> stock = <span class="tk-attr">0</span>;                    <span class="tk-com">-- sí: bórralas</span></code></pre>
+</div>
+
+<p>En nuestra tabla, el <code>SELECT</code> previo (tras dejar con stock 20 al producto 4, como hicimos arriba) devolvería los productos sin stock que insertamos (Micrófono y Hub USB):</p>
+<p><strong>Filas que borraría (comprobación con SELECT)</strong></p>
+<div class="table-wrap"><table>
+<thead><tr><th>id</th><th>nombre</th><th>stock</th></tr></thead>
+<tbody><tr><td>10</td><td>Micrófono</td><td>0</td></tr><tr><td>11</td><td>Hub USB</td><td>0</td></tr></tbody>
+</table></div>
+<p>Y después de borrar queda:</p>
+<p><strong>La tabla después de borrar</strong></p>
+<div class="table-wrap"><table>
+<thead><tr><th>id</th><th>nombre</th><th>stock</th></tr></thead>
+<tbody><tr><td>1</td><td>Teclado</td><td>15</td></tr><tr><td>2</td><td>Ratón</td><td>40</td></tr><tr><td>3</td><td>Monitor FHD</td><td>8</td></tr><tr><td>4</td><td>Auriculares</td><td>20</td></tr><tr><td>5</td><td>Webcam</td><td>12</td></tr><tr><td>6</td><td>Altavoz</td><td>25</td></tr><tr><td>7</td><td>Monitor 4K</td><td>3</td></tr><tr><td>8</td><td>Cable HDMI</td><td>100</td></tr><tr><td>9</td><td>Alfombrilla</td><td>60</td></tr></tbody>
+</table></div>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · Borrar no se deshace</p>
+<p>Salvo que uses una transacción (apartado siguiente) o tengas una copia de seguridad, una fila borrada se pierde. En aplicaciones reales muchas veces se prefiere un «borrado lógico»: una columna <code>activo</code> o <code>eliminado_en</code> en lugar de <code>DELETE</code>.</p>
+</div>
+
+<h2 id="transacciones"><span class="n">4.</span>Trabajar con red: transacciones</h2>
+
+<p>Una <strong>transacción</strong> agrupa instrucciones para que se apliquen <strong>todas o ninguna</strong>. Empieza con <code>BEGIN</code> y termina con <code>COMMIT</code> (confirmar) o <code>ROLLBACK</code> (deshacer). Funciona igual en SQLite y PostgreSQL.</p>
+<div class="code">
+  <div class="code-head"><span>Probar un cambio sin riesgo</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">BEGIN</span>;
+
+<span class="tk-tag">DELETE</span> <span class="tk-tag">FROM</span> productos;              <span class="tk-com">-- ¡ups, sin WHERE!</span>
+<span class="tk-tag">SELECT</span> <span class="tk-tag">COUNT</span>(*) <span class="tk-tag">FROM</span> productos;     <span class="tk-com">-- 0 filas</span>
+
+<span class="tk-tag">ROLLBACK</span>;                           <span class="tk-com">-- se deshace todo</span>
+<span class="tk-tag">SELECT</span> <span class="tk-tag">COUNT</span>(*) <span class="tk-tag">FROM</span> productos;     <span class="tk-com">-- las filas siguen ahí</span></code></pre>
+</div>
+
+<ul>
+<li>Si el resultado es el esperado, termina con <code>COMMIT;</code> y los cambios se guardan.</li>
+<li>Si algo falla, <code>ROLLBACK;</code> devuelve la base de datos al estado de <code>BEGIN</code>.</li>
+<li>Útil también cuando varios cambios dependen entre sí: por ejemplo, restar stock y registrar el pedido deben ocurrir juntos.</li>
+</ul>
+<p>Otro detalle práctico: <code>INSERT</code>, <code>UPDATE</code> y <code>DELETE</code> admiten <code>RETURNING</code>, que devuelve las filas afectadas. Funciona en <strong>PostgreSQL</strong> y en <strong>SQLite 3.35 o posterior</strong>.</p>
+<div class="code">
+  <div class="code-head"><span>RETURNING</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">INSERT</span> <span class="tk-tag">INTO</span> productos (nombre, categoria, precio)
+<span class="tk-tag">VALUES</span> (<span class="tk-val">'Soporte'</span>, <span class="tk-val">'Accesorios'</span>, <span class="tk-attr">25.00</span>)
+<span class="tk-tag">RETURNING</span> id, nombre;</code></pre>
+</div>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Hábito recomendado</p>
+<p>Antes de cualquier <code>UPDATE</code> o <code>DELETE</code> a mano en una base de datos que importa: 1) escribe el <code>SELECT</code> con la misma condición, 2) abre una transacción con <code>BEGIN</code>, 3) ejecuta el cambio, 4) revisa y 5) <code>COMMIT</code> o <code>ROLLBACK</code>.</p>
+</div>
+
+<h2 id="tipos"><span class="n">5.</span>Tipos de datos</h2>
+
+<p>Cada columna tiene un <strong>tipo</strong> que define qué valores admite. Los nombres cambian algo entre motores:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Qué guarda</th><th>SQLite</th><th>PostgreSQL</th></tr></thead>
+<tbody>
+<tr><td>Números enteros</td><td><code>INTEGER</code></td><td><code>INTEGER</code>, <code>BIGINT</code></td></tr>
+<tr><td>Texto</td><td><code>TEXT</code></td><td><code>TEXT</code>, <code>VARCHAR(n)</code></td></tr>
+<tr><td>Decimales exactos (dinero)</td><td><code>NUMERIC</code></td><td><code>NUMERIC(10, 2)</code></td></tr>
+<tr><td>Decimales aproximados</td><td><code>REAL</code></td><td><code>DOUBLE PRECISION</code></td></tr>
+<tr><td>Verdadero / falso</td><td>enteros <code>0</code> y <code>1</code> (acepta <code>TRUE</code>/<code>FALSE</code> desde 3.23)</td><td><code>BOOLEAN</code></td></tr>
+<tr><td>Fechas y horas</td><td>texto <code>'2026-10-06'</code> (con funciones de fecha)</td><td><code>DATE</code>, <code>TIMESTAMP</code></td></tr>
+</tbody>
+</table></div>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · SQLite es flexible; PostgreSQL es estricto</p>
+<p>SQLite usa <em>tipado flexible</em>: en una columna <code>INTEGER</code> aceptaría un texto si no puede convertirlo. PostgreSQL <strong>rechaza</strong> el valor con un error. Para que tu código funcione en ambos, escribe siempre valores del tipo correcto.</p>
+</div>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · El dinero no se guarda en REAL</p>
+<p>Los decimales aproximados acumulan errores (<code>0.1 + 0.2</code> no es exactamente <code>0.3</code>). Para dinero usa <code>NUMERIC</code> con precisión fija o guarda <strong>enteros en céntimos</strong> (<code>1999</code> para 19,99).</p>
+</div>
+
+<p>Las fechas se escriben como texto en formato <code>'AAAA-MM-DD'</code> y las horas como <code>'AAAA-MM-DD HH:MM:SS'</code>, de modo que ordenarlas alfabéticamente también las ordena cronológicamente.</p>
+
+<h2 id="restricciones"><span class="n">6.</span>Las restricciones te protegen</h2>
+
+<p>Las <strong>restricciones</strong> (<em>constraints</em>) son reglas de la tabla que la base de datos hace cumplir al insertar o modificar. Nuestra tabla <code>productos</code> ya tiene algunas: <code>PRIMARY KEY</code>, <code>NOT NULL</code> y <code>DEFAULT</code>. Si una instrucción las rompe, <strong>no se aplica</strong> y recibes un error:</p>
+<div class="code">
+  <div class="code-head"><span>Falta el nombre (columna NOT NULL)</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">INSERT</span> <span class="tk-tag">INTO</span> productos (categoria, precio)
+<span class="tk-tag">VALUES</span> (<span class="tk-val">'Audio'</span>, <span class="tk-attr">10</span>);</code></pre>
+</div>
+<div class="code">
+  <div class="code-head"><span>Error en SQLite</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>NOT NULL constraint failed: productos.nombre</code></pre>
+</div>
+<div class="code">
+  <div class="code-head"><span>Id repetido (clave primaria)</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">INSERT</span> <span class="tk-tag">INTO</span> productos (id, nombre, categoria, precio)
+<span class="tk-tag">VALUES</span> (<span class="tk-attr">1</span>, <span class="tk-val">'Duplicado'</span>, <span class="tk-val">'Audio'</span>, <span class="tk-attr">10</span>);</code></pre>
+</div>
+<div class="code">
+  <div class="code-head"><span>Error en SQLite</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>UNIQUE constraint failed: productos.id</code></pre>
+</div>
+
+<p>PostgreSQL redacta los mensajes de otra forma («null value in column "nombre" … violates not-null constraint», «duplicate key value violates unique constraint»), pero el efecto es el mismo: <strong>la fila no entra</strong>. Un error de este tipo no es un fallo tuyo: es la base de datos haciendo su trabajo y evitando que se guarden datos incorrectos.</p>
+<p>En la lección 4 aprenderás a definir tus propias restricciones: <code>NOT NULL</code>, <code>UNIQUE</code>, <code>CHECK</code> y más.</p>
+
+<h2 id="simulador"><span class="n">7.</span>Pruébalo: simulador de cambios</h2>
+
+<p>Elige una operación y púlsala. La tabla muestra qué filas se <strong>añaden</strong> (verde), <strong>cambian</strong> (naranja) o se <strong>borran</strong> (tachadas). Prueba también a marcar «Olvidar el WHERE» para ver el desastre sin riesgo. (Es una simulación en tu navegador; no ejecuta SQL real.)</p>
+<div class="widget sqlsim" data-sim="dml">
+  <div class="w-head">🛠️ Simulador de INSERT, UPDATE y DELETE</div>
+  <div class="w-body">
+    <div class="w-row">
+      <label for="d-op">Operación</label>
+      <select id="d-op">
+        <option value="0">INSERT: añadir una Alfombrilla</option>
+        <option value="1">UPDATE: subir 10 % los precios de Audio</option>
+        <option value="2">UPDATE: poner stock 20 al producto 4</option>
+        <option value="3">DELETE: borrar productos sin stock</option>
+        <option value="4">DELETE: borrar la categoría Accesorios</option>
+      </select>
+      <label><input type="checkbox" id="d-nowhere"> Olvidar el WHERE</label>
+    </div>
+    <pre class="sql-out" id="d-sql"></pre>
+    <div class="w-row"><button class="btn" type="button" id="d-run">Ejecutar</button><button class="icon-btn" type="button" id="d-reset">Reiniciar la tabla</button></div>
+    <p class="msg" id="d-msg" aria-live="polite">Elige una operación y pulsa Ejecutar.</p>
+    <div class="table-wrap" style="margin:0"><table id="d-tabla"><thead><tr><th>id</th><th>nombre</th><th>categoria</th><th>precio</th><th>stock</th></tr></thead><tbody></tbody></table></div>
+  </div>
+</div>
+
+<h2 id="errores"><span class="n">8.</span>Errores frecuentes</h2>
+<ul><li><strong>Olvidar el <code>WHERE</code> en <code>UPDATE</code> o <code>DELETE</code>:</strong> afecta a todas las filas. Escribe primero la condición o ensaya con <code>SELECT</code>.</li><li><strong>Poner los valores en distinto orden que las columnas</strong> en un <code>INSERT</code>: el precio acaba en el stock. Revisa que cada valor coincida con su columna.</li><li><strong>Texto sin comillas simples</strong> en los <code>VALUES</code>: <code>VALUES (Teclado, …)</code> da error; debe ser <code>'Teclado'</code>.</li><li><strong>Un apóstrofo dentro del texto:</strong> <code>'L'Oréal'</code> rompe la instrucción; se duplica: <code>'L''Oréal'</code>.</li><li><strong>Guardar dinero en <code>REAL</code>:</strong> acumula errores de redondeo. Usa <code>NUMERIC</code> o céntimos enteros.</li><li><strong>Insertar un id que ya existe:</strong> provoca un error de clave duplicada. Deja que el motor numere solo.</li><li><strong>Creer que un error rompió la base de datos:</strong> si una instrucción falla, no se aplica y todo sigue como estaba.</li></ul>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li><code>INSERT INTO tabla (columnas) VALUES (valores);</code> añade filas; se pueden insertar varias a la vez.</li><li><code>UPDATE tabla SET col = valor WHERE condición;</code> modifica; <code>DELETE FROM tabla WHERE condición;</code> borra.</li><li><strong>Sin <code>WHERE</code></strong>, <code>UPDATE</code> y <code>DELETE</code> afectan a todas las filas.</li><li>Prueba la condición con un <code>SELECT</code> y, si importa, trabaja dentro de una transacción: <code>BEGIN</code> … <code>COMMIT</code>/<code>ROLLBACK</code>.</li><li>Los tipos básicos son <code>INTEGER</code>, <code>TEXT</code>, <code>NUMERIC</code>, <code>REAL</code>, booleanos y fechas; SQLite es flexible y PostgreSQL estricto.</li><li>Las restricciones (<code>PRIMARY KEY</code>, <code>NOT NULL</code>, <code>DEFAULT</code>…) rechazan datos incorrectos.</li><li>Los textos van entre comillas simples y los apóstrofos se duplican.</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">9.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td>INSERT</td><td>Instrucción que añade una o varias filas nuevas a una tabla.</td></tr><tr><td>UPDATE</td><td>Instrucción que modifica valores de filas existentes.</td></tr><tr><td>DELETE</td><td>Instrucción que elimina filas de una tabla.</td></tr><tr><td>Restricción (constraint)</td><td>Regla de la tabla que la base de datos hace cumplir (<code>NOT NULL</code>, <code>UNIQUE</code>, <code>CHECK</code>…).</td></tr><tr><td>Valor por defecto</td><td>Valor que recibe una columna si no se indica (<code>DEFAULT</code>).</td></tr><tr><td>Transacción</td><td>Grupo de instrucciones que se aplican todas o ninguna (<code>BEGIN</code>, <code>COMMIT</code>, <code>ROLLBACK</code>).</td></tr><tr><td>Tipo de dato</td><td>Clase de valores que admite una columna: entero, texto, decimal, fecha…</td></tr></tbody>
+</table></div>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>¿Qué pasa si ejecutas <code>DELETE FROM productos;</code> (sin WHERE)?</p><ul class="opts"><li><button type="button" class="opt">Da un error</button></li><li><button type="button" class="opt">Se borra solo la primera fila</button></li><li><button type="button" class="opt" data-ok>Se borran todas las filas; la tabla sigue existiendo</button></li><li><button type="button" class="opt">Se borra la tabla entera</button></li></ul><p class="explain" hidden>Sin <code>WHERE</code> se eliminan todas las filas. Para borrar la tabla en sí se usa <code>DROP TABLE</code> (lección 4).</p></div>
+<div class="quiz-q"><p>¿Cuál es la forma correcta de añadir una fila?</p><ul class="opts"><li><button type="button" class="opt"><code>INSERT productos VALUES 'Mouse', 10</code></button></li><li><button type="button" class="opt" data-ok><code>INSERT INTO productos (nombre, stock) VALUES ('Mouse', 10);</code></button></li><li><button type="button" class="opt"><code>ADD INTO productos ('Mouse')</code></button></li><li><button type="button" class="opt"><code>UPDATE productos ADD 'Mouse'</code></button></li></ul><p class="explain" hidden>La forma es <code>INSERT INTO tabla (columnas) VALUES (valores);</code>, con el texto entre comillas simples.</p></div>
+<div class="quiz-q"><p>¿Qué hace <code>ROLLBACK</code>?</p><ul class="opts"><li><button type="button" class="opt">Confirma los cambios de la transacción</button></li><li><button type="button" class="opt" data-ok>Deshace los cambios desde el <code>BEGIN</code></button></li><li><button type="button" class="opt">Borra la tabla</button></li><li><button type="button" class="opt">Reinicia el servidor</button></li></ul><p class="explain" hidden><code>ROLLBACK</code> cancela la transacción y devuelve los datos a su estado anterior; <code>COMMIT</code> es el que confirma.</p></div>
+<div class="quiz-q"><p>Insertas una fila sin indicar el <code>nombre</code>, que es <code>NOT NULL</code> y no tiene valor por defecto. ¿Qué ocurre?</p><ul class="opts"><li><button type="button" class="opt">Se guarda con el nombre vacío</button></li><li><button type="button" class="opt">Se guarda con el valor 0</button></li><li><button type="button" class="opt" data-ok>La base de datos rechaza la instrucción con un error</button></li><li><button type="button" class="opt">Se borra la fila anterior</button></li></ul><p class="explain" hidden>Las restricciones impiden guardar datos incorrectos: la fila no entra y recibes un error.</p></div>
+<div class="quiz-q"><p>¿Qué tipo es más seguro para guardar importes de dinero?</p><ul class="opts"><li><button type="button" class="opt"><code>REAL</code> (decimal aproximado)</button></li><li><button type="button" class="opt" data-ok><code>NUMERIC</code> o enteros en céntimos</button></li><li><button type="button" class="opt"><code>TEXT</code></button></li><li><button type="button" class="opt"><code>BOOLEAN</code></button></li></ul><p class="explain" hidden>Los decimales aproximados acumulan errores de redondeo; <code>NUMERIC</code> o los céntimos enteros son exactos.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="bd-03">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../02-consultar-con-select/ejercicio.html"><small>← Anterior</small>Ejercicio de la lección 2</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de Bases de datos con SQL · Lección 3 · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&title=%5BError%5D%20Lecci%C3%B3n%203%3A%20Insertar%2C%20actualizar%20y%20borrar%20%C2%B7%20Curso%20de%20Bases%20de%20datos%20con%20SQL&pagina=https%3A//cacg-code.github.io/PRACTICAS-HTML/bd/03-insertar-actualizar-borrar/" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+  <script>
+
+(function () {
+  var w = document.querySelector('[data-sim="dml"]'); if (!w) return;
+  var $ = function (s) { return w.querySelector(s); };
+  var INIT = [
+    [1, 'Teclado', 'Periféricos', 120, 15], [2, 'Ratón', 'Periféricos', 45.5, 40], [3, 'Monitor FHD', 'Pantallas', 650, 8],
+    [4, 'Auriculares', 'Audio', 89.9, 0], [5, 'Webcam', 'Periféricos', 150, 12], [6, 'Altavoz', 'Audio', 99, 25],
+    [7, 'Monitor 4K', 'Pantallas', 899, 3], [8, 'Cable HDMI', 'Accesorios', 15, 100]
+  ];
+  var rows, flags;
+  var SQLS = [
+    "INSERT INTO productos (nombre, categoria, precio, stock)\nVALUES ('Alfombrilla', 'Accesorios', 19.90, 60)",
+    "UPDATE productos\nSET precio = ROUND(precio * 1.10, 2)\nWHERE categoria = 'Audio'",
+    "UPDATE productos\nSET stock = 20\nWHERE id = 4",
+    "DELETE FROM productos\nWHERE stock = 0",
+    "DELETE FROM productos\nWHERE categoria = 'Accesorios'"
+  ];
+  function reset() { rows = INIT.map(function (r) { return r.slice(); }); flags = {}; draw(); $('#d-msg').textContent = 'Tabla reiniciada con 8 filas.'; }
+  function sql() {
+    var i = +$('#d-op').value, s = SQLS[i];
+    if ($('#d-nowhere').checked && i > 0) s = s.replace(/\nWHERE .*/, '');
+    return s + ';';
+  }
+  function upd() { var i = +$('#d-op').value; $('#d-nowhere').disabled = i === 0; if (i === 0) $('#d-nowhere').checked = false; $('#d-sql').textContent = sql(); }
+  function draw() {
+    var tb = $('#d-tabla tbody');
+    tb.innerHTML = rows.map(function (r) {
+      var f = flags[r[0]] || '';
+      return '<tr class="' + f + '"><td>' + r[0] + '</td><td>' + r[1] + '</td><td>' + r[2] + '</td><td>' + r[3].toFixed(2) + '</td><td>' + r[4] + '</td></tr>';
+    }).join('') || '<tr><td colspan="5"><em>La tabla está vacía (0 filas).</em></td></tr>';
+  }
+  function run() {
+    var i = +$('#d-op').value, all = $('#d-nowhere').checked, n = 0, msg;
+    rows = rows.filter(function (r) { return flags[r[0]] !== 'gone'; });
+    flags = {};
+    if (i === 0) {
+      var id = rows.reduce(function (m, r) { return Math.max(m, r[0]); }, 0) + 1;
+      rows.push([id, 'Alfombrilla', 'Accesorios', 19.9, 60]); flags[id] = 'new'; n = 1;
+      msg = 'INSERT correcto. Filas afectadas: 1 (id ' + id + ' asignado automáticamente).';
+    } else {
+      rows.forEach(function (r) {
+        var hit = all || (i === 1 ? r[2] === 'Audio' : i === 2 ? r[0] === 4 : i === 3 ? r[4] === 0 : r[2] === 'Accesorios');
+        if (!hit) return;
+        n++;
+        if (i === 1) { r[3] = Math.round(r[3] * 110) / 100; flags[r[0]] = 'chg'; }
+        else if (i === 2) { r[4] = 20; flags[r[0]] = 'chg'; }
+        else flags[r[0]] = 'gone';
+      });
+      msg = 'Filas afectadas: ' + n + '.' + (all ? ' ¡Sin WHERE afecta a TODAS las filas!' : (n === 0 ? ' Ninguna fila cumplía la condición.' : ''));
+    }
+    var m = $('#d-msg'); m.textContent = msg; m.className = 'msg ' + (all ? 'err' : 'okk');
+    draw();
+  }
+  $('#d-op').addEventListener('change', upd);
+  $('#d-nowhere').addEventListener('change', upd);
+  $('#d-run').addEventListener('click', run);
+  $('#d-reset').addEventListener('click', function () { reset(); var m = $('#d-msg'); m.className = 'msg'; });
+  upd(); reset();
+})();
+
+  </script>
+</body>
+</html>

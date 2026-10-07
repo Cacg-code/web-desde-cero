@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ejercicio · Módulos: CommonJS, ES Modules, fs y path · Curso de Node.js y APIs</title>
+  <meta name="description" content="Ejercicio práctico de: Módulos: CommonJS, ES Modules, fs y path.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/node/02-modulos/ejercicio.html">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Ejercicio · Módulos: CommonJS, ES Modules, fs y path · Curso de Node.js y APIs">
+  <meta property="og:description" content="Ejercicio práctico de: Módulos: CommonJS, ES Modules, fs y path.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/node/02-modulos/ejercicio.html">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de Node.js y APIs</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap" id="contenido" style="max-width:820px;padding-top:2rem;padding-bottom:3rem">
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de Node.js y APIs</a> › <a href="./">Lección 2</a> › Ejercicio</div>
+        <h1>Ejercicio: Módulos: CommonJS, ES Modules, fs y path</h1>
+        <ul class="meta"><li>⏱ 40 minutos</li><li>📶 Nivel: principiante</li></ul>
+      </header>
+
+      <h2>Objetivo</h2>
+      <p>Practicar con módulos y archivos reales en tu computadora, y escribir tres funciones de JavaScript puro que procesan lo que normalmente llega de <code>process.argv</code> y de un archivo CSV.</p>
+
+      <h3>Cómo se trabaja</h3>
+      <p>La <strong>parte A</strong> se hace en tu computadora: creas un pequeño proyecto con dos módulos y lees y escribes archivos. La <strong>parte B</strong> son tres funciones de JavaScript puro que puedes probar aquí y comprobar en el navegador. Pega solo las funciones, sin <code>&lt;script&gt;</code>.</p>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ Prueba tu código aquí (opcional)</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:300px">&lt;script&gt;
+// Escribe aquí tus funciones y pruébalas con console.log
+function parsearArgumentos(args) {
+  // ...
+}
+
+console.log(parsearArgumentos(["--nombre", "Ana", "datos.txt"]));
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+
+      <h2>Pasos</h2>
+      <p>Marca cada paso a medida que lo completes. Tu avance se guarda en este navegador.</p>
+      <div class="progress" aria-hidden="true"><div></div></div>
+      <p id="progreso-texto" style="color:var(--muted);font-size:.9rem" aria-live="polite"></p>
+      <ul class="checklist"><li><label><input type="checkbox" id="p1"><span><strong>Parte A.</strong> En una carpeta nueva ejecuta <code>npm init -y</code> y añade <code>"type": "module"</code> a <code>package.json</code>.</span></label></li><li><label><input type="checkbox" id="p2"><span><strong>Parte A.</strong> Crea <code>utilidades.js</code> con una función <code>contarLineas(texto)</code> exportada y otra por defecto (por ejemplo <code>saludar</code>).</span></label></li><li><label><input type="checkbox" id="p3"><span><strong>Parte A.</strong> Crea <code>app.js</code> que importe ambas, lea el archivo cuyo nombre llegue por <code>process.argv</code> con <code>readFile</code> y muestre cuántas líneas tiene. Prueba con <code>node app.js notas.txt</code>.</span></label></li><li><label><input type="checkbox" id="p4"><span><strong>Parte A.</strong> Haz que <code>app.js</code> también escriba un <code>resumen.txt</code> con <code>writeFile</code> y que muestre un mensaje claro si el archivo no existe (<code>ENOENT</code>).</span></label></li><li><label><input type="checkbox" id="p5"><span><strong>Parte B.</strong> Escribe <code>parsearArgumentos(args)</code>.</span></label></li><li><label><input type="checkbox" id="p6"><span><strong>Parte B.</strong> Escribe <code>cambiarExtension(ruta, nueva)</code> y <code>csvAObjetos(texto)</code>.</span></label></li><li><label><input type="checkbox" id="p7"><span>Pega todo en el comprobador y consigue que los siete puntos salgan en verde.</span></label></li></ul>
+      <details><summary>💡 Pista 1: parsearArgumentos</summary><p>Recorre el array con un <code>for</code> con índice. Cuando uses el siguiente argumento como valor, incrementa <code>i</code> otra vez para saltarlo.</p>
+</details>
+<details><summary>💡 Pista 2: cambiarExtension</summary><p><code>"datos/notas.txt".lastIndexOf(".")</code> da la posición del último punto; con <code>slice(0, posicion)</code> te quedas con la parte anterior. Si devuelve <code>-1</code>, no hay extensión.</p>
+</details>
+<details><summary>💡 Pista 3: csvAObjetos</summary><p><code>texto.split("\n")</code> separa las líneas. Cada línea se separa por <code>","</code> con otro <code>split</code> y se desestructura: <code>const [nombre, edad] = linea.split(",")</code>.</p>
+</details>
+
+      <section class="checker" id="comprobador" aria-labelledby="t-chk">
+        <h2 id="t-chk">🔎 Comprueba tu trabajo</h2>
+        <p>Pega tu código y pulsa <strong>Comprobar</strong>. La revisión ocurre en tu navegador; nada se envía a ningún sitio. Cada punto en rojo incluye una pista. Pega solo el JavaScript, <strong>sin</strong> las etiquetas <code>&lt;script&gt;</code>.</p>
+        <label for="chk-code">Tu código de JavaScript</label>
+        <textarea id="chk-code" rows="10" spellcheck="false" placeholder="Pega aquí tus funciones"></textarea>
+        <div class="chk-actions"><button class="btn" type="button" id="chk-run">Comprobar</button><button class="icon-btn" type="button" id="chk-clear">Limpiar</button></div>
+        <p class="chk-sum" id="chk-sum" aria-live="polite"></p>
+        <ul class="chk-list" id="chk-list"></ul>
+        <script type="application/json" id="checks">{"mode": "js", "scaffold": "", "width": 800, "checks": [{"d": "`parsearArgumentos([\"--nombre\", \"Ana\"])` devuelve `nombre: \"Ana\"`", "h": "Si un argumento empieza por `--` y el siguiente no, el siguiente es su valor.", "t": "var r=parsearArgumentos([\"--nombre\",\"Ana\"]);return r.nombre===\"Ana\""}, {"d": "Un `--flag` sin valor se guarda como `true`", "h": "Si no hay siguiente argumento, o el siguiente también empieza por `--`, guarda `true`.", "t": "var r=parsearArgumentos([\"--mayus\",\"--nombre\",\"Ana\"]);var q=parsearArgumentos([\"--ayuda\"]);return r.mayus===true && r.nombre===\"Ana\" && q.ayuda===true"}, {"d": "Los argumentos sueltos se guardan en el array `_`", "h": "Si no empieza por `--`, añádelo a `resultado._` con `push`.", "t": "var r=parsearArgumentos([\"a.txt\",\"--n\",\"3\",\"b.txt\"]);return Array.isArray(r._) && r._.length===2 && r._[0]===\"a.txt\" && r._[1]===\"b.txt\" && r.n===\"3\" && parsearArgumentos([])._.length===0"}, {"d": "`cambiarExtension(\"datos/notas.txt\", \"md\")` devuelve `datos/notas.md`", "h": "Busca el último punto con `lastIndexOf(\".\")` y corta con `slice`.", "t": "return cambiarExtension(\"datos/notas.txt\",\"md\")===\"datos/notas.md\" && cambiarExtension(\"a.b.js\",\"ts\")===\"a.b.ts\""}, {"d": "`cambiarExtension` añade la extensión si el archivo no tiene", "h": "Si `lastIndexOf` devuelve -1, concatena `.` y la extensión nueva.", "t": "return cambiarExtension(\"README\",\"md\")===\"README.md\""}, {"d": "`csvAObjetos(\"Ana,30\\nLuis,25\")` devuelve dos objetos `{ nombre, edad }` con la edad como número", "h": "Separa por `\\n`, luego cada línea por `,` y convierte la edad con `Number`.", "t": "var r=csvAObjetos(\"Ana,30\\nLuis,25\");return r.length===2 && r[0].nombre===\"Ana\" && r[0].edad===30 && r[1].nombre===\"Luis\" && r[1].edad===25"}, {"d": "`csvAObjetos` ignora las líneas vacías", "h": "Filtra con `.filter((linea) => linea.trim() !== \"\")` antes de convertir.", "t": "var r=csvAObjetos(\"Ana,30\\n\\nLuis,25\\n\");return r.length===2 && csvAObjetos(\"\").length===0"}]}</script>
+      </section>
+      <details>
+        <summary>✅ Ver una solución posible</summary>
+        <p>Intenta resolverlo antes de mirar. Tu versión puede ser distinta y también correcta.</p>
+        <div class="code">
+  <div class="code-head"><span>funciones.js</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>function parsearArgumentos(args) {
+  const resultado = { _: [] };
+  for (let i = 0; i &lt; args.length; i++) {
+    const actual = args[i];
+    if (actual.startsWith(&quot;--&quot;)) {
+      const clave = actual.slice(2);
+      const siguiente = args[i + 1];
+      if (siguiente !== undefined &amp;&amp; !siguiente.startsWith(&quot;--&quot;)) {
+        resultado[clave] = siguiente;
+        i++;
+      } else {
+        resultado[clave] = true;
+      }
+    } else {
+      resultado._.push(actual);
+    }
+  }
+  return resultado;
+}
+
+function cambiarExtension(ruta, nueva) {
+  const punto = ruta.lastIndexOf(&quot;.&quot;);
+  const base = punto === -1 ? ruta : ruta.slice(0, punto);
+  return `${base}.${nueva}`;
+}
+
+function csvAObjetos(texto) {
+  return texto
+    .split(&quot;\n&quot;)
+    .filter((linea) =&gt; linea.trim() !== &quot;&quot;)
+    .map((linea) =&gt; {
+      const [nombre, edad] = linea.split(&quot;,&quot;);
+      return { nombre, edad: Number(edad) };
+    });
+}</code></pre>
+</div>
+
+      </details>
+      <div class="callout consejo">
+<p class="callout-title">💡 🏁 Reto extra (opcional)</p>
+<p>Añade a <code>app.js</code> una opción <code>--mayus</code> que, usando <code>parsearArgumentos</code>, escriba el resumen en mayúsculas. Importa <code>parsearArgumentos</code> desde un módulo propio.</p>
+</div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="./"><small>← Anterior</small>Volver a lección 2</a>
+        <a class="next" href="../03-npm-y-package-json/"><small>Siguiente →</small>npm y package.json</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de Node.js y APIs · Ejercicio de lección 2 · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&amp;title=%5BError%5D%20Ejercicio%20%C2%B7%20M%C3%B3dulos%3A%20CommonJS%2C%20ES%20Modules%2C%20fs%20y%20path%20%C2%B7%20Curso%20de%20Node.js%20y%20APIs&amp;pagina=https://cacg-code.github.io/PRACTICAS-HTML/node/02-modulos/ejercicio.html" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

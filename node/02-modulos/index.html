@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lección 2: Módulos: CommonJS, ES Modules, fs y path · Curso de Node.js y APIs</title>
+  <meta name="description" content="Divide tu código en módulos con CommonJS y ES Modules, usa los módulos integrados fs y path para leer y escribir archivos, y recibe datos con process.argv.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/node/02-modulos/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Lección 2: Módulos: CommonJS, ES Modules, fs y path · Curso de Node.js y APIs">
+  <meta property="og:description" content="Divide tu código en módulos con CommonJS y ES Modules, usa los módulos integrados fs y path para leer y escribir archivos, y recibe datos con process.argv.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/node/02-modulos/">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de Node.js y APIs</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap lesson-layout" id="contenido">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#por-que">Por qué existen los módulos</a></li><li><a href="#commonjs">CommonJS: require y module.exports</a></li><li><a href="#esm">ES Modules: import y export</a></li><li><a href="#integrados">Módulos integrados y el prefijo node:</a></li><li><a href="#fs">Leer y escribir archivos con fs</a></li><li><a href="#path">Construir rutas con path</a></li><li><a href="#argv">Argumentos de la línea de comandos: process.argv</a></li><li><a href="#errores">Errores frecuentes</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de Node.js y APIs</a> › Lección 2</div>
+        <h1>Módulos: CommonJS, ES Modules, fs y path</h1>
+        <ul class="meta"><li>⏱ 50 minutos</li><li>📶 Nivel: principiante</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Distinguir CommonJS (<code>require</code>) de ES Modules (<code>import</code>) y activar el segundo.</li><li>Exportar e importar funciones entre archivos.</li><li>Leer y escribir archivos de texto y JSON con <code>fs/promises</code>.</li><li>Construir rutas seguras con <code>path</code>.</li><li>Leer argumentos con <code>process.argv</code>.</li></ul>
+</div>
+
+<h2 id="por-que"><span class="n">1.</span>Por qué existen los módulos</h2>
+
+<p>Un programa real no cabe en un solo archivo. Se divide en <strong>módulos</strong>: archivos pequeños, cada uno con una responsabilidad, que se <strong>exportan</strong> piezas (funciones, objetos, constantes) y se <strong>importan</strong> unos a otros. Así el código se ordena, se reutiliza y se prueba por partes.</p>
+<p>En Node conviven <strong>dos sistemas de módulos</strong>, por razones históricas:</p>
+<div class="table-wrap"><table>
+<thead><tr><th></th><th>CommonJS (CJS)</th><th>ES Modules (ESM)</th></tr></thead>
+<tbody><tr><td><strong>Sintaxis</strong></td><td><code>require()</code> y <code>module.exports</code></td><td><code>import</code> y <code>export</code></td></tr><tr><td><strong>Origen</strong></td><td>El sistema original de Node (2009)</td><td>El estándar de JavaScript; el mismo que usan los navegadores y React</td></tr><tr><td><strong>Se activa con</strong></td><td>Es el valor por defecto de los archivos <code>.js</code> si no indicas lo contrario</td><td><code>"type": "module"</code> en <code>package.json</code>, o la extensión <code>.mjs</code></td></tr><tr><td><strong>Se carga</strong></td><td>De forma síncrona</td><td>De forma asíncrona (permite <code>await</code> en el nivel superior)</td></tr></tbody>
+</table></div>
+
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · En este curso usaremos ES Modules</p>
+<p>Es la sintaxis moderna y la misma que ya usas en React. Verás CommonJS en muchísimos proyectos y tutoriales antiguos, así que conviene reconocerlo. Lo explicamos primero para que no te sorprenda.</p>
+</div>
+
+
+<h2 id="commonjs"><span class="n">2.</span>CommonJS: require y module.exports</h2>
+
+<p>Imagina dos archivos en la misma carpeta. En <code>mates.js</code> decides <strong>qué se comparte</strong> con <code>module.exports</code>; en <code>app.js</code> lo recoges con <code>require</code>:</p>
+<div class="code">
+  <div class="code-head"><span>mates.js (CommonJS)</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>function sumar(a, b) {
+  return a + b;
+}
+
+function multiplicar(a, b) {
+  return a * b;
+}
+
+module.exports = { sumar, multiplicar };</code></pre>
+</div>
+
+<div class="code">
+  <div class="code-head"><span>app.js (CommonJS)</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>const { sumar, multiplicar } = require(&quot;./mates.js&quot;);
+
+console.log(sumar(2, 3));
+console.log(multiplicar(4, 5));</code></pre>
+</div>
+<div class="code">
+  <div class="code-head"><span>Salida esperada</span></div>
+<pre><code>5
+20</code></pre>
+</div>
+
+<p>Lo que no está dentro de <code>module.exports</code> queda <strong>privado</strong> en su archivo. Las rutas que empiezan por <code>./</code> son <strong>relativas</strong> al archivo actual. Los nombres sin ruta (<code>require("fs")</code>) buscan módulos integrados o paquetes instalados.</p>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · Por qué lo ves en tantos sitios</p>
+<p>Durante más de diez años CommonJS fue la única opción. Por eso la mayoría de tutoriales antiguos y muchos proyectos existentes usan <code>require</code>.</p>
+</div>
+
+
+<h2 id="esm"><span class="n">3.</span>ES Modules: import y export</h2>
+
+<p>Con ES Modules el mismo ejemplo se escribe con <code>export</code> e <code>import</code>. Primero se activa el modo módulo en <code>package.json</code>:</p>
+<div class="code">
+  <div class="code-head"><span>package.json</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>{
+  &quot;name&quot;: &quot;curso-node&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;type&quot;: &quot;module&quot;
+}</code></pre>
+</div>
+
+<div class="code">
+  <div class="code-head"><span>mates.js (ESM)</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>export function sumar(a, b) {
+  return a + b;
+}
+
+export function multiplicar(a, b) {
+  return a * b;
+}
+
+// Una exportación por defecto: solo puede haber una por archivo
+export default function restar(a, b) {
+  return a - b;
+}</code></pre>
+</div>
+
+<div class="code">
+  <div class="code-head"><span>app.js (ESM)</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>import restar, { sumar, multiplicar } from &quot;./mates.js&quot;;
+
+console.log(sumar(2, 3));
+console.log(multiplicar(4, 5));
+console.log(restar(9, 4));</code></pre>
+</div>
+<div class="code">
+  <div class="code-head"><span>Salida esperada</span></div>
+<pre><code>5
+20
+5</code></pre>
+</div>
+
+<div class="table-wrap"><table>
+<thead><tr><th>Forma</th><th>Se exporta con</th><th>Se importa con</th></tr></thead>
+<tbody><tr><td><strong>Con nombre</strong> (varias por archivo)</td><td><code>export function sumar() {}</code></td><td><code>import { sumar } from "./mates.js"</code></td></tr><tr><td><strong>Por defecto</strong> (una por archivo)</td><td><code>export default restar</code></td><td><code>import restar from "./mates.js"</code> (el nombre lo eliges tú)</td></tr><tr><td><strong>Todo junto</strong></td><td>—</td><td><code>import * as mates from "./mates.js"</code></td></tr></tbody>
+</table></div>
+
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · En ESM la extensión es obligatoria</p>
+<p>En imports relativos debes escribir la extensión completa: <code>"./mates.js"</code>, no <code>"./mates"</code>. Es una diferencia frecuente con lo que se hace en React con Vite, donde se puede omitir.</p>
+</div>
+
+<h3>Diferencias que te encontrarás</h3>
+<ul><li>En ESM <strong>no existen</strong> <code>require</code>, <code>module</code>, <code>__dirname</code> ni <code>__filename</code>. Para saber la carpeta del archivo actual usa <code>import.meta.dirname</code> y <code>import.meta.filename</code> (disponibles en Node 20.11 y posteriores).</li><li>Puedes usar <code>await</code> directamente en el nivel superior del archivo, sin envolverlo en una función <code>async</code>.</li><li>Un archivo es CommonJS <strong>o</strong> ESM: no mezcles <code>require</code> con <code>import</code> en el mismo archivo.</li></ul>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Cómo saber en qué modo estás</p>
+<p>Si ves <code>SyntaxError: Cannot use import statement outside a module</code>, tu proyecto está en CommonJS: añade <code>"type": "module"</code> a <code>package.json</code>. Si ves <code>require is not defined in ES module scope</code>, es lo contrario: estás en ESM y usaste <code>require</code>.</p>
+</div>
+
+
+<h2 id="integrados"><span class="n">4.</span>Módulos integrados y el prefijo node:</h2>
+
+<p>Node incluye muchos módulos <strong>sin necesidad de instalar nada</strong>: <code>fs</code> (archivos), <code>path</code> (rutas), <code>http</code> (servidores), <code>os</code> (sistema), <code>crypto</code> (criptografía)… Se importan con el prefijo <code>node:</code>, que deja claro que son del propio Node y no paquetes de terceros:</p>
+<div class="code">
+  <div class="code-head"><span>Importar módulos integrados</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>import fs from &quot;node:fs&quot;;
+import { readFile, writeFile } from &quot;node:fs/promises&quot;;
+import path from &quot;node:path&quot;;
+import os from &quot;node:os&quot;;</code></pre>
+</div>
+
+<p>Por ahora usarás dos de ellos: <code>fs</code> para leer y escribir archivos y <code>path</code> para construir rutas. En la lección 4 llegará el servidor web.</p>
+
+<h2 id="fs"><span class="n">5.</span>Leer y escribir archivos con fs</h2>
+
+<p>El módulo <code>fs</code> (<em>file system</em>) trabaja con archivos y carpetas. Hoy se usa su versión basada en <strong>promesas</strong>, <code>node:fs/promises</code>, con <code>await</code>. Crea un archivo <code>notas.txt</code> con dos líneas y este script <code>leer.js</code>:</p>
+<div class="code">
+  <div class="code-head"><span>notas.txt</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>Comprar pan
+Estudiar Node</code></pre>
+</div>
+
+<div class="code">
+  <div class="code-head"><span>leer.js</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>import { readFile } from &quot;node:fs/promises&quot;;
+
+const texto = await readFile(&quot;notas.txt&quot;, &quot;utf8&quot;);
+console.log(texto);
+console.log(&quot;Líneas:&quot;, texto.split(&quot;\n&quot;).length);</code></pre>
+</div>
+<div class="code">
+  <div class="code-head"><span>Salida esperada</span></div>
+<pre><code>Comprar pan
+Estudiar Node
+Líneas: 2</code></pre>
+</div>
+
+<p>El segundo argumento, <code>"utf8"</code>, indica que quieres <strong>texto</strong>. Sin él, <code>readFile</code> devuelve un <em>Buffer</em> (bytes sin interpretar). Escribir es igual de directo:</p>
+<div class="code">
+  <div class="code-head"><span>escribir.js</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>import { writeFile, appendFile } from &quot;node:fs/promises&quot;;
+
+// Crea el archivo o lo SOBRESCRIBE si ya existe
+await writeFile(&quot;saludo.txt&quot;, &quot;Hola desde Node\n&quot;, &quot;utf8&quot;);
+
+// Añade al final sin borrar lo anterior
+await appendFile(&quot;saludo.txt&quot;, &quot;Otra línea\n&quot;, &quot;utf8&quot;);
+
+console.log(&quot;Archivos escritos&quot;);</code></pre>
+</div>
+<div class="code">
+  <div class="code-head"><span>Salida esperada</span></div>
+<pre><code>Archivos escritos</code></pre>
+</div>
+
+<div class="table-wrap"><table>
+<thead><tr><th>Función</th><th>Qué hace</th></tr></thead>
+<tbody><tr><td><code>readFile(ruta, "utf8")</code></td><td>Lee un archivo completo como texto</td></tr><tr><td><code>writeFile(ruta, contenido)</code></td><td>Crea o <strong>sobrescribe</strong> un archivo</td></tr><tr><td><code>appendFile(ruta, contenido)</code></td><td>Añade contenido al final</td></tr><tr><td><code>readdir(ruta)</code></td><td>Lista los nombres de una carpeta</td></tr><tr><td><code>mkdir(ruta, { recursive: true })</code></td><td>Crea una carpeta (y las intermedias)</td></tr><tr><td><code>rm(ruta)</code></td><td>Borra un archivo (con <code>{ recursive: true }</code>, también carpetas)</td></tr></tbody>
+</table></div>
+
+<h3>Archivos JSON: la base de datos más simple</h3>
+<p>Como JSON es texto, guardar y leer datos estructurados es combinar <code>fs</code> con <code>JSON.stringify</code> y <code>JSON.parse</code>:</p>
+<div class="code">
+  <div class="code-head"><span>guardar-json.js</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>import { readFile, writeFile } from &quot;node:fs/promises&quot;;
+
+const tareas = [
+  { id: 1, texto: &quot;Instalar Node&quot;, hecha: true },
+  { id: 2, texto: &quot;Aprender módulos&quot;, hecha: false }
+];
+
+// null, 2 → JSON con sangría, fácil de leer
+await writeFile(&quot;tareas.json&quot;, JSON.stringify(tareas, null, 2), &quot;utf8&quot;);
+
+const leidas = JSON.parse(await readFile(&quot;tareas.json&quot;, &quot;utf8&quot;));
+console.log(leidas.length, &quot;tareas;&quot;, &quot;primera:&quot;, leidas[0].texto);</code></pre>
+</div>
+<div class="code">
+  <div class="code-head"><span>Salida esperada</span></div>
+<pre><code>2 tareas; primera: Instalar Node</code></pre>
+</div>
+
+<h3>Cuando el archivo no existe</h3>
+<p>Si pides un archivo que no existe, la promesa se rechaza con un error cuyo código es <code>ENOENT</code> (<em>no such file or directory</em>). Se atrapa con <code>try/catch</code>:</p>
+<div class="code">
+  <div class="code-head"><span>seguro.js</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>import { readFile } from &quot;node:fs/promises&quot;;
+
+try {
+  const texto = await readFile(&quot;no-existe.txt&quot;, &quot;utf8&quot;);
+  console.log(texto);
+} catch (error) {
+  if (error.code === &quot;ENOENT&quot;) {
+    console.log(&quot;Ese archivo no existe&quot;);
+  } else {
+    throw error; // otro problema: no lo ocultes
+  }
+}</code></pre>
+</div>
+<div class="code">
+  <div class="code-head"><span>Salida esperada</span></div>
+<pre><code>Ese archivo no existe</code></pre>
+</div>
+
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · Las rutas relativas dependen de dónde ejecutas</p>
+<p><code>readFile("notas.txt")</code> busca el archivo en la <strong>carpeta desde la que lanzaste el comando</strong>, no en la carpeta del script. Si ejecutas <code>node src/leer.js</code> desde la raíz, buscará <code>notas.txt</code> en la raíz. Para anclar la ruta al script usa <code>path.join(import.meta.dirname, "notas.txt")</code>.</p>
+</div>
+
+
+<h2 id="path"><span class="n">6.</span>Construir rutas con path</h2>
+
+<p>Las rutas se escriben distinto según el sistema: <code>datos/notas.txt</code> en macOS y Linux, <code>datos\notas.txt</code> en Windows. Concatenar textos a mano con <code>"/"</code> se rompe tarde o temprano. El módulo <code>path</code> resuelve esas diferencias:</p>
+<div class="code">
+  <div class="code-head"><span>rutas.js</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>import path from &quot;node:path&quot;;
+
+const ruta = path.join(&quot;datos&quot;, &quot;2026&quot;, &quot;notas.txt&quot;);
+console.log(ruta);
+console.log(path.basename(ruta));
+console.log(path.basename(ruta, &quot;.txt&quot;));
+console.log(path.extname(ruta));
+console.log(path.dirname(ruta));</code></pre>
+</div>
+<div class="code">
+  <div class="code-head"><span>Salida esperada</span></div>
+<pre><code>datos/2026/notas.txt
+notas.txt
+notas
+.txt
+datos/2026</code></pre>
+</div>
+
+<p>La salida de arriba es la de macOS y Linux; en Windows las barras aparecen como <code>\</code>. Resumen:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Función</th><th>Para qué sirve</th><th>Ejemplo → resultado</th></tr></thead>
+<tbody><tr><td><code>path.join(...partes)</code></td><td>Une partes con el separador correcto</td><td><code>join("a", "b", "c.txt")</code> → <code>a/b/c.txt</code></td></tr><tr><td><code>path.resolve(...partes)</code></td><td>Construye una ruta <strong>absoluta</strong></td><td><code>resolve("datos")</code> → <code>/tu/carpeta/datos</code></td></tr><tr><td><code>path.basename(ruta)</code></td><td>Nombre del archivo</td><td><code>basename("/a/b.txt")</code> → <code>b.txt</code></td></tr><tr><td><code>path.extname(ruta)</code></td><td>Extensión (con punto)</td><td><code>extname("b.txt")</code> → <code>.txt</code></td></tr><tr><td><code>path.dirname(ruta)</code></td><td>La carpeta que lo contiene</td><td><code>dirname("/a/b.txt")</code> → <code>/a</code></td></tr></tbody>
+</table></div>
+
+
+<h2 id="argv"><span class="n">7.</span>Argumentos de la línea de comandos: process.argv</h2>
+
+<p>Un script puede recibir datos al ejecutarlo: <code>node saludo.js Ana</code>. Esos datos llegan en <code>process.argv</code>, un <strong>array</strong> cuyos dos primeros elementos son la ruta de <code>node</code> y la del script; <strong>los tuyos empiezan en la posición 2</strong>.</p>
+<div class="code">
+  <div class="code-head"><span>saludo.js</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>console.log(process.argv);
+
+const [nombre = &quot;Mundo&quot;] = process.argv.slice(2);
+console.log(`Hola, ${nombre}`);</code></pre>
+</div>
+
+<div class="code">
+  <div class="code-head"><span>Terminal</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>node saludo.js Ana</code></pre>
+</div>
+<div class="code">
+  <div class="code-head"><span>Salida esperada</span></div>
+<pre><code>[
+  &#x27;/usr/local/bin/node&#x27;,
+  &#x27;/home/ana/curso-node/saludo.js&#x27;,
+  &#x27;Ana&#x27;
+]
+Hola, Ana</code></pre>
+</div>
+
+<p>Con <code>slice(2)</code> te quedas solo con lo que escribió la persona. Para <strong>terminar</strong> el programa indicando que hubo un problema, asigna un código de salida: <code>0</code> significa éxito y cualquier otro número, error.</p>
+<div class="code">
+  <div class="code-head"><span>validar.js</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>const [archivo] = process.argv.slice(2);
+
+if (!archivo) {
+  console.error(&quot;Uso: node validar.js &lt;archivo&gt;&quot;);
+  process.exitCode = 1; // termina con error cuando acabe lo pendiente
+} else {
+  console.log(&quot;Procesando&quot;, archivo);
+}</code></pre>
+</div>
+
+<p>Ahora la parte práctica: un analizador de argumentos de estilo <code>--clave valor</code> es JavaScript puro y puedes probarlo aquí mismo, en el navegador.</p>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ Un mini analizador de argumentos</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:420px">&lt;script&gt;
+function parsear(args) {
+  const resultado = { _: [] };
+  for (let i = 0; i &lt; args.length; i++) {
+    const actual = args[i];
+    if (actual.startsWith("--")) {
+      const clave = actual.slice(2);
+      const siguiente = args[i + 1];
+      if (siguiente !== undefined &amp;&amp; !siguiente.startsWith("--")) {
+        resultado[clave] = siguiente;
+        i++;
+      } else {
+        resultado[clave] = true;
+      }
+    } else {
+      resultado._.push(actual);
+    }
+  }
+  return resultado;
+}
+
+// Equivale a: node app.js datos.txt --nombre Ana --mayus
+console.log(parsear(["datos.txt", "--nombre", "Ana", "--mayus"]));
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Existe una utilidad integrada</p>
+<p>Node incluye <code>parseArgs</code> en el módulo <code>node:util</code>, que hace este trabajo con más garantías. Aquí lo escribimos a mano para entender qué ocurre por dentro.</p>
+</div>
+
+
+<h2 id="errores"><span class="n">8.</span>Errores frecuentes</h2>
+<ul><li><strong>Olvidar la extensión en ESM</strong>: <code>import ... from "./mates"</code> falla con <code>ERR_MODULE_NOT_FOUND</code>. Escribe <code>"./mates.js"</code>.</li><li><strong>Mezclar <code>require</code> e <code>import</code></strong>: dentro de un archivo ESM, <code>require</code> no existe.</li><li><strong>Olvidar <code>"type": "module"</code></strong> y obtener <code>Cannot use import statement outside a module</code>.</li><li><strong>Usar <code>__dirname</code> en ESM</strong>: no existe. Usa <code>import.meta.dirname</code>.</li><li><strong>Olvidar <code>await</code></strong> al leer un archivo: obtienes <code>Promise { &lt;pending&gt; }</code> en lugar del texto.</li><li><strong>Sobrescribir sin querer</strong> con <code>writeFile</code>: si solo quieres añadir al final, usa <code>appendFile</code>.</li><li><strong>Contar mal los argumentos</strong>: <code>process.argv[0]</code> y <code>[1]</code> no son tuyos; usa <code>slice(2)</code>.</li></ul>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li>Un <strong>módulo</strong> es un archivo que exporta piezas para que otros las importen.</li><li><strong>CommonJS</strong>: <code>require()</code> y <code>module.exports</code>. <strong>ESM</strong>: <code>import</code> y <code>export</code>.</li><li>Para usar ESM pon <code>"type": "module"</code> en <code>package.json</code> (o usa <code>.mjs</code>).</li><li>En ESM los imports relativos <strong>llevan extensión</strong> y no existen <code>__dirname</code> ni <code>require</code>.</li><li>Los módulos propios de Node se importan con el prefijo <code>node:</code> (<code>node:fs</code>, <code>node:path</code>).</li><li><code>readFile</code>, <code>writeFile</code> y <code>appendFile</code> de <code>fs/promises</code> trabajan con <code>await</code>.</li><li>Usa <code>path.join</code> en lugar de concatenar rutas a mano.</li><li><code>process.argv.slice(2)</code> contiene los argumentos del usuario.</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">9.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td>Módulo</td><td>Archivo de código que exporta piezas para reutilizarlas desde otros archivos.</td></tr><tr><td>CommonJS</td><td>Sistema de módulos original de Node: <code>require</code> / <code>module.exports</code>.</td></tr><tr><td>ES Modules (ESM)</td><td>Sistema de módulos estándar de JavaScript: <code>import</code> / <code>export</code>.</td></tr><tr><td><code>fs</code></td><td>Módulo integrado para trabajar con archivos y carpetas.</td></tr><tr><td><code>path</code></td><td>Módulo integrado para construir y analizar rutas.</td></tr><tr><td>Buffer</td><td>Bloque de bytes sin interpretar; es lo que devuelve <code>readFile</code> si no indicas la codificación.</td></tr><tr><td><code>ENOENT</code></td><td>Código de error que significa «el archivo o carpeta no existe».</td></tr><tr><td><code>process.argv</code></td><td>Array con los argumentos con los que se lanzó el script.</td></tr></tbody>
+</table></div>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>¿Qué sintaxis pertenece a ES Modules?</p><ul class="opts"><li><button type="button" class="opt"><code>const x = require("x")</code></button></li><li><button type="button" class="opt" data-ok><code>import x from "./x.js"</code></button></li><li><button type="button" class="opt"><code>module.exports = x</code></button></li><li><button type="button" class="opt"><code>include "x"</code></button></li></ul><p class="explain" hidden><code>import</code> y <code>export</code> son ESM. <code>require</code> y <code>module.exports</code> son CommonJS.</p></div>
+<div class="quiz-q"><p>¿Cómo activas ES Modules en un proyecto?</p><ul class="opts"><li><button type="button" class="opt" data-ok>Con <code>"type": "module"</code> en <code>package.json</code></button></li><li><button type="button" class="opt">Instalando el paquete <code>esm</code></button></li><li><button type="button" class="opt">Renombrando la carpeta a <code>modules</code></button></li><li><button type="button" class="opt">No se puede en Node</button></li></ul><p class="explain" hidden>También funcionan los archivos con extensión <code>.mjs</code>, pero lo habitual es la opción de <code>package.json</code>.</p></div>
+<div class="quiz-q"><p>En ESM, ¿cuál es la forma correcta de importar un archivo local?</p><ul class="opts"><li><button type="button" class="opt"><code>import { a } from "./util"</code></button></li><li><button type="button" class="opt" data-ok><code>import { a } from "./util.js"</code></button></li><li><button type="button" class="opt"><code>import { a } from util</code></button></li><li><button type="button" class="opt"><code>require("./util")</code></button></li></ul><p class="explain" hidden>En ESM la extensión es obligatoria en las rutas relativas.</p></div>
+<div class="quiz-q"><p>¿Qué devuelve <code>await readFile("a.txt", "utf8")</code>?</p><ul class="opts"><li><button type="button" class="opt">Un Buffer</button></li><li><button type="button" class="opt" data-ok>El contenido del archivo como texto</button></li><li><button type="button" class="opt">Una función</button></li><li><button type="button" class="opt">Siempre <code>undefined</code></button></li></ul><p class="explain" hidden>Con <code>"utf8"</code> obtienes el texto. Sin la codificación obtendrías un Buffer.</p></div>
+<div class="quiz-q"><p>Ejecutas <code>node app.js uno dos</code>. ¿Qué es <code>process.argv.slice(2)</code>?</p><ul class="opts"><li><button type="button" class="opt"><code>["node", "app.js"]</code></button></li><li><button type="button" class="opt" data-ok><code>["uno", "dos"]</code></button></li><li><button type="button" class="opt"><code>"uno dos"</code></button></li><li><button type="button" class="opt"><code>["app.js", "uno"]</code></button></li></ul><p class="explain" hidden>Las posiciones 0 y 1 son la ruta de node y la del script; tus argumentos empiezan en la 2.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="node-02">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../01-que-es-node/"><small>← Anterior</small>Qué es Node.js y tu primer script</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de Node.js y APIs · Lección 2 · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&amp;title=%5BError%5D%20Lecci%C3%B3n%202%3A%20M%C3%B3dulos%3A%20CommonJS%2C%20ES%20Modules%2C%20fs%20y%20path%20%C2%B7%20Curso%20de%20Node.js%20y%20APIs&amp;pagina=https://cacg-code.github.io/PRACTICAS-HTML/node/02-modulos/" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

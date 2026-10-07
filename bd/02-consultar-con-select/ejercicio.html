@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ejercicio · Consultar con SELECT · Curso de Bases de datos con SQL</title>
+  <meta name="description" content="Ejercicio práctico de: Consultar con SELECT.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/bd/02-consultar-con-select/ejercicio.html">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#0e7490">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Ejercicio · Consultar con SELECT · Curso de Bases de datos con SQL">
+  <meta property="og:description" content="Ejercicio práctico de: Consultar con SELECT.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/bd/02-consultar-con-select/ejercicio.html">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+  <style>
+    .sqlsim select, .sqlsim input[type="number"] { padding: .5rem .6rem; border: 1px solid var(--border); border-radius: 8px; background: var(--bg); color: var(--text); font: inherit; max-width: 100%; }
+    .sqlsim .sql-out { margin: 0; padding: .8rem 1rem; border-radius: 10px; background: var(--code-bg); color: var(--code-text); font-family: var(--mono); font-size: .88rem; line-height: 1.6; white-space: pre-wrap; overflow-wrap: anywhere; }
+    .sqlsim .msg { margin: 0; font-weight: 600; }
+    .sqlsim .msg.err { color: #b91c1c; }
+    .sqlsim .msg.okk { color: #15803d; }
+    :root[data-theme="dark"] .sqlsim .msg.err { color: #fca5a5; }
+    :root[data-theme="dark"] .sqlsim .msg.okk { color: #86efac; }
+    @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .sqlsim .msg.err { color: #fca5a5; } :root:not([data-theme="light"]) .sqlsim .msg.okk { color: #86efac; } }
+    .sqlsim .w-row button { cursor: pointer; }
+    .sqlsim .w-row label { display: inline-flex; gap: .4rem; align-items: center; }
+    .sqlsim td.hl, .sqlsim th.hl, .sqlsim tr.hl td { background: color-mix(in srgb, var(--accent) 22%, transparent); }
+    .sqlsim tr.gone td { text-decoration: line-through; opacity: .5; }
+    .sqlsim tr.new td { background: color-mix(in srgb, #22c55e 22%, transparent); }
+    .sqlsim tr.chg td { background: color-mix(in srgb, #f59e0b 25%, transparent); }
+  </style>
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Bases de datos con SQL</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap" id="contenido" style="max-width:820px;padding-top:2rem;padding-bottom:3rem">
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de Bases de datos con SQL</a> › <a href="./">Lección 2</a> › Ejercicio</div>
+        <h1>Ejercicio: Consultar con SELECT</h1>
+        <ul class="meta"><li>⏱ 30 minutos</li><li>📶 Nivel: principiante</li></ul>
+      </header>
+
+      <h2>Objetivo</h2>
+      <p>Practicar <code>SELECT</code>, <code>WHERE</code>, <code>LIKE</code>, <code>ORDER BY</code> y <code>LIMIT</code> escribiendo ocho consultas sobre la tabla <code>productos</code>.</p>
+
+      <h3>Cómo se trabaja</h3>
+      <p>Escribe cada consulta <strong>en papel o en un editor</strong> y, si puedes, pruébala en <code>sqlite3</code> con <code>tienda.db</code> (lección 1). Después compara con la solución desplegable. Recuerda: texto entre comillas simples y cada instrucción acaba en <code>;</code>.</p>
+<p>La tabla es <code>productos(id, nombre, categoria, precio, stock)</code> con las 8 filas del curso.</p>
+
+      <h2>Pasos</h2>
+      <p>Marca cada paso a medida que lo completes. Tu avance se guarda en este navegador.</p>
+      <div class="progress" aria-hidden="true"><div></div></div>
+      <p id="progreso-texto" style="color:var(--muted);font-size:.9rem" aria-live="polite"></p>
+      <ul class="checklist"><li><label><input type="checkbox" id="p1"><span>Muestra solo el <code>nombre</code> y el <code>stock</code> de todos los productos.</span></label></li><li><label><input type="checkbox" id="p2"><span>Muestra todos los productos de la categoría <code>'Periféricos'</code>.</span></label></li><li><label><input type="checkbox" id="p3"><span>Muestra el nombre y el precio de los productos que cuesten <strong>menos de 100</strong> y tengan <strong>stock mayor que 0</strong>.</span></label></li><li><label><input type="checkbox" id="p4"><span>Muestra los productos de las categorías <code>'Audio'</code> o <code>'Pantallas'</code> usando <code>IN</code>.</span></label></li><li><label><input type="checkbox" id="p5"><span>Muestra los nombres que <strong>contengan</strong> la palabra «Monitor».</span></label></li><li><label><input type="checkbox" id="p6"><span>Muestra el nombre y el precio de los 3 productos <strong>más caros</strong>.</span></label></li><li><label><input type="checkbox" id="p7"><span>Muestra las categorías distintas, ordenadas alfabéticamente.</span></label></li><li><label><input type="checkbox" id="p8"><span>Muestra el nombre y el valor del inventario (<code>precio * stock</code>) con el alias <code>valor</code>, del mayor al menor.</span></label></li></ul>
+      <details><summary>💡 Pista 1: qué cláusulas usar</summary><p>Casi todas se resuelven con <code>SELECT … FROM … WHERE … ORDER BY … LIMIT</code>, en ese orden y usando solo las que necesites.</p></details>
+      <details><summary>💡 Pista 2: el inventario</summary><p>Puedes calcular en el propio <code>SELECT</code> y ordenar por el alias: <code>ORDER BY valor DESC</code>.</p></details>
+      <details>
+        <summary>✅ Ver una solución posible</summary>
+        <p>Intenta resolverlo antes de mirar. Tu versión puede ser distinta y también correcta.</p>
+<div class="code">
+  <div class="code-head"><span>Paso 1</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">SELECT</span> nombre, stock
+<span class="tk-tag">FROM</span> productos;</code></pre>
+</div>
+<div class="code">
+  <div class="code-head"><span>Paso 2</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">SELECT</span> *
+<span class="tk-tag">FROM</span> productos
+<span class="tk-tag">WHERE</span> categoria = <span class="tk-val">'Periféricos'</span>;</code></pre>
+</div>
+<div class="code">
+  <div class="code-head"><span>Paso 3</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">SELECT</span> nombre, precio
+<span class="tk-tag">FROM</span> productos
+<span class="tk-tag">WHERE</span> precio &lt; <span class="tk-attr">100</span> <span class="tk-tag">AND</span> stock &gt; <span class="tk-attr">0</span>;</code></pre>
+</div>
+<p><strong>Resultado esperado</strong></p>
+<div class="table-wrap"><table>
+<thead><tr><th>nombre</th><th>precio</th></tr></thead>
+<tbody><tr><td>Ratón</td><td>45.50</td></tr><tr><td>Altavoz</td><td>99.00</td></tr><tr><td>Cable HDMI</td><td>15.00</td></tr></tbody>
+</table></div>
+<div class="code">
+  <div class="code-head"><span>Paso 4</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">SELECT</span> *
+<span class="tk-tag">FROM</span> productos
+<span class="tk-tag">WHERE</span> categoria <span class="tk-tag">IN</span> (<span class="tk-val">'Audio'</span>, <span class="tk-val">'Pantallas'</span>);</code></pre>
+</div>
+<div class="code">
+  <div class="code-head"><span>Paso 5</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">SELECT</span> nombre
+<span class="tk-tag">FROM</span> productos
+<span class="tk-tag">WHERE</span> nombre <span class="tk-tag">LIKE</span> <span class="tk-val">'%Monitor%'</span>;</code></pre>
+</div>
+<div class="code">
+  <div class="code-head"><span>Paso 6</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">SELECT</span> nombre, precio
+<span class="tk-tag">FROM</span> productos
+<span class="tk-tag">ORDER</span> <span class="tk-tag">BY</span> precio <span class="tk-tag">DESC</span>
+<span class="tk-tag">LIMIT</span> <span class="tk-attr">3</span>;</code></pre>
+</div>
+<p><strong>Resultado esperado</strong></p>
+<div class="table-wrap"><table>
+<thead><tr><th>nombre</th><th>precio</th></tr></thead>
+<tbody><tr><td>Monitor 4K</td><td>899.00</td></tr><tr><td>Monitor FHD</td><td>650.00</td></tr><tr><td>Webcam</td><td>150.00</td></tr></tbody>
+</table></div>
+<div class="code">
+  <div class="code-head"><span>Paso 7</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">SELECT</span> <span class="tk-tag">DISTINCT</span> categoria
+<span class="tk-tag">FROM</span> productos
+<span class="tk-tag">ORDER</span> <span class="tk-tag">BY</span> categoria;</code></pre>
+</div>
+<p><strong>Resultado esperado</strong></p>
+<div class="table-wrap"><table>
+<thead><tr><th>categoria</th></tr></thead>
+<tbody><tr><td>Accesorios</td></tr><tr><td>Audio</td></tr><tr><td>Pantallas</td></tr><tr><td>Periféricos</td></tr></tbody>
+</table></div>
+<div class="code">
+  <div class="code-head"><span>Paso 8</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">SELECT</span> nombre, precio * stock <span class="tk-tag">AS</span> valor
+<span class="tk-tag">FROM</span> productos
+<span class="tk-tag">ORDER</span> <span class="tk-tag">BY</span> valor <span class="tk-tag">DESC</span>;</code></pre>
+</div>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · Más de una solución</p>
+<p>Tu consulta puede ser distinta y correcta, siempre que devuelva las mismas filas. Por ejemplo, el paso 5 también funciona con <code>LIKE 'Monitor%'</code> con estos datos.</p>
+</div>
+
+      </details>
+      <div class="callout consejo">
+<p class="callout-title">💡 🏁 Reto extra (opcional)</p>
+<p>Escribe una consulta que muestre los productos con stock <strong>entre 10 y 50</strong> (ambos incluidos), ordenados por categoría y, dentro de cada categoría, del más barato al más caro.</p>
+</div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="./"><small>← Anterior</small>Volver a lección 2</a>
+        <a class="next" href="../03-insertar-actualizar-borrar/"><small>Siguiente →</small>Insertar, actualizar y borrar</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de Bases de datos con SQL · Ejercicio de lección 2 · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&title=%5BError%5D%20Ejercicio%20%C2%B7%20Consultar%20con%20SELECT%20%C2%B7%20Curso%20de%20Bases%20de%20datos%20con%20SQL&pagina=https%3A//cacg-code.github.io/PRACTICAS-HTML/bd/02-consultar-con-select/ejercicio.html" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

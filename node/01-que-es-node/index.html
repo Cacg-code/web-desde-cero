@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lección 1: Qué es Node.js y tu primer script · Curso de Node.js y APIs</title>
+  <meta name="description" content="Qué es Node.js y en qué se diferencia del navegador, cómo instalarlo, usar el REPL, ejecutar tu primer script con node archivo.js y crear un proyecto con npm init.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/node/01-que-es-node/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Lección 1: Qué es Node.js y tu primer script · Curso de Node.js y APIs">
+  <meta property="og:description" content="Qué es Node.js y en qué se diferencia del navegador, cómo instalarlo, usar el REPL, ejecutar tu primer script con node archivo.js y crear un proyecto con npm init.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/node/01-que-es-node/">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de Node.js y APIs</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap lesson-layout" id="contenido">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#que-es">¿Qué es Node.js?</a></li><li><a href="#instalar">Instalar Node.js y comprobarlo</a></li><li><a href="#repl">El REPL: probar JavaScript en la terminal</a></li><li><a href="#primer-script">Tu primer script</a></li><li><a href="#watch">Recargar automáticamente con --watch</a></li><li><a href="#asincronia">Node y lo asíncrono (vistazo)</a></li><li><a href="#npm-init">Convertir la carpeta en un proyecto: npm init</a></li><li><a href="#errores">Errores frecuentes</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de Node.js y APIs</a> › Lección 1</div>
+        <h1>Qué es Node.js y tu primer script</h1>
+        <ul class="meta"><li>⏱ 40 minutos</li><li>📶 Nivel: principiante</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Explicar qué es Node.js y en qué se diferencia de JavaScript en el navegador.</li><li>Instalar Node.js y comprobar su versión.</li><li>Probar código en el REPL y ejecutar un archivo con <code>node archivo.js</code>.</li><li>Crear un proyecto con <code>npm init -y</code>.</li></ul>
+</div>
+
+<h2 id="que-es"><span class="n">1.</span>¿Qué es Node.js?</h2>
+
+<p>Hasta ahora has ejecutado JavaScript <strong>dentro del navegador</strong>: el navegador lee tu código, lo ejecuta y te da herramientas para tocar la página (<code>document</code>, <code>window</code>, el DOM). <strong>Node.js</strong> es otra forma de ejecutar JavaScript: un <strong>entorno de ejecución</strong> que corre en tu computadora o en un servidor, <strong>sin navegador ni página</strong>.</p>
+<p>Node usa el mismo motor de JavaScript que Chrome (<strong>V8</strong>) y le añade herramientas que un navegador no ofrece por seguridad: leer y escribir archivos, abrir un servidor que escucha peticiones, leer variables del sistema, lanzar otros programas.</p>
+<div class="table-wrap"><table>
+<thead><tr><th></th><th>JavaScript en el navegador</th><th>JavaScript en Node.js</th></tr></thead>
+<tbody><tr><td><strong>Dónde corre</strong></td><td>Dentro de una pestaña, al abrir una página</td><td>En una terminal, con el comando <code>node</code></td></tr><tr><td><strong>Objeto global</strong></td><td><code>window</code> (y <code>globalThis</code>)</td><td><code>globalThis</code> (no existe <code>window</code>)</td></tr><tr><td><strong>DOM</strong> (<code>document</code>)</td><td>Sí</td><td><strong>No</strong>: no hay página que modificar</td></tr><tr><td><strong>Archivos del disco</strong></td><td>No (solo con permiso del usuario)</td><td>Sí, con el módulo <code>fs</code></td></tr><tr><td><strong>Servidor</strong></td><td>No</td><td>Sí: puede escuchar peticiones HTTP</td></tr><tr><td><strong>Variables del sistema</strong></td><td>No</td><td>Sí, con <code>process.env</code></td></tr><tr><td><strong>Lenguaje</strong></td><td>JavaScript</td><td>El mismo JavaScript (funciones, arrays, objetos, <code>async/await</code>…)</td></tr></tbody>
+</table></div>
+
+<div class="callout nota">
+<p class="callout-title">📌 Nota · Node no es un lenguaje ni un framework</p>
+<p>Node.js es un <strong>entorno de ejecución</strong>. El lenguaje sigue siendo JavaScript; lo que cambia es dónde corre y qué herramientas tiene a mano. Todo lo que ya sabes de variables, funciones, arrays, objetos, <code>fetch</code> y <code>async/await</code> funciona igual.</p>
+</div>
+
+<p>¿Para qué se usa Node? Para tres grandes cosas:</p>
+<ol class="steps"><li><strong>Servidores y APIs</strong>: programas que reciben peticiones y devuelven datos (lo harás desde la lección 4).</li><li><strong>Herramientas de desarrollo</strong>: Vite, los compiladores y los formateadores que usas en proyectos de React corren sobre Node.</li><li><strong>Automatizar tareas</strong>: renombrar cientos de archivos, procesar datos, generar informes.</li></ol>
+
+<h2 id="instalar"><span class="n">2.</span>Instalar Node.js y comprobarlo</h2>
+
+<p>Descarga el instalador desde <a href="https://nodejs.org/" target="_blank" rel="noopener">nodejs.org</a> y elige la versión <strong>LTS</strong> (<em>Long Term Support</em>, soporte a largo plazo). Es la versión estable que se recomienda para aprender y para producción. La versión «Current» trae novedades, pero cambia más rápido.</p>
+<p>El instalador incluye también <strong>npm</strong>, el gestor de paquetes de Node (lo estudiarás en la lección 3). Cuando termine, <strong>cierra y vuelve a abrir la terminal</strong> y comprueba:</p>
+<div class="code">
+  <div class="code-head"><span>Terminal</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>node --version
+npm --version</code></pre>
+</div>
+<div class="code">
+  <div class="code-head"><span>Salida esperada</span></div>
+<pre><code>v24.11.0
+11.6.1</code></pre>
+</div>
+
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · Tus números pueden ser distintos</p>
+<p>Los números de versión de arriba son solo un ejemplo. Lo importante es que <strong>aparezca una versión</strong> y no un error. Este curso funciona con cualquier Node LTS actual (20 o superior).</p>
+</div>
+
+<p>La <strong>terminal</strong> es la ventana donde escribes comandos: en Windows, PowerShell o Windows Terminal; en macOS, la app Terminal; en Linux, tu terminal habitual. Si usas Visual Studio Code, puedes abrir una dentro del editor con <kbd>Ctrl</kbd> + <kbd>Ñ</kbd> o desde el menú <strong>Terminal → Nuevo terminal</strong>.</p>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Varias versiones a la vez</p>
+<p>Más adelante, si trabajas en proyectos que piden versiones distintas, existen gestores de versiones como <strong>nvm</strong> o <strong>fnm</strong>. Para empezar no los necesitas.</p>
+</div>
+
+
+<h2 id="repl"><span class="n">3.</span>El REPL: probar JavaScript en la terminal</h2>
+
+<p>Si escribes <code>node</code> <strong>sin nada más</strong>, entras en el <strong>REPL</strong> (<em>Read–Eval–Print Loop</em>: lee, evalúa, imprime, repite). Es una consola interactiva, como la del navegador, pero dentro de la terminal.</p>
+<div class="code">
+  <div class="code-head"><span>Terminal</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>node</code></pre>
+</div>
+<div class="code">
+  <div class="code-head"><span>Salida esperada</span></div>
+<pre><code>Welcome to Node.js v24.11.0.
+Type &quot;.help&quot; for more information.
+&gt; 2 + 3
+5
+&gt; const nombre = &quot;Ana&quot;
+undefined
+&gt; `Hola, ${nombre}`
+&#x27;Hola, Ana&#x27;
+&gt; [1, 2, 3].map(n =&gt; n * 2)
+[ 2, 4, 6 ]
+&gt; .exit</code></pre>
+</div>
+
+<p>Cada línea que escribes se ejecuta al pulsar <kbd>Enter</kbd> y Node te muestra el resultado de la expresión. Comandos útiles del REPL:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Comando</th><th>Qué hace</th></tr></thead>
+<tbody><tr><td><code>.help</code></td><td>Lista los comandos del REPL</td></tr><tr><td><code>.exit</code> o <kbd>Ctrl</kbd> + <kbd>D</kbd></td><td>Sale del REPL</td></tr><tr><td><code>.clear</code></td><td>Reinicia el contexto (olvida tus variables)</td></tr><tr><td><kbd>↑</kbd> / <kbd>↓</kbd></td><td>Recorre los comandos anteriores</td></tr><tr><td><kbd>Tab</kbd></td><td>Autocompleta nombres</td></tr></tbody>
+</table></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Úsalo como libreta de pruebas</p>
+<p>El REPL es ideal para comprobar rápido cómo funciona un método (<code>"hola".padStart(8, "*")</code>) sin crear ningún archivo. Para programas de verdad usarás archivos, que ves a continuación.</p>
+</div>
+
+
+<h2 id="primer-script"><span class="n">4.</span>Tu primer script</h2>
+
+<p>Un <strong>script</strong> es un archivo de texto con código. Crea una carpeta para el curso (por ejemplo <code>curso-node</code>), ábrela en tu editor y crea el archivo <code>hola.js</code>:</p>
+<div class="code">
+  <div class="code-head"><span>hola.js</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>const nombre = &quot;Mundo&quot;;
+
+console.log(`¡Hola, ${nombre}!`);
+console.log(&quot;Estás usando Node.js&quot;, process.version);
+console.log(&quot;Sistema operativo:&quot;, process.platform);
+console.log(&quot;Carpeta actual:&quot;, process.cwd());</code></pre>
+</div>
+
+<p>Ejecútalo desde la terminal, <strong>situada en la misma carpeta</strong>:</p>
+<div class="code">
+  <div class="code-head"><span>Terminal</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>node hola.js</code></pre>
+</div>
+<div class="code">
+  <div class="code-head"><span>Salida esperada</span></div>
+<pre><code>¡Hola, Mundo!
+Estás usando Node.js v24.11.0
+Sistema operativo: win32
+Carpeta actual: C:\Users\ana\curso-node</code></pre>
+</div>
+
+<p>Tu salida será parecida, pero con <strong>tu</strong> versión, tu sistema (<code>win32</code>, <code>darwin</code> en macOS o <code>linux</code>) y tu carpeta. Observa tres cosas nuevas:</p>
+<ul><li><code>console.log</code> escribe en la <strong>terminal</strong>, no en una página.</li><li><code>process</code> es un objeto global que existe solo en Node: describe el programa que se está ejecutando.</li><li>Para ejecutar un archivo escribes <code>node</code> y el nombre del archivo.</li></ul>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · console.error</p>
+<p><code>console.error("algo falló")</code> escribe en un canal distinto (<em>stderr</em>) pensado para errores. En la terminal se ve igual, pero otros programas pueden separar los mensajes normales de los de error.</p>
+</div>
+
+<h3>JavaScript que ya conoces, en Node</h3>
+<p>Para practicar sin salir de la lección, este editor ejecuta JavaScript <strong>en tu navegador</strong>. Sirve para las partes de JS puro (funciones, arrays, JSON), que se comportan igual en Node. Lo que no puedes probar aquí es lo propio de Node (<code>process</code>, <code>fs</code>, servidores): eso lo ejecutarás en tu terminal.</p>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ Funciones y datos: igual en el navegador y en Node</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:290px">&lt;script&gt;
+const productos = [
+  { nombre: "Cuaderno", precio: 12.5 },
+  { nombre: "Lápiz", precio: 1.2 },
+  { nombre: "Mochila", precio: 89.9 }
+];
+
+const total = productos.reduce((suma, p) =&gt; suma + p.precio, 0);
+const baratos = productos.filter((p) =&gt; p.precio &lt; 20).map((p) =&gt; p.nombre);
+
+console.log("Total:", total.toFixed(2));
+console.log("Baratos:", baratos);
+console.log(JSON.stringify(productos[0]));
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+
+
+<h2 id="watch"><span class="n">5.</span>Recargar automáticamente con --watch</h2>
+
+<p>Mientras desarrollas, ejecutar <code>node archivo.js</code> a mano cada vez que guardas se vuelve pesado. Node trae una opción para vigilar el archivo y <strong>volver a ejecutarlo en cuanto lo guardes</strong>:</p>
+<div class="code">
+  <div class="code-head"><span>Terminal</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>node --watch hola.js</code></pre>
+</div>
+<div class="code">
+  <div class="code-head"><span>Salida esperada</span></div>
+<pre><code>¡Hola, Mundo!
+Estás usando Node.js v24.11.0
+…
+Completed running &#x27;hola.js&#x27;
+Restarting &#x27;hola.js&#x27;</code></pre>
+</div>
+
+<p>Edita y guarda <code>hola.js</code>: el programa se reinicia solo. Para detenerlo pulsa <kbd>Ctrl</kbd> + <kbd>C</kbd>. Esta opción es especialmente útil con servidores, porque no tienes que pararlos y arrancarlos a mano.</p>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · Ctrl + C es tu botón de parar</p>
+<p>Un script normal termina solo al acabar su código. Pero un servidor o un <code>--watch</code> se quedan <strong>esperando</strong>. Para detenerlos pulsa <kbd>Ctrl</kbd> + <kbd>C</kbd> en la terminal.</p>
+</div>
+
+
+<h2 id="asincronia"><span class="n">6.</span>Node y lo asíncrono (vistazo)</h2>
+
+<p>Node está construido alrededor de lo <strong>asíncrono</strong>: leer un archivo o pedir datos a internet tarda, y mientras espera, Node puede atender otras cosas. Por eso verás mucho <code>async/await</code> y promesas, que repasaste en el curso de JavaScript. Un ejemplo con <code>setTimeout</code>:</p>
+<div class="code">
+  <div class="code-head"><span>espera.js</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>console.log(&quot;1. Empiezo&quot;);
+
+setTimeout(() =&gt; {
+  console.log(&quot;3. Pasó un segundo&quot;);
+}, 1000);
+
+console.log(&quot;2. Sigo con lo demás&quot;);</code></pre>
+</div>
+<div class="code">
+  <div class="code-head"><span>Salida esperada</span></div>
+<pre><code>1. Empiezo
+2. Sigo con lo demás
+3. Pasó un segundo</code></pre>
+</div>
+
+<p>Esto es lo que permite que un único servidor de Node atienda a muchas personas a la vez: cuando una petición espera datos, Node avanza con las demás. Ese mecanismo se llama <strong>bucle de eventos</strong> (<em>event loop</em>). No necesitas dominarlo ahora: basta con recordar que <strong>lo lento se programa con promesas, no se espera bloqueando</strong>.</p>
+
+<h2 id="npm-init"><span class="n">7.</span>Convertir la carpeta en un proyecto: npm init</h2>
+
+<p>Un proyecto de Node suele tener un archivo <code>package.json</code> que describe el proyecto: su nombre, su versión, sus comandos y las bibliotecas que usa. Se crea con:</p>
+<div class="code">
+  <div class="code-head"><span>Terminal</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>npm init -y</code></pre>
+</div>
+
+<p>La opción <code>-y</code> acepta todas las respuestas por defecto. Se crea un <code>package.json</code> parecido a este (puede variar un poco según tu versión de npm):</p>
+<div class="code">
+  <div class="code-head"><span>package.json</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>{
+  &quot;name&quot;: &quot;curso-node&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;description&quot;: &quot;&quot;,
+  &quot;main&quot;: &quot;index.js&quot;,
+  &quot;scripts&quot;: {
+    &quot;test&quot;: &quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;
+  },
+  &quot;keywords&quot;: [],
+  &quot;author&quot;: &quot;&quot;,
+  &quot;license&quot;: &quot;ISC&quot;
+}</code></pre>
+</div>
+
+<p>No te preocupes por cada campo: en la lección 3 lo estudiarás completo. Por ahora quédate con la idea: <strong>un proyecto de Node es una carpeta con un <code>package.json</code></strong>.</p>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Una carpeta por proyecto</p>
+<p>Crea una carpeta nueva para cada proyecto y ejecuta <code>npm init -y</code> dentro. Evita mezclar proyectos distintos en la misma carpeta.</p>
+</div>
+
+
+<h2 id="errores"><span class="n">8.</span>Errores frecuentes</h2>
+<ul><li><strong><code>'node' no se reconoce como un comando</code></strong> (Windows) o <code>command not found</code>: Node no está instalado o no cerraste y reabriste la terminal tras instalarlo.</li><li><strong><code>Cannot find module</code></strong> al ejecutar un archivo: tu terminal está en <strong>otra carpeta</strong>. Comprueba la ruta con <code>pwd</code> (o <code>cd</code> sin argumentos en Windows) y entra en la carpeta con <code>cd curso-node</code>.</li><li><strong>Escribir <code>node hola.js</code> dentro del REPL</strong>: el REPL espera JavaScript, no comandos de terminal. Sal con <code>.exit</code> y ejecuta el comando en la terminal normal.</li><li><strong><code>ReferenceError: document is not defined</code></strong> (o <code>window</code>, <code>alert</code>): esas piezas del navegador no existen en Node.</li><li><strong>Editar el archivo y no ver cambios</strong>: olvidaste guardar, o no volviste a ejecutar el comando (usa <code>--watch</code>).</li></ul>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li><strong>Node.js</strong> ejecuta JavaScript <strong>fuera del navegador</strong>, con el motor V8.</li><li>No hay <code>document</code> ni <code>window</code>, pero sí <code>process</code>, el sistema de archivos y servidores.</li><li>Instala la versión <strong>LTS</strong> desde nodejs.org y comprueba con <code>node --version</code>.</li><li><code>node</code> a secas abre el <strong>REPL</strong>; <code>node archivo.js</code> ejecuta un archivo.</li><li><code>node --watch archivo.js</code> reinicia el programa al guardar; <kbd>Ctrl</kbd> + <kbd>C</kbd> lo detiene.</li><li><code>npm init -y</code> crea el <code>package.json</code> que convierte una carpeta en proyecto.</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">9.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td>Node.js</td><td>Entorno de ejecución que permite correr JavaScript fuera del navegador.</td></tr><tr><td>V8</td><td>Motor de JavaScript de Chrome, que Node reutiliza.</td></tr><tr><td>LTS</td><td><em>Long Term Support</em>: versión estable con soporte prolongado.</td></tr><tr><td>REPL</td><td>Consola interactiva de Node: lee, evalúa e imprime cada línea.</td></tr><tr><td>Script</td><td>Archivo con código que se ejecuta de principio a fin.</td></tr><tr><td><code>process</code></td><td>Objeto global de Node con información del programa en ejecución.</td></tr><tr><td>npm</td><td>Gestor de paquetes que se instala junto con Node.</td></tr><tr><td><code>package.json</code></td><td>Archivo que describe un proyecto de Node y sus dependencias.</td></tr></tbody>
+</table></div>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>¿Qué es Node.js?</p><ul class="opts"><li><button type="button" class="opt">Un lenguaje de programación nuevo</button></li><li><button type="button" class="opt" data-ok>Un entorno que ejecuta JavaScript fuera del navegador</button></li><li><button type="button" class="opt">Un framework de CSS</button></li><li><button type="button" class="opt">Un editor de código</button></li></ul><p class="explain" hidden>Node.js es un entorno de ejecución: el lenguaje es JavaScript, pero corre en tu computadora o en un servidor, sin navegador.</p></div>
+<div class="quiz-q"><p>¿Qué ocurre si usas <code>document.getElementById("x")</code> en un script de Node?</p><ul class="opts"><li><button type="button" class="opt">Funciona igual que en el navegador</button></li><li><button type="button" class="opt" data-ok>Da un <code>ReferenceError</code>: <code>document</code> no existe</button></li><li><button type="button" class="opt">Crea un archivo HTML</button></li><li><button type="button" class="opt">Abre el navegador</button></li></ul><p class="explain" hidden>No hay página ni DOM en Node, así que <code>document</code> no está definido.</p></div>
+<div class="quiz-q"><p>¿Cómo ejecutas un archivo llamado <code>app.js</code>?</p><ul class="opts"><li><button type="button" class="opt"><code>run app.js</code></button></li><li><button type="button" class="opt"><code>js app.js</code></button></li><li><button type="button" class="opt" data-ok><code>node app.js</code></button></li><li><button type="button" class="opt"><code>npm app.js</code></button></li></ul><p class="explain" hidden>El comando es <code>node</code> seguido del nombre del archivo.</p></div>
+<div class="quiz-q"><p>¿Para qué sirve <code>node --watch app.js</code>?</p><ul class="opts"><li><button type="button" class="opt">Para mostrar la versión</button></li><li><button type="button" class="opt" data-ok>Para reiniciar el programa cuando guardas el archivo</button></li><li><button type="button" class="opt">Para instalar dependencias</button></li><li><button type="button" class="opt">Para abrir el REPL</button></li></ul><p class="explain" hidden><code>--watch</code> vigila el archivo y vuelve a ejecutarlo cada vez que cambia.</p></div>
+<div class="quiz-q"><p>¿Qué crea el comando <code>npm init -y</code>?</p><ul class="opts"><li><button type="button" class="opt">Un servidor</button></li><li><button type="button" class="opt" data-ok>Un archivo <code>package.json</code></button></li><li><button type="button" class="opt">Una carpeta <code>node_modules</code> con todo instalado</button></li><li><button type="button" class="opt">Un archivo HTML</button></li></ul><p class="explain" hidden>Crea el <code>package.json</code> con valores por defecto; <code>node_modules</code> aparece solo al instalar paquetes.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="node-01">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../"><small>← Anterior</small>Índice del curso</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de Node.js y APIs · Lección 1 · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&amp;title=%5BError%5D%20Lecci%C3%B3n%201%3A%20Qu%C3%A9%20es%20Node.js%20y%20tu%20primer%20script%20%C2%B7%20Curso%20de%20Node.js%20y%20APIs&amp;pagina=https://cacg-code.github.io/PRACTICAS-HTML/node/01-que-es-node/" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Curso de Node.js y APIs</title>
+  <meta name="description" content="Curso gratuito de Node.js y APIs en español, desde cero: npm, módulos, servidores con Express, API REST, fetch, validación y despliegue. Con editor en vivo y ejercicios.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/node/">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../manifest.webmanifest">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Curso de Node.js y APIs">
+  <meta property="og:description" content="Curso gratuito de Node.js y APIs en español, desde cero: npm, módulos, servidores con Express, API REST, fetch, validación y despliegue. Con editor en vivo y ejercicios.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/node/">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="./"><span class="brand-logo">&lt;/&gt;</span> Curso de Node.js y APIs</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../" style="text-decoration:none">Todos los cursos</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap" id="contenido">
+    <div class="hero-grid">
+      <div class="hero">
+        <span class="eyebrow">Gratis · En español · Nivel 5</span>
+        <h1>Node.js y APIs: lleva tu JavaScript al servidor</h1>
+        <p>Aprende a ejecutar JavaScript fuera del navegador y a crear tus propios servidores y APIs con Express: rutas, JSON, middleware, archivos y despliegue. Cada lección combina apuntes, ejemplos con su salida esperada, un editor en vivo para el JavaScript puro y ejercicios para practicar en tu computadora.</p>
+        <a class="btn" href="01-que-es-node/">Empezar la lección 1</a>
+        <a class="btn secondary" href="#temario">Ver el temario</a>
+        <div class="avance" id="avance"></div>
+      </div>
+      <div class="hero-demo" role="group" aria-label="Demostración: código que se escribe y su resultado">
+        <div class="win-bar"><i></i><i></i><i></i></div>
+        <pre id="typing" data-lines='["import express from \"express\";", "const app = express();", "app.get(\"/\", (req, res) => res.send(\"Hola\"));", "app.listen(3000);"]' data-outs='["", "", "", "Servidor en http://localhost:3000"]'></pre>
+        <div class="hero-out" id="typing-out"></div>
+      </div>
+    </div>
+
+    <section class="features" aria-label="Qué incluye el curso">
+      <div class="feature"><div class="emoji">🟢</div><h2>Node de verdad</h2><p>Ejecutas tus programas en tu propia terminal, como en un trabajo real.</p></div>
+      <div class="feature"><div class="emoji">📝</div><h2>Apuntes claros</h2><p>Explicaciones con recuadros de nota, advertencia y consejo, y un glosario en cada lección.</p></div>
+      <div class="feature"><div class="emoji">✅</div><h2>Ejercicios guiados</h2><p>Una parte práctica en tu computadora y funciones de JavaScript que se comprueban en el navegador.</p></div>
+      <div class="feature"><div class="emoji">🧠</div><h2>Autoevaluación</h2><p>Preguntas con respuesta inmediata y explicación al final de cada lección.</p></div>
+    </section>
+
+    <div class="two-col">
+      <section><h2 class="section-title" style="margin-top:0">Antes de empezar</h2><ul class="checks-list"><li>Saber <strong>JavaScript</strong> (funciones, arrays, objetos y <code>async/await</code>): haz antes el <a href="../javascript/">curso de JavaScript</a>.</li><li>Manejar lo básico de una <strong>terminal</strong> (moverte entre carpetas y ejecutar comandos).</li><li>Tener instalado <strong>Node.js</strong> (la lección 1 te guía) y un editor de código.</li></ul></section>
+      <section><h2 class="section-title" style="margin-top:0">Lo que construirás</h2><ul class="checks-list"><li>Scripts de Node que leen y escriben <strong>archivos</strong>.</li><li>Proyectos con <strong>npm</strong>, scripts y dependencias.</li><li>Un <strong>servidor con Express</strong> con rutas y middleware.</li><li>Una <strong>API REST</strong> completa que habla JSON.</li></ul></section>
+    </div>
+
+    <h2 class="section-title" id="temario">Temario · ≈ 14 horas</h2>
+    <ul class="lessons">
+      <li><a class="lesson-card" href="01-que-es-node/" data-leccion="node-01">
+        <span class="lesson-num">LECCIÓN 01</span><h3>Qué es Node.js y tu primer script</h3>
+        <p>Qué es Node.js, instalación, REPL, node archivo.js, --watch y npm init.</p><span class="tag open">Disponible</span></a></li>
+      <li><a class="lesson-card" href="02-modulos/" data-leccion="node-02">
+        <span class="lesson-num">LECCIÓN 02</span><h3>Módulos: CommonJS, ES Modules, fs y path</h3>
+        <p>require frente a import, leer y escribir archivos, rutas con path y process.argv.</p><span class="tag open">Disponible</span></a></li>
+      <li><a class="lesson-card" href="03-npm-y-package-json/" data-leccion="node-03">
+        <span class="lesson-num">LECCIÓN 03</span><h3>npm y package.json</h3>
+        <p>Instalar paquetes, versiones con ^ y ~, scripts, node_modules y .gitignore.</p><span class="tag open">Disponible</span></a></li>
+      <li><a class="lesson-card" href="04-servidor-express/" data-leccion="node-04">
+        <span class="lesson-num">LECCIÓN 04</span><h3>Servidor HTTP con Express</h3>
+        <p>Rutas, req y res, parámetros, JSON, códigos de estado y middleware.</p><span class="tag open">Disponible</span></a></li>
+      <li><div class="lesson-card disabled">
+        <span class="lesson-num">LECCIÓN 05</span><h3>API REST y verbos HTTP</h3>
+        <p>Recursos, GET, POST, PUT, PATCH y DELETE, y un CRUD completo en memoria.</p><span class="tag soon">Próximamente</span></div></li>
+      <li><div class="lesson-card disabled">
+        <span class="lesson-num">LECCIÓN 06</span><h3>Consumir APIs con fetch y variables de entorno</h3>
+        <p>fetch en Node, llamar a APIs externas, process.env y archivos .env.</p><span class="tag soon">Próximamente</span></div></li>
+      <li><div class="lesson-card disabled">
+        <span class="lesson-num">LECCIÓN 07</span><h3>Errores, validación y seguridad básica</h3>
+        <p>Manejo de errores, validar la entrada, CORS y buenas prácticas básicas.</p><span class="tag soon">Próximamente</span></div></li>
+      <li><div class="lesson-card disabled">
+        <span class="lesson-num">LECCIÓN 08</span><h3>Despliegue de tu API</h3>
+        <p>Preparar el proyecto, variables de entorno en producción y publicar tu API.</p><span class="tag soon">Próximamente</span></div></li>
+      <li><div class="lesson-card disabled">
+        <span class="lesson-num">PROYECTO FINAL</span><h3>Proyecto: API de tareas</h3>
+        <p>Una API REST completa de tareas con Express, validación, archivo JSON y despliegue.</p><span class="tag soon">Próximamente</span></div></li>
+    </ul>
+  </main>
+
+  <footer class="site-footer">Curso de Node.js y APIs · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&amp;title=%5BError%5D%20Curso%20de%20Node.js%20y%20APIs&amp;pagina=https://cacg-code.github.io/PRACTICAS-HTML/node/" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../assets/curso.js"></script>
+</body>
+</html>

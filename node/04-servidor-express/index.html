@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lección 4: Servidor HTTP con Express · Curso de Node.js y APIs</title>
+  <meta name="description" content="Crea tu primer servidor con Express: rutas, parámetros, query, req y res, respuestas JSON con códigos de estado, express.json y middleware.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/node/04-servidor-express/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Lección 4: Servidor HTTP con Express · Curso de Node.js y APIs">
+  <meta property="og:description" content="Crea tu primer servidor con Express: rutas, parámetros, query, req y res, respuestas JSON con códigos de estado, express.json y middleware.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/node/04-servidor-express/">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de Node.js y APIs</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap lesson-layout" id="contenido">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#servidor">Qué hace un servidor HTTP</a></li><li><a href="#hola">Tu primer servidor con Express</a></li><li><a href="#rutas">Rutas, parámetros y query</a></li><li><a href="#responder">Responder: send, json y status</a></li><li><a href="#json">Recibir JSON: express.json()</a></li><li><a href="#middleware">Middleware: funciones en cadena</a></li><li><a href="#completo">El servidor completo</a></li><li><a href="#errores">Errores frecuentes</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de Node.js y APIs</a> › Lección 4</div>
+        <h1>Servidor HTTP con Express</h1>
+        <ul class="meta"><li>⏱ 60 minutos</li><li>📶 Nivel: intermedio</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Explicar el ciclo petición-respuesta y qué es un puerto.</li><li>Crear un servidor con Express y definir rutas con <code>app.get</code> y <code>app.post</code>.</li><li>Leer <code>req.params</code>, <code>req.query</code> y <code>req.body</code>.</li><li>Responder con <code>res.json</code> y códigos de estado.</li><li>Entender y escribir middleware, incluido el 404.</li></ul>
+</div>
+
+<h2 id="servidor"><span class="n">1.</span>Qué hace un servidor HTTP</h2>
+
+<p>Cuando abres una página, tu navegador (el <strong>cliente</strong>) hace una <strong>petición</strong> a otra computadora (el <strong>servidor</strong>) y esta devuelve una <strong>respuesta</strong>. Eso es HTTP. Con Node puedes escribir tú el servidor: un programa que se queda <strong>escuchando</strong> en un <strong>puerto</strong> y responde a cada petición.</p>
+<div class="flow"><div class="node"><strong>Cliente</strong><span>navegador, app o curl</span></div><div class="arrow">→<code>petición</code></div><div class="node"><strong>Tu servidor</strong><span>Node + Express</span></div><div class="arrow">→<code>respuesta</code></div><div class="node"><strong>Cliente</strong><span>recibe HTML o JSON</span></div></div>
+<p>Una petición lleva un <strong>método</strong> (<code>GET</code>, <code>POST</code>…), una <strong>ruta</strong> (<code>/productos</code>) y a veces un <strong>cuerpo</strong> con datos. La respuesta lleva un <strong>código de estado</strong> (<code>200</code>, <code>404</code>…) y su propio cuerpo.</p>
+<p>En tu computadora, el servidor es accesible en <code>http://localhost:3000</code>: <code>localhost</code> significa «esta misma máquina» y <code>3000</code> es el puerto (un número entre 1 y 65535 que identifica el programa que escucha).</p>
+<p>Node incluye el módulo <code>http</code> para esto, pero hacerlo a mano es tedioso: tendrías que analizar las rutas, leer el cuerpo y poner cabeceras tú mismo. Por eso casi todo el mundo usa un <strong>framework</strong>. El más extendido es <strong>Express</strong>.</p>
+
+<h2 id="hola"><span class="n">2.</span>Tu primer servidor con Express</h2>
+
+<p>Crea una carpeta, ejecuta <code>npm init -y</code>, añade <code>"type": "module"</code> a <code>package.json</code> (lección 2) e instala Express:</p>
+<div class="code">
+  <div class="code-head"><span>Terminal</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>npm install express</code></pre>
+</div>
+
+<div class="callout nota">
+<p class="callout-title">📌 Nota · Express 5</p>
+<p>Desde 2025 la versión que instala <code>npm install express</code> es la <strong>5</strong> (requiere Node 18 o superior). Casi todo lo que verás sirve igual en Express 4, que es el que aparece en muchos tutoriales antiguos; señalamos las diferencias cuando importan.</p>
+</div>
+
+<p>Ahora crea <code>index.js</code>:</p>
+<div class="code">
+  <div class="code-head"><span>index.js</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>import express from &quot;express&quot;;
+
+const app = express();
+const PORT = 3000;
+
+app.get(&quot;/&quot;, (req, res) =&gt; {
+  res.send(&quot;¡Hola desde Express!&quot;);
+});
+
+app.listen(PORT, () =&gt; {
+  console.log(`Servidor en http://localhost:${PORT}`);
+});</code></pre>
+</div>
+
+<div class="code">
+  <div class="code-head"><span>Terminal</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>node --watch index.js</code></pre>
+</div>
+<div class="code">
+  <div class="code-head"><span>Salida esperada</span></div>
+<pre><code>Servidor en http://localhost:3000</code></pre>
+</div>
+
+<p>Abre <code>http://localhost:3000</code> en el navegador: verás «¡Hola desde Express!». Detén el servidor con <kbd>Ctrl</kbd> + <kbd>C</kbd>. Fíjate en las piezas:</p>
+<ol class="steps"><li><code>express()</code> crea la aplicación (<code>app</code>).</li><li><code>app.get("/", manejador)</code> dice: «cuando llegue una petición <strong>GET</strong> a la ruta <code>/</code>, ejecuta esta función».</li><li>El manejador recibe <code>req</code> (la petición) y <code>res</code> (la respuesta). Con <code>res.send(...)</code> envías el cuerpo.</li><li><code>app.listen(PORT, ...)</code> arranca el servidor y lo deja esperando peticiones.</li></ol>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · Puerto ocupado</p>
+<p>Si ves <code>Error: listen EADDRINUSE: address already in use :::3000</code>, otro programa (quizá tu propio servidor anterior que no cerraste) ya usa el puerto 3000. Ciérralo con <kbd>Ctrl</kbd> + <kbd>C</kbd> o cambia el número de <code>PORT</code>.</p>
+</div>
+
+
+<h2 id="rutas"><span class="n">3.</span>Rutas, parámetros y query</h2>
+
+<p>Una <strong>ruta</strong> combina un método HTTP y una dirección. Puedes definir tantas como quieras, y los datos variables llegan por tres sitios:</p>
+<div class="code">
+  <div class="code-head"><span>index.js</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>// 1. Parámetros de ruta: /saludo/Ana
+app.get(&quot;/saludo/:nombre&quot;, (req, res) =&gt; {
+  res.send(`Hola, ${req.params.nombre}`);
+});
+
+// 2. Query string: /suma?a=2&amp;b=3
+app.get(&quot;/suma&quot;, (req, res) =&gt; {
+  const a = Number(req.query.a);
+  const b = Number(req.query.b);
+  res.json({ a, b, resultado: a + b });
+});</code></pre>
+</div>
+
+<div class="code">
+  <div class="code-head"><span>Terminal</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>curl http://localhost:3000/saludo/Ana
+curl &quot;http://localhost:3000/suma?a=2&amp;b=3&quot;</code></pre>
+</div>
+<div class="code">
+  <div class="code-head"><span>Salida esperada</span></div>
+<pre><code>Hola, Ana
+{&quot;a&quot;:2,&quot;b&quot;:3,&quot;resultado&quot;:5}</code></pre>
+</div>
+
+<div class="table-wrap"><table>
+<thead><tr><th>Propiedad</th><th>Contiene</th><th>Ejemplo para <code>GET /suma?a=2&amp;b=3</code></th></tr></thead>
+<tbody><tr><td><code>req.method</code></td><td>El método HTTP</td><td><code>"GET"</code></td></tr><tr><td><code>req.path</code></td><td>La ruta sin el query</td><td><code>"/suma"</code></td></tr><tr><td><code>req.params</code></td><td>Segmentos con <code>:nombre</code></td><td><code>{}</code> aquí; <code>{ nombre: "Ana" }</code> en <code>/saludo/:nombre</code></td></tr><tr><td><code>req.query</code></td><td>Datos tras el <code>?</code></td><td><code>{ a: "2", b: "3" }</code></td></tr><tr><td><code>req.body</code></td><td>El cuerpo de la petición (necesita <code>express.json()</code>)</td><td>Lo verás enseguida</td></tr><tr><td><code>req.get("cabecera")</code></td><td>Una cabecera de la petición</td><td><code>req.get("User-Agent")</code></td></tr></tbody>
+</table></div>
+
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · Todo llega como texto</p>
+<p><code>req.params</code> y <code>req.query</code> siempre contienen <strong>textos</strong>. Si esperas un número, conviértelo con <code>Number(...)</code> y comprueba que no sea <code>NaN</code>.</p>
+</div>
+
+<p>Los distintos métodos (<code>app.post</code>, <code>app.put</code>, <code>app.delete</code>) se usan igual; los estudiarás a fondo en la lección 5.</p>
+
+<h2 id="responder"><span class="n">4.</span>Responder: send, json y status</h2>
+
+<p>El objeto <code>res</code> tiene varios métodos para construir la respuesta. Estos son los que usarás cada día:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Método</th><th>Qué envía</th><th>Ejemplo</th></tr></thead>
+<tbody><tr><td><code>res.send(texto)</code></td><td>Texto o HTML</td><td><code>res.send("&lt;h1&gt;Hola&lt;/h1&gt;")</code></td></tr><tr><td><code>res.json(objeto)</code></td><td>JSON, con la cabecera <code>Content-Type: application/json</code></td><td><code>res.json({ ok: true })</code></td></tr><tr><td><code>res.status(codigo)</code></td><td>Fija el código de estado (se encadena)</td><td><code>res.status(404).json({ error: "No existe" })</code></td></tr><tr><td><code>res.sendStatus(codigo)</code></td><td>Envía solo el código con su texto estándar</td><td><code>res.sendStatus(204)</code></td></tr><tr><td><code>res.redirect(ruta)</code></td><td>Redirige a otra dirección</td><td><code>res.redirect("/")</code></td></tr></tbody>
+</table></div>
+
+<p>El <strong>código de estado</strong> le dice al cliente cómo fue todo. Por defecto es <code>200</code>. Los más habituales:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Código</th><th>Significado</th><th>Cuándo usarlo</th></tr></thead>
+<tbody><tr><td><code>200</code></td><td>OK</td><td>Todo salió bien</td></tr><tr><td><code>201</code></td><td>Creado</td><td>Se creó un recurso nuevo (tras un <code>POST</code>)</td></tr><tr><td><code>204</code></td><td>Sin contenido</td><td>Éxito sin nada que devolver (borrados)</td></tr><tr><td><code>400</code></td><td>Petición incorrecta</td><td>El cliente envió datos inválidos</td></tr><tr><td><code>404</code></td><td>No encontrado</td><td>La ruta o el recurso no existe</td></tr><tr><td><code>500</code></td><td>Error del servidor</td><td>Falló algo en tu código</td></tr></tbody>
+</table></div>
+
+<div class="code">
+  <div class="code-head"><span>Ejemplo con estados</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>app.get(&quot;/producto/:id&quot;, (req, res) =&gt; {
+  const id = Number(req.params.id);
+
+  if (Number.isNaN(id)) {
+    return res.status(400).json({ error: &quot;El id debe ser un número&quot; });
+  }
+  if (id !== 1) {
+    return res.status(404).json({ error: &quot;Producto no encontrado&quot; });
+  }
+  res.json({ id: 1, nombre: &quot;Cuaderno&quot;, precio: 12.5 });
+});</code></pre>
+</div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Usa return al responder pronto</p>
+<p>Cada petición admite <strong>una sola respuesta</strong>. Escribe <code>return res.status(400)...</code> en los casos de error para que la función termine ahí. Si no, el código continúa y se intenta responder dos veces (<code>ERR_HTTP_HEADERS_SENT</code>).</p>
+</div>
+
+
+<h2 id="json"><span class="n">5.</span>Recibir JSON: express.json()</h2>
+
+<p>Cuando un cliente envía datos en el cuerpo de la petición (normalmente con <code>POST</code>), Express no los interpreta por sí solo. Necesitas activar el <strong>middleware</strong> <code>express.json()</code>, que lee el cuerpo y lo deja convertido en un objeto en <code>req.body</code>:</p>
+<div class="code">
+  <div class="code-head"><span>index.js</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>app.use(express.json());   // antes de las rutas que lo necesiten
+
+app.post(&quot;/eco&quot;, (req, res) =&gt; {
+  const { mensaje } = req.body ?? {};
+
+  if (!mensaje) {
+    return res.status(400).json({ error: &quot;Falta el campo mensaje&quot; });
+  }
+  res.status(201).json({ recibido: mensaje });
+});</code></pre>
+</div>
+
+<p>Para probarlo, envía una petición <code>POST</code> con JSON:</p>
+<div class="code">
+  <div class="code-head"><span>Terminal (macOS, Linux, Git Bash)</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>curl -X POST http://localhost:3000/eco -H &quot;Content-Type: application/json&quot; -d &#x27;{&quot;mensaje&quot;:&quot;hola&quot;}&#x27;</code></pre>
+</div>
+<div class="code">
+  <div class="code-head"><span>Salida esperada</span></div>
+<pre><code>{&quot;recibido&quot;:&quot;hola&quot;}</code></pre>
+</div>
+
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · En Windows PowerShell</p>
+<p><code>curl</code> es un alias de otro comando. Escribe <code>curl.exe</code> y escapa las comillas del JSON: <code>curl.exe -X POST http://localhost:3000/eco -H "Content-Type: application/json" -d "{\"mensaje\":\"hola\"}"</code>. Si te resulta incómodo, usa una extensión de VS Code como <strong>REST Client</strong> o <strong>Thunder Client</strong>, que permiten probar peticiones con formularios.</p>
+</div>
+
+<div class="callout nota">
+<p class="callout-title">📌 Nota · req.body sin datos</p>
+<p>En Express 5, si la petición no trae cuerpo JSON, <code>req.body</code> es <code>undefined</code> (en Express 4 era un objeto vacío). Por eso el ejemplo usa <code>req.body ?? {}</code> para no fallar.</p>
+</div>
+
+
+<h2 id="middleware"><span class="n">6.</span>Middleware: funciones en cadena</h2>
+
+<p>Un <strong>middleware</strong> es una función que se ejecuta <strong>entre</strong> la llegada de la petición y la respuesta final. Recibe <code>req</code>, <code>res</code> y <code>next</code>. Puede mirar o modificar la petición, y luego tiene dos opciones: llamar a <code>next()</code> para pasar al siguiente, o <strong>responder</strong> y cortar la cadena.</p>
+<div class="code">
+  <div class="code-head"><span>Un middleware que registra cada petición</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>app.use((req, res, next) =&gt; {
+  console.log(`${req.method} ${req.url}`);
+  next();   // sin esto, la petición se queda colgada
+});</code></pre>
+</div>
+
+<p>Los middlewares se ejecutan <strong>en el orden en que los registras</strong>. Por eso <code>express.json()</code> debe ir antes de las rutas que usan <code>req.body</code>. Experimenta con la idea en este editor, que simula la cadena en JavaScript puro:</p>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ Una cadena de middlewares casera</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:520px">&lt;script&gt;
+function crearApp() {
+  const pila = [];
+  return {
+    use(fn) { pila.push(fn); },
+    manejar(req) {
+      let i = 0;
+      const res = { enviado: null, send(texto) { this.enviado = texto; } };
+      const next = () =&gt; {
+        const fn = pila[i++];
+        if (fn) fn(req, res, next);
+      };
+      next();
+      return res.enviado;
+    }
+  };
+}
+
+const app = crearApp();
+
+app.use((req, res, next) =&gt; {
+  console.log("LOG:", req.url);
+  next();
+});
+
+app.use((req, res, next) =&gt; {
+  if (req.url === "/privado") res.send("403 Prohibido");
+  else next();
+});
+
+app.use((req, res) =&gt; res.send("Hola desde " + req.url));
+
+console.log(app.manejar({ url: "/" }));
+console.log(app.manejar({ url: "/privado" }));
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+
+<p>Observa que en <code>/privado</code> el tercer middleware <strong>nunca se ejecuta</strong>: el segundo respondió y no llamó a <code>next()</code>. Así funcionan la autenticación, el registro, la lectura del cuerpo y casi todo en Express.</p>
+<h3>Tres middlewares que casi siempre usarás</h3>
+<div class="code">
+  <div class="code-head"><span>index.js</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>// 1. Archivos estáticos: sirve lo que haya en la carpeta public/
+app.use(express.static(&quot;public&quot;));
+
+// 2. Ruta no encontrada (404): va DESPUÉS de todas tus rutas
+app.use((req, res) =&gt; {
+  res.status(404).json({ error: &quot;Ruta no encontrada&quot; });
+});
+
+// 3. Manejador de errores: lleva CUATRO parámetros y va al final
+app.use((err, req, res, next) =&gt; {
+  console.error(err);
+  res.status(500).json({ error: &quot;Error interno del servidor&quot; });
+});</code></pre>
+</div>
+
+<div class="callout nota">
+<p class="callout-title">📌 Nota · El manejador de errores</p>
+<p>Express reconoce un manejador de errores por tener <strong>cuatro</strong> parámetros <code>(err, req, res, next)</code>. En Express 5, si una función <code>async</code> lanza un error o rechaza una promesa, llega automáticamente a este manejador; en Express 4 había que llamar a <code>next(err)</code> a mano. Lo estudiarás a fondo en la lección 7.</p>
+</div>
+
+
+<h2 id="completo"><span class="n">7.</span>El servidor completo</h2>
+
+<p>Juntando todo, este es un servidor pequeño pero completo. Pruébalo, rómpelo y míralo funcionar:</p>
+<div class="code">
+  <div class="code-head"><span>index.js</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>import express from &quot;express&quot;;
+
+const app = express();
+const PORT = 3000;
+
+app.use(express.json());
+
+app.use((req, res, next) =&gt; {
+  console.log(`${req.method} ${req.url}`);
+  next();
+});
+
+app.get(&quot;/&quot;, (req, res) =&gt; {
+  res.send(&quot;API en marcha&quot;);
+});
+
+app.get(&quot;/saludo/:nombre&quot;, (req, res) =&gt; {
+  res.json({ mensaje: `Hola, ${req.params.nombre}` });
+});
+
+app.get(&quot;/suma&quot;, (req, res) =&gt; {
+  const a = Number(req.query.a);
+  const b = Number(req.query.b);
+  if (Number.isNaN(a) || Number.isNaN(b)) {
+    return res.status(400).json({ error: &quot;a y b deben ser números&quot; });
+  }
+  res.json({ resultado: a + b });
+});
+
+app.post(&quot;/eco&quot;, (req, res) =&gt; {
+  const { mensaje } = req.body ?? {};
+  if (!mensaje) {
+    return res.status(400).json({ error: &quot;Falta el campo mensaje&quot; });
+  }
+  res.status(201).json({ recibido: mensaje });
+});
+
+app.use((req, res) =&gt; {
+  res.status(404).json({ error: &quot;Ruta no encontrada&quot; });
+});
+
+app.listen(PORT, () =&gt; {
+  console.log(`Servidor en http://localhost:${PORT}`);
+});</code></pre>
+</div>
+
+<p>Para saber más sobre todo lo que ofrece, consulta la documentación oficial en <a href="https://expressjs.com/" target="_blank" rel="noopener">expressjs.com</a>.</p>
+
+<h2 id="errores"><span class="n">8.</span>Errores frecuentes</h2>
+<ul><li><strong><code>EADDRINUSE</code></strong>: el puerto ya está ocupado por otro programa o por tu servidor anterior.</li><li><strong>Olvidar <code>next()</code></strong> en un middleware: la petición se queda colgada y el navegador gira sin respuesta.</li><li><strong>Poner <code>express.json()</code> después de las rutas</strong>: <code>req.body</code> llega vacío porque el orden importa.</li><li><strong>Responder dos veces</strong> (<code>Cannot set headers after they are sent</code>): falta un <code>return</code> tras responder en un caso de error.</li><li><strong>Olvidar reiniciar el servidor</strong> tras editar el código. Usa <code>node --watch</code>.</li><li><strong>Tratar <code>req.query</code> y <code>req.params</code> como números</strong>: siempre llegan como texto.</li><li><strong>Poner el 404 antes de las rutas</strong>: capturaría todas las peticiones. Va al final.</li></ul>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li>Un servidor HTTP <strong>escucha</strong> en un puerto y responde a cada petición.</li><li>Express: <code>const app = express()</code>, rutas con <code>app.get/post(...)</code> y arranque con <code>app.listen</code>.</li><li>Datos de entrada: <code>req.params</code> (en la ruta), <code>req.query</code> (tras el <code>?</code>) y <code>req.body</code> (cuerpo).</li><li><code>res.json()</code> responde con JSON; <code>res.status(n)</code> fija el código.</li><li>Códigos clave: <strong>200</strong> OK, <strong>201</strong> creado, <strong>400</strong> petición incorrecta, <strong>404</strong> no encontrado, <strong>500</strong> error del servidor.</li><li><code>app.use(express.json())</code> es necesario para leer JSON en <code>req.body</code>.</li><li>Un <strong>middleware</strong> recibe <code>(req, res, next)</code>: responde o llama a <code>next()</code>. El <strong>orden</strong> importa.</li><li>El 404 y el manejador de errores (4 parámetros) van <strong>al final</strong>.</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">9.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td>Servidor</td><td>Programa que escucha peticiones y devuelve respuestas.</td></tr><tr><td>Puerto</td><td>Número que identifica qué programa de la máquina escucha (por ejemplo, 3000).</td></tr><tr><td><code>localhost</code></td><td>Nombre de «esta misma computadora».</td></tr><tr><td>Ruta</td><td>Combinación de método HTTP y dirección, como <code>GET /saludo/:nombre</code>.</td></tr><tr><td>Express</td><td>Framework de Node para crear servidores y APIs de forma sencilla.</td></tr><tr><td>Middleware</td><td>Función que se ejecuta durante el procesamiento de una petición y puede pasar el control con <code>next()</code>.</td></tr><tr><td>Código de estado</td><td>Número que resume el resultado de la petición (200, 404…).</td></tr><tr><td>Query string</td><td>Datos que van tras el <code>?</code> en la dirección.</td></tr><tr><td>Cuerpo (body)</td><td>Datos enviados dentro de la petición, normalmente en JSON.</td></tr></tbody>
+</table></div>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>¿Qué recibe siempre un manejador de ruta de Express?</p><ul class="opts"><li><button type="button" class="opt">Solo <code>res</code></button></li><li><button type="button" class="opt" data-ok><code>req</code> y <code>res</code></button></li><li><button type="button" class="opt">Un número de puerto</button></li><li><button type="button" class="opt">El archivo HTML</button></li></ul><p class="explain" hidden>Recibe la petición (<code>req</code>) y la respuesta (<code>res</code>), y opcionalmente <code>next</code>.</p></div>
+<div class="quiz-q"><p>En <code>/producto/:id</code>, ¿dónde queda el id de <code>/producto/7</code>?</p><ul class="opts"><li><button type="button" class="opt"><code>req.query.id</code></button></li><li><button type="button" class="opt" data-ok><code>req.params.id</code></button></li><li><button type="button" class="opt"><code>req.body.id</code></button></li><li><button type="button" class="opt"><code>res.id</code></button></li></ul><p class="explain" hidden>Los segmentos con <code>:</code> se leen de <code>req.params</code>, como texto (<code>"7"</code>).</p></div>
+<div class="quiz-q"><p>¿Qué hace falta para leer JSON enviado con POST?</p><ul class="opts"><li><button type="button" class="opt">Nada, <code>req.body</code> ya funciona</button></li><li><button type="button" class="opt" data-ok><code>app.use(express.json())</code></button></li><li><button type="button" class="opt"><code>res.json()</code></button></li><li><button type="button" class="opt"><code>npm install json</code></button></li></ul><p class="explain" hidden>Express no interpreta el cuerpo por defecto: el middleware <code>express.json()</code> lo hace.</p></div>
+<div class="quiz-q"><p>¿Qué código de estado corresponde a «recurso no encontrado»?</p><ul class="opts"><li><button type="button" class="opt">200</button></li><li><button type="button" class="opt">201</button></li><li><button type="button" class="opt" data-ok>404</button></li><li><button type="button" class="opt">500</button></li></ul><p class="explain" hidden>404 significa que la ruta o el recurso pedido no existe.</p></div>
+<div class="quiz-q"><p>Un middleware no llama a <code>next()</code> ni responde. ¿Qué pasa?</p><ul class="opts"><li><button type="button" class="opt">Express continúa solo</button></li><li><button type="button" class="opt" data-ok>La petición se queda colgada sin respuesta</button></li><li><button type="button" class="opt">Devuelve un 404</button></li><li><button type="button" class="opt">Se reinicia el servidor</button></li></ul><p class="explain" hidden>Si no responde ni pasa el control, el cliente espera hasta agotar el tiempo.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="node-04">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../03-npm-y-package-json/"><small>← Anterior</small>npm y package.json</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de Node.js y APIs · Lección 4 · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&amp;title=%5BError%5D%20Lecci%C3%B3n%204%3A%20Servidor%20HTTP%20con%20Express%20%C2%B7%20Curso%20de%20Node.js%20y%20APIs&amp;pagina=https://cacg-code.github.io/PRACTICAS-HTML/node/04-servidor-express/" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

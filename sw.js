@@ -1,5 +1,5 @@
 // Service worker: uso sin conexión. Sube VERSION cuando cambies el sitio.
-const VERSION = 'v1';
+const VERSION = 'v2';
 const CACHE = 'web-desde-cero-' + VERSION;
 const ROOT = new URL('./', self.location).href;
 
