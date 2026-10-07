@@ -63,7 +63,7 @@ for p in paginas:
     if rel == "404.html":
         continue
     ruta = rel[: -len("index.html")] if rel.endswith("index.html") else rel
-    if f"/PRACTICAS-HTML/{ruta}</loc>" not in sitemap:
+    if f"/web-desde-cero/{ruta}</loc>" not in sitemap:
         errores.append(f"sitemap.xml: falta {ruta or '/'}")
 
 # 4 · índice del buscador

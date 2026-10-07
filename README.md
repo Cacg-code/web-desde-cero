@@ -1,12 +1,12 @@
 <div align="center">
 
-<a href="https://cacg-code.github.io/PRACTICAS-HTML/">
+<a href="https://cacg-code.github.io/web-desde-cero/">
   <img src="assets/readme/banner.svg" alt="Aprende desarrollo web: HTML, CSS, JavaScript, React, Node.js y Bases de datos" width="100%">
 </a>
 
 <br>
 
-<a href="https://cacg-code.github.io/PRACTICAS-HTML/">
+<a href="https://cacg-code.github.io/web-desde-cero/">
   <img src="assets/readme/boton.svg" alt="Entrar al curso" width="440">
 </a>
 
@@ -48,7 +48,7 @@ Sigue el orden: cada curso se apoya en el anterior.
 
 <img src="assets/readme/cursos.svg" alt="Seis cursos: HTML, CSS, JavaScript, React, Node.js y Bases de datos" width="100%">
 
-**[▶ Empezar HTML](https://cacg-code.github.io/PRACTICAS-HTML/html/)** &nbsp;·&nbsp; **[▶ Empezar CSS](https://cacg-code.github.io/PRACTICAS-HTML/css/)** &nbsp;·&nbsp; **[▶ Empezar JavaScript](https://cacg-code.github.io/PRACTICAS-HTML/javascript/)** &nbsp;·&nbsp; **[▶ Empezar React](https://cacg-code.github.io/PRACTICAS-HTML/react/)** &nbsp;·&nbsp; **[▶ Node.js](https://cacg-code.github.io/PRACTICAS-HTML/node/)** &nbsp;·&nbsp; **[▶ Bases de datos](https://cacg-code.github.io/PRACTICAS-HTML/bd/)**
+**[▶ Empezar HTML](https://cacg-code.github.io/web-desde-cero/html/)** &nbsp;·&nbsp; **[▶ Empezar CSS](https://cacg-code.github.io/web-desde-cero/css/)** &nbsp;·&nbsp; **[▶ Empezar JavaScript](https://cacg-code.github.io/web-desde-cero/javascript/)** &nbsp;·&nbsp; **[▶ Empezar React](https://cacg-code.github.io/web-desde-cero/react/)** &nbsp;·&nbsp; **[▶ Node.js](https://cacg-code.github.io/web-desde-cero/node/)** &nbsp;·&nbsp; **[▶ Bases de datos](https://cacg-code.github.io/web-desde-cero/bd/)**
 
 </div>
 
@@ -100,7 +100,7 @@ Sigue el orden: cada curso se apoya en el anterior.
 
 <img src="assets/readme/temario.svg" alt="Temario: 60 lecciones y 6 proyectos en HTML, CSS, JavaScript, React, Node.js y Bases de datos" width="100%">
 
-**[▶ HTML](https://cacg-code.github.io/PRACTICAS-HTML/html/)** &nbsp;·&nbsp; **[▶ CSS](https://cacg-code.github.io/PRACTICAS-HTML/css/)** &nbsp;·&nbsp; **[▶ JavaScript](https://cacg-code.github.io/PRACTICAS-HTML/javascript/)** &nbsp;·&nbsp; **[▶ React](https://cacg-code.github.io/PRACTICAS-HTML/react/)** &nbsp;·&nbsp; **[▶ Node.js](https://cacg-code.github.io/PRACTICAS-HTML/node/)** &nbsp;·&nbsp; **[▶ Bases de datos](https://cacg-code.github.io/PRACTICAS-HTML/bd/)**
+**[▶ HTML](https://cacg-code.github.io/web-desde-cero/html/)** &nbsp;·&nbsp; **[▶ CSS](https://cacg-code.github.io/web-desde-cero/css/)** &nbsp;·&nbsp; **[▶ JavaScript](https://cacg-code.github.io/web-desde-cero/javascript/)** &nbsp;·&nbsp; **[▶ React](https://cacg-code.github.io/web-desde-cero/react/)** &nbsp;·&nbsp; **[▶ Node.js](https://cacg-code.github.io/web-desde-cero/node/)** &nbsp;·&nbsp; **[▶ Bases de datos](https://cacg-code.github.io/web-desde-cero/bd/)**
 
 </div>
 
@@ -111,30 +111,30 @@ Sigue el orden: cada curso se apoya en el anterior.
 
 | | 🟠 HTML | 🔵 CSS | 🟡 JavaScript | 🔷 React |
 |:-:|---|---|---|---|
-| 01 | [Primeros pasos](https://cacg-code.github.io/PRACTICAS-HTML/01-primeros-pasos/) | [Cómo funciona CSS](https://cacg-code.github.io/PRACTICAS-HTML/css/01-como-funciona/) | [Primeros pasos](https://cacg-code.github.io/PRACTICAS-HTML/javascript/01-primeros-pasos/) | [Qué es React](https://cacg-code.github.io/PRACTICAS-HTML/react/01-que-es-react/) |
-| 02 | [Texto y enlaces](https://cacg-code.github.io/PRACTICAS-HTML/02-texto-y-enlaces/) | [Selectores y especificidad](https://cacg-code.github.io/PRACTICAS-HTML/css/02-selectores/) | [Variables y tipos](https://cacg-code.github.io/PRACTICAS-HTML/javascript/02-variables-y-tipos/) | [JSX a fondo](https://cacg-code.github.io/PRACTICAS-HTML/react/02-jsx/) |
-| 03 | [Imágenes y listas](https://cacg-code.github.io/PRACTICAS-HTML/03-imagenes-y-listas/) | [Color y tipografía](https://cacg-code.github.io/PRACTICAS-HTML/css/03-color-y-texto/) | [Operadores y decisiones](https://cacg-code.github.io/PRACTICAS-HTML/javascript/03-operadores-y-decisiones/) | [Componentes y props](https://cacg-code.github.io/PRACTICAS-HTML/react/03-componentes-y-props/) |
-| 04 | [Tablas](https://cacg-code.github.io/PRACTICAS-HTML/04-tablas/) | [La caja y el flujo](https://cacg-code.github.io/PRACTICAS-HTML/css/04-caja-y-flujo/) | [Bucles](https://cacg-code.github.io/PRACTICAS-HTML/javascript/04-bucles/) | [Estado con useState](https://cacg-code.github.io/PRACTICAS-HTML/react/04-estado/) |
-| 05 | [Formularios](https://cacg-code.github.io/PRACTICAS-HTML/05-formularios/) | [Posicionamiento](https://cacg-code.github.io/PRACTICAS-HTML/css/05-posicionamiento/) | [Funciones](https://cacg-code.github.io/PRACTICAS-HTML/javascript/05-funciones/) | [Listas y condicionales](https://cacg-code.github.io/PRACTICAS-HTML/react/05-listas-y-condicionales/) |
-| 06 | [HTML semántico](https://cacg-code.github.io/PRACTICAS-HTML/06-html-semantico/) | [Flexbox](https://cacg-code.github.io/PRACTICAS-HTML/css/06-flexbox/) | [Arrays](https://cacg-code.github.io/PRACTICAS-HTML/javascript/06-arrays/) | [Formularios controlados](https://cacg-code.github.io/PRACTICAS-HTML/react/06-formularios/) |
-| 07 | [Introducción a CSS](https://cacg-code.github.io/PRACTICAS-HTML/07-introduccion-css/) | [CSS Grid](https://cacg-code.github.io/PRACTICAS-HTML/css/07-grid/) | [Objetos y JSON](https://cacg-code.github.io/PRACTICAS-HTML/javascript/07-objetos/) | [Efectos con useEffect](https://cacg-code.github.io/PRACTICAS-HTML/react/07-efectos/) |
-| 08 | [Audio y video](https://cacg-code.github.io/PRACTICAS-HTML/08-audio-y-video/) | [Diseño responsivo](https://cacg-code.github.io/PRACTICAS-HTML/css/08-responsivo/) | [El DOM](https://cacg-code.github.io/PRACTICAS-HTML/javascript/08-dom/) | [Compartir estado y Context](https://cacg-code.github.io/PRACTICAS-HTML/react/08-compartir-estado/) |
-| 09 | [Accesibilidad](https://cacg-code.github.io/PRACTICAS-HTML/09-accesibilidad/) | [Fondos y degradados](https://cacg-code.github.io/PRACTICAS-HTML/css/09-fondos-y-efectos/) | [Eventos y formularios](https://cacg-code.github.io/PRACTICAS-HTML/javascript/09-eventos/) | [useRef, useReducer y hooks propios](https://cacg-code.github.io/PRACTICAS-HTML/react/09-mas-hooks/) |
-| 10 | [SEO y metadatos](https://cacg-code.github.io/PRACTICAS-HTML/10-seo-y-metadatos/) | [Animaciones](https://cacg-code.github.io/PRACTICAS-HTML/css/10-animaciones/) | [Asincronía y APIs](https://cacg-code.github.io/PRACTICAS-HTML/javascript/10-asincronia/) | [Datos de internet](https://cacg-code.github.io/PRACTICAS-HTML/react/10-datos-de-internet/) |
-| 11 | [Git y publicación](https://cacg-code.github.io/PRACTICAS-HTML/11-git-y-publicacion/) | [Variables y temas](https://cacg-code.github.io/PRACTICAS-HTML/css/11-variables-y-temas/) | [Errores y almacenamiento](https://cacg-code.github.io/PRACTICAS-HTML/javascript/11-errores-y-almacenamiento/) | [Proyectos reales con Vite](https://cacg-code.github.io/PRACTICAS-HTML/react/11-proyectos-reales/) |
-| 🏆 | [Tu página personal](https://cacg-code.github.io/PRACTICAS-HTML/proyecto-pagina-personal/) | [Landing responsiva](https://cacg-code.github.io/PRACTICAS-HTML/css/proyecto-landing/) | [Lista de tareas](https://cacg-code.github.io/PRACTICAS-HTML/javascript/proyecto-tareas/) | [Carrito de compras](https://cacg-code.github.io/PRACTICAS-HTML/react/proyecto-carrito/) |
+| 01 | [Primeros pasos](https://cacg-code.github.io/web-desde-cero/01-primeros-pasos/) | [Cómo funciona CSS](https://cacg-code.github.io/web-desde-cero/css/01-como-funciona/) | [Primeros pasos](https://cacg-code.github.io/web-desde-cero/javascript/01-primeros-pasos/) | [Qué es React](https://cacg-code.github.io/web-desde-cero/react/01-que-es-react/) |
+| 02 | [Texto y enlaces](https://cacg-code.github.io/web-desde-cero/02-texto-y-enlaces/) | [Selectores y especificidad](https://cacg-code.github.io/web-desde-cero/css/02-selectores/) | [Variables y tipos](https://cacg-code.github.io/web-desde-cero/javascript/02-variables-y-tipos/) | [JSX a fondo](https://cacg-code.github.io/web-desde-cero/react/02-jsx/) |
+| 03 | [Imágenes y listas](https://cacg-code.github.io/web-desde-cero/03-imagenes-y-listas/) | [Color y tipografía](https://cacg-code.github.io/web-desde-cero/css/03-color-y-texto/) | [Operadores y decisiones](https://cacg-code.github.io/web-desde-cero/javascript/03-operadores-y-decisiones/) | [Componentes y props](https://cacg-code.github.io/web-desde-cero/react/03-componentes-y-props/) |
+| 04 | [Tablas](https://cacg-code.github.io/web-desde-cero/04-tablas/) | [La caja y el flujo](https://cacg-code.github.io/web-desde-cero/css/04-caja-y-flujo/) | [Bucles](https://cacg-code.github.io/web-desde-cero/javascript/04-bucles/) | [Estado con useState](https://cacg-code.github.io/web-desde-cero/react/04-estado/) |
+| 05 | [Formularios](https://cacg-code.github.io/web-desde-cero/05-formularios/) | [Posicionamiento](https://cacg-code.github.io/web-desde-cero/css/05-posicionamiento/) | [Funciones](https://cacg-code.github.io/web-desde-cero/javascript/05-funciones/) | [Listas y condicionales](https://cacg-code.github.io/web-desde-cero/react/05-listas-y-condicionales/) |
+| 06 | [HTML semántico](https://cacg-code.github.io/web-desde-cero/06-html-semantico/) | [Flexbox](https://cacg-code.github.io/web-desde-cero/css/06-flexbox/) | [Arrays](https://cacg-code.github.io/web-desde-cero/javascript/06-arrays/) | [Formularios controlados](https://cacg-code.github.io/web-desde-cero/react/06-formularios/) |
+| 07 | [Introducción a CSS](https://cacg-code.github.io/web-desde-cero/07-introduccion-css/) | [CSS Grid](https://cacg-code.github.io/web-desde-cero/css/07-grid/) | [Objetos y JSON](https://cacg-code.github.io/web-desde-cero/javascript/07-objetos/) | [Efectos con useEffect](https://cacg-code.github.io/web-desde-cero/react/07-efectos/) |
+| 08 | [Audio y video](https://cacg-code.github.io/web-desde-cero/08-audio-y-video/) | [Diseño responsivo](https://cacg-code.github.io/web-desde-cero/css/08-responsivo/) | [El DOM](https://cacg-code.github.io/web-desde-cero/javascript/08-dom/) | [Compartir estado y Context](https://cacg-code.github.io/web-desde-cero/react/08-compartir-estado/) |
+| 09 | [Accesibilidad](https://cacg-code.github.io/web-desde-cero/09-accesibilidad/) | [Fondos y degradados](https://cacg-code.github.io/web-desde-cero/css/09-fondos-y-efectos/) | [Eventos y formularios](https://cacg-code.github.io/web-desde-cero/javascript/09-eventos/) | [useRef, useReducer y hooks propios](https://cacg-code.github.io/web-desde-cero/react/09-mas-hooks/) |
+| 10 | [SEO y metadatos](https://cacg-code.github.io/web-desde-cero/10-seo-y-metadatos/) | [Animaciones](https://cacg-code.github.io/web-desde-cero/css/10-animaciones/) | [Asincronía y APIs](https://cacg-code.github.io/web-desde-cero/javascript/10-asincronia/) | [Datos de internet](https://cacg-code.github.io/web-desde-cero/react/10-datos-de-internet/) |
+| 11 | [Git y publicación](https://cacg-code.github.io/web-desde-cero/11-git-y-publicacion/) | [Variables y temas](https://cacg-code.github.io/web-desde-cero/css/11-variables-y-temas/) | [Errores y almacenamiento](https://cacg-code.github.io/web-desde-cero/javascript/11-errores-y-almacenamiento/) | [Proyectos reales con Vite](https://cacg-code.github.io/web-desde-cero/react/11-proyectos-reales/) |
+| 🏆 | [Tu página personal](https://cacg-code.github.io/web-desde-cero/proyecto-pagina-personal/) | [Landing responsiva](https://cacg-code.github.io/web-desde-cero/css/proyecto-landing/) | [Lista de tareas](https://cacg-code.github.io/web-desde-cero/javascript/proyecto-tareas/) | [Carrito de compras](https://cacg-code.github.io/web-desde-cero/react/proyecto-carrito/) |
 
 | | 🟢 Node.js | 🟣 Bases de datos |
 |:-:|---|---|
-| 01 | [Qué es Node.js](https://cacg-code.github.io/PRACTICAS-HTML/node/01-que-es-node/) | [Qué es una base de datos](https://cacg-code.github.io/PRACTICAS-HTML/bd/01-que-es-una-base-de-datos/) |
-| 02 | [Módulos y fs](https://cacg-code.github.io/PRACTICAS-HTML/node/02-modulos/) | [Consultar con SELECT](https://cacg-code.github.io/PRACTICAS-HTML/bd/02-consultar-con-select/) |
-| 03 | [npm y package.json](https://cacg-code.github.io/PRACTICAS-HTML/node/03-npm-y-package-json/) | [Insertar, actualizar, borrar](https://cacg-code.github.io/PRACTICAS-HTML/bd/03-insertar-actualizar-borrar/) |
-| 04 | [Servidor con Express](https://cacg-code.github.io/PRACTICAS-HTML/node/04-servidor-express/) | [Diseñar tablas](https://cacg-code.github.io/PRACTICAS-HTML/bd/04-disenar-tablas/) |
-| 05 | [API REST](https://cacg-code.github.io/PRACTICAS-HTML/node/05-api-rest/) | [Relaciones y JOIN](https://cacg-code.github.io/PRACTICAS-HTML/bd/05-relaciones-y-join/) |
-| 06 | [Consumir APIs y .env](https://cacg-code.github.io/PRACTICAS-HTML/node/06-consumir-apis/) | [Agrupar y resumir](https://cacg-code.github.io/PRACTICAS-HTML/bd/06-agrupar-y-resumir/) |
-| 07 | [Errores y seguridad](https://cacg-code.github.io/PRACTICAS-HTML/node/07-errores-y-seguridad/) | [SQLite y PostgreSQL](https://cacg-code.github.io/PRACTICAS-HTML/bd/07-sqlite-y-postgresql/) |
-| 08 | [Despliegue](https://cacg-code.github.io/PRACTICAS-HTML/node/08-despliegue/) | [Seguridad en SQL](https://cacg-code.github.io/PRACTICAS-HTML/bd/08-seguridad/) |
-| 🏆 | [API de tareas](https://cacg-code.github.io/PRACTICAS-HTML/node/proyecto-api-tareas/) | [Base de datos de una tienda](https://cacg-code.github.io/PRACTICAS-HTML/bd/proyecto-tienda/) |
+| 01 | [Qué es Node.js](https://cacg-code.github.io/web-desde-cero/node/01-que-es-node/) | [Qué es una base de datos](https://cacg-code.github.io/web-desde-cero/bd/01-que-es-una-base-de-datos/) |
+| 02 | [Módulos y fs](https://cacg-code.github.io/web-desde-cero/node/02-modulos/) | [Consultar con SELECT](https://cacg-code.github.io/web-desde-cero/bd/02-consultar-con-select/) |
+| 03 | [npm y package.json](https://cacg-code.github.io/web-desde-cero/node/03-npm-y-package-json/) | [Insertar, actualizar, borrar](https://cacg-code.github.io/web-desde-cero/bd/03-insertar-actualizar-borrar/) |
+| 04 | [Servidor con Express](https://cacg-code.github.io/web-desde-cero/node/04-servidor-express/) | [Diseñar tablas](https://cacg-code.github.io/web-desde-cero/bd/04-disenar-tablas/) |
+| 05 | [API REST](https://cacg-code.github.io/web-desde-cero/node/05-api-rest/) | [Relaciones y JOIN](https://cacg-code.github.io/web-desde-cero/bd/05-relaciones-y-join/) |
+| 06 | [Consumir APIs y .env](https://cacg-code.github.io/web-desde-cero/node/06-consumir-apis/) | [Agrupar y resumir](https://cacg-code.github.io/web-desde-cero/bd/06-agrupar-y-resumir/) |
+| 07 | [Errores y seguridad](https://cacg-code.github.io/web-desde-cero/node/07-errores-y-seguridad/) | [SQLite y PostgreSQL](https://cacg-code.github.io/web-desde-cero/bd/07-sqlite-y-postgresql/) |
+| 08 | [Despliegue](https://cacg-code.github.io/web-desde-cero/node/08-despliegue/) | [Seguridad en SQL](https://cacg-code.github.io/web-desde-cero/bd/08-seguridad/) |
+| 🏆 | [API de tareas](https://cacg-code.github.io/web-desde-cero/node/proyecto-api-tareas/) | [Base de datos de una tienda](https://cacg-code.github.io/web-desde-cero/bd/proyecto-tienda/) |
 
 </details>
 
@@ -386,14 +386,14 @@ Si el navegador bloquea el almacenamiento, el curso sigue funcionando; solo que 
 <details>
 <summary><b>Encontré un error o algo no se entiende</b></summary>
 
-<br>Avísame con un [reporte de error](https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml) o una [duda](https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=duda.yml). Es la mejor forma de mejorar el curso.
+<br>Avísame con un [reporte de error](https://github.com/Cacg-code/web-desde-cero/issues/new?template=error.yml) o una [duda](https://github.com/Cacg-code/web-desde-cero/issues/new?template=duda.yml). Es la mejor forma de mejorar el curso.
 </details>
 
 ## 💻 En tu computadora
 
 ```bash
-git clone https://github.com/Cacg-code/PRACTICAS-HTML.git
-cd PRACTICAS-HTML
+git clone https://github.com/Cacg-code/web-desde-cero.git
+cd web-desde-cero
 # abre index.html en tu navegador
 ```
 
@@ -417,7 +417,7 @@ scripts/revisar.py   Revisión automática (enlaces, títulos, mapa del sitio)
 
 <div align="center">
 
-[🐞 Reportar un error](https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml) · [💡 Sugerir un tema](https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=sugerencia.yml) · [❓ Preguntar una duda](https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=duda.yml) · [⭐ Dar una estrella](https://github.com/Cacg-code/PRACTICAS-HTML)
+[🐞 Reportar un error](https://github.com/Cacg-code/web-desde-cero/issues/new?template=error.yml) · [💡 Sugerir un tema](https://github.com/Cacg-code/web-desde-cero/issues/new?template=sugerencia.yml) · [❓ Preguntar una duda](https://github.com/Cacg-code/web-desde-cero/issues/new?template=duda.yml) · [⭐ Dar una estrella](https://github.com/Cacg-code/web-desde-cero)
 
 </div>
 
@@ -427,7 +427,7 @@ scripts/revisar.py   Revisión automática (enlaces, títulos, mapa del sitio)
 
 ### ¿Listo para tu primera página web?
 
-<a href="https://cacg-code.github.io/PRACTICAS-HTML/">
+<a href="https://cacg-code.github.io/web-desde-cero/">
   <img src="assets/readme/boton.svg" alt="Entrar al curso" width="360">
 </a>
 

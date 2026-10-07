@@ -8,7 +8,7 @@ body:
     attributes:
       label: Dirección de la página
       description: Pega la dirección donde viste el problema.
-      placeholder: https://cacg-code.github.io/PRACTICAS-HTML/...
+      placeholder: https://cacg-code.github.io/web-desde-cero/...
     validations:
       required: true
   - type: textarea

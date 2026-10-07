@@ -848,7 +848,7 @@
         g.fillStyle = '#fff'; g.font = '800 84px system-ui, sans-serif'; g.fillText(x[0], cx, 700); g.fillStyle = '#9aa1c4'; g.font = '500 30px system-ui, sans-serif'; g.fillText(x[1], cx, 755);
       });
       g.fillStyle = '#fff'; g.font = '800 46px system-ui, sans-serif'; g.fillText('Desarrollo web desde cero', 540, 920);
-      g.fillStyle = ac; g.font = '600 34px system-ui, sans-serif'; g.fillText('cacg-code.github.io/PRACTICAS-HTML', 540, 980);
+      g.fillStyle = ac; g.font = '600 34px system-ui, sans-serif'; g.fillText('cacg-code.github.io/web-desde-cero', 540, 980);
       return c;
     };
     var weekCount = function () { var a = activity(), n = 0; for (var i = 0; i < 7; i++) n += a[ymd(addDays(-i))] || 0; return n; };

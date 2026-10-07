@@ -16,7 +16,7 @@ video originales) se comparte bajo la licencia
 ## Qué debes hacer
 
 - **Dar crédito:** indica la autoría («Cacg-code · Desarrollo web desde cero»),
-  enlaza a <https://cacg-code.github.io/PRACTICAS-HTML/> e indica si hiciste cambios.
+  enlaza a <https://cacg-code.github.io/web-desde-cero/> e indica si hiciste cambios.
 
 ## Nota sobre el uso de inteligencia artificial
 
@@ -24,7 +24,7 @@ Este material se elaboró con ayuda de inteligencia artificial y se revisó con
 herramientas automáticas (validador del W3C, pruebas de accesibilidad y pruebas
 funcionales). Aun así puede contener errores: contrasta con la documentación
 oficial ([MDN](https://developer.mozilla.org/es/)) y, si encuentras uno,
-[repórtalo](https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose).
+[repórtalo](https://github.com/Cacg-code/web-desde-cero/issues/new/choose).
 
 ## Código
 

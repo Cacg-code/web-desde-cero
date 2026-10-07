@@ -1,3 +1,3 @@
 User-agent: *
 Allow: /
-Sitemap: https://cacg-code.github.io/PRACTICAS-HTML/sitemap.xml
+Sitemap: https://cacg-code.github.io/web-desde-cero/sitemap.xml
