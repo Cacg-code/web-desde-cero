@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="360" viewBox="0 0 1000 360" role="img" aria-label="Curso de HTML desde cero">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#312e81"/><stop offset=".55" stop-color="#4f46e5"/><stop offset="1" stop-color="#7c3aed"/>
+    </linearGradient>
+    <linearGradient id="tt" x1="0" x2="1"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#c7d2fe"/></linearGradient>
+    <clipPath id="c1"><rect x="0" y="0" height="40" width="0"><animate attributeName="width" values="0;330;330;0" keyTimes="0;.25;.9;1" dur="9s" repeatCount="indefinite"/></rect></clipPath>
+    <clipPath id="c2"><rect x="0" y="0" height="40" width="0"><animate attributeName="width" values="0;0;380;380;0" keyTimes="0;.25;.5;.9;1" dur="9s" repeatCount="indefinite"/></rect></clipPath>
+    
+  </defs>
+  <style>
+    .t{font-family:Segoe UI,Helvetica,Arial,sans-serif}
+    .m{font-family:Consolas,Menlo,monospace;font-size:21px}
+    .float{animation:f 6s ease-in-out infinite}
+    .float2{animation:f 8s ease-in-out infinite reverse}
+    @keyframes f{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+  </style>
+  <rect width="1000" height="360" rx="24" fill="url(#bg)"/>
+  <g opacity=".14" fill="#fff">
+    <circle class="float" cx="880" cy="60" r="90"/><circle class="float2" cx="120" cy="320" r="110"/>
+  </g>
+  <g class="t" fill="#fff" opacity=".9">
+    <text x="60" y="78" font-size="62" font-weight="800" fill="#fda4af">&lt;/&gt;</text>
+  </g>
+  <text class="t" x="60" y="160" font-size="52" font-weight="800" fill="url(#tt)">Aprende HTML desde cero</text>
+  <text class="t" x="62" y="198" font-size="22" fill="#e0e7ff">Curso interactivo en español · 7 lecciones + proyecto final</text>
+  <!-- ventana de código -->
+  <g transform="translate(560 225)">
+    <rect width="380" height="116" rx="14" fill="#14172b" opacity=".95"/>
+    <circle cx="20" cy="18" r="6" fill="#ff5f57"/><circle cx="40" cy="18" r="6" fill="#febc2e"/><circle cx="60" cy="18" r="6" fill="#28c840"/>
+  </g>
+  <g transform="translate(60 225)">
+    <rect width="470" height="116" rx="14" fill="#14172b" opacity=".95"/>
+    <circle cx="20" cy="18" r="6" fill="#ff5f57"/><circle cx="40" cy="18" r="6" fill="#febc2e"/><circle cx="60" cy="18" r="6" fill="#28c840"/>
+    <g transform="translate(20 30)">
+      <g clip-path="url(#c1)"><text class="m" y="20" fill="#7dd3fc">&lt;h1&gt;<tspan fill="#e6e9f5">Hola, mundo</tspan>&lt;/h1&gt;</text></g>
+      <g transform="translate(0 28)" clip-path="url(#c2)"><text class="m" y="20" fill="#7dd3fc">&lt;p&gt;<tspan fill="#e6e9f5">Mi primera </tspan><tspan fill="#fcd34d">&lt;b&gt;</tspan><tspan fill="#e6e9f5">página</tspan><tspan fill="#fcd34d">&lt;/b&gt;</tspan>&lt;/p&gt;</text></g>
+    </g>
+  </g>
+  <g transform="translate(560 225)">
+    <text class="t" x="24" y="48" font-size="19" fill="#e0e7ff">✔ Práctica en vivo</text>
+    <text class="t" x="24" y="75" font-size="19" fill="#e0e7ff">✔ Autoevaluación</text>
+    <text class="t" x="24" y="102" font-size="19" fill="#e0e7ff">✔ Ejercicios con solución</text>
+  </g>
+</svg>

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="96" viewBox="0 0 560 96" role="img" aria-label="Entrar al curso">
+  <defs>
+    <linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#f43f5e"/><stop offset="1" stop-color="#f59e0b"/></linearGradient>
+  </defs>
+  <style>.t{font-family:Segoe UI,Helvetica,Arial,sans-serif;font-weight:800}
+  .pulse{transform-origin:280px 48px;animation:p 2.2s ease-in-out infinite}
+  @keyframes p{0%,100%{transform:scale(1)}50%{transform:scale(1.035)}}
+  .glow{animation:gl 2.2s ease-in-out infinite}@keyframes gl{0%,100%{opacity:.25}50%{opacity:.6}}
+  .arrow{animation:a 1.2s ease-in-out infinite}@keyframes a{0%,100%{transform:translateX(0)}50%{transform:translateX(8px)}}</style>
+  <g class="pulse">
+    <rect class="glow" x="6" y="8" width="548" height="84" rx="42" fill="#f43f5e"/>
+    <rect x="10" y="8" width="540" height="76" rx="38" fill="url(#g)"/>
+    <text class="t" x="262" y="58" font-size="32" fill="#fff" text-anchor="middle">▶  ENTRAR AL CURSO</text>
+    <text class="t arrow" x="470" y="58" font-size="32" fill="#fff">→</text>
+  </g>
+</svg>
