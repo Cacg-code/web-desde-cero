@@ -1,82 +1,109 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="400" viewBox="0 0 1000 400" role="img" aria-label="Ruta de aprendizaje: de Inicio a Proyecto final pasando por 7 lecciones">
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="560" viewBox="0 0 1000 560" role="img" aria-label="Ruta de aprendizaje: de Inicio a Proyecto final pasando por 11 lecciones">
 <defs>
 <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#14172b"/><stop offset="1" stop-color="#1f2440"/></linearGradient>
-<linearGradient id="tr" x1="0" x2="1"><stop offset="0" stop-color="#6366f1"/><stop offset="1" stop-color="#f43f5e"/></linearGradient>
+<linearGradient id="tr" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="1000" y2="0"><stop offset="0" stop-color="#6366f1"/><stop offset="1" stop-color="#f43f5e"/></linearGradient>
 <filter id="gl" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="6"/></filter>
 </defs>
 <style>.t{font-family:Segoe UI,Helvetica,Arial,sans-serif}.lb{font-size:17px;font-weight:600;fill:#e0e7ff;text-anchor:middle}.n{font-size:20px;font-weight:800;fill:#fff;text-anchor:middle}.ti{font-size:15px;fill:#9aa1c4;text-anchor:middle}</style>
-<rect width="1000" height="400" rx="24" fill="url(#bg)"/>
-<text class="t ti" x="500" y="38">Tu camino: 7 lecciones y un proyecto final</text>
-<path d="M100,110 H900 C1010,110 1010,290 900,290 H300" fill="none" stroke="#2b3158" stroke-width="10" stroke-linecap="round"/>
-<path d="M100,110 H900 C1010,110 1010,290 900,290 H300" fill="none" stroke="#3b4170" stroke-width="3" stroke-dasharray="2 12" stroke-linecap="round"/>
-<path d="M100,110 H900 C1010,110 1010,290 900,290 H300" pathLength="1674" fill="none" stroke="url(#tr)" stroke-width="10" stroke-linecap="round" stroke-dasharray="1674" stroke-dashoffset="1674">
-<animate attributeName="stroke-dashoffset" values="1674;0;0;1674" keyTimes="0;0.8;0.97;1" dur="15s" repeatCount="indefinite"/></path>
-
+<rect width="1000" height="560" rx="24" fill="url(#bg)"/>
+<text class="t ti" x="500" y="38">Tu camino: 11 lecciones y un proyecto final</text>
+<path d="M100,110 H900 C1010,110 1010,290 900,290 H100 C-10,290 -10,470 100,470 H500" fill="none" stroke="#2b3158" stroke-width="10" stroke-linecap="round"/>
+<path d="M100,110 H900 C1010,110 1010,290 900,290 H100 C-10,290 -10,470 100,470 H500" fill="none" stroke="#3b4170" stroke-width="3" stroke-dasharray="2 12" stroke-linecap="round"/>
+<path d="M100,110 H900 C1010,110 1010,290 900,290 H100 C-10,290 -10,470 100,470 H500" pathLength="2548" fill="none" stroke="url(#tr)" stroke-width="10" stroke-linecap="round" stroke-dasharray="2548" stroke-dashoffset="2548">
+<animate attributeName="stroke-dashoffset" values="2548;0;0;2548" keyTimes="0;0.8;0.97;1" dur="20s" repeatCount="indefinite"/></path>
 <circle cx="100" cy="110" r="30" fill="none" stroke="#a5b4fc" stroke-width="3" opacity="0">
-<animate attributeName="r" values="30;30;30;62;62" keyTimes="0;0.0000;0.0000;0.0500;1" dur="15s" repeatCount="indefinite"/>
-<animate attributeName="opacity" values="0;0;.9;0;0" keyTimes="0;0.0000;0.0000;0.0500;1" dur="15s" repeatCount="indefinite"/></circle>
+<animate attributeName="r" values="30;30;30;62;62" keyTimes="0;0.0000;0.0001;0.0500;1" dur="20s" repeatCount="indefinite"/>
+<animate attributeName="opacity" values="0;0;.9;0;0" keyTimes="0;0.0000;0.0001;0.0500;1" dur="20s" repeatCount="indefinite"/></circle>
 <circle cx="100" cy="110" r="30" fill="#1f2440" stroke="#6366f1" stroke-width="3">
-<animate attributeName="fill" values="#1f2440;#1f2440;#4f46e5;#4f46e5;#1f2440" keyTimes="0;0;0.0001;0.97;1" dur="15s" repeatCount="indefinite"/></circle>
+<animate attributeName="fill" values="#1f2440;#1f2440;#4f46e5;#4f46e5;#1f2440" keyTimes="0;0.0000;0.0001;0.97;1" dur="20s" repeatCount="indefinite"/></circle>
 <text class="t n" x="100" y="117">🚀</text>
 <text class="t lb" x="100" y="172">Inicio</text>
 <circle cx="300" cy="110" r="30" fill="none" stroke="#a5b4fc" stroke-width="3" opacity="0">
-<animate attributeName="r" values="30;30;30;62;62" keyTimes="0;0.0946;0.0956;0.1456;1" dur="15s" repeatCount="indefinite"/>
-<animate attributeName="opacity" values="0;0;.9;0;0" keyTimes="0;0.0946;0.0956;0.1456;1" dur="15s" repeatCount="indefinite"/></circle>
+<animate attributeName="r" values="30;30;30;62;62" keyTimes="0;0.0628;0.0629;0.1128;1" dur="20s" repeatCount="indefinite"/>
+<animate attributeName="opacity" values="0;0;.9;0;0" keyTimes="0;0.0628;0.0629;0.1128;1" dur="20s" repeatCount="indefinite"/></circle>
 <circle cx="300" cy="110" r="30" fill="#1f2440" stroke="#6366f1" stroke-width="3">
-<animate attributeName="fill" values="#1f2440;#1f2440;#4f46e5;#4f46e5;#1f2440" keyTimes="0;0.0946;0.0956;0.97;1" dur="15s" repeatCount="indefinite"/></circle>
+<animate attributeName="fill" values="#1f2440;#1f2440;#4f46e5;#4f46e5;#1f2440" keyTimes="0;0.0628;0.0629;0.97;1" dur="20s" repeatCount="indefinite"/></circle>
 <text class="t n" x="300" y="117">01</text>
 <text class="t lb" x="300" y="172">Primeros pasos</text>
 <circle cx="500" cy="110" r="30" fill="none" stroke="#a5b4fc" stroke-width="3" opacity="0">
-<animate attributeName="r" values="30;30;30;62;62" keyTimes="0;0.1902;0.1912;0.2412;1" dur="15s" repeatCount="indefinite"/>
-<animate attributeName="opacity" values="0;0;.9;0;0" keyTimes="0;0.1902;0.1912;0.2412;1" dur="15s" repeatCount="indefinite"/></circle>
+<animate attributeName="r" values="30;30;30;62;62" keyTimes="0;0.1256;0.1257;0.1756;1" dur="20s" repeatCount="indefinite"/>
+<animate attributeName="opacity" values="0;0;.9;0;0" keyTimes="0;0.1256;0.1257;0.1756;1" dur="20s" repeatCount="indefinite"/></circle>
 <circle cx="500" cy="110" r="30" fill="#1f2440" stroke="#6366f1" stroke-width="3">
-<animate attributeName="fill" values="#1f2440;#1f2440;#4f46e5;#4f46e5;#1f2440" keyTimes="0;0.1902;0.1912;0.97;1" dur="15s" repeatCount="indefinite"/></circle>
+<animate attributeName="fill" values="#1f2440;#1f2440;#4f46e5;#4f46e5;#1f2440" keyTimes="0;0.1256;0.1257;0.97;1" dur="20s" repeatCount="indefinite"/></circle>
 <text class="t n" x="500" y="117">02</text>
 <text class="t lb" x="500" y="172">Texto y enlaces</text>
 <circle cx="700" cy="110" r="30" fill="none" stroke="#a5b4fc" stroke-width="3" opacity="0">
-<animate attributeName="r" values="30;30;30;62;62" keyTimes="0;0.2858;0.2868;0.3368;1" dur="15s" repeatCount="indefinite"/>
-<animate attributeName="opacity" values="0;0;.9;0;0" keyTimes="0;0.2858;0.2868;0.3368;1" dur="15s" repeatCount="indefinite"/></circle>
+<animate attributeName="r" values="30;30;30;62;62" keyTimes="0;0.1884;0.1885;0.2384;1" dur="20s" repeatCount="indefinite"/>
+<animate attributeName="opacity" values="0;0;.9;0;0" keyTimes="0;0.1884;0.1885;0.2384;1" dur="20s" repeatCount="indefinite"/></circle>
 <circle cx="700" cy="110" r="30" fill="#1f2440" stroke="#6366f1" stroke-width="3">
-<animate attributeName="fill" values="#1f2440;#1f2440;#4f46e5;#4f46e5;#1f2440" keyTimes="0;0.2858;0.2868;0.97;1" dur="15s" repeatCount="indefinite"/></circle>
+<animate attributeName="fill" values="#1f2440;#1f2440;#4f46e5;#4f46e5;#1f2440" keyTimes="0;0.1884;0.1885;0.97;1" dur="20s" repeatCount="indefinite"/></circle>
 <text class="t n" x="700" y="117">03</text>
 <text class="t lb" x="700" y="172">Imágenes y listas</text>
 <circle cx="900" cy="110" r="30" fill="none" stroke="#a5b4fc" stroke-width="3" opacity="0">
-<animate attributeName="r" values="30;30;30;62;62" keyTimes="0;0.3814;0.3824;0.4324;1" dur="15s" repeatCount="indefinite"/>
-<animate attributeName="opacity" values="0;0;.9;0;0" keyTimes="0;0.3814;0.3824;0.4324;1" dur="15s" repeatCount="indefinite"/></circle>
+<animate attributeName="r" values="30;30;30;62;62" keyTimes="0;0.2512;0.2513;0.3012;1" dur="20s" repeatCount="indefinite"/>
+<animate attributeName="opacity" values="0;0;.9;0;0" keyTimes="0;0.2512;0.2513;0.3012;1" dur="20s" repeatCount="indefinite"/></circle>
 <circle cx="900" cy="110" r="30" fill="#1f2440" stroke="#6366f1" stroke-width="3">
-<animate attributeName="fill" values="#1f2440;#1f2440;#4f46e5;#4f46e5;#1f2440" keyTimes="0;0.3814;0.3824;0.97;1" dur="15s" repeatCount="indefinite"/></circle>
+<animate attributeName="fill" values="#1f2440;#1f2440;#4f46e5;#4f46e5;#1f2440" keyTimes="0;0.2512;0.2513;0.97;1" dur="20s" repeatCount="indefinite"/></circle>
 <text class="t n" x="900" y="117">04</text>
 <text class="t lb" x="900" y="172">Tablas</text>
 <circle cx="900" cy="290" r="30" fill="none" stroke="#a5b4fc" stroke-width="3" opacity="0">
-<animate attributeName="r" values="30;30;30;62;62" keyTimes="0;0.5122;0.5132;0.5632;1" dur="15s" repeatCount="indefinite"/>
-<animate attributeName="opacity" values="0;0;.9;0;0" keyTimes="0;0.5122;0.5132;0.5632;1" dur="15s" repeatCount="indefinite"/></circle>
+<animate attributeName="r" values="30;30;30;62;62" keyTimes="0;0.3372;0.3373;0.3872;1" dur="20s" repeatCount="indefinite"/>
+<animate attributeName="opacity" values="0;0;.9;0;0" keyTimes="0;0.3372;0.3373;0.3872;1" dur="20s" repeatCount="indefinite"/></circle>
 <circle cx="900" cy="290" r="30" fill="#1f2440" stroke="#6366f1" stroke-width="3">
-<animate attributeName="fill" values="#1f2440;#1f2440;#4f46e5;#4f46e5;#1f2440" keyTimes="0;0.5122;0.5132;0.97;1" dur="15s" repeatCount="indefinite"/></circle>
+<animate attributeName="fill" values="#1f2440;#1f2440;#4f46e5;#4f46e5;#1f2440" keyTimes="0;0.3372;0.3373;0.97;1" dur="20s" repeatCount="indefinite"/></circle>
 <text class="t n" x="900" y="297">05</text>
 <text class="t lb" x="900" y="352">Formularios</text>
 <circle cx="700" cy="290" r="30" fill="none" stroke="#a5b4fc" stroke-width="3" opacity="0">
-<animate attributeName="r" values="30;30;30;62;62" keyTimes="0;0.6078;0.6088;0.6588;1" dur="15s" repeatCount="indefinite"/>
-<animate attributeName="opacity" values="0;0;.9;0;0" keyTimes="0;0.6078;0.6088;0.6588;1" dur="15s" repeatCount="indefinite"/></circle>
+<animate attributeName="r" values="30;30;30;62;62" keyTimes="0;0.4000;0.4001;0.4500;1" dur="20s" repeatCount="indefinite"/>
+<animate attributeName="opacity" values="0;0;.9;0;0" keyTimes="0;0.4000;0.4001;0.4500;1" dur="20s" repeatCount="indefinite"/></circle>
 <circle cx="700" cy="290" r="30" fill="#1f2440" stroke="#6366f1" stroke-width="3">
-<animate attributeName="fill" values="#1f2440;#1f2440;#4f46e5;#4f46e5;#1f2440" keyTimes="0;0.6078;0.6088;0.97;1" dur="15s" repeatCount="indefinite"/></circle>
+<animate attributeName="fill" values="#1f2440;#1f2440;#4f46e5;#4f46e5;#1f2440" keyTimes="0;0.4000;0.4001;0.97;1" dur="20s" repeatCount="indefinite"/></circle>
 <text class="t n" x="700" y="297">06</text>
 <text class="t lb" x="700" y="352">HTML semántico</text>
 <circle cx="500" cy="290" r="30" fill="none" stroke="#a5b4fc" stroke-width="3" opacity="0">
-<animate attributeName="r" values="30;30;30;62;62" keyTimes="0;0.7034;0.7044;0.7544;1" dur="15s" repeatCount="indefinite"/>
-<animate attributeName="opacity" values="0;0;.9;0;0" keyTimes="0;0.7034;0.7044;0.7544;1" dur="15s" repeatCount="indefinite"/></circle>
+<animate attributeName="r" values="30;30;30;62;62" keyTimes="0;0.4628;0.4629;0.5128;1" dur="20s" repeatCount="indefinite"/>
+<animate attributeName="opacity" values="0;0;.9;0;0" keyTimes="0;0.4628;0.4629;0.5128;1" dur="20s" repeatCount="indefinite"/></circle>
 <circle cx="500" cy="290" r="30" fill="#1f2440" stroke="#6366f1" stroke-width="3">
-<animate attributeName="fill" values="#1f2440;#1f2440;#4f46e5;#4f46e5;#1f2440" keyTimes="0;0.7034;0.7044;0.97;1" dur="15s" repeatCount="indefinite"/></circle>
+<animate attributeName="fill" values="#1f2440;#1f2440;#4f46e5;#4f46e5;#1f2440" keyTimes="0;0.4628;0.4629;0.97;1" dur="20s" repeatCount="indefinite"/></circle>
 <text class="t n" x="500" y="297">07</text>
 <text class="t lb" x="500" y="352">Intro a CSS</text>
 <circle cx="300" cy="290" r="30" fill="none" stroke="#a5b4fc" stroke-width="3" opacity="0">
-<animate attributeName="r" values="30;30;30;62;62" keyTimes="0;0.7990;0.8000;0.8500;1" dur="15s" repeatCount="indefinite"/>
-<animate attributeName="opacity" values="0;0;.9;0;0" keyTimes="0;0.7990;0.8000;0.8500;1" dur="15s" repeatCount="indefinite"/></circle>
+<animate attributeName="r" values="30;30;30;62;62" keyTimes="0;0.5256;0.5257;0.5756;1" dur="20s" repeatCount="indefinite"/>
+<animate attributeName="opacity" values="0;0;.9;0;0" keyTimes="0;0.5256;0.5257;0.5756;1" dur="20s" repeatCount="indefinite"/></circle>
 <circle cx="300" cy="290" r="30" fill="#1f2440" stroke="#6366f1" stroke-width="3">
-<animate attributeName="fill" values="#1f2440;#1f2440;#f43f5e;#f43f5e;#1f2440" keyTimes="0;0.7990;0.8000;0.97;1" dur="15s" repeatCount="indefinite"/></circle>
-<text class="t n" x="300" y="297">🏆</text>
-<text class="t lb" x="300" y="352">Proyecto final</text>
-<g filter="url(#gl)"><circle r="14" fill="#fbbf24"><animateMotion dur="15s" repeatCount="indefinite" keyPoints="0;1;1" keyTimes="0;0.8;1" calcMode="linear"><mpath href="#rt"/></animateMotion></circle></g>
-<circle r="8" fill="#fff"><animateMotion dur="15s" repeatCount="indefinite" keyPoints="0;1;1" keyTimes="0;0.8;1" calcMode="linear"><mpath href="#rt"/></animateMotion>
-<animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.8;0.8200000000000001;1" dur="15s" repeatCount="indefinite"/></circle>
-<path id="rt" d="M100,110 H900 C1010,110 1010,290 900,290 H300" fill="none"/>
+<animate attributeName="fill" values="#1f2440;#1f2440;#4f46e5;#4f46e5;#1f2440" keyTimes="0;0.5256;0.5257;0.97;1" dur="20s" repeatCount="indefinite"/></circle>
+<text class="t n" x="300" y="297">08</text>
+<text class="t lb" x="300" y="352">Audio y video</text>
+<circle cx="100" cy="290" r="30" fill="none" stroke="#a5b4fc" stroke-width="3" opacity="0">
+<animate attributeName="r" values="30;30;30;62;62" keyTimes="0;0.5884;0.5885;0.6384;1" dur="20s" repeatCount="indefinite"/>
+<animate attributeName="opacity" values="0;0;.9;0;0" keyTimes="0;0.5884;0.5885;0.6384;1" dur="20s" repeatCount="indefinite"/></circle>
+<circle cx="100" cy="290" r="30" fill="#1f2440" stroke="#6366f1" stroke-width="3">
+<animate attributeName="fill" values="#1f2440;#1f2440;#4f46e5;#4f46e5;#1f2440" keyTimes="0;0.5884;0.5885;0.97;1" dur="20s" repeatCount="indefinite"/></circle>
+<text class="t n" x="100" y="297">09</text>
+<text class="t lb" x="100" y="352">Accesibilidad</text>
+<circle cx="100" cy="470" r="30" fill="none" stroke="#a5b4fc" stroke-width="3" opacity="0">
+<animate attributeName="r" values="30;30;30;62;62" keyTimes="0;0.6744;0.6745;0.7244;1" dur="20s" repeatCount="indefinite"/>
+<animate attributeName="opacity" values="0;0;.9;0;0" keyTimes="0;0.6744;0.6745;0.7244;1" dur="20s" repeatCount="indefinite"/></circle>
+<circle cx="100" cy="470" r="30" fill="#1f2440" stroke="#6366f1" stroke-width="3">
+<animate attributeName="fill" values="#1f2440;#1f2440;#4f46e5;#4f46e5;#1f2440" keyTimes="0;0.6744;0.6745;0.97;1" dur="20s" repeatCount="indefinite"/></circle>
+<text class="t n" x="100" y="477">10</text>
+<text class="t lb" x="100" y="532">SEO y metadatos</text>
+<circle cx="300" cy="470" r="30" fill="none" stroke="#a5b4fc" stroke-width="3" opacity="0">
+<animate attributeName="r" values="30;30;30;62;62" keyTimes="0;0.7372;0.7373;0.7872;1" dur="20s" repeatCount="indefinite"/>
+<animate attributeName="opacity" values="0;0;.9;0;0" keyTimes="0;0.7372;0.7373;0.7872;1" dur="20s" repeatCount="indefinite"/></circle>
+<circle cx="300" cy="470" r="30" fill="#1f2440" stroke="#6366f1" stroke-width="3">
+<animate attributeName="fill" values="#1f2440;#1f2440;#4f46e5;#4f46e5;#1f2440" keyTimes="0;0.7372;0.7373;0.97;1" dur="20s" repeatCount="indefinite"/></circle>
+<text class="t n" x="300" y="477">11</text>
+<text class="t lb" x="300" y="532">Git y publicación</text>
+<circle cx="500" cy="470" r="30" fill="none" stroke="#a5b4fc" stroke-width="3" opacity="0">
+<animate attributeName="r" values="30;30;30;62;62" keyTimes="0;0.8000;0.8001;0.8500;1" dur="20s" repeatCount="indefinite"/>
+<animate attributeName="opacity" values="0;0;.9;0;0" keyTimes="0;0.8000;0.8001;0.8500;1" dur="20s" repeatCount="indefinite"/></circle>
+<circle cx="500" cy="470" r="30" fill="#1f2440" stroke="#6366f1" stroke-width="3">
+<animate attributeName="fill" values="#1f2440;#1f2440;#f43f5e;#f43f5e;#1f2440" keyTimes="0;0.8000;0.8001;0.97;1" dur="20s" repeatCount="indefinite"/></circle>
+<text class="t n" x="500" y="477">🏆</text>
+<text class="t lb" x="500" y="532">Proyecto final</text>
+<g filter="url(#gl)"><circle r="14" fill="#fbbf24"><animateMotion dur="20s" repeatCount="indefinite" keyPoints="0;1;1" keyTimes="0;0.8;1" calcMode="linear"><mpath href="#rt"/></animateMotion></circle></g>
+<circle r="8" fill="#fff"><animateMotion dur="20s" repeatCount="indefinite" keyPoints="0;1;1" keyTimes="0;0.8;1" calcMode="linear"><mpath href="#rt"/></animateMotion>
+<animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.8;0.82;1" dur="20s" repeatCount="indefinite"/></circle>
+<path id="rt" d="M100,110 H900 C1010,110 1010,290 900,290 H100 C-10,290 -10,470 100,470 H500" fill="none"/>
 </svg>

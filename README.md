@@ -43,7 +43,7 @@
 
 Un **curso gratuito de HTML en español**, hecho para quien nunca ha escrito una línea de código. No es solo texto para leer: en cada lección **escribes código y ves el resultado al instante**, te autoevalúas y practicas con ejercicios guiados.
 
-Al terminar habrás construido **tu propia página personal** desde cero.
+Al terminar habrás construido **tu propia página personal** desde cero: con tablas, formularios, estilo, multimedia, accesibilidad, SEO y publicada en internet.
 
 ## ✨ Qué incluye cada lección
 
@@ -56,7 +56,6 @@ Al terminar habrás construido **tu propia página personal** desde cero.
 | 🔍 | **Comprobador de ejercicios** | Pega tu código y te dice qué requisitos cumples y cuáles faltan |
 | 📒 | **Apuntes y glosario** | Resumen al final de cada lección para repasar rápido |
 | 💾 | **Borrador automático** | Tu código del ejercicio se guarda mientras escribes |
-| 🔎 | **Comprobador automático** | Pegas tu código y te dice qué puntos cumples y cuáles faltan |
 | 📈 | **Progreso guardado** | Tu avance queda marcado en tu navegador |
 | 🌗 | **Modo claro y oscuro** | Se adapta a tu pantalla |
 
@@ -81,7 +80,7 @@ Al terminar habrás construido **tu propia página personal** desde cero.
 ## 🗺️ Ruta de aprendizaje
 
 <div align="center">
-  <img src="assets/readme/ruta.svg" alt="Ruta de aprendizaje animada: Inicio, 7 lecciones y proyecto final" width="100%">
+  <img src="assets/readme/ruta.svg" alt="Ruta de aprendizaje animada: Inicio, 11 lecciones y proyecto final" width="100%">
 </div>
 
 ## 📚 Temario
@@ -97,6 +96,10 @@ Al terminar habrás construido **tu propia página personal** desde cero.
 | 05 | **Formularios** | Pedir datos al usuario con campos y botones | [▶ Abrir](https://cacg-code.github.io/PRACTICAS-HTML/05-formularios/) |
 | 06 | **HTML semántico** | Estructurar la página con significado (header, main, footer…) | [▶ Abrir](https://cacg-code.github.io/PRACTICAS-HTML/06-html-semantico/) |
 | 07 | **Introducción a CSS** | Darle color, tipografía y estilo a tu página | [▶ Abrir](https://cacg-code.github.io/PRACTICAS-HTML/07-introduccion-css/) |
+| 08 | **Audio, video e imágenes adaptables** | Incrustar reproductores con subtítulos, contenido externo e imágenes que se ajustan a cada pantalla | [▶ Abrir](https://cacg-code.github.io/PRACTICAS-HTML/08-audio-y-video/) |
+| 09 | **Accesibilidad** | Hacer tu página usable por todas las personas: contraste, teclado, ARIA y pruebas | [▶ Abrir](https://cacg-code.github.io/PRACTICAS-HTML/09-accesibilidad/) |
+| 10 | **SEO y metadatos** | Mejorar título, descripción, vistas previas al compartir y datos para buscadores | [▶ Abrir](https://cacg-code.github.io/PRACTICAS-HTML/10-seo-y-metadatos/) |
+| 11 | **Git y publicación** | Guardar el historial de tu proyecto, subirlo a GitHub y publicarlo en línea | [▶ Abrir](https://cacg-code.github.io/PRACTICAS-HTML/11-git-y-publicacion/) |
 | 🏆 | **Proyecto final** | Construir tu página personal completa | [▶ Abrir](https://cacg-code.github.io/PRACTICAS-HTML/proyecto-pagina-personal/) |
 
 ## 🧪 Así se ve una lección
@@ -129,7 +132,7 @@ Un adelanto de lo que escribirás en la primera lección:
 
 ## 🏆 El proyecto final
 
-Al terminar las 7 lecciones construyes **tu página personal completa**, siguiendo estos pasos:
+Al terminar las 11 lecciones construyes **tu página personal completa**, siguiendo estos pasos:
 
 1. **Planifica** qué quieres mostrar
 2. Prepara la **carpeta** del proyecto
@@ -165,6 +168,10 @@ Las que más usarás. Despliega para tenerlas a mano:
 | `<form>` `<input>` `<button>` | Formularios | `<input type="email">` |
 | `<header>` `<main>` `<footer>` | Estructura semántica | `<main>…</main>` |
 | `<style>` | CSS dentro de la página | `p { color: teal; }` |
+| `<audio>` `<video>` `<track>` | Reproductores y subtítulos | `<video controls src="demo.mp4"></video>` |
+| `<picture>` `srcset` | Imágenes adaptables | `<img srcset="m.jpg 600w, g.jpg 1200w" alt="…">` |
+| `aria-label` `role` | Accesibilidad | `<nav aria-label="Principal">` |
+| `<meta>` `<link rel>` | SEO y vista previa al compartir | `<meta name="description" content="…">` |
 
 </details>
 
@@ -174,7 +181,7 @@ Cuando termines el proyecto final, sigue por aquí:
 
 - 🎨 **CSS a fondo:** [MDN – Aprende CSS](https://developer.mozilla.org/es/docs/Learn/CSS)
 - ⚙️ **JavaScript:** [MDN – Aprende JavaScript](https://developer.mozilla.org/es/docs/Learn/JavaScript)
-- 🌐 **Publica tu página gratis** con [GitHub Pages](https://pages.github.com/)
+- 🌐 **Publica tu página gratis** con [GitHub Pages](https://pages.github.com/) (la lección 11 te guía paso a paso)
 - 📱 **Hazla adaptable a celular** (diseño responsive)
 
 ## ❓ Preguntas frecuentes
@@ -222,7 +229,7 @@ cd PRACTICAS-HTML
 
 ```text
 index.html                  Portada con el temario y el avance
-assets/                     Estilos (estilos.css), script (curso.js) e imágenes
+assets/                     Estilos (estilos.css), script (curso.js), imágenes y multimedia (audio, video, subtítulos)
 NN-nombre-leccion/          Una carpeta por lección (index.html + ejercicio.html)
 proyecto-pagina-personal/   Proyecto final
 ```
