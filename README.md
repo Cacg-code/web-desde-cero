@@ -150,6 +150,10 @@ Sigue el orden: cada curso se apoya en el anterior.
 
 Pulsa el chip de XP de la barra superior para abrir **Mi progreso**. Todo se guarda en tu navegador: es motivación, **no una acreditación** ni un certificado.
 
+## 🌐 Comunidad
+
+Entra con tu cuenta de GitHub desde el panel **Mi comunidad** y tu progreso se guarda en la nube: apodo, avatar, reto diario y clasificación semanal. Es opcional: el curso funciona igual sin cuenta. El esquema de la base de datos está en [`backend/supabase.sql`](backend/supabase.sql).
+
 ## 🧾 Chuleta
 
 <details>
