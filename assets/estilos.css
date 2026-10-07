@@ -387,3 +387,7 @@ article :not(pre) > code { overflow-wrap: anywhere; }
   .flow .arrow { transform: none; }
   .flow .arrow code { display: inline; margin-left: .4rem; }
 }
+
+/* Enlace para saltar al contenido (visible solo con el foco del teclado) */
+.saltar { position: absolute; left: -999px; top: 0; z-index: 100; padding: .7rem 1.1rem; border-radius: 0 0 10px 0; background: var(--accent); color: var(--accent-text); font-weight: 700; text-decoration: none; }
+.saltar:focus { left: 0; }
