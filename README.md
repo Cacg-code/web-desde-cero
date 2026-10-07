@@ -150,7 +150,11 @@ Sigue el orden: cada curso se apoya en el anterior.
 
 </div>
 
-Pulsa el chip de XP de la barra superior para abrir **Mi progreso**. Todo se guarda en tu navegador: es motivación, **no una acreditación** ni un certificado.
+Pulsa el chip de XP de la barra superior para abrir **Mi progreso**. Todo se guarda en tu navegador: es solo motivación personal, no da ningún título.
+
+## 🙋 Acerca de este material
+
+Lo hace **un estudiante** con ayuda de inteligencia artificial, como aporte gratuito a la comunidad de desarrolladores: no es un curso oficial, no da títulos ni certificados y puede tener errores. Contrástalo con [MDN](https://developer.mozilla.org/es/) y la documentación oficial, y si ves algo mal, [avísame](https://github.com/Cacg-code/web-desde-cero/issues/new/choose).
 
 ## 🌐 Comunidad
 

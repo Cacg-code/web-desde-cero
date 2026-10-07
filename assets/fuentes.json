@@ -1,0 +1,448 @@
+{
+ "01": [
+  [
+   "HTML (MDN)",
+   "https://developer.mozilla.org/es/docs/Web/HTML"
+  ]
+ ],
+ "02": [
+  [
+   "El elemento <a> (MDN)",
+   "https://developer.mozilla.org/es/docs/Web/HTML/Element/a"
+  ],
+  [
+   "Títulos h1–h6 (MDN)",
+   "https://developer.mozilla.org/es/docs/Web/HTML/Element/Heading_Elements"
+  ]
+ ],
+ "03": [
+  [
+   "El elemento <img> (MDN)",
+   "https://developer.mozilla.org/es/docs/Web/HTML/Element/img"
+  ],
+  [
+   "Listas con <ul> (MDN)",
+   "https://developer.mozilla.org/es/docs/Web/HTML/Element/ul"
+  ]
+ ],
+ "04": [
+  [
+   "El elemento <table> (MDN)",
+   "https://developer.mozilla.org/es/docs/Web/HTML/Element/table"
+  ]
+ ],
+ "05": [
+  [
+   "El elemento <form> (MDN)",
+   "https://developer.mozilla.org/es/docs/Web/HTML/Element/form"
+  ],
+  [
+   "El elemento <input> (MDN)",
+   "https://developer.mozilla.org/es/docs/Web/HTML/Element/input"
+  ]
+ ],
+ "06": [
+  [
+   "El elemento <main> (MDN)",
+   "https://developer.mozilla.org/es/docs/Web/HTML/Element/main"
+  ]
+ ],
+ "07": [
+  [
+   "CSS (MDN)",
+   "https://developer.mozilla.org/es/docs/Web/CSS"
+  ]
+ ],
+ "08": [
+  [
+   "El elemento <video> (MDN)",
+   "https://developer.mozilla.org/es/docs/Web/HTML/Element/video"
+  ],
+  [
+   "El elemento <picture> (MDN)",
+   "https://developer.mozilla.org/es/docs/Web/HTML/Element/picture"
+  ]
+ ],
+ "09": [
+  [
+   "Accesibilidad (MDN)",
+   "https://developer.mozilla.org/es/docs/Web/Accessibility"
+  ],
+  [
+   "ARIA (MDN)",
+   "https://developer.mozilla.org/es/docs/Web/Accessibility/ARIA"
+  ]
+ ],
+ "10": [
+  [
+   "El elemento <meta> (MDN)",
+   "https://developer.mozilla.org/es/docs/Web/HTML/Element/meta"
+  ],
+  [
+   "SEO (MDN)",
+   "https://developer.mozilla.org/es/docs/Glossary/SEO"
+  ]
+ ],
+ "11": [
+  [
+   "Documentación de Git",
+   "https://git-scm.com/doc"
+  ],
+  [
+   "GitHub Pages",
+   "https://docs.github.com/es/pages"
+  ]
+ ],
+ "css-01": [
+  [
+   "CSS (MDN)",
+   "https://developer.mozilla.org/es/docs/Web/CSS"
+  ]
+ ],
+ "css-02": [
+  [
+   "Selectores CSS (MDN)",
+   "https://developer.mozilla.org/es/docs/Web/CSS/CSS_selectors"
+  ],
+  [
+   "Especificidad (MDN)",
+   "https://developer.mozilla.org/es/docs/Web/CSS/Specificity"
+  ]
+ ],
+ "css-03": [
+  [
+   "color (MDN)",
+   "https://developer.mozilla.org/es/docs/Web/CSS/color"
+  ],
+  [
+   "Unidades de longitud (MDN)",
+   "https://developer.mozilla.org/es/docs/Web/CSS/length"
+  ]
+ ],
+ "css-04": [
+  [
+   "Modelo de caja (MDN)",
+   "https://developer.mozilla.org/es/docs/Web/CSS/CSS_box_model"
+  ],
+  [
+   "display (MDN)",
+   "https://developer.mozilla.org/es/docs/Web/CSS/display"
+  ]
+ ],
+ "css-05": [
+  [
+   "position (MDN)",
+   "https://developer.mozilla.org/es/docs/Web/CSS/position"
+  ],
+  [
+   "z-index (MDN)",
+   "https://developer.mozilla.org/es/docs/Web/CSS/z-index"
+  ]
+ ],
+ "css-06": [
+  [
+   "Flexbox (MDN)",
+   "https://developer.mozilla.org/es/docs/Web/CSS/CSS_flexible_box_layout"
+  ]
+ ],
+ "css-07": [
+  [
+   "CSS Grid (MDN)",
+   "https://developer.mozilla.org/es/docs/Web/CSS/CSS_grid_layout"
+  ]
+ ],
+ "css-08": [
+  [
+   "Media queries (MDN)",
+   "https://developer.mozilla.org/es/docs/Web/CSS/CSS_media_queries"
+  ],
+  [
+   "Usar media queries (MDN)",
+   "https://developer.mozilla.org/es/docs/Web/CSS/CSS_media_queries/Using_media_queries"
+  ]
+ ],
+ "css-09": [
+  [
+   "box-shadow (MDN)",
+   "https://developer.mozilla.org/es/docs/Web/CSS/box-shadow"
+  ],
+  [
+   "Degradados (MDN)",
+   "https://developer.mozilla.org/es/docs/Web/CSS/gradient"
+  ]
+ ],
+ "css-10": [
+  [
+   "Animaciones CSS (MDN)",
+   "https://developer.mozilla.org/es/docs/Web/CSS/CSS_animations"
+  ],
+  [
+   "Transiciones CSS (MDN)",
+   "https://developer.mozilla.org/es/docs/Web/CSS/CSS_transitions"
+  ]
+ ],
+ "css-11": [
+  [
+   "Variables CSS (MDN)",
+   "https://developer.mozilla.org/es/docs/Web/CSS/Using_CSS_custom_properties"
+  ]
+ ],
+ "js-01": [
+  [
+   "JavaScript (MDN)",
+   "https://developer.mozilla.org/es/docs/Web/JavaScript"
+  ]
+ ],
+ "js-02": [
+  [
+   "Tipos y estructuras de datos (MDN)",
+   "https://developer.mozilla.org/es/docs/Web/JavaScript/Data_structures"
+  ]
+ ],
+ "js-03": [
+  [
+   "if...else (MDN)",
+   "https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Statements/if...else"
+  ]
+ ],
+ "js-04": [
+  [
+   "for (MDN)",
+   "https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Statements/for"
+  ]
+ ],
+ "js-05": [
+  [
+   "Funciones (MDN)",
+   "https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Functions"
+  ]
+ ],
+ "js-06": [
+  [
+   "Array (MDN)",
+   "https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Array"
+  ]
+ ],
+ "js-07": [
+  [
+   "JSON (MDN)",
+   "https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/JSON"
+  ],
+  [
+   "Object (MDN)",
+   "https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Object"
+  ]
+ ],
+ "js-08": [
+  [
+   "El DOM (MDN)",
+   "https://developer.mozilla.org/es/docs/Web/API/Document_Object_Model"
+  ]
+ ],
+ "js-09": [
+  [
+   "Eventos (MDN)",
+   "https://developer.mozilla.org/es/docs/Web/API/Event"
+  ],
+  [
+   "Formularios en JS (MDN)",
+   "https://developer.mozilla.org/es/docs/Web/API/HTMLFormElement"
+  ]
+ ],
+ "js-10": [
+  [
+   "Fetch API (MDN)",
+   "https://developer.mozilla.org/es/docs/Web/API/Fetch_API"
+  ],
+  [
+   "Promise (MDN)",
+   "https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Promise"
+  ]
+ ],
+ "js-11": [
+  [
+   "Web Storage (MDN)",
+   "https://developer.mozilla.org/es/docs/Web/API/Web_Storage_API"
+  ],
+  [
+   "try...catch (MDN)",
+   "https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Statements/try...catch"
+  ]
+ ],
+ "react-01": [
+  [
+   "Documentación de React",
+   "https://react.dev/learn"
+  ]
+ ],
+ "react-02": [
+  [
+   "Escribir marcado con JSX",
+   "https://react.dev/learn/writing-markup-with-jsx"
+  ]
+ ],
+ "react-03": [
+  [
+   "Tu primer componente",
+   "https://react.dev/learn/your-first-component"
+  ],
+  [
+   "Pasar props",
+   "https://react.dev/learn/passing-props-to-a-component"
+  ]
+ ],
+ "react-04": [
+  [
+   "Estado: la memoria de un componente",
+   "https://react.dev/learn/state-a-components-memory"
+  ]
+ ],
+ "react-05": [
+  [
+   "Renderizado de listas",
+   "https://react.dev/learn/rendering-lists"
+  ],
+  [
+   "Renderizado condicional",
+   "https://react.dev/learn/conditional-rendering"
+  ]
+ ],
+ "react-06": [
+  [
+   "<input> en React",
+   "https://react.dev/reference/react-dom/components/input"
+  ]
+ ],
+ "react-07": [
+  [
+   "Sincronizar con efectos",
+   "https://react.dev/learn/synchronizing-with-effects"
+  ]
+ ],
+ "react-08": [
+  [
+   "Compartir estado entre componentes",
+   "https://react.dev/learn/sharing-state-between-components"
+  ],
+  [
+   "Context",
+   "https://react.dev/learn/passing-data-deeply-with-context"
+  ]
+ ],
+ "react-09": [
+  [
+   "Referencias con useRef",
+   "https://react.dev/learn/referencing-values-with-refs"
+  ],
+  [
+   "useReducer",
+   "https://react.dev/learn/extracting-state-logic-into-a-reducer"
+  ]
+ ],
+ "react-10": [
+  [
+   "Fetch API (MDN)",
+   "https://developer.mozilla.org/es/docs/Web/API/Fetch_API"
+  ]
+ ],
+ "react-11": [
+  [
+   "Vite",
+   "https://vite.dev/guide/"
+  ]
+ ],
+ "node-01": [
+  [
+   "Node.js: documentación",
+   "https://nodejs.org/docs/latest/api/"
+  ]
+ ],
+ "node-03": [
+  [
+   "npm Docs",
+   "https://docs.npmjs.com/"
+  ]
+ ],
+ "node-04": [
+  [
+   "Express",
+   "https://expressjs.com/es/"
+  ]
+ ],
+ "node-05": [
+  [
+   "Métodos HTTP (MDN)",
+   "https://developer.mozilla.org/es/docs/Web/HTTP/Methods"
+  ]
+ ],
+ "node-06": [
+  [
+   "Fetch API (MDN)",
+   "https://developer.mozilla.org/es/docs/Web/API/Fetch_API"
+  ]
+ ],
+ "node-07": [
+  [
+   "OWASP Top 10",
+   "https://owasp.org/www-project-top-ten/"
+  ]
+ ],
+ "node-08": [
+  [
+   "Render: despliegue de apps Node",
+   "https://render.com/docs"
+  ]
+ ],
+ "bd-01": [
+  [
+   "SQLite",
+   "https://www.sqlite.org/docs.html"
+  ]
+ ],
+ "bd-02": [
+  [
+   "SQLite: SELECT",
+   "https://www.sqlite.org/lang_select.html"
+  ]
+ ],
+ "bd-03": [
+  [
+   "SQLite: INSERT",
+   "https://www.sqlite.org/lang_insert.html"
+  ],
+  [
+   "SQLite: UPDATE",
+   "https://www.sqlite.org/lang_update.html"
+  ]
+ ],
+ "bd-04": [
+  [
+   "SQLite: CREATE TABLE",
+   "https://www.sqlite.org/lang_createtable.html"
+  ]
+ ],
+ "bd-05": [
+  [
+   "SQLite: JOIN",
+   "https://www.sqlite.org/lang_select.html"
+  ]
+ ],
+ "bd-06": [
+  [
+   "SQLite: funciones de agregación",
+   "https://www.sqlite.org/lang_aggfunc.html"
+  ]
+ ],
+ "bd-07": [
+  [
+   "PostgreSQL: documentación",
+   "https://www.postgresql.org/docs/current/"
+  ]
+ ],
+ "bd-08": [
+  [
+   "OWASP: inyección SQL",
+   "https://owasp.org/www-community/attacks/SQL_Injection"
+  ]
+ ]
+}
