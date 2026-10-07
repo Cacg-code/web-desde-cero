@@ -493,3 +493,156 @@
     if (done) c.classList.add('started');
   });
 })();
+
+
+// ---------- UI v3 · efectos extra (todo opcional; si algo falla, el curso sigue igual) ----------
+(function () {
+  try {
+    var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
+    var cs = document.currentScript;
+    var BASE = cs && cs.src ? new URL('.', cs.src).href : '';
+    var $ = function (s, r) { return (r || document).querySelector(s); };
+    var $$ = function (s, r) { return [].slice.call((r || document).querySelectorAll(s)); };
+
+    // Aurora de fondo
+    if (!reduce) {
+      var au = document.createElement('div'); au.className = 'aurora'; au.setAttribute('aria-hidden', 'true');
+      au.innerHTML = '<i></i><i></i><i></i>'; document.body.insertBefore(au, document.body.firstChild);
+    }
+
+    // Avisos
+    var tbox = document.createElement('div'); tbox.className = 'toasts'; tbox.setAttribute('role', 'status'); tbox.setAttribute('aria-live', 'polite');
+    document.body.appendChild(tbox);
+    var toast = function (msg) {
+      var t = document.createElement('div'); t.className = 'toast'; t.textContent = msg; tbox.appendChild(t);
+      setTimeout(function () { t.classList.add('out'); setTimeout(function () { t.remove(); }, 320); }, 2400);
+    };
+
+    // Confeti (canvas ligero, sin librerías)
+    var confetti = function (x, y) {
+      if (reduce) return;
+      var cv = document.createElement('canvas'); cv.className = 'confetti'; cv.width = innerWidth; cv.height = innerHeight; document.body.appendChild(cv);
+      var g = cv.getContext('2d'), cols = ['#4f46e5', '#22d3ee', '#f472b6', '#facc15', '#34d399', '#fb923c'], ps = [];
+      for (var i = 0; i < 110; i++) {
+        var a = Math.random() * Math.PI * 2, v = 5 + Math.random() * 9;
+        ps.push({ x: x, y: y, vx: Math.cos(a) * v, vy: Math.sin(a) * v - 6, r: Math.random() * 6, w: 5 + Math.random() * 6, h: 3 + Math.random() * 5, c: cols[i % cols.length], l: 0 });
+      }
+      (function tick() {
+        g.clearRect(0, 0, cv.width, cv.height); var alive = false;
+        ps.forEach(function (p) {
+          p.l++; p.vy += .32; p.vx *= .99; p.x += p.vx; p.y += p.vy; p.r += .2;
+          if (p.y < cv.height + 20 && p.l < 160) { alive = true; g.save(); g.translate(p.x, p.y); g.rotate(p.r); g.globalAlpha = Math.max(0, 1 - p.l / 160); g.fillStyle = p.c; g.fillRect(-p.w / 2, -p.h / 2, p.w, p.h); g.restore(); }
+        });
+        if (alive) requestAnimationFrame(tick); else cv.remove();
+      })();
+    };
+    var burstAt = function (el) { var r = el.getBoundingClientRect(); confetti(r.left + r.width / 2, r.top + r.height / 2); };
+
+    // Confeti al completar la lección, sacar todas en el quiz o aprobar el comprobador
+    $$('[data-complete]').forEach(function (b) {
+      b.addEventListener('click', function () { if (b.classList.contains('done')) { burstAt(b); toast('🎉 ¡Lección completada!'); } });
+    });
+    $$('.quiz-score').forEach(function (s) {
+      new MutationObserver(function () { if (/Excelente/.test(s.textContent)) { burstAt(s); toast('⭐ ¡Puntaje perfecto!'); } }).observe(s, { childList: true, characterData: true, subtree: true });
+    });
+    var cs2 = document.getElementById('chk-sum');
+    if (cs2) new MutationObserver(function () { if (cs2.classList.contains('all')) { burstAt(cs2); toast('✅ ¡Ejercicio completo!'); } }).observe(cs2, { attributes: true, attributeFilter: ['class'] });
+
+    // Barra superior compacta + volver arriba con anillo
+    var top = $('.topbar');
+    var tt = document.createElement('button'); tt.type = 'button'; tt.className = 'to-top'; tt.setAttribute('aria-label', 'Volver arriba');
+    tt.innerHTML = '<svg viewBox="0 0 44 44" aria-hidden="true"><circle class="tt-bg" cx="22" cy="22" r="20"/><circle class="tt-fg" cx="22" cy="22" r="20"/></svg><span aria-hidden="true">↑</span>';
+    document.body.appendChild(tt);
+    var fg = $('.tt-fg', tt), tick = false;
+    var onS = function () {
+      var y = scrollY, h = document.documentElement.scrollHeight - innerHeight;
+      if (top) top.classList.toggle('compact', y > 40);
+      tt.classList.toggle('show', y > 500);
+      fg.style.strokeDashoffset = 126 - 126 * (h > 0 ? Math.min(1, y / h) : 0);
+      tick = false;
+    };
+    addEventListener('scroll', function () { if (!tick) { tick = true; requestAnimationFrame(onS); } }, { passive: true }); onS();
+    tt.addEventListener('click', function () { scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' }); });
+
+    // Tarjetas: brillo con el cursor e inclinación 3D (solo con ratón)
+    if (fine) {
+      $$('.lesson-card, .course-card, .feature, .route li.ok a, .pager a').forEach(function (c) {
+        c.classList.add('fx-card');
+        c.addEventListener('pointermove', function (e) {
+          var r = c.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+          c.style.setProperty('--mx', (x * 100) + '%'); c.style.setProperty('--my', (y * 100) + '%');
+          if (!reduce) { c.style.setProperty('--ry', ((x - .5) * 9) + 'deg'); c.style.setProperty('--rx', ((.5 - y) * 9) + 'deg'); c.classList.add('tilting'); }
+        });
+        c.addEventListener('pointerleave', function () { c.classList.remove('tilting'); c.style.removeProperty('--rx'); c.style.removeProperty('--ry'); });
+      });
+    }
+
+    // Ondas en botones
+    $$('.btn, .opt, .gif-btn').forEach(function (b) {
+      if (b.classList.contains('opt') || b.classList.contains('gif-btn')) return;
+      b.addEventListener('pointerdown', function (e) {
+        if (reduce) return;
+        var r = b.getBoundingClientRect(), s = Math.max(r.width, r.height) / 4, d = document.createElement('span'); d.className = 'ripple';
+        d.style.cssText = 'width:' + s + 'px;height:' + s + 'px;left:' + (e.clientX - r.left - s / 2) + 'px;top:' + (e.clientY - r.top - s / 2) + 'px';
+        b.appendChild(d); setTimeout(function () { d.remove(); }, 650);
+      });
+    });
+
+    // Enlace copiable en cada título de la lección
+    $$('article h2[id], article h3[id]').forEach(function (h) {
+      var a = document.createElement('button'); a.type = 'button'; a.className = 'h-anchor'; a.textContent = '#'; a.setAttribute('aria-label', 'Copiar enlace a esta sección');
+      a.addEventListener('click', function () {
+        var u = location.href.split('#')[0] + '#' + h.id;
+        (navigator.clipboard ? navigator.clipboard.writeText(u) : Promise.reject()).then(function () { toast('🔗 Enlace copiado'); }, function () { location.hash = h.id; });
+      });
+      h.appendChild(a);
+    });
+
+    // Copiar código: aviso
+    $$('.copy').forEach(function (b) { b.addEventListener('click', function () { toast('📋 Código copiado'); }); });
+
+    // Buscador de lecciones (Ctrl+K o /)
+    var items = null, pal = null, input, list, sel = 0, shown = [];
+    var strip = function (s) { return s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase(); };
+    var load = function () {
+      if (items) return Promise.resolve(items);
+      return fetch(BASE + 'indice.json').then(function (r) { return r.json(); }).then(function (j) { items = j; return j; }, function () { items = []; return items; });
+    };
+    var render = function () {
+      var q = strip(input.value.trim()); var words = q.split(/\s+/).filter(Boolean);
+      shown = items.filter(function (it) { var t = strip(it[1] + ' ' + it[2] + ' ' + it[0]); return words.every(function (w) { return t.indexOf(w) > -1; }); }).slice(0, 30);
+      sel = 0;
+      list.innerHTML = shown.length ? shown.map(function (it, i) { return '<li><a href="' + BASE + '../' + it[0] + '" class="' + (i ? '' : 'sel') + '"><span>' + it[1].replace(/</g, '&lt;') + '</span><small>' + it[2] + '</small></a></li>'; }).join('') : '<li class="pal-empty">Nada por aquí. Prueba con otra palabra.</li>';
+    };
+    var mark = function () { $$('a', list).forEach(function (a, i) { a.classList.toggle('sel', i === sel); if (i === sel) a.scrollIntoView({ block: 'nearest' }); }); };
+    var open = function () {
+      if (!pal) {
+        pal = document.createElement('div'); pal.className = 'pal'; pal.setAttribute('role', 'dialog'); pal.setAttribute('aria-modal', 'true'); pal.setAttribute('aria-label', 'Buscar lecciones');
+        pal.innerHTML = '<div class="pal-box"><input type="search" placeholder="Buscar lecciones: flexbox, formularios, useState…" aria-label="Buscar lecciones" autocomplete="off"><ul class="pal-list"></ul><div class="pal-foot"><span>↑↓ moverse</span><span>Enter abrir</span><span>Esc cerrar</span></div></div>';
+        document.body.appendChild(pal); input = $('input', pal); list = $('.pal-list', pal);
+        pal.addEventListener('mousedown', function (e) { if (e.target === pal) close(); });
+        input.addEventListener('input', render);
+        input.addEventListener('keydown', function (e) {
+          if (e.key === 'ArrowDown') { e.preventDefault(); sel = Math.min(shown.length - 1, sel + 1); mark(); }
+          else if (e.key === 'ArrowUp') { e.preventDefault(); sel = Math.max(0, sel - 1); mark(); }
+          else if (e.key === 'Enter' && shown[sel]) { location.href = BASE + '../' + shown[sel][0]; }
+        });
+      }
+      pal.classList.add('open'); input.value = ''; load().then(function () { render(); input.focus(); });
+    };
+    var close = function () { if (pal) pal.classList.remove('open'); };
+    addEventListener('keydown', function (e) {
+      var tag = (e.target.tagName || '').toLowerCase(), typing = /^(input|textarea|select)$/.test(tag) || e.target.isContentEditable;
+      if ((e.key === 'k' || e.key === 'K') && (e.ctrlKey || e.metaKey)) { e.preventDefault(); open(); }
+      else if (e.key === '/' && !typing) { e.preventDefault(); open(); }
+      else if (e.key === 'Escape') close();
+    });
+    var actions = $('.topbar-actions');
+    if (actions) {
+      var sb = document.createElement('button'); sb.type = 'button'; sb.className = 'icon-btn'; sb.setAttribute('aria-label', 'Buscar lecciones');
+      sb.innerHTML = '🔍<span class="lbl"> Buscar</span> <span class="kbd-hint" aria-hidden="true">Ctrl K</span>'; sb.addEventListener('click', open);
+      actions.insertBefore(sb, actions.firstChild);
+    }
+  } catch (err) { /* los efectos son opcionales */ }
+})();
