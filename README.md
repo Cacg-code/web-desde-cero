@@ -86,8 +86,18 @@ Sigue el orden: cada curso se apoya en el anterior.
 
 </div>
 
+### 📚 Temario completo · 44 lecciones y 4 proyectos
+
+<div align="center">
+
+<img src="assets/readme/temario.svg" alt="Temario: 44 lecciones y 4 proyectos en HTML, CSS, JavaScript y React" width="100%">
+
+**[▶ HTML](https://cacg-code.github.io/PRACTICAS-HTML/html/)** &nbsp;·&nbsp; **[▶ CSS](https://cacg-code.github.io/PRACTICAS-HTML/css/)** &nbsp;·&nbsp; **[▶ JavaScript](https://cacg-code.github.io/PRACTICAS-HTML/javascript/)** &nbsp;·&nbsp; **[▶ React](https://cacg-code.github.io/PRACTICAS-HTML/react/)**
+
+</div>
+
 <details>
-<summary><b>📚 Ver temario completo (44 lecciones)</b></summary>
+<summary>🔗 Ver con enlace a cada lección</summary>
 
 <br>
 
