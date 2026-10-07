@@ -28,6 +28,7 @@
         <li><a href="#errores">Errores frecuentes</a></li>
         <li><a href="#apuntes">Apuntes para llevar</a></li>
         <li><a href="#glosario">Glosario</a></li>
+        <li><a href="#quiz">Comprueba lo aprendido</a></li>
       </ol>
     </nav>
 
@@ -122,6 +123,19 @@
         <p>Una forma fácil de recordarlo: el <code>head</code> es la «cabeza» que piensa y se prepara; el <code>body</code> es el «cuerpo» que se muestra al mundo.</p>
       </div>
 
+      <h3>✏️ Practica en vivo</h3>
+<div class="playground">
+  <div class="pg-head"><span>✏️ Edita tu primera página</span><button type="button" data-reset>Restablecer</button></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;h1&gt;¡Hola, mundo!&lt;/h1&gt;
+&lt;p&gt;Esta es mi primera página web.&lt;/p&gt;
+&lt;p&gt;Cambia el texto, añade otro párrafo o envuelve una palabra con &lt;strong&gt;strong&lt;/strong&gt;.&lt;/p&gt;
+&lt;!-- Los comentarios no se ven --&gt;</textarea></div>
+    <div><label>Resultado</label><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div>
+  </div>
+</div>
+<p>Aquí solo escribes lo que va dentro de <code>&lt;body&gt;</code>. Prueba a <strong>borrar</strong> una etiqueta de cierre y observa cómo reacciona el navegador: es la mejor forma de aprender a reconocer los errores.</p>
+
       <h2 id="anatomia"><span class="n">4.</span>Anatomía de una etiqueta</h2>
       <p>El HTML se compone de <strong>elementos</strong>. La mayoría tiene una etiqueta de apertura, un contenido y una etiqueta de cierre:</p>
 
@@ -202,6 +216,17 @@
           <tr><td>Editor de código</td><td>Programa donde escribes y guardas tus archivos.</td></tr>
         </tbody>
       </table></div>
+
+      <section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>¿Qué describe HTML?</p><ul class="opts"><li><button type="button" class="opt">El aspecto visual de la página</button></li><li><button type="button" class="opt" data-ok>La estructura y el contenido de la página</button></li><li><button type="button" class="opt">El comportamiento e interacción</button></li><li><button type="button" class="opt">La base de datos del sitio</button></li></ul><p class="explain" hidden>HTML estructura el contenido; CSS da el aspecto y JavaScript el comportamiento.</p></div>
+<div class="quiz-q"><p>¿Qué parte del documento <strong>no</strong> se muestra en la página?</p><ul class="opts"><li><button type="button" class="opt"><code>&lt;body&gt;</code></button></li><li><button type="button" class="opt" data-ok><code>&lt;head&gt;</code></button></li><li><button type="button" class="opt"><code>&lt;h1&gt;</code></button></li><li><button type="button" class="opt"><code>&lt;p&gt;</code></button></li></ul><p class="explain" hidden>El <code>&lt;head&gt;</code> guarda información sobre la página (título, codificación). Lo visible va en <code>&lt;body&gt;</code>.</p></div>
+<div class="quiz-q"><p>¿Cuál es el cierre correcto de <code>&lt;p&gt;</code>?</p><ul class="opts"><li><button type="button" class="opt"><code>&lt;p/&gt;</code></button></li><li><button type="button" class="opt" data-ok><code>&lt;/p&gt;</code></button></li><li><button type="button" class="opt"><code>&lt;\p&gt;</code></button></li><li><button type="button" class="opt"><code>&lt;end p&gt;</code></button></li></ul><p class="explain" hidden>La etiqueta de cierre repite el nombre con una barra: <code>&lt;/p&gt;</code>.</p></div>
+<div class="quiz-q"><p>Tu archivo se abre como texto plano en el navegador. ¿Qué pasó probablemente?</p><ul class="opts"><li><button type="button" class="opt">Faltó un <code>&lt;h1&gt;</code></button></li><li><button type="button" class="opt" data-ok>Se guardó con extensión <code>.txt</code> en vez de <code>.html</code></button></li><li><button type="button" class="opt">El navegador está desactualizado</button></li><li><button type="button" class="opt">Faltó el <code>lang</code></button></li></ul><p class="explain" hidden>Si el nombre termina en <code>.html.txt</code>, el navegador lo trata como texto. Activa la visualización de extensiones.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+<div class="complete"><button class="btn" type="button" data-complete="01">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
 
       <div class="callout consejo">
         <p class="callout-title">🚀 ¡Ahora te toca!</p>

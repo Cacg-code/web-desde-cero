@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lección 5: Formularios · Curso de HTML</title>
+  <meta name="description" content="Cómo crear formularios accesibles: campos, etiquetas, tipos de input, validación y botones." />
+  <link rel="stylesheet" href="../assets/estilos.css" />
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de HTML</a>
+    <div class="topbar-actions">
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <div class="wrap lesson-layout">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#que-es">Qué es un formulario</a></li><li><a href="#form">La etiqueta form</a></li><li><a href="#label">Campos de texto y etiquetas</a></li><li><a href="#tipos">Tipos de input</a></li><li><a href="#atributos">Atributos útiles de los campos</a></li><li><a href="#textarea-select">Texto largo y listas desplegables</a></li><li><a href="#opciones">Casillas y botones de opción</a></li><li><a href="#botones">Botones</a></li><li><a href="#ejemplo">Un formulario completo</a></li><li><a href="#errores">Errores frecuentes</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Inicio</a> › Lección 5</div>
+        <h1>Formularios</h1>
+        <ul class="meta"><li>⏱ 40 minutos</li><li>📶 Nivel: principiante</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Construir un formulario con <code>form</code>, <code>label</code>, <code>input</code>, <code>textarea</code> y <code>select</code>.</li><li>Elegir el <code>type</code> de input adecuado para cada dato.</li><li>Validar con atributos como <code>required</code> y <code>pattern</code>.</li><li>Agrupar opciones con <code>radio</code>, <code>checkbox</code>, <code>fieldset</code> y <code>legend</code>.</li></ul>
+</div>
+
+<h2 id="que-es"><span class="n">1.</span>Qué es un formulario</h2>
+<p>Un <strong>formulario</strong> permite que el visitante escriba o elija información: iniciar sesión, buscar, registrarse, contactar, hacer un pedido. Es la forma principal de interacción entre una persona y un sitio.</p>
+<p>En HTML, un formulario se compone de tres ideas:</p>
+<ol class="steps"><li><strong>El contenedor</strong> <code>&lt;form&gt;</code>, que agrupa todos los campos.</li><li><strong>Los campos</strong> (<code>&lt;input&gt;</code>, <code>&lt;textarea&gt;</code>, <code>&lt;select&gt;</code>…), donde la persona escribe o elige.</li><li><strong>El botón de envío</strong>, que manda los datos a quien los procesa.</li></ol>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · HTML recoge los datos, no los guarda</p>
+<p>HTML solo describe el formulario. Para que los datos se guarden o se envíen por correo se necesita un <strong>servidor</strong> (o un servicio externo). En este curso nos concentramos en construir formularios correctos y accesibles; no necesitas un servidor para aprender eso.</p>
+</div>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · Pruebas en el editor de práctica</p>
+<p>En los editores de práctica de esta lección el <strong>envío está desactivado</strong> por seguridad. Para probar el comportamiento completo, guarda el código en tu propio archivo <code>.html</code> y ábrelo en el navegador.</p>
+</div>
+
+<h2 id="form"><span class="n">2.</span>La etiqueta form</h2>
+<div class="code">
+  <div class="code-head"><span>Estructura mínima</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">&lt;form</span> <span class="tk-attr">action</span>=<span class="tk-val">"/enviar"</span> <span class="tk-attr">method</span>=<span class="tk-val">"post"</span><span class="tk-tag">&gt;</span>
+  <span class="tk-com">&lt;!-- aquí van los campos --&gt;</span>
+  <span class="tk-tag">&lt;button</span> <span class="tk-attr">type</span>=<span class="tk-val">"submit"</span><span class="tk-tag">&gt;</span>Enviar<span class="tk-tag">&lt;/button</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;/form</span><span class="tk-tag">&gt;</span></code></pre>
+</div>
+<div class="table-wrap"><table>
+<thead><tr><th>Atributo</th><th>Función</th><th>Valores comunes</th></tr></thead>
+<tbody><tr><td><code>action</code></td><td>Dirección a la que se envían los datos</td><td>Una URL, por ejemplo <code>/enviar</code></td></tr><tr><td><code>method</code></td><td>Cómo se envían</td><td><code>get</code> (visible en la URL) o <code>post</code> (en el cuerpo de la petición)</td></tr><tr><td><code>target</code></td><td>Dónde se muestra la respuesta</td><td><code>_self</code> (misma pestaña) o <code>_blank</code></td></tr></tbody>
+</table></div>
+<h3>GET o POST</h3>
+<ul><li><strong>GET</strong> agrega los datos a la dirección (<code>?buscar=perros</code>). Úsalo para <strong>búsquedas</strong> y filtros, donde la URL se puede guardar y compartir.</li><li><strong>POST</strong> envía los datos de forma interna. Úsalo para <strong>registros, contraseñas y pedidos</strong>; nunca para algo que quieras que quede en la URL.</li></ul>
+
+<h2 id="label"><span class="n">3.</span>Campos de texto y etiquetas</h2>
+<p>El campo más común es <code>&lt;input&gt;</code>. Cambia su aspecto y comportamiento con el atributo <code>type</code>. Pero <strong>cada campo necesita una etiqueta</strong> <code>&lt;label&gt;</code> que diga qué se espera.</p>
+<div class="code">
+  <div class="code-head"><span>Un campo con su etiqueta</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">&lt;label</span> <span class="tk-attr">for</span>=<span class="tk-val">"nombre"</span><span class="tk-tag">&gt;</span>Nombre completo<span class="tk-tag">&lt;/label</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;input</span> <span class="tk-attr">type</span>=<span class="tk-val">"text"</span> <span class="tk-attr">id</span>=<span class="tk-val">"nombre"</span> <span class="tk-attr">name</span>=<span class="tk-val">"nombre"</span><span class="tk-tag">&gt;</span></code></pre>
+</div>
+<div class="anatomy" role="img" aria-label="Una etiqueta enlazada a un campo mediante for e id"><div class="part" style="--c:#ffd479"><span>&lt;label for="nombre"&gt;</span><span class="lbl">etiqueta</span></div><div class="part" style="--c:#8ee6a0"><span>&lt;input id="nombre"</span><span class="lbl">campo</span></div><div class="part" style="--c:#7cc4ff"><span>name="nombre"&gt;</span><span class="lbl">nombre del dato</span></div></div>
+<ul><li><code>for</code> en el <code>&lt;label&gt;</code> debe coincidir <strong>exactamente</strong> con el <code>id</code> del campo. Esa unión permite hacer clic en el texto para escribir en el campo y hace que el lector de pantalla anuncie qué se pide.</li><li><code>id</code> identifica al campo dentro de la página y debe ser único.</li><li><code>name</code> es el nombre con el que viajará el dato al servidor (por ejemplo, <code>nombre=Ana</code>). <strong>Sin <code>name</code>, el campo no se envía.</strong></li></ul>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · No uses solo placeholder</p>
+<p>El atributo <code>placeholder</code> muestra un texto de ejemplo que desaparece al escribir. No sustituye a la etiqueta: se pierde, suele tener poco contraste y los lectores de pantalla pueden ignorarlo. Úsalo solo como ayuda complementaria.</p>
+</div>
+<div class="playground">
+  <div class="pg-head"><span>✏️ Haz clic en la etiqueta</span><button type="button" data-reset>Restablecer</button></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;form&gt;
+  &lt;p&gt;
+    &lt;label for="nombre"&gt;Nombre completo&lt;/label&gt;&lt;br&gt;
+    &lt;input type="text" id="nombre" name="nombre" placeholder="Ej. Ana Pérez"&gt;
+  &lt;/p&gt;
+  &lt;p&gt;
+    &lt;label for="correo"&gt;Correo electrónico&lt;/label&gt;&lt;br&gt;
+    &lt;input type="email" id="correo" name="correo" placeholder="ana@ejemplo.com"&gt;
+  &lt;/p&gt;
+&lt;/form&gt;</textarea></div>
+    <div><label>Resultado</label><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div>
+  </div>
+</div>
+<p>Prueba: haz clic sobre las palabras «Nombre completo». El cursor salta al campo. Ahora cambia el <code>for</code> por otro valor y vuelve a intentarlo: la conexión se rompe.</p>
+
+<h2 id="tipos"><span class="n">4.</span>Tipos de input</h2>
+<p>El atributo <code>type</code> hace que el navegador adapte el campo: en el celular muestra el teclado adecuado, valida el formato y ofrece herramientas como calendarios o selectores de color.</p>
+<div class="table-wrap"><table>
+<thead><tr><th><code>type</code></th><th>Para qué sirve</th><th>Qué obtienes</th></tr></thead>
+<tbody><tr><td><code>text</code></td><td>Texto corto</td><td>Campo de una línea</td></tr><tr><td><code>email</code></td><td>Correos</td><td>Valida que tenga <code>@</code>; teclado con <code>@</code> en el móvil</td></tr><tr><td><code>password</code></td><td>Contraseñas</td><td>Oculta los caracteres con puntos</td></tr><tr><td><code>number</code></td><td>Números</td><td>Solo números; flechas para subir y bajar</td></tr><tr><td><code>tel</code></td><td>Teléfonos</td><td>Teclado numérico en el móvil</td></tr><tr><td><code>url</code></td><td>Direcciones web</td><td>Valida que parezca una URL</td></tr><tr><td><code>date</code></td><td>Fechas</td><td>Selector de calendario</td></tr><tr><td><code>time</code></td><td>Horas</td><td>Selector de hora</td></tr><tr><td><code>color</code></td><td>Colores</td><td>Paleta de color</td></tr><tr><td><code>range</code></td><td>Valores en una escala</td><td>Deslizador</td></tr><tr><td><code>search</code></td><td>Búsquedas</td><td>Campo con botón para borrar</td></tr><tr><td><code>file</code></td><td>Archivos</td><td>Botón para elegir un archivo</td></tr></tbody>
+</table></div>
+<div class="playground">
+  <div class="pg-head"><span>✏️ Prueba los tipos</span><button type="button" data-reset>Restablecer</button></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;style&gt; label { display:block; margin-top:8px; font-weight:600; } &lt;/style&gt;
+&lt;label for="f"&gt;Fecha&lt;/label&gt;
+&lt;input type="date" id="f"&gt;
+&lt;label for="c"&gt;Color favorito&lt;/label&gt;
+&lt;input type="color" id="c" value="#4f46e5"&gt;
+&lt;label for="r"&gt;Nivel (0 a 10)&lt;/label&gt;
+&lt;input type="range" id="r" min="0" max="10" value="5"&gt;
+&lt;label for="n"&gt;Edad&lt;/label&gt;
+&lt;input type="number" id="n" min="0" max="120"&gt;
+&lt;label for="p"&gt;Contraseña&lt;/label&gt;
+&lt;input type="password" id="p"&gt;</textarea></div>
+    <div><label>Resultado</label><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div>
+  </div>
+</div>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Elige el tipo más específico</p>
+<p>Usar <code>type="email"</code> en vez de <code>text</code> es gratis y mejora la experiencia: validación automática, mejor teclado en el celular y menos errores.</p>
+</div>
+
+<h2 id="atributos"><span class="n">5.</span>Atributos útiles de los campos</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Atributo</th><th>Qué hace</th><th>Ejemplo</th></tr></thead>
+<tbody><tr><td><code>required</code></td><td>El campo es obligatorio</td><td><code>&lt;input required&gt;</code></td></tr><tr><td><code>placeholder</code></td><td>Texto de ayuda</td><td><code>placeholder="Ej. Ana"</code></td></tr><tr><td><code>value</code></td><td>Valor inicial</td><td><code>value="México"</code></td></tr><tr><td><code>minlength</code> / <code>maxlength</code></td><td>Mínimo y máximo de caracteres</td><td><code>minlength="8"</code></td></tr><tr><td><code>min</code> / <code>max</code></td><td>Rango permitido en números y fechas</td><td><code>min="18" max="99"</code></td></tr><tr><td><code>pattern</code></td><td>Formato exigido con una expresión regular</td><td><code>pattern="[0-9]{5}"</code></td></tr><tr><td><code>autocomplete</code></td><td>Ayuda al navegador a autocompletar</td><td><code>autocomplete="email"</code></td></tr><tr><td><code>disabled</code></td><td>Desactiva el campo (no se envía)</td><td><code>&lt;input disabled&gt;</code></td></tr><tr><td><code>readonly</code></td><td>Solo lectura (sí se envía)</td><td><code>&lt;input readonly&gt;</code></td></tr><tr><td><code>autofocus</code></td><td>El cursor empieza aquí</td><td><code>&lt;input autofocus&gt;</code></td></tr></tbody>
+</table></div>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · La validación del navegador no basta</p>
+<p>Atributos como <code>required</code> y <code>pattern</code> mejoran la experiencia, pero cualquier persona puede saltárselos. Quien procesa los datos en el servidor <strong>siempre</strong> debe validarlos de nuevo.</p>
+</div>
+<div class="callout ejemplo">
+<p class="callout-title">🔍 Ejemplo · Un código postal</p>
+<p>Un campo que exige exactamente cinco dígitos se escribe así:</p>
+<div class="code">
+  <div class="code-head"><span>Con validación</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">&lt;label</span> <span class="tk-attr">for</span>=<span class="tk-val">"cp"</span><span class="tk-tag">&gt;</span>Código postal<span class="tk-tag">&lt;/label</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;input</span> <span class="tk-attr">type</span>=<span class="tk-val">"text"</span> <span class="tk-attr">id</span>=<span class="tk-val">"cp"</span> <span class="tk-attr">name</span>=<span class="tk-val">"cp"</span> <span class="tk-attr">required</span>
+       <span class="tk-attr">pattern</span>=<span class="tk-val">"[0-9]{5}"</span> <span class="tk-attr">maxlength</span>=<span class="tk-val">"5"</span>
+       <span class="tk-attr">inputmode</span>=<span class="tk-val">"numeric"</span> <span class="tk-attr">autocomplete</span>=<span class="tk-val">"postal-code"</span><span class="tk-tag">&gt;</span></code></pre>
+</div>
+</div>
+<p>En tu propio navegador, intenta enviar el formulario con el campo vacío o con letras: verás un aviso automático, sin escribir una sola línea de JavaScript.</p>
+
+<h2 id="textarea-select"><span class="n">6.</span>Texto largo y listas desplegables</h2>
+<h3>Texto largo: textarea</h3>
+<div class="code">
+  <div class="code-head"><span>textarea</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">&lt;label</span> <span class="tk-attr">for</span>=<span class="tk-val">"mensaje"</span><span class="tk-tag">&gt;</span>Mensaje<span class="tk-tag">&lt;/label</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;textarea</span> <span class="tk-attr">id</span>=<span class="tk-val">"mensaje"</span> <span class="tk-attr">name</span>=<span class="tk-val">"mensaje"</span> <span class="tk-attr">rows</span>=<span class="tk-val">"5"</span> <span class="tk-attr">cols</span>=<span class="tk-val">"40"</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;/textarea</span><span class="tk-tag">&gt;</span></code></pre>
+</div>
+<p>A diferencia de <code>&lt;input&gt;</code>, <code>&lt;textarea&gt;</code> <strong>sí tiene etiqueta de cierre</strong> y su contenido inicial va entre las etiquetas. <code>rows</code> y <code>cols</code> fijan su tamaño aproximado.</p>
+<h3>Lista desplegable: select</h3>
+<div class="code">
+  <div class="code-head"><span>select, option y optgroup</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">&lt;label</span> <span class="tk-attr">for</span>=<span class="tk-val">"pais"</span><span class="tk-tag">&gt;</span>País<span class="tk-tag">&lt;/label</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;select</span> <span class="tk-attr">id</span>=<span class="tk-val">"pais"</span> <span class="tk-attr">name</span>=<span class="tk-val">"pais"</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;option</span> <span class="tk-attr">value</span>=<span class="tk-val">""</span><span class="tk-tag">&gt;</span>Elige una opción<span class="tk-tag">&lt;/option</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;optgroup</span> <span class="tk-attr">label</span>=<span class="tk-val">"América"</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;option</span> <span class="tk-attr">value</span>=<span class="tk-val">"mx"</span><span class="tk-tag">&gt;</span>México<span class="tk-tag">&lt;/option</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;option</span> <span class="tk-attr">value</span>=<span class="tk-val">"co"</span><span class="tk-tag">&gt;</span>Colombia<span class="tk-tag">&lt;/option</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;/optgroup</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;optgroup</span> <span class="tk-attr">label</span>=<span class="tk-val">"Europa"</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;option</span> <span class="tk-attr">value</span>=<span class="tk-val">"es"</span><span class="tk-tag">&gt;</span>España<span class="tk-tag">&lt;/option</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;/optgroup</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;/select</span><span class="tk-tag">&gt;</span></code></pre>
+</div>
+<ul><li><code>&lt;option value="…"&gt;</code>: el <code>value</code> es lo que se envía; el texto es lo que ve la persona.</li><li><code>&lt;optgroup&gt;</code> agrupa opciones con un título.</li><li><code>selected</code> marca la opción inicial y <code>multiple</code> permite elegir varias.</li></ul>
+<div class="playground">
+  <div class="pg-head"><span>✏️ Texto largo y desplegable</span><button type="button" data-reset>Restablecer</button></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;p&gt;&lt;label for="m"&gt;Mensaje&lt;/label&gt;&lt;br&gt;
+&lt;textarea id="m" rows="4" cols="35"&gt;Escribe aquí…&lt;/textarea&gt;&lt;/p&gt;
+&lt;p&gt;&lt;label for="pais"&gt;País&lt;/label&gt;&lt;br&gt;
+&lt;select id="pais"&gt;
+  &lt;option value=""&gt;Elige una opción&lt;/option&gt;
+  &lt;option value="mx"&gt;México&lt;/option&gt;
+  &lt;option value="co"&gt;Colombia&lt;/option&gt;
+  &lt;option value="es"&gt;España&lt;/option&gt;
+&lt;/select&gt;&lt;/p&gt;</textarea></div>
+    <div><label>Resultado</label><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div>
+  </div>
+</div>
+
+<h2 id="opciones"><span class="n">7.</span>Casillas y botones de opción</h2>
+<p>Cuando la persona debe <strong>elegir entre opciones visibles</strong>, usa dos tipos de <code>&lt;input&gt;</code>:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Tipo</th><th>Permite</th><th>Ejemplo</th></tr></thead>
+<tbody><tr><td><code>radio</code></td><td>Elegir <strong>una sola</strong> opción de un grupo</td><td>Talla: S, M o L</td></tr><tr><td><code>checkbox</code></td><td>Marcar <strong>cero, una o varias</strong> opciones</td><td>Intereses: música, cine, deporte</td></tr></tbody>
+</table></div>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · El grupo se forma con <code>name</code></p>
+<p>Los botones <code>radio</code> que comparten el <strong>mismo <code>name</code></strong> funcionan como un grupo: al elegir uno se desmarca el otro. Cada uno lleva su propio <code>value</code>.</p>
+</div>
+<div class="code">
+  <div class="code-head"><span>radio y checkbox con fieldset</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">&lt;fieldset</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;legend</span><span class="tk-tag">&gt;</span>Talla de la camiseta<span class="tk-tag">&lt;/legend</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;input</span> <span class="tk-attr">type</span>=<span class="tk-val">"radio"</span> <span class="tk-attr">id</span>=<span class="tk-val">"s"</span> <span class="tk-attr">name</span>=<span class="tk-val">"talla"</span> <span class="tk-attr">value</span>=<span class="tk-val">"s"</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;label</span> <span class="tk-attr">for</span>=<span class="tk-val">"s"</span><span class="tk-tag">&gt;</span>Chica<span class="tk-tag">&lt;/label</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;input</span> <span class="tk-attr">type</span>=<span class="tk-val">"radio"</span> <span class="tk-attr">id</span>=<span class="tk-val">"m"</span> <span class="tk-attr">name</span>=<span class="tk-val">"talla"</span> <span class="tk-attr">value</span>=<span class="tk-val">"m"</span> <span class="tk-attr">checked</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;label</span> <span class="tk-attr">for</span>=<span class="tk-val">"m"</span><span class="tk-tag">&gt;</span>Mediana<span class="tk-tag">&lt;/label</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;/fieldset</span><span class="tk-tag">&gt;</span>
+
+<span class="tk-tag">&lt;fieldset</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;legend</span><span class="tk-tag">&gt;</span>Intereses<span class="tk-tag">&lt;/legend</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;input</span> <span class="tk-attr">type</span>=<span class="tk-val">"checkbox"</span> <span class="tk-attr">id</span>=<span class="tk-val">"mus"</span> <span class="tk-attr">name</span>=<span class="tk-val">"interes"</span> <span class="tk-attr">value</span>=<span class="tk-val">"musica"</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;label</span> <span class="tk-attr">for</span>=<span class="tk-val">"mus"</span><span class="tk-tag">&gt;</span>Música<span class="tk-tag">&lt;/label</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;input</span> <span class="tk-attr">type</span>=<span class="tk-val">"checkbox"</span> <span class="tk-attr">id</span>=<span class="tk-val">"cin"</span> <span class="tk-attr">name</span>=<span class="tk-val">"interes"</span> <span class="tk-attr">value</span>=<span class="tk-val">"cine"</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;label</span> <span class="tk-attr">for</span>=<span class="tk-val">"cin"</span><span class="tk-tag">&gt;</span>Cine<span class="tk-tag">&lt;/label</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;/fieldset</span><span class="tk-tag">&gt;</span></code></pre>
+</div>
+<p><code>&lt;fieldset&gt;</code> agrupa campos relacionados y <code>&lt;legend&gt;</code> es el título del grupo. Los lectores de pantalla anuncian la leyenda antes de cada opción, lo que da contexto a quien no ve la pantalla.</p>
+<div class="playground">
+  <div class="pg-head"><span>✏️ Elige tus opciones</span><button type="button" data-reset>Restablecer</button></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;fieldset&gt;
+  &lt;legend&gt;Talla de la camiseta&lt;/legend&gt;
+  &lt;input type="radio" id="s" name="talla" value="s"&gt;
+  &lt;label for="s"&gt;Chica&lt;/label&gt;
+  &lt;input type="radio" id="m" name="talla" value="m" checked&gt;
+  &lt;label for="m"&gt;Mediana&lt;/label&gt;
+  &lt;input type="radio" id="l" name="talla" value="l"&gt;
+  &lt;label for="l"&gt;Grande&lt;/label&gt;
+&lt;/fieldset&gt;
+&lt;fieldset&gt;
+  &lt;legend&gt;Intereses&lt;/legend&gt;
+  &lt;input type="checkbox" id="mus" name="interes" value="musica"&gt;
+  &lt;label for="mus"&gt;Música&lt;/label&gt;
+  &lt;input type="checkbox" id="cin" name="interes" value="cine" checked&gt;
+  &lt;label for="cin"&gt;Cine&lt;/label&gt;
+&lt;/fieldset&gt;</textarea></div>
+    <div><label>Resultado</label><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div>
+  </div>
+</div>
+
+<h2 id="botones"><span class="n">8.</span>Botones</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Código</th><th>Qué hace</th></tr></thead>
+<tbody><tr><td><code>&lt;button type="submit"&gt;</code></td><td>Envía el formulario (es el valor por defecto)</td></tr><tr><td><code>&lt;button type="reset"&gt;</code></td><td>Devuelve todos los campos a su valor inicial</td></tr><tr><td><code>&lt;button type="button"&gt;</code></td><td>No hace nada por sí solo; se usa con JavaScript</td></tr></tbody>
+</table></div>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Usa <code>&lt;button&gt;</code> en lugar de <code>&lt;input type="submit"&gt;</code></p>
+<p>Ambos funcionan, pero <code>&lt;button&gt;</code> admite contenido (texto con formato, íconos) y es más flexible. Indica siempre su <code>type</code> para evitar sorpresas: un botón dentro de un formulario envía el formulario si no declaras otro tipo.</p>
+</div>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · Botón con texto claro</p>
+<p>Escribe el verbo de lo que ocurrirá: «Crear cuenta», «Enviar mensaje», «Comprar». Evita «Aceptar» o «OK», que no explican nada.</p>
+</div>
+
+<h2 id="ejemplo"><span class="n">9.</span>Un formulario completo</h2>
+<p>Juntemos todo en un formulario de contacto. Léelo de arriba abajo e identifica cada pieza que viste en la lección:</p>
+<div class="playground">
+  <div class="pg-head"><span>✏️ Formulario de contacto completo</span><button type="button" data-reset>Restablecer</button></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;style&gt;
+  form { max-width: 360px; }
+  .campo { margin-bottom: 12px; }
+  label { display: block; font-weight: 600; margin-bottom: 2px; }
+  input[type=text], input[type=email], select, textarea { width: 100%; padding: 6px; box-sizing: border-box; }
+  button { padding: 8px 16px; }
+&lt;/style&gt;
+&lt;form action="/enviar" method="post"&gt;
+  &lt;div class="campo"&gt;
+    &lt;label for="nom"&gt;Nombre&lt;/label&gt;
+    &lt;input type="text" id="nom" name="nombre" required&gt;
+  &lt;/div&gt;
+  &lt;div class="campo"&gt;
+    &lt;label for="mail"&gt;Correo&lt;/label&gt;
+    &lt;input type="email" id="mail" name="correo" required&gt;
+  &lt;/div&gt;
+  &lt;div class="campo"&gt;
+    &lt;label for="asunto"&gt;Asunto&lt;/label&gt;
+    &lt;select id="asunto" name="asunto"&gt;
+      &lt;option&gt;Duda&lt;/option&gt;
+      &lt;option&gt;Sugerencia&lt;/option&gt;
+      &lt;option&gt;Otro&lt;/option&gt;
+    &lt;/select&gt;
+  &lt;/div&gt;
+  &lt;div class="campo"&gt;
+    &lt;label for="msg"&gt;Mensaje&lt;/label&gt;
+    &lt;textarea id="msg" name="mensaje" rows="3" required&gt;&lt;/textarea&gt;
+  &lt;/div&gt;
+  &lt;div class="campo"&gt;
+    &lt;input type="checkbox" id="ok" name="acepto" required&gt;
+    &lt;label for="ok" style="display:inline;font-weight:400"&gt;Acepto el aviso de privacidad&lt;/label&gt;
+  &lt;/div&gt;
+  &lt;button type="submit"&gt;Enviar mensaje&lt;/button&gt;
+&lt;/form&gt;</textarea></div>
+    <div><label>Resultado</label><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div>
+  </div>
+</div>
+
+<h2 id="errores"><span class="n">10.</span>Errores frecuentes</h2>
+<ul><li><strong>Campos sin <code>&lt;label&gt;</code></strong> o con <code>for</code> que no coincide con el <code>id</code>.</li><li><strong>Olvidar <code>name</code></strong>: el campo se ve, pero no se envía.</li><li><strong>Dos campos con el mismo <code>id</code></strong>: los <code>id</code> deben ser únicos. (Los <code>radio</code> sí comparten <code>name</code>, pero no <code>id</code>).</li><li><strong>Usar <code>placeholder</code> como única etiqueta.</strong></li><li><strong>Botones <code>radio</code> con distinto <code>name</code></strong>: dejan de comportarse como grupo.</li><li><strong>Pedir más datos de los necesarios.</strong> Cada campo extra baja la tasa de personas que terminan el formulario y aumenta lo que debes proteger.</li><li><strong>Confiar solo en la validación del navegador.</strong></li></ul>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li><code>&lt;form&gt;</code> agrupa los campos; <code>action</code> y <code>method</code> indican dónde y cómo se envían los datos.</li><li>Cada campo lleva un <code>&lt;label for="…"&gt;</code> enlazado a su <code>id</code>, y un <code>name</code> para viajar con el dato.</li><li><code>type</code> adapta el campo: <code>email</code>, <code>password</code>, <code>number</code>, <code>date</code>, <code>color</code>, <code>range</code>, <code>file</code>…</li><li><code>required</code>, <code>min</code>, <code>max</code>, <code>minlength</code>, <code>maxlength</code> y <code>pattern</code> validan en el navegador.</li><li><code>&lt;textarea&gt;</code> para texto largo y <code>&lt;select&gt;</code> con <code>&lt;option&gt;</code> para listas desplegables.</li><li><code>radio</code> (una opción, mismo <code>name</code>) y <code>checkbox</code> (varias); agrúpalos con <code>&lt;fieldset&gt;</code> y <code>&lt;legend&gt;</code>.</li><li><code>&lt;button type="submit"&gt;</code> envía; <code>reset</code> limpia; <code>button</code> no hace nada por sí solo.</li><li>GET para búsquedas, POST para datos sensibles; el servidor siempre debe volver a validar.</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">11.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td>Formulario</td><td>Conjunto de campos con el que la persona envía información.</td></tr><tr><td><code>label</code></td><td>Etiqueta de texto asociada a un campo mediante <code>for</code> e <code>id</code>.</td></tr><tr><td><code>name</code></td><td>Nombre con el que viaja el valor del campo al enviarse.</td></tr><tr><td>Validación</td><td>Comprobación de que los datos tienen el formato esperado.</td></tr><tr><td><code>fieldset</code> / <code>legend</code></td><td>Agrupación de campos y su título.</td></tr><tr><td>Placeholder</td><td>Texto de ayuda que desaparece al escribir.</td></tr><tr><td>GET / POST</td><td>Los dos métodos principales para enviar datos de un formulario.</td></tr></tbody>
+</table></div>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>¿Cómo se enlaza un <code>&lt;label&gt;</code> con su campo?</p><ul class="opts"><li><button type="button" class="opt">Con el atributo <code>name</code></button></li><li><button type="button" class="opt" data-ok>El <code>for</code> del label coincide con el <code>id</code> del campo</button></li><li><button type="button" class="opt">Poniéndolos en la misma línea</button></li><li><button type="button" class="opt">Con la etiqueta <code>&lt;link&gt;</code></button></li></ul><p class="explain" hidden>El <code>for</code> del <code>&lt;label&gt;</code> debe tener el mismo valor que el <code>id</code> del campo. Así se puede hacer clic en el texto y los lectores de pantalla lo asocian.</p></div>
+<div class="quiz-q"><p>Un campo se ve en la página pero <strong>no se envía</strong> al servidor. ¿Qué falta casi seguro?</p><ul class="opts"><li><button type="button" class="opt" data-ok>El atributo <code>name</code></button></li><li><button type="button" class="opt">El atributo <code>class</code></button></li><li><button type="button" class="opt">Una etiqueta <code>&lt;br&gt;</code></button></li><li><button type="button" class="opt">El atributo <code>lang</code></button></li></ul><p class="explain" hidden>Los datos viajan con el <code>name</code> del campo. Sin él, el campo no se incluye en el envío.</p></div>
+<div class="quiz-q"><p>Quieres que la persona elija <strong>solo una</strong> talla. ¿Qué usas?</p><ul class="opts"><li><button type="button" class="opt"><code>checkbox</code> con distinto <code>name</code></button></li><li><button type="button" class="opt" data-ok><code>radio</code> con el mismo <code>name</code></button></li><li><button type="button" class="opt"><code>textarea</code></button></li><li><button type="button" class="opt"><code>input type="number"</code></button></li></ul><p class="explain" hidden>Los <code>radio</code> que comparten <code>name</code> forman un grupo en el que solo se puede elegir una opción.</p></div>
+<div class="quiz-q"><p>¿Qué método es mejor para un formulario de <strong>inicio de sesión</strong>?</p><ul class="opts"><li><button type="button" class="opt"><code>get</code></button></li><li><button type="button" class="opt" data-ok><code>post</code></button></li><li><button type="button" class="opt">Ninguno</button></li><li><button type="button" class="opt">Da igual</button></li></ul><p class="explain" hidden>POST no pone los datos en la URL. Con GET, la contraseña quedaría visible en la dirección y en el historial.</p></div>
+<div class="quiz-q"><p>¿Qué hace <code>required</code>?</p><ul class="opts"><li><button type="button" class="opt">Hace el campo más grande</button></li><li><button type="button" class="opt" data-ok>Obliga a rellenar el campo antes de enviar</button></li><li><button type="button" class="opt">Lo oculta</button></li><li><button type="button" class="opt">Lo envía automáticamente</button></li></ul><p class="explain" hidden><code>required</code> impide el envío mientras el campo esté vacío. Recuerda que el servidor debe validar también.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="05">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../04-tablas/ejercicio.html"><small>← Anterior</small>Ejercicio: Tablas</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </div>
+
+  <footer class="site-footer">Curso de HTML · Lección 5</footer>
+  <script src="../assets/curso.js"></script>
+</body>
+</html>

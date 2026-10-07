@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lección 4: Tablas · Curso de HTML</title>
+  <meta name="description" content="Cómo presentar datos en filas y columnas con tablas HTML, de forma ordenada y accesible." />
+  <link rel="stylesheet" href="../assets/estilos.css" />
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de HTML</a>
+    <div class="topbar-actions">
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <div class="wrap lesson-layout">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#para-que">Para qué sirven las tablas</a></li><li><a href="#estructura">La estructura básica</a></li><li><a href="#practica1">Practica en vivo</a></li><li><a href="#secciones">Encabezado, cuerpo y pie</a></li><li><a href="#titulo">Título de la tabla y accesibilidad</a></li><li><a href="#combinar">Combinar celdas: colspan y rowspan</a></li><li><a href="#columnas">Estilo básico de tabla</a></li><li><a href="#errores">Errores frecuentes</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Inicio</a> › Lección 4</div>
+        <h1>Tablas</h1>
+        <ul class="meta"><li>⏱ 30 minutos</li><li>📶 Nivel: principiante</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Crear tablas con filas, encabezados y celdas de datos.</li><li>Organizar una tabla con encabezado, cuerpo y pie.</li><li>Combinar celdas con <code>colspan</code> y <code>rowspan</code>.</li><li>Hacer tablas accesibles con <code>caption</code> y <code>scope</code>.</li></ul>
+</div>
+
+<h2 id="para-que"><span class="n">1.</span>Para qué sirven las tablas</h2>
+<p>Una <strong>tabla</strong> presenta datos organizados en <strong>filas</strong> y <strong>columnas</strong>, como una hoja de cálculo: horarios, precios, calificaciones, comparativas.</p>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · Las tablas son para datos</p>
+<p>Usa tablas solo cuando la información sea realmente tabular. Antes se usaban para acomodar la página (menús a la izquierda, contenido a la derecha). <strong>Eso ya no se hace</strong>: para el diseño se usa CSS. Una tabla mal usada confunde a los lectores de pantalla y se ve mal en el celular.</p>
+</div>
+<p>Una buena regla: si podrías abrir los datos en una hoja de cálculo, una tabla es la herramienta correcta.</p>
+
+<h2 id="estructura"><span class="n">2.</span>La estructura básica</h2>
+<p>Una tabla se construye con cuatro etiquetas principales. Piensa en ella como una cuadrícula que se arma fila por fila:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Etiqueta</th><th>Significado</th><th>Qué representa</th></tr></thead>
+<tbody><tr><td><code>&lt;table&gt;</code></td><td><em>table</em>: tabla</td><td>El contenedor de toda la tabla</td></tr><tr><td><code>&lt;tr&gt;</code></td><td><em>table row</em>: fila</td><td>Una fila horizontal</td></tr><tr><td><code>&lt;th&gt;</code></td><td><em>table header</em>: encabezado</td><td>Una celda de título (columna o fila)</td></tr><tr><td><code>&lt;td&gt;</code></td><td><em>table data</em>: dato</td><td>Una celda normal con información</td></tr></tbody>
+</table></div>
+<div class="anatomy" role="img" aria-label="Cuatro etiquetas de una tabla: table, tr, th y td"><div class="part" style="--c:#ff8fa3"><span>&lt;table&gt;</span><span class="lbl">tabla</span></div><div class="part" style="--c:#ffd479"><span>&lt;tr&gt;</span><span class="lbl">fila</span></div><div class="part" style="--c:#7cc4ff"><span>&lt;th&gt;</span><span class="lbl">título</span></div><div class="part" style="--c:#8ee6a0"><span>&lt;td&gt;</span><span class="lbl">dato</span></div></div>
+<div class="code">
+  <div class="code-head"><span>Tu primera tabla</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">&lt;table</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;tr</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;th</span><span class="tk-tag">&gt;</span>Fruta<span class="tk-tag">&lt;/th</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;th</span><span class="tk-tag">&gt;</span>Precio<span class="tk-tag">&lt;/th</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;/tr</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;tr</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;td</span><span class="tk-tag">&gt;</span>Manzana<span class="tk-tag">&lt;/td</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;td</span><span class="tk-tag">&gt;</span>$20<span class="tk-tag">&lt;/td</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;/tr</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;tr</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;td</span><span class="tk-tag">&gt;</span>Mango<span class="tk-tag">&lt;/td</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;td</span><span class="tk-tag">&gt;</span>$35<span class="tk-tag">&lt;/td</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;/tr</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;/table</span><span class="tk-tag">&gt;</span></code></pre>
+</div>
+<div class="demo"><p class="demo-label">Así se ve</p><table border="1" cellpadding="6" style="border-collapse:collapse"><tr><th>Fruta</th><th>Precio</th></tr><tr><td>Manzana</td><td>$20</td></tr><tr><td>Mango</td><td>$35</td></tr></table></div>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · Sin estilo, una tabla se ve «desnuda»</p>
+<p>Por defecto el navegador no dibuja bordes. En la lección de CSS le darás un aspecto cuidado. Mientras tanto, en las prácticas de abajo ya incluimos un poco de estilo para que la veas con claridad.</p>
+</div>
+<p>Lee el código de arriba como una receta: «una tabla, con una fila, con dos celdas de título; luego otra fila con dos celdas de datos…». <strong>Cada <code>&lt;tr&gt;</code> debe tener la misma cantidad de celdas</strong> para que las columnas queden alineadas.</p>
+
+<h2 id="practica1"><span class="n">3.</span>Practica en vivo</h2>
+<p>Modifica la tabla: agrega una tercera fila con otra fruta, cambia un precio o añade una columna «Origen». Mira cómo reacciona el resultado a la derecha.</p>
+<div class="playground">
+  <div class="pg-head"><span>✏️ Tu tabla de frutas</span><button type="button" data-reset>Restablecer</button></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;style&gt;
+  table { border-collapse: collapse; }
+  th, td { border: 1px solid #999; padding: 6px 12px; }
+  th { background: #eef; }
+&lt;/style&gt;
+&lt;table&gt;
+  &lt;tr&gt;&lt;th&gt;Fruta&lt;/th&gt;&lt;th&gt;Precio&lt;/th&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;Manzana&lt;/td&gt;&lt;td&gt;$20&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;Mango&lt;/td&gt;&lt;td&gt;$35&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;</textarea></div>
+    <div><label>Resultado</label><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div>
+  </div>
+</div>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Aprende rompiéndolo</p>
+<p>Borra a propósito un <code>&lt;/td&gt;</code> y observa qué pasa. Equivocarte en el editor de práctica no cuesta nada, y ver el error es la mejor forma de reconocerlo después.</p>
+</div>
+
+<h2 id="secciones"><span class="n">4.</span>Encabezado, cuerpo y pie</h2>
+<p>Para tablas más serias conviene dividirlas en tres zonas. Así el código queda ordenado y los lectores de pantalla entienden mejor su estructura:</p>
+<ul><li><code>&lt;thead&gt;</code>: la fila o filas de <strong>encabezado</strong>.</li><li><code>&lt;tbody&gt;</code>: el <strong>cuerpo</strong> con los datos.</li><li><code>&lt;tfoot&gt;</code>: el <strong>pie</strong>, para totales o notas.</li></ul>
+<div class="code">
+  <div class="code-head"><span>Tabla con tres secciones</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">&lt;table</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;thead</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;tr</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;th</span><span class="tk-tag">&gt;</span>Producto<span class="tk-tag">&lt;/th</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;th</span><span class="tk-tag">&gt;</span>Cantidad<span class="tk-tag">&lt;/th</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;th</span><span class="tk-tag">&gt;</span>Subtotal<span class="tk-tag">&lt;/th</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;/tr</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;/thead</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;tbody</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;tr</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;td</span><span class="tk-tag">&gt;</span>Cuaderno<span class="tk-tag">&lt;/td</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;td</span><span class="tk-tag">&gt;</span>3<span class="tk-tag">&lt;/td</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;td</span><span class="tk-tag">&gt;</span>$90<span class="tk-tag">&lt;/td</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;/tr</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;tr</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;td</span><span class="tk-tag">&gt;</span>Lápiz<span class="tk-tag">&lt;/td</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;td</span><span class="tk-tag">&gt;</span>10<span class="tk-tag">&lt;/td</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;td</span><span class="tk-tag">&gt;</span>$50<span class="tk-tag">&lt;/td</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;/tr</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;/tbody</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;tfoot</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;tr</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;th</span><span class="tk-tag">&gt;</span>Total<span class="tk-tag">&lt;/th</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;td</span><span class="tk-tag">&gt;</span>13<span class="tk-tag">&lt;/td</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;td</span><span class="tk-tag">&gt;</span>$140<span class="tk-tag">&lt;/td</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;/tr</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;/tfoot</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;/table</span><span class="tk-tag">&gt;</span></code></pre>
+</div>
+<div class="demo"><p class="demo-label">Así se ve</p><table style="border-collapse:collapse"><thead><tr><th style="border:1px solid #999;padding:6px 12px;background:#eef">Producto</th><th style="border:1px solid #999;padding:6px 12px;background:#eef">Cantidad</th><th style="border:1px solid #999;padding:6px 12px;background:#eef">Subtotal</th></tr></thead><tbody><tr><td style="border:1px solid #999;padding:6px 12px">Cuaderno</td><td style="border:1px solid #999;padding:6px 12px">3</td><td style="border:1px solid #999;padding:6px 12px">$90</td></tr><tr><td style="border:1px solid #999;padding:6px 12px">Lápiz</td><td style="border:1px solid #999;padding:6px 12px">10</td><td style="border:1px solid #999;padding:6px 12px">$50</td></tr></tbody><tfoot><tr><th style="border:1px solid #999;padding:6px 12px;background:#eef">Total</th><td style="border:1px solid #999;padding:6px 12px">13</td><td style="border:1px solid #999;padding:6px 12px">$140</td></tr></tfoot></table></div>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · El orden visual no cambia</p>
+<p>Aunque escribas <code>&lt;tfoot&gt;</code> antes o después de <code>&lt;tbody&gt;</code>, el navegador lo muestra siempre al final de la tabla.</p>
+</div>
+
+<h2 id="titulo"><span class="n">5.</span>Título de la tabla y accesibilidad</h2>
+<p>Una tabla debería decir <strong>de qué trata</strong>. Para eso existe <code>&lt;caption&gt;</code>, que va justo después de abrir <code>&lt;table&gt;</code>:</p>
+<div class="code">
+  <div class="code-head"><span>caption y scope</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">&lt;table</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;caption</span><span class="tk-tag">&gt;</span>Horario de clases: lunes<span class="tk-tag">&lt;/caption</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;thead</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;tr</span><span class="tk-tag">&gt;</span>
+      <span class="tk-tag">&lt;th</span> <span class="tk-attr">scope</span>=<span class="tk-val">"col"</span><span class="tk-tag">&gt;</span>Hora<span class="tk-tag">&lt;/th</span><span class="tk-tag">&gt;</span>
+      <span class="tk-tag">&lt;th</span> <span class="tk-attr">scope</span>=<span class="tk-val">"col"</span><span class="tk-tag">&gt;</span>Materia<span class="tk-tag">&lt;/th</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;/tr</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;/thead</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;tbody</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;tr</span><span class="tk-tag">&gt;</span>
+      <span class="tk-tag">&lt;th</span> <span class="tk-attr">scope</span>=<span class="tk-val">"row"</span><span class="tk-tag">&gt;</span>8:00<span class="tk-tag">&lt;/th</span><span class="tk-tag">&gt;</span>
+      <span class="tk-tag">&lt;td</span><span class="tk-tag">&gt;</span>Matemáticas<span class="tk-tag">&lt;/td</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;/tr</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;tr</span><span class="tk-tag">&gt;</span>
+      <span class="tk-tag">&lt;th</span> <span class="tk-attr">scope</span>=<span class="tk-val">"row"</span><span class="tk-tag">&gt;</span>10:00<span class="tk-tag">&lt;/th</span><span class="tk-tag">&gt;</span>
+      <span class="tk-tag">&lt;td</span><span class="tk-tag">&gt;</span>Historia<span class="tk-tag">&lt;/td</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;/tr</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;/tbody</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;/table</span><span class="tk-tag">&gt;</span></code></pre>
+</div>
+<p>El atributo <code>scope</code> le dice a los lectores de pantalla <strong>a qué se refiere un encabezado</strong>:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Valor</th><th>Significa</th><th>Úsalo cuando…</th></tr></thead>
+<tbody><tr><td><code>scope="col"</code></td><td>Título de la columna</td><td>El <code>&lt;th&gt;</code> está arriba y describe hacia abajo</td></tr><tr><td><code>scope="row"</code></td><td>Título de la fila</td><td>El <code>&lt;th&gt;</code> está a la izquierda y describe hacia la derecha</td></tr></tbody>
+</table></div>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Piénsalo en voz alta</p>
+<p>Una persona que usa lector de pantalla recorre la tabla celda por celda. Con <code>scope</code>, al llegar a «Matemáticas» escuchará «8:00, Matemáticas», y entenderá la relación sin ver la cuadrícula.</p>
+</div>
+
+<h2 id="combinar"><span class="n">6.</span>Combinar celdas: colspan y rowspan</h2>
+<p>A veces una celda debe ocupar más de una columna o una fila, por ejemplo un título que abarca varias columnas. Hay dos atributos:</p>
+<ul><li><code>colspan="n"</code>: la celda se extiende <strong>n columnas</strong> hacia la derecha.</li><li><code>rowspan="n"</code>: la celda se extiende <strong>n filas</strong> hacia abajo.</li></ul>
+<div class="playground">
+  <div class="pg-head"><span>✏️ Combina celdas</span><button type="button" data-reset>Restablecer</button></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;style&gt;
+  table { border-collapse: collapse; text-align: center; }
+  th, td { border: 1px solid #999; padding: 6px 14px; }
+  th { background: #eef; }
+&lt;/style&gt;
+&lt;table&gt;
+  &lt;tr&gt;
+    &lt;th rowspan="2"&gt;Alumno&lt;/th&gt;
+    &lt;th colspan="2"&gt;Calificaciones&lt;/th&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;th&gt;Parcial 1&lt;/th&gt;
+    &lt;th&gt;Parcial 2&lt;/th&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;Ana&lt;/td&gt;&lt;td&gt;9&lt;/td&gt;&lt;td&gt;10&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;Luis&lt;/td&gt;&lt;td&gt;8&lt;/td&gt;&lt;td&gt;9&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;</textarea></div>
+    <div><label>Resultado</label><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div>
+  </div>
+</div>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · Cuenta bien las celdas</p>
+<p>Cuando combinas celdas, las filas siguientes deben tener <strong>menos</strong> celdas, porque algunas posiciones ya están ocupadas. En el ejemplo, «Alumno» ocupa dos filas, así que la segunda fila solo escribe dos <code>&lt;th&gt;</code>. Si las cuentas no cuadran, la tabla se deforma.</p>
+</div>
+<ol class="steps"><li>Dibuja la tabla en papel con la cuadrícula completa.</li><li>Marca qué celdas se unen.</li><li>Escribe el código fila por fila, omitiendo las celdas ya cubiertas.</li></ol>
+
+<h2 id="columnas"><span class="n">7.</span>Estilo básico de tabla</h2>
+<p>Sin CSS, una tabla es funcional pero poco atractiva. Aquí tienes un pequeño estilo que puedes copiar y adaptar. En la lección de CSS entenderás cada línea:</p>
+<div class="code">
+  <div class="code-head"><span>Estilo para tablas</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-sel">table</span> {
+  <span class="tk-attr">border-collapse</span>: <span class="tk-val">collapse</span>;
+  <span class="tk-attr">width</span>: <span class="tk-val">100%</span>;
+}
+<span class="tk-sel">th, td</span> {
+  <span class="tk-attr">padding</span>: <span class="tk-val">8px 12px</span>;
+  <span class="tk-attr">border</span>: <span class="tk-val">1px solid #ccc</span>;
+  <span class="tk-attr">text-align</span>: <span class="tk-val">left</span>;
+}
+<span class="tk-sel">th</span> {
+  <span class="tk-attr">background</span>: <span class="tk-val">#f0f0ff</span>;
+}
+<span class="tk-sel">tbody tr:nth-child(even)</span> {
+  <span class="tk-attr">background</span>: <span class="tk-val">#fafafa</span>;
+}</code></pre>
+</div>
+<ul><li><code>border-collapse: collapse</code> une los bordes de las celdas en una sola línea.</li><li><code>padding</code> da aire interior a cada celda.</li><li><code>nth-child(even)</code> pinta las filas pares para leer mejor ("cebra").</li></ul>
+<div class="callout ejemplo">
+<p class="callout-title">🔍 Ejemplo · Tablas en el celular</p>
+<p>En pantallas pequeñas una tabla ancha puede desbordarse. Una solución sencilla es envolverla en un <code>&lt;div&gt;</code> con <code>overflow-x: auto</code>, para que se pueda desplazar horizontalmente sin romper la página. Este curso lo hace con sus propias tablas.</p>
+</div>
+
+<h2 id="errores"><span class="n">8.</span>Errores frecuentes</h2>
+<ul><li><strong>Usar tablas para el diseño de la página.</strong> Las tablas son solo para datos.</li><li><strong>Celdas de más o de menos</strong> en una fila: la cuadrícula queda torcida.</li><li><strong>Olvidar cerrar <code>&lt;/td&gt;</code> o <code>&lt;/tr&gt;</code></strong>: el navegador intenta adivinar y el resultado cambia entre navegadores.</li><li><strong>Usar <code>&lt;td&gt;</code> en negrita en lugar de <code>&lt;th&gt;</code></strong> para los títulos: se pierde el significado.</li><li><strong>Escribir <code>&lt;tr&gt;</code> directamente dentro de <code>&lt;table&gt;</code> y también <code>&lt;tbody&gt;</code></strong>: elige un estilo y úsalo en toda la tabla.</li><li><strong>Dejar tablas sin <code>&lt;caption&gt;</code> ni <code>scope</code></strong>, dificultando la lectura con lector de pantalla.</li></ul>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li>Una tabla se compone de <code>&lt;table&gt;</code>, filas <code>&lt;tr&gt;</code> y celdas <code>&lt;th&gt;</code> (título) o <code>&lt;td&gt;</code> (dato).</li><li>Úsalas solo para <strong>datos tabulares</strong>, nunca para dar forma a la página.</li><li><code>&lt;thead&gt;</code>, <code>&lt;tbody&gt;</code> y <code>&lt;tfoot&gt;</code> ordenan la tabla en encabezado, cuerpo y pie.</li><li><code>&lt;caption&gt;</code> da título a la tabla y <code>scope="col"</code> o <code>scope="row"</code> aclara los encabezados.</li><li><code>colspan</code> combina columnas y <code>rowspan</code> combina filas.</li><li>Todas las filas deben sumar el mismo número de columnas, contando las celdas combinadas.</li><li>El aspecto se logra con CSS (<code>border-collapse</code>, <code>padding</code>, <code>border</code>).</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">9.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td>Fila</td><td>Línea horizontal de celdas (<code>&lt;tr&gt;</code>).</td></tr><tr><td>Columna</td><td>Conjunto vertical de celdas; no tiene etiqueta propia, nace de alinear las celdas.</td></tr><tr><td>Celda</td><td>Cada recuadro de la tabla (<code>&lt;th&gt;</code> o <code>&lt;td&gt;</code>).</td></tr><tr><td>Encabezado</td><td>Celda que da título a una columna o fila (<code>&lt;th&gt;</code>).</td></tr><tr><td><code>colspan</code></td><td>Atributo que extiende una celda a varias columnas.</td></tr><tr><td><code>rowspan</code></td><td>Atributo que extiende una celda a varias filas.</td></tr><tr><td>Datos tabulares</td><td>Información que tiene sentido ordenada en filas y columnas.</td></tr></tbody>
+</table></div>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>¿Qué etiqueta crea una celda de <strong>encabezado</strong>?</p><ul class="opts"><li><button type="button" class="opt"><code>&lt;td&gt;</code></button></li><li><button type="button" class="opt" data-ok><code>&lt;th&gt;</code></button></li><li><button type="button" class="opt"><code>&lt;tr&gt;</code></button></li><li><button type="button" class="opt"><code>&lt;head&gt;</code></button></li></ul><p class="explain" hidden><code>&lt;th&gt;</code> (table header) marca una celda de título. <code>&lt;td&gt;</code> es una celda de datos y <code>&lt;tr&gt;</code> es la fila completa.</p></div>
+<div class="quiz-q"><p>¿Para qué debes usar una tabla?</p><ul class="opts"><li><button type="button" class="opt">Para acomodar el diseño de la página</button></li><li><button type="button" class="opt" data-ok>Para mostrar datos organizados en filas y columnas</button></li><li><button type="button" class="opt">Para insertar imágenes</button></li><li><button type="button" class="opt">Para hacer menús</button></li></ul><p class="explain" hidden>Las tablas son para datos tabulares. El diseño de la página se hace con CSS.</p></div>
+<div class="quiz-q"><p>Quieres que una celda ocupe <strong>dos columnas</strong>. ¿Qué escribes?</p><ul class="opts"><li><button type="button" class="opt"><code>rowspan="2"</code></button></li><li><button type="button" class="opt" data-ok><code>colspan="2"</code></button></li><li><button type="button" class="opt"><code>cols="2"</code></button></li><li><button type="button" class="opt"><code>merge="2"</code></button></li></ul><p class="explain" hidden><code>colspan</code> extiende la celda horizontalmente; <code>rowspan</code> lo hace verticalmente.</p></div>
+<div class="quiz-q"><p>¿Dónde se coloca <code>&lt;caption&gt;</code>?</p><ul class="opts"><li><button type="button" class="opt">Al final de la tabla</button></li><li><button type="button" class="opt">Dentro de cada fila</button></li><li><button type="button" class="opt" data-ok>Justo después de abrir <code>&lt;table&gt;</code></button></li><li><button type="button" class="opt">Dentro de <code>&lt;tfoot&gt;</code></button></li></ul><p class="explain" hidden><code>&lt;caption&gt;</code> debe ser lo primero dentro de <code>&lt;table&gt;</code>, para que describa la tabla completa.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="04">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../03-imagenes-y-listas/ejercicio.html"><small>← Anterior</small>Ejercicio: Imágenes y listas</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </div>
+
+  <footer class="site-footer">Curso de HTML · Lección 4</footer>
+  <script src="../assets/curso.js"></script>
+</body>
+</html>

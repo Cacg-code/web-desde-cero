@@ -29,6 +29,7 @@
         <li><a href="#errores">Errores frecuentes</a></li>
         <li><a href="#apuntes">Apuntes para llevar</a></li>
         <li><a href="#glosario">Glosario</a></li>
+        <li><a href="#quiz">Comprueba lo aprendido</a></li>
       </ol>
     </nav>
 
@@ -123,6 +124,23 @@
         <p>Existen, y también ponen negrita y cursiva, pero <strong>no aportan significado</strong>. Prefiere <code>&lt;strong&gt;</code> y <code>&lt;em&gt;</code> salvo que solo busques un efecto visual (y para eso, lo ideal es CSS).</p>
       </div>
 
+      <h3>✏️ Practica en vivo</h3>
+<div class="playground">
+  <div class="pg-head"><span>✏️ Títulos y énfasis</span><button type="button" data-reset>Restablecer</button></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;h1&gt;Mi página&lt;/h1&gt;
+&lt;h2&gt;Una sección&lt;/h2&gt;
+&lt;h3&gt;Una subsección&lt;/h3&gt;
+&lt;p&gt;Un párrafo con &lt;strong&gt;importancia&lt;/strong&gt;, &lt;em&gt;énfasis&lt;/em&gt; y
+&lt;mark&gt;texto resaltado&lt;/mark&gt;.&lt;/p&gt;
+&lt;p&gt;Línea uno&lt;br&gt;Línea dos&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;Otro tema.&lt;/p&gt;</textarea></div>
+    <div><label>Resultado</label><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div>
+  </div>
+</div>
+<p>Cambia los niveles de título y compara tamaños. Recuerda: el nivel se elige por <strong>significado</strong>, no por tamaño.</p>
+
       <h2 id="enlaces"><span class="n">4.</span>Enlaces</h2>
       <p>Los enlaces son lo que hace de la web una «red». Se crean con la etiqueta <code>&lt;a&gt;</code> (de <em>anchor</em>, «ancla») y su atributo <code>href</code> (<em>hypertext reference</em>), que indica el destino.</p>
 
@@ -165,6 +183,18 @@
         <p class="callout-title">💡 Consejo · Escribe textos de enlace que se entiendan solos</p>
         <p>Evita «haz clic aquí». Mejor: «Consulta la <a href="https://developer.mozilla.org/es/docs/Web/HTML" target="_blank" rel="noopener">guía de HTML de MDN</a>». Quien navega con lector de pantalla suele recorrer solo los enlaces, y «aquí» no le dice nada.</p>
       </div>
+
+      <h3>✏️ Practica en vivo</h3>
+<div class="playground">
+  <div class="pg-head"><span>✏️ Enlaces</span><button type="button" data-reset>Restablecer</button></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;p&gt;&lt;a href="https://developer.mozilla.org/es/" target="_blank" rel="noopener"&gt;Ir a MDN&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="#abajo"&gt;Saltar al final (ancla)&lt;/a&gt;&lt;/p&gt;
+&lt;p style="margin-top:160px" id="abajo"&gt;Aquí estás: un enlace con &lt;code&gt;#id&lt;/code&gt;.&lt;/p&gt;</textarea></div>
+    <div><label>Resultado</label><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div>
+  </div>
+</div>
+<p>El primer enlace abre una pestaña nueva (se desactiva por seguridad dentro del editor, pero en tu archivo funcionará). El segundo salta a un elemento con <code>id</code>.</p>
 
       <h2 id="rutas"><span class="n">5.</span>Rutas: dónde está el archivo</h2>
       <p>En un enlace interno, el valor de <code>href</code> es una <strong>ruta</strong>: el camino hasta el archivo. Imagina esta carpeta:</p>
@@ -241,6 +271,17 @@
           <tr><td>Entidad</td><td>Código como <code>&amp;lt;</code> para mostrar un carácter especial.</td></tr>
         </tbody>
       </table></div>
+
+      <section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>¿Cuántos <code>&lt;h1&gt;</code> conviene usar por página?</p><ul class="opts"><li><button type="button" class="opt" data-ok>Uno</button></li><li><button type="button" class="opt">Tantos como quieras</button></li><li><button type="button" class="opt">Seis</button></li><li><button type="button" class="opt">Ninguno</button></li></ul><p class="explain" hidden>Un único <code>&lt;h1&gt;</code> identifica el tema principal de la página.</p></div>
+<div class="quiz-q"><p>¿Qué etiqueta indica <strong>importancia</strong> fuerte (no solo negrita)?</p><ul class="opts"><li><button type="button" class="opt"><code>&lt;b&gt;</code></button></li><li><button type="button" class="opt" data-ok><code>&lt;strong&gt;</code></button></li><li><button type="button" class="opt"><code>&lt;big&gt;</code></button></li><li><button type="button" class="opt"><code>&lt;mark&gt;</code></button></li></ul><p class="explain" hidden><code>&lt;strong&gt;</code> aporta significado de importancia; <code>&lt;b&gt;</code> solo cambia el aspecto.</p></div>
+<div class="quiz-q"><p>Quieres un enlace que lleve a la sección con <code>id="contacto"</code> de la misma página. ¿Qué escribes?</p><ul class="opts"><li><button type="button" class="opt"><code>href="contacto"</code></button></li><li><button type="button" class="opt" data-ok><code>href="#contacto"</code></button></li><li><button type="button" class="opt"><code>href="@contacto"</code></button></li><li><button type="button" class="opt"><code>href="/contacto/"</code></button></li></ul><p class="explain" hidden>El <code>#</code> seguido del <code>id</code> salta a ese elemento dentro de la misma página.</p></div>
+<div class="quiz-q"><p>Un enlace externo con <code>target="_blank"</code> debería llevar también…</p><ul class="opts"><li><button type="button" class="opt" data-ok><code>rel="noopener"</code></button></li><li><button type="button" class="opt"><code>class="externo"</code></button></li><li><button type="button" class="opt"><code>download</code></button></li><li><button type="button" class="opt"><code>lang="es"</code></button></li></ul><p class="explain" hidden><code>rel="noopener"</code> evita que la página abierta pueda controlar la tuya.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+<div class="complete"><button class="btn" type="button" data-complete="02">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
 
       <div class="callout consejo">
         <p class="callout-title">🚀 ¡Ahora te toca!</p>
