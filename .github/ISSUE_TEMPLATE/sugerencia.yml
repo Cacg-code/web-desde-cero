@@ -1,0 +1,16 @@
+name: 💡 Sugerir un tema o mejora
+description: Una lección, un ejemplo o un curso que te gustaría ver.
+title: "[Sugerencia] "
+labels: ["sugerencia"]
+body:
+  - type: textarea
+    id: idea
+    attributes:
+      label: Tu idea
+      description: ¿Qué te gustaría que se añadiera o se mejorara?
+    validations:
+      required: true
+  - type: textarea
+    id: motivo
+    attributes:
+      label: ¿Para qué te serviría?

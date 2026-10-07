@@ -1,0 +1,35 @@
+name: 🐞 Reportar un error
+description: Algo no funciona, un ejemplo falla o hay una errata.
+title: "[Error] "
+labels: ["error"]
+body:
+  - type: input
+    id: pagina
+    attributes:
+      label: Dirección de la página
+      description: Pega la dirección donde viste el problema.
+      placeholder: https://cacg-code.github.io/PRACTICAS-HTML/...
+    validations:
+      required: true
+  - type: textarea
+    id: descripcion
+    attributes:
+      label: ¿Qué pasó?
+      description: Cuéntalo con tus palabras. Si es posible, di qué esperabas que pasara.
+    validations:
+      required: true
+  - type: textarea
+    id: pasos
+    attributes:
+      label: ¿Cómo se repite?
+      description: Los pasos que seguiste para verlo.
+  - type: dropdown
+    id: dispositivo
+    attributes:
+      label: ¿Desde qué dispositivo?
+      options: [Computadora, Celular, Tableta]
+  - type: input
+    id: navegador
+    attributes:
+      label: Navegador
+      placeholder: Chrome, Firefox, Safari, Edge…

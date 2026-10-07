@@ -25,8 +25,9 @@
 <body>
   <a class="saltar" href="#contenido">Saltar al contenido</a>
   <header class="topbar">
-    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de HTML</a>
+    <a class="brand" href="../html/"><span class="brand-logo">&lt;/&gt;</span> Curso de HTML</a>
     <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../" style="text-decoration:none">Todos los cursos</a>
       <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
       <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
     </div>
@@ -50,7 +51,7 @@
 
     <article>
       <header class="lesson-head">
-        <div class="breadcrumb"><a href="../">Inicio</a> › Lección 1</div>
+        <div class="breadcrumb"><a href="../html/">Curso de HTML</a> › Lección 1</div>
         <h1>Primeros pasos</h1>
         <ul class="meta"><li>⏱ 20 minutos</li><li>📶 Nivel: principiante</li><li>🧩 Incluye ejercicio</li></ul>
       </header>
@@ -140,6 +141,14 @@
       </div>
 
       <h3>✏️ Practica en vivo</h3>
+<figure class="gif-demo">
+  <button type="button" class="gif-btn" data-gif="../assets/gif/practica-en-vivo.gif" aria-label="Reproducir animación: Se escriben un párrafo y un subtítulo nuevos en el editor y aparecen de inmediato en el resultado">
+    <img src="../assets/gif/practica-en-vivo.png" alt="Se escriben un párrafo y un subtítulo nuevos en el editor y aparecen de inmediato en el resultado" width="640" height="360" loading="lazy">
+    <span class="gif-play">▶ Ver animación</span>
+  </button>
+  <figcaption>Así funciona cada editor «Practica en vivo» de las lecciones: lo que escribes se ve al instante.</figcaption>
+</figure>
+
 <div class="playground">
   <div class="pg-head"><span>✏️ Edita tu primera página</span><button type="button" data-reset>Restablecer</button></div>
   <div class="pg-body">
@@ -233,7 +242,14 @@
         </tbody>
       </table></div>
 
-      <section class="quiz" id="quiz" aria-labelledby="t-quiz">
+      <figure class="gif-demo">
+  <button type="button" class="gif-btn" data-gif="../assets/gif/quiz.gif" aria-label="Reproducir animación: Se responden cuatro preguntas y cada una muestra al instante si es correcta y por qué">
+    <img src="../assets/gif/quiz.png" alt="Se responden cuatro preguntas y cada una muestra al instante si es correcta y por qué" width="640" height="360" loading="lazy">
+    <span class="gif-play">▶ Ver animación</span>
+  </button>
+  <figcaption>Las preguntas dicen al instante si acertaste y explican la respuesta.</figcaption>
+</figure>
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
 <h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
 <p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
 <div class="quiz-q"><p>¿Qué describe HTML?</p><ul class="opts"><li><button type="button" class="opt">El aspecto visual de la página</button></li><li><button type="button" class="opt" data-ok>La estructura y el contenido de la página</button></li><li><button type="button" class="opt">El comportamiento e interacción</button></li><li><button type="button" class="opt">La base de datos del sitio</button></li></ul><p class="explain" hidden>HTML estructura el contenido; CSS da el aspecto y JavaScript el comportamiento.</p></div>
@@ -251,13 +267,13 @@
       </div>
 
       <nav class="pager" aria-label="Navegación entre lecciones">
-        <a href="../"><small>← Volver</small>Índice del curso</a>
+        <a href="../html/"><small>← Volver</small>Índice del curso</a>
         <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de la lección 1</a>
       </nav>
     </article>
   </main>
 
-  <footer class="site-footer">Curso de HTML · Lección 1 · Material elaborado con ayuda de inteligencia artificial.</footer>
+  <footer class="site-footer">Curso de HTML · Lección 1 · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&title=%5BError%5D%20Lecci%C3%B3n%201%3A%20Primeros%20pasos%20%C2%B7%20Curso%20de%20HTML&pagina=https%3A//cacg-code.github.io/PRACTICAS-HTML/01-primeros-pasos/" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
   <script src="../assets/curso.js"></script>
 </body>
 </html>

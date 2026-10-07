@@ -1,5 +1,7 @@
 // Curso de HTML · interacciones mínimas (todo es opcional, la página funciona sin JS)
 (function () {
+  // Configuración del sitio: escribe aquí tu código de GoatCounter para activar las estadísticas (sin cookies).
+  var CONFIG = { goatcounter: '' };
   var root = document.documentElement;
   var store = {
     get: function (k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
@@ -232,10 +234,53 @@
       var min = c.min == null ? 1 : c.min;
       return els.length >= min && (c.max == null || els.length <= c.max);
     };
+    var paint = function (items, hintOf) {
+      var ok = 0;
+      items.forEach(function (it, i) {
+        if (it.ok) ok++;
+        var li = document.createElement('li'); li.style.setProperty('--i', i);
+        if (it.ok) li.className = 'ok';
+        var d = document.createElement('span'); d.textContent = it.d;
+        var h = document.createElement('span'); h.className = 'hint'; h.textContent = '💡 ' + (it.h || '');
+        li.appendChild(d); li.appendChild(h); clist.appendChild(li);
+      });
+      var all = ok === items.length;
+      csum.textContent = all ? '🎉 ¡Todo correcto! Cumples los ' + ok + ' puntos.' : ok + ' de ' + items.length + ' puntos cumplidos. Revisa las pistas en rojo.';
+      if (all) csum.className = 'chk-sum all';
+    };
+    // Comprobación «en vivo»: ejecuta el código del alumno en un iframe aislado y prueba el resultado
+    var runLive = function (src) {
+      csum.textContent = 'Comprobando…';
+      var id = 'ck' + Math.random().toString(36).slice(2);
+      var fr = document.createElement('iframe');
+      fr.setAttribute('sandbox', 'allow-scripts'); fr.setAttribute('aria-hidden', 'true'); fr.tabIndex = -1;
+      fr.style.cssText = 'position:absolute;left:-9999px;top:0;border:0;height:700px;width:' + (cfg.width || 800) + 'px';
+      var safe = src.replace(/<\/(script|style)/gi, '<\\/$1');
+      var tests = cfg.checks.map(function (c) { return c.t; });
+      var shimCk = '<script>window.__logs=[];window.__err="";console.log=function(){window.__logs.push([].map.call(arguments,function(a){return typeof a==="string"?a:JSON.stringify(a)}).join(" "))};window.addEventListener("error",function(e){window.__err=e.message});<\/script>';
+      var runner = '<script>(function(){var AF=Object.getPrototypeOf(async function(){}).constructor;var T=' + JSON.stringify(tests) + ';' +
+        'var run=async function(){var res=[];for(var i=0;i<T.length;i++){var ok=false;try{ok=!!(await Promise.race([new AF(T[i])(),new Promise(function(r){setTimeout(function(){r(false)},1500)})]))}catch(e){ok=false}res.push(ok)}' +
+        'parent.postMessage({ck:' + JSON.stringify(id) + ',res:res,err:window.__err},"*")};' +
+        'setTimeout(run,60)})();<\/script>';
+      var body = '<meta charset="utf-8">' + (cfg.mode === 'cssl' ? '<style>' + safe + '</style>' : '') + (cfg.scaffold || '') + shimCk +
+        (cfg.mode === 'js' ? '<script>' + safe + '<\/script>' : '') + runner;
+      var done = false;
+      var finish = function (res, err) {
+        if (done) return; done = true; removeEventListener('message', onMsg); fr.remove();
+        clist.innerHTML = ''; csum.className = 'chk-sum';
+        paint(cfg.checks.map(function (c, i) { return { d: c.d, h: c.h, ok: !!res[i] }; }));
+        if (err) { var e = document.createElement('li'); e.style.setProperty('--i', 0); var d = document.createElement('span'); d.textContent = 'Tu código produjo un error: ' + err; var h = document.createElement('span'); h.className = 'hint'; h.textContent = '💡 Corrige este error primero; suele ser una llave, comilla o paréntesis sin cerrar, o un nombre mal escrito.'; e.appendChild(d); e.appendChild(h); clist.insertBefore(e, clist.firstChild); }
+      };
+      var onMsg = function (e) { var d = e.data; if (d && d.ck === id && e.source === fr.contentWindow) finish(d.res, d.err); };
+      addEventListener('message', onMsg);
+      setTimeout(function () { finish([], 'el código tardó demasiado en responder (¿hay un bucle infinito?)'); }, 12000);
+      fr.srcdoc = body; document.body.appendChild(fr);
+    };
     var run = function () {
       var src = cta.value;
       clist.innerHTML = ''; csum.className = 'chk-sum';
       if (!src.trim()) { csum.textContent = 'Pega primero tu código en el cuadro de arriba.'; return; }
+      if (cfg.mode === 'js' || cfg.mode === 'cssl') { runLive(src); return; }
       var doc = new DOMParser().parseFromString(src, 'text/html');
       var ok = 0;
       cfg.checks.forEach(function (c, i) {
@@ -306,4 +351,84 @@
   markScrollers();
   addEventListener('resize', markScrollers);
   addEventListener('load', markScrollers);
+
+  // ---------- Estadísticas anónimas (opcional, GoatCounter) ----------
+  if (CONFIG.goatcounter && location.protocol !== 'file:' && navigator.doNotTrack !== '1') {
+    var gc = document.createElement('script');
+    gc.async = true;
+    gc.src = 'https://gc.zgo.at/count.js';
+    gc.setAttribute('data-goatcounter', 'https://' + CONFIG.goatcounter + '.goatcounter.com/count');
+    document.head.appendChild(gc);
+  }
+
+  // ---------- Animaciones GIF bajo demanda (accesibles: no se reproducen solas) ----------
+  document.querySelectorAll('.gif-btn').forEach(function (btn) {
+    var img = btn.querySelector('img'), label = btn.querySelector('.gif-play'), still = img.getAttribute('src'), playing = false;
+    btn.addEventListener('click', function () {
+      playing = !playing;
+      img.src = playing ? btn.getAttribute('data-gif') + '?r=' + Date.now() : still;
+      label.textContent = playing ? '⏸ Detener' : '▶ Ver animación';
+      btn.setAttribute('aria-pressed', playing ? 'true' : 'false');
+    });
+  });
+
+  // ---------- Editor con distintos anchos de pantalla ----------
+  document.querySelectorAll('.playground[data-widths]').forEach(function (pg) {
+    var ta = pg.querySelector('.pg-code'), fr = pg.querySelector('.pg-out'), lab = pg.querySelector('.pg-wlabel');
+    pg.querySelectorAll('[data-w]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var w = b.getAttribute('data-w');
+        fr.style.width = /%$/.test(w) ? w : w + 'px';
+        lab.textContent = /%$/.test(w) ? 'completo' : w + ' px';
+      });
+    });
+  });
+
+  // ---------- Editor de JavaScript con consola ----------
+  var shim = function (id) {
+    return '<script>(function(){var id=' + JSON.stringify(id) + ';window.__logs=[];var fmt=function(a){try{if(typeof a==="string")return a;if(a instanceof Error)return a.name+": "+a.message;if(typeof a==="function")return a.toString();if(a===undefined)return "undefined";var rep=function(k,v){return typeof v==="function"?"[Función]":v===undefined?"undefined":v};var j=JSON.stringify(a,rep);return j&&j.length>70?JSON.stringify(a,rep,2):j}catch(e){return String(a)}};var send=function(l,args){var t=[].map.call(args,fmt).join(" ");window.__logs.push(t);parent.postMessage({pg:id,l:l,t:t},"*")};["log","info","warn","error","table"].forEach(function(m){console[m]=function(){send(m==="table"?"log":m,arguments)}});window.addEventListener("error",function(e){send("error",[e.message])});window.addEventListener("unhandledrejection",function(e){send("error",["Promesa rechazada: "+(e.reason&&e.reason.message||e.reason)])});})();<\/script>';
+  };
+  var jsPlaygrounds = [];
+  document.querySelectorAll('.playground[data-js]').forEach(function (pg) {
+    var ta = pg.querySelector('.pg-code'), host = pg.querySelector('.pg-frame'), log = pg.querySelector('.pg-log');
+    var original = ta.value;
+    pg._run = function () {
+      log.textContent = '';
+      var id = 'pg' + Math.random().toString(36).slice(2);
+      var fr = document.createElement('iframe');
+      fr.className = 'pg-out'; fr.title = 'Resultado en vivo'; fr.setAttribute('sandbox', 'allow-scripts');
+      fr.srcdoc = BASE + shim(id) + ta.value;
+      host.innerHTML = ''; host.appendChild(fr);
+      pg._id = id; pg._frame = fr;
+    };
+    pg.querySelector('[data-run]').addEventListener('click', pg._run);
+    pg.querySelector('[data-reset]').addEventListener('click', function () { ta.value = original; pg._run(); });
+    pg.querySelector('[data-clear]').addEventListener('click', function () { log.textContent = ''; });
+    ta.addEventListener('keydown', function (e) {
+      if (e.key === 'Tab' && !e.shiftKey) { e.preventDefault(); var st = ta.selectionStart; ta.value = ta.value.slice(0, st) + '  ' + ta.value.slice(ta.selectionEnd); ta.selectionStart = ta.selectionEnd = st + 2; }
+      if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) { e.preventDefault(); pg._run(); }
+    });
+    jsPlaygrounds.push(pg);
+  });
+  addEventListener('message', function (e) {
+    var d = e.data; if (!d || !d.pg) return;
+    var pg = jsPlaygrounds.filter(function (p) { return p._id === d.pg && p._frame && p._frame.contentWindow === e.source; })[0];
+    if (!pg) return;
+    var line = document.createElement('div'); line.className = 'log-' + d.l; line.textContent = d.t;
+    pg.querySelector('.pg-log').appendChild(line);
+  });
+  if (jsPlaygrounds.length && 'IntersectionObserver' in window) {
+    var jio = new IntersectionObserver(function (es) { es.forEach(function (en) { if (en.isIntersecting) { en.target._run(); jio.unobserve(en.target); } }); }, { rootMargin: '0px 0px -10% 0px' });
+    jsPlaygrounds.forEach(function (pg) { jio.observe(pg); });
+  } else { jsPlaygrounds.forEach(function (pg) { pg._run(); }); }
+
+  // ---------- Progreso por curso (biblioteca) ----------
+  document.querySelectorAll('[data-course]').forEach(function (c) {
+    var keys = c.getAttribute('data-keys').split(','), pre = c.getAttribute('data-prefix') || '', done = 0;
+    keys.forEach(function (k) { if (store.get('leccion:' + pre + k) === '1') done++; });
+    var bar = c.querySelector('.progress > div'), txt = c.querySelector('.course-prog');
+    if (bar) bar.style.width = (done / keys.length * 100) + '%';
+    if (txt) txt.textContent = done === 0 ? 'Sin empezar' : done === keys.length ? '🎉 Curso completado' : done + ' de ' + keys.length + ' completadas';
+    if (done) c.classList.add('started');
+  });
 })();
