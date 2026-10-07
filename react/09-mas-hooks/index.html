@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lección 9: Más hooks: useRef, useReducer y hooks propios · Curso de React</title>
+  <meta name="description" content="Más hooks: useRef para el DOM y valores mutables, useReducer para estados complejos, useMemo y useCallback con criterio, hooks personalizados y las reglas de los hooks.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/react/09-mas-hooks/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Lección 9: Más hooks: useRef, useReducer y hooks propios · Curso de React">
+  <meta property="og:description" content="Más hooks: useRef para el DOM y valores mutables, useReducer para estados complejos, useMemo y useCallback con criterio, hooks personalizados y las reglas de los hooks.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/react/09-mas-hooks/">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de React</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap lesson-layout" id="contenido">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#useref">useRef: una referencia que no provoca dibujos</a></li><li><a href="#usereducer">useReducer: estado con muchas acciones</a></li><li><a href="#memo">useMemo y useCallback: optimizar con cabeza</a></li><li><a href="#personalizados">Hooks personalizados: reutilizar lógica</a></li><li><a href="#reglas">Las reglas de los hooks</a></li><li><a href="#errores">Errores frecuentes</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de React</a> › Lección 9</div>
+        <h1>Más hooks: useRef, useReducer y hooks propios</h1>
+        <ul class="meta"><li>⏱ 55 minutos</li><li>📶 Nivel: principiante</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Acceder al DOM y guardar valores mutables con <code>useRef</code>.</li><li>Organizar estados complejos con <code>useReducer</code>.</li><li>Saber cuándo (y cuándo no) memorizar.</li><li>Crear y reutilizar hooks personalizados.</li></ul>
+</div>
+
+<h2 id="useref"><span class="n">1.</span>useRef: una referencia que no provoca dibujos</h2>
+<p><code>useRef</code> devuelve un <strong>objeto que se conserva entre dibujos</strong> y cuya propiedad <code>.current</code> puedes leer y cambiar <strong>sin que React vuelva a dibujar</strong>. Tiene dos usos principales:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Uso</th><th>Ejemplo</th></tr></thead>
+<tbody><tr><td><strong>Acceder a un elemento del DOM</strong></td><td>Enfocar un campo, hacer scroll, medir un tamaño, reproducir un video</td></tr><tr><td><strong>Guardar un valor mutable</strong> que no se muestra</td><td>El id de un temporizador, el valor anterior de algo, un contador interno</td></tr></tbody>
+</table></div>
+<div class="playground js" data-js data-react>
+  <div class="pg-head"><span>⚛️ Enfocar un campo con una referencia</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de React" style="height:250px">import { useRef } from "react";
+
+function App() {
+  const campo = useRef(null);
+
+  function enfocar() {
+    campo.current.focus();          // .current es el &lt;input&gt; real del DOM
+  }
+
+  return (
+    &lt;main&gt;
+      &lt;input ref={campo} placeholder="Escribe aquí" /&gt;{" "}
+      &lt;button onClick={enfocar}&gt;Enfocar el campo&lt;/button&gt;
+    &lt;/main&gt;
+  );
+}</textarea></div>
+    <div><label>Resultado</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<div class="playground js" data-js data-react>
+  <div class="pg-head"><span>⚛️ Guardar un valor sin redibujar</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de React" style="height:300px">import { useRef, useState } from "react";
+
+function App() {
+  const [veces, setVeces] = useState(0);
+  const pulsaciones = useRef(0);            // no provoca dibujo al cambiar
+
+  function pulsar() {
+    pulsaciones.current += 1;
+    console.log("Ref:", pulsaciones.current, "· Estado (aún):", veces);
+  }
+
+  return (
+    &lt;main&gt;
+      &lt;button onClick={pulsar}&gt;Cambiar ref (la pantalla no cambia)&lt;/button&gt;{" "}
+      &lt;button onClick={() =&gt; setVeces(veces + 1)}&gt;Cambiar estado (sí redibuja)&lt;/button&gt;
+      &lt;p&gt;Estado: {veces} · Ref actual al dibujar: {pulsaciones.current}&lt;/p&gt;
+    &lt;/main&gt;
+  );
+}</textarea></div>
+    <div><label>Resultado</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · Estado frente a referencia</p>
+<p>Si el valor <strong>se muestra en pantalla</strong>, debe ser <strong>estado</strong>. Si solo lo necesitas «recordar» sin dibujarlo, usa una <strong>referencia</strong>. No leas ni escribas <code>ref.current</code> <strong>mientras dibujas</strong> (en el cuerpo del componente): hazlo en eventos y efectos.</p>
+</div>
+
+<h2 id="usereducer"><span class="n">2.</span>useReducer: estado con muchas acciones</h2>
+<p>Cuando un estado tiene <strong>muchas formas de cambiar</strong> (agregar, quitar, editar, vaciar…), repartir <code>setX</code> por todo el componente se desordena. <strong><code>useReducer</code></strong> concentra toda la lógica en <strong>una sola función</strong>, el <strong>reductor</strong>, que recibe el estado actual y una <strong>acción</strong> y devuelve el estado nuevo.</p>
+<div class="anatomy" role="img" aria-label="useReducer devuelve el estado y dispatch; recibe el reductor y el estado inicial"><div class="part" style="--c:#ff8fa3"><span>const [</span><span class="lbl">&nbsp;</span></div><div class="part" style="--c:#ffd479"><span>estado</span><span class="lbl">estado actual</span></div><div class="part" style="--c:#ff8fa3"><span>, </span><span class="lbl">&nbsp;</span></div><div class="part" style="--c:#8ee6a0"><span>dispatch</span><span class="lbl">envía acciones</span></div><div class="part" style="--c:#ff8fa3"><span>] = useReducer(</span><span class="lbl">&nbsp;</span></div><div class="part" style="--c:#7cc4ff"><span>reductor</span><span class="lbl">reglas de cambio</span></div><div class="part" style="--c:#ff8fa3"><span>, </span><span class="lbl">&nbsp;</span></div><div class="part" style="--c:#c8a6ff"><span>inicial</span><span class="lbl">estado inicial</span></div><div class="part" style="--c:#ff8fa3"><span>);</span><span class="lbl">&nbsp;</span></div></div>
+<div class="playground js" data-js data-react>
+  <div class="pg-head"><span>⚛️ Un contador con acciones</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de React" style="height:470px">import { useReducer } from "react";
+
+// Una función pura: (estado, acción) → estado nuevo
+function reductor(estado, accion) {
+  switch (accion.tipo) {
+    case "sumar":     return { ...estado, cuenta: estado.cuenta + 1 };
+    case "restar":    return { ...estado, cuenta: estado.cuenta - 1 };
+    case "reiniciar": return { ...estado, cuenta: 0 };
+    default:          throw new Error("Acción desconocida: " + accion.tipo);
+  }
+}
+
+function App() {
+  const [estado, dispatch] = useReducer(reductor, { cuenta: 0 });
+
+  return (
+    &lt;main&gt;
+      &lt;p&gt;Cuenta: {estado.cuenta}&lt;/p&gt;
+      &lt;button onClick={() =&gt; dispatch({ tipo: "sumar" })}&gt;+1&lt;/button&gt;{" "}
+      &lt;button onClick={() =&gt; dispatch({ tipo: "restar" })}&gt;-1&lt;/button&gt;{" "}
+      &lt;button onClick={() =&gt; dispatch({ tipo: "reiniciar" })}&gt;Reiniciar&lt;/button&gt;
+    &lt;/main&gt;
+  );
+}</textarea></div>
+    <div><label>Resultado</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<div class="table-wrap"><table>
+<thead><tr><th><code>useState</code></th><th><code>useReducer</code></th></tr></thead>
+<tbody><tr><td>Estados <strong>simples</strong> (un número, un texto, un booleano)</td><td>Estados <strong>complejos</strong> (objetos con varias partes o listas con muchas operaciones)</td></tr><tr><td>Pocas formas de cambiar</td><td>Muchas acciones relacionadas</td></tr><tr><td>La lógica está en los manejadores de eventos</td><td>La lógica está <strong>centralizada</strong> y es fácil de probar</td></tr></tbody>
+</table></div>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Reductor + Context</p>
+<p>La combinación <code>useReducer</code> + Context es la «mini Redux» que muchas aplicaciones medianas necesitan. La verás completa en el proyecto final.</p>
+</div>
+
+<h2 id="memo"><span class="n">3.</span>useMemo y useCallback: optimizar con cabeza</h2>
+<p>React es rápido por defecto. Solo cuando midas un problema de rendimiento te servirán estas dos herramientas, que <strong>recuerdan un resultado entre dibujos</strong>:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Hook</th><th>Recuerda…</th><th>Se recalcula cuando…</th></tr></thead>
+<tbody><tr><td><strong><code>useMemo(() =&gt; cálculo, [deps])</code></strong></td><td>El <strong>resultado</strong> de un cálculo costoso</td><td>cambia alguna dependencia</td></tr><tr><td><strong><code>useCallback(fn, [deps])</code></strong></td><td>La <strong>función misma</strong> (misma referencia)</td><td>cambia alguna dependencia</td></tr></tbody>
+</table></div>
+<div class="playground js" data-js data-react>
+  <div class="pg-head"><span>⚛️ useMemo: no repetir un cálculo pesado</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de React" style="height:470px">import { useMemo, useState } from "react";
+
+function primosHasta(n) {
+  console.log("🔢 Calculando primos hasta", n);
+  const lista = [];
+  for (let i = 2; i &lt;= n; i++) {
+    let esPrimo = true;
+    for (let j = 2; j * j &lt;= i; j++) if (i % j === 0) { esPrimo = false; break; }
+    if (esPrimo) lista.push(i);
+  }
+  return lista;
+}
+
+function App() {
+  const [limite, setLimite] = useState(1000);
+  const [contador, setContador] = useState(0);
+
+  // Solo se recalcula cuando cambia «limite»
+  const primos = useMemo(() =&gt; primosHasta(limite), [limite]);
+
+  return (
+    &lt;main&gt;
+      &lt;p&gt;Hay {primos.length} primos hasta {limite}.&lt;/p&gt;
+      &lt;button onClick={() =&gt; setLimite(limite + 1000)}&gt;Aumentar límite&lt;/button&gt;{" "}
+      &lt;button onClick={() =&gt; setContador(contador + 1)}&gt;Otro estado: {contador}&lt;/button&gt;
+      &lt;p&gt;&lt;small&gt;Pulsa el segundo botón: la consola no repite el cálculo.&lt;/small&gt;&lt;/p&gt;
+    &lt;/main&gt;
+  );
+}</textarea></div>
+    <div><label>Resultado</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · No los uses «por si acaso»</p>
+<p>Memorizar tiene un costo (memoria y código más difícil de leer). <strong>Empieza sin ellos</strong>, mide con las herramientas de desarrollo y úsalos donde de verdad haya lentitud. <code>useCallback</code> solo aporta algo cuando pasas la función a un componente envuelto en <code>memo</code> o a las dependencias de un efecto.</p>
+</div>
+
+<h2 id="personalizados"><span class="n">4.</span>Hooks personalizados: reutilizar lógica</h2>
+<p>Un <strong>hook personalizado</strong> es una función cuyo nombre <strong>empieza por <code>use</code></strong> y que usa otros hooks dentro. Sirve para <strong>extraer lógica con estado</strong> y reutilizarla en varios componentes, igual que un componente reutiliza JSX.</p>
+<div class="playground js" data-js data-react>
+  <div class="pg-head"><span>⚛️ useToggle y useContador</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de React" style="height:640px">import { useState } from "react";
+
+// Hook 1: alternar un booleano
+function useToggle(inicial = false) {
+  const [valor, setValor] = useState(inicial);
+  const alternar = () =&gt; setValor((v) =&gt; !v);
+  return [valor, alternar];
+}
+
+// Hook 2: un contador con límites
+function useContador(inicial = 0, max = 10) {
+  const [n, setN] = useState(inicial);
+  return {
+    n,
+    sumar: () =&gt; setN((v) =&gt; Math.min(max, v + 1)),
+    restar: () =&gt; setN((v) =&gt; Math.max(0, v - 1)),
+    reiniciar: () =&gt; setN(inicial),
+  };
+}
+
+function Panel() {
+  const [abierto, alternar] = useToggle();
+  return (
+    &lt;section&gt;
+      &lt;button onClick={alternar}&gt;{abierto ? "Cerrar" : "Abrir"} panel&lt;/button&gt;
+      {abierto &amp;&amp; &lt;p&gt;Contenido del panel&lt;/p&gt;}
+    &lt;/section&gt;
+  );
+}
+
+function Votos() {
+  const { n, sumar, restar } = useContador(0, 5);
+  return &lt;p&gt;Votos: {n} &lt;button onClick={sumar}&gt;+&lt;/button&gt; &lt;button onClick={restar}&gt;−&lt;/button&gt;&lt;/p&gt;;
+}
+
+function App() {
+  return &lt;main&gt;&lt;Panel /&gt;&lt;Votos /&gt;&lt;Votos /&gt;&lt;/main&gt;;
+}</textarea></div>
+    <div><label>Resultado</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · Se comparte la lógica, no el estado</p>
+<p>Cada vez que usas un hook personalizado, <strong>cada componente obtiene su propio estado</strong>. Los dos <code>&lt;Votos /&gt;</code> tienen contadores separados aunque usen el mismo hook.</p>
+</div>
+<div class="code">
+  <div class="code-head"><span>Un clásico: useLocalStorage</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">function</span> useLocalStorage(clave, inicial) {
+  <span class="tk-tag">const</span> [valor, setValor] = useState(() =&gt; {
+    <span class="tk-tag">const</span> guardado = localStorage.getItem(clave);
+    <span class="tk-tag">return</span> guardado !== <span class="tk-tag">null</span> ? JSON.parse(guardado) : inicial;
+  });
+
+  useEffect(() =&gt; {
+    localStorage.setItem(clave, JSON.stringify(valor));
+  }, [clave, valor]);
+
+  <span class="tk-tag">return</span> [valor, setValor];
+}
+
+<span class="tk-com">// Se usa igual que useState, pero persiste</span>
+<span class="tk-tag">const</span> [nombre, setNombre] = useLocalStorage(<span class="tk-val">"nombre"</span>, <span class="tk-val">""</span>);</code></pre>
+</div>
+
+<h2 id="reglas"><span class="n">5.</span>Las reglas de los hooks</h2>
+<ul><li><strong>Solo en el nivel superior:</strong> no los llames dentro de <code>if</code>, bucles ni funciones anidadas.</li><li><strong>Solo en componentes o en otros hooks:</strong> no en funciones normales de JavaScript.</li><li><strong>Los hooks personalizados empiezan por <code>use</code>:</strong> así las herramientas reconocen que son hooks y vigilan las reglas.</li></ul>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Instala el linter</p>
+<p>Los proyectos de Vite traen <code>eslint-plugin-react-hooks</code>, que te avisa si rompes estas reglas o si olvidas una dependencia. Es de las ayudas más valiosas al aprender.</p>
+</div>
+
+<h2 id="errores"><span class="n">6.</span>Errores frecuentes</h2>
+<ul><li><strong>Usar <code>ref.current</code> para algo que se muestra:</strong> la pantalla no se actualizará; usa estado.</li><li><strong>Leer <code>ref.current</code> mientras dibujas:</strong> puede estar <code>null</code> en el primer dibujo.</li><li><strong>Mutar el estado dentro del reductor:</strong> debe devolver siempre un objeto <strong>nuevo</strong>.</li><li><strong>Olvidar el <code>default</code> del reductor:</strong> una acción mal escrita pasa desapercibida.</li><li><strong>Usar <code>useMemo</code> por todas partes:</strong> añade complejidad sin beneficio medido.</li><li><strong>Dependencias incompletas</strong> en <code>useMemo</code> y <code>useCallback</code>: devuelven valores viejos.</li><li><strong>Un hook personalizado sin <code>use</code> al inicio:</strong> React no puede comprobar las reglas.</li></ul>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li><code>useRef</code> guarda un valor <strong>mutable que no redibuja</strong> y da acceso a <strong>elementos del DOM</strong> (<code>ref={campo}</code> → <code>campo.current</code>).</li><li>Si se muestra en pantalla, es <strong>estado</strong>; si solo se recuerda, es <strong>ref</strong>.</li><li><code>useReducer(reductor, inicial)</code> centraliza los cambios de un estado complejo con <strong>acciones</strong> (<code>dispatch({ tipo })</code>).</li><li>El reductor es una <strong>función pura</strong>: <code>(estado, acción) → estado nuevo</code>.</li><li><code>useMemo</code> recuerda un <strong>resultado</strong>; <code>useCallback</code> recuerda una <strong>función</strong>. Úsalos <strong>solo si mides</strong> un problema.</li><li>Un <strong>hook personalizado</strong> (<code>useAlgo</code>) extrae lógica con estado para reutilizarla.</li><li>Reglas de los hooks: <strong>nivel superior</strong> y solo en <strong>componentes u otros hooks</strong>.</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">7.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td><code>useRef</code></td><td>Hook que devuelve un objeto <code>{ current }</code> estable entre dibujos.</td></tr><tr><td><code>useReducer</code></td><td>Hook para manejar estado complejo mediante un reductor y acciones.</td></tr><tr><td>Reductor (reducer)</td><td>Función pura que recibe estado y acción y devuelve el nuevo estado.</td></tr><tr><td>Acción</td><td>Objeto que describe qué ocurrió, por ejemplo <code>{ tipo: "sumar" }</code>.</td></tr><tr><td><code>useMemo</code></td><td>Hook que recuerda el resultado de un cálculo mientras no cambien sus dependencias.</td></tr><tr><td><code>useCallback</code></td><td>Hook que recuerda una función con la misma referencia entre dibujos.</td></tr><tr><td>Hook personalizado</td><td>Función <code>useAlgo</code> que reutiliza lógica con hooks entre componentes.</td></tr></tbody>
+</table></div>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>¿Qué ocurre al cambiar <code>miRef.current</code>?</p><ul class="opts"><li><button type="button" class="opt">React vuelve a dibujar</button></li><li><button type="button" class="opt" data-ok>No se redibuja nada</button></li><li><button type="button" class="opt">Se lanza un error</button></li><li><button type="button" class="opt">Se borra el estado</button></li></ul><p class="explain" hidden>Las referencias no provocan nuevos dibujos.</p></div>
+<div class="quiz-q"><p>Necesitas enfocar un <code>&lt;input&gt;</code> al pulsar un botón. ¿Qué usas?</p><ul class="opts"><li><button type="button" class="opt"><code>useState</code></button></li><li><button type="button" class="opt" data-ok><code>useRef</code></button></li><li><button type="button" class="opt"><code>useMemo</code></button></li><li><button type="button" class="opt"><code>useReducer</code></button></li></ul><p class="explain" hidden>Con <code>ref={campo}</code> accedes al elemento real y llamas a <code>campo.current.focus()</code>.</p></div>
+<div class="quiz-q"><p>¿Qué debe devolver un reductor?</p><ul class="opts"><li><button type="button" class="opt">El mismo estado modificado</button></li><li><button type="button" class="opt" data-ok>Un estado nuevo, sin mutar el anterior</button></li><li><button type="button" class="opt"><code>undefined</code></button></li><li><button type="button" class="opt">Una promesa</button></li></ul><p class="explain" hidden>Es una función pura: crea siempre un estado nuevo.</p></div>
+<div class="quiz-q"><p>¿Cuál es un nombre válido para un hook personalizado?</p><ul class="opts"><li><button type="button" class="opt"><code>toggle</code></button></li><li><button type="button" class="opt" data-ok><code>useToggle</code></button></li><li><button type="button" class="opt"><code>HookToggle</code></button></li><li><button type="button" class="opt"><code>getToggle</code></button></li></ul><p class="explain" hidden>Los hooks personalizados empiezan por <code>use</code>.</p></div>
+<div class="quiz-q"><p>¿Cuándo conviene usar <code>useMemo</code>?</p><ul class="opts"><li><button type="button" class="opt">En cada variable</button></li><li><button type="button" class="opt" data-ok>Cuando mides que un cálculo costoso se repite sin necesidad</button></li><li><button type="button" class="opt">Nunca</button></li><li><button type="button" class="opt">Solo en formularios</button></li></ul><p class="explain" hidden>Es una optimización: úsala donde haya un problema real de rendimiento.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="react-09">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../08-compartir-estado/ejercicio.html"><small>← Anterior</small>Ejercicio: Compartir estado: elevar y Context</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de React · Lección 9 · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&title=%5BError%5D%20Lecci%C3%B3n%209%3A%20M%C3%A1s%20hooks%3A%20useRef%2C%20useReducer%20y%20hooks%20propios%20%C2%B7%20Curso%20de%20React&pagina=https%3A//cacg-code.github.io/PRACTICAS-HTML/react/09-mas-hooks/" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

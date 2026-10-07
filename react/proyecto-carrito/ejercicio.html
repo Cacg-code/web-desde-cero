@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ejercicio · Proyecto: carrito de compras · Curso de React</title>
+  <meta name="description" content="Ejercicio práctico de: Proyecto: carrito de compras.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/react/proyecto-carrito/ejercicio.html">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Ejercicio · Proyecto: carrito de compras · Curso de React">
+  <meta property="og:description" content="Ejercicio práctico de: Proyecto: carrito de compras.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/react/proyecto-carrito/ejercicio.html">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de React</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap" id="contenido" style="max-width:820px;padding-top:2rem;padding-bottom:3rem">
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de React</a> › <a href="./">Proyecto final</a> › Ejercicio</div>
+        <h1>Ejercicio: Proyecto: carrito de compras</h1>
+        <ul class="meta"><li>⏱ 120 minutos</li><li>📶 Nivel: principiante</li></ul>
+      </header>
+
+      <h2>Objetivo</h2>
+      <p>Construir la tienda completa. Las pruebas usan tu aplicación como lo haría una persona: buscan, agregan, suman, restan, quitan y recargan.</p>
+
+      <h3>Cómo se trabaja</h3>
+      <p>El <strong>código inicial ya incluye los datos</strong> (<code>PRODUCTOS</code>) y la función <code>moneda</code>: <strong>no los modifiques</strong>. Escribe el resto: el reductor, el contexto, los componentes y <code>App</code>. Prueba en el editor y, cuando todo funcione, pega <strong>todo</strong> el archivo en el comprobador.</p>
+<div class="playground js" data-js data-react>
+  <div class="pg-head"><span>⚛️ Tu editor de React (empieza desde aquí)</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de React" style="height:300px">import { createContext, useContext, useEffect, useReducer, useState } from "react";
+
+const PRODUCTOS = [
+  { id: 1, nombre: "Teclado", precio: 25, categoria: "Periféricos" },
+  { id: 2, nombre: "Mouse", precio: 12.5, categoria: "Periféricos" },
+  { id: 3, nombre: "Monitor", precio: 180, categoria: "Pantallas" },
+  { id: 4, nombre: "Webcam", precio: 40, categoria: "Pantallas" },
+];
+
+const moneda = (n) =&gt; "$" + n.toFixed(2);
+
+function App() {
+  return &lt;h1&gt;Tienda&lt;/h1&gt;;
+}</textarea></div>
+    <div><label>Resultado</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+
+      <h2>Pasos</h2>
+      <p>Marca cada paso a medida que lo completes. Tu avance se guarda en este navegador.</p>
+      <div class="progress" aria-hidden="true"><div></div></div>
+      <p id="progreso-texto" style="color:var(--muted);font-size:.9rem" aria-live="polite"></p>
+      <ul class="checklist"><li><label><input type="checkbox" id="p1"><span>Dibuja el <strong>catálogo</strong>: un <code>&lt;article className="producto"&gt;</code> por producto, con <code>&lt;h3&gt;</code>, <code>&lt;p className="precio"&gt;</code> (formato <code>$25.00</code>) y un botón <strong>«Agregar»</strong>.</span></label></li><li><label><input type="checkbox" id="p2"><span>Añade el <strong>buscador</strong> (<code>&lt;input type="search"&gt;</code>) que filtre por nombre sin distinguir mayúsculas.</span></label></li><li><label><input type="checkbox" id="p3"><span>Escribe el <strong>reductor</strong> con <code>agregar</code>, <code>sumar</code>, <code>restar</code> y <code>quitar</code>.</span></label></li><li><label><input type="checkbox" id="p4"><span>Crea el <strong>contexto</strong>, el <code>CarritoProvider</code> (con <code>useReducer</code>) y el hook <code>useCarrito()</code>.</span></label></li><li><label><input type="checkbox" id="p5"><span>Dibuja el <strong>carrito</strong> (<code>&lt;aside aria-label="Carrito"&gt;</code>): mensaje de vacío, líneas con <code>Restar</code>, <code>Sumar</code> y <code>Quitar</code>, y el total en <code>&lt;strong id="total"&gt;</code>.</span></label></li><li><label><input type="checkbox" id="p6"><span>Muestra el número de artículos en <code>&lt;span id="contador"&gt;</code>.</span></label></li><li><label><input type="checkbox" id="p7"><span><strong>Guarda</strong> el carrito en <code>localStorage</code> (clave <code>carrito</code>) y recupéralo al iniciar.</span></label></li></ul>
+      <details><summary>💡 Pista 1: agregar un producto repetido</summary><p>En el caso <code>"agregar"</code>, busca con <code>find</code> si ya existe la línea. Si existe, usa <code>map</code> para sumar 1; si no, <code>[...lineas, { ...producto, cantidad: 1 }]</code>.</p>
+</details>
+<details><summary>💡 Pista 2: cálculos</summary><p><code>lineas.reduce((suma, l) =&gt; suma + l.precio * l.cantidad, 0)</code> te da el total; con <code>l.cantidad</code> en lugar del producto, obtienes las unidades.</p>
+</details>
+<details><summary>💡 Pista 3: formato</summary><p>Escribe una función <code>moneda = (n) =&gt; "$" + n.toFixed(2)</code> y úsala en el catálogo y en el total.</p>
+</details>
+
+      <section class="checker" id="comprobador" aria-labelledby="t-chk">
+        <h2 id="t-chk">🔎 Comprueba tu trabajo</h2>
+        <p>Pega tu código y pulsa <strong>Comprobar</strong>. La revisión ocurre en tu navegador; nada se envía a ningún sitio. Cada punto en rojo incluye una pista.</p>
+        <label for="chk-code">Tu código de React (el archivo App.jsx completo)</label>
+        <textarea id="chk-code" rows="10" spellcheck="false" placeholder="Pega aquí el contenido completo de tu archivo App.jsx"></textarea>
+        <div class="chk-actions"><button class="btn" type="button" id="chk-run">Comprobar</button><button class="icon-btn" type="button" id="chk-clear">Limpiar</button></div>
+        <p class="chk-sum" id="chk-sum" aria-live="polite"></p>
+        <ul class="chk-list" id="chk-list"></ul>
+        <script type="application/json" id="checks">{"mode": "react", "scaffold": "", "width": 700, "checks": [{"d": "El catálogo muestra los 4 productos con su precio (`$25.00`, `$12.50`…)", "h": "Dibuja `PRODUCTOS.map(...)` con `<p className=\"precio\">`.", "t": "var p=$$(\"#root .producto\");return p.length===4 && /Teclado/.test(p[0].textContent) && p[0].querySelector(\".precio\").textContent.trim()===\"$25.00\" && p[1].querySelector(\".precio\").textContent.trim()===\"$12.50\""}, {"d": "El carrito vacío muestra el mensaje, total `$0.00` y contador 0", "h": "Muestra `<p className=\"vacio\">` cuando no hay líneas.", "t": "return /vacío/.test(texto(\"#root .vacio\")) && texto(\"#root #total\")===\"$0.00\" && texto(\"#root #contador\")===\"0\" && !!$(\"#root aside[aria-label=Carrito]\")"}, {"d": "El buscador filtra: «mo» muestra Mouse y Monitor", "h": "Filtra con `toLowerCase().includes(...)` sobre un estado `busqueda`.", "t": "await escribir(\"#root input[type=search]\",\"mo\");var n=$$(\"#root .producto\").map(function(x){return x.querySelector(\"h3\").textContent});var ok=n.length===2 && n.indexOf(\"Mouse\")>-1 && n.indexOf(\"Monitor\")>-1;await escribir(\"#root input[type=search]\",\"\");return ok && $$(\"#root .producto\").length===4"}, {"d": "«Agregar» crea una línea con cantidad 1; total `$25.00`, contador 1", "h": "Despacha `{ tipo: \"agregar\", producto }`.", "t": "var a=$$(\"#root .producto\").filter(function(x){return /Teclado/.test(x.textContent)})[0];await click(a.querySelector(\"button\"));return $$(\"#root li.linea\").length===1 && texto(\"#root li.linea .cantidad\")===\"1\" && texto(\"#root #total\")===\"$25.00\" && texto(\"#root #contador\")===\"1\" && !$(\"#root .vacio\")"}, {"d": "Agregar el mismo producto suma cantidad (no duplica la línea); total `$62.50`, contador 3", "h": "En `agregar`, si la línea existe, suma 1 a su cantidad.", "t": "var t=$$(\"#root .producto\").filter(function(x){return /Teclado/.test(x.textContent)})[0],m=$$(\"#root .producto\").filter(function(x){return /Mouse/.test(x.textContent)})[0];await click(t.querySelector(\"button\"));await click(m.querySelector(\"button\"));var l=$$(\"#root li.linea\");return l.length===2 && l[0].querySelector(\".cantidad\").textContent===\"2\" && texto(\"#root #total\")===\"$62.50\" && texto(\"#root #contador\")===\"3\""}, {"d": "«Sumar» y «Restar» ajustan la cantidad y el total", "h": "Botones con `aria-label=\"Sumar\"` y `aria-label=\"Restar\"` que despachen sus acciones.", "t": "var l=$$(\"#root li.linea\")[1];await click(l.querySelector(\"[aria-label=Sumar]\"));var a=texto(\"#root #total\")===\"$75.00\" && $$(\"#root li.linea\")[1].querySelector(\".cantidad\").textContent===\"2\";await click($$(\"#root li.linea\")[1].querySelector(\"[aria-label=Restar]\"));return a && texto(\"#root #total\")===\"$62.50\""}, {"d": "Restar hasta 0 elimina la línea", "h": "Tras restar, descarta con `filter` las líneas con cantidad 0.", "t": "await click($$(\"#root li.linea\")[1].querySelector(\"[aria-label=Restar]\"));return $$(\"#root li.linea\").length===1 && texto(\"#root #total\")===\"$50.00\" && texto(\"#root #contador\")===\"2\""}, {"d": "«Quitar» elimina la línea completa y vuelve el mensaje de vacío", "h": "Despacha `{ tipo: \"quitar\", id }`.", "t": "await click($(\"#root li.linea [aria-label=Quitar]\"));return $$(\"#root li.linea\").length===0 && !!$(\"#root .vacio\") && texto(\"#root #total\")===\"$0.00\""}, {"d": "El carrito se guarda en `localStorage` y una nueva instancia lo recupera", "h": "Guarda con un efecto `[lineas]` y lee con el tercer argumento de `useReducer`.", "t": "var w=$$(\"#root .producto\").filter(function(x){return /Webcam/.test(x.textContent)})[0],mo=$$(\"#root .producto\").filter(function(x){return /Monitor/.test(x.textContent)})[0];await click(w.querySelector(\"button\"));await click(mo.querySelector(\"button\"));var g=JSON.parse(localStorage.getItem(\"carrito\")||\"[]\");var d=document.createElement(\"div\");document.body.appendChild(d);var r=createRoot(d);r.render(React.createElement(App));await tick(150);var n=d.querySelectorAll(\"li.linea\").length,t=d.querySelector(\"#total\").textContent;r.unmount();return g.length===2 && n===2 && t===\"$220.00\""}, {"d": "Usas `useReducer`, Context y `useEffect`, sin avisos ni errores", "h": "Combina `useReducer`, `createContext`/`useContext` y `useEffect` como en la solución.", "t": "return /useReducer\\s*\\(/.test(window.__src) && /createContext\\s*\\(/.test(window.__src) && /useContext\\s*\\(/.test(window.__src) && /useEffect\\s*\\(/.test(window.__src) && window.__warns.length===0 && !window.__err"}]}</script>
+      </section>
+      <details>
+        <summary>✅ Ver una solución completa de ejemplo</summary>
+        <p>Intenta resolverlo antes de mirar. Tu versión puede ser distinta y también correcta.</p>
+        <div class="code">
+  <div class="code-head"><span>App.jsx</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">import</span> { createContext, useContext, useEffect, useReducer, useState } <span class="tk-tag">from</span> <span class="tk-val">"react"</span>;
+
+<span class="tk-tag">const</span> PRODUCTOS = [
+  { id: <span class="tk-attr">1</span>, nombre: <span class="tk-val">"Teclado"</span>, precio: <span class="tk-attr">25</span>, categoria: <span class="tk-val">"Periféricos"</span> },
+  { id: <span class="tk-attr">2</span>, nombre: <span class="tk-val">"Mouse"</span>, precio: <span class="tk-attr">12.5</span>, categoria: <span class="tk-val">"Periféricos"</span> },
+  { id: <span class="tk-attr">3</span>, nombre: <span class="tk-val">"Monitor"</span>, precio: <span class="tk-attr">180</span>, categoria: <span class="tk-val">"Pantallas"</span> },
+  { id: <span class="tk-attr">4</span>, nombre: <span class="tk-val">"Webcam"</span>, precio: <span class="tk-attr">40</span>, categoria: <span class="tk-val">"Pantallas"</span> },
+];
+
+<span class="tk-tag">const</span> moneda = (n) =&gt; <span class="tk-val">"$"</span> + n.toFixed(<span class="tk-attr">2</span>);
+
+<span class="tk-com">// ----- Reductor: todas las formas de cambiar el carrito -----</span>
+<span class="tk-tag">function</span> reductor(lineas, accion) {
+  <span class="tk-tag">switch</span> (accion.tipo) {
+    <span class="tk-tag">case</span> <span class="tk-val">"agregar"</span>: {
+      <span class="tk-tag">const</span> existe = lineas.find((l) =&gt; l.id === accion.producto.id);
+      <span class="tk-tag">if</span> (existe) {
+        <span class="tk-tag">return</span> lineas.map((l) =&gt; (l.id === existe.id ? { ...l, cantidad: l.cantidad + <span class="tk-attr">1</span> } : l));
+      }
+      <span class="tk-tag">return</span> [...lineas, { ...accion.producto, cantidad: <span class="tk-attr">1</span> }];
+    }
+    <span class="tk-tag">case</span> <span class="tk-val">"sumar"</span>:
+      <span class="tk-tag">return</span> lineas.map((l) =&gt; (l.id === accion.id ? { ...l, cantidad: l.cantidad + <span class="tk-attr">1</span> } : l));
+    <span class="tk-tag">case</span> <span class="tk-val">"restar"</span>:
+      <span class="tk-tag">return</span> lineas
+        .map((l) =&gt; (l.id === accion.id ? { ...l, cantidad: l.cantidad - <span class="tk-attr">1</span> } : l))
+        .filter((l) =&gt; l.cantidad <span class="tk-tag">&gt;</span> <span class="tk-attr">0</span>);
+    <span class="tk-tag">case</span> <span class="tk-val">"quitar"</span>:
+      <span class="tk-tag">return</span> lineas.filter((l) =&gt; l.id !== accion.id);
+    <span class="tk-tag">default</span>:
+      <span class="tk-tag">return</span> lineas;
+  }
+}
+
+<span class="tk-com">// ----- Contexto y proveedor (con persistencia) -----</span>
+<span class="tk-tag">const</span> CarritoContext = createContext(<span class="tk-tag">null</span>);
+
+<span class="tk-tag">function</span> leerGuardado() {
+  <span class="tk-tag">try</span> {
+    <span class="tk-tag">return</span> JSON.parse(localStorage.getItem(<span class="tk-val">"carrito"</span>)) ?? [];
+  } <span class="tk-tag">catch</span> {
+    <span class="tk-tag">return</span> [];
+  }
+}
+
+<span class="tk-tag">function</span> CarritoProvider({ children }) {
+  <span class="tk-tag">const</span> [lineas, dispatch] = useReducer(reductor, [], leerGuardado);
+
+  useEffect(() =&gt; {
+    localStorage.setItem(<span class="tk-val">"carrito"</span>, JSON.stringify(lineas));
+  }, [lineas]);
+
+  <span class="tk-tag">const</span> total = lineas.reduce((suma, l) =&gt; suma + l.precio * l.cantidad, <span class="tk-attr">0</span>);
+  <span class="tk-tag">const</span> unidades = lineas.reduce((suma, l) =&gt; suma + l.cantidad, <span class="tk-attr">0</span>);
+
+  <span class="tk-tag">return</span> (
+    <span class="tk-tag">&lt;CarritoContext.Provider</span> <span class="tk-attr">value</span>={{ lineas, dispatch, total, <span class="tk-attr">unidades</span> }}<span class="tk-tag">&gt;</span>
+      {children}
+    <span class="tk-tag">&lt;/CarritoContext.Provider</span><span class="tk-tag">&gt;</span>
+  );
+}
+
+<span class="tk-tag">function</span> useCarrito() {
+  <span class="tk-tag">return</span> useContext(CarritoContext);
+}
+
+<span class="tk-com">// ----- Componentes -----</span>
+<span class="tk-tag">function</span> Catalogo() {
+  <span class="tk-tag">const</span> { dispatch } = useCarrito();
+  <span class="tk-tag">const</span> [busqueda, setBusqueda] = useState(<span class="tk-val">""</span>);
+  <span class="tk-tag">const</span> visibles = PRODUCTOS.filter((p) =&gt;
+    p.nombre.toLowerCase().includes(busqueda.trim().toLowerCase())
+  );
+
+  <span class="tk-tag">return</span> (
+    <span class="tk-tag">&lt;section</span> aria-<span class="tk-attr">label</span>=<span class="tk-val">"Catálogo"</span><span class="tk-tag">&gt;</span>
+      <span class="tk-tag">&lt;input</span>
+        <span class="tk-attr">type</span>=<span class="tk-val">"search"</span>
+        aria-<span class="tk-attr">label</span>=<span class="tk-val">"Buscar producto"</span>
+        <span class="tk-attr">placeholder</span>=<span class="tk-val">"Buscar…"</span>
+        <span class="tk-attr">value</span>={busqueda}
+        <span class="tk-attr">onChange</span>={(e) =&gt; setBusqueda(e.target.value)}
+      <span class="tk-tag">/&gt;</span>
+      {visibles.map((p) =&gt; (
+        <span class="tk-tag">&lt;article</span> <span class="tk-attr">key</span>={p.id} <span class="tk-attr">className</span>=<span class="tk-val">"producto"</span><span class="tk-tag">&gt;</span>
+          <span class="tk-tag">&lt;h3</span><span class="tk-tag">&gt;</span>{p.nombre}<span class="tk-tag">&lt;/h3</span><span class="tk-tag">&gt;</span>
+          <span class="tk-tag">&lt;p</span> <span class="tk-attr">className</span>=<span class="tk-val">"precio"</span><span class="tk-tag">&gt;</span>{moneda(p.precio)}<span class="tk-tag">&lt;/p</span><span class="tk-tag">&gt;</span>
+          <span class="tk-tag">&lt;button</span> <span class="tk-attr">onClick</span>={() =&gt; dispatch({ tipo: <span class="tk-val">"agregar"</span>, producto: <span class="tk-attr">p</span> })}<span class="tk-tag">&gt;</span>Agregar<span class="tk-tag">&lt;/button</span><span class="tk-tag">&gt;</span>
+        <span class="tk-tag">&lt;/article</span><span class="tk-tag">&gt;</span>
+      ))}
+    <span class="tk-tag">&lt;/section</span><span class="tk-tag">&gt;</span>
+  );
+}
+
+<span class="tk-tag">function</span> Carrito() {
+  <span class="tk-tag">const</span> { lineas, dispatch, total } = useCarrito();
+
+  <span class="tk-tag">return</span> (
+    <span class="tk-tag">&lt;aside</span> aria-<span class="tk-attr">label</span>=<span class="tk-val">"Carrito"</span><span class="tk-tag">&gt;</span>
+      <span class="tk-tag">&lt;h2</span><span class="tk-tag">&gt;</span>Tu carrito<span class="tk-tag">&lt;/h2</span><span class="tk-tag">&gt;</span>
+      {lineas.length === <span class="tk-attr">0</span> ? (
+        <span class="tk-tag">&lt;p</span> <span class="tk-attr">className</span>=<span class="tk-val">"vacio"</span><span class="tk-tag">&gt;</span>Tu carrito está vacío<span class="tk-tag">&lt;/p</span><span class="tk-tag">&gt;</span>
+      ) : (
+        <span class="tk-tag">&lt;ul</span> <span class="tk-attr">className</span>=<span class="tk-val">"lineas"</span><span class="tk-tag">&gt;</span>
+          {lineas.map((l) =&gt; (
+            <span class="tk-tag">&lt;li</span> <span class="tk-attr">key</span>={l.id} <span class="tk-attr">className</span>=<span class="tk-val">"linea"</span><span class="tk-tag">&gt;</span>
+              <span class="tk-tag">&lt;span</span> <span class="tk-attr">className</span>=<span class="tk-val">"nombre"</span><span class="tk-tag">&gt;</span>{l.nombre}<span class="tk-tag">&lt;/span</span><span class="tk-tag">&gt;</span>
+              <span class="tk-tag">&lt;button</span> aria-<span class="tk-attr">label</span>=<span class="tk-val">"Restar"</span> <span class="tk-attr">onClick</span>={() =&gt; dispatch({ tipo: <span class="tk-val">"restar"</span>, id: l.<span class="tk-attr">id</span> })}<span class="tk-tag">&gt;</span>−<span class="tk-tag">&lt;/button</span><span class="tk-tag">&gt;</span>
+              <span class="tk-tag">&lt;span</span> <span class="tk-attr">className</span>=<span class="tk-val">"cantidad"</span><span class="tk-tag">&gt;</span>{l.cantidad}<span class="tk-tag">&lt;/span</span><span class="tk-tag">&gt;</span>
+              <span class="tk-tag">&lt;button</span> aria-<span class="tk-attr">label</span>=<span class="tk-val">"Sumar"</span> <span class="tk-attr">onClick</span>={() =&gt; dispatch({ tipo: <span class="tk-val">"sumar"</span>, id: l.<span class="tk-attr">id</span> })}<span class="tk-tag">&gt;</span>+<span class="tk-tag">&lt;/button</span><span class="tk-tag">&gt;</span>
+              <span class="tk-tag">&lt;button</span> aria-<span class="tk-attr">label</span>=<span class="tk-val">"Quitar"</span> <span class="tk-attr">onClick</span>={() =&gt; dispatch({ tipo: <span class="tk-val">"quitar"</span>, id: l.<span class="tk-attr">id</span> })}<span class="tk-tag">&gt;</span>Quitar<span class="tk-tag">&lt;/button</span><span class="tk-tag">&gt;</span>
+            <span class="tk-tag">&lt;/li</span><span class="tk-tag">&gt;</span>
+          ))}
+        <span class="tk-tag">&lt;/ul</span><span class="tk-tag">&gt;</span>
+      )}
+      <span class="tk-tag">&lt;p</span><span class="tk-tag">&gt;</span>Total: <span class="tk-tag">&lt;strong</span> <span class="tk-attr">id</span>=<span class="tk-val">"total"</span><span class="tk-tag">&gt;</span>{moneda(total)}<span class="tk-tag">&lt;/strong</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;/p</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;/aside</span><span class="tk-tag">&gt;</span>
+  );
+}
+
+<span class="tk-tag">function</span> Cabecera() {
+  <span class="tk-tag">const</span> { unidades } = useCarrito();
+  <span class="tk-tag">return</span> (
+    <span class="tk-tag">&lt;header</span><span class="tk-tag">&gt;</span>
+      <span class="tk-tag">&lt;h1</span><span class="tk-tag">&gt;</span>Tienda<span class="tk-tag">&lt;/h1</span><span class="tk-tag">&gt;</span>
+      <span class="tk-tag">&lt;p</span><span class="tk-tag">&gt;</span>Artículos: <span class="tk-tag">&lt;span</span> <span class="tk-attr">id</span>=<span class="tk-val">"contador"</span><span class="tk-tag">&gt;</span>{unidades}<span class="tk-tag">&lt;/span</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;/p</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;/header</span><span class="tk-tag">&gt;</span>
+  );
+}
+
+<span class="tk-tag">export</span> <span class="tk-tag">default</span> <span class="tk-tag">function</span> App() {
+  <span class="tk-tag">return</span> (
+    <span class="tk-tag">&lt;CarritoProvider</span><span class="tk-tag">&gt;</span>
+      <span class="tk-tag">&lt;Cabecera</span> <span class="tk-tag">/&gt;</span>
+      <span class="tk-tag">&lt;Catalogo</span> <span class="tk-tag">/&gt;</span>
+      <span class="tk-tag">&lt;Carrito</span> <span class="tk-tag">/&gt;</span>
+    <span class="tk-tag">&lt;/CarritoProvider</span><span class="tk-tag">&gt;</span>
+  );
+}</code></pre>
+</div>
+
+      </details>
+      <div class="callout consejo">
+<p class="callout-title">💡 🏁 Reto extra (opcional)</p>
+<p>Añade un filtro por categoría y un campo de cupón de descuento con el código <code>REACT10</code> (10 %).</p>
+</div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="./"><small>← Anterior</small>Volver a proyecto final</a>
+        <a class="next" href="../"><small>¡Terminaste! →</small>Volver al índice del curso</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de React · Ejercicio de proyecto final · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&title=%5BError%5D%20Ejercicio%20%C2%B7%20Proyecto%3A%20carrito%20de%20compras%20%C2%B7%20Curso%20de%20React&pagina=https%3A//cacg-code.github.io/PRACTICAS-HTML/react/proyecto-carrito/ejercicio.html" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

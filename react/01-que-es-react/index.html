@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lección 1: Qué es React y tu primer componente · Curso de React</title>
+  <meta name="description" content="Qué es React, qué problema resuelve y cómo se escribe un componente: JSX, reutilización, montaje en el DOM y cómo crear un proyecto real con Vite.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/react/01-que-es-react/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Lección 1: Qué es React y tu primer componente · Curso de React">
+  <meta property="og:description" content="Qué es React, qué problema resuelve y cómo se escribe un componente: JSX, reutilización, montaje en el DOM y cómo crear un proyecto real con Vite.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/react/01-que-es-react/">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de React</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap lesson-layout" id="contenido">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#problema">El problema que resuelve React</a></li><li><a href="#componentes">La idea central: componentes</a></li><li><a href="#reutilizar">Reutilizar: escribir una vez, usar muchas</a></li><li><a href="#montaje">Cómo llega React a la pantalla</a></li><li><a href="#reglas">Las tres reglas de un componente</a></li><li><a href="#vite">React en un proyecto real: Vite</a></li><li><a href="#errores">Errores frecuentes</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de React</a> › Lección 1</div>
+        <h1>Qué es React y tu primer componente</h1>
+        <ul class="meta"><li>⏱ 40 minutos</li><li>📶 Nivel: principiante</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Explicar qué problema resuelve React y qué significa «declarativo».</li><li>Escribir y reutilizar un componente.</li><li>Aplicar las tres reglas básicas de un componente.</li><li>Saber cómo se crea y ejecuta un proyecto real con Vite.</li></ul>
+</div>
+
+<h2 id="problema"><span class="n">1.</span>El problema que resuelve React</h2>
+<p>Una página web de verdad <strong>cambia todo el tiempo</strong>: aparece un mensaje, se suma un producto al carrito, se abre un menú, se filtra una lista. Con JavaScript puro, tú tienes que dar <strong>cada orden</strong> al navegador: «busca este elemento, cambia su texto, añade esta clase, quita aquel nodo». A medida que la página crece, esas órdenes se enredan y la pantalla deja de coincidir con los datos.</p>
+<p><strong>React</strong> propone otra forma de pensar: en lugar de dar órdenes, <strong>describes cómo debe verse la pantalla para unos datos concretos</strong>, y React se encarga de actualizar el navegador cuando los datos cambian.</p>
+<div class="table-wrap"><table>
+<thead><tr><th><span class="sr-only">Aspecto</span></th><th>JavaScript puro (imperativo)</th><th>React (declarativo)</th></tr></thead>
+<tbody><tr><td><strong>Tú escribes</strong></td><td>«Busca el botón, cambia su texto, súmale 1…»</td><td>«Si el contador vale 3, el botón dice *Pulsado 3*»</td></tr><tr><td><strong>Quién toca el DOM</strong></td><td>Tú, a mano, en cada cambio</td><td>React, de forma automática</td></tr><tr><td><strong>Riesgo</strong></td><td>Que la pantalla y los datos se desincronicen</td><td>Mucho menor: la pantalla <strong>se calcula</strong> desde los datos</td></tr></tbody>
+</table></div>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · ¿Qué es React exactamente?</p>
+<p>React es una <strong>biblioteca de JavaScript</strong> creada por Meta para construir <strong>interfaces de usuario</strong>. No es un lenguaje nuevo ni un programa aparte: es JavaScript con ideas y herramientas extra. Por eso este curso asume que ya conoces JavaScript (variables, funciones, arrays, objetos y eventos).</p>
+</div>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · Requisitos</p>
+<p>Si aún dudas con funciones flecha, <code>map</code>, <code>filter</code> o desestructuración, repasa antes el <a href="../../javascript/">curso de JavaScript</a>. React se aprende mucho más rápido cuando esas piezas ya son familiares.</p>
+</div>
+
+<h2 id="componentes"><span class="n">2.</span>La idea central: componentes</h2>
+<p>Una interfaz se puede dividir en <strong>piezas independientes y reutilizables</strong>: una barra de navegación, una tarjeta, un botón, un formulario. En React cada pieza es un <strong>componente</strong>, y un componente es, sencillamente, <strong>una función de JavaScript que devuelve lo que se debe ver</strong>.</p>
+<div class="anatomy" role="img" aria-label="Un componente es una función con nombre en mayúscula que devuelve JSX"><div class="part" style="--c:#ff8fa3"><span>function </span><span class="lbl">&nbsp;</span></div><div class="part" style="--c:#ffd479"><span>Saludo</span><span class="lbl">nombre (¡con mayúscula!)</span></div><div class="part" style="--c:#ff8fa3"><span>() { return </span><span class="lbl">&nbsp;</span></div><div class="part" style="--c:#7cc4ff"><span>&lt;h1&gt;Hola, React&lt;/h1&gt;</span><span class="lbl">lo que se ve</span></div><div class="part" style="--c:#ff8fa3"><span>; }</span><span class="lbl">&nbsp;</span></div></div>
+<div class="playground js" data-js data-react>
+  <div class="pg-head"><span>⚛️ Tu primer componente</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de React" style="height:150px">function App() {
+  return &lt;h1&gt;Hola, React 👋&lt;/h1&gt;;
+}</textarea></div>
+    <div><label>Resultado</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<p>Lo que parece HTML dentro de la función se llama <strong>JSX</strong>: una sintaxis que permite escribir etiquetas <strong>dentro de JavaScript</strong>. Verás que se parece muchísimo a HTML, con algunas diferencias que estudiarás a fondo en la lección 2.</p>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Edita y observa</p>
+<p>Cambia el texto del <code>&lt;h1&gt;</code> en el editor y pulsa <strong>Ejecutar</strong> (o <code>Ctrl + Enter</code>). Prueba también a olvidar el cierre de una etiqueta: la consola te dirá qué ocurrió. Equivocarse aquí no cuesta nada.</p>
+</div>
+
+<h2 id="reutilizar"><span class="n">3.</span>Reutilizar: escribir una vez, usar muchas</h2>
+<p>La gran ventaja de un componente es que <strong>lo defines una vez y lo usas todas las veces que necesites</strong>, escribiéndolo como si fuera una etiqueta HTML propia: <code>&lt;Tarjeta /&gt;</code>.</p>
+<div class="playground js" data-js data-react>
+  <div class="pg-head"><span>⚛️ Un componente, tres usos</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de React" style="height:330px">function Tarjeta() {
+  return (
+    &lt;article className="tarjeta"&gt;
+      &lt;h2&gt;Componente&lt;/h2&gt;
+      &lt;p&gt;Una pieza reutilizable de la interfaz.&lt;/p&gt;
+    &lt;/article&gt;
+  );
+}
+
+function App() {
+  return (
+    &lt;main&gt;
+      &lt;h1&gt;Mis tarjetas&lt;/h1&gt;
+      &lt;Tarjeta /&gt;
+      &lt;Tarjeta /&gt;
+      &lt;Tarjeta /&gt;
+    &lt;/main&gt;
+  );
+}</textarea></div>
+    <div><label>Resultado</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<figure class="gif-demo">
+  <button type="button" class="gif-btn" data-gif="../../assets/gif/react-editor.gif" aria-label="Reproducir animación: Editando un componente en el editor y viendo el resultado cambiar al ejecutar">
+    <img src="../../assets/gif/react-editor.png" alt="Editando un componente en el editor y viendo el resultado cambiar al ejecutar" width="640" height="512" loading="lazy">
+    <span class="gif-play">▶ Ver animación</span>
+  </button>
+  <figcaption>Cambias el texto del componente y añades otra <code>&lt;Tarjeta /&gt;</code>: al pulsar <strong>Ejecutar</strong>, <strong>todas</strong> las tarjetas se actualizan.</figcaption>
+</figure>
+<p>Si mañana quieres cambiar el diseño de <strong>todas</strong> las tarjetas, editas <strong>un solo lugar</strong>. Y en la lección 3 aprenderás a que cada tarjeta muestre datos distintos con las <strong>props</strong>.</p>
+<ol class="steps"><li><strong>Define</strong> el componente: una función con nombre en mayúscula.</li><li><strong>Devuelve</strong> JSX con lo que quieres mostrar.</li><li><strong>Úsalo</strong> como una etiqueta: <code>&lt;Tarjeta /&gt;</code>. Puedes anidarlo dentro de otros componentes.</li></ol>
+
+<h2 id="montaje"><span class="n">4.</span>Cómo llega React a la pantalla</h2>
+<p>Tus componentes viven en JavaScript, pero el navegador solo entiende HTML. React hace de puente: toma un <strong>punto de montaje</strong> (un <code>&lt;div id="root"&gt;</code> vacío en el HTML) y <strong>dibuja allí</strong> el árbol de componentes.</p>
+<div class="code">
+  <div class="code-head"><span>main.jsx · el punto de entrada</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">import</span> { createRoot } <span class="tk-tag">from</span> <span class="tk-val">"react-dom/client"</span>;
+<span class="tk-tag">import</span> App <span class="tk-tag">from</span> <span class="tk-val">"./App.jsx"</span>;
+
+<span class="tk-com">// 1. Busca el &lt;div id="root"&gt; de index.html</span>
+<span class="tk-com">// 2. Crea una «raíz» de React allí</span>
+<span class="tk-com">// 3. Dibuja el componente App dentro</span>
+createRoot(document.getElementById(<span class="tk-val">"root"</span>)).render(<span class="tk-tag">&lt;App</span> <span class="tk-tag">/&gt;</span>);</code></pre>
+</div>
+<div class="flow"><div class="node"><strong>index.html</strong><span>tiene &lt;div id="root"&gt;</span></div><div class="arrow">→<code>carga</code></div><div class="node"><strong>main.jsx</strong><span>crea la raíz</span></div><div class="arrow">→<code>dibuja</code></div><div class="node"><strong>&lt;App /&gt;</strong><span>tu árbol de componentes</span></div></div>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · En este curso no verás <code>main.jsx</code></p>
+<p>Los editores de las lecciones <strong>ya montan</strong> tu componente <code>App</code> automáticamente. Escribe tu <code>App</code> (y los demás componentes) y verás el resultado. También puedes dejar los <code>import</code> al inicio, como en un proyecto real: aquí se ignoran porque React ya está cargado.</p>
+</div>
+
+<h2 id="reglas"><span class="n">5.</span>Las tres reglas de un componente</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Regla</th><th>Ejemplo correcto</th><th>Si no la cumples</th></tr></thead>
+<tbody><tr><td><strong>Nombre con mayúscula inicial</strong></td><td><code>function Tarjeta()</code></td><td>React piensa que <code>&lt;tarjeta /&gt;</code> es una etiqueta HTML y no encuentra tu componente</td></tr><tr><td><strong>Devuelve un solo elemento raíz</strong></td><td><code>&lt;main&gt; … &lt;/main&gt;</code> o <code>&lt;&gt; … &lt;/&gt;</code></td><td>Error: «Adjacent JSX elements must be wrapped…»</td></tr><tr><td><strong>Es una función pura al dibujar</strong></td><td>Mismo dato → misma pantalla</td><td>Resultados impredecibles: nunca cambies variables externas mientras dibujas</td></tr></tbody>
+</table></div>
+<div class="playground js" data-js data-react>
+  <div class="pg-head"><span>⚛️ Rompe y arregla</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de React" style="height:190px">function App() {
+  // Esto falla: dos elementos hermanos sin un contenedor.
+  // Envuélvelos en &lt;main&gt;…&lt;/main&gt; o en &lt;&gt;…&lt;/&gt; para arreglarlo.
+  return (
+    &lt;h1&gt;Título&lt;/h1&gt;
+    &lt;p&gt;Un párrafo suelto&lt;/p&gt;
+  );
+}</textarea></div>
+    <div><label>Resultado</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · El fragmento <code>&lt;&gt;…&lt;/&gt;</code></p>
+<p>Cuando necesitas varios elementos hermanos pero <strong>no quieres un <code>&lt;div&gt;</code> extra</strong> en el HTML final, envuélvelos en un <strong>fragmento</strong>: <code>&lt;&gt; … &lt;/&gt;</code>. No deja rastro en la página.</p>
+</div>
+
+<h2 id="vite"><span class="n">6.</span>React en un proyecto real: Vite</h2>
+<p>Los editores de este curso son ideales para aprender, pero un proyecto real vive en tu computadora. La herramienta más usada hoy para crearlo es <strong>Vite</strong>: prepara el proyecto, compila el JSX y actualiza el navegador al instante cada vez que guardas.</p>
+<div class="code">
+  <div class="code-head"><span>Terminal · crear un proyecto</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>npm create vite@latest mi-app -- --template react
+cd mi-app
+npm install
+npm run dev</code></pre>
+</div>
+<p>Vite te dará una dirección local (normalmente <code>http://localhost:5173</code>). Necesitas tener <strong>Node.js</strong> instalado. En la lección 11 recorrerás el proyecto completo y cómo publicarlo.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Archivo o carpeta</th><th>Para qué sirve</th></tr></thead>
+<tbody><tr><td><code>index.html</code></td><td>La única página HTML. Contiene el <code>&lt;div id="root"&gt;</code>.</td></tr><tr><td><code>src/main.jsx</code></td><td>El punto de entrada: monta <code>&lt;App /&gt;</code> en el <code>#root</code>.</td></tr><tr><td><code>src/App.jsx</code></td><td>Tu componente principal. Aquí empiezas a escribir.</td></tr><tr><td><code>package.json</code></td><td>La lista de dependencias y de comandos (<code>dev</code>, <code>build</code>…).</td></tr><tr><td><code>node_modules/</code></td><td>Las bibliotecas descargadas. <strong>No se sube a Git.</strong></td></tr></tbody>
+</table></div>
+
+<h2 id="errores"><span class="n">7.</span>Errores frecuentes</h2>
+<ul><li><strong>Nombre de componente en minúscula:</strong> <code>function tarjeta()</code> y <code>&lt;tarjeta /&gt;</code> no funcionan como esperas.</li><li><strong>Dos elementos raíz sin contenedor:</strong> envuélvelos en un <code>&lt;div&gt;</code>, un <code>&lt;main&gt;</code> o un fragmento.</li><li><strong>Olvidar el <code>return</code></strong> o dejar el JSX en la línea siguiente sin paréntesis: <code>return</code> + salto de línea devuelve <code>undefined</code>. Usa <code>return ( … );</code>.</li><li><strong>Escribir <code>&lt;Tarjeta&gt;</code> sin cerrar:</strong> los componentes sin contenido se cierran solos: <code>&lt;Tarjeta /&gt;</code>.</li><li><strong>Llamar al componente como función:</strong> escribe <code>&lt;Tarjeta /&gt;</code>, no <code>Tarjeta()</code>.</li><li><strong>Definir componentes dentro de otros componentes:</strong> se vuelven a crear en cada dibujo y pierden su estado. Defínelos siempre fuera.</li></ul>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li>React es una <strong>biblioteca de JavaScript</strong> para construir interfaces; describes <strong>qué</strong> debe verse y React actualiza el DOM.</li><li>Una interfaz se divide en <strong>componentes</strong>: funciones que devuelven <strong>JSX</strong>.</li><li>El nombre de un componente <strong>empieza con mayúscula</strong> y se usa como etiqueta: <code>&lt;Tarjeta /&gt;</code>.</li><li>Un componente debe devolver <strong>un solo elemento raíz</strong> (usa <code>&lt;&gt;…&lt;/&gt;</code> si no quieres un contenedor).</li><li>Un componente se <strong>define una vez</strong> y se <strong>reutiliza</strong> cuantas veces haga falta.</li><li><code>createRoot(...).render(&lt;App /&gt;)</code> monta tu aplicación en el <code>&lt;div id="root"&gt;</code>.</li><li>En la práctica se usa <strong>Vite</strong> (<code>npm create vite@latest</code>) para crear y ejecutar proyectos.</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">8.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td>React</td><td>Biblioteca de JavaScript para construir interfaces de usuario.</td></tr><tr><td>Componente</td><td>Función que devuelve JSX y representa una pieza reutilizable de la interfaz.</td></tr><tr><td>JSX</td><td>Sintaxis que permite escribir etiquetas parecidas a HTML dentro de JavaScript.</td></tr><tr><td>Declarativo</td><td>Estilo en el que describes el resultado deseado y no los pasos para lograrlo.</td></tr><tr><td>Fragmento</td><td>Contenedor invisible <code>&lt;&gt;…&lt;/&gt;</code> que agrupa elementos sin añadir nodos al HTML.</td></tr><tr><td>Raíz (root)</td><td>Punto del HTML donde React dibuja la aplicación.</td></tr><tr><td>Vite</td><td>Herramienta que crea, compila y sirve proyectos de React durante el desarrollo.</td></tr></tbody>
+</table></div>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>¿Qué es un componente de React?</p><ul class="opts"><li><button type="button" class="opt">Un archivo CSS</button></li><li><button type="button" class="opt" data-ok>Una función que devuelve JSX</button></li><li><button type="button" class="opt">Una base de datos</button></li><li><button type="button" class="opt">Una etiqueta de HTML</button></li></ul><p class="explain" hidden>Un componente es una función de JavaScript que devuelve lo que debe verse en pantalla.</p></div>
+<div class="quiz-q"><p>¿Cuál es un nombre válido para usar el componente como etiqueta?</p><ul class="opts"><li><button type="button" class="opt"><code>&lt;tarjeta /&gt;</code></button></li><li><button type="button" class="opt" data-ok><code>&lt;Tarjeta /&gt;</code></button></li><li><button type="button" class="opt"><code>&lt;tarjeta()&gt;</code></button></li><li><button type="button" class="opt"><code>&lt;$tarjeta /&gt;</code></button></li></ul><p class="explain" hidden>Los componentes empiezan con mayúscula; así React los distingue de las etiquetas HTML normales.</p></div>
+<div class="quiz-q"><p>¿Por qué falla <code>return &lt;h1&gt;A&lt;/h1&gt;&lt;p&gt;B&lt;/p&gt;;</code>?</p><ul class="opts"><li><button type="button" class="opt">Falta un punto y coma</button></li><li><button type="button" class="opt">No puedes usar <code>&lt;p&gt;</code></button></li><li><button type="button" class="opt" data-ok>Hay dos elementos raíz sin un contenedor</button></li><li><button type="button" class="opt">Los títulos no se pueden devolver</button></li></ul><p class="explain" hidden>Un componente devuelve un solo elemento raíz: envuélvelos en un <code>&lt;div&gt;</code> o en un fragmento.</p></div>
+<div class="quiz-q"><p>¿Qué significa que React sea «declarativo»?</p><ul class="opts"><li><button type="button" class="opt">Que no necesita JavaScript</button></li><li><button type="button" class="opt" data-ok>Que describes cómo debe verse la interfaz y React se encarga del DOM</button></li><li><button type="button" class="opt">Que declara variables automáticamente</button></li><li><button type="button" class="opt">Que solo funciona con CSS</button></li></ul><p class="explain" hidden>Describes el resultado para unos datos; React calcula qué cambios hacer en la página.</p></div>
+<div class="quiz-q"><p>¿Qué herramienta se usa hoy para crear un proyecto de React?</p><ul class="opts"><li><button type="button" class="opt" data-ok>Vite</button></li><li><button type="button" class="opt">Photoshop</button></li><li><button type="button" class="opt">Excel</button></li><li><button type="button" class="opt">Git Bash</button></li></ul><p class="explain" hidden>Vite crea el proyecto, compila el JSX y recarga el navegador al guardar.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="react-01">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../"><small>← Volver</small>Índice del curso</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de React · Lección 1 · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&title=%5BError%5D%20Lecci%C3%B3n%201%3A%20Qu%C3%A9%20es%20React%20y%20tu%20primer%20componente%20%C2%B7%20Curso%20de%20React&pagina=https%3A//cacg-code.github.io/PRACTICAS-HTML/react/01-que-es-react/" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

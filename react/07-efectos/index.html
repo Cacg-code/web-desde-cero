@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lección 7: Efectos con useEffect · Curso de React</title>
+  <meta name="description" content="Efectos en React: useEffect, el arreglo de dependencias, funciones de limpieza, persistencia en localStorage, cuándo evitar un efecto y el comportamiento de StrictMode.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/react/07-efectos/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Lección 7: Efectos con useEffect · Curso de React">
+  <meta property="og:description" content="Efectos en React: useEffect, el arreglo de dependencias, funciones de limpieza, persistencia en localStorage, cuándo evitar un efecto y el comportamiento de StrictMode.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/react/07-efectos/">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de React</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap lesson-layout" id="contenido">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#que-es">Efectos: cuando React necesita hablar con el exterior</a></li><li><a href="#dependencias">El arreglo de dependencias</a></li><li><a href="#limpieza">La función de limpieza</a></li><li><a href="#almacenamiento">Ejemplo útil: guardar en localStorage</a></li><li><a href="#cuando-no">Cuándo NO usar un efecto</a></li><li><a href="#strict">Un detalle: el modo estricto en desarrollo</a></li><li><a href="#errores">Errores frecuentes</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de React</a> › Lección 7</div>
+        <h1>Efectos con useEffect</h1>
+        <ul class="meta"><li>⏱ 55 minutos</li><li>📶 Nivel: principiante</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Sincronizar un componente con el exterior con <code>useEffect</code>.</li><li>Controlar cuándo se ejecuta un efecto con dependencias.</li><li>Limpiar temporizadores y oyentes.</li><li>Distinguir cuándo no hace falta un efecto.</li></ul>
+</div>
+
+<h2 id="que-es"><span class="n">1.</span>Efectos: cuando React necesita hablar con el exterior</h2>
+<p>Dibujar un componente debe ser algo <strong>puro y predecible</strong>: los mismos datos producen la misma pantalla. Pero a veces necesitas hacer cosas <strong>fuera de React</strong>: cambiar el título de la pestaña, guardar en <code>localStorage</code>, escuchar el teclado, iniciar un temporizador, pedir datos a internet. Esas acciones se llaman <strong>efectos secundarios</strong> y su lugar es <strong><code>useEffect</code></strong>.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Dentro del dibujo (render)</th><th>En un efecto (<code>useEffect</code>)</th></tr></thead>
+<tbody><tr><td>Calcular el JSX a partir de props y estado</td><td>Cambiar <code>document.title</code></td></tr><tr><td>Transformar datos (<code>map</code>, <code>filter</code>)</td><td>Leer/escribir <code>localStorage</code></td></tr><tr><td>Decidir qué mostrar</td><td>Crear temporizadores y suscripciones</td></tr><tr><td><strong>No</strong> debe tener efectos secundarios</td><td>Pedir datos a un servidor</td></tr></tbody>
+</table></div>
+<div class="playground js" data-js data-react>
+  <div class="pg-head"><span>⚛️ Tu primer efecto: el título de la pestaña</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de React" style="height:240px">import { useState, useEffect } from "react";
+
+function App() {
+  const [cuenta, setCuenta] = useState(0);
+
+  useEffect(() =&gt; {
+    document.title = "Pulsaciones: " + cuenta;
+    console.log("Efecto ejecutado, cuenta =", cuenta);
+  });
+
+  return &lt;button onClick={() =&gt; setCuenta(cuenta + 1)}&gt;Pulsaciones: {cuenta}&lt;/button&gt;;
+}</textarea></div>
+    <div><label>Resultado</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · Cuándo se ejecuta</p>
+<p>React ejecuta el efecto <strong>después de dibujar</strong> el componente en pantalla. En el ejemplo, cada vez que cambia <code>cuenta</code>, el componente se vuelve a dibujar y el efecto corre otra vez (míralo en la consola).</p>
+</div>
+
+<h2 id="dependencias"><span class="n">2.</span>El arreglo de dependencias</h2>
+<p>Ejecutar el efecto <strong>en cada dibujo</strong> casi nunca es lo que quieres. El segundo argumento de <code>useEffect</code> es un <strong>arreglo de dependencias</strong> que controla <strong>cuándo</strong> se vuelve a ejecutar:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Escribes</th><th>El efecto se ejecuta…</th><th>Úsalo para</th></tr></thead>
+<tbody><tr><td><code>useEffect(fn)</code></td><td>Después de <strong>cada</strong> dibujo</td><td>Casi nunca</td></tr><tr><td><code>useEffect(fn, [])</code></td><td><strong>Una sola vez</strong>, al aparecer el componente</td><td>Configuración inicial, suscripciones</td></tr><tr><td><code>useEffect(fn, [a, b])</code></td><td>Al aparecer y <strong>cuando cambie <code>a</code> o <code>b</code></strong></td><td>Sincronizar con unos datos concretos</td></tr></tbody>
+</table></div>
+<div class="playground js" data-js data-react>
+  <div class="pg-head"><span>⚛️ Qué dispara cada efecto</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de React" style="height:270px">import { useState, useEffect } from "react";
+
+function App() {
+  const [a, setA] = useState(0);
+  const [b, setB] = useState(0);
+
+  useEffect(() =&gt; { console.log("🔵 una sola vez (dependencias [])"); }, []);
+  useEffect(() =&gt; { console.log("🟢 cambió a →", a); }, [a]);
+  useEffect(() =&gt; { console.log("🟠 cambió a o b →", a, b); }, [a, b]);
+
+  return (
+    &lt;main&gt;
+      &lt;button onClick={() =&gt; setA(a + 1)}&gt;a = {a}&lt;/button&gt;{" "}
+      &lt;button onClick={() =&gt; setB(b + 1)}&gt;b = {b}&lt;/button&gt;
+    &lt;/main&gt;
+  );
+}</textarea></div>
+    <div><label>Resultado</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · Declara todo lo que usas</p>
+<p>Incluye en el arreglo <strong>todas las variables de props o estado que el efecto lee</strong>. Si te falta alguna, el efecto trabajará con valores <strong>viejos</strong>. Los linters de React (<code>eslint-plugin-react-hooks</code>) te avisan de ello; hazles caso.</p>
+</div>
+
+<h2 id="limpieza"><span class="n">3.</span>La función de limpieza</h2>
+<p>Algunos efectos <strong>dejan algo funcionando</strong>: un temporizador, un oyente de eventos. Si no los detienes, se acumulan. Para eso el efecto puede <strong>devolver una función de limpieza</strong>, que React ejecuta <strong>antes de repetir el efecto</strong> y <strong>cuando el componente desaparece</strong>.</p>
+<div class="playground js" data-js data-react>
+  <div class="pg-head"><span>⚛️ Un temporizador que se limpia solo</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de React" style="height:400px">import { useState, useEffect } from "react";
+
+function Reloj() {
+  const [segundos, setSegundos] = useState(0);
+
+  useEffect(() =&gt; {
+    const id = setInterval(() =&gt; setSegundos((s) =&gt; s + 1), 1000);
+    console.log("⏱ Temporizador iniciado");
+    return () =&gt; {
+      clearInterval(id);                    // limpieza
+      console.log("🧹 Temporizador detenido");
+    };
+  }, []);
+
+  return &lt;p&gt;Llevas {segundos} s en esta página.&lt;/p&gt;;
+}
+
+function App() {
+  const [visible, setVisible] = useState(true);
+  return (
+    &lt;main&gt;
+      &lt;button onClick={() =&gt; setVisible(!visible)}&gt;{visible ? "Ocultar" : "Mostrar"} reloj&lt;/button&gt;
+      {visible &amp;&amp; &lt;Reloj /&gt;}
+    &lt;/main&gt;
+  );
+}</textarea></div>
+    <div><label>Resultado</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<ol class="steps"><li>Al <strong>aparecer</strong> <code>Reloj</code>, el efecto inicia el intervalo.</li><li>Cada segundo <code>setSegundos(s =&gt; s + 1)</code> actualiza el estado.</li><li>Al <strong>ocultarlo</strong>, React ejecuta la limpieza y detiene el intervalo (míralo en la consola).</li></ol>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Oyentes de eventos</p>
+<p>El patrón es idéntico para <code>window.addEventListener("resize", fn)</code>: añade el oyente en el efecto y quítalo con <code>removeEventListener</code> en la limpieza. Así nunca duplicas oyentes.</p>
+</div>
+
+<h2 id="almacenamiento"><span class="n">4.</span>Ejemplo útil: guardar en localStorage</h2>
+<p>Un uso muy habitual es <strong>persistir</strong> datos para que sobrevivan a recargar la página. Se hace en dos pasos: <strong>leer</strong> al empezar (con un valor inicial calculado una sola vez) y <strong>guardar</strong> con un efecto cada vez que cambia el dato.</p>
+<div class="playground js" data-js data-react>
+  <div class="pg-head"><span>⚛️ Una nota que se guarda sola</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de React" style="height:320px">import { useState, useEffect } from "react";
+
+function App() {
+  // Función inicial: se ejecuta solo en el primer dibujo
+  const [nota, setNota] = useState(() =&gt; localStorage.getItem("nota") || "");
+
+  useEffect(() =&gt; {
+    localStorage.setItem("nota", nota);     // sincroniza cada vez que cambia
+  }, [nota]);
+
+  return (
+    &lt;main&gt;
+      &lt;textarea value={nota} onChange={(e) =&gt; setNota(e.target.value)} placeholder="Escribe una nota…" rows={4} style={{ width: "100%" }} /&gt;
+      &lt;p&gt;{nota.length} caracteres guardados&lt;/p&gt;
+    &lt;/main&gt;
+  );
+}</textarea></div>
+    <div><label>Resultado</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · El estado inicial perezoso</p>
+<p><code>useState(() =&gt; …)</code> con una <strong>función</strong> hace que el cálculo (aquí, leer <code>localStorage</code>) se ejecute <strong>solo la primera vez</strong>. Si escribieras <code>useState(localStorage.getItem("nota"))</code>, se leería en <strong>cada</strong> dibujo aunque el resultado se ignore.</p>
+</div>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · Sobre estos editores</p>
+<p>Dentro de las lecciones el <code>localStorage</code> es una copia temporal de la página, así que la nota se pierde al pulsar <strong>Ejecutar</strong> o recargar. En un proyecto real en tu navegador sí persiste.</p>
+</div>
+
+<h2 id="cuando-no"><span class="n">5.</span>Cuándo NO usar un efecto</h2>
+<p><code>useEffect</code> es un recurso para <strong>sincronizar con el exterior</strong>, no para todo. El error más común de quien empieza es usarlo para <strong>calcular datos</strong> que ya se pueden deducir:</p>
+<div class="code">
+  <div class="code-head"><span>❌ Efecto innecesario</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">const</span> [precio, setPrecio] = useState(<span class="tk-attr">10</span>);
+<span class="tk-tag">const</span> [cantidad, setCantidad] = useState(<span class="tk-attr">2</span>);
+<span class="tk-tag">const</span> [total, setTotal] = useState(<span class="tk-attr">0</span>);
+
+useEffect(() =&gt; {
+  setTotal(precio * cantidad);   <span class="tk-com">// dibuja dos veces cada cambio</span>
+}, [precio, cantidad]);</code></pre>
+</div>
+<div class="code">
+  <div class="code-head"><span>✅ Calcúlalo mientras dibujas</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">const</span> [precio, setPrecio] = useState(<span class="tk-attr">10</span>);
+<span class="tk-tag">const</span> [cantidad, setCantidad] = useState(<span class="tk-attr">2</span>);
+<span class="tk-tag">const</span> total = precio * cantidad;   <span class="tk-com">// valor derivado</span></code></pre>
+</div>
+<div class="table-wrap"><table>
+<thead><tr><th>Situación</th><th>Qué usar</th></tr></thead>
+<tbody><tr><td>Dato que sale de otros datos (total, filtrado)</td><td>Una <strong>variable normal</strong> calculada al dibujar</td></tr><tr><td>Respuesta a un clic o un envío</td><td>El <strong>manejador de eventos</strong> (<code>onClick</code>, <code>onSubmit</code>)</td></tr><tr><td>Reiniciar estado cuando cambia una prop</td><td>Una <strong><code>key</code></strong> distinta en el componente</td></tr><tr><td>Sincronizar con algo externo (título, red, temporizador)</td><td><strong><code>useEffect</code></strong></td></tr></tbody>
+</table></div>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Pregúntate</p>
+<p>«¿Esto ocurre <strong>porque algo se mostró</strong> o <strong>porque el usuario hizo algo</strong>?». Lo segundo va en un manejador de eventos. Solo lo primero necesita un efecto.</p>
+</div>
+
+<h2 id="strict"><span class="n">6.</span>Un detalle: el modo estricto en desarrollo</h2>
+<p>En los proyectos creados con Vite, <code>main.jsx</code> envuelve la aplicación en <code>&lt;StrictMode&gt;</code>. En <strong>desarrollo</strong>, React ejecuta cada efecto <strong>dos veces</strong> (monta, limpia y vuelve a montar) para ayudarte a descubrir <strong>efectos sin limpieza</strong>. En producción solo se ejecuta una vez.</p>
+<p>Si ves un mensaje duplicado en la consola de tu proyecto, no es un error: es React comprobando que tu limpieza funciona. Si tu efecto está bien escrito, no notarás ninguna diferencia.</p>
+
+<h2 id="errores"><span class="n">7.</span>Errores frecuentes</h2>
+<ul><li><strong>Olvidar el arreglo de dependencias:</strong> el efecto corre en cada dibujo (y puede provocar bucles infinitos si actualiza estado).</li><li><strong>Dependencias incompletas:</strong> el efecto usa valores viejos. Incluye todo lo que lees.</li><li><strong>No limpiar</strong> temporizadores y oyentes: se acumulan y causan fugas de memoria.</li><li><strong>Usar un efecto para calcular datos derivados:</strong> calcúlalos al dibujar.</li><li><strong>Actualizar estado dentro de un efecto sin dependencias:</strong> <code>useEffect(() =&gt; setN(n + 1))</code> crea un bucle infinito.</li><li><strong>Marcar el efecto como <code>async</code>:</strong> <code>useEffect(async () =&gt; …)</code> no está permitido; define una función <code>async</code> dentro y llámala (lo verás en la lección 10).</li><li><strong>Poner una función nueva en las dependencias</strong> sin necesidad (cambia en cada dibujo): mueve la función dentro del efecto o usa <code>useCallback</code>.</li></ul>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li><code>useEffect</code> sirve para <strong>sincronizar con el exterior</strong>: título, <code>localStorage</code>, temporizadores, red.</li><li>Se ejecuta <strong>después de dibujar</strong>.</li><li>Dependencias: <strong>ninguna</strong> (cada dibujo), <strong><code>[]</code></strong> (una vez) o <strong><code>[a, b]</code></strong> (cuando cambian).</li><li>Incluye en el arreglo <strong>todo lo que el efecto lee</strong>.</li><li>Devuelve una <strong>función de limpieza</strong> para detener temporizadores y oyentes.</li><li><code>useState(() =&gt; …)</code> calcula el valor inicial <strong>una sola vez</strong>.</li><li>No uses efectos para <strong>datos derivados</strong> ni para responder a <strong>clics</strong>.</li><li>En desarrollo, <code>StrictMode</code> ejecuta los efectos dos veces para detectar limpiezas incorrectas.</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">8.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td>Efecto secundario</td><td>Acción que afecta algo fuera del componente: red, título, almacenamiento, temporizadores.</td></tr><tr><td><code>useEffect</code></td><td>Hook que ejecuta código después de dibujar y lo sincroniza con unas dependencias.</td></tr><tr><td>Dependencias</td><td>Valores que, al cambiar, vuelven a ejecutar el efecto.</td></tr><tr><td>Limpieza</td><td>Función que devuelve el efecto para deshacer lo que hizo.</td></tr><tr><td>Estado inicial perezoso</td><td>Pasar una función a <code>useState</code> para calcular el valor inicial solo una vez.</td></tr><tr><td><code>StrictMode</code></td><td>Modo de desarrollo que repite renders y efectos para destapar errores.</td></tr></tbody>
+</table></div>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>¿Cuándo corre <code>useEffect(fn, [])</code>?</p><ul class="opts"><li><button type="button" class="opt">En cada dibujo</button></li><li><button type="button" class="opt" data-ok>Una sola vez, al aparecer el componente</button></li><li><button type="button" class="opt">Nunca</button></li><li><button type="button" class="opt">Solo cuando cambia el estado</button></li></ul><p class="explain" hidden>Con un arreglo vacío no depende de nada, así que solo se ejecuta al montar.</p></div>
+<div class="quiz-q"><p>¿Para qué sirve la función que devuelve un efecto?</p><ul class="opts"><li><button type="button" class="opt">Para repetir el efecto</button></li><li><button type="button" class="opt" data-ok>Para limpiar: detener temporizadores, quitar oyentes…</button></li><li><button type="button" class="opt">Para devolver JSX</button></li><li><button type="button" class="opt">Para cambiar el estado</button></li></ul><p class="explain" hidden>React la ejecuta antes de repetir el efecto y al desmontar el componente.</p></div>
+<div class="quiz-q"><p>Quieres mostrar <code>precio * cantidad</code>. ¿Qué es lo correcto?</p><ul class="opts"><li><button type="button" class="opt">Un <code>useEffect</code> que llame a <code>setTotal</code></button></li><li><button type="button" class="opt" data-ok>Una variable calculada al dibujar: <code>const total = precio * cantidad</code></button></li><li><button type="button" class="opt">Un <code>setInterval</code></button></li><li><button type="button" class="opt">Un segundo componente</button></li></ul><p class="explain" hidden>Si un dato se deduce de otros, no necesita estado ni efecto.</p></div>
+<div class="quiz-q"><p>¿Qué ocurre con <code>useEffect(() =&gt; setN(n + 1))</code> sin dependencias?</p><ul class="opts"><li><button type="button" class="opt">Suma 1 una vez</button></li><li><button type="button" class="opt" data-ok>Un bucle infinito de dibujos</button></li><li><button type="button" class="opt">Nada</button></li><li><button type="button" class="opt">Un error de sintaxis</button></li></ul><p class="explain" hidden>Cada dibujo ejecuta el efecto, que cambia el estado, que provoca otro dibujo…</p></div>
+<div class="quiz-q"><p>¿Qué hace <code>useState(() =&gt; localStorage.getItem("x"))</code>?</p><ul class="opts"><li><button type="button" class="opt">Lee <code>localStorage</code> en cada dibujo</button></li><li><button type="button" class="opt" data-ok>Lee <code>localStorage</code> solo en el primer dibujo</button></li><li><button type="button" class="opt">Guarda el dato</button></li><li><button type="button" class="opt">Lanza un error</button></li></ul><p class="explain" hidden>La función inicial se ejecuta una única vez.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="react-07">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../06-formularios/ejercicio.html"><small>← Anterior</small>Ejercicio: Formularios y componentes controlados</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de React · Lección 7 · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&title=%5BError%5D%20Lecci%C3%B3n%207%3A%20Efectos%20con%20useEffect%20%C2%B7%20Curso%20de%20React&pagina=https%3A//cacg-code.github.io/PRACTICAS-HTML/react/07-efectos/" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

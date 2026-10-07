@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ejercicio · JSX a fondo · Curso de React</title>
+  <meta name="description" content="Ejercicio práctico de: JSX a fondo.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/react/02-jsx/ejercicio.html">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Ejercicio · JSX a fondo · Curso de React">
+  <meta property="og:description" content="Ejercicio práctico de: JSX a fondo.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/react/02-jsx/ejercicio.html">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de React</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap" id="contenido" style="max-width:820px;padding-top:2rem;padding-bottom:3rem">
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de React</a> › <a href="./">Lección 2</a> › Ejercicio</div>
+        <h1>Ejercicio: JSX a fondo</h1>
+        <ul class="meta"><li>⏱ 20 minutos</li><li>📶 Nivel: principiante</li></ul>
+      </header>
+
+      <h2>Objetivo</h2>
+      <p>Practicar JSX: expresiones entre llaves, un estilo dinámico, atributos propios de JSX y comentarios.</p>
+
+      <h3>Cómo se trabaja</h3>
+      <p>Escribe un componente llamado <strong><code>App</code></strong> (puedes crear los demás que necesites). Prueba tu código en el editor de abajo; cuando funcione, pega <strong>todo</strong> el archivo en el comprobador. Los <code>import</code> de <code>react</code> se aceptan y se ignoran, porque aquí React ya está cargado.</p>
+<div class="playground js" data-js data-react>
+  <div class="pg-head"><span>⚛️ Tu editor de React (empieza desde aquí)</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de React" style="height:300px">const usuario = { nombre: "Ana Pérez", puntos: 20, activo: true };
+
+function App() {
+  return (
+    &lt;main&gt;
+      &lt;h1&gt;Escribe aquí el nombre&lt;/h1&gt;
+    &lt;/main&gt;
+  );
+}</textarea></div>
+    <div><label>Resultado</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+
+      <h2>Pasos</h2>
+      <p>Marca cada paso a medida que lo completes. Tu avance se guarda en este navegador.</p>
+      <div class="progress" aria-hidden="true"><div></div></div>
+      <p id="progreso-texto" style="color:var(--muted);font-size:.9rem" aria-live="polite"></p>
+      <ul class="checklist"><li><label><input type="checkbox" id="p1"><span>En <code>App</code>, muestra en un <code>&lt;h1&gt;</code> el nombre de <code>usuario.nombre</code>.</span></label></li><li><label><input type="checkbox" id="p2"><span>Debajo, un <code>&lt;p&gt;</code> con el texto <strong>«Puntos dobles: …»</strong> y el resultado de multiplicar <code>usuario.puntos</code> por 2.</span></label></li><li><label><input type="checkbox" id="p3"><span>Haz que el <code>&lt;h1&gt;</code> tenga el color <code>green</code> si <code>usuario.activo</code> es <code>true</code> y <code>gray</code> si no (con un ternario y <code>style</code>).</span></label></li><li><label><input type="checkbox" id="p4"><span>Añade un <code>&lt;label&gt;</code> con <code>htmlFor="correo"</code> y un <code>&lt;input&gt;</code> con <code>id="correo"</code> y <code>type="email"</code>.</span></label></li><li><label><input type="checkbox" id="p5"><span>Escribe un comentario JSX (<code>{/* … */}</code>) y asegúrate de que no hay errores en la consola.</span></label></li></ul>
+      <details><summary>💡 Pista 1: el estilo</summary><p>Usa <code>style={{ color: usuario.activo ? "green" : "gray" }}</code> en el <code>&lt;h1&gt;</code>.</p>
+</details>
+<details><summary>💡 Pista 2: varias líneas</summary><p>Si tu JSX tiene varios elementos, envuélvelos en un <code>&lt;main&gt;</code> o en un fragmento.</p>
+</details>
+
+      <section class="checker" id="comprobador" aria-labelledby="t-chk">
+        <h2 id="t-chk">🔎 Comprueba tu trabajo</h2>
+        <p>Pega tu código y pulsa <strong>Comprobar</strong>. La revisión ocurre en tu navegador; nada se envía a ningún sitio. Cada punto en rojo incluye una pista.</p>
+        <label for="chk-code">Tu código de React (el archivo App.jsx completo)</label>
+        <textarea id="chk-code" rows="10" spellcheck="false" placeholder="Pega aquí el contenido completo de tu archivo App.jsx"></textarea>
+        <div class="chk-actions"><button class="btn" type="button" id="chk-run">Comprobar</button><button class="icon-btn" type="button" id="chk-clear">Limpiar</button></div>
+        <p class="chk-sum" id="chk-sum" aria-live="polite"></p>
+        <ul class="chk-list" id="chk-list"></ul>
+        <script type="application/json" id="checks">{"mode": "react", "scaffold": "", "width": 700, "checks": [{"d": "El `<h1>` muestra el nombre del usuario (`Ana Pérez`)", "h": "Escribe `{usuario.nombre}` dentro del `<h1>`.", "t": "return texto(\"#root h1\")===\"Ana Pérez\""}, {"d": "Aparece «Puntos dobles: 40» (calculado con una expresión)", "h": "Escribe `Puntos dobles: {usuario.puntos * 2}`.", "t": "return /Puntos dobles:\\s*40/.test(texto())"}, {"d": "El `<h1>` es verde cuando el usuario está activo", "h": "Usa `style={{ color: … ? \"green\" : \"gray\" }}`.", "t": "return getComputedStyle($(\"#root h1\")).color===\"rgb(0, 128, 0)\""}, {"d": "El color se decide con una expresión (ternario), no está escrito a mano", "h": "Escribe `usuario.activo ? \"green\" : \"gray\"` dentro de `style`.", "t": "return /\\?\\s*[\"\\x27]green[\"\\x27]\\s*:\\s*[\"\\x27]gray[\"\\x27]/.test(window.__src)"}, {"d": "Hay un `<label>` enlazado con un `<input type=\"email\">`", "h": "Usa `htmlFor=\"correo\"` en el label e `id=\"correo\"` en el input.", "t": "var l=$(\"#root label[for=correo]\"),i=$(\"#root input#correo\");return !!l && !!i && i.type===\"email\""}, {"d": "Incluyes un comentario JSX `{/* … */}`", "h": "Escríbelo dentro de las etiquetas, por ejemplo al inicio del `<main>`.", "t": "return /\\{\\s*\\/\\*[\\s\\S]*?\\*\\/\\s*\\}/.test(window.__src)"}, {"d": "No usas `class=` ni `for=` y la consola no muestra advertencias", "h": "Cambia `class` por `className` y `for` por `htmlFor`.", "t": "return !/\\s(class|for)=/.test(window.__src) && window.__warns.length===0 && !window.__err"}]}</script>
+      </section>
+      <details>
+        <summary>✅ Ver una solución posible</summary>
+        <p>Intenta resolverlo antes de mirar. Tu versión puede ser distinta y también correcta.</p>
+        <div class="code">
+  <div class="code-head"><span>App.jsx</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">const</span> usuario = { nombre: <span class="tk-val">"Ana Pérez"</span>, puntos: <span class="tk-attr">20</span>, activo: <span class="tk-tag">true</span> };
+
+<span class="tk-tag">export</span> <span class="tk-tag">default</span> <span class="tk-tag">function</span> App() {
+  <span class="tk-tag">return</span> (
+    <span class="tk-tag">&lt;main</span><span class="tk-tag">&gt;</span>
+      {<span class="tk-com">/* Cabecera del perfil */</span>}
+      <span class="tk-tag">&lt;h1</span> <span class="tk-attr">style</span>={{ color: usuario.<span class="tk-attr">activo</span> ? <span class="tk-val">"green"</span> : <span class="tk-val">"gray"</span> }}<span class="tk-tag">&gt;</span>
+        {usuario.nombre}
+      <span class="tk-tag">&lt;/h1</span><span class="tk-tag">&gt;</span>
+      <span class="tk-tag">&lt;p</span><span class="tk-tag">&gt;</span>Puntos dobles: {usuario.puntos * <span class="tk-attr">2</span>}<span class="tk-tag">&lt;/p</span><span class="tk-tag">&gt;</span>
+      <span class="tk-tag">&lt;label</span> <span class="tk-attr">htmlFor</span>=<span class="tk-val">"correo"</span><span class="tk-tag">&gt;</span>Correo<span class="tk-tag">&lt;/label</span><span class="tk-tag">&gt;</span>
+      <span class="tk-tag">&lt;input</span> <span class="tk-attr">id</span>=<span class="tk-val">"correo"</span> <span class="tk-attr">type</span>=<span class="tk-val">"email"</span> <span class="tk-tag">/&gt;</span>
+    <span class="tk-tag">&lt;/main</span><span class="tk-tag">&gt;</span>
+  );
+}</code></pre>
+</div>
+
+      </details>
+      <div class="callout consejo">
+<p class="callout-title">💡 🏁 Reto extra (opcional)</p>
+<p>Muestra las iniciales del usuario (por ejemplo «AP») usando <code>split(" ")</code> y <code>map</code>, dentro de un <code>&lt;span&gt;</code> con estilo circular.</p>
+</div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="./"><small>← Anterior</small>Volver a lección 2</a>
+        <a class="next" href="../03-componentes-y-props/"><small>Siguiente →</small>Componentes y props</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de React · Ejercicio de lección 2 · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&title=%5BError%5D%20Ejercicio%20%C2%B7%20JSX%20a%20fondo%20%C2%B7%20Curso%20de%20React&pagina=https%3A//cacg-code.github.io/PRACTICAS-HTML/react/02-jsx/ejercicio.html" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

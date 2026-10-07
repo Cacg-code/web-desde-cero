@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Proyecto final: Proyecto: carrito de compras · Curso de React</title>
+  <meta name="description" content="Proyecto final de React: un carrito de compras con catálogo, buscador, reductor, Context, persistencia en localStorage y valores derivados.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/react/proyecto-carrito/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Proyecto final: Proyecto: carrito de compras · Curso de React">
+  <meta property="og:description" content="Proyecto final de React: un carrito de compras con catálogo, buscador, reductor, Context, persistencia en localStorage y valores derivados.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/react/proyecto-carrito/">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de React</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap lesson-layout" id="contenido">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#que">Qué vas a construir</a></li><li><a href="#plan">Plan: la arquitectura</a></li><li><a href="#estructura">La estructura que esperan las pruebas</a></li><li><a href="#pasos">Paso a paso</a></li><li><a href="#calidad">Revisión de calidad</a></li><li><a href="#retos">Retos para ir más lejos</a></li><li><a href="#siguiente">Qué sigue en tu camino</a></li><li><a href="#errores">Errores frecuentes en el proyecto</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de React</a> › Proyecto final</div>
+        <h1>Proyecto: carrito de compras</h1>
+        <ul class="meta"><li>⏱ 150 minutos</li><li>📶 Nivel: principiante</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Planificar una aplicación de React dividiéndola en componentes.</li><li>Combinar <code>useReducer</code>, Context y efectos en un proyecto real.</li><li>Derivar valores en lugar de duplicarlos en estado.</li><li>Persistir y recuperar datos del navegador.</li></ul>
+</div>
+
+<h2 id="que"><span class="n">1.</span>Qué vas a construir</h2>
+<p>Vas a crear el <strong>carrito de compras de una tienda</strong>: un catálogo con buscador, un carrito donde se agregan, suman, restan y quitan productos, un total siempre correcto y el contenido <strong>guardado</strong> para que no se pierda al recargar. Es un proyecto pequeño, pero tiene la estructura de una aplicación real.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Función de la app</th><th>Lo que aplicas</th><th>Lección</th></tr></thead>
+<tbody><tr><td>Dibujar el <strong>catálogo</strong> desde una lista de datos</td><td>Listas, <code>key</code>, props</td><td>3 y 5</td></tr><tr><td><strong>Buscar</strong> productos mientras se escribe</td><td>Campos controlados, valores derivados</td><td>5 y 6</td></tr><tr><td>Agregar, sumar, restar y quitar productos</td><td><code>useReducer</code> con acciones</td><td>9</td></tr><tr><td>Compartir el carrito entre componentes lejanos</td><td>Context y hook propio</td><td>8</td></tr><tr><td>Total y contador de artículos</td><td>Valores derivados con <code>reduce</code></td><td>5</td></tr><tr><td><strong>Guardar</strong> el carrito y recuperarlo</td><td><code>useEffect</code>, <code>localStorage</code>, estado inicial perezoso</td><td>7</td></tr><tr><td>Mensaje de carrito vacío</td><td>Renderizado condicional</td><td>5</td></tr></tbody>
+</table></div>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Una sola fuente de verdad</p>
+<p>El carrito vive <strong>en un solo lugar</strong> (el reductor del proveedor). El total y el número de artículos <strong>no se guardan</strong>: se <strong>calculan</strong> con <code>reduce</code> a partir de las líneas. Así nunca se desincronizan.</p>
+</div>
+
+<h2 id="plan"><span class="n">2.</span>Plan: la arquitectura</h2>
+<div class="flow"><div class="node"><strong>CarritoProvider</strong><span>reductor + localStorage</span></div><div class="arrow">→<code>Context</code></div><div class="node"><strong>Cabecera</strong><span>contador</span></div><div class="arrow">→<code>y</code></div><div class="node"><strong>Catalogo</strong><span>agrega</span></div><div class="arrow">→<code>y</code></div><div class="node"><strong>Carrito</strong><span>modifica y suma</span></div></div>
+<div class="table-wrap"><table>
+<thead><tr><th>Pieza</th><th>Responsabilidad</th></tr></thead>
+<tbody><tr><td><code>reductor(lineas, accion)</code></td><td>Función pura con las acciones <code>agregar</code>, <code>sumar</code>, <code>restar</code> y <code>quitar</code></td></tr><tr><td><code>CarritoProvider</code></td><td>Guarda las líneas con <code>useReducer</code>, las persiste con un efecto y ofrece <code>{ lineas, dispatch, total, unidades }</code></td></tr><tr><td><code>useCarrito()</code></td><td>Hook que lee el contexto</td></tr><tr><td><code>Catalogo</code></td><td>Buscador + un <code>&lt;article className="producto"&gt;</code> por producto con su botón «Agregar»</td></tr><tr><td><code>Carrito</code></td><td>Lista de líneas con «Restar», «Sumar» y «Quitar», más el total</td></tr><tr><td><code>Cabecera</code></td><td>Muestra cuántos artículos hay en total</td></tr></tbody>
+</table></div>
+<h3>El modelo de datos</h3>
+<div class="code">
+  <div class="code-head"><span>Cada línea del carrito</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-com">// El carrito es un array de líneas:</span>
+[
+  { id: <span class="tk-attr">1</span>, nombre: <span class="tk-val">"Teclado"</span>, precio: <span class="tk-attr">25</span>,   categoria: <span class="tk-val">"Periféricos"</span>, cantidad: <span class="tk-attr">2</span> },
+  { id: <span class="tk-attr">2</span>, nombre: <span class="tk-val">"Mouse"</span>,   precio: <span class="tk-attr">12.5</span>, categoria: <span class="tk-val">"Periféricos"</span>, cantidad: <span class="tk-attr">1</span> },
+]
+
+<span class="tk-com">// Y las acciones que lo cambian:</span>
+{ tipo: <span class="tk-val">"agregar"</span>, producto }   <span class="tk-com">// suma 1 si ya existe, o crea la línea</span>
+{ tipo: <span class="tk-val">"sumar"</span>,   id }
+{ tipo: <span class="tk-val">"restar"</span>,  id }          <span class="tk-com">// si llega a 0, la línea desaparece</span>
+{ tipo: <span class="tk-val">"quitar"</span>,  id }</code></pre>
+</div>
+
+<h2 id="estructura"><span class="n">3.</span>La estructura que esperan las pruebas</h2>
+<p>Para que tu proyecto y el comprobador se entiendan, usa <strong>estos elementos y nombres</strong>:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Elemento</th><th>Cómo debe ser</th></tr></thead>
+<tbody><tr><td>Cada producto del catálogo</td><td><code>&lt;article className="producto"&gt;</code> con un <code>&lt;h3&gt;</code> (nombre), un <code>&lt;p className="precio"&gt;</code> (por ejemplo <code>$25.00</code>) y un botón <strong>«Agregar»</strong></td></tr><tr><td>Buscador</td><td><code>&lt;input type="search"&gt;</code></td></tr><tr><td>Carrito</td><td>Un <code>&lt;aside aria-label="Carrito"&gt;</code></td></tr><tr><td>Carrito vacío</td><td>Un <code>&lt;p className="vacio"&gt;</code> con «Tu carrito está vacío»</td></tr><tr><td>Cada línea</td><td><code>&lt;li className="linea"&gt;</code> con <code>&lt;span className="cantidad"&gt;</code> y tres botones con <code>aria-label</code>: <strong>Restar</strong>, <strong>Sumar</strong> y <strong>Quitar</strong></td></tr><tr><td>Total</td><td><code>&lt;strong id="total"&gt;</code> con el formato <code>$62.50</code></td></tr><tr><td>Contador de artículos</td><td><code>&lt;span id="contador"&gt;</code> con la suma de todas las cantidades</td></tr><tr><td>Persistencia</td><td><code>localStorage</code> con la clave <strong><code>carrito</code></strong> (un JSON con las líneas)</td></tr></tbody>
+</table></div>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · Por qué <code>aria-label</code></p>
+<p>Los botones «−» y «+» no tienen texto que un lector de pantalla pueda leer con claridad. <code>aria-label="Restar"</code> y <code>aria-label="Sumar"</code> describen la acción; además es lo que usan las pruebas para encontrarlos.</p>
+</div>
+
+<h2 id="pasos"><span class="n">4.</span>Paso a paso</h2>
+<h3>Paso 1 · El catálogo</h3>
+<p>Con <code>PRODUCTOS.map(...)</code> dibuja un <code>&lt;article className="producto"&gt;</code> por producto. Usa <code>key={p.id}</code>. Aún sin carrito: los botones pueden no hacer nada.</p>
+<h3>Paso 2 · El buscador</h3>
+<p>Un campo controlado (<code>busqueda</code>) y una lista <strong>derivada</strong>: <code>PRODUCTOS.filter(p =&gt; p.nombre.toLowerCase().includes(busqueda.toLowerCase()))</code>. No guardes la lista filtrada en estado.</p>
+<h3>Paso 3 · El reductor</h3>
+<div class="code">
+  <div class="code-head"><span>Esqueleto del reductor</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">function</span> reductor(lineas, accion) {
+  <span class="tk-tag">switch</span> (accion.tipo) {
+    <span class="tk-tag">case</span> <span class="tk-val">"agregar"</span>: <span class="tk-com">/* si existe: cantidad + 1; si no: nueva línea con cantidad 1 */</span>
+    <span class="tk-tag">case</span> <span class="tk-val">"sumar"</span>:   <span class="tk-com">/* map: cantidad + 1 en la línea con ese id */</span>
+    <span class="tk-tag">case</span> <span class="tk-val">"restar"</span>:  <span class="tk-com">/* map: cantidad - 1 y filter: descarta las que lleguen a 0 */</span>
+    <span class="tk-tag">case</span> <span class="tk-val">"quitar"</span>:  <span class="tk-com">/* filter: descarta la línea con ese id */</span>
+    <span class="tk-tag">default</span>: <span class="tk-tag">return</span> lineas;
+  }
+}</code></pre>
+</div>
+<p>Cada caso debe devolver un <strong>array nuevo</strong>; nunca modifiques el existente.</p>
+<h3>Paso 4 · Contexto y proveedor</h3>
+<p>Crea <code>CarritoContext</code> fuera de los componentes. En <code>CarritoProvider</code> usa <code>useReducer(reductor, [], leerGuardado)</code>, calcula <code>total</code> y <code>unidades</code> con <code>reduce</code> y ofrécelos junto a <code>lineas</code> y <code>dispatch</code>. Añade el hook <code>useCarrito()</code>.</p>
+<h3>Paso 5 · El carrito</h3>
+<p>Lee <code>{ lineas, dispatch, total }</code>. Si <code>lineas.length === 0</code> muestra el mensaje de vacío; si no, una <code>&lt;ul className="lineas"&gt;</code> con las líneas y sus tres botones. Muestra el total con <code>moneda(total)</code>.</p>
+<h3>Paso 6 · Persistencia</h3>
+<p>Dentro del proveedor, un efecto con <code>[lineas]</code> guarda <code>JSON.stringify(lineas)</code> en <code>localStorage</code>. La función <code>leerGuardado</code> (tercer argumento de <code>useReducer</code>) lo recupera al iniciar, con <code>try/catch</code> por si el dato estuviera dañado.</p>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Avanza probando</p>
+<p>Después de cada paso, ejecuta el editor y comprueba que funciona antes de seguir. Un error aislado es fácil de encontrar; cinco errores mezclados, no.</p>
+</div>
+
+<h2 id="calidad"><span class="n">5.</span>Revisión de calidad</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Revisión</th><th>Cómo comprobarlo</th></tr></thead>
+<tbody><tr><td><strong>Funciona</strong></td><td>Agrega, suma, resta y quita; el total y el contador siempre coinciden</td></tr><tr><td><strong>Sin avisos</strong></td><td>La consola no muestra advertencias (por ejemplo, de <code>key</code>)</td></tr><tr><td><strong>Sin mutaciones</strong></td><td>Ningún <code>push</code>, <code>splice</code> ni asignación directa sobre el estado</td></tr><tr><td><strong>Persiste</strong></td><td>Recarga: el carrito sigue ahí</td></tr><tr><td><strong>Accesible</strong></td><td>Los botones sin texto tienen <code>aria-label</code>; el buscador tiene etiqueta</td></tr><tr><td><strong>Legible</strong></td><td>Componentes pequeños, nombres claros y sin lógica larga dentro del JSX</td></tr></tbody>
+</table></div>
+<div class="playground js" data-js data-react>
+  <div class="pg-head"><span>⚛️ Una pista visual: el estilo de tu tienda (opcional)</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de React" style="height:300px">function App() {
+  return (
+    &lt;main style={{ display: "grid", gap: 12, maxWidth: 360 }}&gt;
+      &lt;article style={{ border: "1px solid #c7d2fe", borderRadius: 12, padding: 12 }}&gt;
+        &lt;h3 style={{ margin: 0 }}&gt;Teclado&lt;/h3&gt;
+        &lt;p style={{ margin: "4px 0" }}&gt;$25.00&lt;/p&gt;
+        &lt;button style={{ background: "#4f46e5", color: "#fff", border: 0, borderRadius: 8, padding: "6px 12px" }}&gt;Agregar&lt;/button&gt;
+      &lt;/article&gt;
+    &lt;/main&gt;
+  );
+}</textarea></div>
+    <div><label>Resultado</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+
+<h2 id="retos"><span class="n">6.</span>Retos para ir más lejos</h2>
+<ul><li><strong>Filtro por categoría:</strong> botones «Todas», «Periféricos» y «Pantallas».</li><li><strong>Cupón de descuento:</strong> un campo que aplique un 10 % si escribes <code>REACT10</code>.</li><li><strong>Envío gratis:</strong> muestra «Te faltan $X para el envío gratis» según el total.</li><li><strong>Ordenar</strong> el catálogo por precio o por nombre (recuerda copiar el array antes de <code>sort</code>).</li><li><strong>Productos desde una API:</strong> reemplaza <code>PRODUCTOS</code> por datos pedidos con el hook <code>useDatos</code> de la lección 10.</li><li><strong>Pasarlo a un proyecto de Vite</strong>, dividir los componentes en archivos y publicarlo en GitHub Pages (lección 11).</li></ul>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Añádelo a tu portafolio</p>
+<p>Cuando lo tengas publicado, enlázalo desde tu página personal del curso de HTML. Una aplicación funcionando vale más que cualquier lista de tecnologías en un currículum.</p>
+</div>
+
+<h2 id="siguiente"><span class="n">7.</span>Qué sigue en tu camino</h2>
+<p>Has recorrido el camino del frontend: <strong>HTML</strong> para la estructura, <strong>CSS</strong> para el diseño, <strong>JavaScript</strong> para la lógica y <strong>React</strong> para construir aplicaciones. Lo que viene es el <strong>backend</strong>: guardar los datos de verdad en un servidor y una base de datos.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Paso</th><th>Qué aprenderás</th></tr></thead>
+<tbody><tr><td><strong>TypeScript</strong></td><td>Tipos para detectar errores antes de ejecutar el código</td></tr><tr><td><strong>Node.js y APIs</strong></td><td>Crear tu propio servidor y las rutas que consume React</td></tr><tr><td><strong>Bases de datos</strong></td><td>Guardar usuarios, productos y pedidos de forma permanente</td></tr><tr><td><strong>Proyecto full stack</strong></td><td>Esta tienda, con servidor, base de datos, usuarios y pagos</td></tr></tbody>
+</table></div>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · Próximamente</p>
+<p>Los cursos de <strong>Node.js y APIs</strong>, <strong>Bases de datos</strong> y el <strong>proyecto full stack</strong> llegarán más adelante. Mientras tanto, aplica lo aprendido: construye cosas propias.</p>
+</div>
+
+<h2 id="errores"><span class="n">8.</span>Errores frecuentes en el proyecto</h2>
+<ul><li><strong>Mutar el estado en el reductor:</strong> <code>lineas.push(…)</code> o <code>existe.cantidad++</code> rompen la actualización. Crea copias con <code>map</code> y <code>filter</code>.</li><li><strong>Guardar <code>total</code> en estado:</strong> se desincroniza. Calcúlalo con <code>reduce</code>.</li><li><strong>Olvidar <code>.filter(l =&gt; l.cantidad &gt; 0)</code></strong> al restar: quedan líneas con cantidad 0 o negativas.</li><li><strong>Duplicar líneas:</strong> al agregar, comprueba primero si el producto ya está.</li><li><strong>Leer <code>localStorage</code> en cada dibujo:</strong> usa el estado inicial perezoso (tercer argumento de <code>useReducer</code>).</li><li><strong>Olvidar la <code>key</code></strong> en las listas de productos y de líneas.</li><li><strong>Dar formato en varios sitios:</strong> usa una sola función <code>moneda(n)</code>.</li><li><strong><code>aria-label</code> ausente</strong> en los botones «+» y «−».</li></ul>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li>El proyecto integra <strong>componentes, props, listas, estado, formularios, efectos, Context y reductores</strong>.</li><li>Un <strong>reductor</strong> concentra todas las formas de cambiar el carrito; siempre devuelve un <strong>array nuevo</strong>.</li><li><strong>Context</strong> comparte <code>lineas</code>, <code>dispatch</code>, <code>total</code> y <code>unidades</code> sin pasar props.</li><li>Lo que se puede <strong>calcular</strong> (total, contador, lista filtrada) <strong>no se guarda en estado</strong>.</li><li><code>localStorage</code> + <code>useEffect</code> + estado inicial perezoso dan <strong>persistencia</strong>.</li><li>Usa nombres y estructura claros: facilitan el mantenimiento y las pruebas.</li><li>El siguiente paso natural es el <strong>backend</strong>: Node.js, APIs y bases de datos.</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">9.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td>Reductor</td><td>Función pura que recibe el estado y una acción y devuelve el estado nuevo.</td></tr><tr><td>Acción</td><td>Objeto que describe un cambio, por ejemplo <code>{ tipo: "sumar", id: 1 }</code>.</td></tr><tr><td>Proveedor</td><td>Componente que ofrece un contexto (y su estado) a todo su árbol.</td></tr><tr><td>Valor derivado</td><td>Dato calculado a partir del estado en cada dibujo.</td></tr><tr><td>Persistencia</td><td>Guardar datos para que sobrevivan a recargar la página.</td></tr><tr><td>Línea de pedido</td><td>Cada fila del carrito: un producto con su cantidad.</td></tr></tbody>
+</table></div>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>¿Por qué el total del carrito no se guarda en estado?</p><ul class="opts"><li><button type="button" class="opt">Porque es imposible</button></li><li><button type="button" class="opt" data-ok>Porque se puede calcular desde las líneas y guardarlo causaría desincronización</button></li><li><button type="button" class="opt">Porque el estado solo admite texto</button></li><li><button type="button" class="opt">Porque <code>localStorage</code> no lo permite</button></li></ul><p class="explain" hidden>Los valores derivados se calculan en cada dibujo a partir de la fuente de verdad.</p></div>
+<div class="quiz-q"><p>Al «restar» un producto con cantidad 1, ¿qué debe pasar?</p><ul class="opts"><li><button type="button" class="opt">Queda con cantidad 0</button></li><li><button type="button" class="opt" data-ok>Se elimina la línea</button></li><li><button type="button" class="opt">Se vuelve negativa</button></li><li><button type="button" class="opt">Se bloquea el botón</button></li></ul><p class="explain" hidden>El reductor descarta con <code>filter</code> las líneas cuya cantidad llega a 0.</p></div>
+<div class="quiz-q"><p>¿Qué debe devolver siempre un caso del reductor?</p><ul class="opts"><li><button type="button" class="opt">El mismo array mutado</button></li><li><button type="button" class="opt" data-ok>Un array nuevo (o el mismo si no hay cambio)</button></li><li><button type="button" class="opt"><code>undefined</code></button></li><li><button type="button" class="opt">Un número</button></li></ul><p class="explain" hidden>Nunca se muta el estado anterior: se crean copias.</p></div>
+<div class="quiz-q"><p>¿Cómo se recupera el carrito guardado al iniciar?</p><ul class="opts"><li><button type="button" class="opt">Con un <code>setInterval</code></button></li><li><button type="button" class="opt" data-ok>Con el tercer argumento de <code>useReducer</code> (función inicial) que lee <code>localStorage</code></button></li><li><button type="button" class="opt">Con <code>alert</code></button></li><li><button type="button" class="opt">Con <code>fetch</code></button></li></ul><p class="explain" hidden>La función inicial se ejecuta solo una vez al montar.</p></div>
+<div class="quiz-q"><p>¿Qué te permite el hook <code>useCarrito()</code>?</p><ul class="opts"><li><button type="button" class="opt">Pedir datos a un servidor</button></li><li><button type="button" class="opt" data-ok>Leer el contexto del carrito desde cualquier componente</button></li><li><button type="button" class="opt">Dar estilos</button></li><li><button type="button" class="opt">Crear rutas</button></li></ul><p class="explain" hidden>Encapsula <code>useContext(CarritoContext)</code> en un solo lugar.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="react-P">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../11-proyectos-reales/ejercicio.html"><small>← Anterior</small>Ejercicio: Proyectos reales con Vite y el ecosistema</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de React · Proyecto final · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&title=%5BError%5D%20Proyecto%20final%3A%20Proyecto%3A%20carrito%20de%20compras%20%C2%B7%20Curso%20de%20React&pagina=https%3A//cacg-code.github.io/PRACTICAS-HTML/react/proyecto-carrito/" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

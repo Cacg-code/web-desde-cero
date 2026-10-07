@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lección 8: Compartir estado: elevar y Context · Curso de React</title>
+  <meta name="description" content="Compartir estado en React: elevar el estado al ancestro común, entender el prop drilling, usar Context con Provider y useContext, y crear un proveedor con hook propio.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/react/08-compartir-estado/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Lección 8: Compartir estado: elevar y Context · Curso de React">
+  <meta property="og:description" content="Compartir estado en React: elevar el estado al ancestro común, entender el prop drilling, usar Context con Provider y useContext, y crear un proveedor con hook propio.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/react/08-compartir-estado/">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de React</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap lesson-layout" id="contenido">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#elevar">Elevar el estado: el ancestro común</a></li><li><a href="#drilling">El problema: pasar props por muchos niveles</a></li><li><a href="#context">Context: datos disponibles para todo un árbol</a></li><li><a href="#proveedor">Un proveedor propio con estado y funciones</a></li><li><a href="#cuando">¿Estado local, elevado o Context?</a></li><li><a href="#errores">Errores frecuentes</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de React</a> › Lección 8</div>
+        <h1>Compartir estado: elevar y Context</h1>
+        <ul class="meta"><li>⏱ 50 minutos</li><li>📶 Nivel: principiante</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Elevar el estado cuando dos componentes lo comparten.</li><li>Reconocer el prop drilling.</li><li>Crear y consumir un contexto.</li><li>Elegir entre estado local, elevado o Context.</li></ul>
+</div>
+
+<h2 id="elevar"><span class="n">1.</span>Elevar el estado: el ancestro común</h2>
+<p>Cuando <strong>dos componentes necesitan el mismo dato</strong>, ninguno de los dos puede guardarlo (el estado de uno no es visible para el otro). La solución es <strong>elevar el estado</strong> al <strong>ancestro común más cercano</strong> y bajarlo a cada hijo mediante props. Si un hijo debe <strong>modificarlo</strong>, el padre le pasa también <strong>una función</strong>.</p>
+<div class="flow"><div class="node"><strong>Padre</strong><span>guarda el estado</span></div><div class="arrow">→<code>datos + funciones por props</code></div><div class="node"><strong>Hijo A</strong><span>muestra el dato</span></div><div class="arrow">→<code>comparte con</code></div><div class="node"><strong>Hijo B</strong><span>lo modifica</span></div></div>
+<div class="playground js" data-js data-react>
+  <div class="pg-head"><span>⚛️ Dos componentes, un mismo dato</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de React" style="height:380px">import { useState } from "react";
+
+function Entrada({ texto, onCambio }) {
+  return &lt;input value={texto} onChange={(e) =&gt; onCambio(e.target.value)} placeholder="Escribe aquí" /&gt;;
+}
+
+function Vista({ texto }) {
+  return &lt;p&gt;Vista previa: &lt;strong&gt;{texto || "…"}&lt;/strong&gt; ({texto.length} letras)&lt;/p&gt;;
+}
+
+function App() {
+  const [texto, setTexto] = useState("");   // estado elevado al padre
+
+  return (
+    &lt;main&gt;
+      &lt;Entrada texto={texto} onCambio={setTexto} /&gt;
+      &lt;Vista texto={texto} /&gt;
+    &lt;/main&gt;
+  );
+}</textarea></div>
+    <div><label>Resultado</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<ol class="steps"><li><strong>Identifica</strong> quién necesita el dato (<code>Entrada</code> y <code>Vista</code>).</li><li><strong>Sube</strong> el estado a su ancestro común (<code>App</code>).</li><li><strong>Baja</strong> el valor como prop (<code>texto</code>) y el modo de cambiarlo como función (<code>onCambio</code>).</li></ol>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · El nombre <code>onAlgo</code></p>
+<p>Por convención, las props que reciben <strong>funciones para avisar de eventos</strong> se llaman <code>onCambio</code>, <code>onGuardar</code>, <code>onBorrar</code>… y las funciones que las manejan en el padre, <code>manejarCambio</code>, <code>guardar</code>, etc.</p>
+</div>
+
+<h2 id="drilling"><span class="n">2.</span>El problema: pasar props por muchos niveles</h2>
+<p>Elevar el estado funciona muy bien, pero si el dato debe viajar <strong>a través de muchos componentes intermedios que no lo usan</strong>, terminas escribiendo la misma prop en cada nivel. A eso se le llama <strong>prop drilling</strong> (perforar con props):</p>
+<div class="code">
+  <div class="code-head"><span>Un dato que atraviesa componentes que no lo necesitan</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">&lt;App</span><span class="tk-tag">&gt;</span>                         <span class="tk-com">// tiene el tema</span>
+  <span class="tk-tag">&lt;Pagina</span> <span class="tk-attr">tema</span>={tema}<span class="tk-tag">&gt;</span>        <span class="tk-com">// no lo usa, solo lo pasa</span>
+    <span class="tk-tag">&lt;Barra</span> <span class="tk-attr">tema</span>={tema}<span class="tk-tag">&gt;</span>       <span class="tk-com">// no lo usa, solo lo pasa</span>
+      <span class="tk-tag">&lt;Boton</span> <span class="tk-attr">tema</span>={tema} <span class="tk-tag">/&gt;</span>   <span class="tk-com">// ¡el único que lo usa!</span>
+    <span class="tk-tag">&lt;/Barra</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;/Pagina</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;/App</span><span class="tk-tag">&gt;</span></code></pre>
+</div>
+<p>Para datos <strong>globales a una zona de la aplicación</strong> (el tema, el usuario conectado, el idioma, el carrito) React ofrece <strong>Context</strong>.</p>
+
+<h2 id="context"><span class="n">3.</span>Context: datos disponibles para todo un árbol</h2>
+<p>Un <strong>contexto</strong> es un «canal» por el que un componente <strong>proveedor</strong> publica un valor, y <strong>cualquier descendiente</strong>, sin importar la profundidad, puede <strong>leerlo directamente</strong>. Se hace en tres pasos:</p>
+<ol class="steps"><li><strong>Crear</strong> el contexto: <code>const TemaContext = createContext("claro");</code></li><li><strong>Proveer</strong> el valor: <code>&lt;TemaContext.Provider value={...}&gt; … &lt;/TemaContext.Provider&gt;</code></li><li><strong>Consumir</strong> el valor donde haga falta: <code>const tema = useContext(TemaContext);</code></li></ol>
+<div class="playground js" data-js data-react>
+  <div class="pg-head"><span>⚛️ Un tema compartido con Context</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de React" style="height:520px">import { createContext, useContext, useState } from "react";
+
+const TemaContext = createContext("claro");
+
+function Boton() {
+  const tema = useContext(TemaContext);          // lee el valor, sin props
+  const estilo = tema === "oscuro"
+    ? { background: "#1e2235", color: "#fff" }
+    : { background: "#e0e7ff", color: "#1e2235" };
+  return &lt;button style={{ ...estilo, border: 0, padding: "8px 14px", borderRadius: 8 }}&gt;Botón {tema}&lt;/button&gt;;
+}
+
+function Barra() {          // no recibe ni pasa ninguna prop
+  return &lt;nav style={{ padding: 8 }}&gt;&lt;Boton /&gt;&lt;/nav&gt;;
+}
+
+function Pagina() {
+  return &lt;section&gt;&lt;Barra /&gt;&lt;/section&gt;;
+}
+
+function App() {
+  const [tema, setTema] = useState("claro");
+  return (
+    &lt;TemaContext.Provider value={tema}&gt;
+      &lt;Pagina /&gt;
+      &lt;button onClick={() =&gt; setTema(tema === "claro" ? "oscuro" : "claro")}&gt;Cambiar tema&lt;/button&gt;
+    &lt;/TemaContext.Provider&gt;
+  );
+}</textarea></div>
+    <div><label>Resultado</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · Cuando el valor cambia</p>
+<p>Cuando el valor del <code>Provider</code> cambia, <strong>todos los componentes que lo leen con <code>useContext</code> se vuelven a dibujar</strong>. Por eso conviene que el contexto contenga datos que cambian poco, o dividirlo en varios contextos pequeños.</p>
+</div>
+
+<h2 id="proveedor"><span class="n">4.</span>Un proveedor propio con estado y funciones</h2>
+<p>Lo más habitual es <strong>empaquetar</strong> el estado, el contexto y el proveedor en un componente propio, y un <strong>hook personalizado</strong> para consumirlo. Así el resto de la aplicación solo escribe <code>useTema()</code>:</p>
+<div class="playground js" data-js data-react>
+  <div class="pg-head"><span>⚛️ El patrón completo: contexto + proveedor + hook</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de React" style="height:620px">import { createContext, useContext, useState } from "react";
+
+const TemaContext = createContext(null);
+
+function TemaProvider({ children }) {
+  const [tema, setTema] = useState("claro");
+  const alternar = () =&gt; setTema((t) =&gt; (t === "claro" ? "oscuro" : "claro"));
+  return (
+    &lt;TemaContext.Provider value={{ tema, alternar }}&gt;
+      {children}
+    &lt;/TemaContext.Provider&gt;
+  );
+}
+
+// Hook propio: un solo lugar para leer el contexto
+function useTema() {
+  const valor = useContext(TemaContext);
+  if (valor === null) throw new Error("useTema debe usarse dentro de &lt;TemaProvider&gt;");
+  return valor;
+}
+
+function Etiqueta() {
+  const { tema } = useTema();
+  return &lt;p&gt;Tema actual: &lt;strong&gt;{tema}&lt;/strong&gt;&lt;/p&gt;;
+}
+
+function Interruptor() {
+  const { alternar } = useTema();
+  return &lt;button onClick={alternar}&gt;Cambiar tema&lt;/button&gt;;
+}
+
+function App() {
+  return (
+    &lt;TemaProvider&gt;
+      &lt;Etiqueta /&gt;
+      &lt;Interruptor /&gt;
+    &lt;/TemaProvider&gt;
+  );
+}</textarea></div>
+    <div><label>Resultado</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Comprobación útil</p>
+<p>El <code>throw</code> del hook te avisa con un mensaje claro si olvidas envolver tus componentes en el proveedor, en vez de dejarte un <code>undefined</code> difícil de entender.</p>
+</div>
+
+<h2 id="cuando"><span class="n">5.</span>¿Estado local, elevado o Context?</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Situación</th><th>Mejor opción</th></tr></thead>
+<tbody><tr><td>Solo lo usa <strong>un</strong> componente</td><td><strong>Estado local</strong> (<code>useState</code> en ese componente)</td></tr><tr><td>Lo usan <strong>un padre y sus hijos cercanos</strong></td><td><strong>Elevar el estado</strong> y pasar props</td></tr><tr><td>Lo necesitan <strong>muchos componentes lejanos</strong> (tema, usuario, idioma, carrito)</td><td><strong>Context</strong></td></tr><tr><td>Estado <strong>muy grande y complejo</strong> con muchas acciones</td><td>Context + <code>useReducer</code> (lección 9) o una biblioteca (Zustand, Redux Toolkit)</td></tr><tr><td><strong>Datos del servidor</strong> (listas, perfiles)</td><td>Una biblioteca de datos (TanStack Query) o un hook propio (lección 10)</td></tr></tbody>
+</table></div>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · No te precipites con Context</p>
+<p>Empieza <strong>siempre por lo más simple</strong>: estado local. Eleva el estado cuando haga falta. Usa Context cuando el prop drilling sea realmente molesto. Un contexto para todo vuelve la aplicación difícil de seguir.</p>
+</div>
+
+<h2 id="errores"><span class="n">6.</span>Errores frecuentes</h2>
+<ul><li><strong>Guardar el mismo dato en dos lugares:</strong> acaban desincronizados. Una sola fuente de verdad.</li><li><strong>Elevar el estado demasiado alto:</strong> súbelo solo hasta el ancestro común, no hasta <code>App</code> por costumbre.</li><li><strong>Usar <code>useContext</code> fuera del <code>Provider</code>:</strong> recibes el valor por defecto (<code>createContext(valor)</code>), a veces <code>undefined</code>.</li><li><strong>Pasar un objeto nuevo como <code>value</code></strong> en cada dibujo cuando no hace falta: todos los consumidores se redibujan.</li><li><strong>Mutar el valor del contexto:</strong> cámbialo siempre mediante el estado del proveedor.</li><li><strong>Crear el contexto dentro de un componente:</strong> debe vivir <strong>fuera</strong>, a nivel de módulo.</li><li><strong>Olvidar <code>children</code></strong> en el proveedor propio: nada se dibuja dentro.</li></ul>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li>Si dos componentes necesitan el mismo dato, <strong>eleva el estado</strong> a su ancestro común.</li><li>El padre pasa el <strong>valor</strong> y una <strong>función para modificarlo</strong> (<code>onCambio</code>) por props.</li><li><strong>Prop drilling:</strong> pasar props por niveles que no las usan; se soluciona con Context.</li><li>Context: <code>createContext</code> → <code>&lt;Context.Provider value&gt;</code> → <code>useContext</code>.</li><li>El patrón habitual: <strong>Provider propio</strong> con estado + <strong>hook</strong> <code>useAlgo()</code> para consumirlo.</li><li>Empieza por estado local; sube o usa Context <strong>solo cuando hace falta</strong>.</li><li>Una sola <strong>fuente de verdad</strong> para cada dato.</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">7.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td>Elevar el estado</td><td>Mover el estado al ancestro común para que varios hijos lo compartan.</td></tr><tr><td>Prop drilling</td><td>Pasar una prop por muchos componentes intermedios que no la necesitan.</td></tr><tr><td>Context</td><td>Mecanismo para publicar un valor que cualquier descendiente puede leer.</td></tr><tr><td>Provider</td><td>Componente que ofrece el valor de un contexto a su árbol.</td></tr><tr><td><code>useContext</code></td><td>Hook que lee el valor del contexto más cercano.</td></tr><tr><td>Fuente de verdad</td><td>El único lugar donde vive un dato; los demás lo reciben.</td></tr></tbody>
+</table></div>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>Dos componentes hermanos necesitan el mismo dato. ¿Dónde guardas el estado?</p><ul class="opts"><li><button type="button" class="opt">En el primer hermano</button></li><li><button type="button" class="opt">En el segundo hermano</button></li><li><button type="button" class="opt" data-ok>En su padre (ancestro común)</button></li><li><button type="button" class="opt">En una variable global</button></li></ul><p class="explain" hidden>Se eleva al ancestro común y se baja por props.</p></div>
+<div class="quiz-q"><p>¿Qué es el prop drilling?</p><ul class="opts"><li><button type="button" class="opt">Un tipo de error de React</button></li><li><button type="button" class="opt" data-ok>Pasar props a través de componentes que no las usan</button></li><li><button type="button" class="opt">Un hook</button></li><li><button type="button" class="opt">Un método de <code>map</code></button></li></ul><p class="explain" hidden>Es repetir una prop por muchos niveles solo para que llegue a un componente profundo.</p></div>
+<div class="quiz-q"><p>¿Qué hace <code>useContext(TemaContext)</code>?</p><ul class="opts"><li><button type="button" class="opt">Crea un contexto</button></li><li><button type="button" class="opt" data-ok>Lee el valor del contexto más cercano</button></li><li><button type="button" class="opt">Cambia el valor del contexto</button></li><li><button type="button" class="opt">Borra el contexto</button></li></ul><p class="explain" hidden>Devuelve el <code>value</code> del <code>Provider</code> más cercano por encima.</p></div>
+<div class="quiz-q"><p>¿Dónde se define <code>createContext</code>?</p><ul class="opts"><li><button type="button" class="opt">Dentro del componente</button></li><li><button type="button" class="opt" data-ok>Fuera de los componentes, a nivel de módulo</button></li><li><button type="button" class="opt">Dentro de <code>useEffect</code></button></li><li><button type="button" class="opt">En el HTML</button></li></ul><p class="explain" hidden>Si lo creas dentro, se crearía uno nuevo en cada dibujo.</p></div>
+<div class="quiz-q"><p>Un dato solo lo usa un componente. ¿Qué eliges?</p><ul class="opts"><li><button type="button" class="opt">Context</button></li><li><button type="button" class="opt" data-ok>Estado local</button></li><li><button type="button" class="opt">Redux</button></li><li><button type="button" class="opt">Un efecto</button></li></ul><p class="explain" hidden>Empieza por lo más simple: <code>useState</code> en ese componente.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="react-08">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../07-efectos/ejercicio.html"><small>← Anterior</small>Ejercicio: Efectos con useEffect</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de React · Lección 8 · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&title=%5BError%5D%20Lecci%C3%B3n%208%3A%20Compartir%20estado%3A%20elevar%20y%20Context%20%C2%B7%20Curso%20de%20React&pagina=https%3A//cacg-code.github.io/PRACTICAS-HTML/react/08-compartir-estado/" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

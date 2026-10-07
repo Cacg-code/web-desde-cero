@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ejercicio · Efectos con useEffect · Curso de React</title>
+  <meta name="description" content="Ejercicio práctico de: Efectos con useEffect.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/react/07-efectos/ejercicio.html">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Ejercicio · Efectos con useEffect · Curso de React">
+  <meta property="og:description" content="Ejercicio práctico de: Efectos con useEffect.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/react/07-efectos/ejercicio.html">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de React</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap" id="contenido" style="max-width:820px;padding-top:2rem;padding-bottom:3rem">
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de React</a> › <a href="./">Lección 7</a> › Ejercicio</div>
+        <h1>Ejercicio: Efectos con useEffect</h1>
+        <ul class="meta"><li>⏱ 30 minutos</li><li>📶 Nivel: principiante</li></ul>
+      </header>
+
+      <h2>Objetivo</h2>
+      <p>Crear un borrador que se guarda solo, actualiza el título de la pestaña y se recupera al volver.</p>
+
+      <h3>Cómo se trabaja</h3>
+      <p>Escribe un componente llamado <strong><code>App</code></strong> (puedes crear los demás que necesites). Prueba tu código en el editor de abajo; cuando funcione, pega <strong>todo</strong> el archivo en el comprobador. Los <code>import</code> de <code>react</code> se aceptan y se ignoran, porque aquí React ya está cargado.</p>
+<div class="playground js" data-js data-react>
+  <div class="pg-head"><span>⚛️ Tu editor de React (empieza desde aquí)</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de React" style="height:300px">import { useState, useEffect } from "react";
+
+function App() {
+  return &lt;h1&gt;Mi borrador&lt;/h1&gt;;
+}</textarea></div>
+    <div><label>Resultado</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+
+      <h2>Pasos</h2>
+      <p>Marca cada paso a medida que lo completes. Tu avance se guarda en este navegador.</p>
+      <div class="progress" aria-hidden="true"><div></div></div>
+      <p id="progreso-texto" style="color:var(--muted);font-size:.9rem" aria-live="polite"></p>
+      <ul class="checklist"><li><label><input type="checkbox" id="p1"><span>Crea un componente <code>App</code> con un <code>&lt;textarea&gt;</code> controlado (estado <code>texto</code>).</span></label></li><li><label><input type="checkbox" id="p2"><span>El estado inicial debe leerse de <code>localStorage</code> con la clave <code>"borrador"</code> (con función inicial perezosa).</span></label></li><li><label><input type="checkbox" id="p3"><span>Con un efecto, <strong>guarda</strong> <code>texto</code> en <code>localStorage</code> con la clave <code>"borrador"</code> cada vez que cambie.</span></label></li><li><label><input type="checkbox" id="p4"><span>Con otro efecto, actualiza <code>document.title</code> a <strong>«Caracteres: N»</strong>.</span></label></li><li><label><input type="checkbox" id="p5"><span>Muestra en un <code>&lt;p className="contador"&gt;</code> el número de caracteres, y un botón <strong>«Borrar»</strong> que vacíe el texto.</span></label></li></ul>
+      <details><summary>💡 Pista 1: dos efectos</summary><p>Es mejor tener un efecto por cada tarea: uno para <code>localStorage</code> y otro para <code>document.title</code>, ambos con <code>[texto]</code>.</p>
+</details>
+<details><summary>💡 Pista 2: leer al inicio</summary><p>Usa <code>useState(() =&gt; localStorage.getItem("borrador") || "")</code>.</p>
+</details>
+
+      <section class="checker" id="comprobador" aria-labelledby="t-chk">
+        <h2 id="t-chk">🔎 Comprueba tu trabajo</h2>
+        <p>Pega tu código y pulsa <strong>Comprobar</strong>. La revisión ocurre en tu navegador; nada se envía a ningún sitio. Cada punto en rojo incluye una pista.</p>
+        <label for="chk-code">Tu código de React (el archivo App.jsx completo)</label>
+        <textarea id="chk-code" rows="10" spellcheck="false" placeholder="Pega aquí el contenido completo de tu archivo App.jsx"></textarea>
+        <div class="chk-actions"><button class="btn" type="button" id="chk-run">Comprobar</button><button class="icon-btn" type="button" id="chk-clear">Limpiar</button></div>
+        <p class="chk-sum" id="chk-sum" aria-live="polite"></p>
+        <ul class="chk-list" id="chk-list"></ul>
+        <script type="application/json" id="checks">{"mode": "react", "scaffold": "", "width": 700, "checks": [{"d": "Hay un `<textarea>` controlado y un contador que empieza en 0", "h": "Usa `value={texto}` y `onChange`; muestra `texto.length` en `.contador`.", "t": "return !!$(\"#root textarea\") && texto(\"#root .contador\")===\"0\""}, {"d": "Al escribir, el contador se actualiza", "h": "Muestra `{texto.length}`.", "t": "await escribir(\"#root textarea\",\"hola\");return texto(\"#root .contador\")===\"4\""}, {"d": "El título de la página cambia a «Caracteres: 4»", "h": "Escribe un efecto que asigne `document.title`.", "t": "return document.title===\"Caracteres: 4\""}, {"d": "El texto se guarda en `localStorage` con la clave «borrador»", "h": "Usa `localStorage.setItem(\"borrador\", texto)` dentro de un efecto con `[texto]`.", "t": "return localStorage.getItem(\"borrador\")===\"hola\""}, {"d": "Una segunda instancia de la aplicación recupera el texto guardado", "h": "Inicializa el estado con `useState(() => localStorage.getItem(\"borrador\") || \"\")`.", "t": "var d=document.createElement(\"div\");document.body.appendChild(d);createRoot(d).render(React.createElement(App));await tick(100);var t=d.querySelector(\"textarea\");return !!t && t.value===\"hola\""}, {"d": "«Borrar» vacía el texto, el contador y lo guardado", "h": "Llama a `setTexto(\"\")`; el efecto se encarga del resto.", "t": "await click(boton(\"borrar\"));return $(\"#root textarea\").value===\"\" && texto(\"#root .contador\")===\"0\" && localStorage.getItem(\"borrador\")===\"\" && document.title===\"Caracteres: 0\""}, {"d": "Usas `useEffect` con dependencias y no hay errores", "h": "Escribe `useEffect(() => { … }, [texto])`.", "t": "return /useEffect\\s*\\(/.test(window.__src) && /\\[\\s*texto\\s*\\]/.test(window.__src) && window.__warns.length===0 && !window.__err"}]}</script>
+      </section>
+      <details>
+        <summary>✅ Ver una solución posible</summary>
+        <p>Intenta resolverlo antes de mirar. Tu versión puede ser distinta y también correcta.</p>
+        <div class="code">
+  <div class="code-head"><span>App.jsx</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">import</span> { useState, useEffect } <span class="tk-tag">from</span> <span class="tk-val">"react"</span>;
+
+<span class="tk-tag">export</span> <span class="tk-tag">default</span> <span class="tk-tag">function</span> App() {
+  <span class="tk-tag">const</span> [texto, setTexto] = useState(() =&gt; localStorage.getItem(<span class="tk-val">"borrador"</span>) || <span class="tk-val">""</span>);
+
+  useEffect(() =&gt; {
+    localStorage.setItem(<span class="tk-val">"borrador"</span>, texto);
+  }, [texto]);
+
+  useEffect(() =&gt; {
+    document.title = <span class="tk-val">"Caracteres: "</span> + texto.length;
+  }, [texto]);
+
+  <span class="tk-tag">return</span> (
+    <span class="tk-tag">&lt;main</span><span class="tk-tag">&gt;</span>
+      <span class="tk-tag">&lt;textarea</span> <span class="tk-attr">value</span>={texto} <span class="tk-attr">onChange</span>={(e) =&gt; setTexto(e.target.value)} <span class="tk-attr">rows</span>={<span class="tk-attr">4</span>} <span class="tk-tag">/&gt;</span>
+      <span class="tk-tag">&lt;p</span> <span class="tk-attr">className</span>=<span class="tk-val">"contador"</span><span class="tk-tag">&gt;</span>{texto.length}<span class="tk-tag">&lt;/p</span><span class="tk-tag">&gt;</span>
+      <span class="tk-tag">&lt;button</span> <span class="tk-attr">onClick</span>={() =&gt; setTexto(<span class="tk-val">""</span>)}<span class="tk-tag">&gt;</span>Borrar<span class="tk-tag">&lt;/button</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;/main</span><span class="tk-tag">&gt;</span>
+  );
+}</code></pre>
+</div>
+
+      </details>
+      <div class="callout consejo">
+<p class="callout-title">💡 🏁 Reto extra (opcional)</p>
+<p>Añade un aviso «Guardado hace un momento» que aparezca 1 segundo después de dejar de escribir (usa <code>setTimeout</code> y su limpieza).</p>
+</div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="./"><small>← Anterior</small>Volver a lección 7</a>
+        <a class="next" href="../08-compartir-estado/"><small>Siguiente →</small>Compartir estado: elevar y Context</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de React · Ejercicio de lección 7 · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&title=%5BError%5D%20Ejercicio%20%C2%B7%20Efectos%20con%20useEffect%20%C2%B7%20Curso%20de%20React&pagina=https%3A//cacg-code.github.io/PRACTICAS-HTML/react/07-efectos/ejercicio.html" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

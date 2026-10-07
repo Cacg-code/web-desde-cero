@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lección 3: Componentes y props · Curso de React</title>
+  <meta name="description" content="Componentes y props: cómo pasar datos de padres a hijos, desestructurar, valores por defecto, la prop children, composición y organización en archivos.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/react/03-componentes-y-props/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Lección 3: Componentes y props · Curso de React">
+  <meta property="og:description" content="Componentes y props: cómo pasar datos de padres a hijos, desestructurar, valores por defecto, la prop children, composición y organización en archivos.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/react/03-componentes-y-props/">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de React</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap lesson-layout" id="contenido">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#props">Props: los datos que recibe un componente</a></li><li><a href="#destructuring">Desestructurar: la forma habitual</a></li><li><a href="#tipos">Qué se puede pasar como prop</a></li><li><a href="#children">La prop especial `children`</a></li><li><a href="#solo-lectura">Las props son de solo lectura</a></li><li><a href="#organizar">Organizar: un componente por archivo</a></li><li><a href="#errores">Errores frecuentes</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de React</a> › Lección 3</div>
+        <h1>Componentes y props</h1>
+        <ul class="meta"><li>⏱ 45 minutos</li><li>📶 Nivel: principiante</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Pasar datos a un componente con props de cualquier tipo.</li><li>Desestructurar props y definir valores por defecto.</li><li>Crear componentes contenedor con <code>children</code>.</li><li>Entender por qué las props son de solo lectura.</li></ul>
+</div>
+
+<h2 id="props"><span class="n">1.</span>Props: los datos que recibe un componente</h2>
+<p>Un componente que siempre muestra lo mismo sirve de poco. Para que <strong>una misma pieza muestre datos distintos</strong> usamos las <strong>props</strong> (de *properties*, «propiedades»): información que el componente padre le pasa al hijo, igual que los atributos de una etiqueta HTML.</p>
+<div class="anatomy" role="img" aria-label="Pasar una prop: nombre y valor, como un atributo"><div class="part" style="--c:#ff8fa3"><span>&lt;Saludo </span><span class="lbl">&nbsp;</span></div><div class="part" style="--c:#ffd479"><span>nombre</span><span class="lbl">nombre de la prop</span></div><div class="part" style="--c:#ff8fa3"><span>=</span><span class="lbl">&nbsp;</span></div><div class="part" style="--c:#8ee6a0"><span>"Ana"</span><span class="lbl">valor</span></div><div class="part" style="--c:#ff8fa3"><span> /&gt;</span><span class="lbl">&nbsp;</span></div></div>
+<div class="playground js" data-js data-react>
+  <div class="pg-head"><span>⚛️ Tu primera prop</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de React" style="height:240px">function Saludo(props) {
+  return &lt;h2&gt;Hola, {props.nombre}&lt;/h2&gt;;
+}
+
+function App() {
+  return (
+    &lt;main&gt;
+      &lt;Saludo nombre="Ana" /&gt;
+      &lt;Saludo nombre="Luis" /&gt;
+      &lt;Saludo nombre="Marta" /&gt;
+    &lt;/main&gt;
+  );
+}</textarea></div>
+    <div><label>Resultado</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<p>React reúne <strong>todas las props en un único objeto</strong> que recibe como primer parámetro la función. Por eso se escribe <code>props.nombre</code>. El mismo componente <code>Saludo</code> produce tres resultados distintos.</p>
+
+<h2 id="destructuring"><span class="n">2.</span>Desestructurar: la forma habitual</h2>
+<p>Escribir <code>props.</code> en cada línea cansa. Lo habitual es <strong>desestructurar</strong> el objeto en la propia lista de parámetros (lo viste en el curso de JavaScript):</p>
+<div class="playground js" data-js data-react>
+  <div class="pg-head"><span>⚛️ Props desestructuradas y valores por defecto</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de React" style="height:300px">function Perfil({ nombre, rol = "Estudiante", edad }) {
+  return (
+    &lt;article className="perfil"&gt;
+      &lt;h2&gt;{nombre}&lt;/h2&gt;
+      &lt;p&gt;{rol} · {edad} años&lt;/p&gt;
+    &lt;/article&gt;
+  );
+}
+
+function App() {
+  return (
+    &lt;main&gt;
+      &lt;Perfil nombre="Ana" rol="Diseñadora" edad={28} /&gt;
+      &lt;Perfil nombre="Luis" edad={19} /&gt;
+    &lt;/main&gt;
+  );
+}</textarea></div>
+    <div><label>Resultado</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<ul><li><strong>Valor por defecto:</strong> <code>rol = "Estudiante"</code> se usa cuando no pasas esa prop.</li><li><strong>Textos</strong> se pasan con comillas: <code>nombre="Ana"</code>.</li><li><strong>Todo lo demás</strong> (números, booleanos, arrays, objetos, funciones) se pasa con <strong>llaves</strong>: <code>edad={28}</code>.</li><li><strong>Una prop booleana</strong> sin valor equivale a <code>true</code>: <code>&lt;Boton deshabilitado /&gt;</code> es igual a <code>deshabilitado={true}</code>.</li></ul>
+
+<h2 id="tipos"><span class="n">3.</span>Qué se puede pasar como prop</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Tipo</th><th>Cómo se pasa</th><th>Ejemplo</th></tr></thead>
+<tbody><tr><td>Texto</td><td>comillas</td><td><code>titulo="Mi curso"</code></td></tr><tr><td>Número</td><td>llaves</td><td><code>precio={25}</code></td></tr><tr><td>Booleano</td><td>llaves o presencia</td><td><code>activo={true}</code> · <code>activo</code></td></tr><tr><td>Array</td><td>llaves</td><td><code>etiquetas={["css", "html"]}</code></td></tr><tr><td>Objeto</td><td>llaves dobles</td><td><code>autor={{ nombre: "Ana" }}</code></td></tr><tr><td>Función</td><td>llaves</td><td><code>onGuardar={guardar}</code></td></tr><tr><td>JSX</td><td>llaves</td><td><code>icono={&lt;Estrella /&gt;}</code></td></tr></tbody>
+</table></div>
+<div class="playground js" data-js data-react>
+  <div class="pg-head"><span>⚛️ Distintos tipos de props</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de React" style="height:330px">function Producto({ nombre, precio, enOferta = false, etiquetas = [] }) {
+  return (
+    &lt;article className="producto"&gt;
+      &lt;h3&gt;{nombre} {enOferta &amp;&amp; &lt;span&gt;🔥 Oferta&lt;/span&gt;}&lt;/h3&gt;
+      &lt;p&gt;${precio.toFixed(2)}&lt;/p&gt;
+      &lt;p&gt;Etiquetas: {etiquetas.join(", ") || "ninguna"}&lt;/p&gt;
+    &lt;/article&gt;
+  );
+}
+
+function App() {
+  return (
+    &lt;main&gt;
+      &lt;Producto nombre="Teclado" precio={25} enOferta etiquetas={["pc", "oficina"]} /&gt;
+      &lt;Producto nombre="Mouse" precio={12.5} /&gt;
+    &lt;/main&gt;
+  );
+}</textarea></div>
+    <div><label>Resultado</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+
+<h2 id="children"><span class="n">4.</span>La prop especial <code>children</code></h2>
+<p>A veces quieres pasar a un componente <strong>otros elementos dentro de sus etiquetas</strong>, igual que haces con un <code>&lt;div&gt;</code> en HTML. Todo lo que pongas entre la etiqueta de apertura y de cierre llega como la prop <strong><code>children</code></strong>:</p>
+<div class="playground js" data-js data-react>
+  <div class="pg-head"><span>⚛️ Componentes contenedor con children</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de React" style="height:380px">function Caja({ titulo, children }) {
+  return (
+    &lt;section className="caja" style={{ border: "2px solid #4f46e5", borderRadius: 12, padding: 14, marginBottom: 12 }}&gt;
+      &lt;h3 style={{ marginTop: 0 }}&gt;{titulo}&lt;/h3&gt;
+      {children}
+    &lt;/section&gt;
+  );
+}
+
+function App() {
+  return (
+    &lt;main&gt;
+      &lt;Caja titulo="Consejo"&gt;
+        &lt;p&gt;Los componentes pueden envolver a otros.&lt;/p&gt;
+      &lt;/Caja&gt;
+      &lt;Caja titulo="Lista"&gt;
+        &lt;ul&gt;
+          &lt;li&gt;Reutilizable&lt;/li&gt;
+          &lt;li&gt;Flexible&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/Caja&gt;
+    &lt;/main&gt;
+  );
+}</textarea></div>
+    <div><label>Resultado</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Composición antes que herencia</p>
+<p>React favorece <strong>componer</strong> piezas pequeñas: una <code>Caja</code> que acepta <code>children</code>, una <code>Pagina</code> que contiene una <code>Cabecera</code> y un <code>Contenido</code>… Es la forma más flexible de reutilizar interfaz sin repetir código.</p>
+</div>
+
+<h2 id="solo-lectura"><span class="n">5.</span>Las props son de solo lectura</h2>
+<p>Un componente <strong>nunca debe modificar sus propias props</strong>. Piensa en ellas como los argumentos de una función pura: mismos datos de entrada, misma pantalla. Si necesitas algo que <strong>cambie con el tiempo</strong>, usarás <strong>estado</strong> (lección 4).</p>
+<div class="code">
+  <div class="code-head"><span>❌ Nunca hagas esto</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">function</span> Contador({ valor }) {
+  valor = valor + <span class="tk-attr">1</span>;        <span class="tk-com">// ❌ no modifiques las props</span>
+  <span class="tk-tag">return</span> <span class="tk-tag">&lt;p</span><span class="tk-tag">&gt;</span>{valor}<span class="tk-tag">&lt;/p</span><span class="tk-tag">&gt;</span>;
+}</code></pre>
+</div>
+<div class="code">
+  <div class="code-head"><span>✅ Calcula un valor nuevo</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">function</span> Contador({ valor }) {
+  <span class="tk-tag">const</span> siguiente = valor + <span class="tk-attr">1</span>;   <span class="tk-com">// ✅ un valor derivado</span>
+  <span class="tk-tag">return</span> <span class="tk-tag">&lt;p</span><span class="tk-tag">&gt;</span>{siguiente}<span class="tk-tag">&lt;/p</span><span class="tk-tag">&gt;</span>;
+}</code></pre>
+</div>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · El flujo de datos</p>
+<p>Los datos <strong>bajan</strong> de padres a hijos mediante props: es un flujo en <strong>una sola dirección</strong>. Esto hace que sea fácil saber de dónde sale cada dato cuando algo falla.</p>
+</div>
+
+<h2 id="organizar"><span class="n">6.</span>Organizar: un componente por archivo</h2>
+<p>En un proyecto real, cada componente suele vivir en <strong>su propio archivo</strong> y se importa donde se necesita. Esta es la estructura típica:</p>
+<div class="code">
+  <div class="code-head"><span>src/components/Tarjeta.jsx</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">export</span> <span class="tk-tag">default</span> <span class="tk-tag">function</span> Tarjeta({ titulo, children }) {
+  <span class="tk-tag">return</span> (
+    <span class="tk-tag">&lt;article</span> <span class="tk-attr">className</span>=<span class="tk-val">"tarjeta"</span><span class="tk-tag">&gt;</span>
+      <span class="tk-tag">&lt;h2</span><span class="tk-tag">&gt;</span>{titulo}<span class="tk-tag">&lt;/h2</span><span class="tk-tag">&gt;</span>
+      {children}
+    <span class="tk-tag">&lt;/article</span><span class="tk-tag">&gt;</span>
+  );
+}</code></pre>
+</div>
+<div class="code">
+  <div class="code-head"><span>src/App.jsx</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">import</span> Tarjeta <span class="tk-tag">from</span> <span class="tk-val">"./components/Tarjeta.jsx"</span>;
+
+<span class="tk-tag">export</span> <span class="tk-tag">default</span> <span class="tk-tag">function</span> App() {
+  <span class="tk-tag">return</span> (
+    <span class="tk-tag">&lt;Tarjeta</span> <span class="tk-attr">titulo</span>=<span class="tk-val">"Hola"</span><span class="tk-tag">&gt;</span>
+      <span class="tk-tag">&lt;p</span><span class="tk-tag">&gt;</span>Contenido de la tarjeta<span class="tk-tag">&lt;/p</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;/Tarjeta</span><span class="tk-tag">&gt;</span>
+  );
+}</code></pre>
+</div>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · En los editores del curso</p>
+<p>Aquí todos los componentes caben en un solo cuadro de código, para que puedas ver todo junto. En Vite los separarás con <code>import</code> y <code>export</code>, como arriba.</p>
+</div>
+
+<h2 id="errores"><span class="n">7.</span>Errores frecuentes</h2>
+<ul><li><strong>Pasar un número entre comillas:</strong> <code>precio="25"</code> es el <strong>texto</strong> «25», no el número 25. Usa <code>precio={25}</code>.</li><li><strong>Olvidar las llaves en el parámetro:</strong> <code>function Perfil(nombre)</code> recibe <strong>todo el objeto de props</strong>; escribe <code>function Perfil({ nombre })</code>.</li><li><strong>Modificar una prop:</strong> son de solo lectura; calcula un valor nuevo.</li><li><strong>Esperar <code>children</code> sin pintarlo:</strong> si no escribes <code>{children}</code>, el contenido se ignora.</li><li><strong>Nombres de props mal escritos:</strong> <code>&lt;Perfil nomber="Ana" /&gt;</code> no da error, pero <code>nombre</code> queda <code>undefined</code>.</li><li><strong>Pasar objetos nuevos en cada dibujo</strong> sin necesidad (se vuelve relevante con <code>memo</code>, más adelante).</li></ul>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li>Las <strong>props</strong> son los datos que un componente padre pasa a un hijo; llegan como <strong>un objeto</strong> en el primer parámetro.</li><li>Se <strong>desestructuran</strong> en los parámetros: <code>function Perfil({ nombre, rol = "Estudiante" })</code>.</li><li>Texto con comillas; <strong>todo lo demás con llaves</strong>: <code>edad={28}</code>, <code>activo={true}</code>, <code>etiquetas={[…]}</code>.</li><li><code>children</code> contiene lo que se escribe <strong>entre</strong> las etiquetas del componente.</li><li>Las props son de <strong>solo lectura</strong>: no las modifiques; calcula valores derivados.</li><li>Los datos fluyen en <strong>una dirección</strong>: de padre a hijo.</li><li>Un componente por archivo, con <code>export default</code> e <code>import</code>.</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">8.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td>Prop</td><td>Dato que un componente padre pasa a un hijo, como un atributo.</td></tr><tr><td><code>children</code></td><td>Prop especial con el contenido escrito entre las etiquetas del componente.</td></tr><tr><td>Desestructuración</td><td>Sacar propiedades de un objeto en variables: <code>{ nombre, edad }</code>.</td></tr><tr><td>Valor por defecto</td><td>Valor que se usa si la prop no se envía: <code>rol = "Estudiante"</code>.</td></tr><tr><td>Composición</td><td>Construir interfaces combinando componentes pequeños.</td></tr><tr><td>Componente padre / hijo</td><td>El padre usa al hijo dentro de su JSX y le pasa props.</td></tr></tbody>
+</table></div>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>¿Cómo recibe un componente las props?</p><ul class="opts"><li><button type="button" class="opt">Como variables globales</button></li><li><button type="button" class="opt" data-ok>Como un objeto en su primer parámetro</button></li><li><button type="button" class="opt">Desde el <code>localStorage</code></button></li><li><button type="button" class="opt">Con <code>this.props</code> obligatoriamente</button></li></ul><p class="explain" hidden>React agrupa todas las props en un objeto y lo pasa como primer argumento.</p></div>
+<div class="quiz-q"><p>¿Cómo pasas el número 25 como prop <code>precio</code>?</p><ul class="opts"><li><button type="button" class="opt"><code>precio="25"</code></button></li><li><button type="button" class="opt" data-ok><code>precio={25}</code></button></li><li><button type="button" class="opt"><code>precio=(25)</code></button></li><li><button type="button" class="opt"><code>precio:25</code></button></li></ul><p class="explain" hidden>Con comillas sería un texto. Los números, booleanos, arrays y objetos van entre llaves.</p></div>
+<div class="quiz-q"><p>¿Qué contiene <code>children</code>?</p><ul class="opts"><li><button type="button" class="opt">Los hijos del DOM del navegador</button></li><li><button type="button" class="opt" data-ok>Lo que escribes entre la etiqueta de apertura y la de cierre del componente</button></li><li><button type="button" class="opt">Las props de los hijos</button></li><li><button type="button" class="opt">Un array de componentes de la carpeta</button></li></ul><p class="explain" hidden><code>&lt;Caja&gt;hola&lt;/Caja&gt;</code> entrega «hola» como <code>children</code>.</p></div>
+<div class="quiz-q"><p>¿Qué debes hacer con una prop dentro del componente?</p><ul class="opts"><li><button type="button" class="opt">Modificarla libremente</button></li><li><button type="button" class="opt" data-ok>Solo leerla</button></li><li><button type="button" class="opt">Borrarla con <code>delete</code></button></li><li><button type="button" class="opt">Convertirla en variable global</button></li></ul><p class="explain" hidden>Las props son de solo lectura; para datos que cambian se usa estado.</p></div>
+<div class="quiz-q"><p>¿Qué hace <code>&lt;Perfil nombre="Ana" /&gt;</code> si <code>Perfil</code> tiene <code>rol = "Estudiante"</code> y no se pasa <code>rol</code>?</p><ul class="opts"><li><button type="button" class="opt">Da error</button></li><li><button type="button" class="opt" data-ok>Usa «Estudiante»</button></li><li><button type="button" class="opt">Muestra <code>undefined</code></button></li><li><button type="button" class="opt">No dibuja el componente</button></li></ul><p class="explain" hidden>El valor por defecto se aplica cuando la prop no se envía.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="react-03">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../02-jsx/ejercicio.html"><small>← Anterior</small>Ejercicio: JSX a fondo</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de React · Lección 3 · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&title=%5BError%5D%20Lecci%C3%B3n%203%3A%20Componentes%20y%20props%20%C2%B7%20Curso%20de%20React&pagina=https%3A//cacg-code.github.io/PRACTICAS-HTML/react/03-componentes-y-props/" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

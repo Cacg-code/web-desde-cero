@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ejercicio · Datos de internet · Curso de React</title>
+  <meta name="description" content="Ejercicio práctico de: Datos de internet.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/react/10-datos-de-internet/ejercicio.html">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Ejercicio · Datos de internet · Curso de React">
+  <meta property="og:description" content="Ejercicio práctico de: Datos de internet.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/react/10-datos-de-internet/ejercicio.html">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de React</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap" id="contenido" style="max-width:820px;padding-top:2rem;padding-bottom:3rem">
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de React</a> › <a href="./">Lección 10</a> › Ejercicio</div>
+        <h1>Ejercicio: Datos de internet</h1>
+        <ul class="meta"><li>⏱ 40 minutos</li><li>📶 Nivel: principiante</li></ul>
+      </header>
+
+      <h2>Objetivo</h2>
+      <p>Pedir datos a una API simulada, mostrar cargando, datos y error, y poder reintentar con un fallo provocado.</p>
+
+      <h3>Cómo se trabaja</h3>
+      <p>Escribe un componente llamado <strong><code>App</code></strong> (puedes crear los demás que necesites). Prueba tu código en el editor de abajo; cuando funcione, pega <strong>todo</strong> el archivo en el comprobador. Los <code>import</code> de <code>react</code> se aceptan y se ignoran, porque aquí React ya está cargado.</p>
+<div class="playground js" data-js data-react>
+  <div class="pg-head"><span>⚛️ Tu editor de React (empieza desde aquí)</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de React" style="height:300px">// Simula una API: responde tras un breve retraso (o falla)
+function pedirUsuarios(falla = false) {
+  return new Promise((resolver, rechazar) =&gt; {
+    setTimeout(() =&gt; {
+      if (falla) rechazar(new Error("No se pudo conectar con el servidor"));
+      else resolver([
+        { id: 1, nombre: "Ana Pérez", ciudad: "Lima" },
+        { id: 2, nombre: "Luis Gómez", ciudad: "Quito" },
+        { id: 3, nombre: "Marta Ríos", ciudad: "Bogotá" },
+      ]);
+    }, 500);
+  });
+}
+
+import { useState, useEffect } from "react";
+
+function App() {
+  return &lt;h1&gt;Usuarios&lt;/h1&gt;;
+}</textarea></div>
+    <div><label>Resultado</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+
+      <h2>Pasos</h2>
+      <p>Marca cada paso a medida que lo completes. Tu avance se guarda en este navegador.</p>
+      <div class="progress" aria-hidden="true"><div></div></div>
+      <p id="progreso-texto" style="color:var(--muted);font-size:.9rem" aria-live="polite"></p>
+      <ul class="checklist"><li><label><input type="checkbox" id="p1"><span><code>pedirUsuarios(falla)</code> ya está escrita en el código inicial (simula una API). <strong>No la modifiques.</strong></span></label></li><li><label><input type="checkbox" id="p2"><span>En <code>App</code>, guarda en estado los <code>usuarios</code> (empieza con <code>[]</code>), <code>cargando</code> (empieza en <code>true</code>) y <code>error</code> (empieza en <code>null</code>).</span></label></li><li><label><input type="checkbox" id="p3"><span>En un <code>useEffect</code> pide los usuarios; mientras cargan, muestra un <code>&lt;p className="cargando"&gt;Cargando…&lt;/p&gt;</code>.</span></label></li><li><label><input type="checkbox" id="p4"><span>Cuando lleguen, dibuja una lista <code>&lt;ul&gt;</code> con un <code>&lt;li&gt;</code> por usuario con su <strong>nombre</strong> y su <strong>ciudad</strong>.</span></label></li><li><label><input type="checkbox" id="p5"><span>Añade un botón <strong>«Simular fallo»</strong> que vuelva a pedir con <code>pedirUsuarios(true)</code> y muestre el error en un <code>&lt;p role="alert"&gt;</code>.</span></label></li></ul>
+      <details><summary>💡 Pista 1: el efecto</summary><p>Usa <code>.then(setUsuarios).catch(e =&gt; setError(e.message)).finally(() =&gt; setCargando(false))</code> o <code>try/catch/finally</code> dentro de una función <code>async</code> interna.</p>
+</details>
+<details><summary>💡 Pista 2: pedir de nuevo</summary><p>Crea una función <code>cargar(falla)</code> que ponga <code>cargando</code> en <code>true</code>, limpie el error y haga la petición. Úsala en el efecto y en el botón.</p>
+</details>
+
+      <section class="checker" id="comprobador" aria-labelledby="t-chk">
+        <h2 id="t-chk">🔎 Comprueba tu trabajo</h2>
+        <p>Pega tu código y pulsa <strong>Comprobar</strong>. La revisión ocurre en tu navegador; nada se envía a ningún sitio. Cada punto en rojo incluye una pista.</p>
+        <label for="chk-code">Tu código de React (el archivo App.jsx completo)</label>
+        <textarea id="chk-code" rows="10" spellcheck="false" placeholder="Pega aquí el contenido completo de tu archivo App.jsx"></textarea>
+        <div class="chk-actions"><button class="btn" type="button" id="chk-run">Comprobar</button><button class="icon-btn" type="button" id="chk-clear">Limpiar</button></div>
+        <p class="chk-sum" id="chk-sum" aria-live="polite"></p>
+        <ul class="chk-list" id="chk-list"></ul>
+        <script type="application/json" id="checks">{"mode": "react", "scaffold": "", "width": 700, "checks": [{"d": "Al inicio se muestra «Cargando…»", "h": "Empieza con `cargando` en `true` y muestra `<p className=\"cargando\">`.", "t": "return texto(\"#root .cargando\")===\"Cargando…\""}, {"d": "Mientras carga no se muestra ninguna lista", "h": "Dibuja la lista solo cuando `!cargando`.", "t": "return $$(\"#root li\").length===0"}, {"d": "Tras la respuesta aparecen los 3 usuarios con nombre y ciudad", "h": "Dibuja `{u.nombre} · {u.ciudad}` en cada `<li>`.", "t": "for(var i=0;i<30&&$$(\"#root li\").length<3;i++)await tick(60);var l=$$(\"#root li\").map(function(x){return x.textContent});return l.length===3 && /Ana Pérez/.test(l[0]) && /Lima/.test(l[0]) && /Bogotá/.test(l[2])"}, {"d": "Cuando terminan los datos desaparece «Cargando…»", "h": "Pon `cargando` en `false` en `finally`.", "t": "return !$(\"#root .cargando\")"}, {"d": "«Simular fallo» vuelve a mostrar «Cargando…»", "h": "Pon `cargando` en `true` al volver a pedir.", "t": "await click(boton(\"simular fallo\"));return !!$(\"#root .cargando\")"}, {"d": "El fallo se muestra en un `<p role=\"alert\">` con el mensaje del servidor", "h": "Captura el error con `.catch` y muestra `e.message`.", "t": "for(var i=0;i<30&&!$(\"#root [role=alert]\");i++)await tick(60);return /No se pudo conectar con el servidor/.test(texto(\"#root [role=alert]\"))"}, {"d": "Usas `useEffect`, el estado de error y no hay avisos", "h": "Pide los datos dentro de `useEffect(…, [])`.", "t": "return /useEffect\\s*\\(/.test(window.__src) && /useState\\s*\\(\\s*null\\s*\\)/.test(window.__src) && window.__warns.length===0 && !window.__err"}]}</script>
+      </section>
+      <details>
+        <summary>✅ Ver una solución posible</summary>
+        <p>Intenta resolverlo antes de mirar. Tu versión puede ser distinta y también correcta.</p>
+        <div class="code">
+  <div class="code-head"><span>App.jsx</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-com">// Simula una API: responde tras un breve retraso (o falla)</span>
+<span class="tk-tag">function</span> pedirUsuarios(falla = <span class="tk-tag">false</span>) {
+  <span class="tk-tag">return</span> <span class="tk-tag">new</span> Promise((resolver, rechazar) =&gt; {
+    setTimeout(() =&gt; {
+      <span class="tk-tag">if</span> (falla) rechazar(<span class="tk-tag">new</span> Error(<span class="tk-val">"No se pudo conectar con el servidor"</span>));
+      <span class="tk-tag">else</span> resolver([
+        { id: <span class="tk-attr">1</span>, nombre: <span class="tk-val">"Ana Pérez"</span>, ciudad: <span class="tk-val">"Lima"</span> },
+        { id: <span class="tk-attr">2</span>, nombre: <span class="tk-val">"Luis Gómez"</span>, ciudad: <span class="tk-val">"Quito"</span> },
+        { id: <span class="tk-attr">3</span>, nombre: <span class="tk-val">"Marta Ríos"</span>, ciudad: <span class="tk-val">"Bogotá"</span> },
+      ]);
+    }, <span class="tk-attr">500</span>);
+  });
+}
+
+<span class="tk-tag">import</span> { useState, useEffect } <span class="tk-tag">from</span> <span class="tk-val">"react"</span>;
+
+<span class="tk-tag">export</span> <span class="tk-tag">default</span> <span class="tk-tag">function</span> App() {
+  <span class="tk-tag">const</span> [usuarios, setUsuarios] = useState([]);
+  <span class="tk-tag">const</span> [cargando, setCargando] = useState(<span class="tk-tag">true</span>);
+  <span class="tk-tag">const</span> [error, setError] = useState(<span class="tk-tag">null</span>);
+
+  <span class="tk-tag">function</span> cargar(falla) {
+    setCargando(<span class="tk-tag">true</span>);
+    setError(<span class="tk-tag">null</span>);
+    pedirUsuarios(falla)
+      .then(setUsuarios)
+      .<span class="tk-tag">catch</span>((e) =&gt; setError(e.message))
+      .<span class="tk-tag">finally</span>(() =&gt; setCargando(<span class="tk-tag">false</span>));
+  }
+
+  useEffect(() =&gt; {
+    cargar(<span class="tk-tag">false</span>);
+  }, []);
+
+  <span class="tk-tag">return</span> (
+    <span class="tk-tag">&lt;main</span><span class="tk-tag">&gt;</span>
+      <span class="tk-tag">&lt;button</span> <span class="tk-attr">onClick</span>={() =&gt; cargar(<span class="tk-tag">true</span>)}<span class="tk-tag">&gt;</span>Simular fallo<span class="tk-tag">&lt;/button</span><span class="tk-tag">&gt;</span>
+      {cargando &amp;&amp; <span class="tk-tag">&lt;p</span> <span class="tk-attr">className</span>=<span class="tk-val">"cargando"</span><span class="tk-tag">&gt;</span>Cargando…<span class="tk-tag">&lt;/p</span><span class="tk-tag">&gt;</span>}
+      {error &amp;&amp; <span class="tk-tag">&lt;p</span> <span class="tk-attr">role</span>=<span class="tk-val">"alert"</span><span class="tk-tag">&gt;</span>{error}<span class="tk-tag">&lt;/p</span><span class="tk-tag">&gt;</span>}
+      {!cargando &amp;&amp; !error &amp;&amp; (
+        <span class="tk-tag">&lt;ul</span><span class="tk-tag">&gt;</span>
+          {usuarios.map((u) =&gt; (
+            <span class="tk-tag">&lt;li</span> <span class="tk-attr">key</span>={u.id}<span class="tk-tag">&gt;</span>{u.nombre} · {u.ciudad}<span class="tk-tag">&lt;/li</span><span class="tk-tag">&gt;</span>
+          ))}
+        <span class="tk-tag">&lt;/ul</span><span class="tk-tag">&gt;</span>
+      )}
+    <span class="tk-tag">&lt;/main</span><span class="tk-tag">&gt;</span>
+  );
+}</code></pre>
+</div>
+
+      </details>
+      <div class="callout consejo">
+<p class="callout-title">💡 🏁 Reto extra (opcional)</p>
+<p>Añade un botón «Reintentar» dentro del mensaje de error que vuelva a pedir los datos con éxito.</p>
+</div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="./"><small>← Anterior</small>Volver a lección 10</a>
+        <a class="next" href="../11-proyectos-reales/"><small>Siguiente →</small>Proyectos reales con Vite y el ecosistema</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de React · Ejercicio de lección 10 · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&title=%5BError%5D%20Ejercicio%20%C2%B7%20Datos%20de%20internet%20%C2%B7%20Curso%20de%20React&pagina=https%3A//cacg-code.github.io/PRACTICAS-HTML/react/10-datos-de-internet/ejercicio.html" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

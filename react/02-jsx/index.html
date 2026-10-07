@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lección 2: JSX a fondo · Curso de React</title>
+  <meta name="description" content="JSX paso a paso: en qué se convierte, las diferencias con HTML, expresiones entre llaves, atributos dinámicos, estilos como objeto, fragmentos y buenas prácticas.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/react/02-jsx/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Lección 2: JSX a fondo · Curso de React">
+  <meta property="og:description" content="JSX paso a paso: en qué se convierte, las diferencias con HTML, expresiones entre llaves, atributos dinámicos, estilos como objeto, fragmentos y buenas prácticas.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/react/02-jsx/">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de React</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap lesson-layout" id="contenido">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#que-es">JSX es JavaScript con etiquetas</a></li><li><a href="#reglas">Diferencias con HTML</a></li><li><a href="#llaves">Llaves { }: JavaScript dentro del JSX</a></li><li><a href="#atributos">Atributos dinámicos y estilos</a></li><li><a href="#texto">Texto, espacios y fragmentos</a></li><li><a href="#buenas">Buenas prácticas de escritura</a></li><li><a href="#errores">Errores frecuentes</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de React</a> › Lección 2</div>
+        <h1>JSX a fondo</h1>
+        <ul class="meta"><li>⏱ 45 minutos</li><li>📶 Nivel: principiante</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Explicar qué es JSX y en qué se convierte.</li><li>Aplicar las diferencias entre JSX y HTML.</li><li>Insertar expresiones de JavaScript con llaves, en texto y en atributos.</li><li>Dar estilos con objetos y usar fragmentos.</li></ul>
+</div>
+
+<h2 id="que-es"><span class="n">1.</span>JSX es JavaScript con etiquetas</h2>
+<p><strong>JSX</strong> te permite escribir etiquetas parecidas a HTML <strong>dentro</strong> de JavaScript. No es HTML ni un texto que se pega en la página: una herramienta (Vite, Babel) lo <strong>traduce</strong> a llamadas normales de JavaScript antes de que el navegador lo ejecute.</p>
+<div class="code">
+  <div class="code-head"><span>Lo que escribes (JSX)</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">const</span> saludo = <span class="tk-tag">&lt;h1</span> <span class="tk-attr">className</span>=<span class="tk-val">"titulo"</span><span class="tk-tag">&gt;</span>Hola, React<span class="tk-tag">&lt;/h1</span><span class="tk-tag">&gt;</span>;</code></pre>
+</div>
+<div class="code">
+  <div class="code-head"><span>En lo que se convierte (JavaScript)</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">const</span> saludo = React.createElement(
+  <span class="tk-val">"h1"</span>,
+  { className: <span class="tk-val">"titulo"</span> },
+  <span class="tk-val">"Hola, React"</span>
+);</code></pre>
+</div>
+<p>Ambas versiones producen exactamente lo mismo. JSX existe porque es <strong>mucho más cómodo de leer y escribir</strong>, y porque deja el marcado y la lógica de cada pieza <strong>en el mismo lugar</strong>.</p>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · JSX es opcional, pero universal</p>
+<p>Técnicamente podrías usar React sin JSX. En la práctica <strong>casi todo el mundo lo usa</strong>, así que es lo que aprenderás aquí.</p>
+</div>
+
+<h2 id="reglas"><span class="n">2.</span>Diferencias con HTML</h2>
+<p>JSX se ve como HTML, pero sigue las reglas de JavaScript. Estas son las diferencias que más te encontrarás:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Tema</th><th>En HTML</th><th>En JSX</th></tr></thead>
+<tbody><tr><td><strong>Clases CSS</strong></td><td><code>class="caja"</code></td><td><code>className="caja"</code> (porque <code>class</code> es palabra reservada)</td></tr><tr><td><strong>Etiqueta <code>for</code></strong></td><td><code>&lt;label for="correo"&gt;</code></td><td><code>&lt;label htmlFor="correo"&gt;</code></td></tr><tr><td><strong>Atributos compuestos</strong></td><td><code>tabindex</code>, <code>maxlength</code>, <code>onclick</code></td><td><code>tabIndex</code>, <code>maxLength</code>, <code>onClick</code> (camelCase)</td></tr><tr><td><strong>Etiquetas vacías</strong></td><td><code>&lt;br&gt;</code>, <code>&lt;img&gt;</code>, <code>&lt;input&gt;</code></td><td><code>&lt;br /&gt;</code>, <code>&lt;img /&gt;</code>, <code>&lt;input /&gt;</code> (<strong>siempre</strong> se cierran)</td></tr><tr><td><strong>Estilos en línea</strong></td><td><code>style="color: red"</code></td><td><code>style={{ color: "red" }}</code> (un objeto)</td></tr><tr><td><strong>Comentarios</strong></td><td><code>&lt;!-- nota --&gt;</code></td><td><code>{/* nota */}</code></td></tr><tr><td><strong>Varios elementos</strong></td><td>Pueden ser hermanos</td><td>Necesitan <strong>un solo elemento raíz</strong> o un fragmento <code>&lt;&gt;…&lt;/&gt;</code></td></tr></tbody>
+</table></div>
+<div class="playground js" data-js data-react>
+  <div class="pg-head"><span>⚛️ Corrige los errores de JSX</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de React" style="height:270px">function App() {
+  return (
+    &lt;&gt;
+      {/* Esto es un comentario en JSX */}
+      &lt;h1 className="titulo"&gt;Perfil&lt;/h1&gt;
+      &lt;label htmlFor="nombre"&gt;Nombre&lt;/label&gt;
+      &lt;input id="nombre" type="text" maxLength={20} /&gt;
+      &lt;br /&gt;
+      &lt;img alt="Un punto de color" width="24" height="24" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='12' cy='12' r='10' fill='%234f46e5'/%3E%3C/svg%3E" /&gt;
+    &lt;/&gt;
+  );
+}</textarea></div>
+    <div><label>Resultado</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Si olvidas una regla</p>
+<p>No te preocupes por memorizarlas todas: la <strong>consola te avisa</strong>. Por ejemplo, si escribes <code>class</code>, React muestra una advertencia que te dice exactamente que debes usar <code>className</code>. Prueba a cambiarlo en el editor de arriba.</p>
+</div>
+
+<h2 id="llaves"><span class="n">3.</span>Llaves { }: JavaScript dentro del JSX</h2>
+<p>Las <strong>llaves</strong> son la puerta entre JSX y JavaScript. Todo lo que escribas entre <code>{ }</code> se evalúa como <strong>una expresión de JavaScript</strong> y su resultado se inserta en la pantalla.</p>
+<div class="playground js" data-js data-react>
+  <div class="pg-head"><span>⚛️ Expresiones dentro de las llaves</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de React" style="height:300px">function App() {
+  const nombre = "Ana";
+  const precio = 24.5;
+  const unidades = 3;
+  const colores = ["rojo", "verde", "azul"];
+
+  return (
+    &lt;main&gt;
+      &lt;h1&gt;Hola, {nombre.toUpperCase()}&lt;/h1&gt;
+      &lt;p&gt;Total: ${(precio * unidades).toFixed(2)}&lt;/p&gt;
+      &lt;p&gt;Primer color: {colores[0]}&lt;/p&gt;
+      &lt;p&gt;Hay {colores.length} colores&lt;/p&gt;
+      &lt;p&gt;¿Más de dos? {colores.length &gt; 2 ? "Sí" : "No"}&lt;/p&gt;
+    &lt;/main&gt;
+  );
+}</textarea></div>
+    <div><label>Resultado</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<div class="table-wrap"><table>
+<thead><tr><th>Puedes poner dentro de <code>{ }</code></th><th>No puedes poner</th></tr></thead>
+<tbody><tr><td>Variables y propiedades: <code>{nombre}</code>, <code>{usuario.edad}</code></td><td>Sentencias: <code>if</code>, <code>for</code>, <code>while</code></td></tr><tr><td>Operaciones y llamadas: <code>{a + b}</code>, <code>{texto.trim()}</code></td><td>Declaraciones: <code>const x = 1</code></td></tr><tr><td>Ternarios: <code>{activo ? "Sí" : "No"}</code></td><td>Objetos directos para mostrar: <code>{usuario}</code> (da error)</td></tr><tr><td>Expresiones con <code>&amp;&amp;</code>, <code>map</code>, <code>filter</code>…</td><td>—</td></tr></tbody>
+</table></div>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · Qué se puede «dibujar»</p>
+<p>React muestra <strong>texto y números</strong>; ignora <code>true</code>, <code>false</code>, <code>null</code> y <code>undefined</code> (no dibuja nada). Pero <strong>un objeto</strong> como <code>{ a: 1 }</code> provoca un error, porque no sabe cómo convertirlo en pantalla. Muestra sus propiedades: <code>{usuario.nombre}</code>.</p>
+</div>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · El caso del <code>0</code></p>
+<p>Cuidado con <code>{lista.length &amp;&amp; &lt;Lista /&gt;}</code>: si la longitud es <code>0</code>, React <strong>dibuja un <code>0</code></strong>. Es una trampa muy común; en la lección 5 verás cómo evitarla.</p>
+</div>
+
+<h2 id="atributos"><span class="n">4.</span>Atributos dinámicos y estilos</h2>
+<p>Las llaves también sirven en los <strong>atributos</strong>. Fíjate: con comillas pasas un texto fijo; con llaves, <strong>el resultado de una expresión</strong>.</p>
+<div class="code">
+  <div class="code-head"><span>Texto fijo frente a expresión</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">&lt;img</span> <span class="tk-attr">src</span>=<span class="tk-val">"logo.png"</span> <span class="tk-attr">alt</span>=<span class="tk-val">"Logo"</span> <span class="tk-tag">/&gt;</span>            <span class="tk-com">// texto fijo, con comillas</span>
+<span class="tk-tag">&lt;img</span> <span class="tk-attr">src</span>={usuario.foto} <span class="tk-attr">alt</span>={usuario.nombre} <span class="tk-tag">/&gt;</span> <span class="tk-com">// valor calculado, con llaves</span></code></pre>
+</div>
+<div class="playground js" data-js data-react>
+  <div class="pg-head"><span>⚛️ Atributos y estilos con objetos</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de React" style="height:330px">function App() {
+  const activo = true;
+  const estilo = {
+    padding: "12px 16px",
+    borderRadius: "10px",
+    background: activo ? "#dcfce7" : "#fee2e2",
+    color: activo ? "#166534" : "#991b1b",
+  };
+
+  return (
+    &lt;main&gt;
+      &lt;p style={estilo}&gt;Estado: {activo ? "activo" : "inactivo"}&lt;/p&gt;
+      &lt;p style={{ fontSize: "1.4rem", marginTop: 16 }}&gt;Doble llave: llave de JSX + objeto&lt;/p&gt;
+      &lt;button disabled={!activo} className={activo ? "boton activo" : "boton"}&gt;
+        Guardar
+      &lt;/button&gt;
+    &lt;/main&gt;
+  );
+}</textarea></div>
+    <div><label>Resultado</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · ¿Por qué <code>style={{ … }}</code> lleva dos llaves?</p>
+<p>La llave <strong>exterior</strong> abre «JavaScript dentro de JSX». La <strong>interior</strong> es el objeto <code>{ color: "red" }</code> que le pasas. Las propiedades CSS van en <strong>camelCase</strong> (<code>backgroundColor</code>, no <code>background-color</code>) y los números sin unidad se interpretan como píxeles.</p>
+</div>
+
+<h2 id="texto"><span class="n">5.</span>Texto, espacios y fragmentos</h2>
+<ul><li><strong>Los saltos de línea del JSX no se muestran:</strong> JSX recorta los espacios al inicio y al final de cada línea. Para un salto visible usa <code>&lt;br /&gt;</code> o párrafos.</li><li><strong>Para un espacio entre una expresión y otro texto en la misma línea</strong> basta con escribirlo: <code>Hola, {nombre}!</code>.</li><li><strong>Las comillas y símbolos</strong> <code>&lt;</code>, <code>&gt;</code>, <code>{</code>, <code>}</code> en el texto: si necesitas mostrar llaves, ponlas dentro de una cadena: <code>{"{ hola }"}</code>.</li><li><strong>Fragmentos con clave:</strong> <code>&lt;Fragment key={id}&gt;…&lt;/Fragment&gt;</code> cuando necesitas una clave (lección 5).</li></ul>
+<div class="playground js" data-js data-react>
+  <div class="pg-head"><span>⚛️ Fragmentos y texto</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de React" style="height:270px">function Fila() {
+  // Devuelve dos celdas sin envolverlas en un &lt;div&gt; que rompería la tabla
+  return (
+    &lt;&gt;
+      &lt;td&gt;Teclado&lt;/td&gt;
+      &lt;td&gt;$25.00&lt;/td&gt;
+    &lt;/&gt;
+  );
+}
+
+function App() {
+  return (
+    &lt;table border="1" cellPadding="6"&gt;
+      &lt;tbody&gt;
+        &lt;tr&gt;&lt;Fila /&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;Fila /&gt;&lt;/tr&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+  );
+}</textarea></div>
+    <div><label>Resultado</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+
+<h2 id="buenas"><span class="n">6.</span>Buenas prácticas de escritura</h2>
+<ul><li><strong>Paréntesis tras <code>return</code></strong> cuando el JSX ocupa varias líneas: <code>return ( … );</code>.</li><li><strong>Una sola cosa por componente:</strong> si el JSX crece demasiado, divídelo en componentes.</li><li><strong>Cálculos antes del <code>return</code>:</strong> haz las operaciones en variables y deja el JSX limpio.</li><li><strong>Nombres claros:</strong> <code>usuarioActivo</code> explica más que <code>x</code>.</li><li><strong>Indenta de forma consistente</strong> (2 espacios): JSX anidado sin sangría es ilegible.</li><li><strong>Evita lógica larga dentro de las llaves:</strong> si no cabe en una línea, extráela a una variable o función.</li></ul>
+<div class="code">
+  <div class="code-head"><span>Antes y después</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-com">// ❌ Difícil de leer</span>
+<span class="tk-tag">return</span> <span class="tk-tag">&lt;p</span><span class="tk-tag">&gt;</span>{usuario.puntos <span class="tk-tag">&gt;</span> <span class="tk-attr">100</span> ? <span class="tk-val">"Experto"</span> : usuario.puntos <span class="tk-tag">&gt;</span> <span class="tk-attr">50</span> ? <span class="tk-val">"Avanzado"</span> : <span class="tk-val">"Novato"</span>}<span class="tk-tag">&lt;/p</span><span class="tk-tag">&gt;</span>;
+
+<span class="tk-com">// ✅ Cálculo fuera, JSX limpio</span>
+<span class="tk-tag">let</span> nivel = <span class="tk-val">"Novato"</span>;
+<span class="tk-tag">if</span> (usuario.puntos <span class="tk-tag">&gt;</span> <span class="tk-attr">100</span>) nivel = <span class="tk-val">"Experto"</span>;
+<span class="tk-tag">else</span> <span class="tk-tag">if</span> (usuario.puntos <span class="tk-tag">&gt;</span> <span class="tk-attr">50</span>) nivel = <span class="tk-val">"Avanzado"</span>;
+<span class="tk-tag">return</span> <span class="tk-tag">&lt;p</span><span class="tk-tag">&gt;</span>{nivel}<span class="tk-tag">&lt;/p</span><span class="tk-tag">&gt;</span>;</code></pre>
+</div>
+
+<h2 id="errores"><span class="n">7.</span>Errores frecuentes</h2>
+<ul><li><strong>Usar <code>class</code> o <code>for</code>:</strong> React avisa en la consola; cámbialos por <code>className</code> y <code>htmlFor</code>.</li><li><strong>Olvidar cerrar <code>&lt;input&gt;</code>, <code>&lt;img&gt;</code> o <code>&lt;br&gt;</code>:</strong> en JSX deben ser <code>&lt;input /&gt;</code>.</li><li><strong>Escribir <code>style="color: red"</code>:</strong> el <code>style</code> recibe un <strong>objeto</strong>: <code>style={{ color: "red" }}</code>.</li><li><strong>Intentar mostrar un objeto:</strong> <code>{usuario}</code> da error; muestra <code>{usuario.nombre}</code>.</li><li><strong>Poner un <code>if</code> dentro de las llaves:</strong> solo se permiten expresiones; usa un ternario o calcula antes.</li><li><strong>Comentar con <code>//</code> dentro del JSX:</strong> aparece como texto. Usa <code>{/* … */}</code>.</li><li><strong>Atributos en minúscula</strong> como <code>onclick</code>: usa <code>onClick</code>.</li></ul>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li><strong>JSX</strong> es JavaScript con etiquetas; una herramienta lo traduce a <code>React.createElement(...)</code>.</li><li>Diferencias con HTML: <code>className</code>, <code>htmlFor</code>, atributos en <strong>camelCase</strong>, etiquetas <strong>siempre cerradas</strong> y <code>style</code> como <strong>objeto</strong>.</li><li>Un componente devuelve <strong>un solo elemento raíz</strong> o un <strong>fragmento</strong> <code>&lt;&gt;…&lt;/&gt;</code>.</li><li>Las <strong>llaves <code>{ }</code></strong> insertan <strong>expresiones</strong> de JavaScript (no sentencias).</li><li>React no dibuja <code>true</code>, <code>false</code>, <code>null</code> ni <code>undefined</code>; los <strong>objetos</strong> dan error; el <strong><code>0</code></strong> sí se dibuja.</li><li>Las llaves también se usan en <strong>atributos</strong>: <code>src={foto}</code>, <code>disabled={!activo}</code>.</li><li>Los comentarios en JSX son <code>{/* … */}</code>.</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">8.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td>JSX</td><td>Extensión de sintaxis de JavaScript que permite escribir etiquetas dentro del código.</td></tr><tr><td>Expresión</td><td>Código que produce un valor: <code>a + b</code>, <code>nombre.trim()</code>, <code>activo ? 1 : 2</code>.</td></tr><tr><td>Fragmento</td><td><code>&lt;&gt;…&lt;/&gt;</code>: agrupa elementos sin crear un nodo extra en el DOM.</td></tr><tr><td>camelCase</td><td>Convención de nombres con mayúscula en cada palabra interna: <code>onClick</code>, <code>tabIndex</code>.</td></tr><tr><td><code>className</code></td><td>Atributo de JSX equivalente al <code>class</code> de HTML.</td></tr><tr><td><code>htmlFor</code></td><td>Atributo de JSX equivalente al <code>for</code> de HTML en un <code>&lt;label&gt;</code>.</td></tr><tr><td>Transpilar</td><td>Traducir código de una sintaxis a otra (JSX → JavaScript).</td></tr></tbody>
+</table></div>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>¿Cómo se escribe el atributo <code>class</code> en JSX?</p><ul class="opts"><li><button type="button" class="opt"><code>class</code></button></li><li><button type="button" class="opt" data-ok><code>className</code></button></li><li><button type="button" class="opt"><code>klass</code></button></li><li><button type="button" class="opt"><code>cssClass</code></button></li></ul><p class="explain" hidden><code>class</code> es una palabra reservada de JavaScript; JSX usa <code>className</code>.</p></div>
+<div class="quiz-q"><p>¿Cuál es la forma correcta de aplicar un estilo?</p><ul class="opts"><li><button type="button" class="opt"><code>style="color: red"</code></button></li><li><button type="button" class="opt"><code>style={color: "red"}</code></button></li><li><button type="button" class="opt" data-ok><code>style={{ color: "red" }}</code></button></li><li><button type="button" class="opt"><code>style=(color: red)</code></button></li></ul><p class="explain" hidden>Se pasa un objeto: las llaves exteriores son de JSX y las interiores del objeto.</p></div>
+<div class="quiz-q"><p>¿Qué hace React con <code>{false}</code>?</p><ul class="opts"><li><button type="button" class="opt">Muestra la palabra false</button></li><li><button type="button" class="opt" data-ok>No dibuja nada</button></li><li><button type="button" class="opt">Lanza un error</button></li><li><button type="button" class="opt">Muestra un cero</button></li></ul><p class="explain" hidden>Los valores booleanos, <code>null</code> y <code>undefined</code> no se dibujan.</p></div>
+<div class="quiz-q"><p>¿Qué NO se puede escribir dentro de las llaves de JSX?</p><ul class="opts"><li><button type="button" class="opt">Una suma</button></li><li><button type="button" class="opt">Una llamada a función</button></li><li><button type="button" class="opt" data-ok>Una sentencia <code>if</code></button></li><li><button type="button" class="opt">Un ternario</button></li></ul><p class="explain" hidden>Dentro de las llaves solo caben expresiones. Para decidir, usa un ternario o calcula antes del <code>return</code>.</p></div>
+<div class="quiz-q"><p>¿Cómo se escribe un comentario dentro del JSX?</p><ul class="opts"><li><button type="button" class="opt"><code>&lt;!-- nota --&gt;</code></button></li><li><button type="button" class="opt"><code>// nota</code></button></li><li><button type="button" class="opt" data-ok><code>{/* nota */}</code></button></li><li><button type="button" class="opt"><code># nota</code></button></li></ul><p class="explain" hidden>Los comentarios van entre llaves con la sintaxis de comentario de JavaScript.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="react-02">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../01-que-es-react/ejercicio.html"><small>← Anterior</small>Ejercicio: Qué es React y tu primer componente</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de React · Lección 2 · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&title=%5BError%5D%20Lecci%C3%B3n%202%3A%20JSX%20a%20fondo%20%C2%B7%20Curso%20de%20React&pagina=https%3A//cacg-code.github.io/PRACTICAS-HTML/react/02-jsx/" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

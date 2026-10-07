@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Curso de React</title>
+  <meta name="description" content="Curso gratuito de React en español, desde cero: componentes, JSX, props, estado, listas, formularios, efectos, Context, hooks y datos de internet. Con editor en vivo en cada lección y ejercicios que se prueban de verdad.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/react/">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Curso de React">
+  <meta property="og:description" content="Curso gratuito de React en español, desde cero: componentes, JSX, props, estado, listas, formularios, efectos, Context, hooks y datos de internet. Con editor en vivo en cada lección y ejercicios que se prueban de verdad.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/react/">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="./"><span class="brand-logo">&lt;/&gt;</span> Curso de React</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../" style="text-decoration:none">Todos los cursos</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap" id="contenido">
+    <div class="hero-grid">
+      <div class="hero">
+        <span class="eyebrow">Gratis · En español · Nivel 4</span>
+        <h1>React desde cero: construye interfaces con componentes</h1>
+        <p>Aprende a crear aplicaciones web que reaccionan a lo que hace la gente: componentes reutilizables, estado, formularios, datos de internet y un proyecto final completo. Cada lección tiene un editor de React que se ejecuta en tu navegador, sin instalar nada.</p>
+        <a class="btn" href="01-que-es-react/">Empezar la lección 1</a>
+        <a class="btn secondary" href="#temario">Ver el temario</a>
+        <div class="avance" id="avance"></div>
+      </div>
+      <div class="hero-demo" role="group" aria-label="Demostración: código que se escribe y su resultado">
+        <div class="win-bar"><i></i><i></i><i></i></div>
+        <pre id="typing" data-lines='["<h1 style=\"color:#4f46e5\">Hola, React ⚛️</h1>", "<p>Una interfaz hecha de componentes.</p>", "<button style=\"padding:.4rem 1rem\">Pulsado 3 veces</button>"]'></pre>
+        <div class="hero-out" id="typing-out"></div>
+      </div>
+    </div>
+
+    <section class="features" aria-label="Qué incluye el curso">
+      <div class="feature"><div class="emoji">⚛️</div><h2>Editor de React en vivo</h2><p>Escribes JSX y componentes en la lección y ves la aplicación funcionando, con su consola.</p></div>
+      <div class="feature"><div class="emoji">📝</div><h2>Apuntes claros</h2><p>Explicaciones con recuadros de nota, advertencia y consejo, y un glosario en cada lección.</p></div>
+      <div class="feature"><div class="emoji">✅</div><h2>Ejercicios que se prueban de verdad</h2><p>Tu aplicación se ejecuta y se usa por ti: se hace clic, se escribe y se comprueba el resultado.</p></div>
+      <div class="feature"><div class="emoji">🧠</div><h2>Autoevaluación</h2><p>Preguntas con respuesta inmediata y explicación al final de cada lección.</p></div>
+    </section>
+
+    <div class="two-col">
+      <section><h2 class="section-title" style="margin-top:0">Antes de empezar</h2><ul class="checks-list"><li>Saber **JavaScript** (funciones, arrays, objetos y eventos): haz antes el <a href="../javascript/">curso de JavaScript</a>.</li><li>Conocer HTML y CSS: los cursos de <a href="../html/">HTML</a> y <a href="../css/">CSS</a>.</li><li>Un navegador moderno: el editor de React está dentro de cada lección, sin instalar nada.</li></ul></section>
+      <section><h2 class="section-title" style="margin-top:0">Lo que construirás</h2><ul class="checks-list"><li>Componentes reutilizables con **props**.</li><li>Interfaces que cambian con **estado** y eventos.</li><li>Listas, formularios y pantallas que piden **datos de internet**.</li><li>Estado compartido con **Context** y **useReducer**.</li><li>Un **carrito de compras** completo como proyecto final.</li></ul></section>
+    </div>
+
+    <h2 class="section-title" id="temario">Temario · ≈ 16 horas</h2>
+    <ul class="lessons">
+      <li><a class="lesson-card" href="01-que-es-react/" data-leccion="react-01">
+        <span class="lesson-num">LECCIÓN 01</span><h3>Qué es React y tu primer componente</h3>
+        <p>Qué problema resuelve React, qué es un componente, JSX, el montaje y cómo crear un proyecto con Vite.</p><span class="tag open">Disponible</span></a></li>
+      <li><a class="lesson-card" href="02-jsx/" data-leccion="react-02">
+        <span class="lesson-num">LECCIÓN 02</span><h3>JSX a fondo</h3>
+        <p>Diferencias con HTML, expresiones entre llaves, atributos dinámicos, estilos y fragmentos.</p><span class="tag open">Disponible</span></a></li>
+      <li><a class="lesson-card" href="03-componentes-y-props/" data-leccion="react-03">
+        <span class="lesson-num">LECCIÓN 03</span><h3>Componentes y props</h3>
+        <p>Pasar datos con props, desestructurar, valores por defecto, children y composición.</p><span class="tag open">Disponible</span></a></li>
+      <li><a class="lesson-card" href="04-estado/" data-leccion="react-04">
+        <span class="lesson-num">LECCIÓN 04</span><h3>Estado con useState</h3>
+        <p>useState, eventos, actualizaciones funcionales y estado con objetos y arrays sin mutar.</p><span class="tag open">Disponible</span></a></li>
+      <li><a class="lesson-card" href="05-listas-y-condicionales/" data-leccion="react-05">
+        <span class="lesson-num">LECCIÓN 05</span><h3>Listas, claves y renderizado condicional</h3>
+        <p>map, la prop key, ternarios, AND, retornos anticipados y filtros con valores derivados.</p><span class="tag open">Disponible</span></a></li>
+      <li><a class="lesson-card" href="06-formularios/" data-leccion="react-06">
+        <span class="lesson-num">LECCIÓN 06</span><h3>Formularios y componentes controlados</h3>
+        <p>Componentes controlados, un solo estado para muchos campos, onSubmit y validación.</p><span class="tag open">Disponible</span></a></li>
+      <li><a class="lesson-card" href="07-efectos/" data-leccion="react-07">
+        <span class="lesson-num">LECCIÓN 07</span><h3>Efectos con useEffect</h3>
+        <p>useEffect, dependencias, limpieza, localStorage y cuándo no usar un efecto.</p><span class="tag open">Disponible</span></a></li>
+      <li><a class="lesson-card" href="08-compartir-estado/" data-leccion="react-08">
+        <span class="lesson-num">LECCIÓN 08</span><h3>Compartir estado: elevar y Context</h3>
+        <p>Elevar el estado, prop drilling, Context, Provider y hooks de consumo.</p><span class="tag open">Disponible</span></a></li>
+      <li><a class="lesson-card" href="09-mas-hooks/" data-leccion="react-09">
+        <span class="lesson-num">LECCIÓN 09</span><h3>Más hooks: useRef, useReducer y hooks propios</h3>
+        <p>useRef, useReducer, useMemo, useCallback y hooks personalizados.</p><span class="tag open">Disponible</span></a></li>
+      <li><a class="lesson-card" href="10-datos-de-internet/" data-leccion="react-10">
+        <span class="lesson-num">LECCIÓN 10</span><h3>Datos de internet</h3>
+        <p>fetch en efectos, estados de carga y error, respuestas obsoletas y un hook useDatos.</p><span class="tag open">Disponible</span></a></li>
+      <li><a class="lesson-card" href="11-proyectos-reales/" data-leccion="react-11">
+        <span class="lesson-num">LECCIÓN 11</span><h3>Proyectos reales con Vite y el ecosistema</h3>
+        <p>Vite, módulos, estilos, rutas, variables de entorno, GitHub Pages y el ecosistema.</p><span class="tag open">Disponible</span></a></li>
+      <li><a class="lesson-card" href="proyecto-carrito/" data-leccion="react-P">
+        <span class="lesson-num">PROYECTO FINAL</span><h3>Proyecto: carrito de compras</h3>
+        <p>Un carrito de compras completo con reductor, Context, buscador y persistencia.</p><span class="tag open">Disponible</span></a></li>
+    </ul>
+  </main>
+
+  <footer class="site-footer">Curso de React · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&title=%5BError%5D%20Curso%20de%20React&pagina=https%3A//cacg-code.github.io/PRACTICAS-HTML/react/" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../assets/curso.js"></script>
+</body>
+</html>
