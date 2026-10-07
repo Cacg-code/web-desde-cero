@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lección 5: Funciones · Curso de HTML</title>
+  <meta name="description" content="Funciones en JavaScript: parámetros, return, tres formas de escribirlas, ámbito, funciones puras, rest y spread, callbacks y closures.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/javascript/05-funciones/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Lección 5: Funciones · Curso de HTML">
+  <meta property="og:description" content="Funciones en JavaScript: parámetros, return, tres formas de escribirlas, ámbito, funciones puras, rest y spread, callbacks y closures.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/javascript/05-funciones/">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de JavaScript</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap lesson-layout" id="contenido">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#que-es">Qué es una función</a></li><li><a href="#parametros">Parámetros, argumentos y return</a></li><li><a href="#formas">Tres maneras de escribir una función</a></li><li><a href="#ambito">Ámbito: dónde vive cada variable</a></li><li><a href="#puras">Funciones puras y pequeñas</a></li><li><a href="#resto">Parámetros rest y spread</a></li><li><a href="#callbacks">Funciones como valores: callbacks</a></li><li><a href="#closure">Un vistazo a las closures</a></li><li><a href="#errores">Errores frecuentes</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de JavaScript</a> › Lección 5</div>
+        <h1>Funciones</h1>
+        <ul class="meta"><li>⏱ 45 minutos</li><li>📶 Nivel: principiante</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Definir y llamar funciones con parámetros y <code>return</code>.</li><li>Elegir entre declaración, expresión y función flecha.</li><li>Entender el ámbito de las variables.</li><li>Usar funciones como valores: callbacks y closures básicas.</li></ul>
+</div>
+
+<h2 id="que-es"><span class="n">1.</span>Qué es una función</h2>
+<p>Una <strong>función</strong> es un <strong>bloque de código con nombre</strong> que puedes ejecutar cuando quieras, las veces que quieras, y con datos distintos cada vez. Es la herramienta principal para <strong>organizar</strong> un programa, <strong>evitar repetir código</strong> y darle nombre a cada tarea.</p>
+<p>Ya has usado funciones sin saberlo: <code>console.log()</code>, <code>Math.round()</code> o <code>"hola".toUpperCase()</code> son funciones que escribió otra persona. Ahora escribirás las tuyas.</p>
+<div class="anatomy" role="img" aria-label="Las partes de una función: nombre, parámetro y cuerpo con return"><div class="part" style="--c:#ff8fa3"><span>function </span><span class="lbl">&nbsp;</span></div><div class="part" style="--c:#ffd479"><span>saludar</span><span class="lbl">nombre</span></div><div class="part" style="--c:#ff8fa3"><span>(</span><span class="lbl">&nbsp;</span></div><div class="part" style="--c:#8ee6a0"><span>nombre</span><span class="lbl">parámetro</span></div><div class="part" style="--c:#ff8fa3"><span>) { </span><span class="lbl">&nbsp;</span></div><div class="part" style="--c:#7cc4ff"><span>return "Hola " + nombre</span><span class="lbl">cuerpo</span></div><div class="part" style="--c:#ff8fa3"><span>; }</span><span class="lbl">&nbsp;</span></div></div>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ Tu primera función</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:240px">&lt;script&gt;
+  function saludar(nombre) {
+    return "Hola, " + nombre + "!";
+  }
+
+  console.log(saludar("Ana"));
+  console.log(saludar("Luis"));
+  console.log(saludar("Mundo"));
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<ol class="steps"><li><strong>Defines</strong> la función con <code>function nombre(parámetros) { … }</code>.</li><li><strong>La llamas</strong> con <code>nombre(argumentos)</code>. Hasta que no la llamas, no hace nada.</li><li><strong>Devuelve</strong> un resultado con <code>return</code>.</li></ol>
+
+<h2 id="parametros"><span class="n">2.</span>Parámetros, argumentos y return</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Qué es</th><th>Ejemplo</th></tr></thead>
+<tbody><tr><td><strong>Parámetro</strong></td><td>El <strong>nombre</strong> que la función usa para un dato de entrada</td><td><code>function sumar(a, b)</code> → <code>a</code> y <code>b</code></td></tr><tr><td><strong>Argumento</strong></td><td>El <strong>valor concreto</strong> que pasas al llamarla</td><td><code>sumar(3, 4)</code> → <code>3</code> y <code>4</code></td></tr><tr><td><strong>return</strong></td><td>El valor que la función <strong>devuelve</strong> y termina</td><td><code>return a + b;</code></td></tr></tbody>
+</table></div>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ Entradas y salida</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:240px">&lt;script&gt;
+  function sumar(a, b) {
+    return a + b;
+  }
+
+  const resultado = sumar(3, 4);       // guardamos lo que devuelve
+  console.log(resultado);               // 7
+  console.log(sumar(10, 5) * 2);        // usamos el resultado en otra operación
+
+  function saludarEnConsola(nombre) {
+    console.log("Hola", nombre);        // sin return: devuelve undefined
+  }
+  const nada = saludarEnConsola("Ana");
+  console.log(nada);                    // undefined
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · <code>return</code> frente a <code>console.log</code></p>
+<p><code>console.log</code> <strong>muestra</strong> un valor; <code>return</code> lo <strong>entrega</strong> a quien llamó a la función para que lo use. Una función útil casi siempre <strong>devuelve</strong> su resultado (y es quien la llama la que decide si lo muestra, lo guarda o lo suma a otra cosa). Si una función no tiene <code>return</code>, devuelve <code>undefined</code>.</p>
+</div>
+<h3>Valores por defecto</h3>
+<div class="code">
+  <div class="code-head"><span>Un parámetro opcional</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">function</span> saludar(nombre = <span class="tk-val">"amigo"</span>) {
+  <span class="tk-tag">return</span> <span class="tk-val">`Hola, ${nombre}`</span>;
+}
+console.log(saludar(<span class="tk-val">"Ana"</span>));   <span class="tk-com">// "Hola, Ana"</span>
+console.log(saludar());        <span class="tk-com">// "Hola, amigo"</span></code></pre>
+</div>
+
+<h2 id="formas"><span class="n">3.</span>Tres maneras de escribir una función</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Forma</th><th>Sintaxis</th><th>Notas</th></tr></thead>
+<tbody><tr><td><strong>Declaración</strong></td><td><code>function sumar(a, b) { return a + b; }</code></td><td>Se puede llamar <strong>antes</strong> de definirla (hoisting)</td></tr><tr><td><strong>Expresión</strong></td><td><code>const sumar = function (a, b) { return a + b; };</code></td><td>Es un valor guardado en una variable</td></tr><tr><td><strong>Flecha</strong></td><td><code>const sumar = (a, b) =&gt; a + b;</code></td><td>Más corta; muy usada con arrays y eventos</td></tr></tbody>
+</table></div>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ Funciones flecha</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:240px">&lt;script&gt;
+  const doble = (n) =&gt; n * 2;              // una línea: el resultado es implícito
+  const cuadrado = n =&gt; n * n;             // un parámetro: paréntesis opcionales
+  const saludo = () =&gt; "Hola";             // sin parámetros: paréntesis vacíos
+
+  const promedio = (a, b) =&gt; {             // varias líneas: llaves y return
+    const suma = a + b;
+    return suma / 2;
+  };
+
+  console.log(doble(4), cuadrado(5), saludo(), promedio(6, 9));
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · ¿Cuál usar?</p>
+<p>Para empezar, la <strong>declaración</strong> (<code>function nombre() {}</code>) es la más legible. Las <strong>flechas</strong> son perfectas para funciones pequeñas que pasarás a otras (como en <code>map</code> o <code>addEventListener</code>). Con el tiempo verás que cada una tiene su sitio.</p>
+</div>
+
+<h2 id="ambito"><span class="n">4.</span>Ámbito: dónde vive cada variable</h2>
+<p>El <strong>ámbito</strong> (*scope*) es la zona del código donde una variable es visible. Las variables creadas <strong>dentro</strong> de una función <strong>no existen fuera</strong> de ella:</p>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ Ámbito</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:240px">&lt;script&gt;
+  const global = "Soy visible en todas partes";
+
+  function ejemplo() {
+    const local = "Solo existe dentro de la función";
+    console.log(global);       // sí: lo de fuera se ve desde dentro
+    console.log(local);
+  }
+
+  ejemplo();
+  console.log(global);
+  console.log(local);          // ReferenceError: local is not defined
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<div class="table-wrap"><table>
+<thead><tr><th>Ámbito</th><th>Dónde existe</th></tr></thead>
+<tbody><tr><td><strong>Global</strong></td><td>En todo el programa (declaradas fuera de funciones y bloques)</td></tr><tr><td><strong>De función</strong></td><td>Solo dentro de esa función</td></tr><tr><td><strong>De bloque</strong></td><td>Solo dentro de <code>{ … }</code> si usas <code>let</code> o <code>const</code> (un <code>if</code>, un <code>for</code>…)</td></tr></tbody>
+</table></div>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Evita variables globales</p>
+<p>Las variables globales pueden modificarse desde cualquier parte, lo que hace los errores difíciles de rastrear. <strong>Pasa los datos por parámetros</strong> y <strong>devuélvelos con <code>return</code></strong>: tus funciones serán más fáciles de probar y de reutilizar.</p>
+</div>
+
+<h2 id="puras"><span class="n">5.</span>Funciones puras y pequeñas</h2>
+<p>Una <strong>función pura</strong> siempre devuelve <strong>lo mismo para los mismos argumentos</strong> y <strong>no cambia nada fuera de ella</strong>. Son las más fáciles de entender, de probar y de reutilizar.</p>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ Pura frente a impura</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:240px">&lt;script&gt;
+  // PURA: solo depende de sus argumentos
+  const conIva = (precio) =&gt; precio * 1.16;
+
+  // IMPURA: depende de (y cambia) algo de fuera
+  let total = 0;
+  function sumarAlTotal(precio) {
+    total += precio;               // modifica una variable global
+    return total;
+  }
+
+  console.log(conIva(100), conIva(100));          // siempre igual
+  console.log(sumarAlTotal(10), sumarAlTotal(10)); // distinto cada vez
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<ul><li><strong>Una función, una tarea:</strong> si necesitas «y» para describirla, probablemente son dos funciones.</li><li><strong>Nombres que son verbos:</strong> <code>calcularTotal</code>, <code>esValido</code>, <code>crearTarjeta</code>.</li><li>Las funciones que devuelven <code>true</code>/<code>false</code> suelen empezar por <code>es</code>, <code>tiene</code> o <code>puede</code>.</li><li><strong>Pocos parámetros</strong> (idealmente 3 o menos).</li></ul>
+
+<h2 id="resto"><span class="n">6.</span>Parámetros rest y spread</h2>
+<div class="code">
+  <div class="code-head"><span>Un número variable de argumentos</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">function</span> sumarTodos(...numeros) {         <span class="tk-com">// ...numeros: agrupa los argumentos en un array</span>
+  <span class="tk-tag">let</span> total = <span class="tk-attr">0</span>;
+  <span class="tk-tag">for</span> (<span class="tk-tag">const</span> n <span class="tk-tag">of</span> numeros) total += n;
+  <span class="tk-tag">return</span> total;
+}
+console.log(sumarTodos(<span class="tk-attr">1</span>, <span class="tk-attr">2</span>, <span class="tk-attr">3</span>));          <span class="tk-com">// 6</span>
+console.log(sumarTodos(<span class="tk-attr">10</span>, <span class="tk-attr">20</span>, <span class="tk-attr">30</span>, <span class="tk-attr">40</span>));   <span class="tk-com">// 100</span>
+
+<span class="tk-tag">const</span> lista = [<span class="tk-attr">4</span>, <span class="tk-attr">8</span>, <span class="tk-attr">15</span>];
+console.log(Math.max(...lista));           <span class="tk-com">// ...lista: reparte el array en argumentos</span></code></pre>
+</div>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · Los tres puntos</p>
+<p>Los <code>...</code> hacen dos cosas según dónde estén: en la <strong>definición</strong> de una función <strong>agrupan</strong> (rest); al <strong>llamar</strong> o en un array/objeto <strong>reparten</strong> (spread). Lo volverás a ver en arrays y objetos.</p>
+</div>
+
+<h2 id="callbacks"><span class="n">7.</span>Funciones como valores: callbacks</h2>
+<p>En JavaScript, las funciones son <strong>valores</strong>: puedes guardarlas en variables, pasarlas como argumentos y devolverlas de otras funciones. Una función que se pasa a otra para que esta la ejecute después se llama <strong>callback</strong>.</p>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ Pasar funciones como argumentos</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:240px">&lt;script&gt;
+  function repetir(veces, accion) {
+    for (let i = 1; i &lt;= veces; i++) {
+      accion(i);                         // aquí se ejecuta la función recibida
+    }
+  }
+
+  repetir(3, (n) =&gt; console.log("Vuelta", n));
+  repetir(2, function (n) { console.log("Otra forma", n * 10); });
+
+  function aplicar(valor, transformar) {
+    return transformar(valor);
+  }
+  console.log(aplicar(5, (x) =&gt; x * x));
+  console.log(aplicar("hola", (t) =&gt; t.toUpperCase()));
+
+  setTimeout(() =&gt; console.log("Un callback que se ejecuta después"), 500);
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<p>Los callbacks son la base de los <strong>eventos</strong> («cuando pulsen el botón, ejecuta esta función») y de la <strong>asincronía</strong> («cuando llegue la respuesta, ejecuta esta función»), que verás en las lecciones 9 y 10.</p>
+
+<h2 id="closure"><span class="n">8.</span>Un vistazo a las closures</h2>
+<p>Una función <strong>recuerda</strong> las variables del lugar donde se creó, incluso después de que ese lugar haya terminado. A esto se le llama <strong>closure</strong> (clausura) y permite cosas muy útiles:</p>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ Un contador con memoria</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:240px">&lt;script&gt;
+  function crearContador() {
+    let cuenta = 0;                   // variable «privada»
+    return function () {
+      cuenta++;
+      return cuenta;
+    };
+  }
+
+  const contadorA = crearContador();
+  const contadorB = crearContador();
+
+  console.log(contadorA(), contadorA(), contadorA());   // 1 2 3
+  console.log(contadorB());                              // 1 (otro contador, otra memoria)
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · No hace falta dominarlo ya</p>
+<p>Las closures confunden al principio y es normal. Lo importante: la función interna <strong>sigue teniendo acceso</strong> a <code>cuenta</code>, y nadie de fuera puede tocarla. Lo usarás sin darte cuenta cada vez que escribas un evento o un callback dentro de una función.</p>
+</div>
+
+<h2 id="errores"><span class="n">9.</span>Errores frecuentes</h2>
+<ul><li><strong>Olvidar <code>return</code>:</strong> la función devuelve <code>undefined</code>.</li><li><strong>Escribir <code>saludar</code> en vez de <code>saludar()</code>:</strong> sin paréntesis no se <strong>llama</strong>, solo se hace referencia a la función.</li><li><strong>Usar <code>return</code> y esperar que lo que está después se ejecute:</strong> <code>return</code> termina la función.</li><li><strong>Depender de variables globales</strong> en lugar de parámetros.</li><li><strong>Funciones demasiado largas</strong> que hacen muchas cosas.</li><li><strong>Modificar los argumentos</strong> (arrays y objetos) sin querer: se pasan por referencia.</li><li><strong>Nombres de parámetros iguales a variables de fuera</strong> que provocan confusión.</li><li><strong>Funciones flecha con llaves y sin <code>return</code>:</strong> <code>n =&gt; { n * 2 }</code> devuelve <code>undefined</code>.</li></ul>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li>Una función es un bloque con nombre que se <strong>define</strong> una vez y se <strong>llama</strong> muchas.</li><li><strong>Parámetros</strong> son los nombres de entrada; <strong>argumentos</strong> los valores al llamar; <strong><code>return</code></strong> entrega el resultado y termina la función.</li><li>Tres formas: declaración (<code>function f() {}</code>), expresión (<code>const f = function () {}</code>) y flecha (<code>const f = () =&gt; {}</code>).</li><li>Las variables de una función <strong>no existen fuera de ella</strong>; las de fuera sí se ven desde dentro.</li><li>Prefiere funciones <strong>puras</strong> y pequeñas: reciben datos por parámetros y los devuelven con <code>return</code>.</li><li>Los valores por defecto (<code>nombre = "amigo"</code>) y los parámetros rest (<code>...numeros</code>) dan flexibilidad.</li><li>Las funciones son <strong>valores</strong>: se pasan como <strong>callbacks</strong>, base de eventos y asincronía.</li><li>Una <strong>closure</strong> es una función que recuerda las variables del lugar donde nació.</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">10.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td>Función</td><td>Bloque de código con nombre que se ejecuta al llamarlo.</td></tr><tr><td>Parámetro</td><td>Nombre de un dato de entrada en la definición de la función.</td></tr><tr><td>Argumento</td><td>Valor que se pasa al llamar a la función.</td></tr><tr><td><code>return</code></td><td>Devuelve un valor y termina la función.</td></tr><tr><td>Ámbito (scope)</td><td>Zona donde una variable es visible.</td></tr><tr><td>Función flecha</td><td>Forma corta de escribir funciones: <code>(a, b) =&gt; a + b</code>.</td></tr><tr><td>Callback</td><td>Función que se pasa a otra para que la ejecute más tarde.</td></tr><tr><td>Closure</td><td>Función que conserva acceso a las variables de su entorno de creación.</td></tr></tbody>
+</table></div>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>¿Qué devuelve una función que no tiene <code>return</code>?</p><ul class="opts"><li><button type="button" class="opt"><code>0</code></button></li><li><button type="button" class="opt"><code>null</code></button></li><li><button type="button" class="opt" data-ok><code>undefined</code></button></li><li><button type="button" class="opt">Un error</button></li></ul><p class="explain" hidden>Sin <code>return</code>, devuelve <code>undefined</code>.</p></div>
+<div class="quiz-q"><p>¿Qué diferencia hay entre <code>saludar</code> y <code>saludar()</code>?</p><ul class="opts"><li><button type="button" class="opt">Ninguna</button></li><li><button type="button" class="opt" data-ok><code>saludar()</code> <strong>llama</strong> a la función; <code>saludar</code> es solo una referencia a ella</button></li><li><button type="button" class="opt"><code>saludar</code> la ejecuta dos veces</button></li><li><button type="button" class="opt"><code>saludar()</code> la borra</button></li></ul><p class="explain" hidden>Los paréntesis son los que ejecutan la función.</p></div>
+<div class="quiz-q"><p>Una variable declarada con <code>const</code> dentro de una función, ¿se puede usar fuera?</p><ul class="opts"><li><button type="button" class="opt">Sí</button></li><li><button type="button" class="opt" data-ok>No, solo existe dentro de la función</button></li><li><button type="button" class="opt">Sí, si se llama primero</button></li><li><button type="button" class="opt">Solo con <code>var</code></button></li></ul><p class="explain" hidden>Las variables locales no existen fuera de su función.</p></div>
+<div class="quiz-q"><p>¿Cuál de estas es una función flecha <strong>correcta</strong> que devuelve el doble?</p><ul class="opts"><li><button type="button" class="opt"><code>n =&gt; { n * 2 }</code></button></li><li><button type="button" class="opt" data-ok><code>n =&gt; n * 2</code></button></li><li><button type="button" class="opt"><code>=&gt; n * 2</code></button></li><li><button type="button" class="opt"><code>function =&gt; n * 2</code></button></li></ul><p class="explain" hidden>Con una sola expresión sin llaves, el resultado se devuelve solo. Con llaves necesitas <code>return</code>.</p></div>
+<div class="quiz-q"><p>¿Qué es un callback?</p><ul class="opts"><li><button type="button" class="opt">Una variable global</button></li><li><button type="button" class="opt" data-ok>Una función que se pasa como argumento a otra</button></li><li><button type="button" class="opt">Un error de JavaScript</button></li><li><button type="button" class="opt">Un tipo de bucle</button></li></ul><p class="explain" hidden>Se ejecuta más tarde, cuando la otra función lo decide.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="js-05">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../04-bucles/ejercicio.html"><small>← Anterior</small>Ejercicio: Bucles</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de JavaScript · Lección 5 · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&title=%5BError%5D%20Lecci%C3%B3n%205%3A%20Funciones%20%C2%B7%20Curso%20de%20HTML&pagina=https%3A//cacg-code.github.io/PRACTICAS-HTML/javascript/05-funciones/" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

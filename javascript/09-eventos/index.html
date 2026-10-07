@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lección 9: Eventos y formularios · Curso de HTML</title>
+  <meta name="description" content="Eventos y formularios en JavaScript: addEventListener, el objeto del evento, submit y preventDefault, FormData, validación, burbujeo y delegación.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/javascript/09-eventos/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Lección 9: Eventos y formularios · Curso de HTML">
+  <meta property="og:description" content="Eventos y formularios en JavaScript: addEventListener, el objeto del evento, submit y preventDefault, FormData, validación, burbujeo y delegación.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/javascript/09-eventos/">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de JavaScript</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap lesson-layout" id="contenido">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#que-es">Qué es un evento</a></li><li><a href="#tipos">Los eventos más usados</a></li><li><a href="#objeto">El objeto del evento</a></li><li><a href="#formularios">Formularios: submit y preventDefault</a></li><li><a href="#validar">Validar y mostrar mensajes</a></li><li><a href="#burbujeo">Propagación y delegación de eventos</a></li><li><a href="#teclado">Teclado y accesibilidad</a></li><li><a href="#quitar">Más opciones de addEventListener</a></li><li><a href="#errores">Errores frecuentes</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de JavaScript</a> › Lección 9</div>
+        <h1>Eventos y formularios</h1>
+        <ul class="meta"><li>⏱ 45 minutos</li><li>📶 Nivel: principiante</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Reaccionar a clics, teclas y formularios con <code>addEventListener</code>.</li><li>Leer los campos de un formulario y validarlos con mensajes accesibles.</li><li>Usar <code>preventDefault</code> y entender el burbujeo.</li><li>Aplicar la delegación de eventos en listas dinámicas.</li></ul>
+</div>
+
+<h2 id="que-es"><span class="n">1.</span>Qué es un evento</h2>
+<p>Un <strong>evento</strong> es algo que <strong>ocurre</strong> en la página: un clic, una tecla pulsada, un formulario enviado, la ventana que cambia de tamaño, una imagen que termina de cargar. JavaScript te permite <strong>escuchar</strong> esos eventos y <strong>ejecutar una función</strong> cuando suceden. Así la página deja de ser un documento estático y se vuelve <strong>interactiva</strong>.</p>
+<div class="code">
+  <div class="code-head"><span>La fórmula básica</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>elemento.addEventListener(<span class="tk-val">"tipo-de-evento"</span>, funcion);
+<span class="tk-com">//            ① qué escuchar    ② qué hacer</span></code></pre>
+</div>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ Tu primer evento</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:240px">&lt;button id="boton"&gt;Púlsame&lt;/button&gt;
+&lt;p id="resultado"&gt;Aún no has pulsado nada.&lt;/p&gt;
+
+&lt;script&gt;
+  const boton = document.getElementById("boton");
+  const resultado = document.getElementById("resultado");
+  let veces = 0;
+
+  boton.addEventListener("click", () =&gt; {
+    veces++;
+    resultado.textContent = `Has pulsado ${veces} ${veces === 1 ? "vez" : "veces"}`;
+    console.log("Clic número", veces);
+  });
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<p>La función que pasas se llama <strong>manejador</strong> (*handler*) o <strong>callback</strong>. No se ejecuta al escribirla: el navegador la guarda y la llama <strong>cada vez</strong> que ocurre el evento.</p>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · No pongas paréntesis</p>
+<p><code>boton.addEventListener("click", saludar)</code> <strong>pasa</strong> la función para que el navegador la llame cuando toque. <code>boton.addEventListener("click", saludar())</code> <strong>la ejecuta ya</strong> y pasa su resultado. Es el error más común con eventos.</p>
+</div>
+
+<h2 id="tipos"><span class="n">2.</span>Los eventos más usados</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Evento</th><th>Cuándo ocurre</th><th>Típico en</th></tr></thead>
+<tbody><tr><td><code>click</code></td><td>Se pulsa (con ratón, dedo o teclado en un botón)</td><td>Botones, enlaces, tarjetas</td></tr><tr><td><code>dblclick</code></td><td>Doble clic</td><td></td></tr><tr><td><code>input</code></td><td>Cada vez que <strong>cambia</strong> lo escrito</td><td>Buscadores en vivo, contadores de caracteres</td></tr><tr><td><code>change</code></td><td>Cuando el valor cambia <strong>y se confirma</strong> (al salir del campo)</td><td><code>select</code>, <code>checkbox</code>, <code>radio</code></td></tr><tr><td><code>submit</code></td><td>Se envía un <code>&lt;form&gt;</code></td><td>Formularios</td></tr><tr><td><code>keydown</code> / <code>keyup</code></td><td>Se pulsa / suelta una tecla</td><td>Atajos, juegos</td></tr><tr><td><code>mouseover</code> / <code>mouseout</code></td><td>El cursor entra / sale</td><td>Efectos</td></tr><tr><td><code>focus</code> / <code>blur</code></td><td>El elemento recibe / pierde el foco</td><td>Validar al salir del campo</td></tr><tr><td><code>scroll</code>, <code>resize</code></td><td>Se desplaza / cambia el tamaño</td><td>Barras, cabeceras</td></tr><tr><td><code>DOMContentLoaded</code></td><td>El HTML ya se leyó</td><td>Iniciar el programa</td></tr><tr><td><code>load</code></td><td>Todo cargó (imágenes incluidas)</td><td></td></tr></tbody>
+</table></div>
+
+<h2 id="objeto"><span class="n">3.</span>El objeto del evento</h2>
+<p>El navegador llama a tu función <strong>pasándole un objeto</strong> con información sobre lo ocurrido. Por convención se llama <code>evento</code> o <code>e</code>:</p>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ Qué sabe el evento</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:240px">&lt;button id="b" class="rojo"&gt;Pulsa aquí&lt;/button&gt;
+&lt;input id="campo" placeholder="Escribe y pulsa teclas"&gt;
+&lt;script&gt;
+  document.getElementById("b").addEventListener("click", (e) =&gt; {
+    console.log("tipo:", e.type);
+    console.log("elemento:", e.target.id, "| clase:", e.target.className);
+    console.log("posición:", e.clientX, e.clientY);
+  });
+
+  document.getElementById("campo").addEventListener("keydown", (e) =&gt; {
+    console.log("tecla:", e.key, "| ctrl:", e.ctrlKey);
+  });
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<div class="table-wrap"><table>
+<thead><tr><th>Propiedad</th><th>Qué da</th></tr></thead>
+<tbody><tr><td><code>e.target</code></td><td>El elemento <strong>donde ocurrió</strong> el evento</td></tr><tr><td><code>e.currentTarget</code></td><td>El elemento <strong>al que está pegado</strong> el manejador</td></tr><tr><td><code>e.type</code></td><td>El nombre del evento (<code>"click"</code>)</td></tr><tr><td><code>e.key</code></td><td>La tecla pulsada (<code>"Enter"</code>, <code>"a"</code>, <code>"Escape"</code>)</td></tr><tr><td><code>e.clientX</code>, <code>e.clientY</code></td><td>Posición del cursor</td></tr><tr><td><code>e.preventDefault()</code></td><td><strong>Cancela</strong> la acción por defecto</td></tr><tr><td><code>e.stopPropagation()</code></td><td>Detiene que el evento «suba» a los padres</td></tr></tbody>
+</table></div>
+
+<h2 id="formularios"><span class="n">4.</span>Formularios: submit y preventDefault</h2>
+<p>Un formulario HTML, al enviarse, <strong>recarga la página</strong> y manda los datos al servidor. Con JavaScript casi siempre queremos <strong>evitarlo</strong> y procesar los datos nosotros. Para eso, <code>e.preventDefault()</code>:</p>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ Un formulario con JavaScript</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:240px">&lt;form id="saludo"&gt;
+  &lt;label for="nombre"&gt;Tu nombre&lt;/label&gt;
+  &lt;input id="nombre" required&gt;
+  &lt;button type="submit"&gt;Saludar&lt;/button&gt;
+&lt;/form&gt;
+&lt;p id="respuesta" role="status"&gt;&lt;/p&gt;
+
+&lt;script&gt;
+  const form = document.getElementById("saludo");
+  const campo = document.getElementById("nombre");
+  const respuesta = document.getElementById("respuesta");
+
+  form.addEventListener("submit", (e) =&gt; {
+    e.preventDefault();                       // ¡sin esto, se recargaría la página!
+    const nombre = campo.value.trim();
+    respuesta.textContent = `¡Hola, ${nombre}!`;
+    form.reset();                             // vaciar el formulario
+    campo.focus();                            // devolver el foco al campo
+  });
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Escucha <code>submit</code>, no <code>click</code></p>
+<p>Escucha <strong><code>submit</code> en el <code>&lt;form&gt;</code></strong>, no <code>click</code> en el botón. Así también funciona al pulsar <kbd>Enter</kbd> dentro de un campo, y respetas la validación del navegador (<code>required</code>, <code>type="email"</code>…).</p>
+</div>
+<h3>Leer los valores de los campos</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>Campo</th><th>Propiedad</th><th>Tipo de dato</th></tr></thead>
+<tbody><tr><td><code>input type="text"</code>, <code>textarea</code>, <code>select</code></td><td><code>.value</code></td><td>Siempre <strong>texto</strong> (convierte con <code>Number()</code>)</td></tr><tr><td><code>input type="number"</code></td><td><code>.value</code> / <code>.valueAsNumber</code></td><td>Texto / número</td></tr><tr><td><code>input type="checkbox"</code></td><td><code>.checked</code></td><td><code>true</code> / <code>false</code></td></tr><tr><td><code>input type="radio"</code> (grupo)</td><td><code>querySelector("input[name=x]:checked")?.value</code></td><td>Texto o <code>undefined</code></td></tr><tr><td>Todo el formulario</td><td><code>Object.fromEntries(new FormData(form))</code></td><td>Un objeto con todos los campos</td></tr></tbody>
+</table></div>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ FormData</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:240px">&lt;form id="registro"&gt;
+  &lt;input name="usuario" value="ana"&gt;
+  &lt;input name="edad" type="number" value="28"&gt;
+  &lt;label&gt;&lt;input name="acepto" type="checkbox" checked&gt; Acepto&lt;/label&gt;
+  &lt;select name="pais"&gt;&lt;option&gt;México&lt;/option&gt;&lt;option selected&gt;Perú&lt;/option&gt;&lt;/select&gt;
+  &lt;button&gt;Enviar&lt;/button&gt;
+&lt;/form&gt;
+&lt;script&gt;
+  document.getElementById("registro").addEventListener("submit", (e) =&gt; {
+    e.preventDefault();
+    const datos = Object.fromEntries(new FormData(e.target));
+    console.log(datos);
+    console.log("edad + 1 =", Number(datos.edad) + 1);
+  });
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+
+<h2 id="validar"><span class="n">5.</span>Validar y mostrar mensajes</h2>
+<p>HTML ya valida mucho (<code>required</code>, <code>minlength</code>, <code>type="email"</code>, <code>pattern</code>). JavaScript te permite <strong>reglas propias</strong> y <strong>mensajes claros</strong> dentro de la página, en lugar de ventanas emergentes:</p>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ Validación propia</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:240px">&lt;form id="f" novalidate&gt;
+  &lt;label for="c"&gt;Contraseña (mínimo 8 caracteres)&lt;/label&gt;
+  &lt;input id="c" type="password" aria-describedby="err"&gt;
+  &lt;button&gt;Crear cuenta&lt;/button&gt;
+  &lt;p id="err" role="alert" style="color:#b00020"&gt;&lt;/p&gt;
+&lt;/form&gt;
+&lt;script&gt;
+  const f = document.getElementById("f");
+  const c = document.getElementById("c");
+  const err = document.getElementById("err");
+
+  f.addEventListener("submit", (e) =&gt; {
+    e.preventDefault();
+    if (c.value.length &lt; 8) {
+      err.textContent = "La contraseña necesita al menos 8 caracteres.";
+      c.setAttribute("aria-invalid", "true");
+      c.focus();
+      return;
+    }
+    err.textContent = "";
+    c.removeAttribute("aria-invalid");
+    console.log("¡Cuenta creada!");
+  });
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<ul><li>Pon el mensaje <strong>junto al campo</strong> y enlázalo con <code>aria-describedby</code>; usa <code>role="alert"</code> para que se anuncie.</li><li>Marca el campo con <code>aria-invalid="true"</code> y <strong>devuelve el foco</strong> al primer campo con error.</li><li>El mensaje debe decir <strong>qué pasó y cómo arreglarlo</strong>.</li><li><code>form.checkValidity()</code> y <code>campo.validity</code> consultan la validación nativa.</li></ul>
+
+<h2 id="burbujeo"><span class="n">6.</span>Propagación y delegación de eventos</h2>
+<p>Cuando ocurre un evento en un elemento, <strong>«sube»</strong> por sus ancestros: primero se avisa al elemento, luego a su padre, a su abuelo… hasta <code>document</code>. A esto se le llama <strong>burbujeo</strong> (*bubbling*).</p>
+<p>Y de ahí sale una técnica muy potente, la <strong>delegación de eventos</strong>: en lugar de poner un manejador a <strong>cada</strong> elemento de una lista, pones <strong>uno solo en el contenedor</strong> y miras <code>e.target</code> para saber cuál se pulsó. Funciona también con los elementos que añadas <strong>después</strong>.</p>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ Delegación</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:240px">&lt;ul id="lista"&gt;
+  &lt;li&gt;Aprender eventos&lt;/li&gt;
+  &lt;li&gt;Practicar&lt;/li&gt;
+&lt;/ul&gt;
+&lt;button id="nuevo"&gt;Añadir una tarea&lt;/button&gt;
+
+&lt;script&gt;
+  const lista = document.getElementById("lista");
+
+  // UN solo manejador para todos los &lt;li&gt;, presentes y futuros
+  lista.addEventListener("click", (e) =&gt; {
+    const li = e.target.closest("li");
+    if (!li) return;                       // el clic no fue en un &lt;li&gt;
+    li.classList.toggle("hecha");
+    li.style.textDecoration = li.classList.contains("hecha") ? "line-through" : "none";
+  });
+
+  document.getElementById("nuevo").addEventListener("click", () =&gt; {
+    const li = document.createElement("li");
+    li.textContent = "Tarea nueva " + (lista.children.length + 1);
+    lista.append(li);                      // ya responde al clic sin añadirle nada
+  });
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · <code>closest()</code></p>
+<p><code>e.target.closest("li")</code> sube desde el elemento pulsado hasta encontrar el <code>li</code> más cercano. Es más robusto que <code>e.target</code> a secas, porque el clic puede caer en un <code>&lt;strong&gt;</code> dentro del <code>&lt;li&gt;</code>.</p>
+</div>
+
+<h2 id="teclado"><span class="n">7.</span>Teclado y accesibilidad</h2>
+<ul><li><strong>Usa <code>&lt;button&gt;</code></strong> para las acciones: funciona con ratón, teclado (<kbd>Enter</kbd>, <kbd>Espacio</kbd>) y lector de pantalla, sin hacer nada.</li><li>No pongas <code>click</code> en un <code>&lt;div&gt;</code> o <code>&lt;span&gt;</code>: nadie podrá usarlo con teclado.</li><li>Para atajos, escucha <code>keydown</code> y comprueba <code>e.key</code> (por ejemplo <code>"Escape"</code> para cerrar).</li><li>Nunca dependas <strong>solo</strong> del ratón (<code>mouseover</code>): ofrece también <code>focus</code>.</li><li>Si cambias algo en la página, <strong>avísalo</strong> con una región <code>aria-live</code> o <code>role="status"</code>.</li></ul>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ Atajos de teclado</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:240px">&lt;input id="campo" placeholder="Escribe algo y pulsa Escape para borrar"&gt;
+&lt;p id="info" role="status"&gt;&lt;/p&gt;
+&lt;script&gt;
+  const campo = document.getElementById("campo");
+  const info = document.getElementById("info");
+
+  campo.addEventListener("input", () =&gt; {
+    info.textContent = campo.value.length + " caracteres";
+  });
+
+  campo.addEventListener("keydown", (e) =&gt; {
+    if (e.key === "Escape") {
+      campo.value = "";
+      info.textContent = "Campo vaciado";
+    }
+  });
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+
+<h2 id="quitar"><span class="n">8.</span>Más opciones de addEventListener</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Opción</th><th>Efecto</th><th>Ejemplo</th></tr></thead>
+<tbody><tr><td><code>{ once: true }</code></td><td>El manejador se ejecuta <strong>una sola vez</strong></td><td><code>boton.addEventListener("click", f, { once: true })</code></td></tr><tr><td><code>removeEventListener</code></td><td>Quita un manejador (necesita la <strong>misma</strong> función)</td><td><code>boton.removeEventListener("click", f)</code></td></tr><tr><td><code>{ passive: true }</code></td><td>Promete no cancelar (mejora el rendimiento del scroll)</td><td><code>addEventListener("scroll", f, { passive: true })</code></td></tr></tbody>
+</table></div>
+<div class="code">
+  <div class="code-head"><span>Un manejador nombrado se puede quitar</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">function</span> saludar() { console.log(<span class="tk-val">"¡Hola!"</span>); }
+
+boton.addEventListener(<span class="tk-val">"click"</span>, saludar);
+boton.removeEventListener(<span class="tk-val">"click"</span>, saludar);     <span class="tk-com">// funciona porque es la misma función</span>
+
+<span class="tk-com">// Con una flecha anónima NO se puede quitar:</span>
+boton.addEventListener(<span class="tk-val">"click"</span>, () =&gt; console.log(<span class="tk-val">"x"</span>));</code></pre>
+</div>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Debounce</p>
+<p>Para eventos que se disparan <strong>muchísimas veces</strong> (<code>input</code>, <code>scroll</code>, <code>resize</code>), conviene esperar a que el usuario pare antes de hacer algo costoso. Esa técnica se llama *debounce* y se apoya en <code>setTimeout</code>, que verás en la siguiente lección.</p>
+</div>
+
+<h2 id="errores"><span class="n">9.</span>Errores frecuentes</h2>
+<ul><li><strong><code>addEventListener("click", funcion())</code></strong> con paréntesis: se ejecuta de inmediato.</li><li><strong>Olvidar <code>e.preventDefault()</code></strong> en un <code>submit</code>: la página se recarga y «desaparece» todo.</li><li><strong>Escuchar <code>click</code> en el botón del formulario</strong> en lugar de <code>submit</code> en el formulario.</li><li><strong>Leer <code>.value</code> como si fuera número:</strong> es texto. <code>"2" + "3"</code> es <code>"23"</code>.</li><li><strong>Añadir un manejador por cada elemento de una lista</strong> en vez de usar delegación.</li><li><strong>Esperar que un manejador funcione sobre elementos que aún no existen</strong> (usa delegación).</li><li><strong>Eventos en <code>div</code> sin teclado:</strong> inaccesible. Usa <code>button</code>.</li><li><strong>Manejadores dentro de bucles</strong> que acaban duplicados al repintar: se ejecutan varias veces.</li><li><strong>Atributos como <code>onclick="…"</code></strong> en el HTML: difíciles de mantener.</li></ul>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li><code>elemento.addEventListener("evento", funcion)</code> ejecuta tu función cuando ocurre el evento; <strong>pasa</strong> la función, no la llames.</li><li>Eventos habituales: <code>click</code>, <code>input</code>, <code>change</code>, <code>submit</code>, <code>keydown</code>, <code>focus</code>, <code>DOMContentLoaded</code>.</li><li>El <strong>objeto del evento</strong> (<code>e</code>) da <code>target</code>, <code>key</code>, <code>type</code>… y <code>preventDefault()</code> cancela la acción por defecto.</li><li>En un formulario escucha <strong><code>submit</code></strong> y llama a <code>e.preventDefault()</code>; lee los campos con <code>.value</code>, <code>.checked</code> o <code>FormData</code>.</li><li>Los valores de los campos son <strong>texto</strong>: conviértelos con <code>Number()</code>.</li><li>Valida con mensajes <strong>dentro de la página</strong>, enlazados con <code>aria-describedby</code> y anunciados con <code>role="alert"</code>.</li><li>Los eventos <strong>burbujean</strong>: la <strong>delegación</strong> pone un solo manejador en el contenedor y usa <code>e.target.closest(…)</code>.</li><li>Usa <code>button</code> para acciones, soporta el teclado y evita <code>onclick</code> en el HTML.</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">10.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td>Evento</td><td>Algo que ocurre en la página (clic, tecla, envío…).</td></tr><tr><td>Manejador (handler)</td><td>Función que se ejecuta cuando ocurre un evento.</td></tr><tr><td><code>addEventListener</code></td><td>Método que registra un manejador para un evento.</td></tr><tr><td>Objeto del evento</td><td>Información que recibe el manejador (<code>e</code>).</td></tr><tr><td><code>preventDefault()</code></td><td>Cancela el comportamiento por defecto del navegador.</td></tr><tr><td>Burbujeo (bubbling)</td><td>Propagación del evento desde el elemento hacia sus ancestros.</td></tr><tr><td>Delegación</td><td>Un manejador en el padre que atiende a los hijos usando <code>e.target</code>.</td></tr><tr><td><code>FormData</code></td><td>Objeto que reúne los valores de un formulario.</td></tr></tbody>
+</table></div>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>¿Cuál es la forma <strong>correcta</strong> de asociar una función a un clic?</p><ul class="opts"><li><button type="button" class="opt"><code>b.addEventListener("click", saludar())</code></button></li><li><button type="button" class="opt" data-ok><code>b.addEventListener("click", saludar)</code></button></li><li><button type="button" class="opt"><code>b.click = saludar()</code></button></li><li><button type="button" class="opt"><code>b.onclick(saludar)</code></button></li></ul><p class="explain" hidden>Se pasa la función sin paréntesis; el navegador la llamará.</p></div>
+<div class="quiz-q"><p>Un formulario recarga la página al enviarse. ¿Cómo evitarlo?</p><ul class="opts"><li><button type="button" class="opt"><code>e.stopPropagation()</code></button></li><li><button type="button" class="opt" data-ok><code>e.preventDefault()</code> en el evento <code>submit</code></button></li><li><button type="button" class="opt"><code>form.hide()</code></button></li><li><button type="button" class="opt">Quitando el botón</button></li></ul><p class="explain" hidden><code>preventDefault</code> cancela el envío por defecto.</p></div>
+<div class="quiz-q"><p><code>input.value</code> de un <code>input type="number"</code> con «5» es…</p><ul class="opts"><li><button type="button" class="opt">El número <code>5</code></button></li><li><button type="button" class="opt" data-ok>El texto <code>"5"</code></button></li><li><button type="button" class="opt"><code>NaN</code></button></li><li><button type="button" class="opt"><code>true</code></button></li></ul><p class="explain" hidden>Los valores de los campos siempre son texto.</p></div>
+<div class="quiz-q"><p>¿Para qué sirve la delegación de eventos?</p><ul class="opts"><li><button type="button" class="opt">Para duplicar eventos</button></li><li><button type="button" class="opt" data-ok>Para atender a muchos elementos (incluso los futuros) con un solo manejador en el contenedor</button></li><li><button type="button" class="opt">Para evitar los eventos de teclado</button></li><li><button type="button" class="opt">Para cancelar el burbujeo</button></li></ul><p class="explain" hidden>El evento sube hasta el contenedor, que decide qué hijo fue.</p></div>
+<div class="quiz-q"><p>¿Por qué es mejor un <code>&lt;button&gt;</code> que un <code>&lt;div&gt;</code> con <code>click</code>?</p><ul class="opts"><li><button type="button" class="opt">Es más rápido</button></li><li><button type="button" class="opt" data-ok>El botón funciona con teclado y lectores de pantalla sin trabajo extra</button></li><li><button type="button" class="opt">Ocupa menos</button></li><li><button type="button" class="opt">No hay diferencia</button></li></ul><p class="explain" hidden>Un <code>div</code> no recibe foco ni se activa con <kbd>Enter</kbd> ni <kbd>Espacio</kbd>.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="js-09">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../08-dom/ejercicio.html"><small>← Anterior</small>Ejercicio: El DOM: leer y cambiar la página</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de JavaScript · Lección 9 · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&title=%5BError%5D%20Lecci%C3%B3n%209%3A%20Eventos%20y%20formularios%20%C2%B7%20Curso%20de%20HTML&pagina=https%3A//cacg-code.github.io/PRACTICAS-HTML/javascript/09-eventos/" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

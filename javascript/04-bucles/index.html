@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lección 4: Bucles · Curso de HTML</title>
+  <meta name="description" content="Bucles en JavaScript: for, while, do while, for of, for in, break, continue, bucles anidados y los patrones de acumular, contar, buscar y construir.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/javascript/04-bucles/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Lección 4: Bucles · Curso de HTML">
+  <meta property="og:description" content="Bucles en JavaScript: for, while, do while, for of, for in, break, continue, bucles anidados y los patrones de acumular, contar, buscar y construir.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/javascript/04-bucles/">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de JavaScript</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap lesson-layout" id="contenido">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#para-que">Por qué repetir</a></li><li><a href="#for">El bucle for</a></li><li><a href="#while">while y do…while</a></li><li><a href="#forof">for…of: recorrer elementos</a></li><li><a href="#control">break y continue</a></li><li><a href="#anidados">Bucles anidados</a></li><li><a href="#patrones">Patrones que usarás siempre</a></li><li><a href="#errores">Errores frecuentes</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de JavaScript</a> › Lección 4</div>
+        <h1>Bucles</h1>
+        <ul class="meta"><li>⏱ 40 minutos</li><li>📶 Nivel: principiante</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Repetir tareas con <code>for</code>, <code>while</code> y <code>do…while</code>.</li><li>Recorrer arrays y textos con <code>for…of</code>.</li><li>Controlar el flujo con <code>break</code> y <code>continue</code>.</li><li>Aplicar los patrones de acumular, contar, buscar y construir.</li></ul>
+</div>
+
+<h2 id="para-que"><span class="n">1.</span>Por qué repetir</h2>
+<p>Muchas tareas consisten en <strong>hacer lo mismo varias veces</strong>: mostrar los números del 1 al 100, recorrer una lista de productos, sumar todos los precios, buscar un nombre. Escribir cada repetición a mano sería largo, aburrido y propenso a errores. Los <strong>bucles</strong> le piden a la computadora que repita un bloque de código <strong>mientras se cumpla una condición</strong>.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Bucle</th><th>Úsalo cuando…</th></tr></thead>
+<tbody><tr><td><code>for</code></td><td>Sabes <strong>cuántas veces</strong> repetir</td></tr><tr><td><code>while</code></td><td>Repites <strong>mientras</strong> una condición sea verdadera</td></tr><tr><td><code>do…while</code></td><td>Quieres ejecutar <strong>al menos una vez</strong></td></tr><tr><td><code>for…of</code></td><td>Recorres los <strong>elementos</strong> de un array o texto</td></tr><tr><td><code>for…in</code></td><td>Recorres las <strong>claves</strong> de un objeto</td></tr><tr><td><code>forEach</code>, <code>map</code>…</td><td>Recorres arrays con funciones (lección 6)</td></tr></tbody>
+</table></div>
+
+<h2 id="for"><span class="n">2.</span>El bucle for</h2>
+<div class="code">
+  <div class="code-head"><span>Anatomía de un for</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">for</span> (<span class="tk-tag">let</span> i = <span class="tk-attr">0</span>; i &lt; <span class="tk-attr">5</span>; i++) {
+  console.log(<span class="tk-val">"Vuelta"</span>, i);
+}
+<span class="tk-com">//   ① inicio     ② condición   ③ avance</span></code></pre>
+</div>
+<div class="anatomy" role="img" aria-label="Las partes de un bucle for"><div class="part" style="--c:#ff8fa3"><span>for (</span><span class="lbl">&nbsp;</span></div><div class="part" style="--c:#8ee6a0"><span>let i = 0</span><span class="lbl">① inicio</span></div><div class="part" style="--c:#ff8fa3"><span>; </span><span class="lbl">&nbsp;</span></div><div class="part" style="--c:#ffd479"><span>i &lt; 5</span><span class="lbl">② condición</span></div><div class="part" style="--c:#ff8fa3"><span>; </span><span class="lbl">&nbsp;</span></div><div class="part" style="--c:#7cc4ff"><span>i++</span><span class="lbl">③ avance</span></div><div class="part" style="--c:#ff8fa3"><span>) { … }</span><span class="lbl">④ cuerpo</span></div></div>
+<ol class="steps"><li><strong>Inicio:</strong> se ejecuta <strong>una sola vez</strong> al principio (<code>let i = 0</code>).</li><li><strong>Condición:</strong> se evalúa <strong>antes de cada vuelta</strong>; si es falsa, el bucle termina.</li><li><strong>Cuerpo:</strong> el código entre llaves se ejecuta.</li><li><strong>Avance:</strong> se ejecuta <strong>al final de cada vuelta</strong> (<code>i++</code>). Luego se vuelve a la condición.</li></ol>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ Cuenta y suma</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:240px">&lt;script&gt;
+  // contar del 1 al 5
+  for (let i = 1; i &lt;= 5; i++) {
+    console.log("Número", i);
+  }
+
+  // sumar los números del 1 al 100
+  let suma = 0;
+  for (let n = 1; n &lt;= 100; n++) {
+    suma += n;
+  }
+  console.log("La suma del 1 al 100 es", suma);
+
+  // cuenta regresiva
+  for (let i = 3; i &gt;= 1; i--) {
+    console.log(i + "...");
+  }
+  console.log("¡Despegue!");
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Sigue el bucle con papel</p>
+<p>Si no entiendes un bucle, haz una <strong>tabla de seguimiento</strong>: una columna por variable y una fila por vuelta. Anota cuánto valen <code>i</code> y <code>suma</code> en cada vuelta. En poco tiempo lo harás de cabeza.</p>
+</div>
+
+<h2 id="while"><span class="n">3.</span>while y do…while</h2>
+<div class="code">
+  <div class="code-head"><span>Repetir mientras se cumpla una condición</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">let</span> intentos = <span class="tk-attr">0</span>;
+<span class="tk-tag">while</span> (intentos &lt; <span class="tk-attr">3</span>) {
+  console.log(<span class="tk-val">"Intento"</span>, intentos + <span class="tk-attr">1</span>);
+  intentos++;
+}
+
+<span class="tk-tag">let</span> n = <span class="tk-attr">10</span>;
+<span class="tk-tag">do</span> {
+  console.log(<span class="tk-val">"Este se ejecuta una vez aunque n sea 10"</span>);
+} <span class="tk-tag">while</span> (n &lt; <span class="tk-attr">5</span>);</code></pre>
+</div>
+<p><code>while</code> <strong>evalúa la condición primero</strong>: si desde el inicio es falsa, no entra nunca. <code>do…while</code> <strong>ejecuta primero</strong> y evalúa después: entra siempre al menos una vez.</p>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ Dividir hasta llegar a 1</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:240px">&lt;script&gt;
+  let numero = 100;
+  let pasos = 0;
+
+  while (numero &gt; 1) {
+    numero = numero / 2;
+    pasos++;
+    console.log("Paso", pasos, "→", numero);
+  }
+  console.log("Se necesitaron", pasos, "pasos");
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · Bucles infinitos</p>
+<p>Si la condición <strong>nunca</strong> se vuelve falsa, el bucle no termina y la página se <strong>congela</strong>. Siempre asegúrate de que algo dentro del bucle (un contador, una lectura) acabará haciendo falsa la condición. Si pasa en tu navegador, cierra la pestaña. En los editores de este curso, recarga la página.</p>
+</div>
+
+<h2 id="forof"><span class="n">4.</span>for…of: recorrer elementos</h2>
+<p>Cuando tienes un <strong>array</strong> o un <strong>texto</strong>, <code>for…of</code> te entrega cada elemento directamente, sin contadores:</p>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ Recorrer listas y textos</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:240px">&lt;script&gt;
+  const frutas = ["manzana", "pera", "mango"];
+  for (const fruta of frutas) {
+    console.log("Me gusta la", fruta);
+  }
+
+  for (const letra of "Hola") {
+    console.log(letra);
+  }
+
+  // Con el índice: entries()
+  for (const [i, fruta] of frutas.entries()) {
+    console.log(i + 1 + ".", fruta);
+  }
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<div class="code">
+  <div class="code-head"><span>for…in: las claves de un objeto</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">const</span> persona = { nombre: <span class="tk-val">"Ana"</span>, edad: <span class="tk-attr">30</span>, ciudad: <span class="tk-val">"Lima"</span> };
+<span class="tk-tag">for</span> (<span class="tk-tag">const</span> clave <span class="tk-tag">in</span> persona) {
+  console.log(clave, <span class="tk-val">"="</span>, persona[clave]);
+}</code></pre>
+</div>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · <code>for…of</code> y <code>for…in</code> no son lo mismo</p>
+<p><code>for…of</code> recorre <strong>valores</strong> (arrays, textos); <code>for…in</code> recorre <strong>claves</strong> (objetos). Usar <code>for…in</code> con arrays da los índices como texto y puede incluir propiedades inesperadas: evítalo con arrays.</p>
+</div>
+
+<h2 id="control"><span class="n">5.</span>break y continue</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Instrucción</th><th>Qué hace</th></tr></thead>
+<tbody><tr><td><code>break</code></td><td><strong>Sale</strong> del bucle por completo</td></tr><tr><td><code>continue</code></td><td><strong>Salta</strong> a la siguiente vuelta, ignorando el resto de esta</td></tr></tbody>
+</table></div>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ Saltar y salir</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:240px">&lt;script&gt;
+  // continue: ignorar los múltiplos de 3
+  for (let i = 1; i &lt;= 10; i++) {
+    if (i % 3 === 0) continue;
+    console.log(i);
+  }
+
+  console.log("---");
+
+  // break: buscar el primer número divisible entre 7
+  for (let i = 20; i &lt; 100; i++) {
+    if (i % 7 === 0) {
+      console.log("El primero es", i);
+      break;
+    }
+  }
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+
+<h2 id="anidados"><span class="n">6.</span>Bucles anidados</h2>
+<p>Un bucle <strong>dentro de otro</strong> repite el interior por cada vuelta del exterior. Sirve para tablas, cuadrículas y combinaciones:</p>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ Tabla de multiplicar y dibujo</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:240px">&lt;script&gt;
+  // tablas del 1 al 3, hasta el 5
+  for (let tabla = 1; tabla &lt;= 3; tabla++) {
+    for (let n = 1; n &lt;= 5; n++) {
+      console.log(tabla + " × " + n + " = " + tabla * n);
+    }
+    console.log("---");
+  }
+
+  // un triángulo de estrellas
+  for (let fila = 1; fila &lt;= 4; fila++) {
+    console.log("*".repeat(fila));
+  }
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Cuidado con el coste</p>
+<p>Un bucle dentro de otro con 1000 vueltas cada uno hace <strong>un millón</strong> de operaciones. Es normal con pocos datos, pero ten presente cómo crece cuando manejes listas enormes.</p>
+</div>
+
+<h2 id="patrones"><span class="n">7.</span>Patrones que usarás siempre</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Patrón</th><th>Idea</th><th>Ejemplo</th></tr></thead>
+<tbody><tr><td><strong>Acumular</strong></td><td>Una variable que va sumando o juntando</td><td><code>total += precio</code></td></tr><tr><td><strong>Contar</strong></td><td>Aumentar un contador cuando algo se cumple</td><td><code>if (n % 2 === 0) pares++</code></td></tr><tr><td><strong>Buscar</strong></td><td>Recorrer hasta encontrar y salir con <code>break</code>/<code>return</code></td><td><code>if (x === buscado) return i</code></td></tr><tr><td><strong>Máximo / mínimo</strong></td><td>Recordar el mejor valor visto</td><td><code>if (n &gt; mayor) mayor = n</code></td></tr><tr><td><strong>Construir</strong></td><td>Ir armando un array o texto nuevo</td><td><code>resultado.push(n * 2)</code></td></tr></tbody>
+</table></div>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ Los cinco patrones</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:240px">&lt;script&gt;
+  const numeros = [4, 9, 2, 7, 12, 5];
+
+  let total = 0, pares = 0, mayor = numeros[0], dobles = [];
+  for (const n of numeros) {
+    total += n;                      // acumular
+    if (n % 2 === 0) pares++;        // contar
+    if (n &gt; mayor) mayor = n;        // máximo
+    dobles.push(n * 2);              // construir
+  }
+  console.log({ total, pares, mayor, dobles });
+
+  // buscar (con función y return)
+  function posicion(lista, buscado) {
+    for (let i = 0; i &lt; lista.length; i++) {
+      if (lista[i] === buscado) return i;
+    }
+    return -1;
+  }
+  console.log(posicion(numeros, 7), posicion(numeros, 99));
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+
+<h2 id="errores"><span class="n">8.</span>Errores frecuentes</h2>
+<ul><li><strong>Bucle infinito:</strong> la condición nunca se vuelve falsa (se olvidó <code>i++</code>).</li><li><strong>Error «por uno» (off-by-one):</strong> usar <code>&lt;</code> cuando debía ser <code>&lt;=</code>, o empezar en 1 en lugar de 0.</li><li><strong>Modificar la lista que se recorre</strong> (añadir o quitar elementos dentro del bucle).</li><li><strong>Usar <code>var</code> en un <code>for</code>:</strong> la variable «se escapa» del bucle. Usa <code>let</code>.</li><li><strong>Confundir <code>for…of</code> con <code>for…in</code>.</strong></li><li><strong>Declarar la variable acumuladora dentro del bucle:</strong> se reinicia en cada vuelta.</li><li><strong>Olvidar <code>break</code></strong> y seguir recorriendo cuando ya se encontró lo buscado.</li></ul>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li>Los bucles repiten un bloque de código mientras se cumpla una condición.</li><li><code>for (inicio; condición; avance)</code> es ideal si sabes cuántas vueltas dar; <code>while</code> repite mientras la condición sea verdadera; <code>do…while</code> entra al menos una vez.</li><li><code>for…of</code> recorre los valores de un array o texto; <code>for…in</code> recorre las claves de un objeto.</li><li><code>break</code> sale del bucle y <code>continue</code> salta a la siguiente vuelta.</li><li>Un bucle puede contener otro: el interior se repite por cada vuelta del exterior.</li><li>Cinco patrones: acumular, contar, buscar, máximo/mínimo y construir.</li><li>Evita los bucles infinitos y los errores «por uno» revisando siempre la condición y el avance.</li><li>Declara las variables acumuladoras <strong>fuera</strong> del bucle.</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">9.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td>Bucle</td><td>Estructura que repite un bloque de código.</td></tr><tr><td>Iteración</td><td>Cada vuelta de un bucle.</td></tr><tr><td>Contador</td><td>Variable que cuenta las vueltas (<code>i</code>).</td></tr><tr><td>Acumulador</td><td>Variable que va guardando un resultado parcial (<code>suma</code>).</td></tr><tr><td>Bucle infinito</td><td>Bucle cuya condición nunca se vuelve falsa.</td></tr><tr><td><code>break</code> / <code>continue</code></td><td>Salir del bucle / saltar a la siguiente vuelta.</td></tr><tr><td>Error por uno</td><td>Fallo de un elemento de más o de menos en los límites.</td></tr><tr><td>Anidado</td><td>Un bucle colocado dentro de otro.</td></tr></tbody>
+</table></div>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>¿Cuántas veces se ejecuta el cuerpo de <code>for (let i = 0; i &lt; 4; i++)</code>?</p><ul class="opts"><li><button type="button" class="opt">3</button></li><li><button type="button" class="opt" data-ok>4</button></li><li><button type="button" class="opt">5</button></li><li><button type="button" class="opt">Infinitas</button></li></ul><p class="explain" hidden>Con <code>i</code> valiendo 0, 1, 2 y 3: cuatro veces.</p></div>
+<div class="quiz-q"><p>¿Qué diferencia hay entre <code>while</code> y <code>do…while</code>?</p><ul class="opts"><li><button type="button" class="opt">Ninguna</button></li><li><button type="button" class="opt" data-ok><code>do…while</code> ejecuta el cuerpo al menos una vez</button></li><li><button type="button" class="opt"><code>while</code> es más rápido</button></li><li><button type="button" class="opt"><code>do…while</code> no admite condiciones</button></li></ul><p class="explain" hidden><code>do…while</code> evalúa la condición <strong>después</strong> del cuerpo.</p></div>
+<div class="quiz-q"><p>Quieres recorrer los <strong>valores</strong> de un array. ¿Cuál es la mejor opción?</p><ul class="opts"><li><button type="button" class="opt"><code>for…in</code></button></li><li><button type="button" class="opt" data-ok><code>for…of</code></button></li><li><button type="button" class="opt"><code>while(true)</code></button></li><li><button type="button" class="opt"><code>switch</code></button></li></ul><p class="explain" hidden><code>for…of</code> entrega cada elemento directamente.</p></div>
+<div class="quiz-q"><p>¿Qué hace <code>continue</code> dentro de un bucle?</p><ul class="opts"><li><button type="button" class="opt">Sale del bucle</button></li><li><button type="button" class="opt" data-ok>Salta a la siguiente vuelta</button></li><li><button type="button" class="opt">Reinicia el programa</button></li><li><button type="button" class="opt">Detiene la página</button></li></ul><p class="explain" hidden><code>continue</code> omite lo que queda de la vuelta actual.</p></div>
+<div class="quiz-q"><p>Un bucle <code>while (x &lt; 10)</code> no modifica nunca <code>x</code> dentro del cuerpo. ¿Qué ocurre?</p><ul class="opts"><li><button type="button" class="opt">Termina enseguida</button></li><li><button type="button" class="opt" data-ok>Es un bucle infinito</button></li><li><button type="button" class="opt">Da un error de sintaxis</button></li><li><button type="button" class="opt">Se ejecuta una vez</button></li></ul><p class="explain" hidden>La condición siempre será verdadera y la página se congelará.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="js-04">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../03-operadores-y-decisiones/ejercicio.html"><small>← Anterior</small>Ejercicio: Operadores y decisiones</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de JavaScript · Lección 4 · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&title=%5BError%5D%20Lecci%C3%B3n%204%3A%20Bucles%20%C2%B7%20Curso%20de%20HTML&pagina=https%3A//cacg-code.github.io/PRACTICAS-HTML/javascript/04-bucles/" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

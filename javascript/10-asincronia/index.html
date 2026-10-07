@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lección 10: Asincronía y APIs · Curso de HTML</title>
+  <meta name="description" content="Asincronía y APIs en JavaScript: setTimeout, setInterval, promesas, async/await, fetch, Promise.all y los estados de carga.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/javascript/10-asincronia/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Lección 10: Asincronía y APIs · Curso de HTML">
+  <meta property="og:description" content="Asincronía y APIs en JavaScript: setTimeout, setInterval, promesas, async/await, fetch, Promise.all y los estados de carga.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/javascript/10-asincronia/">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de JavaScript</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap lesson-layout" id="contenido">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#sincrono">Síncrono y asíncrono</a></li><li><a href="#timers">Temporizadores</a></li><li><a href="#promesas">Promesas</a></li><li><a href="#async">async / await: promesas con aspecto de código normal</a></li><li><a href="#fetch">Pedir datos a internet con fetch</a></li><li><a href="#varias">Varias tareas a la vez</a></li><li><a href="#ux">Buena experiencia: cargando, error y vacío</a></li><li><a href="#errores">Errores frecuentes</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de JavaScript</a> › Lección 10</div>
+        <h1>Asincronía y APIs</h1>
+        <ul class="meta"><li>⏱ 50 minutos</li><li>📶 Nivel: principiante</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Explicar por qué el código asíncrono no se ejecuta en el orden en que se escribe.</li><li>Usar temporizadores y promesas.</li><li>Escribir funciones con <code>async/await</code> y <code>try/catch</code>.</li><li>Pedir datos con <code>fetch</code> y gestionar los estados de carga, error y vacío.</li></ul>
+</div>
+
+<h2 id="sincrono"><span class="n">1.</span>Síncrono y asíncrono</h2>
+<p>Hasta ahora, cada línea esperaba a que terminara la anterior: es lo <strong>síncrono</strong>. Pero hay tareas que <strong>tardan</strong>: pedir datos a un servidor, esperar 3 segundos, leer un archivo. Si JavaScript se quedara esperando sin hacer nada más, <strong>la página se congelaría</strong>: no podrías ni pulsar un botón.</p>
+<p>La solución es lo <strong>asíncrono</strong>: se <strong>inicia</strong> la tarea lenta, el programa <strong>sigue</strong> con lo demás, y cuando la tarea termina, se ejecuta una función con el resultado.</p>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ El orden sorprendente</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:240px">&lt;script&gt;
+  console.log("1. Empieza");
+
+  setTimeout(() =&gt; {
+    console.log("3. Esto llega después de 1 segundo");
+  }, 1000);
+
+  console.log("2. Esto se ejecuta ANTES de lo anterior");
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<p>Ejecútalo: el mensaje 2 sale <strong>antes</strong> que el 3, aunque esté escrito después. <code>setTimeout</code> no detiene el programa: <strong>agenda</strong> la función para más tarde y continúa. Entender esto es la clave de toda la lección.</p>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · Una sola línea de ejecución</p>
+<p>JavaScript hace <strong>una cosa a la vez</strong>. Lo asíncrono no significa «dos cosas a la vez»: significa que cuando una tarea tiene que <strong>esperar</strong> (a la red, a un temporizador), el navegador se ocupa de la espera y JavaScript atiende otras cosas mientras tanto.</p>
+</div>
+
+<h2 id="timers"><span class="n">2.</span>Temporizadores</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Función</th><th>Qué hace</th><th>Se cancela con</th></tr></thead>
+<tbody><tr><td><code>setTimeout(fn, ms)</code></td><td>Ejecuta <code>fn</code> <strong>una vez</strong> tras <code>ms</code> milisegundos</td><td><code>clearTimeout(id)</code></td></tr><tr><td><code>setInterval(fn, ms)</code></td><td>Ejecuta <code>fn</code> <strong>cada</strong> <code>ms</code> milisegundos</td><td><code>clearInterval(id)</code></td></tr></tbody>
+</table></div>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ Una cuenta regresiva</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:240px">&lt;p id="num" style="font-size:2rem;font-weight:700"&gt;3&lt;/p&gt;
+&lt;script&gt;
+  let n = 3;
+  const salida = document.getElementById("num");
+
+  const id = setInterval(() =&gt; {
+    n--;
+    if (n === 0) {
+      salida.textContent = "¡Despegue!";
+      clearInterval(id);                 // ¡hay que pararlo!
+      console.log("Terminó");
+    } else {
+      salida.textContent = n;
+      console.log(n + "...");
+    }
+  }, 1000);
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · Limpia tus intervalos</p>
+<p>Un <code>setInterval</code> <strong>sigue ejecutándose para siempre</strong> hasta que lo cancelas. Guarda su <code>id</code> y llama a <code>clearInterval(id)</code> cuando ya no haga falta, o seguirá consumiendo recursos aunque ya no se vea.</p>
+</div>
+
+<h2 id="promesas"><span class="n">3.</span>Promesas</h2>
+<p>Una <strong>promesa</strong> (*Promise*) es un objeto que representa <strong>un resultado que llegará en el futuro</strong>. Siempre está en uno de tres estados:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Estado</th><th>Significa</th><th>Cómo reaccionar</th></tr></thead>
+<tbody><tr><td><strong>pending</strong> (pendiente)</td><td>Todavía no hay resultado</td><td>—</td></tr><tr><td><strong>fulfilled</strong> (cumplida)</td><td>Terminó <strong>bien</strong> y tiene un valor</td><td><code>.then(valor =&gt; …)</code></td></tr><tr><td><strong>rejected</strong> (rechazada)</td><td>Terminó <strong>mal</strong> y tiene un error</td><td><code>.catch(error =&gt; …)</code></td></tr></tbody>
+</table></div>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ Crear y usar una promesa</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:240px">&lt;script&gt;
+  function esperar(ms) {
+    return new Promise((resolver) =&gt; {
+      setTimeout(() =&gt; resolver("listo tras " + ms + " ms"), ms);
+    });
+  }
+
+  function dividir(a, b) {
+    return new Promise((resolver, rechazar) =&gt; {
+      if (b === 0) rechazar(new Error("No se puede dividir entre cero"));
+      else resolver(a / b);
+    });
+  }
+
+  esperar(500).then((mensaje) =&gt; console.log(mensaje));
+
+  dividir(10, 2).then((r) =&gt; console.log("10 / 2 =", r));
+  dividir(1, 0)
+    .then((r) =&gt; console.log(r))
+    .catch((e) =&gt; console.log("Error:", e.message))
+    .finally(() =&gt; console.log("Terminó la división"));
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<ul><li><code>.then()</code> recibe el valor cuando la promesa se <strong>cumple</strong> y devuelve otra promesa: se pueden <strong>encadenar</strong>.</li><li><code>.catch()</code> atrapa los errores de <strong>cualquier</strong> paso anterior de la cadena.</li><li><code>.finally()</code> se ejecuta siempre, salga bien o mal (ideal para quitar un «cargando…»).</li></ul>
+
+<h2 id="async"><span class="n">4.</span>async / await: promesas con aspecto de código normal</h2>
+<p><code>async</code> y <code>await</code> permiten escribir código asíncrono <strong>como si fuera síncrono</strong>, de arriba abajo, mucho más legible que las cadenas de <code>.then()</code>:</p>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ async / await</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:240px">&lt;script&gt;
+  const esperar = (ms, valor) =&gt; new Promise(r =&gt; setTimeout(() =&gt; r(valor), ms));
+
+  async function preparar() {
+    console.log("Empiezo");
+    const cafe = await esperar(500, "café");      // espera sin congelar la página
+    console.log("Listo el", cafe);
+    const pan = await esperar(300, "pan");
+    console.log("Listo el", pan);
+    return `${cafe} con ${pan}`;
+  }
+
+  preparar().then((desayuno) =&gt; console.log("Desayuno:", desayuno));
+  console.log("Esta línea sale antes de que termine preparar()");
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<div class="table-wrap"><table>
+<thead><tr><th>Palabra</th><th>Qué hace</th></tr></thead>
+<tbody><tr><td><code>async function f()</code></td><td>La función <strong>siempre devuelve una promesa</strong></td></tr><tr><td><code>await promesa</code></td><td><strong>Pausa solo esa función</strong> hasta que la promesa se cumpla y da su valor. Solo se puede usar dentro de una función <code>async</code> (o en un módulo)</td></tr><tr><td><code>try { … } catch (e) { … }</code></td><td>Atrapa los errores (promesas rechazadas) de los <code>await</code></td></tr></tbody>
+</table></div>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ Errores con try / catch</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:240px">&lt;script&gt;
+  const fallar = () =&gt; new Promise((_, rechazar) =&gt; setTimeout(() =&gt; rechazar(new Error("¡Se cayó el servidor!")), 300));
+
+  async function intentar() {
+    try {
+      const datos = await fallar();
+      console.log("No llegamos aquí", datos);
+    } catch (error) {
+      console.log("Capturado:", error.message);
+    } finally {
+      console.log("Fin del intento");
+    }
+  }
+  intentar();
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+
+<h2 id="fetch"><span class="n">5.</span>Pedir datos a internet con fetch</h2>
+<p><code>fetch(url)</code> hace una <strong>petición HTTP</strong> y devuelve una promesa con la <strong>respuesta</strong>. Es lo que usan las páginas para traer datos de una <strong>API</strong> (un servicio que ofrece datos en JSON):</p>
+<div class="code">
+  <div class="code-head"><span>El patrón estándar</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">async</span> <span class="tk-tag">function</span> cargarUsuario(id) {
+  <span class="tk-tag">const</span> respuesta = <span class="tk-tag">await</span> fetch(<span class="tk-val">`https://jsonplaceholder.typicode.com/users/${id}`</span>);
+
+  <span class="tk-tag">if</span> (!respuesta.ok) {                         <span class="tk-com">// 404, 500…</span>
+    <span class="tk-tag">throw</span> <span class="tk-tag">new</span> Error(<span class="tk-val">`Error ${respuesta.status}`</span>);
+  }
+
+  <span class="tk-tag">const</span> usuario = <span class="tk-tag">await</span> respuesta.json();      <span class="tk-com">// convertir el cuerpo JSON en un objeto</span>
+  <span class="tk-tag">return</span> usuario;
+}</code></pre>
+</div>
+<ol class="steps"><li><code>await fetch(url)</code> → una <strong>respuesta</strong> (aunque sea un 404: <code>fetch</code> <strong>solo falla</strong> si no hay red).</li><li>Comprueba <strong><code>respuesta.ok</code></strong> (<code>true</code> para códigos 200–299) y lanza un error si no.</li><li><code>await respuesta.json()</code> → los datos como objeto de JavaScript.</li></ol>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ Una API real (necesitas internet)</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:240px">&lt;h3 id="estado"&gt;Cargando…&lt;/h3&gt;
+&lt;ul id="lista"&gt;&lt;/ul&gt;
+&lt;script&gt;
+  async function cargar() {
+    const estado = document.getElementById("estado");
+    try {
+      const r = await fetch("https://jsonplaceholder.typicode.com/users?_limit=4");
+      if (!r.ok) throw new Error("Respuesta " + r.status);
+      const usuarios = await r.json();
+
+      estado.textContent = "Usuarios";
+      document.getElementById("lista").innerHTML = "";
+      for (const u of usuarios) {
+        const li = document.createElement("li");
+        li.textContent = `${u.name} (${u.email})`;     // textContent: dato externo
+        document.getElementById("lista").append(li);
+      }
+      console.log("Llegaron", usuarios.length, "usuarios");
+    } catch (error) {
+      estado.textContent = "No se pudo cargar: " + error.message;
+    }
+  }
+  cargar();
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · ¿Y si estás sin conexión?</p>
+<p>Este ejemplo necesita internet. Si falla, verás el mensaje de error en pantalla: es justo lo que debe pasar, y por eso siempre se envuelve <code>fetch</code> en <code>try…catch</code>. Los ejercicios del curso <strong>simulan</strong> la red para funcionar siempre.</p>
+</div>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · CORS</p>
+<p>Los navegadores bloquean pedir datos a <strong>otro dominio</strong> salvo que ese servidor lo permita expresamente (cabeceras <strong>CORS</strong>). Si ves «blocked by CORS policy», no es un error tuyo: el servidor no admite peticiones desde tu página.</p>
+</div>
+
+<h2 id="varias"><span class="n">6.</span>Varias tareas a la vez</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Función</th><th>Hace</th><th>Cuándo</th></tr></thead>
+<tbody><tr><td><code>Promise.all([…])</code></td><td>Espera a que <strong>todas</strong> terminen; falla si <strong>una</strong> falla</td><td>Cargar varias cosas <strong>independientes</strong> a la vez</td></tr><tr><td><code>Promise.allSettled([…])</code></td><td>Espera a <strong>todas</strong> y da el resultado de cada una</td><td>Quieres saber qué salió bien y qué mal</td></tr><tr><td><code>Promise.race([…])</code></td><td>La <strong>primera</strong> que termine</td><td>Tiempos límite</td></tr></tbody>
+</table></div>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ En serie frente a en paralelo</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:240px">&lt;script&gt;
+  const pedir = (nombre, ms) =&gt; new Promise(r =&gt; setTimeout(() =&gt; r(nombre), ms));
+
+  async function enSerie() {
+    const t0 = Date.now();
+    const a = await pedir("A", 500);
+    const b = await pedir("B", 500);
+    const c = await pedir("C", 500);
+    console.log("En serie:", [a, b, c], Date.now() - t0, "ms");
+  }
+
+  async function enParalelo() {
+    const t0 = Date.now();
+    const resultados = await Promise.all([pedir("A", 500), pedir("B", 500), pedir("C", 500)]);
+    console.log("En paralelo:", resultados, Date.now() - t0, "ms");
+  }
+
+  enSerie().then(enParalelo);
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · No esperes de uno en uno sin necesidad</p>
+<p>Si las tareas <strong>no dependen unas de otras</strong>, lánzalas juntas con <code>Promise.all</code>: tardan lo que tarde la más lenta, no la suma de todas. Es una mejora de rendimiento gratuita.</p>
+</div>
+
+<h2 id="ux"><span class="n">7.</span>Buena experiencia: cargando, error y vacío</h2>
+<p>Una pantalla que muestra datos remotos debe contemplar <strong>cuatro estados</strong>, no solo el feliz:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Estado</th><th>Qué mostrar</th></tr></thead>
+<tbody><tr><td><strong>Cargando</strong></td><td>Un indicador («Cargando…», un *spinner*), idealmente con <code>role="status"</code></td></tr><tr><td><strong>Éxito</strong></td><td>Los datos</td></tr><tr><td><strong>Vacío</strong></td><td>Un mensaje claro («No hay resultados») y no una pantalla en blanco</td></tr><tr><td><strong>Error</strong></td><td>Qué pasó, en lenguaje humano, y <strong>cómo reintentar</strong></td></tr></tbody>
+</table></div>
+<div class="code">
+  <div class="code-head"><span>Estructura recomendada</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">async</span> <span class="tk-tag">function</span> mostrarDatos() {
+  estado.textContent = <span class="tk-val">"Cargando…"</span>;
+  boton.disabled = <span class="tk-tag">true</span>;
+  <span class="tk-tag">try</span> {
+    <span class="tk-tag">const</span> datos = <span class="tk-tag">await</span> obtener();
+    estado.textContent = datos.length ? <span class="tk-val">""</span> : <span class="tk-val">"No hay resultados"</span>;
+    pintar(datos);
+  } <span class="tk-tag">catch</span> (error) {
+    estado.textContent = <span class="tk-val">"No pudimos cargar los datos. Inténtalo de nuevo."</span>;
+  } <span class="tk-tag">finally</span> {
+    boton.disabled = <span class="tk-tag">false</span>;       <span class="tk-com">// se ejecuta siempre</span>
+  }
+}</code></pre>
+</div>
+
+<h2 id="errores"><span class="n">8.</span>Errores frecuentes</h2>
+<ul><li><strong>Olvidar <code>await</code>:</strong> obtienes una promesa en lugar del valor (<code>Promise { &lt;pending&gt; }</code>).</li><li><strong>Usar <code>await</code> fuera de una función <code>async</code>.</strong></li><li><strong>No comprobar <code>respuesta.ok</code>:</strong> un 404 no hace fallar a <code>fetch</code>.</li><li><strong>Olvidar <code>.json()</code></strong> o no esperarlo con <code>await</code>.</li><li><strong>No capturar errores:</strong> un <code>await</code> que falla sin <code>try/catch</code> deja un error sin controlar.</li><li><strong>Esperar en serie</strong> tareas independientes en lugar de usar <code>Promise.all</code>.</li><li><strong>Dejar un <code>setInterval</code> activo</strong> sin cancelarlo.</li><li><strong>Usar <code>innerHTML</code> con datos de una API:</strong> son datos externos, usa <code>textContent</code>.</li><li><strong>Dar por hecho que el orden de ejecución es el del código:</strong> lo asíncrono llega después.</li></ul>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li>JavaScript hace una cosa a la vez; lo <strong>asíncrono</strong> permite iniciar una tarea lenta y seguir, atendiendo el resultado cuando llegue.</li><li><code>setTimeout</code> ejecuta una vez y <code>setInterval</code> repetidamente; cancélalos con <code>clearTimeout</code>/<code>clearInterval</code>.</li><li>Una <strong>Promise</strong> está pendiente, cumplida o rechazada: <code>.then()</code> recibe el valor, <code>.catch()</code> el error y <code>.finally()</code> siempre se ejecuta.</li><li><code>async function</code> devuelve una promesa; <code>await</code> espera el resultado sin congelar la página; <code>try/catch</code> captura los fallos.</li><li><code>fetch(url)</code> devuelve la respuesta: comprueba <code>respuesta.ok</code> y usa <code>await respuesta.json()</code>.</li><li><code>Promise.all</code> lanza tareas independientes en paralelo; <code>allSettled</code> y <code>race</code> cubren otros casos.</li><li>Toda pantalla con datos remotos necesita estados de <strong>cargando, éxito, vacío y error</strong>.</li><li>Los datos de internet son externos: muéstralos con <code>textContent</code>.</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">9.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td>Asíncrono</td><td>Que no bloquea la ejecución mientras espera un resultado.</td></tr><tr><td>Promesa (Promise)</td><td>Objeto que representa un resultado futuro.</td></tr><tr><td><code>async</code> / <code>await</code></td><td>Sintaxis para escribir promesas como código secuencial.</td></tr><tr><td><code>fetch</code></td><td>Función que hace peticiones HTTP y devuelve una promesa.</td></tr><tr><td>API</td><td>Servicio que ofrece datos o funciones para ser usado por programas.</td></tr><tr><td>CORS</td><td>Mecanismo que restringe peticiones entre dominios distintos.</td></tr><tr><td>Callback</td><td>Función que se ejecuta cuando termina una tarea.</td></tr><tr><td><code>Promise.all</code></td><td>Espera a que terminen varias promesas a la vez.</td></tr></tbody>
+</table></div>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>¿En qué orden se muestran? <code>console.log(1); setTimeout(() =&gt; console.log(2), 0); console.log(3);</code></p><ul class="opts"><li><button type="button" class="opt">1, 2, 3</button></li><li><button type="button" class="opt" data-ok>1, 3, 2</button></li><li><button type="button" class="opt">2, 1, 3</button></li><li><button type="button" class="opt">3, 2, 1</button></li></ul><p class="explain" hidden>El callback del temporizador se ejecuta <strong>después</strong> de todo el código síncrono, incluso con 0 ms.</p></div>
+<div class="quiz-q"><p>¿Qué devuelve una función <code>async</code>?</p><ul class="opts"><li><button type="button" class="opt">El valor directamente</button></li><li><button type="button" class="opt" data-ok>Siempre una promesa</button></li><li><button type="button" class="opt"><code>undefined</code></button></li><li><button type="button" class="opt">Un array</button></li></ul><p class="explain" hidden>Una función <code>async</code> siempre devuelve una promesa.</p></div>
+<div class="quiz-q"><p><code>fetch</code> recibe un 404 del servidor. ¿Qué ocurre?</p><ul class="opts"><li><button type="button" class="opt">La promesa se rechaza</button></li><li><button type="button" class="opt" data-ok>La promesa se cumple, pero <code>respuesta.ok</code> es <code>false</code></button></li><li><button type="button" class="opt">El navegador se cierra</button></li><li><button type="button" class="opt">Se reintenta solo</button></li></ul><p class="explain" hidden><code>fetch</code> solo se rechaza si falla la red; hay que comprobar <code>ok</code>.</p></div>
+<div class="quiz-q"><p>Tienes 3 peticiones independientes. ¿Cómo tardas menos?</p><ul class="opts"><li><button type="button" class="opt">Con tres <code>await</code> seguidos</button></li><li><button type="button" class="opt" data-ok>Con <code>Promise.all([...])</code></button></li><li><button type="button" class="opt">Con <code>setInterval</code></button></li><li><button type="button" class="opt">No se puede</button></li></ul><p class="explain" hidden><code>Promise.all</code> las lanza juntas: tardas lo que tarde la más lenta.</p></div>
+<div class="quiz-q"><p>Un <code>setInterval</code> que ya no necesitas, ¿qué requiere?</p><ul class="opts"><li><button type="button" class="opt">Nada, se detiene solo</button></li><li><button type="button" class="opt" data-ok><code>clearInterval(id)</code></button></li><li><button type="button" class="opt">Recargar la página siempre</button></li><li><button type="button" class="opt"><code>break</code></button></li></ul><p class="explain" hidden>Sin cancelarlo, sigue ejecutándose indefinidamente.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="js-10">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../09-eventos/ejercicio.html"><small>← Anterior</small>Ejercicio: Eventos y formularios</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de JavaScript · Lección 10 · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&title=%5BError%5D%20Lecci%C3%B3n%2010%3A%20Asincron%C3%ADa%20y%20APIs%20%C2%B7%20Curso%20de%20HTML&pagina=https%3A//cacg-code.github.io/PRACTICAS-HTML/javascript/10-asincronia/" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

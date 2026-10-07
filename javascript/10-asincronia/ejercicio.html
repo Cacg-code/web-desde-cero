@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ejercicio · Asincronía y APIs · Curso de HTML</title>
+  <meta name="description" content="Ejercicio práctico de: Asincronía y APIs.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/javascript/10-asincronia/ejercicio.html">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Ejercicio · Asincronía y APIs · Curso de HTML">
+  <meta property="og:description" content="Ejercicio práctico de: Asincronía y APIs.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/javascript/10-asincronia/ejercicio.html">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de JavaScript</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap" id="contenido" style="max-width:820px;padding-top:2rem;padding-bottom:3rem">
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de JavaScript</a> › <a href="./">Lección 10</a> › Ejercicio</div>
+        <h1>Ejercicio: Asincronía y APIs</h1>
+        <ul class="meta"><li>⏱ 45 minutos</li><li>📶 Nivel: principiante</li></ul>
+      </header>
+
+      <h2>Objetivo</h2>
+      <p>Escribir funciones asíncronas: promesas con temporizador, peticiones con <code>fetch</code> y gestión de errores, varias peticiones en paralelo y reintentos. La red se simula en las pruebas para que el resultado sea siempre el mismo.</p>
+
+      <h3>Antes de empezar</h3>
+      <p>Estas funciones no necesitan una página. En el editor puedes probarlas con <code>console.log</code>; el comprobador <strong>simula</strong> <code>fetch</code> para que las pruebas no dependan de internet.</p>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ Prueba tu código aquí (opcional)</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:240px">&lt;script&gt;
+  // escribe tu JavaScript
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+
+      <h2>Pasos</h2>
+      <p>Marca cada paso a medida que lo completes. Tu avance se guarda en este navegador.</p>
+      <div class="progress" aria-hidden="true"><div></div></div>
+      <p id="progreso-texto" style="color:var(--muted);font-size:.9rem" aria-live="polite"></p>
+      <ul class="checklist"><li><label><input type="checkbox" id="p1"><span>Escribe <code>esperar(ms)</code> que devuelva una promesa que se cumpla con el texto <code>"listo"</code> tras <code>ms</code> milisegundos.</span></label></li><li><label><input type="checkbox" id="p2"><span>Escribe <code>obtenerUsuario(id)</code> (async): hace <code>fetch</code> a <code>https://api.ejemplo.com/usuarios/&lt;id&gt;</code>; si <code>respuesta.ok</code> es falso lanza <code>new Error("Error " + respuesta.status)</code>; si no, devuelve el JSON.</span></label></li><li><label><input type="checkbox" id="p3"><span>Escribe <code>nombreUsuario(id)</code> (async): usa <code>obtenerUsuario</code> y devuelve el <code>nombre</code>; si hay <strong>cualquier error</strong>, devuelve <code>"desconocido"</code>.</span></label></li><li><label><input type="checkbox" id="p4"><span>Escribe <code>cargarVarios(ids)</code> (async): obtiene todos los usuarios <strong>a la vez</strong> con <code>Promise.all</code> y devuelve un array con sus nombres.</span></label></li><li><label><input type="checkbox" id="p5"><span>Escribe <code>contarAtras(n, alTerminar)</code> que use <code>setTimeout</code> para llamar a <code>alTerminar()</code> después de <code>n * 10</code> milisegundos.</span></label></li><li><label><input type="checkbox" id="p6"><span>Escribe <code>conReintentos(tarea, intentos)</code> (async): ejecuta <code>tarea()</code> (una función que devuelve una promesa); si falla, la reintenta hasta <code>intentos</code> veces; si agota los intentos, lanza el último error.</span></label></li></ul>
+      <details><summary>💡 Pista 1: `esperar`</summary><p><code>return new Promise(resolver =&gt; setTimeout(() =&gt; resolver("listo"), ms));</code></p>
+</details>
+<details><summary>💡 Pista 2: errores en `nombreUsuario`</summary><p>Envuelve el <code>await obtenerUsuario(id)</code> en <code>try { … } catch { return "desconocido"; }</code>.</p>
+</details>
+
+      <section class="checker" id="comprobador" aria-labelledby="t-chk">
+        <h2 id="t-chk">🔎 Comprueba tu trabajo</h2>
+        <p>Pega tu código y pulsa <strong>Comprobar</strong>. La revisión ocurre en tu navegador; nada se envía a ningún sitio. Cada punto en rojo incluye una pista.</p>
+        <label for="chk-code">Tu código JavaScript</label>
+        <textarea id="chk-code" rows="10" spellcheck="false" placeholder="Pega aquí solo tu JavaScript (sin la etiqueta script)"></textarea>
+        <div class="chk-actions"><button class="btn" type="button" id="chk-run">Comprobar</button><button class="icon-btn" type="button" id="chk-clear">Limpiar</button></div>
+        <p class="chk-sum" id="chk-sum" aria-live="polite"></p>
+        <ul class="chk-list" id="chk-list"></ul>
+        <script type="application/json" id="checks">{"mode": "js", "scaffold": "", "width": 800, "checks": [{"d": "`esperar(100)` se cumple con «listo» tras ~100 ms", "h": "Devuelve `new Promise(...)` con un `setTimeout`.", "t": "var t=Date.now();var r=await esperar(100);var d=Date.now()-t;return r===\"listo\" && d>=90 && d<600"}, {"d": "`obtenerUsuario(1)` devuelve el objeto del usuario", "h": "Usa `await fetch(...)` y `await respuesta.json()`.", "t": "window.fetch=async function(u){var m=/usuarios\\/(\\d+)/.exec(u);var id=m?+m[1]:0;if(id>=90)return{ok:false,status:id===99?500:404,json:async function(){return{}}};return{ok:true,status:200,json:async function(){return{id:id,nombre:\"Usuario \"+id}}}};var u=await obtenerUsuario(1);return u.id===1 && u.nombre===\"Usuario 1\""}, {"d": "`obtenerUsuario` lanza un error si la respuesta no es `ok`", "h": "Comprueba `respuesta.ok` y haz `throw new Error(...)`.", "t": "window.fetch=async function(u){var m=/usuarios\\/(\\d+)/.exec(u);var id=m?+m[1]:0;if(id>=90)return{ok:false,status:id===99?500:404,json:async function(){return{}}};return{ok:true,status:200,json:async function(){return{id:id,nombre:\"Usuario \"+id}}}};try{await obtenerUsuario(99);return false}catch(e){return e instanceof Error && /500/.test(e.message)}"}, {"d": "`nombreUsuario(2)` devuelve el nombre", "h": "Devuelve `usuario.nombre`.", "t": "window.fetch=async function(u){var m=/usuarios\\/(\\d+)/.exec(u);var id=m?+m[1]:0;if(id>=90)return{ok:false,status:id===99?500:404,json:async function(){return{}}};return{ok:true,status:200,json:async function(){return{id:id,nombre:\"Usuario \"+id}}}};return (await nombreUsuario(2))===\"Usuario 2\""}, {"d": "`nombreUsuario` devuelve «desconocido» si hay error", "h": "Atrapa el error con `try/catch`.", "t": "window.fetch=async function(u){var m=/usuarios\\/(\\d+)/.exec(u);var id=m?+m[1]:0;if(id>=90)return{ok:false,status:id===99?500:404,json:async function(){return{}}};return{ok:true,status:200,json:async function(){return{id:id,nombre:\"Usuario \"+id}}}};return (await nombreUsuario(95))===\"desconocido\""}, {"d": "`cargarVarios([1,2,3])` devuelve los tres nombres", "h": "Usa `Promise.all` con `map`.", "t": "window.fetch=async function(u){var m=/usuarios\\/(\\d+)/.exec(u);var id=m?+m[1]:0;if(id>=90)return{ok:false,status:id===99?500:404,json:async function(){return{}}};return{ok:true,status:200,json:async function(){return{id:id,nombre:\"Usuario \"+id}}}};var r=await cargarVarios([1,2,3]);return Array.isArray(r) && r.join()===\"Usuario 1,Usuario 2,Usuario 3\""}, {"d": "`cargarVarios` las pide a la vez (usa `Promise.all`)", "h": "No uses `await` dentro de un bucle: lanza todas y espera con `Promise.all`.", "t": "return /Promise\\.all/.test(window.__src)"}, {"d": "`contarAtras(5, f)` llama a `f` pasados ~50 ms", "h": "Usa `setTimeout(() => alTerminar(), n * 10)`.", "t": "var llamado=0,t=Date.now();contarAtras(5,function(){llamado=Date.now()-t});await new Promise(function(r){setTimeout(r,200)});return llamado>=40 && llamado<180"}, {"d": "`conReintentos` reintenta hasta que la tarea funciona", "h": "Haz un bucle con `try/catch` y `return await tarea()`.", "t": "var n=0;var r=await conReintentos(function(){n++;return n<3?Promise.reject(new Error(\"falla\"+n)):Promise.resolve(\"ok\")},5);return r===\"ok\" && n===3"}, {"d": "`conReintentos` lanza el último error si se agotan los intentos", "h": "Guarda el error y lánzalo al terminar el bucle.", "t": "var n=0;try{await conReintentos(function(){n++;return Promise.reject(new Error(\"falla\"+n))},3);return false}catch(e){return n===3 && e.message===\"falla3\"}"}]}</script>
+      </section>
+      <details>
+        <summary>✅ Ver una solución de ejemplo</summary>
+        <p>Intenta resolverlo antes de mirar. Tu versión puede ser distinta y también correcta.</p>
+        <div class="code">
+  <div class="code-head"><span>app.js</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">function</span> esperar(ms) {
+  <span class="tk-tag">return</span> <span class="tk-tag">new</span> Promise((resolver) =&gt; {
+    setTimeout(() =&gt; resolver(<span class="tk-val">"listo"</span>), ms);
+  });
+}
+
+<span class="tk-tag">async</span> <span class="tk-tag">function</span> obtenerUsuario(id) {
+  <span class="tk-tag">const</span> respuesta = <span class="tk-tag">await</span> fetch(<span class="tk-val">`https://api.ejemplo.com/usuarios/${id}`</span>);
+  <span class="tk-tag">if</span> (!respuesta.ok) {
+    <span class="tk-tag">throw</span> <span class="tk-tag">new</span> Error(<span class="tk-val">"Error "</span> + respuesta.status);
+  }
+  <span class="tk-tag">return</span> <span class="tk-tag">await</span> respuesta.json();
+}
+
+<span class="tk-tag">async</span> <span class="tk-tag">function</span> nombreUsuario(id) {
+  <span class="tk-tag">try</span> {
+    <span class="tk-tag">const</span> usuario = <span class="tk-tag">await</span> obtenerUsuario(id);
+    <span class="tk-tag">return</span> usuario.nombre;
+  } <span class="tk-tag">catch</span> {
+    <span class="tk-tag">return</span> <span class="tk-val">"desconocido"</span>;
+  }
+}
+
+<span class="tk-tag">async</span> <span class="tk-tag">function</span> cargarVarios(ids) {
+  <span class="tk-tag">const</span> usuarios = <span class="tk-tag">await</span> Promise.all(ids.map((id) =&gt; obtenerUsuario(id)));
+  <span class="tk-tag">return</span> usuarios.map((u) =&gt; u.nombre);
+}
+
+<span class="tk-tag">function</span> contarAtras(n, alTerminar) {
+  setTimeout(() =&gt; alTerminar(), n * <span class="tk-attr">10</span>);
+}
+
+<span class="tk-tag">async</span> <span class="tk-tag">function</span> conReintentos(tarea, intentos) {
+  <span class="tk-tag">let</span> ultimoError;
+  <span class="tk-tag">for</span> (<span class="tk-tag">let</span> i = <span class="tk-attr">0</span>; i &lt; intentos; i++) {
+    <span class="tk-tag">try</span> {
+      <span class="tk-tag">return</span> <span class="tk-tag">await</span> tarea();
+    } <span class="tk-tag">catch</span> (error) {
+      ultimoError = error;
+    }
+  }
+  <span class="tk-tag">throw</span> ultimoError;
+}</code></pre>
+</div>
+
+      </details>
+      <div class="callout consejo">
+<p class="callout-title">💡 🏁 Reto extra (opcional)</p>
+<p>Escribe <code>conTiempoLimite(promesa, ms)</code> que rechace con <code>new Error("Tiempo agotado")</code> si la promesa tarda más de <code>ms</code> milisegundos (pista: <code>Promise.race</code>).</p>
+</div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="./"><small>← Anterior</small>Volver a lección 10</a>
+        <a class="next" href="../11-errores-y-almacenamiento/"><small>Siguiente →</small>Errores, depuración y almacenamiento</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de JavaScript · Ejercicio de lección 10 · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&title=%5BError%5D%20Ejercicio%20%C2%B7%20Asincron%C3%ADa%20y%20APIs%20%C2%B7%20Curso%20de%20HTML&pagina=https%3A//cacg-code.github.io/PRACTICAS-HTML/javascript/10-asincronia/ejercicio.html" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

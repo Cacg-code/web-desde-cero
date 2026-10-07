@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Proyecto final: Proyecto: lista de tareas · Curso de HTML</title>
+  <meta name="description" content="Proyecto final de JavaScript: una aplicación de tareas completa con formulario, filtros, contador, delegación de eventos y almacenamiento en localStorage.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/javascript/proyecto-tareas/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Proyecto final: Proyecto: lista de tareas · Curso de HTML">
+  <meta property="og:description" content="Proyecto final de JavaScript: una aplicación de tareas completa con formulario, filtros, contador, delegación de eventos y almacenamiento en localStorage.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/javascript/proyecto-tareas/">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de JavaScript</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap lesson-layout" id="contenido">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#que">Qué vas a construir</a></li><li><a href="#modelo">Plan: los datos y las funciones</a></li><li><a href="#estructura">La estructura del `&lt;li&gt;`</a></li><li><a href="#pasos">Paso a paso</a></li><li><a href="#calidad">Revisión de calidad</a></li><li><a href="#mejoras">Retos para ir más lejos</a></li><li><a href="#siguiente">Qué sigue en tu camino</a></li><li><a href="#errores">Errores frecuentes en el proyecto</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de JavaScript</a> › Proyecto final</div>
+        <h1>Proyecto: lista de tareas</h1>
+        <ul class="meta"><li>⏱ 150 minutos</li><li>📶 Nivel: principiante</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Aplicar todo el curso en una aplicación completa.</li><li>Separar los datos de la interfaz y pintar a partir del estado.</li><li>Persistir datos con <code>localStorage</code> de forma segura.</li><li>Revisar la calidad, seguridad y accesibilidad de una app.</li></ul>
+</div>
+
+<h2 id="que"><span class="n">1.</span>Qué vas a construir</h2>
+<p>Vas a crear una <strong>aplicación de tareas</strong> completa, la «lista de pendientes» que casi todo programador ha hecho alguna vez. Reúne <strong>todo</strong> lo que has aprendido: variables, decisiones, bucles, funciones, arrays, objetos, el DOM, eventos, formularios, JSON y <code>localStorage</code>.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Función de la app</th><th>Lo que aplicas</th><th>Lección</th></tr></thead>
+<tbody><tr><td>Guardar las tareas en una <strong>lista de objetos</strong></td><td>Arrays y objetos</td><td>6 y 7</td></tr><tr><td><strong>Añadir</strong> con un formulario y validar</td><td>Eventos, <code>submit</code>, <code>preventDefault</code></td><td>9</td></tr><tr><td><strong>Marcar</strong> como hechas y <strong>borrar</strong></td><td>Delegación de eventos, <code>closest()</code></td><td>9</td></tr><tr><td><strong>Filtrar</strong>: todas, pendientes, hechas</td><td><code>filter</code>, atributos <code>aria-pressed</code></td><td>6 y 8</td></tr><tr><td><strong>Contador</strong> de pendientes</td><td>Funciones, plantillas de texto</td><td>2 y 5</td></tr><tr><td><strong>Pintar</strong> la lista a partir de los datos</td><td><code>createElement</code>, <code>textContent</code></td><td>8</td></tr><tr><td><strong>Guardar</strong> y recuperar al recargar</td><td><code>localStorage</code>, JSON, <code>try/catch</code></td><td>7 y 11</td></tr></tbody>
+</table></div>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Una idea que lo cambia todo</p>
+<p>La clave de este proyecto es separar <strong>los datos</strong> (el array <code>tareas</code>) de <strong>lo que se ve</strong> (el DOM). No cambies la página a mano: <strong>cambia los datos y vuelve a pintar</strong>. Así la pantalla siempre refleja la realidad y es fácil guardar. Es la idea en la que se basan frameworks como React y Vue.</p>
+</div>
+
+<h2 id="modelo"><span class="n">2.</span>Plan: los datos y las funciones</h2>
+<h3>El modelo de datos</h3>
+<div class="code">
+  <div class="code-head"><span>Cada tarea es un objeto</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>{ id: <span class="tk-attr">1712345678</span>, texto: <span class="tk-val">"Estudiar JavaScript"</span>, hecha: <span class="tk-tag">false</span> }
+
+<span class="tk-com">// Toda la aplicación vive en este array:</span>
+<span class="tk-tag">let</span> tareas = [
+  { id: <span class="tk-attr">1</span>, texto: <span class="tk-val">"Estudiar JavaScript"</span>, hecha: <span class="tk-tag">false</span> },
+  { id: <span class="tk-attr">2</span>, texto: <span class="tk-val">"Hacer ejercicio"</span>,     hecha: <span class="tk-tag">true</span>  },
+];
+
+<span class="tk-com">// Y en una variable para el filtro actual:</span>
+<span class="tk-tag">let</span> filtro = <span class="tk-val">"todas"</span>;     <span class="tk-com">// "todas" | "pendientes" | "hechas"</span></code></pre>
+</div>
+<h3>Las funciones que necesitas</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>Función</th><th>Responsabilidad</th></tr></thead>
+<tbody><tr><td><code>cargar()</code></td><td>Lee el array guardado en <code>localStorage</code> (o <code>[]</code>)</td></tr><tr><td><code>guardar()</code></td><td>Guarda el array actual como JSON</td></tr><tr><td><code>visibles()</code></td><td>Devuelve las tareas que pasan el filtro actual</td></tr><tr><td><code>crearElemento(tarea)</code></td><td>Construye el <code>&lt;li&gt;</code> de una tarea</td></tr><tr><td><code>pintar()</code></td><td>Vuelve a dibujar la lista, el contador y los filtros</td></tr><tr><td><code>cambiar()</code></td><td><code>guardar()</code> y <code>pintar()</code>: la usarás tras cada cambio</td></tr><tr><td><code>iniciar()</code></td><td>Carga los datos y pinta; se llama al arrancar</td></tr></tbody>
+</table></div>
+<p>Además, cuatro <strong>manejadores de eventos</strong>: enviar el formulario, pulsar dentro de la lista (marcar y borrar, con delegación), pulsar un filtro y pulsar «Borrar completadas».</p>
+
+<h2 id="estructura"><span class="n">3.</span>La estructura del <code>&lt;li&gt;</code></h2>
+<p>Para que tu código y las pruebas del ejercicio se entiendan, cada tarea debe pintarse con <strong>esta estructura</strong>:</p>
+<div class="code">
+  <div class="code-head"><span>Cada tarea en el HTML</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">&lt;li</span> <span class="tk-attr">data-id</span>=<span class="tk-val">"1712345678"</span> <span class="tk-attr">class</span>=<span class="tk-val">"hecha"</span><span class="tk-tag">&gt;</span>      <span class="tk-com">&lt;!-- la clase "hecha" solo si está completada --&gt;</span>
+  <span class="tk-tag">&lt;input</span> <span class="tk-attr">type</span>=<span class="tk-val">"checkbox"</span> <span class="tk-attr">class</span>=<span class="tk-val">"check"</span> <span class="tk-attr">checked</span> <span class="tk-attr">aria-label</span>=<span class="tk-val">"Marcar como hecha"</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;span</span> <span class="tk-attr">class</span>=<span class="tk-val">"texto"</span><span class="tk-tag">&gt;</span>Estudiar JavaScript<span class="tk-tag">&lt;/span</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;button</span> <span class="tk-attr">type</span>=<span class="tk-val">"button"</span> <span class="tk-attr">class</span>=<span class="tk-val">"borrar"</span> <span class="tk-attr">aria-label</span>=<span class="tk-val">"Borrar tarea"</span><span class="tk-tag">&gt;</span>✕<span class="tk-tag">&lt;/button</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;/li</span><span class="tk-tag">&gt;</span></code></pre>
+</div>
+<ul><li>El <strong><code>id</code></strong> de la tarea se guarda en <code>data-id</code> para saber cuál es.</li><li>El texto va en un <code>&lt;span class="texto"&gt;</code> y se inserta con <strong><code>textContent</code></strong>.</li><li>La casilla y el botón llevan <strong><code>aria-label</code></strong>, porque no tienen texto visible.</li><li>Los <strong>botones de filtro</strong> ya están en el HTML con <code>data-filtro</code> y <code>aria-pressed</code>.</li></ul>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · <code>textContent</code>, siempre</p>
+<p>El texto de cada tarea lo escribe el usuario. Si lo insertaras con <code>innerHTML</code>, alguien podría escribir <code>&lt;img src=x onerror=alert(1)&gt;</code> y ejecutar código en tu página. Con <code>textContent</code> el texto es <strong>siempre texto</strong>. Las pruebas del ejercicio lo comprueban.</p>
+</div>
+
+<h2 id="pasos"><span class="n">4.</span>Paso a paso</h2>
+<h3>Paso 1 · Datos y almacenamiento</h3>
+<div class="code">
+  <div class="code-head"><span>Cargar y guardar</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">const</span> CLAVE = <span class="tk-val">"tareas"</span>;
+<span class="tk-tag">let</span> tareas = [];
+<span class="tk-tag">let</span> filtro = <span class="tk-val">"todas"</span>;
+
+<span class="tk-tag">function</span> cargar() {
+  <span class="tk-tag">try</span> { <span class="tk-tag">return</span> JSON.parse(localStorage.getItem(CLAVE)) ?? []; }
+  <span class="tk-tag">catch</span> { <span class="tk-tag">return</span> []; }
+}
+<span class="tk-tag">function</span> guardar() {
+  localStorage.setItem(CLAVE, JSON.stringify(tareas));
+}</code></pre>
+</div>
+<h3>Paso 2 · Pintar</h3>
+<p><code>pintar()</code> recorre <code>visibles()</code>, crea un <code>&lt;li&gt;</code> por tarea con <code>crearElemento()</code> y los coloca en la lista con <code>lista.replaceChildren(...)</code>. Después actualiza el contador (<code>"1 pendiente"</code> o <code>"3 pendientes"</code>) y marca con <code>aria-pressed="true"</code> el botón del filtro activo.</p>
+<h3>Paso 3 · Añadir tareas</h3>
+<p>Escucha <code>submit</code> en el formulario: <code>preventDefault()</code>, recorta el texto, si está vacío muestra el error en <code>#error</code>; si no, añade <code>{ id, texto, hecha: false }</code> al array, vacía el campo y llama a <code>cambiar()</code>.</p>
+<h3>Paso 4 · Marcar y borrar con delegación</h3>
+<p>Un <strong>solo</strong> manejador de <code>click</code> en <code>#lista</code>: busca el <code>li</code> con <code>e.target.closest("li")</code>, localiza la tarea por su <code>data-id</code> y, según el elemento pulsado (<code>.check</code> o <code>.borrar</code>), cambia <code>hecha</code> o elimina la tarea. Termina con <code>cambiar()</code>.</p>
+<h3>Paso 5 · Filtros y limpiar</h3>
+<p>Los botones <code>[data-filtro]</code> cambian la variable <code>filtro</code> y llaman a <code>pintar()</code>. «Borrar completadas» deja en el array solo las pendientes (<code>filter</code>) y llama a <code>cambiar()</code>.</p>
+<h3>Paso 6 · Arrancar</h3>
+<p>Escribe <code>iniciar()</code> (carga los datos, restablece el filtro y pinta) y llámala al final del script. Prueba: añade tareas, recarga con <kbd>F5</kbd> en tu propia página y comprueba que siguen ahí.</p>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · Un identificador por tarea</p>
+<p>No uses la <strong>posición</strong> en el array como identificador: cambia al borrar o filtrar. Un <code>id</code> propio (por ejemplo <code>Date.now()</code>) no cambia nunca, y es lo que permite localizar la tarea correcta.</p>
+</div>
+
+<h2 id="calidad"><span class="n">5.</span>Revisión de calidad</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Revisión</th><th>Cómo comprobarlo</th></tr></thead>
+<tbody><tr><td><strong>Funciona</strong></td><td>Añadir, marcar, borrar, filtrar y limpiar, sin errores en la consola</td></tr><tr><td><strong>Persiste</strong></td><td>Recarga la página: las tareas siguen ahí (revisa en <kbd>F12</kbd> → Aplicación → Almacenamiento local)</td></tr><tr><td><strong>Es seguro</strong></td><td>Añade una tarea con <code>&lt;b&gt;hola&lt;/b&gt;</code> o <code>&lt;script&gt;</code>: debe verse como texto, no ejecutarse</td></tr><tr><td><strong>Teclado</strong></td><td>Todo se puede hacer con <kbd>Tab</kbd>, <kbd>Enter</kbd> y <kbd>Espacio</kbd></td></tr><tr><td><strong>Lector de pantalla</strong></td><td>El contador y el error se anuncian (<code>role="status"</code>, <code>role="alert"</code>)</td></tr><tr><td><strong>Casos límite</strong></td><td>Texto vacío, solo espacios, un texto larguísimo, borrar la última tarea</td></tr><tr><td><strong>Código</strong></td><td>Funciones pequeñas, nombres claros, sin repetición, sin variables globales innecesarias</td></tr></tbody>
+</table></div>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Estilo con CSS</p>
+<p>Esta app está pidiendo a gritos el <strong>curso de CSS</strong>: una tarjeta centrada con Grid o Flexbox, la clase <code>.hecha</code> con texto tachado y atenuado, transiciones al marcar, un tema oscuro con variables y que funcione perfecto en el móvil. Haz esa parte y tendrás una pieza lista para tu portafolio.</p>
+</div>
+
+<h2 id="mejoras"><span class="n">6.</span>Retos para ir más lejos</h2>
+<ul><li><strong>Editar</strong> una tarea con doble clic.</li><li>Añadir una <strong>fecha límite</strong> y ordenar por ella.</li><li>Un botón <strong>«Marcar todas»</strong> y otro de <strong>deshacer</strong> el último borrado.</li><li>Guardar el <strong>filtro</strong> elegido en <code>localStorage</code>.</li><li>Dividir el código en <strong>módulos</strong> (<code>almacenamiento.js</code>, <code>vista.js</code>, <code>app.js</code>).</li><li>Cargar tareas de ejemplo desde una <strong>API</strong> con <code>fetch</code>.</li><li>Arrastrar y soltar para reordenar (API *Drag and Drop*).</li><li>Reescribirla con un framework (React, Vue, Svelte) y comparar.</li></ul>
+
+<h2 id="siguiente"><span class="n">7.</span>Qué sigue en tu camino</h2>
+<p>Con este curso ya sabes <strong>programar en JavaScript</strong> y construir interfaces interactivas. El camino hacia el <strong>desarrollo full stack</strong> tiene estas paradas:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Etapa</th><th>Qué aprenderás</th><th>Dónde empezar</th></tr></thead>
+<tbody><tr><td><strong>Herramientas modernas</strong></td><td>npm, Vite, módulos, depuración avanzada</td><td><a href="https://vitejs.dev/" target="_blank" rel="noopener">Vite</a></td></tr><tr><td><strong>Un framework de interfaz</strong></td><td>React, Vue o Svelte: componentes y estado</td><td><a href="https://react.dev/learn" target="_blank" rel="noopener">react.dev</a></td></tr><tr><td><strong>Backend con Node.js</strong></td><td>Servidores, rutas y APIs propias</td><td><a href="https://nodejs.org/es/learn" target="_blank" rel="noopener">nodejs.org</a></td></tr><tr><td><strong>Bases de datos</strong></td><td>SQL (PostgreSQL) o NoSQL (MongoDB)</td><td><a href="https://developer.mozilla.org/es/docs/Learn/Server-side" target="_blank" rel="noopener">MDN: servidores</a></td></tr><tr><td><strong>TypeScript</strong></td><td>JavaScript con tipos para proyectos grandes</td><td><a href="https://www.typescriptlang.org/docs/" target="_blank" rel="noopener">typescriptlang.org</a></td></tr><tr><td><strong>Despliegue</strong></td><td>Publicar apps con backend (Render, Railway, Vercel)</td><td>Documentación de cada plataforma</td></tr></tbody>
+</table></div>
+<p>Y el consejo de siempre: <strong>construye cosas</strong>. Una calculadora, un juego del ahorcado, un clon de tu app favorita. Cada proyecto te enseña algo que ningún curso puede enseñarte.</p>
+
+<h2 id="errores"><span class="n">8.</span>Errores frecuentes en el proyecto</h2>
+<ul><li><strong>Modificar el DOM a mano</strong> en lugar de cambiar los datos y volver a pintar: la pantalla y el array se desincronizan.</li><li><strong>Olvidar <code>guardar()</code></strong> tras un cambio: al recargar se pierde.</li><li><strong>Usar el índice del array como id.</strong></li><li><strong><code>innerHTML</code> con el texto de la tarea.</strong></li><li><strong>Un manejador por tarea</strong> (en lugar de delegación) que se duplica al repintar.</li><li><strong>Comparar ids de tipo texto con ids numéricos</strong> (<code>li.dataset.id</code> es texto: conviértelo con <code>Number()</code>).</li><li><strong>Leer <code>localStorage</code> sin valor por defecto ni <code>try/catch</code>.</strong></li><li><strong>No volver a pintar</strong> después de cambiar el filtro.</li></ul>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li>Separa los <strong>datos</strong> (el array <code>tareas</code>) de lo que se <strong>ve</strong> (el DOM): cambia los datos y vuelve a pintar.</li><li>Cada tarea es un objeto <code>{ id, texto, hecha }</code> con un <code>id</code> propio estable.</li><li>Un conjunto de funciones pequeñas (<code>cargar</code>, <code>guardar</code>, <code>visibles</code>, <code>pintar</code>, <code>cambiar</code>, <code>iniciar</code>) hace el programa fácil de seguir.</li><li>La <strong>delegación</strong> en la lista atiende marcar y borrar, incluso en tareas nuevas.</li><li><code>textContent</code> (nunca <code>innerHTML</code>) inserta texto del usuario de forma segura.</li><li><code>localStorage</code> + JSON persiste los datos; lee con <code>?? []</code> y <code>try/catch</code>.</li><li>La accesibilidad también es JavaScript: <code>aria-label</code>, <code>aria-pressed</code>, <code>role="status"</code> y <code>role="alert"</code>.</li><li>El siguiente paso: un framework, Node.js y bases de datos, rumbo a full stack.</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">9.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td>Estado</td><td>Los datos que describen cómo está la aplicación en un momento.</td></tr><tr><td>Renderizar / pintar</td><td>Dibujar la interfaz a partir del estado.</td></tr><tr><td>Delegación de eventos</td><td>Un manejador en el contenedor que atiende a sus hijos.</td></tr><tr><td>Persistencia</td><td>Conservar los datos aunque se cierre o recargue la página.</td></tr><tr><td>Identificador (id)</td><td>Valor único que distingue a cada elemento.</td></tr><tr><td>Caso límite</td><td>Situación extrema o poco habitual que hay que probar.</td></tr><tr><td>XSS</td><td>Ataque que inyecta código en una página mediante datos de usuario.</td></tr><tr><td>Full stack</td><td>Desarrollo tanto del lado del navegador como del servidor.</td></tr></tbody>
+</table></div>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>¿Cuál es la idea central de este proyecto?</p><ul class="opts"><li><button type="button" class="opt">Modificar el DOM a mano en cada cambio</button></li><li><button type="button" class="opt" data-ok>Cambiar los datos y volver a pintar la interfaz a partir de ellos</button></li><li><button type="button" class="opt">Guardar todo en el HTML</button></li><li><button type="button" class="opt">Usar solo <code>innerHTML</code></button></li></ul><p class="explain" hidden>Separar datos y vista mantiene todo sincronizado y facilita guardar.</p></div>
+<div class="quiz-q"><p>¿Por qué no usar la posición del array como <code>id</code> de una tarea?</p><ul class="opts"><li><button type="button" class="opt">Es más lenta</button></li><li><button type="button" class="opt" data-ok>Cambia al borrar o filtrar elementos</button></li><li><button type="button" class="opt">No se puede guardar</button></li><li><button type="button" class="opt">Los arrays no tienen posiciones</button></li></ul><p class="explain" hidden>Un <code>id</code> propio no cambia cuando la lista se reordena o se filtra.</p></div>
+<div class="quiz-q"><p>Un usuario escribe <code>&lt;b&gt;hola&lt;/b&gt;</code> como tarea. ¿Cómo lo muestras de forma segura?</p><ul class="opts"><li><button type="button" class="opt">Con <code>innerHTML</code></button></li><li><button type="button" class="opt" data-ok>Con <code>textContent</code></button></li><li><button type="button" class="opt">Con <code>document.write</code></button></li><li><button type="button" class="opt">No se puede</button></li></ul><p class="explain" hidden><code>textContent</code> lo muestra como texto literal.</p></div>
+<div class="quiz-q"><p>Recargas la página y las tareas desaparecen. ¿Qué falta casi seguro?</p><ul class="opts"><li><button type="button" class="opt">Un <code>defer</code></button></li><li><button type="button" class="opt" data-ok>Llamar a <code>guardar()</code> tras cada cambio y <code>cargar()</code> al empezar</button></li><li><button type="button" class="opt">Más CSS</button></li><li><button type="button" class="opt">Usar <code>var</code></button></li></ul><p class="explain" hidden>Sin guardar en <code>localStorage</code>, los datos solo viven en memoria.</p></div>
+<div class="quiz-q"><p>¿Para qué sirve la delegación de eventos en la lista de tareas?</p><ul class="opts"><li><button type="button" class="opt">Para evitar el uso de <code>localStorage</code></button></li><li><button type="button" class="opt" data-ok>Para atender con un solo manejador a todas las tareas, incluso las que se añadan después</button></li><li><button type="button" class="opt">Para hacer la lista más bonita</button></li><li><button type="button" class="opt">Para ordenar</button></li></ul><p class="explain" hidden>Un manejador en la lista y <code>closest("li")</code> basta.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="js-P">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../11-errores-y-almacenamiento/ejercicio.html"><small>← Anterior</small>Ejercicio: Errores, depuración y almacenamiento</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de JavaScript · Proyecto final · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&title=%5BError%5D%20Proyecto%20final%3A%20Proyecto%3A%20lista%20de%20tareas%20%C2%B7%20Curso%20de%20HTML&pagina=https%3A//cacg-code.github.io/PRACTICAS-HTML/javascript/proyecto-tareas/" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

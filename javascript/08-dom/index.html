@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lección 8: El DOM: leer y cambiar la página · Curso de HTML</title>
+  <meta name="description" content="El DOM con JavaScript: seleccionar elementos, cambiar texto, clases y atributos, crear y eliminar nodos, y por qué usar textContent en lugar de innerHTML.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/javascript/08-dom/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Lección 8: El DOM: leer y cambiar la página · Curso de HTML">
+  <meta property="og:description" content="El DOM con JavaScript: seleccionar elementos, cambiar texto, clases y atributos, crear y eliminar nodos, y por qué usar textContent en lugar de innerHTML.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/javascript/08-dom/">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de JavaScript</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <div class="wrap lesson-layout">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#dom">Qué es el DOM</a></li><li><a href="#seleccionar">Seleccionar elementos</a></li><li><a href="#contenido">Leer y cambiar el contenido</a></li><li><a href="#estilos">Clases, estilos y atributos</a></li><li><a href="#crear">Crear, añadir y eliminar elementos</a></li><li><a href="#plantillas">Plantillas con HTML: cuándo sí usar innerHTML</a></li><li><a href="#listas-nodos">NodeList: una lista que no es un array</a></li><li><a href="#errores">Errores frecuentes</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de JavaScript</a> › Lección 8</div>
+        <h1>El DOM: leer y cambiar la página</h1>
+        <ul class="meta"><li>⏱ 45 minutos</li><li>📶 Nivel: principiante</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Seleccionar elementos con <code>querySelector</code> y <code>querySelectorAll</code>.</li><li>Cambiar texto, clases, estilos y atributos de forma segura.</li><li>Crear, añadir y eliminar elementos desde JavaScript.</li><li>Evitar los errores más comunes con el DOM y el riesgo de <code>innerHTML</code>.</li></ul>
+</div>
+
+<h2 id="dom"><span class="n">1.</span>Qué es el DOM</h2>
+<p>Cuando el navegador lee tu HTML, construye un <strong>árbol de objetos</strong> que representa la página: el <strong>DOM</strong> (*Document Object Model*). Cada etiqueta es un <strong>nodo</strong> de ese árbol, y JavaScript puede <strong>leerlo y modificarlo</strong>; cada cambio se refleja al instante en pantalla.</p>
+<div class="code">
+  <div class="code-head"><span>El HTML y su árbol</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>&lt;body&gt;
+  &lt;h1 id="titulo"&gt;Hola&lt;/h1&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Uno&lt;/li&gt;
+    &lt;li&gt;Dos&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/body&gt;
+
+document
+└── body
+    ├── h1#titulo  →  "Hola"
+    └── ul
+        ├── li  →  "Uno"
+        └── li  →  "Dos"</code></pre>
+</div>
+<p>El objeto <strong><code>document</code></strong> es la puerta de entrada al DOM. Con él buscas elementos, y cada elemento es un objeto con propiedades (<code>textContent</code>, <code>className</code>…) y métodos (<code>append()</code>, <code>remove()</code>…).</p>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · Los editores del curso</p>
+<p>En esta lección cada editor tiene una <strong>Página (resultado)</strong> a la derecha. Tu script modifica <strong>esa</strong> página. Pulsa <strong>Ejecutar</strong> para volver a empezar con el HTML original.</p>
+</div>
+
+<h2 id="seleccionar"><span class="n">2.</span>Seleccionar elementos</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Método</th><th>Devuelve</th><th>Ejemplo</th></tr></thead>
+<tbody><tr><td><code>document.getElementById("id")</code></td><td>Un elemento (o <code>null</code>)</td><td><code>getElementById("titulo")</code></td></tr><tr><td><code>document.querySelector("css")</code></td><td>El <strong>primer</strong> elemento que coincide</td><td><code>querySelector(".caja")</code>, <code>querySelector("ul li")</code></td></tr><tr><td><code>document.querySelectorAll("css")</code></td><td>Una <strong>lista</strong> de todos los que coinciden</td><td><code>querySelectorAll("li")</code></td></tr><tr><td><code>elemento.closest("css")</code></td><td>El ancestro más cercano que coincide</td><td><code>boton.closest(".tarjeta")</code></td></tr><tr><td><code>elemento.children</code></td><td>Los hijos directos</td><td></td></tr></tbody>
+</table></div>
+<p>Los selectores son <strong>los mismos del curso de CSS</strong>: <code>#id</code>, <code>.clase</code>, <code>etiqueta</code>, <code>ul &gt; li</code>, <code>[type="email"]</code>… Si ya dominas CSS, ya sabes seleccionar.</p>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ Buscar elementos</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:240px">&lt;h1 id="titulo"&gt;Título&lt;/h1&gt;
+&lt;ul id="lista"&gt;&lt;li&gt;Uno&lt;/li&gt;&lt;li class="especial"&gt;Dos&lt;/li&gt;&lt;li&gt;Tres&lt;/li&gt;&lt;/ul&gt;
+
+&lt;script&gt;
+  const titulo = document.getElementById("titulo");
+  const primero = document.querySelector("#lista li");
+  const especial = document.querySelector(".especial");
+  const todos = document.querySelectorAll("#lista li");
+
+  console.log(titulo.textContent);
+  console.log(primero.textContent, "|", especial.textContent);
+  console.log("Cantidad de li:", todos.length);
+
+  for (const li of todos) {
+    console.log("→", li.textContent);
+  }
+
+  console.log(document.querySelector(".no-existe"));    // null
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · <code>null</code> si no existe</p>
+<p>Si el selector no encuentra nada, <code>getElementById</code> y <code>querySelector</code> devuelven <strong><code>null</code></strong>, y usar <code>null.textContent</code> da el error *«Cannot read properties of null»*. Casi siempre es una errata en el selector o un script que se ejecuta <strong>antes</strong> de que el elemento exista (usa <code>defer</code> o pon el script al final).</p>
+</div>
+
+<h2 id="contenido"><span class="n">3.</span>Leer y cambiar el contenido</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Propiedad</th><th>Qué hace</th><th>Cuándo</th></tr></thead>
+<tbody><tr><td><code>textContent</code></td><td>Lee o cambia el <strong>texto</strong> (sin interpretar HTML)</td><td><strong>Casi siempre.</strong> Es seguro</td></tr><tr><td><code>innerHTML</code></td><td>Lee o cambia el <strong>HTML interno</strong></td><td>Solo con HTML <strong>propio y de confianza</strong></td></tr><tr><td><code>value</code></td><td>El valor de un <code>input</code>, <code>select</code> o <code>textarea</code></td><td>Formularios</td></tr><tr><td><code>outerHTML</code></td><td>El HTML del elemento <strong>incluido él mismo</strong></td><td>Poco habitual</td></tr></tbody>
+</table></div>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ textContent frente a innerHTML</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:240px">&lt;p id="a"&gt;&lt;/p&gt;
+&lt;p id="b"&gt;&lt;/p&gt;
+&lt;script&gt;
+  const texto = "Hola &lt;strong&gt;mundo&lt;/strong&gt;";
+
+  document.getElementById("a").textContent = texto;   // lo muestra tal cual, como texto
+  document.getElementById("b").innerHTML = texto;     // lo interpreta como HTML
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · Seguridad: nunca <code>innerHTML</code> con datos de usuarios</p>
+<p>Si insertas con <code>innerHTML</code> un texto que escribió alguien (un comentario, un nombre), esa persona puede colar código malicioso (<strong>ataque XSS</strong>). Con <strong><code>textContent</code></strong> el texto se muestra siempre como texto, sin riesgo. <strong>Regla:</strong> usa <code>textContent</code> por defecto, y <code>innerHTML</code> solo con HTML que tú escribiste.</p>
+</div>
+
+<h2 id="estilos"><span class="n">4.</span>Clases, estilos y atributos</h2>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ Modificar el aspecto</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:240px">&lt;style&gt;
+  .destacado { background: #fde68a; padding: 8px; border-radius: 8px; }
+  .oculto { display: none; }
+&lt;/style&gt;
+&lt;p id="parrafo"&gt;Un párrafo de ejemplo&lt;/p&gt;
+&lt;a id="enlace" href="#"&gt;Un enlace&lt;/a&gt;
+
+&lt;script&gt;
+  const p = document.getElementById("parrafo");
+  const enlace = document.getElementById("enlace");
+
+  // CLASES (lo recomendado: el aspecto vive en el CSS)
+  p.classList.add("destacado");
+  console.log(p.classList.contains("destacado"));   // true
+  // p.classList.remove("destacado");
+  // p.classList.toggle("oculto");                  // la pone o la quita
+
+  // ESTILOS EN LÍNEA (para valores calculados)
+  p.style.color = "#4f46e5";
+  p.style.fontSize = "1.4rem";                      // camelCase
+
+  // ATRIBUTOS
+  enlace.setAttribute("href", "https://developer.mozilla.org");
+  enlace.setAttribute("target", "_blank");
+  console.log(enlace.getAttribute("href"));
+  console.log(enlace.href);                         // también como propiedad
+
+  // DATA-ATTRIBUTES
+  p.dataset.id = "42";                              // data-id="42"
+  console.log(p.dataset.id);
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<div class="table-wrap"><table>
+<thead><tr><th>Quiero…</th><th>Uso</th></tr></thead>
+<tbody><tr><td>Añadir / quitar / alternar una clase</td><td><code>el.classList.add()</code>, <code>.remove()</code>, <code>.toggle()</code></td></tr><tr><td>Saber si tiene una clase</td><td><code>el.classList.contains()</code></td></tr><tr><td>Un estilo concreto</td><td><code>el.style.color = "red"</code></td></tr><tr><td>Leer / cambiar un atributo</td><td><code>getAttribute()</code> / <code>setAttribute()</code> / <code>removeAttribute()</code></td></tr><tr><td>Guardar datos en el HTML</td><td><code>el.dataset.nombre</code> (atributos <code>data-nombre</code>)</td></tr></tbody>
+</table></div>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Cambia clases, no estilos</p>
+<p>Mantén el <strong>aspecto en el CSS</strong> y desde JavaScript solo <strong>añade o quita clases</strong>: <code>tarjeta.classList.toggle("activa")</code>. Así separas las responsabilidades y tu CSS sigue mandando.</p>
+</div>
+
+<h2 id="crear"><span class="n">5.</span>Crear, añadir y eliminar elementos</h2>
+<ol class="steps"><li><strong>Crea</strong> el elemento: <code>document.createElement("li")</code>.</li><li><strong>Dale contenido</strong> y atributos: <code>li.textContent = "…"</code>.</li><li><strong>Añádelo</strong> a la página: <code>lista.append(li)</code>.</li></ol>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ Construir una lista</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:240px">&lt;h3&gt;Tareas&lt;/h3&gt;
+&lt;ul id="lista"&gt;&lt;/ul&gt;
+
+&lt;script&gt;
+  const lista = document.getElementById("lista");
+  const tareas = ["Estudiar el DOM", "Practicar", "Descansar"];
+
+  for (const texto of tareas) {
+    const li = document.createElement("li");
+    li.textContent = texto;
+    lista.append(li);                   // al final
+  }
+
+  const urgente = document.createElement("li");
+  urgente.textContent = "¡Urgente!";
+  urgente.style.fontWeight = "bold";
+  lista.prepend(urgente);               // al principio
+
+  lista.children[2].remove();           // eliminar el tercero
+  console.log("Total:", lista.children.length);
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<figure class="gif-demo">
+  <button type="button" class="gif-btn" data-gif="../../assets/gif/js-dom.gif" aria-label="Reproducir animación: Se ejecuta un script que construye una lista de tareas y los elementos aparecen en la página">
+    <img src="../../assets/gif/js-dom.png" alt="Se ejecuta un script que construye una lista de tareas y los elementos aparecen en la página" width="640" height="560" loading="lazy">
+    <span class="gif-play">▶ Ver animación</span>
+  </button>
+  <figcaption>Un script que construye una lista: cada vuelta del bucle crea un <code>&lt;li&gt;</code> y lo añade a la página.</figcaption>
+</figure>
+<div class="table-wrap"><table>
+<thead><tr><th>Método</th><th>Qué hace</th></tr></thead>
+<tbody><tr><td><code>padre.append(hijo)</code> / <code>prepend(hijo)</code></td><td>Añade al <strong>final</strong> / al <strong>principio</strong></td></tr><tr><td><code>elemento.before(x)</code> / <code>after(x)</code></td><td>Inserta <strong>antes</strong> / <strong>después</strong> del elemento</td></tr><tr><td><code>elemento.remove()</code></td><td>Elimina el elemento</td></tr><tr><td><code>elemento.replaceWith(x)</code></td><td>Lo sustituye por otro</td></tr><tr><td><code>elemento.cloneNode(true)</code></td><td>Crea una copia (con sus hijos)</td></tr><tr><td><code>padre.replaceChildren()</code></td><td><strong>Vacía</strong> el contenedor (o lo reemplaza con lo que pases)</td></tr></tbody>
+</table></div>
+
+<h2 id="plantillas"><span class="n">6.</span>Plantillas con HTML: cuándo sí usar innerHTML</h2>
+<p>Para estructuras con <strong>mucho HTML</strong>, crear cada elemento a mano es tedioso. Si los <strong>datos son tuyos</strong> (no de usuarios), puedes generar HTML con plantillas de texto:</p>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ Tarjetas desde datos</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:240px">&lt;style&gt;
+  .t { border: 1px solid #c7d2fe; border-radius: 10px; padding: 10px; margin: 6px 0; }
+  .t h4 { margin: 0 0 4px; } .precio { color: #4f46e5; font-weight: 700; }
+&lt;/style&gt;
+&lt;div id="tienda"&gt;&lt;/div&gt;
+&lt;script&gt;
+  const productos = [
+    { nombre: "Cuaderno", precio: 25 },
+    { nombre: "Mochila", precio: 450 },
+  ];
+
+  const html = productos.map(p =&gt; `
+    &lt;article class="t"&gt;
+      &lt;h4&gt;${p.nombre}&lt;/h4&gt;
+      &lt;span class="precio"&gt;$${p.precio.toFixed(2)}&lt;/span&gt;
+    &lt;/article&gt;`).join("");
+
+  document.getElementById("tienda").innerHTML = html;
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · Datos propios</p>
+<p>Esto es seguro <strong>solo</strong> porque los datos los escribimos nosotros. Si <code>nombre</code> viniera de un formulario o de internet, tendrías que <strong>escapar</strong> el texto o crear los elementos con <code>createElement</code> y <code>textContent</code>.</p>
+</div>
+
+<h2 id="listas-nodos"><span class="n">7.</span>NodeList: una lista que no es un array</h2>
+<p><code>querySelectorAll</code> devuelve una <strong>NodeList</strong>: se parece a un array (tiene <code>length</code>, se puede recorrer con <code>for…of</code> y <code>forEach</code>) pero <strong>no tiene</strong> <code>map</code>, <code>filter</code> ni <code>reduce</code>. Para usarlos, conviértela con <code>Array.from()</code> o el spread:</p>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ De NodeList a array</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:240px">&lt;ul&gt;&lt;li&gt;3&lt;/li&gt;&lt;li&gt;1&lt;/li&gt;&lt;li&gt;2&lt;/li&gt;&lt;/ul&gt;
+&lt;script&gt;
+  const items = document.querySelectorAll("li");
+
+  items.forEach(li =&gt; console.log("forEach:", li.textContent));   // sí existe
+
+  // console.log(items.map(...));       // ← TypeError: no existe en NodeList
+  const numeros = Array.from(items).map(li =&gt; Number(li.textContent));
+  console.log(numeros);
+  console.log([...items].map(li =&gt; li.textContent).sort());
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+
+<h2 id="errores"><span class="n">8.</span>Errores frecuentes</h2>
+<ul><li><strong>Script que se ejecuta antes de que exista el elemento:</strong> <code>null</code>. Usa <code>defer</code> o ponlo al final del <code>&lt;body&gt;</code>.</li><li><strong>Errata en el selector:</strong> <code>#titulo</code> frente a <code>.titulo</code> frente a <code>titulo</code>.</li><li><strong>Usar <code>innerHTML</code> con datos de usuario:</strong> riesgo de XSS. Usa <code>textContent</code>.</li><li><strong>Esperar un array de <code>querySelectorAll</code>:</strong> es una NodeList (sin <code>map</code>).</li><li><strong>Cambiar estilos con <code>style</code> en vez de clases:</strong> mezclas aspecto y lógica.</li><li><strong>Escribir <code>elemento.style.font-size</code>:</strong> en JavaScript se escribe en camelCase: <code>fontSize</code>.</li><li><strong>Modificar el DOM dentro de un bucle muy grande:</strong> es lento; construye todo y añádelo una vez.</li><li><strong>Olvidar que <code>createElement</code> no añade nada:</strong> hay que <code>append</code> el elemento.</li></ul>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li>El <strong>DOM</strong> es el árbol de objetos que representa la página; <code>document</code> es su punto de entrada.</li><li>Selecciona con <code>getElementById</code>, <code>querySelector</code> (uno) y <code>querySelectorAll</code> (todos), con los mismos selectores de CSS; devuelven <code>null</code> si no encuentran.</li><li><code>textContent</code> cambia el texto de forma segura; <code>innerHTML</code> interpreta HTML y solo se usa con datos propios; <code>value</code> lee los campos.</li><li><code>classList.add/remove/toggle/contains</code> cambia el aspecto sin mezclar estilos; <code>style</code>, <code>setAttribute</code> y <code>dataset</code> cubren los demás casos.</li><li>Crea con <code>createElement</code>, añade con <code>append</code>/<code>prepend</code>/<code>before</code>/<code>after</code> y elimina con <code>remove()</code>.</li><li><code>querySelectorAll</code> devuelve una NodeList: usa <code>Array.from()</code> o <code>[...]</code> para tener <code>map</code> y <code>filter</code>.</li><li>Ejecuta tu script cuando la página esté lista (<code>defer</code>).</li><li><strong>Nunca</strong> insertes datos de usuarios con <code>innerHTML</code>.</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">9.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td>DOM</td><td>Representación en forma de árbol de objetos de la página.</td></tr><tr><td>Nodo</td><td>Cada elemento, texto o comentario del árbol.</td></tr><tr><td>Selector</td><td>Texto (como en CSS) que identifica uno o varios elementos.</td></tr><tr><td><code>textContent</code></td><td>Propiedad que lee o cambia el texto de un elemento.</td></tr><tr><td><code>innerHTML</code></td><td>Propiedad que lee o cambia el HTML interno; peligrosa con datos de usuarios.</td></tr><tr><td><code>classList</code></td><td>Objeto para añadir, quitar o alternar clases.</td></tr><tr><td>NodeList</td><td>Lista de nodos que devuelve <code>querySelectorAll</code>.</td></tr><tr><td>XSS</td><td>Ataque que inyecta código malicioso en una página.</td></tr></tbody>
+</table></div>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>¿Qué devuelve <code>document.querySelector(".no-existe")</code>?</p><ul class="opts"><li><button type="button" class="opt"><code>undefined</code></button></li><li><button type="button" class="opt" data-ok><code>null</code></button></li><li><button type="button" class="opt">Un array vacío</button></li><li><button type="button" class="opt">Lanza un error</button></li></ul><p class="explain" hidden>Si no hay coincidencias devuelve <code>null</code>.</p></div>
+<div class="quiz-q"><p>Quieres mostrar un comentario que escribió un usuario. ¿Qué usas?</p><ul class="opts"><li><button type="button" class="opt"><code>innerHTML</code></button></li><li><button type="button" class="opt" data-ok><code>textContent</code></button></li><li><button type="button" class="opt"><code>outerHTML</code></button></li><li><button type="button" class="opt"><code>document.write</code></button></li></ul><p class="explain" hidden><code>textContent</code> muestra siempre texto plano y evita ataques XSS.</p></div>
+<div class="quiz-q"><p>¿Cuál es la forma recomendada de resaltar un elemento?</p><ul class="opts"><li><button type="button" class="opt"><code>el.style.background = "yellow"</code></button></li><li><button type="button" class="opt" data-ok><code>el.classList.add("destacado")</code></button></li><li><button type="button" class="opt"><code>el.setAttribute("style", "…")</code></button></li><li><button type="button" class="opt"><code>el.innerHTML = "…"</code></button></li></ul><p class="explain" hidden>Manteniendo el aspecto en el CSS y alternando clases desde JavaScript.</p></div>
+<div class="quiz-q"><p><code>document.querySelectorAll("li").map(...)</code> da un error porque…</p><ul class="opts"><li><button type="button" class="opt"><code>li</code> no existe</button></li><li><button type="button" class="opt" data-ok>Una NodeList no tiene el método <code>map</code></button></li><li><button type="button" class="opt">Falta un <code>return</code></button></li><li><button type="button" class="opt">Hay que usar <code>getElementById</code></button></li></ul><p class="explain" hidden>Convierte antes con <code>Array.from()</code> o <code>[...lista]</code>.</p></div>
+<div class="quiz-q"><p>¿Qué hace <code>document.createElement("li")</code> por sí solo?</p><ul class="opts"><li><button type="button" class="opt">Añade un <code>li</code> a la página</button></li><li><button type="button" class="opt" data-ok>Crea un <code>li</code> en memoria, que aún no está en la página</button></li><li><button type="button" class="opt">Borra todos los <code>li</code></button></li><li><button type="button" class="opt">Da un error</button></li></ul><p class="explain" hidden>Hay que añadirlo después con <code>append</code> o similar.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="js-08">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../07-objetos/ejercicio.html"><small>← Anterior</small>Ejercicio: Objetos y JSON</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </div>
+
+  <footer class="site-footer">Curso de JavaScript · Lección 8 · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&title=%5BError%5D%20Lecci%C3%B3n%208%3A%20El%20DOM%3A%20leer%20y%20cambiar%20la%20p%C3%A1gina%20%C2%B7%20Curso%20de%20HTML&pagina=https%3A//cacg-code.github.io/PRACTICAS-HTML/javascript/08-dom/" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

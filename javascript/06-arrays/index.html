@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lección 6: Arrays · Curso de HTML</title>
+  <meta name="description" content="Arrays en JavaScript: crear y modificar listas, recorrerlas, map, filter, reduce, find, some, every, sort y desestructuración.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/javascript/06-arrays/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Lección 6: Arrays · Curso de HTML">
+  <meta property="og:description" content="Arrays en JavaScript: crear y modificar listas, recorrerlas, map, filter, reduce, find, some, every, sort y desestructuración.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/javascript/06-arrays/">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de JavaScript</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap lesson-layout" id="contenido">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#que-es">Qué es un array</a></li><li><a href="#modificar">Añadir, quitar y buscar</a></li><li><a href="#recorrer">Recorrer un array</a></li><li><a href="#transformar">Los métodos que más usarás: map, filter, reduce</a></li><li><a href="#buscar">Buscar y comprobar</a></li><li><a href="#ordenar">Ordenar con sort</a></li><li><a href="#desestructurar">Desestructurar y copiar</a></li><li><a href="#errores">Errores frecuentes</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de JavaScript</a> › Lección 6</div>
+        <h1>Arrays</h1>
+        <ul class="meta"><li>⏱ 45 minutos</li><li>📶 Nivel: principiante</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Crear, leer y modificar arrays.</li><li>Recorrer listas con <code>for…of</code> y <code>forEach</code>.</li><li>Transformar y resumir datos con <code>map</code>, <code>filter</code> y <code>reduce</code>.</li><li>Buscar y ordenar sin cometer los errores habituales.</li></ul>
+</div>
+
+<h2 id="que-es"><span class="n">1.</span>Qué es un array</h2>
+<p>Un <strong>array</strong> es una <strong>lista ordenada de valores</strong> guardados en una sola variable: los nombres de tus contactos, los precios de una tienda, las tareas de un día. Cada valor ocupa una <strong>posición</strong> (índice) que <strong>empieza en 0</strong>.</p>
+<div class="code">
+  <div class="code-head"><span>Crear y leer un array</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">const</span> colores = [<span class="tk-val">"rojo"</span>, <span class="tk-val">"verde"</span>, <span class="tk-val">"azul"</span>];
+<span class="tk-com">//                  [0]     [1]      [2]</span>
+
+console.log(colores[<span class="tk-attr">0</span>]);         <span class="tk-com">// "rojo"</span>
+console.log(colores[<span class="tk-attr">2</span>]);         <span class="tk-com">// "azul"</span>
+console.log(colores[<span class="tk-attr">5</span>]);         <span class="tk-com">// undefined (no existe)</span>
+console.log(colores.length);     <span class="tk-com">// 3</span>
+console.log(colores[colores.length - <span class="tk-attr">1</span>]);   <span class="tk-com">// el último: "azul"</span>
+console.log(colores.at(-<span class="tk-attr">1</span>));     <span class="tk-com">// también el último</span></code></pre>
+</div>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ Tu primer array</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:240px">&lt;script&gt;
+  const frutas = ["manzana", "pera", "mango"];
+  console.log(frutas);
+  console.log("Primera:", frutas[0]);
+  console.log("Cantidad:", frutas.length);
+
+  frutas[1] = "kiwi";            // cambiar un elemento
+  console.log(frutas);
+
+  const mezcla = [42, "texto", true, null, [1, 2]];   // pueden mezclar tipos
+  console.log(mezcla.length, typeof mezcla);
+  console.log(Array.isArray(mezcla));
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · Se empieza a contar desde 0</p>
+<p>El <strong>primer</strong> elemento es el <code>[0]</code> y el último es <code>[length - 1]</code>. Es la fuente de errores «por uno» más habitual. Y aunque el array se declare con <code>const</code>, <strong>sus elementos sí se pueden cambiar</strong>: <code>const</code> impide reasignar la variable, no modificar el contenido.</p>
+</div>
+
+<h2 id="modificar"><span class="n">2.</span>Añadir, quitar y buscar</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Método</th><th>Qué hace</th><th>Devuelve</th><th>Modifica</th></tr></thead>
+<tbody><tr><td><code>push(x)</code></td><td>Añade al <strong>final</strong></td><td>la nueva longitud</td><td>Sí</td></tr><tr><td><code>pop()</code></td><td>Quita del <strong>final</strong></td><td>el elemento quitado</td><td>Sí</td></tr><tr><td><code>unshift(x)</code></td><td>Añade al <strong>principio</strong></td><td>la nueva longitud</td><td>Sí</td></tr><tr><td><code>shift()</code></td><td>Quita del <strong>principio</strong></td><td>el elemento quitado</td><td>Sí</td></tr><tr><td><code>splice(i, n, …)</code></td><td>Quita <code>n</code> elementos desde <code>i</code> (y puede insertar)</td><td>los quitados</td><td>Sí</td></tr><tr><td><code>slice(a, b)</code></td><td>Copia un trozo</td><td>un array nuevo</td><td>No</td></tr><tr><td><code>concat(otro)</code> / <code>[...a, ...b]</code></td><td>Une arrays</td><td>un array nuevo</td><td>No</td></tr><tr><td><code>indexOf(x)</code> / <code>includes(x)</code></td><td>Posición / ¿existe?</td><td><code>número</code> / <code>booleano</code></td><td>No</td></tr><tr><td><code>join(sep)</code></td><td>Convierte en texto</td><td><code>string</code></td><td>No</td></tr><tr><td><code>reverse()</code> / <code>sort()</code></td><td>Invierte / ordena</td><td>el mismo array</td><td><strong>Sí</strong></td></tr></tbody>
+</table></div>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ Un carrito de compras</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:240px">&lt;script&gt;
+  const carrito = ["pan", "leche"];
+
+  carrito.push("huevos");            // ["pan","leche","huevos"]
+  carrito.unshift("fruta");          // ["fruta","pan","leche","huevos"]
+  console.log(carrito);
+
+  const quitado = carrito.pop();     // quita "huevos"
+  console.log("Quité:", quitado, "→", carrito);
+
+  console.log(carrito.indexOf("leche"), carrito.includes("pan"), carrito.includes("sal"));
+  console.log(carrito.join(", "));
+  console.log(carrito.slice(1, 3));   // copia: la original no cambia
+  console.log([...carrito, "sal"]);   // copia con un elemento más
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · Modificar o copiar</p>
+<p>Algunos métodos <strong>modifican el array original</strong> (<code>push</code>, <code>pop</code>, <code>splice</code>, <code>sort</code>, <code>reverse</code>) y otros <strong>devuelven uno nuevo</strong> (<code>slice</code>, <code>map</code>, <code>filter</code>, <code>concat</code>). Saber cuál es cuál evita sorpresas. Para trabajar con seguridad, prefiere copiar: <code>[...arr]</code> o <code>arr.slice()</code>.</p>
+</div>
+
+<h2 id="recorrer"><span class="n">3.</span>Recorrer un array</h2>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ Tres formas de recorrer</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:240px">&lt;script&gt;
+  const notas = [8, 6, 9, 7];
+
+  // 1. for clásico (cuando necesitas el índice)
+  for (let i = 0; i &lt; notas.length; i++) {
+    console.log("Posición", i, "→", notas[i]);
+  }
+
+  // 2. for…of (cuando solo necesitas el valor)
+  for (const nota of notas) {
+    console.log("Nota", nota);
+  }
+
+  // 3. forEach (con una función)
+  notas.forEach((nota, indice) =&gt; {
+    console.log(indice + 1 + ". " + nota);
+  });
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+
+<h2 id="transformar"><span class="n">4.</span>Los métodos que más usarás: map, filter, reduce</h2>
+<p>En lugar de escribir un bucle cada vez, los arrays traen métodos que reciben <strong>una función</strong> (un callback) y hacen el trabajo repetitivo. Los tres más importantes:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Método</th><th>Para qué</th><th>Devuelve</th><th>Ejemplo</th></tr></thead>
+<tbody><tr><td><code>map(fn)</code></td><td><strong>Transformar</strong> cada elemento</td><td>Un array del mismo tamaño</td><td><code>[1,2,3].map(n =&gt; n * 2)</code> → <code>[2,4,6]</code></td></tr><tr><td><code>filter(fn)</code></td><td><strong>Quedarse</strong> con los que cumplan</td><td>Un array igual o más corto</td><td><code>[1,2,3,4].filter(n =&gt; n % 2 === 0)</code> → <code>[2,4]</code></td></tr><tr><td><code>reduce(fn, inicial)</code></td><td><strong>Resumir</strong> todo en un valor</td><td>Un solo valor</td><td><code>[1,2,3].reduce((total, n) =&gt; total + n, 0)</code> → <code>6</code></td></tr></tbody>
+</table></div>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ map, filter y reduce</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:240px">&lt;script&gt;
+  const precios = [120, 45, 300, 80, 15];
+
+  const conIva    = precios.map(p =&gt; p * 1.16);
+  const baratos   = precios.filter(p =&gt; p &lt; 100);
+  const total     = precios.reduce((suma, p) =&gt; suma + p, 0);
+
+  console.log("Con IVA:", conIva);
+  console.log("Baratos:", baratos);
+  console.log("Total:", total);
+
+  // Se pueden encadenar
+  const totalBaratos = precios.filter(p =&gt; p &lt; 100).reduce((s, p) =&gt; s + p, 0);
+  console.log("Total de los baratos:", totalBaratos);
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Cómo leer <code>reduce</code></p>
+<p><code>reduce((acumulado, elemento) =&gt; nuevoAcumulado, valorInicial)</code>. En cada vuelta recibes lo acumulado hasta ahora y el elemento actual, y <strong>devuelves el nuevo acumulado</strong>. El último valor es el resultado final. Si te cuesta, escribe primero el <code>for</code> equivalente y compáralo.</p>
+</div>
+
+<h2 id="buscar"><span class="n">5.</span>Buscar y comprobar</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Método</th><th>Qué responde</th><th>Ejemplo</th></tr></thead>
+<tbody><tr><td><code>find(fn)</code></td><td>El <strong>primer elemento</strong> que cumple (o <code>undefined</code>)</td><td><code>usuarios.find(u =&gt; u.id === 3)</code></td></tr><tr><td><code>findIndex(fn)</code></td><td>Su <strong>posición</strong> (o <code>-1</code>)</td><td><code>nums.findIndex(n =&gt; n &gt; 10)</code></td></tr><tr><td><code>some(fn)</code></td><td>¿<strong>Alguno</strong> cumple?</td><td><code>nums.some(n =&gt; n &lt; 0)</code></td></tr><tr><td><code>every(fn)</code></td><td>¿<strong>Todos</strong> cumplen?</td><td><code>nums.every(n =&gt; n &gt; 0)</code></td></tr><tr><td><code>includes(valor)</code></td><td>¿Contiene este valor?</td><td><code>["a","b"].includes("a")</code></td></tr></tbody>
+</table></div>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ Buscar y comprobar</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:240px">&lt;script&gt;
+  const edades = [15, 22, 17, 30, 12];
+
+  console.log(edades.find(e =&gt; e &gt;= 18));        // 22
+  console.log(edades.findIndex(e =&gt; e &gt;= 18));    // 1
+  console.log(edades.some(e =&gt; e &lt; 13));          // true
+  console.log(edades.every(e =&gt; e &gt;= 18));        // false
+  console.log(edades.filter(e =&gt; e &gt;= 18).length + " mayores de edad");
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+
+<h2 id="ordenar"><span class="n">6.</span>Ordenar con sort</h2>
+<p><code>sort()</code> ordena <strong>modificando</strong> el array. Y tiene una trampa famosa: por defecto ordena <strong>como texto</strong>, no como números.</p>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ La trampa de sort</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:240px">&lt;script&gt;
+  const numeros = [10, 9, 1, 100, 25];
+
+  console.log([...numeros].sort());                   // [1, 10, 100, 25, 9]  ← ¡como texto!
+  console.log([...numeros].sort((a, b) =&gt; a - b));    // [1, 9, 10, 25, 100]  ascendente
+  console.log([...numeros].sort((a, b) =&gt; b - a));    // [100, 25, 10, 9, 1]  descendente
+
+  const nombres = ["Zoe", "ana", "Luis", "álvaro"];
+  console.log([...nombres].sort((a, b) =&gt; a.localeCompare(b, "es")));   // alfabético correcto
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · La función de comparación</p>
+<p><code>(a, b) =&gt; a - b</code> devuelve <strong>negativo</strong> si <code>a</code> va antes, <strong>positivo</strong> si va después y <code>0</code> si empatan. Para textos con tildes y eñes usa <code>a.localeCompare(b, "es")</code>. Y como <code>sort</code> modifica el original, <strong>cópialo antes</strong> con <code>[...arr]</code> si no quieres perder el orden.</p>
+</div>
+
+<h2 id="desestructurar"><span class="n">7.</span>Desestructurar y copiar</h2>
+<div class="code">
+  <div class="code-head"><span>Sacar valores de un array</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">const</span> [primero, segundo, ...resto] = [<span class="tk-attr">10</span>, <span class="tk-attr">20</span>, <span class="tk-attr">30</span>, <span class="tk-attr">40</span>];
+console.log(primero, segundo, resto);       <span class="tk-com">// 10 20 [30, 40]</span>
+
+<span class="tk-com">// Intercambiar dos variables</span>
+<span class="tk-tag">let</span> a = <span class="tk-attr">1</span>, b = <span class="tk-attr">2</span>;
+[a, b] = [b, a];
+console.log(a, b);                           <span class="tk-com">// 2 1</span>
+
+<span class="tk-com">// Copiar y combinar</span>
+<span class="tk-tag">const</span> original = [<span class="tk-attr">1</span>, <span class="tk-attr">2</span>, <span class="tk-attr">3</span>];
+<span class="tk-tag">const</span> copia = [...original];                <span class="tk-com">// copia superficial</span>
+<span class="tk-tag">const</span> ampliada = [<span class="tk-attr">0</span>, ...original, <span class="tk-attr">4</span>];      <span class="tk-com">// [0, 1, 2, 3, 4]</span></code></pre>
+</div>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · Copias superficiales</p>
+<p><code>[...arr]</code> y <code>arr.slice()</code> copian <strong>un nivel</strong>: si los elementos son objetos u otros arrays, la copia <strong>comparte</strong> esas referencias. Para copias profundas existe <code>structuredClone(arr)</code>.</p>
+</div>
+
+<h2 id="errores"><span class="n">8.</span>Errores frecuentes</h2>
+<ul><li><strong>Empezar a contar desde 1:</strong> el primero es el <code>[0]</code>.</li><li><strong>Usar <code>arr[arr.length]</code>:</strong> no existe; el último es <code>arr[arr.length - 1]</code>.</li><li><strong>Olvidar el <code>return</code> en el callback de <code>map</code>/<code>filter</code></strong> (con llaves): devuelve <code>undefined</code>.</li><li><strong>Usar <code>sort()</code> sin función con números.</strong></li><li><strong>Modificar el array original sin querer</strong> con <code>sort</code>, <code>reverse</code> o <code>splice</code>.</li><li><strong>Usar <code>map</code> solo para recorrer</strong> (sin usar el array que devuelve): para eso, <code>forEach</code> o <code>for…of</code>.</li><li><strong>Usar <code>==</code> o <code>indexOf</code> para buscar objetos:</strong> compara referencias, no contenido.</li><li><strong>Olvidar el valor inicial en <code>reduce</code>:</strong> con un array vacío da error.</li></ul>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li>Un array es una lista ordenada; los índices empiezan en <strong>0</strong> y <code>length</code> da la cantidad.</li><li><code>push/pop</code> trabajan al final y <code>unshift/shift</code> al principio; <code>splice</code> quita o inserta en cualquier punto.</li><li><code>slice</code>, <code>concat</code>, <code>map</code>, <code>filter</code> y <code>[...arr]</code> <strong>no modifican</strong> el original; <code>sort</code>, <code>reverse</code>, <code>splice</code>, <code>push</code>… <strong>sí</strong>.</li><li><code>for</code>, <code>for…of</code> y <code>forEach</code> recorren; <code>map</code> transforma, <code>filter</code> selecciona y <code>reduce</code> resume.</li><li><code>find</code>, <code>findIndex</code>, <code>some</code>, <code>every</code> e <code>includes</code> buscan y comprueban.</li><li><code>sort</code> ordena como texto por defecto: usa <code>(a, b) =&gt; a - b</code> para números y <code>localeCompare</code> para textos.</li><li>La desestructuración (<code>const [a, b] = arr</code>) y el spread (<code>[...arr]</code>) simplifican copias y asignaciones.</li><li>Una copia con <code>[...arr]</code> es superficial; para copias profundas, <code>structuredClone()</code>.</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">9.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td>Array</td><td>Lista ordenada de valores.</td></tr><tr><td>Índice</td><td>Posición de un elemento; empieza en 0.</td></tr><tr><td>Método</td><td>Función que pertenece a un valor (<code>arr.push()</code>).</td></tr><tr><td>Callback</td><td>Función que se pasa a un método para que la ejecute con cada elemento.</td></tr><tr><td><code>map</code></td><td>Crea un array nuevo transformando cada elemento.</td></tr><tr><td><code>filter</code></td><td>Crea un array nuevo con los elementos que cumplen una condición.</td></tr><tr><td><code>reduce</code></td><td>Resume un array en un solo valor.</td></tr><tr><td>Spread (<code>...</code>)</td><td>Reparte los elementos de un array.</td></tr></tbody>
+</table></div>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>¿Cuál es el índice del <strong>último</strong> elemento de un array <code>a</code>?</p><ul class="opts"><li><button type="button" class="opt"><code>a.length</code></button></li><li><button type="button" class="opt" data-ok><code>a.length - 1</code></button></li><li><button type="button" class="opt"><code>a[-1]</code></button></li><li><button type="button" class="opt"><code>a.last</code></button></li></ul><p class="explain" hidden>Como se cuenta desde 0, el último es <code>length - 1</code> (o <code>a.at(-1)</code>).</p></div>
+<div class="quiz-q"><p>¿Qué devuelve <code>[1, 2, 3].map(n =&gt; n * 2)</code>?</p><ul class="opts"><li><button type="button" class="opt"><code>6</code></button></li><li><button type="button" class="opt" data-ok><code>[2, 4, 6]</code></button></li><li><button type="button" class="opt"><code>[1, 2, 3]</code></button></li><li><button type="button" class="opt"><code>undefined</code></button></li></ul><p class="explain" hidden><code>map</code> devuelve un array nuevo con cada elemento transformado.</p></div>
+<div class="quiz-q"><p>¿Qué hace <code>[5, 12, 8].filter(n =&gt; n &gt; 6)</code>?</p><ul class="opts"><li><button type="button" class="opt" data-ok>Devuelve <code>[12, 8]</code></button></li><li><button type="button" class="opt">Devuelve <code>[5]</code></button></li><li><button type="button" class="opt">Devuelve <code>true</code></button></li><li><button type="button" class="opt">Devuelve <code>13</code></button></li></ul><p class="explain" hidden><code>filter</code> se queda con los elementos para los que el callback devuelve verdadero.</p></div>
+<div class="quiz-q"><p>¿Qué da <code>[10, 9, 1].sort()</code> sin función de comparación?</p><ul class="opts"><li><button type="button" class="opt"><code>[1, 9, 10]</code></button></li><li><button type="button" class="opt" data-ok><code>[1, 10, 9]</code></button></li><li><button type="button" class="opt"><code>[10, 9, 1]</code></button></li><li><button type="button" class="opt">Error</button></li></ul><p class="explain" hidden>Ordena como texto: <code>"1" &lt; "10" &lt; "9"</code>. Para números necesitas <code>(a, b) =&gt; a - b</code>.</p></div>
+<div class="quiz-q"><p>¿Cuál de estos métodos <strong>modifica</strong> el array original?</p><ul class="opts"><li><button type="button" class="opt"><code>slice</code></button></li><li><button type="button" class="opt"><code>map</code></button></li><li><button type="button" class="opt" data-ok><code>push</code></button></li><li><button type="button" class="opt"><code>filter</code></button></li></ul><p class="explain" hidden><code>push</code> añade al final del mismo array; los otros devuelven uno nuevo.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="js-06">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../05-funciones/ejercicio.html"><small>← Anterior</small>Ejercicio: Funciones</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de JavaScript · Lección 6 · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&title=%5BError%5D%20Lecci%C3%B3n%206%3A%20Arrays%20%C2%B7%20Curso%20de%20HTML&pagina=https%3A//cacg-code.github.io/PRACTICAS-HTML/javascript/06-arrays/" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

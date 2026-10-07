@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ejercicio · Proyecto: lista de tareas · Curso de HTML</title>
+  <meta name="description" content="Ejercicio práctico de: Proyecto: lista de tareas.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/javascript/proyecto-tareas/ejercicio.html">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Ejercicio · Proyecto: lista de tareas · Curso de HTML">
+  <meta property="og:description" content="Ejercicio práctico de: Proyecto: lista de tareas.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/javascript/proyecto-tareas/ejercicio.html">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de JavaScript</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap" id="contenido" style="max-width:820px;padding-top:2rem;padding-bottom:3rem">
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de JavaScript</a> › <a href="./">Proyecto final</a> › Ejercicio</div>
+        <h1>Ejercicio: Proyecto: lista de tareas</h1>
+        <ul class="meta"><li>⏱ 120 minutos</li><li>📶 Nivel: principiante</li></ul>
+      </header>
+
+      <h2>Objetivo</h2>
+      <p>Construir la aplicación de tareas completa. Las pruebas ejecutan tu código sobre la página dada: simulan el uso real (añadir, marcar, borrar, filtrar, recargar) y comprueban el resultado.</p>
+
+      <h3>La página de partida</h3>
+      <p>Esta es la página sobre la que trabaja tu código. <strong>No la modifiques</strong>: escribe solo el JavaScript.</p>
+<div class="code">
+  <div class="code-head"><span>pagina.html</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">&lt;main</span> <span class="tk-attr">class</span>=<span class="tk-val">"app"</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;h1</span><span class="tk-tag">&gt;</span>Mis tareas<span class="tk-tag">&lt;/h1</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;form</span> <span class="tk-attr">id</span>=<span class="tk-val">"form-tarea"</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;label</span> <span class="tk-attr">for</span>=<span class="tk-val">"texto"</span><span class="tk-tag">&gt;</span>Nueva tarea<span class="tk-tag">&lt;/label</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;input</span> <span class="tk-attr">id</span>=<span class="tk-val">"texto"</span> <span class="tk-attr">type</span>=<span class="tk-val">"text"</span> <span class="tk-attr">autocomplete</span>=<span class="tk-val">"off"</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;button</span> <span class="tk-attr">type</span>=<span class="tk-val">"submit"</span><span class="tk-tag">&gt;</span>Añadir<span class="tk-tag">&lt;/button</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;/form</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;p</span> <span class="tk-attr">id</span>=<span class="tk-val">"error"</span> <span class="tk-attr">role</span>=<span class="tk-val">"alert"</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;/p</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;div</span> <span class="tk-attr">class</span>=<span class="tk-val">"filtros"</span> <span class="tk-attr">role</span>=<span class="tk-val">"group"</span> <span class="tk-attr">aria-label</span>=<span class="tk-val">"Filtrar tareas"</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;button</span> <span class="tk-attr">type</span>=<span class="tk-val">"button"</span> <span class="tk-attr">data-filtro</span>=<span class="tk-val">"todas"</span> <span class="tk-attr">aria-pressed</span>=<span class="tk-val">"true"</span><span class="tk-tag">&gt;</span>Todas<span class="tk-tag">&lt;/button</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;button</span> <span class="tk-attr">type</span>=<span class="tk-val">"button"</span> <span class="tk-attr">data-filtro</span>=<span class="tk-val">"pendientes"</span> <span class="tk-attr">aria-pressed</span>=<span class="tk-val">"false"</span><span class="tk-tag">&gt;</span>Pendientes<span class="tk-tag">&lt;/button</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;button</span> <span class="tk-attr">type</span>=<span class="tk-val">"button"</span> <span class="tk-attr">data-filtro</span>=<span class="tk-val">"hechas"</span> <span class="tk-attr">aria-pressed</span>=<span class="tk-val">"false"</span><span class="tk-tag">&gt;</span>Hechas<span class="tk-tag">&lt;/button</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;/div</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;ul</span> <span class="tk-attr">id</span>=<span class="tk-val">"lista"</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;/ul</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;p</span> <span class="tk-attr">id</span>=<span class="tk-val">"contador"</span> <span class="tk-attr">role</span>=<span class="tk-val">"status"</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;/p</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;button</span> <span class="tk-attr">type</span>=<span class="tk-val">"button"</span> <span class="tk-attr">id</span>=<span class="tk-val">"borrar-hechas"</span><span class="tk-tag">&gt;</span>Borrar completadas<span class="tk-tag">&lt;/button</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;/main</span><span class="tk-tag">&gt;</span></code></pre>
+</div>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ Prueba tu código aquí (opcional)</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:240px">&lt;main class="app"&gt;
+  &lt;h1&gt;Mis tareas&lt;/h1&gt;
+  &lt;form id="form-tarea"&gt;
+    &lt;label for="texto"&gt;Nueva tarea&lt;/label&gt;
+    &lt;input id="texto" type="text" autocomplete="off"&gt;
+    &lt;button type="submit"&gt;Añadir&lt;/button&gt;
+  &lt;/form&gt;
+  &lt;p id="error" role="alert"&gt;&lt;/p&gt;
+  &lt;div class="filtros" role="group" aria-label="Filtrar tareas"&gt;
+    &lt;button type="button" data-filtro="todas" aria-pressed="true"&gt;Todas&lt;/button&gt;
+    &lt;button type="button" data-filtro="pendientes" aria-pressed="false"&gt;Pendientes&lt;/button&gt;
+    &lt;button type="button" data-filtro="hechas" aria-pressed="false"&gt;Hechas&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;ul id="lista"&gt;&lt;/ul&gt;
+  &lt;p id="contador" role="status"&gt;&lt;/p&gt;
+  &lt;button type="button" id="borrar-hechas"&gt;Borrar completadas&lt;/button&gt;
+&lt;/main&gt;
+&lt;script&gt;
+  // escribe tu JavaScript
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+
+      <h2>Pasos</h2>
+      <p>Marca cada paso a medida que lo completes. Tu avance se guarda en este navegador.</p>
+      <div class="progress" aria-hidden="true"><div></div></div>
+      <p id="progreso-texto" style="color:var(--muted);font-size:.9rem" aria-live="polite"></p>
+      <ul class="checklist"><li><label><input type="checkbox" id="p1"><span>Declara el estado: <code>let tareas = []</code> y <code>let filtro = "todas"</code>, y la constante <code>CLAVE = "tareas"</code>.</span></label></li><li><label><input type="checkbox" id="p2"><span>Escribe <code>cargar()</code> (lee <code>localStorage</code>, con <code>[]</code> por defecto y <code>try/catch</code>) y <code>guardar()</code>.</span></label></li><li><label><input type="checkbox" id="p3"><span>Escribe <code>crearElemento(tarea)</code>: un <code>&lt;li&gt;</code> con <code>data-id</code>, la clase <code>hecha</code> si corresponde, un <code>input.check</code>, un <code>span.texto</code> (con <code>textContent</code>) y un <code>button.borrar</code>.</span></label></li><li><label><input type="checkbox" id="p4"><span>Escribe <code>pintar()</code>: muestra las tareas que pasan el filtro, escribe el contador en <code>#contador</code> (<code>"1 pendiente"</code> / <code>"N pendientes"</code>) y actualiza <code>aria-pressed</code> de los botones de filtro.</span></label></li><li><label><input type="checkbox" id="p5"><span>Escribe <code>cambiar()</code> (guardar + pintar) y <code>iniciar()</code> (cargar, filtro <code>"todas"</code>, pintar). <strong>Llama a <code>iniciar()</code> al final.</strong></span></label></li><li><label><input type="checkbox" id="p6"><span>Maneja el <code>submit</code> del formulario: <code>preventDefault</code>, validar (error <code>"Escribe una tarea"</code>), añadir con <code>id</code> único, vaciar el campo y <code>cambiar()</code>.</span></label></li><li><label><input type="checkbox" id="p7"><span>Con <strong>delegación</strong> en <code>#lista</code>, marca (<code>.check</code>) y borra (<code>.borrar</code>) tareas.</span></label></li><li><label><input type="checkbox" id="p8"><span>Haz que los botones <code>[data-filtro]</code> cambien el filtro, y que <code>#borrar-hechas</code> elimine las completadas.</span></label></li></ul>
+      <details><summary>💡 Pista 1: no sé por dónde empezar</summary><p>Empieza <strong>solo</strong> por <code>cargar</code>, <code>guardar</code>, <code>crearElemento</code> y <code>pintar</code>, y prueba en el editor con unas tareas a mano. Cuando se vean bien, añade los eventos uno a uno.</p>
+</details>
+<details><summary>💡 Pista 2: ids de tipo texto</summary><p><code>li.dataset.id</code> es <strong>texto</strong> y tu <code>id</code> guardado es <strong>número</strong>. Compara con <code>Number(li.dataset.id)</code> o guarda el id como texto en ambos lados.</p>
+</details>
+
+      <section class="checker" id="comprobador" aria-labelledby="t-chk">
+        <h2 id="t-chk">🔎 Comprueba tu trabajo</h2>
+        <p>Pega tu código y pulsa <strong>Comprobar</strong>. La revisión ocurre en tu navegador; nada se envía a ningún sitio. Cada punto en rojo incluye una pista.</p>
+        <label for="chk-code">Tu código JavaScript</label>
+        <textarea id="chk-code" rows="10" spellcheck="false" placeholder="Pega aquí solo tu JavaScript (sin la etiqueta script)"></textarea>
+        <div class="chk-actions"><button class="btn" type="button" id="chk-run">Comprobar</button><button class="icon-btn" type="button" id="chk-clear">Limpiar</button></div>
+        <p class="chk-sum" id="chk-sum" aria-live="polite"></p>
+        <ul class="chk-list" id="chk-list"></ul>
+        <script type="application/json" id="checks">{"mode": "js", "scaffold": "<main class=\"app\">\n  <h1>Mis tareas<\/h1>\n  <form id=\"form-tarea\">\n    <label for=\"texto\">Nueva tarea<\/label>\n    <input id=\"texto\" type=\"text\" autocomplete=\"off\">\n    <button type=\"submit\">Añadir<\/button>\n  <\/form>\n  <p id=\"error\" role=\"alert\"><\/p>\n  <div class=\"filtros\" role=\"group\" aria-label=\"Filtrar tareas\">\n    <button type=\"button\" data-filtro=\"todas\" aria-pressed=\"true\">Todas<\/button>\n    <button type=\"button\" data-filtro=\"pendientes\" aria-pressed=\"false\">Pendientes<\/button>\n    <button type=\"button\" data-filtro=\"hechas\" aria-pressed=\"false\">Hechas<\/button>\n  <\/div>\n  <ul id=\"lista\"><\/ul>\n  <p id=\"contador\" role=\"status\"><\/p>\n  <button type=\"button\" id=\"borrar-hechas\">Borrar completadas<\/button>\n<\/main>", "width": 800, "checks": [{"d": "Existe la función `iniciar()`", "h": "Escribe `function iniciar() { … }` y llámala al final.", "t": "return typeof iniciar===\"function\""}, {"d": "`iniciar()` pinta las tareas guardadas, con la clase `hecha` en las completadas", "h": "Carga `localStorage` y pinta un `<li>` por tarea.", "t": "localStorage.setItem(\"tareas\",JSON.stringify([{id:1,texto:\"Uno\",hecha:false},{id:2,texto:\"Dos\",hecha:true}]));iniciar();var l=document.querySelectorAll(\"#lista li\");return l.length===2 && l[0].querySelector(\".texto\").textContent===\"Uno\" && l[1].classList.contains(\"hecha\") && l[1].querySelector(\".check\").checked===true && l[0].querySelector(\".borrar\")!==null"}, {"d": "El contador dice «1 pendiente»", "h": "Usa singular cuando es 1.", "t": "return document.getElementById(\"contador\").textContent===\"1 pendiente\""}, {"d": "Añadir una tarea: aparece, el campo se vacía y se guarda", "h": "Crea el objeto, `push`, vacía el campo y llama a `cambiar()`.", "t": "var c=document.getElementById(\"texto\");c.value=\"  Tercera  \";var ev=new Event(\"submit\",{cancelable:true,bubbles:true});document.getElementById(\"form-tarea\").dispatchEvent(ev);var l=document.querySelectorAll(\"#lista li\");var g=JSON.parse(localStorage.getItem(\"tareas\"));return ev.defaultPrevented && l.length===3 && l[2].querySelector(\".texto\").textContent===\"Tercera\" && c.value===\"\" && g.length===3 && document.getElementById(\"contador\").textContent===\"2 pendientes\""}, {"d": "Un texto vacío muestra «Escribe una tarea» y no añade nada", "h": "Valida antes de añadir.", "t": "var c=document.getElementById(\"texto\");c.value=\"   \";document.getElementById(\"form-tarea\").dispatchEvent(new Event(\"submit\",{cancelable:true,bubbles:true}));return document.querySelectorAll(\"#lista li\").length===3 && document.getElementById(\"error\").textContent===\"Escribe una tarea\""}, {"d": "El texto se inserta de forma segura (no interpreta HTML)", "h": "Usa `textContent`, nunca `innerHTML`.", "t": "var c=document.getElementById(\"texto\");c.value=\"<b>negrita<\/b>\";document.getElementById(\"form-tarea\").dispatchEvent(new Event(\"submit\",{cancelable:true,bubbles:true}));var l=document.querySelectorAll(\"#lista li\");var t=l[l.length-1].querySelector(\".texto\");return t.textContent===\"<b>negrita<\/b>\" && t.querySelector(\"b\")===null"}, {"d": "Marcar la casilla completa la tarea y se guarda", "h": "En la delegación, cambia `hecha` y llama a `cambiar()`.", "t": "var li=document.querySelectorAll(\"#lista li\")[0];li.querySelector(\".check\").click();var l=document.querySelectorAll(\"#lista li\")[0];var g=JSON.parse(localStorage.getItem(\"tareas\"));return l.classList.contains(\"hecha\") && g[0].hecha===true && document.getElementById(\"contador\").textContent===\"2 pendientes\""}, {"d": "Desmarcarla la vuelve a poner pendiente", "h": "Usa `e.target.checked` para fijar el valor.", "t": "var li=document.querySelectorAll(\"#lista li\")[0];li.querySelector(\".check\").click();var l=document.querySelectorAll(\"#lista li\")[0];return !l.classList.contains(\"hecha\") && JSON.parse(localStorage.getItem(\"tareas\"))[0].hecha===false"}, {"d": "El botón ✕ borra la tarea y se guarda", "h": "Filtra el array para quitar la tarea con ese `id`.", "t": "var n=document.querySelectorAll(\"#lista li\").length;document.querySelectorAll(\"#lista li\")[0].querySelector(\".borrar\").click();return document.querySelectorAll(\"#lista li\").length===n-1 && JSON.parse(localStorage.getItem(\"tareas\")).length===n-1"}, {"d": "El filtro «Hechas» muestra solo las completadas y marca `aria-pressed`", "h": "Cambia `filtro`, llama a `pintar()` y actualiza `aria-pressed`.", "t": "var pend=[].find.call(document.querySelectorAll(\"#lista li\"),function(x){return !x.classList.contains(\"hecha\")});pend.querySelector(\".check\").click();var b=document.querySelector(\"[data-filtro=hechas]\");b.click();var l=document.querySelectorAll(\"#lista li\");var ok=l.length>=1 && [].every.call(l,function(x){return x.classList.contains(\"hecha\")}) && b.getAttribute(\"aria-pressed\")===\"true\" && document.querySelector(\"[data-filtro=todas]\").getAttribute(\"aria-pressed\")===\"false\";return ok"}, {"d": "El filtro «Pendientes» muestra solo las pendientes", "h": "Filtra las que tienen `hecha === false`.", "t": "document.querySelector(\"[data-filtro=pendientes]\").click();var l=document.querySelectorAll(\"#lista li\");return l.length>=1 && [].every.call(l,function(x){return !x.classList.contains(\"hecha\")})"}, {"d": "«Borrar completadas» elimina las hechas y se guarda", "h": "Deja solo las pendientes en el array.", "t": "document.querySelector(\"[data-filtro=todas]\").click();document.getElementById(\"borrar-hechas\").click();var g=JSON.parse(localStorage.getItem(\"tareas\"));return document.querySelectorAll(\"#lista li.hecha\").length===0 && g.every(function(t){return t.hecha===false}) && g.length===document.querySelectorAll(\"#lista li\").length"}, {"d": "Los datos sobreviven: `iniciar()` recupera lo guardado", "h": "Vuelve a leer `localStorage` en `iniciar()`.", "t": "localStorage.setItem(\"tareas\",JSON.stringify([{id:7,texto:\"Persistente\",hecha:false}]));iniciar();var l=document.querySelectorAll(\"#lista li\");return l.length===1 && l[0].querySelector(\".texto\").textContent===\"Persistente\" && document.getElementById(\"contador\").textContent===\"1 pendiente\""}, {"d": "Resiste datos corruptos en `localStorage`", "h": "Usa `try/catch` al leer.", "t": "localStorage.setItem(\"tareas\",\"{{{no es json\");try{iniciar()}catch(e){return false}return document.querySelectorAll(\"#lista li\").length===0 && document.getElementById(\"contador\").textContent===\"0 pendientes\""}, {"d": "Usas `addEventListener` y no `innerHTML` con texto de usuario", "h": "Registra eventos con `addEventListener` y evita `innerHTML`.", "t": "return /addEventListener/.test(window.__src) && !/innerHTML/.test(window.__src)"}]}</script>
+      </section>
+      <details>
+        <summary>✅ Ver una solución completa de ejemplo</summary>
+        <p>Intenta resolverlo antes de mirar. Tu versión puede ser distinta y también correcta.</p>
+        <div class="code">
+  <div class="code-head"><span>app.js</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">const</span> CLAVE = <span class="tk-val">"tareas"</span>;
+<span class="tk-tag">let</span> tareas = [];
+<span class="tk-tag">let</span> filtro = <span class="tk-val">"todas"</span>;
+
+<span class="tk-tag">const</span> form = document.getElementById(<span class="tk-val">"form-tarea"</span>);
+<span class="tk-tag">const</span> campo = document.getElementById(<span class="tk-val">"texto"</span>);
+<span class="tk-tag">const</span> error = document.getElementById(<span class="tk-val">"error"</span>);
+<span class="tk-tag">const</span> lista = document.getElementById(<span class="tk-val">"lista"</span>);
+<span class="tk-tag">const</span> contador = document.getElementById(<span class="tk-val">"contador"</span>);
+
+<span class="tk-com">// ----- Almacenamiento -----</span>
+<span class="tk-tag">function</span> cargar() {
+  <span class="tk-tag">try</span> {
+    <span class="tk-tag">return</span> JSON.parse(localStorage.getItem(CLAVE)) ?? [];
+  } <span class="tk-tag">catch</span> {
+    <span class="tk-tag">return</span> [];
+  }
+}
+
+<span class="tk-tag">function</span> guardar() {
+  localStorage.setItem(CLAVE, JSON.stringify(tareas));
+}
+
+<span class="tk-com">// ----- Pintar la página a partir de los datos -----</span>
+<span class="tk-tag">function</span> visibles() {
+  <span class="tk-tag">if</span> (filtro === <span class="tk-val">"pendientes"</span>) <span class="tk-tag">return</span> tareas.filter((t) =&gt; !t.hecha);
+  <span class="tk-tag">if</span> (filtro === <span class="tk-val">"hechas"</span>) <span class="tk-tag">return</span> tareas.filter((t) =&gt; t.hecha);
+  <span class="tk-tag">return</span> tareas;
+}
+
+<span class="tk-tag">function</span> crearElemento(tarea) {
+  <span class="tk-tag">const</span> li = document.createElement(<span class="tk-val">"li"</span>);
+  li.dataset.id = tarea.id;
+  li.classList.toggle(<span class="tk-val">"hecha"</span>, tarea.hecha);
+
+  <span class="tk-tag">const</span> check = document.createElement(<span class="tk-val">"input"</span>);
+  check.type = <span class="tk-val">"checkbox"</span>;
+  check.className = <span class="tk-val">"check"</span>;
+  check.checked = tarea.hecha;
+  check.setAttribute(<span class="tk-val">"aria-label"</span>, <span class="tk-val">"Marcar como hecha"</span>);
+
+  <span class="tk-tag">const</span> texto = document.createElement(<span class="tk-val">"span"</span>);
+  texto.className = <span class="tk-val">"texto"</span>;
+  texto.textContent = tarea.texto;          <span class="tk-com">// textContent: seguro con cualquier texto</span>
+
+  <span class="tk-tag">const</span> borrar = document.createElement(<span class="tk-val">"button"</span>);
+  borrar.type = <span class="tk-val">"button"</span>;
+  borrar.className = <span class="tk-val">"borrar"</span>;
+  borrar.setAttribute(<span class="tk-val">"aria-label"</span>, <span class="tk-val">"Borrar tarea"</span>);
+  borrar.textContent = <span class="tk-val">"✕"</span>;
+
+  li.append(check, texto, borrar);
+  <span class="tk-tag">return</span> li;
+}
+
+<span class="tk-tag">function</span> pintar() {
+  lista.replaceChildren(...visibles().map(crearElemento));
+
+  <span class="tk-tag">const</span> pendientes = tareas.filter((t) =&gt; !t.hecha).length;
+  contador.textContent = pendientes === <span class="tk-attr">1</span> ? <span class="tk-val">"1 pendiente"</span> : <span class="tk-val">`${pendientes} pendientes`</span>;
+
+  document.querySelectorAll(<span class="tk-val">"[data-filtro]"</span>).forEach((b) =&gt; {
+    b.setAttribute(<span class="tk-val">"aria-pressed"</span>, String(b.dataset.filtro === filtro));
+  });
+}
+
+<span class="tk-tag">function</span> cambiar() {      <span class="tk-com">// cada cambio: guardar y volver a pintar</span>
+  guardar();
+  pintar();
+}
+
+<span class="tk-com">// ----- Eventos -----</span>
+form.addEventListener(<span class="tk-val">"submit"</span>, (e) =&gt; {
+  e.preventDefault();
+  <span class="tk-tag">const</span> texto = campo.value.trim();
+  <span class="tk-tag">if</span> (texto === <span class="tk-val">""</span>) {
+    error.textContent = <span class="tk-val">"Escribe una tarea"</span>;
+    <span class="tk-tag">return</span>;
+  }
+  error.textContent = <span class="tk-val">""</span>;
+  tareas.push({ id: Date.now() + Math.random(), texto, hecha: <span class="tk-tag">false</span> });
+  campo.value = <span class="tk-val">""</span>;
+  cambiar();
+});
+
+lista.addEventListener(<span class="tk-val">"click"</span>, (e) =&gt; {
+  <span class="tk-tag">const</span> li = e.target.closest(<span class="tk-val">"li"</span>);
+  <span class="tk-tag">if</span> (!li) <span class="tk-tag">return</span>;
+  <span class="tk-tag">const</span> id = Number(li.dataset.id);
+  <span class="tk-tag">const</span> tarea = tareas.find((t) =&gt; t.id === id);
+  <span class="tk-tag">if</span> (!tarea) <span class="tk-tag">return</span>;
+
+  <span class="tk-tag">if</span> (e.target.classList.contains(<span class="tk-val">"check"</span>)) {
+    tarea.hecha = e.target.checked;
+    cambiar();
+  } <span class="tk-tag">else</span> <span class="tk-tag">if</span> (e.target.classList.contains(<span class="tk-val">"borrar"</span>)) {
+    tareas = tareas.filter((t) =&gt; t.id !== id);
+    cambiar();
+  }
+});
+
+document.querySelector(<span class="tk-val">".filtros"</span>).addEventListener(<span class="tk-val">"click"</span>, (e) =&gt; {
+  <span class="tk-tag">const</span> boton = e.target.closest(<span class="tk-val">"[data-filtro]"</span>);
+  <span class="tk-tag">if</span> (!boton) <span class="tk-tag">return</span>;
+  filtro = boton.dataset.filtro;
+  pintar();
+});
+
+document.getElementById(<span class="tk-val">"borrar-hechas"</span>).addEventListener(<span class="tk-val">"click"</span>, () =&gt; {
+  tareas = tareas.filter((t) =&gt; !t.hecha);
+  cambiar();
+});
+
+<span class="tk-com">// ----- Arranque -----</span>
+<span class="tk-tag">function</span> iniciar() {
+  tareas = cargar();
+  filtro = <span class="tk-val">"todas"</span>;
+  pintar();
+}
+
+iniciar();</code></pre>
+</div>
+
+      </details>
+      <div class="callout consejo">
+<p class="callout-title">💡 🏁 Reto extra (opcional)</p>
+<p>Añade <strong>edición</strong>: al hacer doble clic sobre el texto de una tarea, conviértelo en un <code>&lt;input&gt;</code>; al pulsar <kbd>Enter</kbd> se guarda y con <kbd>Escape</kbd> se cancela. Pruébalo con el teclado.</p>
+</div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="./"><small>← Anterior</small>Volver a proyecto final</a>
+        <a class="next" href="../"><small>¡Terminaste! →</small>Volver al índice del curso</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de JavaScript · Ejercicio de proyecto final · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&title=%5BError%5D%20Ejercicio%20%C2%B7%20Proyecto%3A%20lista%20de%20tareas%20%C2%B7%20Curso%20de%20HTML&pagina=https%3A//cacg-code.github.io/PRACTICAS-HTML/javascript/proyecto-tareas/ejercicio.html" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>
