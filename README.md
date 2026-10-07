@@ -45,19 +45,9 @@ Al terminar habrás construido **tu propia página personal** desde cero.
 
 ## 🗺️ Ruta de aprendizaje
 
-```mermaid
-flowchart LR
-    A([🚀 Inicio]) --> B[01 Primeros pasos]
-    B --> C[02 Texto y enlaces]
-    C --> D[03 Imágenes y listas]
-    D --> E[04 Tablas]
-    E --> F[05 Formularios]
-    F --> G[06 HTML semántico]
-    G --> H[07 Intro a CSS]
-    H --> I([🏆 Proyecto final])
-    style A fill:#4f46e5,color:#fff,stroke:none
-    style I fill:#f43f5e,color:#fff,stroke:none
-```
+<div align="center">
+  <img src="assets/readme/ruta.svg" alt="Ruta de aprendizaje animada: Inicio, 7 lecciones y proyecto final" width="100%">
+</div>
 
 ## 📚 Temario
 
