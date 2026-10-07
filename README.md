@@ -53,24 +53,12 @@ Sigue el orden: cada curso se apoya en el anterior.
 <div align="center">
 
 <img src="assets/readme/demos1.svg" alt="Práctica en vivo y Flexbox interactivo" width="100%">
-<table>
-<tr>
-<td width="48%"><img src="assets/gif/practica-en-vivo.gif" alt="Editor con resultado instantáneo" width="100%"></td>
-<td width="4%"></td>
-<td width="48%"><img src="assets/gif/flexbox.gif" alt="Demostración interactiva de Flexbox" width="100%"></td>
-</tr>
-</table>
+<img src="assets/gif/practica-en-vivo.gif" alt="Editor con resultado instantáneo" width="47%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="assets/gif/flexbox.gif" alt="Demostración interactiva de Flexbox" width="47%">
 
 <br><br><br>
 
 <img src="assets/readme/demos2.svg" alt="JavaScript con consola y Comprobador" width="100%">
-<table>
-<tr>
-<td width="48%"><img src="assets/gif/js-consola.gif" alt="Editor de JavaScript con consola" width="100%"></td>
-<td width="4%"></td>
-<td width="48%"><img src="assets/gif/comprobador.gif" alt="Comprobador que revisa tu código" width="100%"></td>
-</tr>
-</table>
+<img src="assets/gif/js-consola.gif" alt="Editor de JavaScript con consola" width="47%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="assets/gif/comprobador.gif" alt="Comprobador que revisa tu código" width="47%">
 
 </div>
 
