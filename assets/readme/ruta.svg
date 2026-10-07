@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="300" viewBox="0 0 1000 300" role="img" aria-label="Ruta: HTML, CSS, JavaScript y Git disponibles; React, Node.js, bases de datos y proyecto full stack próximamente">
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="300" viewBox="0 0 1000 300" role="img" aria-label="Ruta: HTML, CSS, JavaScript, Git y React disponibles; Node.js, bases de datos y proyecto full stack próximamente">
 <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#14172b"/><stop offset="1" stop-color="#1f2440"/></linearGradient>
 <linearGradient id="tr" gradientUnits="userSpaceOnUse" x1="70" y1="0" x2="930" y2="0"><stop offset="0" stop-color="#6366f1"/><stop offset="1" stop-color="#f43f5e"/></linearGradient></defs>
 <style>.t{font-family:Segoe UI,Helvetica,Arial,sans-serif;text-anchor:middle}.a{font-size:16px;font-weight:700;fill:#e0e7ff}.s{font-size:13px;fill:#9aa1c4}.n{font-size:19px;font-weight:800;fill:#fff}.p{animation:pp 3s ease-in-out infinite}@keyframes pp{0%,100%{opacity:.35}50%{opacity:.8}}</style>
@@ -6,7 +6,7 @@
 <text class="t s" x="500" y="40" style="font-size:16px">Tu camino: de cero a full stack</text>
 <line x1="70" y1="140" x2="930" y2="140" stroke="#2b3158" stroke-width="8" stroke-linecap="round"/>
 <line x1="70" y1="140" x2="930" y2="140" stroke="#3b4170" stroke-width="3" stroke-dasharray="2 12" stroke-linecap="round"/>
-<line x1="70" y1="140" x2="439" y2="140" pathLength="1" stroke="url(#tr)" stroke-width="8" stroke-linecap="round" stroke-dasharray="1" stroke-dashoffset="1"><animate attributeName="stroke-dashoffset" values="1;0;0;1" keyTimes="0;.35;.92;1" dur="9s" repeatCount="indefinite"/></line>
+<line x1="70" y1="140" x2="562" y2="140" pathLength="1" stroke="url(#tr)" stroke-width="8" stroke-linecap="round" stroke-dasharray="1" stroke-dashoffset="1"><animate attributeName="stroke-dashoffset" values="1;0;0;1" keyTimes="0;.42;.92;1" dur="9s" repeatCount="indefinite"/></line>
 <circle cx="70" cy="140" r="32" fill="none" stroke="#e34f26" stroke-width="3" opacity="0"><animate attributeName="r" values="30;30;60;60" keyTimes="0;0.0;0.060;1" dur="9s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;0;.9;0;0" keyTimes="0;0.0;0.010;0.060;1" dur="9s" repeatCount="indefinite"/></circle>
 <circle cx="70" cy="140" r="30" fill="#1f2440" stroke="#e34f26" stroke-width="4"><animate attributeName="fill" values="#1f2440;#1f2440;#e34f26;#e34f26;#1f2440" keyTimes="0;0.0;0.010;.92;1" dur="9s" repeatCount="indefinite"/></circle>
 <text class="t n" x="70" y="147">1</text>
@@ -27,10 +27,11 @@
 <text class="t n" x="439" y="147">4</text>
 <text class="t a" x="439" y="202">Git</text><text class="t s" x="439" y="222">Versiones</text>
 <text class="t s" x="439" y="248" style="fill:#4ade80;font-weight:700">✔ Disponible</text>
-<circle class="p" cx="562" cy="140" r="30" fill="none" stroke="#38bdf8" stroke-width="3" stroke-dasharray="5 6" style="animation-delay:1.2s"/>
-<text class="t n" x="562" y="147" style="fill:#6b7299">5</text>
-<text class="t a" x="562" y="202" style="fill:#7a82ac">React</text><text class="t s" x="562" y="222" style="fill:#5c6490">Frameworks</text>
-<text class="t s" x="562" y="248" style="fill:#7a82ac">Próximamente</text>
+<circle cx="562" cy="140" r="32" fill="none" stroke="#38bdf8" stroke-width="3" opacity="0"><animate attributeName="r" values="30;30;60;60" keyTimes="0;0.467;0.527;1" dur="9s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;0;.9;0;0" keyTimes="0;0.467;0.477;0.527;1" dur="9s" repeatCount="indefinite"/></circle>
+<circle cx="562" cy="140" r="30" fill="#1f2440" stroke="#38bdf8" stroke-width="4"><animate attributeName="fill" values="#1f2440;#1f2440;#38bdf8;#38bdf8;#1f2440" keyTimes="0;0.467;0.477;.92;1" dur="9s" repeatCount="indefinite"/></circle>
+<text class="t n" x="562" y="147">5</text>
+<text class="t a" x="562" y="202">React</text><text class="t s" x="562" y="222">Interfaces</text>
+<text class="t s" x="562" y="248" style="fill:#4ade80;font-weight:700">✔ Disponible</text>
 <circle class="p" cx="685" cy="140" r="30" fill="none" stroke="#22c55e" stroke-width="3" stroke-dasharray="5 6" style="animation-delay:1.5s"/>
 <text class="t n" x="685" y="147" style="fill:#6b7299">6</text>
 <text class="t a" x="685" y="202" style="fill:#7a82ac">Node.js</text><text class="t s" x="685" y="222" style="fill:#5c6490">APIs</text>

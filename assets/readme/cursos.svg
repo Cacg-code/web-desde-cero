@@ -1,37 +1,44 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="410" viewBox="0 0 1000 410" role="img" aria-label="Tres cursos: HTML, CSS y JavaScript">
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="410" viewBox="0 0 1000 410" role="img" aria-label="Cuatro cursos: HTML, CSS, JavaScript y React">
 <style>.t{font-family:Segoe UI,Helvetica,Arial,sans-serif}.fl{animation:f 5s ease-in-out infinite}@keyframes f{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}.sh{animation:s 4s linear infinite}@keyframes s{0%{transform:translateX(-340px)}100%{transform:translateX(340px)}}</style><defs>
-<linearGradient id="g0" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e34f26"/><stop offset="1" stop-color="#f97316"/></linearGradient><clipPath id="k0"><rect width="300" height="378" rx="22"/></clipPath>
-<linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1572b6"/><stop offset="1" stop-color="#38bdf8"/></linearGradient><clipPath id="k1"><rect width="300" height="378" rx="22"/></clipPath>
-<linearGradient id="g2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d4a017"/><stop offset="1" stop-color="#fde047"/></linearGradient><clipPath id="k2"><rect width="300" height="378" rx="22"/></clipPath>
+<linearGradient id="g0" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e34f26"/><stop offset="1" stop-color="#f97316"/></linearGradient><clipPath id="k0"><rect width="228" height="378" rx="22"/></clipPath>
+<linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1572b6"/><stop offset="1" stop-color="#38bdf8"/></linearGradient><clipPath id="k1"><rect width="228" height="378" rx="22"/></clipPath>
+<linearGradient id="g2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d4a017"/><stop offset="1" stop-color="#fde047"/></linearGradient><clipPath id="k2"><rect width="228" height="378" rx="22"/></clipPath>
+<linearGradient id="g3" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0ea5e9"/><stop offset="1" stop-color="#67e8f9"/></linearGradient><clipPath id="k3"><rect width="228" height="378" rx="22"/></clipPath>
 </defs>
-<g transform="translate(20 15)"><g class="fl" style="animation-delay:0.0s"><rect width="300" height="378" rx="22" fill="#14172b" stroke="url(#g0)" stroke-width="3"/>
-<g clip-path="url(#k0)"><rect width="300" height="120" fill="url(#g0)"/><rect class="sh" x="0" y="0" width="60" height="120" fill="#fff" opacity=".18" transform="skewX(-20)" style="animation-delay:0.0s"/></g>
-<text class="t" x="28" y="80" font-size="46" font-weight="800" fill="#fff" opacity=".9">&lt;/&gt;</text>
-<text class="t" x="272" y="46" font-size="15" font-weight="700" fill="#fff" text-anchor="end" opacity=".9">CURSO 1</text>
-<text class="t" x="28" y="168" font-size="34" font-weight="800" fill="#fff">HTML</text><text class="t" x="28" y="196" font-size="18" fill="#f97316" font-weight="600">Estructura</text>
-<text class="t" x="28" y="238" font-size="16" fill="#cbd2f0"><tspan fill="#f97316">✔ </tspan>Texto, enlaces y tablas</text>
-<text class="t" x="28" y="266" font-size="16" fill="#cbd2f0"><tspan fill="#f97316">✔ </tspan>Formularios y multimedia</text>
-<text class="t" x="28" y="294" font-size="16" fill="#cbd2f0"><tspan fill="#f97316">✔ </tspan>Accesibilidad, SEO y Git</text>
-<line x1="28" y1="338" x2="272" y2="338" stroke="#2b3158"/><text class="t" x="28" y="361" font-size="14" fill="#9aa1c4">11 lecciones + proyecto · ≈ 10 h</text>
-<text class="t" x="28" y="326" font-size="16" font-weight="700" fill="#fff">🏆 Tu página personal</text></g></g>
-<g transform="translate(345 15)"><g class="fl" style="animation-delay:0.5s"><rect width="300" height="378" rx="22" fill="#14172b" stroke="url(#g1)" stroke-width="3"/>
-<g clip-path="url(#k1)"><rect width="300" height="120" fill="url(#g1)"/><rect class="sh" x="0" y="0" width="60" height="120" fill="#fff" opacity=".18" transform="skewX(-20)" style="animation-delay:0.7s"/></g>
-<text class="t" x="28" y="80" font-size="46" font-weight="800" fill="#fff" opacity=".9">{ }</text>
-<text class="t" x="272" y="46" font-size="15" font-weight="700" fill="#fff" text-anchor="end" opacity=".9">CURSO 2</text>
-<text class="t" x="28" y="168" font-size="34" font-weight="800" fill="#fff">CSS</text><text class="t" x="28" y="196" font-size="18" fill="#38bdf8" font-weight="600">Estilo</text>
-<text class="t" x="28" y="238" font-size="16" fill="#cbd2f0"><tspan fill="#38bdf8">✔ </tspan>Selectores y la caja</text>
-<text class="t" x="28" y="266" font-size="16" fill="#cbd2f0"><tspan fill="#38bdf8">✔ </tspan>Flexbox, Grid y responsivo</text>
-<text class="t" x="28" y="294" font-size="16" fill="#cbd2f0"><tspan fill="#38bdf8">✔ </tspan>Animaciones y modo oscuro</text>
-<line x1="28" y1="338" x2="272" y2="338" stroke="#2b3158"/><text class="t" x="28" y="361" font-size="14" fill="#9aa1c4">11 lecciones + proyecto · ≈ 12 h</text>
-<text class="t" x="28" y="326" font-size="16" font-weight="700" fill="#fff">🏆 Landing responsiva</text></g></g>
-<g transform="translate(670 15)"><g class="fl" style="animation-delay:1.0s"><rect width="300" height="378" rx="22" fill="#14172b" stroke="url(#g2)" stroke-width="3"/>
-<g clip-path="url(#k2)"><rect width="300" height="120" fill="url(#g2)"/><rect class="sh" x="0" y="0" width="60" height="120" fill="#fff" opacity=".18" transform="skewX(-20)" style="animation-delay:1.4s"/></g>
-<text class="t" x="28" y="80" font-size="46" font-weight="800" fill="#fff" opacity=".9">JS</text>
-<text class="t" x="272" y="46" font-size="15" font-weight="700" fill="#fff" text-anchor="end" opacity=".9">CURSO 3</text>
-<text class="t" x="28" y="168" font-size="34" font-weight="800" fill="#fff">JavaScript</text><text class="t" x="28" y="196" font-size="18" fill="#fde047" font-weight="600">Lógica</text>
-<text class="t" x="28" y="238" font-size="16" fill="#cbd2f0"><tspan fill="#fde047">✔ </tspan>Variables, bucles y funciones</text>
-<text class="t" x="28" y="266" font-size="16" fill="#cbd2f0"><tspan fill="#fde047">✔ </tspan>DOM y eventos</text>
-<text class="t" x="28" y="294" font-size="16" fill="#cbd2f0"><tspan fill="#fde047">✔ </tspan>Asincronía y almacenamiento</text>
-<line x1="28" y1="338" x2="272" y2="338" stroke="#2b3158"/><text class="t" x="28" y="361" font-size="14" fill="#9aa1c4">11 lecciones + proyecto · ≈ 14 h</text>
-<text class="t" x="28" y="326" font-size="16" font-weight="700" fill="#fff">🏆 App de tareas</text></g></g>
+<g transform="translate(12 15)"><g class="fl" style="animation-delay:0.0s"><rect width="228" height="378" rx="22" fill="#14172b" stroke="url(#g0)" stroke-width="3"/>
+<g clip-path="url(#k0)"><rect width="228" height="120" fill="url(#g0)"/><rect class="sh" x="0" y="0" width="60" height="120" fill="#fff" opacity=".18" transform="skewX(-20)" style="animation-delay:0.0s"/></g>
+<text class="t" x="22" y="80" font-size="46" font-weight="800" fill="#fff" opacity=".9">&lt;/&gt;</text>
+<text class="t" x="206" y="46" font-size="14" font-weight="700" fill="#fff" text-anchor="end" opacity=".9">CURSO 1</text>
+<text class="t" x="22" y="168" font-size="30" font-weight="800" fill="#fff">HTML</text><text class="t" x="22" y="194" font-size="17" fill="#f97316" font-weight="600">Estructura</text>
+<text class="t" x="22" y="236" font-size="14" fill="#cbd2f0"><tspan fill="#f97316">✔ </tspan>Texto, enlaces y tablas</text>
+<text class="t" x="22" y="264" font-size="14" fill="#cbd2f0"><tspan fill="#f97316">✔ </tspan>Formularios y multimedia</text>
+<text class="t" x="22" y="292" font-size="14" fill="#cbd2f0"><tspan fill="#f97316">✔ </tspan>Accesibilidad, SEO y Git</text>
+<text class="t" x="22" y="326" font-size="15" font-weight="700" fill="#fff">🏆 Tu página personal</text><line x1="22" y1="338" x2="206" y2="338" stroke="#2b3158"/><text class="t" x="22" y="361" font-size="13" fill="#9aa1c4">11 lecciones + proyecto · ≈ 10 h</text></g></g>
+<g transform="translate(259 15)"><g class="fl" style="animation-delay:0.5s"><rect width="228" height="378" rx="22" fill="#14172b" stroke="url(#g1)" stroke-width="3"/>
+<g clip-path="url(#k1)"><rect width="228" height="120" fill="url(#g1)"/><rect class="sh" x="0" y="0" width="60" height="120" fill="#fff" opacity=".18" transform="skewX(-20)" style="animation-delay:0.7s"/></g>
+<text class="t" x="22" y="80" font-size="46" font-weight="800" fill="#fff" opacity=".9">{ }</text>
+<text class="t" x="206" y="46" font-size="14" font-weight="700" fill="#fff" text-anchor="end" opacity=".9">CURSO 2</text>
+<text class="t" x="22" y="168" font-size="30" font-weight="800" fill="#fff">CSS</text><text class="t" x="22" y="194" font-size="17" fill="#38bdf8" font-weight="600">Estilo</text>
+<text class="t" x="22" y="236" font-size="14" fill="#cbd2f0"><tspan fill="#38bdf8">✔ </tspan>Selectores y la caja</text>
+<text class="t" x="22" y="264" font-size="14" fill="#cbd2f0"><tspan fill="#38bdf8">✔ </tspan>Flexbox, Grid, responsivo</text>
+<text class="t" x="22" y="292" font-size="14" fill="#cbd2f0"><tspan fill="#38bdf8">✔ </tspan>Animaciones y temas</text>
+<text class="t" x="22" y="326" font-size="15" font-weight="700" fill="#fff">🏆 Landing responsiva</text><line x1="22" y1="338" x2="206" y2="338" stroke="#2b3158"/><text class="t" x="22" y="361" font-size="13" fill="#9aa1c4">11 lecciones + proyecto · ≈ 12 h</text></g></g>
+<g transform="translate(506 15)"><g class="fl" style="animation-delay:1.0s"><rect width="228" height="378" rx="22" fill="#14172b" stroke="url(#g2)" stroke-width="3"/>
+<g clip-path="url(#k2)"><rect width="228" height="120" fill="url(#g2)"/><rect class="sh" x="0" y="0" width="60" height="120" fill="#fff" opacity=".18" transform="skewX(-20)" style="animation-delay:1.4s"/></g>
+<text class="t" x="22" y="80" font-size="46" font-weight="800" fill="#fff" opacity=".9">JS</text>
+<text class="t" x="206" y="46" font-size="14" font-weight="700" fill="#fff" text-anchor="end" opacity=".9">CURSO 3</text>
+<text class="t" x="22" y="168" font-size="30" font-weight="800" fill="#fff">JavaScript</text><text class="t" x="22" y="194" font-size="17" fill="#fde047" font-weight="600">Lógica</text>
+<text class="t" x="22" y="236" font-size="14" fill="#cbd2f0"><tspan fill="#fde047">✔ </tspan>Variables y funciones</text>
+<text class="t" x="22" y="264" font-size="14" fill="#cbd2f0"><tspan fill="#fde047">✔ </tspan>DOM y eventos</text>
+<text class="t" x="22" y="292" font-size="14" fill="#cbd2f0"><tspan fill="#fde047">✔ </tspan>Asincronía y APIs</text>
+<text class="t" x="22" y="326" font-size="15" font-weight="700" fill="#fff">🏆 App de tareas</text><line x1="22" y1="338" x2="206" y2="338" stroke="#2b3158"/><text class="t" x="22" y="361" font-size="13" fill="#9aa1c4">11 lecciones + proyecto · ≈ 14 h</text></g></g>
+<g transform="translate(753 15)"><g class="fl" style="animation-delay:1.5s"><rect width="228" height="378" rx="22" fill="#14172b" stroke="url(#g3)" stroke-width="3"/>
+<g clip-path="url(#k3)"><rect width="228" height="120" fill="url(#g3)"/><rect class="sh" x="0" y="0" width="60" height="120" fill="#fff" opacity=".18" transform="skewX(-20)" style="animation-delay:2.0999999999999996s"/></g>
+<text class="t" x="22" y="80" font-size="46" font-weight="800" fill="#fff" opacity=".9">⚛</text>
+<text class="t" x="206" y="46" font-size="14" font-weight="700" fill="#fff" text-anchor="end" opacity=".9">CURSO 4</text>
+<text class="t" x="22" y="168" font-size="30" font-weight="800" fill="#fff">React</text><text class="t" x="22" y="194" font-size="17" fill="#67e8f9" font-weight="600">Interfaces</text>
+<text class="t" x="22" y="236" font-size="14" fill="#cbd2f0"><tspan fill="#67e8f9">✔ </tspan>JSX, componentes y props</text>
+<text class="t" x="22" y="264" font-size="14" fill="#cbd2f0"><tspan fill="#67e8f9">✔ </tspan>Estado y efectos</text>
+<text class="t" x="22" y="292" font-size="14" fill="#cbd2f0"><tspan fill="#67e8f9">✔ </tspan>Hooks, Context y Vite</text>
+<text class="t" x="22" y="326" font-size="15" font-weight="700" fill="#fff">🏆 Carrito de compras</text><line x1="22" y1="338" x2="206" y2="338" stroke="#2b3158"/><text class="t" x="22" y="361" font-size="13" fill="#9aa1c4">11 lecciones + proyecto · ≈ 14 h</text></g></g>
 </svg>

@@ -1,7 +1,7 @@
 <div align="center">
 
 <a href="https://cacg-code.github.io/PRACTICAS-HTML/">
-  <img src="assets/readme/banner.svg" alt="Aprende desarrollo web: HTML, CSS y JavaScript" width="100%">
+  <img src="assets/readme/banner.svg" alt="Aprende desarrollo web: HTML, CSS, JavaScript y React" width="100%">
 </a>
 
 <br>
@@ -15,12 +15,13 @@
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+![React](https://img.shields.io/badge/React-087EA4?style=for-the-badge&logo=react&logoColor=white)
 ![Gratis](https://img.shields.io/badge/100%25-Gratis-16a34a?style=for-the-badge)
 ![Sin instalación](https://img.shields.io/badge/Sin%20instalaci%C3%B3n-4f46e5?style=for-the-badge)
 
 *Se abre en tu navegador. Sin cuentas, sin descargas, sin instalar nada.*
 
-<img src="assets/readme/cifras.svg" alt="3 cursos, 33 lecciones, 3 proyectos, unas 36 horas, gratis" width="100%">
+<img src="assets/readme/cifras.svg" alt="4 cursos, 44 lecciones, 4 proyectos, unas 50 horas, gratis" width="100%">
 
 </div>
 
@@ -42,9 +43,9 @@ Sigue el orden: cada curso se apoya en el anterior.
 
 <div align="center">
 
-<img src="assets/readme/cursos.svg" alt="Tres cursos: HTML, CSS y JavaScript" width="100%">
+<img src="assets/readme/cursos.svg" alt="Cuatro cursos: HTML, CSS, JavaScript y React" width="100%">
 
-**[▶ Empezar HTML](https://cacg-code.github.io/PRACTICAS-HTML/html/)** &nbsp;·&nbsp; **[▶ Empezar CSS](https://cacg-code.github.io/PRACTICAS-HTML/css/)** &nbsp;·&nbsp; **[▶ Empezar JavaScript](https://cacg-code.github.io/PRACTICAS-HTML/javascript/)**
+**[▶ Empezar HTML](https://cacg-code.github.io/PRACTICAS-HTML/html/)** &nbsp;·&nbsp; **[▶ Empezar CSS](https://cacg-code.github.io/PRACTICAS-HTML/css/)** &nbsp;·&nbsp; **[▶ Empezar JavaScript](https://cacg-code.github.io/PRACTICAS-HTML/javascript/)** &nbsp;·&nbsp; **[▶ Empezar React](https://cacg-code.github.io/PRACTICAS-HTML/react/)**
 
 </div>
 
@@ -60,12 +61,17 @@ Sigue el orden: cada curso se apoya en el anterior.
 <img src="assets/readme/demos2.svg" alt="JavaScript con consola y Comprobador" width="100%">
 <img src="assets/gif/js-consola.gif" alt="Editor de JavaScript con consola" width="47%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="assets/gif/comprobador.gif" alt="Comprobador que revisa tu código" width="47%">
 
+<br><br><br>
+
+<img src="assets/readme/demos3.svg" alt="React en vivo y estado con useState" width="100%">
+<img src="assets/gif/react-editor.gif" alt="Editor de React con resultado instantáneo" width="47%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="assets/gif/react-estado.gif" alt="Estado de React con useState" width="47%">
+
 </div>
 
 ## 🗺️ Ruta
 
 <div align="center">
-  <img src="assets/readme/ruta.svg" alt="Ruta: HTML, CSS, JavaScript y Git disponibles; React, Node.js, bases de datos y full stack próximamente" width="100%">
+  <img src="assets/readme/ruta.svg" alt="Ruta: HTML, CSS, JavaScript, Git y React disponibles; Node.js, bases de datos y full stack próximamente" width="100%">
 </div>
 
 ## 🔁 Cada lección
@@ -81,31 +87,31 @@ Sigue el orden: cada curso se apoya en el anterior.
 </div>
 
 <details>
-<summary><b>📚 Ver temario completo (33 lecciones)</b></summary>
+<summary><b>📚 Ver temario completo (44 lecciones)</b></summary>
 
 <br>
 
-| | HTML | CSS | JavaScript |
-|:-:|---|---|---|
-| 01 | [Primeros pasos](https://cacg-code.github.io/PRACTICAS-HTML/01-primeros-pasos/) | [Cómo funciona CSS](https://cacg-code.github.io/PRACTICAS-HTML/css/01-como-funciona/) | [Primeros pasos](https://cacg-code.github.io/PRACTICAS-HTML/javascript/01-primeros-pasos/) |
-| 02 | [Texto y enlaces](https://cacg-code.github.io/PRACTICAS-HTML/02-texto-y-enlaces/) | [Selectores y especificidad](https://cacg-code.github.io/PRACTICAS-HTML/css/02-selectores/) | [Variables y tipos](https://cacg-code.github.io/PRACTICAS-HTML/javascript/02-variables-y-tipos/) |
-| 03 | [Imágenes y listas](https://cacg-code.github.io/PRACTICAS-HTML/03-imagenes-y-listas/) | [Color y tipografía](https://cacg-code.github.io/PRACTICAS-HTML/css/03-color-y-texto/) | [Operadores y decisiones](https://cacg-code.github.io/PRACTICAS-HTML/javascript/03-operadores-y-decisiones/) |
-| 04 | [Tablas](https://cacg-code.github.io/PRACTICAS-HTML/04-tablas/) | [La caja y el flujo](https://cacg-code.github.io/PRACTICAS-HTML/css/04-caja-y-flujo/) | [Bucles](https://cacg-code.github.io/PRACTICAS-HTML/javascript/04-bucles/) |
-| 05 | [Formularios](https://cacg-code.github.io/PRACTICAS-HTML/05-formularios/) | [Posicionamiento](https://cacg-code.github.io/PRACTICAS-HTML/css/05-posicionamiento/) | [Funciones](https://cacg-code.github.io/PRACTICAS-HTML/javascript/05-funciones/) |
-| 06 | [HTML semántico](https://cacg-code.github.io/PRACTICAS-HTML/06-html-semantico/) | [Flexbox](https://cacg-code.github.io/PRACTICAS-HTML/css/06-flexbox/) | [Arrays](https://cacg-code.github.io/PRACTICAS-HTML/javascript/06-arrays/) |
-| 07 | [Introducción a CSS](https://cacg-code.github.io/PRACTICAS-HTML/07-introduccion-css/) | [CSS Grid](https://cacg-code.github.io/PRACTICAS-HTML/css/07-grid/) | [Objetos y JSON](https://cacg-code.github.io/PRACTICAS-HTML/javascript/07-objetos/) |
-| 08 | [Audio y video](https://cacg-code.github.io/PRACTICAS-HTML/08-audio-y-video/) | [Diseño responsivo](https://cacg-code.github.io/PRACTICAS-HTML/css/08-responsivo/) | [El DOM](https://cacg-code.github.io/PRACTICAS-HTML/javascript/08-dom/) |
-| 09 | [Accesibilidad](https://cacg-code.github.io/PRACTICAS-HTML/09-accesibilidad/) | [Fondos y degradados](https://cacg-code.github.io/PRACTICAS-HTML/css/09-fondos-y-efectos/) | [Eventos y formularios](https://cacg-code.github.io/PRACTICAS-HTML/javascript/09-eventos/) |
-| 10 | [SEO y metadatos](https://cacg-code.github.io/PRACTICAS-HTML/10-seo-y-metadatos/) | [Animaciones](https://cacg-code.github.io/PRACTICAS-HTML/css/10-animaciones/) | [Asincronía y APIs](https://cacg-code.github.io/PRACTICAS-HTML/javascript/10-asincronia/) |
-| 11 | [Git y publicación](https://cacg-code.github.io/PRACTICAS-HTML/11-git-y-publicacion/) | [Variables y temas](https://cacg-code.github.io/PRACTICAS-HTML/css/11-variables-y-temas/) | [Errores y almacenamiento](https://cacg-code.github.io/PRACTICAS-HTML/javascript/11-errores-y-almacenamiento/) |
-| 🏆 | [Tu página personal](https://cacg-code.github.io/PRACTICAS-HTML/proyecto-pagina-personal/) | [Landing responsiva](https://cacg-code.github.io/PRACTICAS-HTML/css/proyecto-landing/) | [Lista de tareas](https://cacg-code.github.io/PRACTICAS-HTML/javascript/proyecto-tareas/) |
+| | HTML | CSS | JavaScript | React |
+|:-:|---|---|---|---|
+| 01 | [Primeros pasos](https://cacg-code.github.io/PRACTICAS-HTML/01-primeros-pasos/) | [Cómo funciona CSS](https://cacg-code.github.io/PRACTICAS-HTML/css/01-como-funciona/) | [Primeros pasos](https://cacg-code.github.io/PRACTICAS-HTML/javascript/01-primeros-pasos/) | [Qué es React](https://cacg-code.github.io/PRACTICAS-HTML/react/01-que-es-react/) |
+| 02 | [Texto y enlaces](https://cacg-code.github.io/PRACTICAS-HTML/02-texto-y-enlaces/) | [Selectores y especificidad](https://cacg-code.github.io/PRACTICAS-HTML/css/02-selectores/) | [Variables y tipos](https://cacg-code.github.io/PRACTICAS-HTML/javascript/02-variables-y-tipos/) | [JSX a fondo](https://cacg-code.github.io/PRACTICAS-HTML/react/02-jsx/) |
+| 03 | [Imágenes y listas](https://cacg-code.github.io/PRACTICAS-HTML/03-imagenes-y-listas/) | [Color y tipografía](https://cacg-code.github.io/PRACTICAS-HTML/css/03-color-y-texto/) | [Operadores y decisiones](https://cacg-code.github.io/PRACTICAS-HTML/javascript/03-operadores-y-decisiones/) | [Componentes y props](https://cacg-code.github.io/PRACTICAS-HTML/react/03-componentes-y-props/) |
+| 04 | [Tablas](https://cacg-code.github.io/PRACTICAS-HTML/04-tablas/) | [La caja y el flujo](https://cacg-code.github.io/PRACTICAS-HTML/css/04-caja-y-flujo/) | [Bucles](https://cacg-code.github.io/PRACTICAS-HTML/javascript/04-bucles/) | [Estado con useState](https://cacg-code.github.io/PRACTICAS-HTML/react/04-estado/) |
+| 05 | [Formularios](https://cacg-code.github.io/PRACTICAS-HTML/05-formularios/) | [Posicionamiento](https://cacg-code.github.io/PRACTICAS-HTML/css/05-posicionamiento/) | [Funciones](https://cacg-code.github.io/PRACTICAS-HTML/javascript/05-funciones/) | [Listas y condicionales](https://cacg-code.github.io/PRACTICAS-HTML/react/05-listas-y-condicionales/) |
+| 06 | [HTML semántico](https://cacg-code.github.io/PRACTICAS-HTML/06-html-semantico/) | [Flexbox](https://cacg-code.github.io/PRACTICAS-HTML/css/06-flexbox/) | [Arrays](https://cacg-code.github.io/PRACTICAS-HTML/javascript/06-arrays/) | [Formularios controlados](https://cacg-code.github.io/PRACTICAS-HTML/react/06-formularios/) |
+| 07 | [Introducción a CSS](https://cacg-code.github.io/PRACTICAS-HTML/07-introduccion-css/) | [CSS Grid](https://cacg-code.github.io/PRACTICAS-HTML/css/07-grid/) | [Objetos y JSON](https://cacg-code.github.io/PRACTICAS-HTML/javascript/07-objetos/) | [Efectos con useEffect](https://cacg-code.github.io/PRACTICAS-HTML/react/07-efectos/) |
+| 08 | [Audio y video](https://cacg-code.github.io/PRACTICAS-HTML/08-audio-y-video/) | [Diseño responsivo](https://cacg-code.github.io/PRACTICAS-HTML/css/08-responsivo/) | [El DOM](https://cacg-code.github.io/PRACTICAS-HTML/javascript/08-dom/) | [Compartir estado y Context](https://cacg-code.github.io/PRACTICAS-HTML/react/08-compartir-estado/) |
+| 09 | [Accesibilidad](https://cacg-code.github.io/PRACTICAS-HTML/09-accesibilidad/) | [Fondos y degradados](https://cacg-code.github.io/PRACTICAS-HTML/css/09-fondos-y-efectos/) | [Eventos y formularios](https://cacg-code.github.io/PRACTICAS-HTML/javascript/09-eventos/) | [useRef, useReducer y hooks propios](https://cacg-code.github.io/PRACTICAS-HTML/react/09-mas-hooks/) |
+| 10 | [SEO y metadatos](https://cacg-code.github.io/PRACTICAS-HTML/10-seo-y-metadatos/) | [Animaciones](https://cacg-code.github.io/PRACTICAS-HTML/css/10-animaciones/) | [Asincronía y APIs](https://cacg-code.github.io/PRACTICAS-HTML/javascript/10-asincronia/) | [Datos de internet](https://cacg-code.github.io/PRACTICAS-HTML/react/10-datos-de-internet/) |
+| 11 | [Git y publicación](https://cacg-code.github.io/PRACTICAS-HTML/11-git-y-publicacion/) | [Variables y temas](https://cacg-code.github.io/PRACTICAS-HTML/css/11-variables-y-temas/) | [Errores y almacenamiento](https://cacg-code.github.io/PRACTICAS-HTML/javascript/11-errores-y-almacenamiento/) | [Proyectos reales con Vite](https://cacg-code.github.io/PRACTICAS-HTML/react/11-proyectos-reales/) |
+| 🏆 | [Tu página personal](https://cacg-code.github.io/PRACTICAS-HTML/proyecto-pagina-personal/) | [Landing responsiva](https://cacg-code.github.io/PRACTICAS-HTML/css/proyecto-landing/) | [Lista de tareas](https://cacg-code.github.io/PRACTICAS-HTML/javascript/proyecto-tareas/) | [Carrito de compras](https://cacg-code.github.io/PRACTICAS-HTML/react/proyecto-carrito/) |
 
 </details>
 
 ## 🧾 Chuleta
 
 <details>
-<summary><b>📋 Abrir la chuleta (HTML · CSS · JavaScript · Git)</b></summary>
+<summary><b>📋 Abrir la chuleta (HTML · CSS · JavaScript · React · Git)</b></summary>
 
 <br>
 
@@ -151,6 +157,20 @@ Sigue el orden: cada curso se apoya en el anterior.
 | 🌐 Asincronía | `fetch` `async` `await` | `const r = await fetch(url);` |
 | 💾 Almacenar | `localStorage` `try…catch` | `localStorage.setItem("k", "v")` |
 
+### 🔷 React
+
+| Para… | Usa | Ejemplo |
+|---|---|---|
+| 🧩 Componente | función que devuelve JSX | `function Hola() { return <h1>Hola</h1>; }` |
+| 📨 Datos de entrada | `props` | `<Tarjeta titulo="Hola" />` |
+| 🔄 Estado | `useState` | `const [n, setN] = useState(0);` |
+| 📋 Listas | `map` + `key` | `items.map(i => <li key={i.id}>{i.nombre}</li>)` |
+| ❓ Condicional | `&&` · `? :` | `{abierto && <Menu />}` |
+| 📝 Formulario | `value` + `onChange` | `<input value={t} onChange={e => setT(e.target.value)} />` |
+| ⚙️ Efectos | `useEffect` | `useEffect(() => { … }, [dep]);` |
+| 🌍 Compartir datos | `createContext` · `useContext` | `const tema = useContext(Tema);` |
+| 🧠 Más hooks | `useRef` · `useReducer` | `const ref = useRef(null);` |
+
 ### ⚫ Git
 
 | Para… | Comando |
@@ -180,7 +200,7 @@ Sigue el orden: cada curso se apoya en el anterior.
 <details>
 <summary><b>¿Necesito saber programar?</b></summary>
 
-<br>No. El curso de HTML empieza desde cero y no asume nada. CSS pide haber hecho HTML, y JavaScript pide saber maquetar una página; ambos lo indican al inicio.
+<br>No. El curso de HTML empieza desde cero y no asume nada. CSS pide haber hecho HTML, y JavaScript pide saber maquetar una página y React pide saber JavaScript (funciones, arrays y objetos); todos lo indican al inicio.
 </details>
 
 <details>
@@ -218,7 +238,7 @@ Si el navegador bloquea el almacenamiento, el curso sigue funcionando; solo que 
 <details>
 <summary><b>¿Cuánto tarda cada curso?</b></summary>
 
-<br>HTML ≈ 10 h, CSS ≈ 12 h y JavaScript ≈ 14 h. Lo ideal es **una lección al día**: mejor constancia que maratones.
+<br>HTML ≈ 10 h, CSS ≈ 12 h y JavaScript ≈ 14 h y React ≈ 14 h. Lo ideal es **una lección al día**: mejor constancia que maratones.
 </details>
 
 <details>
@@ -245,8 +265,8 @@ cd PRACTICAS-HTML
 <summary><b>📁 Estructura</b></summary>
 
 ```text
-index.html        Portada con los 3 cursos y la ruta
-html/ css/ javascript/   Una carpeta por curso (lecciones + proyecto)
+index.html        Portada con los 4 cursos y la ruta
+html/ css/ javascript/ react/   Una carpeta por curso (lecciones + proyecto)
 NN-nombre/        Lecciones del curso de HTML
 assets/           Estilos, script, GIFs, imágenes y multimedia
 404.html · sitemap.xml

@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="360" viewBox="0 0 1000 360" role="img" aria-label="Aprende desarrollo web desde cero: HTML, CSS y JavaScript">
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="360" viewBox="0 0 1000 360" role="img" aria-label="Aprende desarrollo web desde cero: HTML, CSS, JavaScript y React">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#312e81"/><stop offset=".55" stop-color="#4f46e5"/><stop offset="1" stop-color="#7c3aed"/>
@@ -23,7 +23,7 @@
     <text x="60" y="78" font-size="62" font-weight="800" fill="#fda4af">&lt;/&gt;</text>
   </g>
   <text class="t" x="60" y="160" font-size="52" font-weight="800" fill="url(#tt)">Aprende desarrollo web</text>
-  <text class="t" x="62" y="198" font-size="22" fill="#e0e7ff">HTML · CSS · JavaScript — 33 lecciones y 3 proyectos, en español</text>
+  <text class="t" x="62" y="198" font-size="22" fill="#e0e7ff">HTML · CSS · JavaScript · React — 44 lecciones y 4 proyectos, en español</text>
   <!-- ventana de código -->
   <g transform="translate(560 225)">
     <rect width="380" height="116" rx="14" fill="#14172b" opacity=".95"/>
