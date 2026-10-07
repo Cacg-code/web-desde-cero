@@ -1,7 +1,7 @@
 <div align="center">
 
 <a href="https://cacg-code.github.io/PRACTICAS-HTML/">
-  <img src="assets/readme/banner.svg" alt="Aprende desarrollo web: HTML, CSS, JavaScript y React" width="100%">
+  <img src="assets/readme/banner.svg" alt="Aprende desarrollo web: HTML, CSS, JavaScript, React, Node.js y Bases de datos" width="100%">
 </a>
 
 <br>
@@ -43,7 +43,7 @@ Sigue el orden: cada curso se apoya en el anterior.
 
 <div align="center">
 
-<img src="assets/readme/cursos.svg" alt="Cuatro cursos: HTML, CSS, JavaScript y React" width="100%">
+<img src="assets/readme/cursos.svg" alt="Seis cursos: HTML, CSS, JavaScript, React, Node.js y Bases de datos" width="100%">
 
 **[▶ Empezar HTML](https://cacg-code.github.io/PRACTICAS-HTML/html/)** &nbsp;·&nbsp; **[▶ Empezar CSS](https://cacg-code.github.io/PRACTICAS-HTML/css/)** &nbsp;·&nbsp; **[▶ Empezar JavaScript](https://cacg-code.github.io/PRACTICAS-HTML/javascript/)** &nbsp;·&nbsp; **[▶ Empezar React](https://cacg-code.github.io/PRACTICAS-HTML/react/)** &nbsp;·&nbsp; **[▶ Node.js](https://cacg-code.github.io/PRACTICAS-HTML/node/)** &nbsp;·&nbsp; **[▶ Bases de datos](https://cacg-code.github.io/PRACTICAS-HTML/bd/)**
 
@@ -71,7 +71,7 @@ Sigue el orden: cada curso se apoya en el anterior.
 ## 🗺️ Ruta
 
 <div align="center">
-  <img src="assets/readme/ruta.svg" alt="Ruta: HTML, CSS, JavaScript, Git y React disponibles; Node.js, bases de datos y full stack próximamente" width="100%">
+  <img src="assets/readme/ruta.svg" alt="Ruta: HTML, CSS, JavaScript, Git, React, Node.js y bases de datos disponibles; proyecto full stack próximamente" width="100%">
 </div>
 
 ## 🔁 Cada lección
@@ -115,6 +115,18 @@ Sigue el orden: cada curso se apoya en el anterior.
 | 10 | [SEO y metadatos](https://cacg-code.github.io/PRACTICAS-HTML/10-seo-y-metadatos/) | [Animaciones](https://cacg-code.github.io/PRACTICAS-HTML/css/10-animaciones/) | [Asincronía y APIs](https://cacg-code.github.io/PRACTICAS-HTML/javascript/10-asincronia/) | [Datos de internet](https://cacg-code.github.io/PRACTICAS-HTML/react/10-datos-de-internet/) |
 | 11 | [Git y publicación](https://cacg-code.github.io/PRACTICAS-HTML/11-git-y-publicacion/) | [Variables y temas](https://cacg-code.github.io/PRACTICAS-HTML/css/11-variables-y-temas/) | [Errores y almacenamiento](https://cacg-code.github.io/PRACTICAS-HTML/javascript/11-errores-y-almacenamiento/) | [Proyectos reales con Vite](https://cacg-code.github.io/PRACTICAS-HTML/react/11-proyectos-reales/) |
 | 🏆 | [Tu página personal](https://cacg-code.github.io/PRACTICAS-HTML/proyecto-pagina-personal/) | [Landing responsiva](https://cacg-code.github.io/PRACTICAS-HTML/css/proyecto-landing/) | [Lista de tareas](https://cacg-code.github.io/PRACTICAS-HTML/javascript/proyecto-tareas/) | [Carrito de compras](https://cacg-code.github.io/PRACTICAS-HTML/react/proyecto-carrito/) |
+
+| | 🟢 Node.js | 🟣 Bases de datos |
+|:-:|---|---|
+| 01 | [Qué es Node.js](https://cacg-code.github.io/PRACTICAS-HTML/node/01-que-es-node/) | [Qué es una base de datos](https://cacg-code.github.io/PRACTICAS-HTML/bd/01-que-es-una-base-de-datos/) |
+| 02 | [Módulos y fs](https://cacg-code.github.io/PRACTICAS-HTML/node/02-modulos/) | [Consultar con SELECT](https://cacg-code.github.io/PRACTICAS-HTML/bd/02-consultar-con-select/) |
+| 03 | [npm y package.json](https://cacg-code.github.io/PRACTICAS-HTML/node/03-npm-y-package-json/) | [Insertar, actualizar, borrar](https://cacg-code.github.io/PRACTICAS-HTML/bd/03-insertar-actualizar-borrar/) |
+| 04 | [Servidor con Express](https://cacg-code.github.io/PRACTICAS-HTML/node/04-servidor-express/) | [Diseñar tablas](https://cacg-code.github.io/PRACTICAS-HTML/bd/04-disenar-tablas/) |
+| 05 | [API REST](https://cacg-code.github.io/PRACTICAS-HTML/node/05-api-rest/) | [Relaciones y JOIN](https://cacg-code.github.io/PRACTICAS-HTML/bd/05-relaciones-y-join/) |
+| 06 | [Consumir APIs y .env](https://cacg-code.github.io/PRACTICAS-HTML/node/06-consumir-apis/) | [Agrupar y resumir](https://cacg-code.github.io/PRACTICAS-HTML/bd/06-agrupar-y-resumir/) |
+| 07 | [Errores y seguridad](https://cacg-code.github.io/PRACTICAS-HTML/node/07-errores-y-seguridad/) | [SQLite y PostgreSQL](https://cacg-code.github.io/PRACTICAS-HTML/bd/07-sqlite-y-postgresql/) |
+| 08 | [Despliegue](https://cacg-code.github.io/PRACTICAS-HTML/node/08-despliegue/) | [Seguridad en SQL](https://cacg-code.github.io/PRACTICAS-HTML/bd/08-seguridad/) |
+| 🏆 | [API de tareas](https://cacg-code.github.io/PRACTICAS-HTML/node/proyecto-api-tareas/) | [Base de datos de una tienda](https://cacg-code.github.io/PRACTICAS-HTML/bd/proyecto-tienda/) |
 
 </details>
 
@@ -258,7 +270,7 @@ Sigue el orden: cada curso se apoya en el anterior.
 <details>
 <summary><b>¿Necesito saber programar?</b></summary>
 
-<br>No. El curso de HTML empieza desde cero y no asume nada. CSS pide haber hecho HTML, y JavaScript pide saber maquetar una página y React pide saber JavaScript (funciones, arrays y objetos); todos lo indican al inicio.
+<br>No. El curso de HTML empieza desde cero y no asume nada. CSS pide haber hecho HTML, y JavaScript pide saber maquetar una página React pide saber JavaScript (funciones, arrays y objetos), Node.js pide JavaScript y Bases de datos solo pide ganas (conviene Node.js para la lección de SQLite); todos lo indican al inicio.
 </details>
 
 <details>
@@ -296,7 +308,7 @@ Si el navegador bloquea el almacenamiento, el curso sigue funcionando; solo que 
 <details>
 <summary><b>¿Cuánto tarda cada curso?</b></summary>
 
-<br>HTML ≈ 10 h, CSS ≈ 12 h y JavaScript ≈ 14 h y React ≈ 14 h. Lo ideal es **una lección al día**: mejor constancia que maratones.
+<br>HTML ≈ 10 h, CSS ≈ 12 h, JavaScript ≈ 14 h, React ≈ 14 h, Node.js ≈ 14 h y Bases de datos ≈ 12 h. Lo ideal es **una lección al día**: mejor constancia que maratones.
 </details>
 
 <details>
@@ -323,7 +335,7 @@ cd PRACTICAS-HTML
 <summary><b>📁 Estructura</b></summary>
 
 ```text
-index.html        Portada con los 4 cursos y la ruta
+index.html        Portada con los 6 cursos y la ruta
 html/ css/ javascript/ react/ node/ bd/   Una carpeta por curso (lecciones + proyecto)
 NN-nombre/        Lecciones del curso de HTML
 assets/           Estilos, script, GIFs, imágenes y multimedia
