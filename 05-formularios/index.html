@@ -10,7 +10,7 @@
   <meta name="theme-color" content="#4f46e5">
   <meta name="color-scheme" content="light dark">
   <meta property="og:type" content="website">
-  <meta property="og:site_name" content="Curso de HTML desde cero">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
   <meta property="og:locale" content="es_LA">
   <meta property="og:title" content="Lección 5: Formularios · Curso de HTML">
   <meta property="og:description" content="Cómo crear formularios accesibles: campos, etiquetas, tipos de input, validación y botones.">
@@ -18,15 +18,16 @@
   <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="Curso de HTML desde cero: apuntes, práctica en vivo y proyecto final">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="stylesheet" href="../assets/estilos.css">
 </head>
 <body>
   <a class="saltar" href="#contenido">Saltar al contenido</a>
   <header class="topbar">
-    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de HTML</a>
+    <a class="brand" href="../html/"><span class="brand-logo">&lt;/&gt;</span> Curso de HTML</a>
     <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../" style="text-decoration:none">Todos los cursos</a>
       <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
       <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
     </div>
@@ -40,7 +41,7 @@
 
     <article>
       <header class="lesson-head">
-        <div class="breadcrumb"><a href="../">Inicio</a> › Lección 5</div>
+        <div class="breadcrumb"><a href="../html/">Curso de HTML</a> › Lección 5</div>
         <h1>Formularios</h1>
         <ul class="meta"><li>⏱ 40 minutos</li><li>📶 Nivel: principiante</li><li>🧩 Incluye ejercicio</li></ul>
       </header>
@@ -90,6 +91,13 @@
 <p class="callout-title">⚠️ Importante · No uses solo placeholder</p>
 <p>El atributo <code>placeholder</code> muestra un texto de ejemplo que desaparece al escribir. No sustituye a la etiqueta: se pierde, suele tener poco contraste y los lectores de pantalla pueden ignorarlo. Úsalo solo como ayuda complementaria.</p>
 </div>
+<figure class="gif-demo">
+  <button type="button" class="gif-btn" data-gif="../assets/gif/formulario.gif" aria-label="Reproducir animación: Se hace clic sobre el texto de cada etiqueta, el cursor salta al campo y se escribe el nombre y el correo">
+    <img src="../assets/gif/formulario.png" alt="Se hace clic sobre el texto de cada etiqueta, el cursor salta al campo y se escribe el nombre y el correo" width="640" height="360" loading="lazy">
+    <span class="gif-play">▶ Ver animación</span>
+  </button>
+  <figcaption>Al hacer clic en la etiqueta, el cursor salta a su campo: eso es lo que consigue <code>for</code> + <code>id</code>.</figcaption>
+</figure>
 <div class="playground">
   <div class="pg-head"><span>✏️ Haz clic en la etiqueta</span><button type="button" data-reset>Restablecer</button></div>
   <div class="pg-body">
@@ -346,7 +354,7 @@
     </article>
   </main>
 
-  <footer class="site-footer">Curso de HTML · Lección 5 · Material elaborado con ayuda de inteligencia artificial.</footer>
+  <footer class="site-footer">Curso de HTML · Lección 5 · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&title=%5BError%5D%20Lecci%C3%B3n%205%3A%20Formularios%20%C2%B7%20Curso%20de%20HTML&pagina=https%3A//cacg-code.github.io/PRACTICAS-HTML/05-formularios/" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
   <script src="../assets/curso.js"></script>
 </body>
 </html>

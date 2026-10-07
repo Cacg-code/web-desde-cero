@@ -1,0 +1,17 @@
+name: ❓ Preguntar una duda
+description: Algo no quedó claro y quieres que se explique mejor.
+title: "[Duda] "
+labels: ["duda"]
+body:
+  - type: input
+    id: pagina
+    attributes:
+      label: ¿En qué página o lección?
+      placeholder: Ej. Lección 5, sección «Tipos de input»
+  - type: textarea
+    id: duda
+    attributes:
+      label: Tu duda
+      description: Cuéntanos qué no entendiste. Entre más específico, mejor.
+    validations:
+      required: true

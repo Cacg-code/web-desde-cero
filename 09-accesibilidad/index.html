@@ -10,7 +10,7 @@
   <meta name="theme-color" content="#4f46e5">
   <meta name="color-scheme" content="light dark">
   <meta property="og:type" content="website">
-  <meta property="og:site_name" content="Curso de HTML desde cero">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
   <meta property="og:locale" content="es_LA">
   <meta property="og:title" content="Lección 9: Accesibilidad · Curso de HTML">
   <meta property="og:description" content="Accesibilidad web: HTML semántico, contraste, teclado, formularios, ARIA y cómo probar tu página para que todas las personas puedan usarla.">
@@ -18,15 +18,16 @@
   <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="Curso de HTML desde cero: apuntes, práctica en vivo y proyecto final">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="stylesheet" href="../assets/estilos.css">
 </head>
 <body>
   <a class="saltar" href="#contenido">Saltar al contenido</a>
   <header class="topbar">
-    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de HTML</a>
+    <a class="brand" href="../html/"><span class="brand-logo">&lt;/&gt;</span> Curso de HTML</a>
     <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../" style="text-decoration:none">Todos los cursos</a>
       <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
       <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
     </div>
@@ -40,7 +41,7 @@
 
     <article>
       <header class="lesson-head">
-        <div class="breadcrumb"><a href="../">Inicio</a> › Lección 9</div>
+        <div class="breadcrumb"><a href="../html/">Curso de HTML</a> › Lección 9</div>
         <h1>Accesibilidad</h1>
         <ul class="meta"><li>⏱ 40 minutos</li><li>📶 Nivel: principiante</li><li>🧩 Incluye ejercicio</li></ul>
       </header>
@@ -98,6 +99,13 @@
 <tbody><tr><td><strong>AA</strong> (el mínimo recomendado)</td><td>4.5 : 1</td><td>3 : 1</td></tr><tr><td><strong>AAA</strong> (el ideal)</td><td>7 : 1</td><td>4.5 : 1</td></tr></tbody>
 </table></div>
 <p>Prueba tú mismo: el valor inicial es un gris claro sobre blanco, muy común… y que <strong>no pasa</strong>. Mueve los colores y mira cuándo se cumple cada nivel.</p>
+<figure class="gif-demo">
+  <button type="button" class="gif-btn" data-gif="../assets/gif/contraste.gif" aria-label="Reproducir animación: Se cambia el color del texto de gris claro a negro y la proporción de contraste sube de 3,45 a 21 mientras los niveles AA y AAA se van cumpliendo">
+    <img src="../assets/gif/contraste.png" alt="Se cambia el color del texto de gris claro a negro y la proporción de contraste sube de 3,45 a 21 mientras los niveles AA y AAA se van cumpliendo" width="640" height="360" loading="lazy">
+    <span class="gif-play">▶ Ver animación</span>
+  </button>
+  <figcaption>El comprobador en acción: al oscurecer el texto, sube la proporción y se van cumpliendo los niveles.</figcaption>
+</figure>
 <div class="widget" data-widget="contrast">
   <div class="w-head">🎨 Comprobador de contraste</div>
   <div class="w-body">
@@ -251,7 +259,7 @@
     </article>
   </main>
 
-  <footer class="site-footer">Curso de HTML · Lección 9 · Material elaborado con ayuda de inteligencia artificial.</footer>
+  <footer class="site-footer">Curso de HTML · Lección 9 · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&title=%5BError%5D%20Lecci%C3%B3n%209%3A%20Accesibilidad%20%C2%B7%20Curso%20de%20HTML&pagina=https%3A//cacg-code.github.io/PRACTICAS-HTML/09-accesibilidad/" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
   <script src="../assets/curso.js"></script>
 </body>
 </html>
