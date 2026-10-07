@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="556" viewBox="0 0 1000 556" role="img" aria-label="Tarjetas de la chuleta de js">
+<style>.t{font-family:Segoe UI,Helvetica,Arial,sans-serif}.m{font-family:Consolas,Menlo,monospace}</style>
+<defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d4a017"/><stop offset="1" stop-color="#fde047"/></linearGradient></defs>
+<g transform="translate(0 3)"><rect width="490" height="96" rx="14" fill="#14172b"/><rect width="7" height="96" rx="3.5" fill="url(#g)"/>
+<text class="t" x="24" y="30" font-size="17" font-weight="700" fill="#fff">📌 Guardar datos</text>
+<text class="m" x="24" y="52" font-size="13" fill="#fde047">const let</text>
+<rect x="20" y="62" width="452" height="26" rx="7" fill="#0b0d1a" stroke="#2b3158"/><text class="m" x="30" y="79" font-size="13" fill="#e0e7ff">const nombre = "Ana";</text></g>
+<g transform="translate(510 3)"><rect width="490" height="96" rx="14" fill="#14172b"/><rect width="7" height="96" rx="3.5" fill="url(#g)"/>
+<text class="t" x="24" y="30" font-size="17" font-weight="700" fill="#fff">🔀 Decidir</text>
+<text class="m" x="24" y="52" font-size="13" fill="#fde047">if else switch</text>
+<rect x="20" y="62" width="452" height="26" rx="7" fill="#0b0d1a" stroke="#2b3158"/><text class="m" x="30" y="79" font-size="13" fill="#e0e7ff">if (edad &gt;= 18) { … }</text></g>
+<g transform="translate(0 113)"><rect width="490" height="96" rx="14" fill="#14172b"/><rect width="7" height="96" rx="3.5" fill="url(#g)"/>
+<text class="t" x="24" y="30" font-size="17" font-weight="700" fill="#fff">🔁 Repetir</text>
+<text class="m" x="24" y="52" font-size="13" fill="#fde047">for while for…of</text>
+<rect x="20" y="62" width="452" height="26" rx="7" fill="#0b0d1a" stroke="#2b3158"/><text class="m" x="30" y="79" font-size="13" fill="#e0e7ff">for (const x of lista) { … }</text></g>
+<g transform="translate(510 113)"><rect width="490" height="96" rx="14" fill="#14172b"/><rect width="7" height="96" rx="3.5" fill="url(#g)"/>
+<text class="t" x="24" y="30" font-size="17" font-weight="700" fill="#fff">🧩 Funciones</text>
+<text class="m" x="24" y="52" font-size="13" fill="#fde047">function =&gt;</text>
+<rect x="20" y="62" width="452" height="26" rx="7" fill="#0b0d1a" stroke="#2b3158"/><text class="m" x="30" y="79" font-size="13" fill="#e0e7ff">const doble = n =&gt; n * 2;</text></g>
+<g transform="translate(0 223)"><rect width="490" height="96" rx="14" fill="#14172b"/><rect width="7" height="96" rx="3.5" fill="url(#g)"/>
+<text class="t" x="24" y="30" font-size="17" font-weight="700" fill="#fff">📚 Arrays</text>
+<text class="m" x="24" y="52" font-size="13" fill="#fde047">push map filter find</text>
+<rect x="20" y="62" width="452" height="26" rx="7" fill="#0b0d1a" stroke="#2b3158"/><text class="m" x="30" y="79" font-size="13" fill="#e0e7ff">lista.filter(n =&gt; n &gt; 2)</text></g>
+<g transform="translate(510 223)"><rect width="490" height="96" rx="14" fill="#14172b"/><rect width="7" height="96" rx="3.5" fill="url(#g)"/>
+<text class="t" x="24" y="30" font-size="17" font-weight="700" fill="#fff">🗂️ Objetos y JSON</text>
+<text class="m" x="24" y="52" font-size="13" fill="#fde047">{} JSON.parse JSON.stringify</text>
+<rect x="20" y="62" width="452" height="26" rx="7" fill="#0b0d1a" stroke="#2b3158"/><text class="m" x="30" y="79" font-size="13" fill="#e0e7ff">persona.nombre</text></g>
+<g transform="translate(0 333)"><rect width="490" height="96" rx="14" fill="#14172b"/><rect width="7" height="96" rx="3.5" fill="url(#g)"/>
+<text class="t" x="24" y="30" font-size="17" font-weight="700" fill="#fff">🖱️ DOM y eventos</text>
+<text class="m" x="24" y="52" font-size="13" fill="#fde047">querySelector addEventListener</text>
+<rect x="20" y="62" width="452" height="26" rx="7" fill="#0b0d1a" stroke="#2b3158"/><text class="m" x="30" y="79" font-size="13" fill="#e0e7ff">btn.addEventListener("click", f)</text></g>
+<g transform="translate(510 333)"><rect width="490" height="96" rx="14" fill="#14172b"/><rect width="7" height="96" rx="3.5" fill="url(#g)"/>
+<text class="t" x="24" y="30" font-size="17" font-weight="700" fill="#fff">🌐 Asincronía</text>
+<text class="m" x="24" y="52" font-size="13" fill="#fde047">fetch async await</text>
+<rect x="20" y="62" width="452" height="26" rx="7" fill="#0b0d1a" stroke="#2b3158"/><text class="m" x="30" y="79" font-size="13" fill="#e0e7ff">const r = await fetch(url);</text></g>
+<g transform="translate(0 443)"><rect width="490" height="96" rx="14" fill="#14172b"/><rect width="7" height="96" rx="3.5" fill="url(#g)"/>
+<text class="t" x="24" y="30" font-size="17" font-weight="700" fill="#fff">💾 Almacenar</text>
+<text class="m" x="24" y="52" font-size="13" fill="#fde047">localStorage try…catch</text>
+<rect x="20" y="62" width="452" height="26" rx="7" fill="#0b0d1a" stroke="#2b3158"/><text class="m" x="30" y="79" font-size="13" fill="#e0e7ff">localStorage.setItem("k", "v")</text></g>
+</svg>

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="336" viewBox="0 0 1000 336" role="img" aria-label="Tarjetas de la chuleta de git">
+<style>.t{font-family:Segoe UI,Helvetica,Arial,sans-serif}.m{font-family:Consolas,Menlo,monospace}</style>
+<defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f05032"/><stop offset="1" stop-color="#fda4af"/></linearGradient></defs>
+<g transform="translate(0 3)"><rect width="490" height="96" rx="14" fill="#14172b"/><rect width="7" height="96" rx="3.5" fill="url(#g)"/>
+<text class="t" x="24" y="30" font-size="17" font-weight="700" fill="#fff">Empezar un repositorio</text>
+<rect x="20" y="46" width="452" height="26" rx="7" fill="#0b0d1a" stroke="#2b3158"/><text class="m" x="30" y="63" font-size="13" fill="#e0e7ff">git init</text></g>
+<g transform="translate(510 3)"><rect width="490" height="96" rx="14" fill="#14172b"/><rect width="7" height="96" rx="3.5" fill="url(#g)"/>
+<text class="t" x="24" y="30" font-size="17" font-weight="700" fill="#fff">Ver qué cambió</text>
+<rect x="20" y="46" width="452" height="26" rx="7" fill="#0b0d1a" stroke="#2b3158"/><text class="m" x="30" y="63" font-size="13" fill="#e0e7ff">git status</text></g>
+<g transform="translate(0 113)"><rect width="490" height="96" rx="14" fill="#14172b"/><rect width="7" height="96" rx="3.5" fill="url(#g)"/>
+<text class="t" x="24" y="30" font-size="17" font-weight="700" fill="#fff">Preparar y guardar cambios</text>
+<rect x="20" y="46" width="452" height="26" rx="7" fill="#0b0d1a" stroke="#2b3158"/><text class="m" x="30" y="63" font-size="13" fill="#e0e7ff">git add . → git commit -m "mensaje"</text></g>
+<g transform="translate(510 113)"><rect width="490" height="96" rx="14" fill="#14172b"/><rect width="7" height="96" rx="3.5" fill="url(#g)"/>
+<text class="t" x="24" y="30" font-size="17" font-weight="700" fill="#fff">Conectar con GitHub y subir</text>
+<rect x="20" y="46" width="452" height="26" rx="7" fill="#0b0d1a" stroke="#2b3158"/><text class="m" x="30" y="63" font-size="12" fill="#e0e7ff">git remote add origin URL → git push -u origin main</text></g>
+<g transform="translate(0 223)"><rect width="490" height="96" rx="14" fill="#14172b"/><rect width="7" height="96" rx="3.5" fill="url(#g)"/>
+<text class="t" x="24" y="30" font-size="17" font-weight="700" fill="#fff">Traer cambios</text>
+<rect x="20" y="46" width="452" height="26" rx="7" fill="#0b0d1a" stroke="#2b3158"/><text class="m" x="30" y="63" font-size="13" fill="#e0e7ff">git pull</text></g>
+</svg>

@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="446" viewBox="0 0 1000 446" role="img" aria-label="Tarjetas de la chuleta de css">
+<style>.t{font-family:Segoe UI,Helvetica,Arial,sans-serif}.m{font-family:Consolas,Menlo,monospace}</style>
+<defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1572b6"/><stop offset="1" stop-color="#38bdf8"/></linearGradient></defs>
+<g transform="translate(0 3)"><rect width="490" height="96" rx="14" fill="#14172b"/><rect width="7" height="96" rx="3.5" fill="url(#g)"/>
+<text class="t" x="24" y="30" font-size="17" font-weight="700" fill="#fff">🎯 Seleccionar</text>
+<text class="m" x="24" y="52" font-size="13" fill="#38bdf8">p .clase #id a:hover</text>
+<rect x="20" y="62" width="452" height="26" rx="7" fill="#0b0d1a" stroke="#2b3158"/><text class="m" x="30" y="79" font-size="13" fill="#e0e7ff">.tarjeta { … }</text></g>
+<g transform="translate(510 3)"><rect width="490" height="96" rx="14" fill="#14172b"/><rect width="7" height="96" rx="3.5" fill="url(#g)"/>
+<text class="t" x="24" y="30" font-size="17" font-weight="700" fill="#fff">🎨 Color y texto</text>
+<text class="m" x="24" y="52" font-size="13" fill="#38bdf8">color background font-size line-height</text>
+<rect x="20" y="62" width="452" height="26" rx="7" fill="#0b0d1a" stroke="#2b3158"/><text class="m" x="30" y="79" font-size="13" fill="#e0e7ff">color: #4f46e5;</text></g>
+<g transform="translate(0 113)"><rect width="490" height="96" rx="14" fill="#14172b"/><rect width="7" height="96" rx="3.5" fill="url(#g)"/>
+<text class="t" x="24" y="30" font-size="17" font-weight="700" fill="#fff">📦 La caja</text>
+<text class="m" x="24" y="52" font-size="13" fill="#38bdf8">margin padding border box-sizing</text>
+<rect x="20" y="62" width="452" height="26" rx="7" fill="#0b0d1a" stroke="#2b3158"/><text class="m" x="30" y="79" font-size="13" fill="#e0e7ff">box-sizing: border-box;</text></g>
+<g transform="translate(510 113)"><rect width="490" height="96" rx="14" fill="#14172b"/><rect width="7" height="96" rx="3.5" fill="url(#g)"/>
+<text class="t" x="24" y="30" font-size="17" font-weight="700" fill="#fff">↔️ Flexbox</text>
+<text class="m" x="24" y="52" font-size="13" fill="#38bdf8">display:flex justify-content align-items gap</text>
+<rect x="20" y="62" width="452" height="26" rx="7" fill="#0b0d1a" stroke="#2b3158"/><text class="m" x="30" y="79" font-size="13" fill="#e0e7ff">display:flex; gap:1rem;</text></g>
+<g transform="translate(0 223)"><rect width="490" height="96" rx="14" fill="#14172b"/><rect width="7" height="96" rx="3.5" fill="url(#g)"/>
+<text class="t" x="24" y="30" font-size="17" font-weight="700" fill="#fff">▦ Grid</text>
+<text class="m" x="24" y="52" font-size="13" fill="#38bdf8">display:grid grid-template-columns</text>
+<rect x="20" y="62" width="452" height="26" rx="7" fill="#0b0d1a" stroke="#2b3158"/><text class="m" x="30" y="79" font-size="13" fill="#e0e7ff">grid-template-columns: repeat(3, 1fr);</text></g>
+<g transform="translate(510 223)"><rect width="490" height="96" rx="14" fill="#14172b"/><rect width="7" height="96" rx="3.5" fill="url(#g)"/>
+<text class="t" x="24" y="30" font-size="17" font-weight="700" fill="#fff">📱 Responsivo</text>
+<text class="m" x="24" y="52" font-size="13" fill="#38bdf8">@media clamp() max-width</text>
+<rect x="20" y="62" width="452" height="26" rx="7" fill="#0b0d1a" stroke="#2b3158"/><text class="m" x="30" y="79" font-size="13" fill="#e0e7ff">@media (max-width: 600px) { … }</text></g>
+<g transform="translate(0 333)"><rect width="490" height="96" rx="14" fill="#14172b"/><rect width="7" height="96" rx="3.5" fill="url(#g)"/>
+<text class="t" x="24" y="30" font-size="17" font-weight="700" fill="#fff">✨ Efectos</text>
+<text class="m" x="24" y="52" font-size="13" fill="#38bdf8">transition animation box-shadow linear-gradient</text>
+<rect x="20" y="62" width="452" height="26" rx="7" fill="#0b0d1a" stroke="#2b3158"/><text class="m" x="30" y="79" font-size="13" fill="#e0e7ff">transition: .3s;</text></g>
+<g transform="translate(510 333)"><rect width="490" height="96" rx="14" fill="#14172b"/><rect width="7" height="96" rx="3.5" fill="url(#g)"/>
+<text class="t" x="24" y="30" font-size="17" font-weight="700" fill="#fff">🌗 Variables</text>
+<text class="m" x="24" y="52" font-size="13" fill="#38bdf8">--nombre var()</text>
+<rect x="20" y="62" width="452" height="26" rx="7" fill="#0b0d1a" stroke="#2b3158"/><text class="m" x="30" y="79" font-size="13" fill="#e0e7ff">:root { --color: teal; }</text></g>
+</svg>

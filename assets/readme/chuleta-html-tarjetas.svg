@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="556" viewBox="0 0 1000 556" role="img" aria-label="Tarjetas de la chuleta de html">
+<style>.t{font-family:Segoe UI,Helvetica,Arial,sans-serif}.m{font-family:Consolas,Menlo,monospace}</style>
+<defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e34f26"/><stop offset="1" stop-color="#f97316"/></linearGradient></defs>
+<g transform="translate(0 3)"><rect width="490" height="96" rx="14" fill="#14172b"/><rect width="7" height="96" rx="3.5" fill="url(#g)"/>
+<text class="t" x="24" y="30" font-size="17" font-weight="700" fill="#fff">🏗️ Estructura base</text>
+<text class="m" x="24" y="52" font-size="13" fill="#f97316">&lt;!DOCTYPE html&gt; &lt;html lang&gt; &lt;head&gt; &lt;body&gt;</text>
+<rect x="20" y="62" width="452" height="26" rx="7" fill="#0b0d1a" stroke="#2b3158"/><text class="m" x="30" y="79" font-size="13" fill="#e0e7ff">&lt;html lang="es"&gt;</text></g>
+<g transform="translate(510 3)"><rect width="490" height="96" rx="14" fill="#14172b"/><rect width="7" height="96" rx="3.5" fill="url(#g)"/>
+<text class="t" x="24" y="30" font-size="17" font-weight="700" fill="#fff">🔤 Títulos y texto</text>
+<text class="m" x="24" y="52" font-size="13" fill="#f97316">&lt;h1&gt;–&lt;h6&gt; &lt;p&gt; &lt;strong&gt; &lt;em&gt;</text>
+<rect x="20" y="62" width="452" height="26" rx="7" fill="#0b0d1a" stroke="#2b3158"/><text class="m" x="30" y="79" font-size="13" fill="#e0e7ff">&lt;h1&gt;Mi web&lt;/h1&gt;</text></g>
+<g transform="translate(0 113)"><rect width="490" height="96" rx="14" fill="#14172b"/><rect width="7" height="96" rx="3.5" fill="url(#g)"/>
+<text class="t" x="24" y="30" font-size="17" font-weight="700" fill="#fff">🔗 Enlaces e imágenes</text>
+<text class="m" x="24" y="52" font-size="13" fill="#f97316">&lt;a href&gt; &lt;img src alt&gt;</text>
+<rect x="20" y="62" width="452" height="26" rx="7" fill="#0b0d1a" stroke="#2b3158"/><text class="m" x="30" y="79" font-size="13" fill="#e0e7ff">&lt;img src="foto.jpg" alt="Mi foto"&gt;</text></g>
+<g transform="translate(510 113)"><rect width="490" height="96" rx="14" fill="#14172b"/><rect width="7" height="96" rx="3.5" fill="url(#g)"/>
+<text class="t" x="24" y="30" font-size="17" font-weight="700" fill="#fff">📃 Listas</text>
+<text class="m" x="24" y="52" font-size="13" fill="#f97316">&lt;ul&gt; &lt;ol&gt; &lt;li&gt;</text>
+<rect x="20" y="62" width="452" height="26" rx="7" fill="#0b0d1a" stroke="#2b3158"/><text class="m" x="30" y="79" font-size="13" fill="#e0e7ff">&lt;ul&gt;&lt;li&gt;Uno&lt;/li&gt;&lt;/ul&gt;</text></g>
+<g transform="translate(0 223)"><rect width="490" height="96" rx="14" fill="#14172b"/><rect width="7" height="96" rx="3.5" fill="url(#g)"/>
+<text class="t" x="24" y="30" font-size="17" font-weight="700" fill="#fff">📊 Tablas</text>
+<text class="m" x="24" y="52" font-size="13" fill="#f97316">&lt;table&gt; &lt;tr&gt; &lt;th&gt; &lt;td&gt;</text>
+<rect x="20" y="62" width="452" height="26" rx="7" fill="#0b0d1a" stroke="#2b3158"/><text class="m" x="30" y="79" font-size="13" fill="#e0e7ff">&lt;tr&gt;&lt;td&gt;Dato&lt;/td&gt;&lt;/tr&gt;</text></g>
+<g transform="translate(510 223)"><rect width="490" height="96" rx="14" fill="#14172b"/><rect width="7" height="96" rx="3.5" fill="url(#g)"/>
+<text class="t" x="24" y="30" font-size="17" font-weight="700" fill="#fff">📝 Formularios</text>
+<text class="m" x="24" y="52" font-size="13" fill="#f97316">&lt;form&gt; &lt;label&gt; &lt;input&gt; &lt;button&gt;</text>
+<rect x="20" y="62" width="452" height="26" rx="7" fill="#0b0d1a" stroke="#2b3158"/><text class="m" x="30" y="79" font-size="13" fill="#e0e7ff">&lt;input type="email" required&gt;</text></g>
+<g transform="translate(0 333)"><rect width="490" height="96" rx="14" fill="#14172b"/><rect width="7" height="96" rx="3.5" fill="url(#g)"/>
+<text class="t" x="24" y="30" font-size="17" font-weight="700" fill="#fff">🧱 Semántica</text>
+<text class="m" x="24" y="52" font-size="13" fill="#f97316">&lt;header&gt; &lt;nav&gt; &lt;main&gt; &lt;section&gt; &lt;footer&gt;</text>
+<rect x="20" y="62" width="452" height="26" rx="7" fill="#0b0d1a" stroke="#2b3158"/><text class="m" x="30" y="79" font-size="13" fill="#e0e7ff">&lt;nav aria-label="Principal"&gt;</text></g>
+<g transform="translate(510 333)"><rect width="490" height="96" rx="14" fill="#14172b"/><rect width="7" height="96" rx="3.5" fill="url(#g)"/>
+<text class="t" x="24" y="30" font-size="17" font-weight="700" fill="#fff">🎬 Multimedia</text>
+<text class="m" x="24" y="52" font-size="13" fill="#f97316">&lt;audio&gt; &lt;video&gt; &lt;track&gt; &lt;picture&gt;</text>
+<rect x="20" y="62" width="452" height="26" rx="7" fill="#0b0d1a" stroke="#2b3158"/><text class="m" x="30" y="79" font-size="13" fill="#e0e7ff">&lt;video controls src="a.mp4"&gt;</text></g>
+<g transform="translate(0 443)"><rect width="490" height="96" rx="14" fill="#14172b"/><rect width="7" height="96" rx="3.5" fill="url(#g)"/>
+<text class="t" x="24" y="30" font-size="17" font-weight="700" fill="#fff">♿ Accesibilidad</text>
+<text class="m" x="24" y="52" font-size="13" fill="#f97316">alt aria-label role tabindex</text>
+<rect x="20" y="62" width="452" height="26" rx="7" fill="#0b0d1a" stroke="#2b3158"/><text class="m" x="30" y="79" font-size="13" fill="#e0e7ff">&lt;button aria-label="Cerrar"&gt;</text></g>
+<g transform="translate(510 443)"><rect width="490" height="96" rx="14" fill="#14172b"/><rect width="7" height="96" rx="3.5" fill="url(#g)"/>
+<text class="t" x="24" y="30" font-size="17" font-weight="700" fill="#fff">🔍 SEO</text>
+<text class="m" x="24" y="52" font-size="13" fill="#f97316">&lt;title&gt; &lt;meta name="description"&gt; og:*</text>
+<rect x="20" y="62" width="452" height="26" rx="7" fill="#0b0d1a" stroke="#2b3158"/><text class="m" x="30" y="79" font-size="13" fill="#e0e7ff">&lt;meta name="description" content="…"&gt;</text></g>
+</svg>

@@ -91,7 +91,7 @@ Sigue el orden: cada curso se apoya en el anterior.
 
 <br>
 
-| | HTML | CSS | JavaScript | React |
+| | 🟠 HTML | 🔵 CSS | 🟡 JavaScript | 🔷 React |
 |:-:|---|---|---|---|
 | 01 | [Primeros pasos](https://cacg-code.github.io/PRACTICAS-HTML/01-primeros-pasos/) | [Cómo funciona CSS](https://cacg-code.github.io/PRACTICAS-HTML/css/01-como-funciona/) | [Primeros pasos](https://cacg-code.github.io/PRACTICAS-HTML/javascript/01-primeros-pasos/) | [Qué es React](https://cacg-code.github.io/PRACTICAS-HTML/react/01-que-es-react/) |
 | 02 | [Texto y enlaces](https://cacg-code.github.io/PRACTICAS-HTML/02-texto-y-enlaces/) | [Selectores y especificidad](https://cacg-code.github.io/PRACTICAS-HTML/css/02-selectores/) | [Variables y tipos](https://cacg-code.github.io/PRACTICAS-HTML/javascript/02-variables-y-tipos/) | [JSX a fondo](https://cacg-code.github.io/PRACTICAS-HTML/react/02-jsx/) |
@@ -117,6 +117,10 @@ Sigue el orden: cada curso se apoya en el anterior.
 
 <img src="assets/readme/chuleta-html.svg" alt="Chuleta de HTML" width="100%">
 
+<img src="assets/readme/chuleta-html-tarjetas.svg" alt="Tarjetas de la chuleta de html" width="100%">
+
+<details>
+<summary>📎 Versión para copiar</summary>
 
 | Para… | Usa | Ejemplo |
 |---|---|---|
@@ -131,8 +135,15 @@ Sigue el orden: cada curso se apoya en el anterior.
 | ♿ Accesibilidad | `alt` `aria-label` `role` `tabindex` | `<button aria-label="Cerrar">` |
 | 🔍 SEO | `<title>` `<meta name="description">` `og:*` | `<meta name="description" content="…">` |
 
+</details>
+
+
 <img src="assets/readme/chuleta-css.svg" alt="Chuleta de CSS" width="100%">
 
+<img src="assets/readme/chuleta-css-tarjetas.svg" alt="Tarjetas de la chuleta de css" width="100%">
+
+<details>
+<summary>📎 Versión para copiar</summary>
 
 | Para… | Usa | Ejemplo |
 |---|---|---|
@@ -145,8 +156,15 @@ Sigue el orden: cada curso se apoya en el anterior.
 | ✨ Efectos | `transition` `animation` `box-shadow` `linear-gradient` | `transition: .3s;` |
 | 🌗 Variables | `--nombre` `var()` | `:root { --color: teal; }` |
 
+</details>
+
+
 <img src="assets/readme/chuleta-js.svg" alt="Chuleta de JavaScript" width="100%">
 
+<img src="assets/readme/chuleta-js-tarjetas.svg" alt="Tarjetas de la chuleta de js" width="100%">
+
+<details>
+<summary>📎 Versión para copiar</summary>
 
 | Para… | Usa | Ejemplo |
 |---|---|---|
@@ -160,8 +178,15 @@ Sigue el orden: cada curso se apoya en el anterior.
 | 🌐 Asincronía | `fetch` `async` `await` | `const r = await fetch(url);` |
 | 💾 Almacenar | `localStorage` `try…catch` | `localStorage.setItem("k", "v")` |
 
+</details>
+
+
 <img src="assets/readme/chuleta-react.svg" alt="Chuleta de React" width="100%">
 
+<img src="assets/readme/chuleta-react-tarjetas.svg" alt="Tarjetas de la chuleta de react" width="100%">
+
+<details>
+<summary>📎 Versión para copiar</summary>
 
 | Para… | Usa | Ejemplo |
 |---|---|---|
@@ -175,8 +200,15 @@ Sigue el orden: cada curso se apoya en el anterior.
 | 🌍 Compartir datos | `createContext` · `useContext` | `const tema = useContext(Tema);` |
 | 🧠 Más hooks | `useRef` · `useReducer` | `const ref = useRef(null);` |
 
+</details>
+
+
 <img src="assets/readme/chuleta-git.svg" alt="Chuleta de Git" width="100%">
 
+<img src="assets/readme/chuleta-git-tarjetas.svg" alt="Tarjetas de la chuleta de git" width="100%">
+
+<details>
+<summary>📎 Versión para copiar</summary>
 
 | Para… | Comando |
 |---|---|
@@ -186,14 +218,24 @@ Sigue el orden: cada curso se apoya en el anterior.
 | Conectar con GitHub y subir | `git remote add origin URL` → `git push -u origin main` |
 | Traer cambios | `git pull` |
 
+</details>
+
+
 <img src="assets/readme/chuleta-atajos.svg" alt="Chuleta de Atajos del navegador" width="100%">
 
+<img src="assets/readme/chuleta-atajos-tarjetas.svg" alt="Tarjetas de la chuleta de atajos" width="100%">
+
+<details>
+<summary>📎 Versión para copiar</summary>
 
 | Atajo | Qué hace |
 |---|---|
 | `F12` | Abre las herramientas de desarrollo (consola, elementos) |
 | `Ctrl` + `U` | Muestra el código fuente de cualquier página |
 | `Ctrl` + `Shift` + `M` | Modo dispositivo: simula celular y tableta (con F12 abierto) |
+
+</details>
+
 
 </details>
 

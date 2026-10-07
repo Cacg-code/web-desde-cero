@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="226" viewBox="0 0 1000 226" role="img" aria-label="Tarjetas de la chuleta de atajos">
+<style>.t{font-family:Segoe UI,Helvetica,Arial,sans-serif}.m{font-family:Consolas,Menlo,monospace}</style>
+<defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6366f1"/><stop offset="1" stop-color="#a5b4fc"/></linearGradient></defs>
+<g transform="translate(0 3)"><rect width="490" height="96" rx="14" fill="#14172b"/><rect width="7" height="96" rx="3.5" fill="url(#g)"/>
+<text class="t" x="24" y="30" font-size="17" font-weight="700" fill="#fff">F12</text>
+<rect x="20" y="46" width="452" height="26" rx="7" fill="#0b0d1a" stroke="#2b3158"/><text class="m" x="30" y="63" font-size="12" fill="#e0e7ff">Abre las herramientas de desarrollo (consola, elementos)</text></g>
+<g transform="translate(510 3)"><rect width="490" height="96" rx="14" fill="#14172b"/><rect width="7" height="96" rx="3.5" fill="url(#g)"/>
+<text class="t" x="24" y="30" font-size="17" font-weight="700" fill="#fff">Ctrl + U</text>
+<rect x="20" y="46" width="452" height="26" rx="7" fill="#0b0d1a" stroke="#2b3158"/><text class="m" x="30" y="63" font-size="13" fill="#e0e7ff">Muestra el código fuente de cualquier página</text></g>
+<g transform="translate(0 113)"><rect width="490" height="96" rx="14" fill="#14172b"/><rect width="7" height="96" rx="3.5" fill="url(#g)"/>
+<text class="t" x="24" y="30" font-size="17" font-weight="700" fill="#fff">Ctrl + Shift + M</text>
+<rect x="20" y="46" width="452" height="26" rx="7" fill="#0b0d1a" stroke="#2b3158"/><text class="m" x="30" y="63" font-size="12" fill="#e0e7ff">Modo dispositivo: simula celular y tableta (con F12 abierto)</text></g>
+</svg>
