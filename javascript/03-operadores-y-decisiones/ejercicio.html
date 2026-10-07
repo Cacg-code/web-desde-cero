@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ejercicio · Operadores y decisiones · Curso de HTML</title>
+  <meta name="description" content="Ejercicio práctico de: Operadores y decisiones.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/javascript/03-operadores-y-decisiones/ejercicio.html">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Ejercicio · Operadores y decisiones · Curso de HTML">
+  <meta property="og:description" content="Ejercicio práctico de: Operadores y decisiones.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/javascript/03-operadores-y-decisiones/ejercicio.html">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de JavaScript</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap" id="contenido" style="max-width:820px;padding-top:2rem;padding-bottom:3rem">
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de JavaScript</a> › <a href="./">Lección 3</a> › Ejercicio</div>
+        <h1>Ejercicio: Operadores y decisiones</h1>
+        <ul class="meta"><li>⏱ 35 minutos</li><li>📶 Nivel: principiante</li></ul>
+      </header>
+
+      <h2>Objetivo</h2>
+      <p>Escribir seis funciones que toman decisiones: clasificar notas, años bisiestos, precios de entrada, días de la semana, valores por defecto y paridad.</p>
+
+      <h3>Antes de empezar</h3>
+      <p>Estas funciones no necesitan una página. Escribe el código en el editor de abajo, pruébalo con <code>console.log</code> y pégalo en el comprobador.</p>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ Prueba tu código aquí (opcional)</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:240px">&lt;script&gt;
+  // escribe tu JavaScript
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+
+      <h2>Pasos</h2>
+      <p>Marca cada paso a medida que lo completes. Tu avance se guarda en este navegador.</p>
+      <div class="progress" aria-hidden="true"><div></div></div>
+      <p id="progreso-texto" style="color:var(--muted);font-size:.9rem" aria-live="polite"></p>
+      <ul class="checklist"><li><label><input type="checkbox" id="p1"><span>Escribe una función <code>clasificar(nota)</code> que devuelva <code>"Sobresaliente"</code> (≥ 9), <code>"Notable"</code> (≥ 7), <code>"Aprobado"</code> (≥ 5) o <code>"Reprobado"</code> (menos de 5).</span></label></li><li><label><input type="checkbox" id="p2"><span>Escribe una función <code>esBisiesto(anio)</code> que devuelva <code>true</code> si el año es bisiesto: divisible entre 4, salvo los divisibles entre 100 que <strong>no</strong> lo sean entre 400.</span></label></li><li><label><input type="checkbox" id="p3"><span>Escribe una función <code>precioEntrada(edad)</code> que devuelva <code>0</code> si la edad es menor de 5 o mayor de 65, <code>50</code> si es menor de 18, y <code>100</code> en cualquier otro caso.</span></label></li><li><label><input type="checkbox" id="p4"><span>Escribe una función <code>nombreDia(n)</code> con <code>switch</code>: <code>1</code> → <code>"lunes"</code> … <code>7</code> → <code>"domingo"</code>; cualquier otro número, <code>"día no válido"</code>.</span></label></li><li><label><input type="checkbox" id="p5"><span>Escribe una función <code>valorPorDefecto(valor, porDefecto)</code> que use <code>??</code> para devolver <code>porDefecto</code> solo si <code>valor</code> es <code>null</code> o <code>undefined</code>.</span></label></li><li><label><input type="checkbox" id="p6"><span>Escribe una función <code>parOImpar(n)</code> con el operador <strong>ternario</strong> que devuelva <code>"par"</code> o <code>"impar"</code>.</span></label></li></ul>
+      <details><summary>💡 Pista 1: orden de las condiciones</summary><p>En <code>clasificar</code>, empieza por la condición más exigente: primero <code>nota &gt;= 9</code>, luego <code>&gt;= 7</code>, <code>&gt;= 5</code> y por último el caso contrario.</p>
+</details>
+<details><summary>💡 Pista 2: el año bisiesto</summary><p><code>(anio % 4 === 0 &amp;&amp; anio % 100 !== 0) || anio % 400 === 0</code>. Prueba con 2000 (sí), 1900 (no), 2024 (sí) y 2023 (no).</p>
+</details>
+
+      <section class="checker" id="comprobador" aria-labelledby="t-chk">
+        <h2 id="t-chk">🔎 Comprueba tu trabajo</h2>
+        <p>Pega tu código y pulsa <strong>Comprobar</strong>. La revisión ocurre en tu navegador; nada se envía a ningún sitio. Cada punto en rojo incluye una pista.</p>
+        <label for="chk-code">Tu código JavaScript</label>
+        <textarea id="chk-code" rows="10" spellcheck="false" placeholder="Pega aquí solo tu JavaScript (sin la etiqueta script)"></textarea>
+        <div class="chk-actions"><button class="btn" type="button" id="chk-run">Comprobar</button><button class="icon-btn" type="button" id="chk-clear">Limpiar</button></div>
+        <p class="chk-sum" id="chk-sum" aria-live="polite"></p>
+        <ul class="chk-list" id="chk-list"></ul>
+        <script type="application/json" id="checks">{"mode": "js", "scaffold": "", "width": 800, "checks": [{"d": "`clasificar` devuelve la categoría correcta para 10, 8, 5 y 3", "h": "Revisa los límites: ≥ 9, ≥ 7, ≥ 5 y el resto.", "t": "return clasificar(10)===\"Sobresaliente\" && clasificar(9)===\"Sobresaliente\" && clasificar(8)===\"Notable\" && clasificar(7)===\"Notable\" && clasificar(5)===\"Aprobado\" && clasificar(4.9)===\"Reprobado\" && clasificar(0)===\"Reprobado\""}, {"d": "`esBisiesto` acierta con 2000, 1900, 2024 y 2023", "h": "Combina las tres reglas con `&&` y `||`.", "t": "return esBisiesto(2000)===true && esBisiesto(1900)===false && esBisiesto(2024)===true && esBisiesto(2023)===false && esBisiesto(2100)===false"}, {"d": "`precioEntrada` da 0 a menores de 5 y mayores de 65", "h": "Usa `edad < 5 || edad > 65`.", "t": "return precioEntrada(3)===0 && precioEntrada(66)===0 && precioEntrada(65)!==0"}, {"d": "`precioEntrada` da 50 a menores de 18 y 100 al resto", "h": "Después de los casos gratuitos, `edad < 18` → 50; si no, 100.", "t": "return precioEntrada(10)===50 && precioEntrada(17)===50 && precioEntrada(18)===100 && precioEntrada(40)===100"}, {"d": "`nombreDia` devuelve lunes, domingo y «día no válido»", "h": "Usa un `switch` con un `default`.", "t": "return nombreDia(1)===\"lunes\" && nombreDia(5)===\"viernes\" && nombreDia(7)===\"domingo\" && nombreDia(9)===\"día no válido\" && nombreDia(0)===\"día no válido\""}, {"d": "`nombreDia` está escrita con `switch`", "h": "Usa `switch (n) { case 1: … }`.", "t": "return /switch\\s*\\(/.test(window.__src)"}, {"d": "`valorPorDefecto` respeta el 0 y el texto vacío, y reemplaza null/undefined", "h": "Usa `??` en lugar de `||`.", "t": "return valorPorDefecto(0,5)===0 && valorPorDefecto(\"\",\"x\")===\"\" && valorPorDefecto(null,5)===5 && valorPorDefecto(undefined,\"x\")===\"x\""}, {"d": "`parOImpar` usa el operador ternario", "h": "Escribe `return n % 2 === 0 ? \"par\" : \"impar\";`.", "t": "return parOImpar(4)===\"par\" && parOImpar(7)===\"impar\" && /\\?[^?]*:/.test(window.__src.slice(window.__src.indexOf(\"function parOImpar\")))"}, {"d": "Usas `===` y no `==`", "h": "Cambia los `==` por `===`.", "t": "return !/[^=!<>]==[^=]/.test(window.__src)"}]}</script>
+      </section>
+      <details>
+        <summary>✅ Ver una solución de ejemplo</summary>
+        <p>Intenta resolverlo antes de mirar. Tu versión puede ser distinta y también correcta.</p>
+        <div class="code">
+  <div class="code-head"><span>app.js</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">function</span> clasificar(nota) {
+  <span class="tk-tag">if</span> (nota &gt;= <span class="tk-attr">9</span>) <span class="tk-tag">return</span> <span class="tk-val">"Sobresaliente"</span>;
+  <span class="tk-tag">if</span> (nota &gt;= <span class="tk-attr">7</span>) <span class="tk-tag">return</span> <span class="tk-val">"Notable"</span>;
+  <span class="tk-tag">if</span> (nota &gt;= <span class="tk-attr">5</span>) <span class="tk-tag">return</span> <span class="tk-val">"Aprobado"</span>;
+  <span class="tk-tag">return</span> <span class="tk-val">"Reprobado"</span>;
+}
+
+<span class="tk-tag">function</span> esBisiesto(anio) {
+  <span class="tk-tag">return</span> (anio % <span class="tk-attr">4</span> === <span class="tk-attr">0</span> &amp;&amp; anio % <span class="tk-attr">100</span> !== <span class="tk-attr">0</span>) || anio % <span class="tk-attr">400</span> === <span class="tk-attr">0</span>;
+}
+
+<span class="tk-tag">function</span> precioEntrada(edad) {
+  <span class="tk-tag">if</span> (edad &lt; <span class="tk-attr">5</span> || edad &gt; <span class="tk-attr">65</span>) <span class="tk-tag">return</span> <span class="tk-attr">0</span>;
+  <span class="tk-tag">if</span> (edad &lt; <span class="tk-attr">18</span>) <span class="tk-tag">return</span> <span class="tk-attr">50</span>;
+  <span class="tk-tag">return</span> <span class="tk-attr">100</span>;
+}
+
+<span class="tk-tag">function</span> nombreDia(n) {
+  <span class="tk-tag">switch</span> (n) {
+    <span class="tk-tag">case</span> <span class="tk-attr">1</span>: <span class="tk-tag">return</span> <span class="tk-val">"lunes"</span>;
+    <span class="tk-tag">case</span> <span class="tk-attr">2</span>: <span class="tk-tag">return</span> <span class="tk-val">"martes"</span>;
+    <span class="tk-tag">case</span> <span class="tk-attr">3</span>: <span class="tk-tag">return</span> <span class="tk-val">"miércoles"</span>;
+    <span class="tk-tag">case</span> <span class="tk-attr">4</span>: <span class="tk-tag">return</span> <span class="tk-val">"jueves"</span>;
+    <span class="tk-tag">case</span> <span class="tk-attr">5</span>: <span class="tk-tag">return</span> <span class="tk-val">"viernes"</span>;
+    <span class="tk-tag">case</span> <span class="tk-attr">6</span>: <span class="tk-tag">return</span> <span class="tk-val">"sábado"</span>;
+    <span class="tk-tag">case</span> <span class="tk-attr">7</span>: <span class="tk-tag">return</span> <span class="tk-val">"domingo"</span>;
+    <span class="tk-tag">default</span>: <span class="tk-tag">return</span> <span class="tk-val">"día no válido"</span>;
+  }
+}
+
+<span class="tk-tag">function</span> valorPorDefecto(valor, porDefecto) {
+  <span class="tk-tag">return</span> valor ?? porDefecto;
+}
+
+<span class="tk-tag">function</span> parOImpar(n) {
+  <span class="tk-tag">return</span> n % <span class="tk-attr">2</span> === <span class="tk-attr">0</span> ? <span class="tk-val">"par"</span> : <span class="tk-val">"impar"</span>;
+}</code></pre>
+</div>
+
+      </details>
+      <div class="callout consejo">
+<p class="callout-title">💡 🏁 Reto extra (opcional)</p>
+<p>Escribe <code>esTriangulo(a, b, c)</code> que devuelva <code>true</code> si con esos tres lados se puede formar un triángulo (cada lado debe ser menor que la suma de los otros dos). Pruébalo con varios casos.</p>
+</div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="./"><small>← Anterior</small>Volver a lección 3</a>
+        <a class="next" href="../04-bucles/"><small>Siguiente →</small>Bucles</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de JavaScript · Ejercicio de lección 3 · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&title=%5BError%5D%20Ejercicio%20%C2%B7%20Operadores%20y%20decisiones%20%C2%B7%20Curso%20de%20HTML&pagina=https%3A//cacg-code.github.io/PRACTICAS-HTML/javascript/03-operadores-y-decisiones/ejercicio.html" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

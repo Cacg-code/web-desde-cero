@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lección 2: Variables y tipos de datos · Curso de HTML</title>
+  <meta name="description" content="Variables y tipos de datos en JavaScript: const, let, strings, números, booleanos, plantillas de texto, métodos y conversión de tipos.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/javascript/02-variables-y-tipos/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Lección 2: Variables y tipos de datos · Curso de HTML">
+  <meta property="og:description" content="Variables y tipos de datos en JavaScript: const, let, strings, números, booleanos, plantillas de texto, métodos y conversión de tipos.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/javascript/02-variables-y-tipos/">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de JavaScript</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap lesson-layout" id="contenido">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#variables">Variables: cajas con nombre</a></li><li><a href="#nombres">Cómo nombrar variables</a></li><li><a href="#tipos">Los tipos de datos</a></li><li><a href="#texto">Trabajar con texto</a></li><li><a href="#numeros">Trabajar con números</a></li><li><a href="#conversion">Conversión de tipos</a></li><li><a href="#errores">Errores frecuentes</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de JavaScript</a> › Lección 2</div>
+        <h1>Variables y tipos de datos</h1>
+        <ul class="meta"><li>⏱ 40 minutos</li><li>📶 Nivel: principiante</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Declarar variables con <code>const</code> y <code>let</code> y nombrarlas bien.</li><li>Reconocer los tipos de datos y consultar su tipo con <code>typeof</code>.</li><li>Manipular texto con plantillas y métodos de <code>string</code>.</li><li>Operar con números y convertir tipos sin sorpresas.</li></ul>
+</div>
+
+<h2 id="variables"><span class="n">1.</span>Variables: cajas con nombre</h2>
+<p>Una <strong>variable</strong> es un <strong>espacio con nombre</strong> donde guardas un valor para usarlo después. Es como una caja con una etiqueta: puedes mirar qué hay dentro, cambiarlo y usarlo cuantas veces quieras.</p>
+<div class="code">
+  <div class="code-head"><span>Crear y usar variables</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">let</span> edad = <span class="tk-attr">25</span>;                    <span class="tk-com">// la creas con let</span>
+<span class="tk-tag">const</span> pais = <span class="tk-val">"México"</span>;            <span class="tk-com">// la creas con const</span>
+console.log(edad, pais);          <span class="tk-com">// 25 "México"</span>
+
+edad = <span class="tk-attr">26</span>;                        <span class="tk-com">// let permite cambiar el valor</span>
+console.log(<span class="tk-val">"Ahora tengo"</span>, edad);</code></pre>
+</div>
+<div class="table-wrap"><table>
+<thead><tr><th>Palabra</th><th>Se puede reasignar</th><th>Cuándo usarla</th></tr></thead>
+<tbody><tr><td><code>const</code></td><td><strong>No</strong></td><td><strong>Por defecto.</strong> Para todo lo que no cambia</td></tr><tr><td><code>let</code></td><td>Sí</td><td>Cuando el valor tiene que cambiar (un contador, un total)</td></tr><tr><td><code>var</code></td><td>Sí</td><td><strong>No la uses.</strong> Es la forma antigua y tiene comportamientos confusos</td></tr></tbody>
+</table></div>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ Variables en acción</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:240px">&lt;script&gt;
+  const producto = "Cuaderno";
+  let cantidad = 2;
+  console.log(producto, cantidad);
+
+  cantidad = cantidad + 1;
+  console.log("Después de añadir uno:", cantidad);
+
+  // producto = "Lápiz";   // ← descomenta: TypeError, const no se puede reasignar
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Empieza siempre con <code>const</code></p>
+<p>Usa <code>const</code> y cámbialo a <code>let</code> <strong>solo cuando el compilador te lo exija</strong>. Así sabes de un vistazo qué valores nunca cambian, y tu código tiene menos sorpresas.</p>
+</div>
+
+<h2 id="nombres"><span class="n">2.</span>Cómo nombrar variables</h2>
+<ul><li>Pueden contener <strong>letras, números, <code>_</code> y <code>$</code></strong>, pero <strong>no pueden empezar con número</strong>.</li><li>Distinguen <strong>mayúsculas y minúsculas</strong>: <code>edad</code> y <code>Edad</code> son variables distintas.</li><li>No pueden ser <strong>palabras reservadas</strong> (<code>let</code>, <code>if</code>, <code>class</code>…).</li><li>Se usa la convención <strong>camelCase</strong>: <code>precioTotal</code>, <code>nombreDelCliente</code>.</li><li>Los nombres deben <strong>decir qué contienen</strong>: <code>total</code> y no <code>t</code>; <code>esMayor</code> y no <code>flag</code>.</li><li>Las <strong>constantes «de verdad»</strong> (valores fijos del programa) suelen ir en MAYÚSCULAS: <code>const IVA = 0.16;</code>.</li></ul>
+<div class="table-wrap"><table>
+<thead><tr><th>Bien</th><th>Mal</th><th>Por qué</th></tr></thead>
+<tbody><tr><td><code>precioTotal</code></td><td><code>x</code></td><td>No dice nada</td></tr><tr><td><code>nombreCliente</code></td><td><code>nombre cliente</code></td><td>No admite espacios</td></tr><tr><td><code>pagina2</code></td><td><code>2pagina</code></td><td>No puede empezar con número</td></tr><tr><td><code>esMayorDeEdad</code></td><td><code>mayor?</code></td><td>No admite signos como <code>?</code></td></tr><tr><td><code>let total</code></td><td><code>let let</code></td><td>Palabra reservada</td></tr></tbody>
+</table></div>
+
+<h2 id="tipos"><span class="n">3.</span>Los tipos de datos</h2>
+<p>Cada valor tiene un <strong>tipo</strong>. El tipo decide qué puedes hacer con él: sumar números, juntar textos, decidir con verdadero o falso…</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Tipo</th><th>Qué guarda</th><th>Ejemplos</th></tr></thead>
+<tbody><tr><td><code>string</code></td><td>Texto</td><td><code>"hola"</code>, <code>'adiós'</code>, `<code> </code>plantilla<code> </code>`</td></tr><tr><td><code>number</code></td><td>Números (enteros y decimales)</td><td><code>42</code>, <code>3.14</code>, <code>-7</code>, <code>NaN</code>, <code>Infinity</code></td></tr><tr><td><code>boolean</code></td><td>Verdadero o falso</td><td><code>true</code>, <code>false</code></td></tr><tr><td><code>undefined</code></td><td>Variable creada <strong>sin valor</strong></td><td><code>let x;</code></td></tr><tr><td><code>null</code></td><td>«Nada» a propósito</td><td><code>let resultado = null;</code></td></tr><tr><td><code>bigint</code></td><td>Enteros enormes</td><td><code>9007199254740993n</code></td></tr><tr><td><code>symbol</code></td><td>Identificadores únicos</td><td>(uso avanzado)</td></tr><tr><td><code>object</code></td><td>Colecciones de datos (arrays, objetos…)</td><td><code>[1, 2, 3]</code>, <code>{ nombre: "Ana" }</code></td></tr></tbody>
+</table></div>
+<p>Para saber el tipo de un valor existe el operador <strong><code>typeof</code></strong>:</p>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ typeof</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:240px">&lt;script&gt;
+  console.log(typeof "hola");        // "string"
+  console.log(typeof 42);            // "number"
+  console.log(typeof true);          // "boolean"
+  console.log(typeof undefined);     // "undefined"
+  console.log(typeof null);          // "object"  (un error histórico del lenguaje)
+  console.log(typeof [1, 2, 3]);     // "object"  (los arrays son objetos)
+
+  let sinValor;
+  console.log(sinValor);             // undefined
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · JavaScript es de tipado dinámico</p>
+<p>No declaras el tipo de una variable: JavaScript lo deduce del valor, y una misma variable puede cambiar de tipo con el tiempo. Es flexible, pero obliga a ser cuidadoso: muchos errores vienen de tipos que no son los que creías.</p>
+</div>
+
+<h2 id="texto"><span class="n">4.</span>Trabajar con texto</h2>
+<div class="code">
+  <div class="code-head"><span>Strings: lo esencial</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">const</span> nombre = <span class="tk-val">"Ana"</span>;
+<span class="tk-tag">const</span> apellido = <span class="tk-val">'Pérez'</span>;
+
+console.log(nombre + <span class="tk-val">" "</span> + apellido);        <span class="tk-com">// unir con +</span>
+console.log(<span class="tk-val">`Hola, ${nombre} ${apellido}`</span>);  <span class="tk-com">// plantilla de texto (¡mejor!)</span>
+console.log(nombre.length);                  <span class="tk-com">// 3  (cantidad de caracteres)</span>
+console.log(nombre[<span class="tk-attr">0</span>]);                      <span class="tk-com">// "A" (primer carácter)</span></code></pre>
+</div>
+<p>Las <strong>plantillas de texto</strong> (comillas invertidas `<code> </code> `<code>) permiten **insertar valores** con </code>${…}` y escribir varias líneas. Son la forma más cómoda de componer mensajes.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Método</th><th>Qué hace</th><th>Ejemplo → resultado</th></tr></thead>
+<tbody><tr><td><code>length</code></td><td>Cantidad de caracteres</td><td><code>"hola".length</code> → <code>4</code></td></tr><tr><td><code>toUpperCase()</code> / <code>toLowerCase()</code></td><td>Mayúsculas / minúsculas</td><td><code>"hola".toUpperCase()</code> → <code>"HOLA"</code></td></tr><tr><td><code>trim()</code></td><td>Quita espacios de los extremos</td><td><code>"  hola ".trim()</code> → <code>"hola"</code></td></tr><tr><td><code>includes(texto)</code></td><td>¿Contiene…?</td><td><code>"manzana".includes("zan")</code> → <code>true</code></td></tr><tr><td><code>startsWith()</code> / <code>endsWith()</code></td><td>¿Empieza / termina con…?</td><td><code>"hola".startsWith("ho")</code> → <code>true</code></td></tr><tr><td><code>indexOf(texto)</code></td><td>Posición de la primera aparición (o -1)</td><td><code>"hola".indexOf("l")</code> → <code>2</code></td></tr><tr><td><code>slice(inicio, fin)</code></td><td>Extrae un fragmento</td><td><code>"abcdef".slice(1, 4)</code> → <code>"bcd"</code></td></tr><tr><td><code>replace(a, b)</code></td><td>Reemplaza la primera aparición</td><td><code>"a-b-c".replace("-", "+")</code> → <code>"a+b-c"</code></td></tr><tr><td><code>replaceAll(a, b)</code></td><td>Reemplaza todas</td><td><code>"a-b-c".replaceAll("-", "+")</code> → <code>"a+b+c"</code></td></tr><tr><td><code>split(sep)</code></td><td>Divide en un array</td><td><code>"a,b,c".split(",")</code> → <code>["a","b","c"]</code></td></tr><tr><td><code>repeat(n)</code></td><td>Repite el texto</td><td><code>"ab".repeat(3)</code> → <code>"ababab"</code></td></tr><tr><td><code>padStart(n, c)</code></td><td>Rellena por la izquierda</td><td><code>"7".padStart(2, "0")</code> → <code>"07"</code></td></tr></tbody>
+</table></div>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ Prueba los métodos de texto</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:240px">&lt;script&gt;
+  const frase = "  JavaScript es divertido  ";
+  console.log(frase.trim());
+  console.log(frase.trim().toUpperCase());
+  console.log(frase.includes("divertido"));
+  console.log(frase.trim().split(" "));
+  console.log(frase.trim().slice(0, 10));
+
+  const usuario = "Ana", puntos = 1250;
+  console.log(`${usuario} tiene ${puntos} puntos`);
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · Los strings no se modifican</p>
+<p>Los métodos de texto <strong>devuelven un texto nuevo</strong>, no cambian el original. <code>frase.toUpperCase();</code> por sí solo no hace nada visible: debes guardar o usar el resultado (<code>const grande = frase.toUpperCase();</code>).</p>
+</div>
+
+<h2 id="numeros"><span class="n">5.</span>Trabajar con números</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Operación</th><th>Ejemplo</th><th>Resultado</th></tr></thead>
+<tbody><tr><td>Suma, resta</td><td><code>5 + 3</code>, <code>5 - 3</code></td><td><code>8</code>, <code>2</code></td></tr><tr><td>Multiplicación, división</td><td><code>5 * 3</code>, <code>10 / 4</code></td><td><code>15</code>, <code>2.5</code></td></tr><tr><td>Resto (módulo)</td><td><code>10 % 3</code></td><td><code>1</code></td></tr><tr><td>Potencia</td><td><code>2 ** 3</code></td><td><code>8</code></td></tr><tr><td>Incrementar</td><td><code>x++</code>, <code>x += 5</code></td><td>suma 1 / suma 5 a <code>x</code></td></tr></tbody>
+</table></div>
+<div class="table-wrap"><table>
+<thead><tr><th>Función</th><th>Qué hace</th><th>Ejemplo</th></tr></thead>
+<tbody><tr><td><code>Math.round(n)</code></td><td>Redondea</td><td><code>Math.round(2.6)</code> → <code>3</code></td></tr><tr><td><code>Math.floor(n)</code> / <code>Math.ceil(n)</code></td><td>Hacia abajo / arriba</td><td><code>Math.floor(2.9)</code> → <code>2</code></td></tr><tr><td><code>Math.max(…)</code> / <code>Math.min(…)</code></td><td>El mayor / menor</td><td><code>Math.max(3, 9, 5)</code> → <code>9</code></td></tr><tr><td><code>Math.random()</code></td><td>Aleatorio entre 0 y 1</td><td><code>Math.floor(Math.random() * 6) + 1</code> → un dado</td></tr><tr><td><code>n.toFixed(2)</code></td><td>Texto con 2 decimales</td><td><code>(3.14159).toFixed(2)</code> → <code>"3.14"</code></td></tr><tr><td><code>Number.isInteger(n)</code></td><td>¿Es entero?</td><td><code>Number.isInteger(4.0)</code> → <code>true</code></td></tr></tbody>
+</table></div>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ Números</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:240px">&lt;script&gt;
+  console.log(10 / 3);
+  console.log((10 / 3).toFixed(2));
+  console.log(10 % 3);
+  console.log(2 ** 10);
+  console.log(Math.round(4.5), Math.floor(4.9), Math.ceil(4.1));
+
+  // El famoso problema de los decimales
+  console.log(0.1 + 0.2);                   // 0.30000000000000004
+  console.log((0.1 + 0.2).toFixed(2));      // "0.30"
+
+  // Un dado de 6 caras
+  console.log(Math.floor(Math.random() * 6) + 1);
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · ¿Por qué <code>0.1 + 0.2</code> no da <code>0.3</code>?</p>
+<p>Las computadoras guardan los decimales en binario y algunos no se pueden representar con exactitud. No es un error de JavaScript: pasa en casi todos los lenguajes. Para dinero, redondea con <code>toFixed()</code> o trabaja en <strong>centavos</strong> (números enteros).</p>
+</div>
+
+<h2 id="conversion"><span class="n">6.</span>Conversión de tipos</h2>
+<p>Cuando recibes datos de un formulario o de internet, <strong>casi siempre son texto</strong>, aunque parezcan números. Hay que convertirlos:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Función</th><th>Convierte a</th><th>Ejemplos</th></tr></thead>
+<tbody><tr><td><code>Number(x)</code></td><td>Número</td><td><code>Number("42")</code> → <code>42</code> · <code>Number("hola")</code> → <code>NaN</code></td></tr><tr><td><code>parseInt(x)</code></td><td>Entero</td><td><code>parseInt("42px")</code> → <code>42</code></td></tr><tr><td><code>parseFloat(x)</code></td><td>Decimal</td><td><code>parseFloat("3.5kg")</code> → <code>3.5</code></td></tr><tr><td><code>String(x)</code></td><td>Texto</td><td><code>String(42)</code> → <code>"42"</code></td></tr><tr><td><code>Boolean(x)</code></td><td>true / false</td><td><code>Boolean("")</code> → <code>false</code> · <code>Boolean("a")</code> → <code>true</code></td></tr></tbody>
+</table></div>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ El peligro de sumar textos</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:240px">&lt;script&gt;
+  const a = "5";
+  const b = 3;
+  console.log(a + b);               // "53"  ← ¡unió textos!
+  console.log(Number(a) + b);       // 8
+  console.log(a * b);               // 15  (el * sí convierte)
+
+  console.log(Number("hola"));      // NaN: «no es un número»
+  console.log(Number(""));          // 0
+  console.log(Number.isNaN(Number("hola")));
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · El operador <code>+</code> con texto</p>
+<p>Si <strong>uno</strong> de los lados de <code>+</code> es texto, JavaScript <strong>concatena</strong> en vez de sumar: <code>"5" + 3</code> da <code>"53"</code>. Convierte antes con <code>Number()</code>. Con <code>-</code>, <code>*</code> y <code>/</code> sí convierte solo, pero conviene ser explícito.</p>
+</div>
+<div class="callout ejemplo">
+<p class="callout-title">🔍 Ejemplo · Los valores «falsos»</p>
+<p>Se comportan como <code>false</code> al convertirlos a booleano: <code>false</code>, <code>0</code>, <code>""</code> (texto vacío), <code>null</code>, <code>undefined</code> y <code>NaN</code>. <strong>Todo lo demás es «verdadero»</strong>, incluso <code>"0"</code> y <code>[]</code>. Lo usarás en la próxima lección para tomar decisiones.</p>
+</div>
+
+<h2 id="errores"><span class="n">7.</span>Errores frecuentes</h2>
+<ul><li><strong>Reasignar una <code>const</code>:</strong> <code>TypeError: Assignment to constant variable</code>.</li><li><strong>Usar una variable antes de crearla:</strong> <code>ReferenceError</code> o <code>undefined</code>.</li><li><strong>Sumar textos creyendo que son números:</strong> <code>"5" + 3</code> → <code>"53"</code>.</li><li><strong>Olvidar convertir lo que viene de un formulario.</strong></li><li><strong>Confundir <code>null</code> y <code>undefined</code>:</strong> <code>undefined</code> es «aún no tiene valor»; <code>null</code> es «vacío a propósito».</li><li><strong>Esperar que <code>toUpperCase()</code> modifique el original.</strong></li><li><strong>Comparar números decimales con <code>===</code></strong> tras operar (<code>0.1 + 0.2 === 0.3</code> es <code>false</code>).</li><li><strong>Nombres poco claros</strong> que obligan a adivinar qué guarda cada variable.</li></ul>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li>Una variable guarda un valor con nombre. Usa <strong><code>const</code></strong> por defecto, <code>let</code> si debe cambiar y <strong>nunca <code>var</code></strong>.</li><li>Los nombres van en camelCase, no empiezan con número ni usan palabras reservadas, y deben decir qué guardan.</li><li>Tipos: <code>string</code>, <code>number</code>, <code>boolean</code>, <code>undefined</code>, <code>null</code>, <code>bigint</code>, <code>symbol</code> y <code>object</code>. <code>typeof</code> consulta el tipo.</li><li>Las plantillas de texto `<code> </code>Hola ${nombre}<code> </code>` insertan valores y son la mejor forma de componer mensajes.</li><li>Los métodos de texto (<code>toUpperCase</code>, <code>includes</code>, <code>slice</code>, <code>split</code>, <code>trim</code>…) devuelven valores nuevos.</li><li><code>Math.round/floor/ceil/random</code> y <code>toFixed()</code> ayudan con los números; cuidado con los decimales.</li><li><code>Number()</code>, <code>parseInt()</code>, <code>parseFloat()</code>, <code>String()</code> y <code>Boolean()</code> convierten tipos.</li><li><code>"5" + 3</code> concatena: convierte siempre los datos de un formulario antes de operar.</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">8.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td>Variable</td><td>Espacio con nombre donde se guarda un valor.</td></tr><tr><td><code>const</code> / <code>let</code></td><td>Declaran variables: <code>const</code> no se reasigna, <code>let</code> sí.</td></tr><tr><td>Tipo de dato</td><td>Categoría de un valor: texto, número, booleano…</td></tr><tr><td>Plantilla de texto</td><td>Texto con comillas invertidas que admite <code>${}</code> y varias líneas.</td></tr><tr><td><code>typeof</code></td><td>Operador que devuelve el tipo de un valor.</td></tr><tr><td><code>NaN</code></td><td>«Not a Number»: resultado de una operación numérica inválida.</td></tr><tr><td>Concatenar</td><td>Unir textos uno tras otro.</td></tr><tr><td>Conversión</td><td>Cambiar un valor de un tipo a otro.</td></tr></tbody>
+</table></div>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>¿Cuál es la mejor práctica para declarar una variable que <strong>no</strong> cambiará?</p><ul class="opts"><li><button type="button" class="opt"><code>var</code></button></li><li><button type="button" class="opt"><code>let</code></button></li><li><button type="button" class="opt" data-ok><code>const</code></button></li><li><button type="button" class="opt">Sin palabra clave</button></li></ul><p class="explain" hidden><code>const</code> expresa que el valor no se reasigna, y evita errores.</p></div>
+<div class="quiz-q"><p>¿Qué muestra <code>console.log("5" + 3)</code>?</p><ul class="opts"><li><button type="button" class="opt"><code>8</code></button></li><li><button type="button" class="opt" data-ok><code>"53"</code></button></li><li><button type="button" class="opt"><code>NaN</code></button></li><li><button type="button" class="opt">Un error</button></li></ul><p class="explain" hidden>Si un lado es texto, <code>+</code> concatena: <code>"53"</code>.</p></div>
+<div class="quiz-q"><p>¿Cuál de estos es un nombre de variable <strong>válido</strong>?</p><ul class="opts"><li><button type="button" class="opt"><code>2pagina</code></button></li><li><button type="button" class="opt"><code>mi variable</code></button></li><li><button type="button" class="opt" data-ok><code>precioTotal</code></button></li><li><button type="button" class="opt"><code>let</code></button></li></ul><p class="explain" hidden>No puede empezar con número, tener espacios ni ser palabra reservada.</p></div>
+<div class="quiz-q"><p>¿Qué devuelve <code>Number("hola")</code>?</p><ul class="opts"><li><button type="button" class="opt"><code>0</code></button></li><li><button type="button" class="opt"><code>"hola"</code></button></li><li><button type="button" class="opt" data-ok><code>NaN</code></button></li><li><button type="button" class="opt"><code>undefined</code></button></li></ul><p class="explain" hidden><code>NaN</code> significa «no es un número».</p></div>
+<div class="quiz-q"><p>¿Qué hace <code>"Hola".toUpperCase()</code> sobre la variable original?</p><ul class="opts"><li><button type="button" class="opt">La modifica</button></li><li><button type="button" class="opt" data-ok>No la modifica: devuelve un texto nuevo</button></li><li><button type="button" class="opt">Da un error</button></li><li><button type="button" class="opt">La borra</button></li></ul><p class="explain" hidden>Los strings son inmutables: los métodos devuelven valores nuevos.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="js-02">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../01-primeros-pasos/ejercicio.html"><small>← Anterior</small>Ejercicio: Primeros pasos con JavaScript</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de JavaScript · Lección 2 · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&title=%5BError%5D%20Lecci%C3%B3n%202%3A%20Variables%20y%20tipos%20de%20datos%20%C2%B7%20Curso%20de%20HTML&pagina=https%3A//cacg-code.github.io/PRACTICAS-HTML/javascript/02-variables-y-tipos/" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ejercicio · Errores, depuración y almacenamiento · Curso de HTML</title>
+  <meta name="description" content="Ejercicio práctico de: Errores, depuración y almacenamiento.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/javascript/11-errores-y-almacenamiento/ejercicio.html">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Ejercicio · Errores, depuración y almacenamiento · Curso de HTML">
+  <meta property="og:description" content="Ejercicio práctico de: Errores, depuración y almacenamiento.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/javascript/11-errores-y-almacenamiento/ejercicio.html">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de JavaScript</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap" id="contenido" style="max-width:820px;padding-top:2rem;padding-bottom:3rem">
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de JavaScript</a> › <a href="./">Lección 11</a> › Ejercicio</div>
+        <h1>Ejercicio: Errores, depuración y almacenamiento</h1>
+        <ul class="meta"><li>⏱ 40 minutos</li><li>📶 Nivel: principiante</li></ul>
+      </header>
+
+      <h2>Objetivo</h2>
+      <p>Controlar errores y guardar datos: una división segura, un analizador de JSON, y una pequeña capa de almacenamiento con <code>localStorage</code> (leer, guardar, añadir tareas y contar visitas).</p>
+
+      <h3>Antes de empezar</h3>
+      <p>Estas funciones no necesitan una página. El comprobador usa un <code>localStorage</code> simulado, vacío al empezar, para que el resultado no dependa de tu navegador.</p>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ Prueba tu código aquí (opcional)</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:240px">&lt;script&gt;
+  // escribe tu JavaScript
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+
+      <h2>Pasos</h2>
+      <p>Marca cada paso a medida que lo completes. Tu avance se guarda en este navegador.</p>
+      <div class="progress" aria-hidden="true"><div></div></div>
+      <p id="progreso-texto" style="color:var(--muted);font-size:.9rem" aria-live="polite"></p>
+      <ul class="checklist"><li><label><input type="checkbox" id="p1"><span>Escribe <code>dividirSeguro(a, b)</code>: si <code>b</code> es <code>0</code>, lanza <code>new Error("No se puede dividir entre cero")</code>; si no, devuelve <code>a / b</code>.</span></label></li><li><label><input type="checkbox" id="p2"><span>Escribe <code>analizarJSON(texto)</code>: devuelve <code>{ ok: true, datos }</code> si el texto es JSON válido, o <code>{ ok: false, error: &lt;mensaje&gt; }</code> si no (usa <code>try/catch</code>).</span></label></li><li><label><input type="checkbox" id="p3"><span>Escribe <code>leerTareas()</code>: devuelve el array guardado en <code>localStorage</code> con la clave <code>"tareas"</code> (en JSON), o <code>[]</code> si no hay nada o el dato está corrupto.</span></label></li><li><label><input type="checkbox" id="p4"><span>Escribe <code>guardarTareas(tareas)</code>: guarda el array en <code>localStorage</code> con la clave <code>"tareas"</code>, convertido a JSON.</span></label></li><li><label><input type="checkbox" id="p5"><span>Escribe <code>agregarTarea(texto)</code>: lee las tareas, añade <code>{ texto, hecha: false }</code>, las guarda y devuelve la lista actualizada. Si <code>texto</code> está vacío (o solo espacios), lanza <code>new Error("La tarea no puede estar vacía")</code>.</span></label></li><li><label><input type="checkbox" id="p6"><span>Escribe <code>contarVisita()</code>: usa <code>localStorage</code> con la clave <code>"visitas"</code> para sumar 1 en cada llamada y devuelve el total (como <strong>número</strong>).</span></label></li></ul>
+      <details><summary>💡 Pista 1: valor por defecto al leer</summary><p><code>JSON.parse(localStorage.getItem("tareas")) ?? []</code> cubre el caso «no hay nada». Y envuélvelo en <code>try/catch</code> por si el texto guardado no es JSON válido.</p>
+</details>
+<details><summary>💡 Pista 2: `contarVisita`</summary><p>Lo guardado es <strong>texto</strong>: <code>Number(localStorage.getItem("visitas") ?? 0) + 1</code>, y vuelve a guardarlo con <code>setItem</code>.</p>
+</details>
+
+      <section class="checker" id="comprobador" aria-labelledby="t-chk">
+        <h2 id="t-chk">🔎 Comprueba tu trabajo</h2>
+        <p>Pega tu código y pulsa <strong>Comprobar</strong>. La revisión ocurre en tu navegador; nada se envía a ningún sitio. Cada punto en rojo incluye una pista.</p>
+        <label for="chk-code">Tu código JavaScript</label>
+        <textarea id="chk-code" rows="10" spellcheck="false" placeholder="Pega aquí solo tu JavaScript (sin la etiqueta script)"></textarea>
+        <div class="chk-actions"><button class="btn" type="button" id="chk-run">Comprobar</button><button class="icon-btn" type="button" id="chk-clear">Limpiar</button></div>
+        <p class="chk-sum" id="chk-sum" aria-live="polite"></p>
+        <ul class="chk-list" id="chk-list"></ul>
+        <script type="application/json" id="checks">{"mode": "js", "scaffold": "", "width": 800, "checks": [{"d": "`dividirSeguro(10, 2)` devuelve 5", "h": "Devuelve `a / b` cuando `b` no es cero.", "t": "return dividirSeguro(10,2)===5 && dividirSeguro(-9,3)===-3"}, {"d": "`dividirSeguro(1, 0)` lanza «No se puede dividir entre cero»", "h": "Usa `throw new Error(\"…\")`.", "t": "try{dividirSeguro(1,0);return false}catch(e){return e instanceof Error && e.message===\"No se puede dividir entre cero\"}"}, {"d": "`analizarJSON` devuelve `{ ok: true, datos }` con JSON válido", "h": "Usa `JSON.parse` dentro de `try`.", "t": "var r=analizarJSON(\"{\\\"a\\\":1}\");return r.ok===true && r.datos.a===1"}, {"d": "`analizarJSON` devuelve `{ ok: false, error }` con JSON inválido", "h": "Atrapa el error y devuelve su mensaje.", "t": "var r=analizarJSON(\"{mal\");return r.ok===false && typeof r.error===\"string\" && r.error.length>0"}, {"d": "`leerTareas` devuelve `[]` si no hay nada guardado", "h": "Usa `?? []`.", "t": "localStorage.clear();var r=leerTareas();return Array.isArray(r) && r.length===0"}, {"d": "`leerTareas` devuelve `[]` si el dato está corrupto", "h": "Envuelve `JSON.parse` en `try/catch`.", "t": "localStorage.setItem(\"tareas\",\"esto no es json\");var r=leerTareas();return Array.isArray(r) && r.length===0"}, {"d": "`guardarTareas` guarda el array como JSON en la clave «tareas»", "h": "Usa `localStorage.setItem(\"tareas\", JSON.stringify(...))`.", "t": "guardarTareas([{texto:\"a\",hecha:true}]);var t=localStorage.getItem(\"tareas\");return typeof t===\"string\" && JSON.parse(t)[0].texto===\"a\" && JSON.parse(t)[0].hecha===true"}, {"d": "`agregarTarea` añade, guarda y devuelve la lista", "h": "Lee, haz `push`, guarda y devuelve.", "t": "localStorage.clear();agregarTarea(\"Primera\");var r=agregarTarea(\"  Segunda  \");return r.length===2 && r[1].texto===\"Segunda\" && r[1].hecha===false && leerTareas().length===2"}, {"d": "`agregarTarea` lanza un error con texto vacío", "h": "Comprueba `texto.trim() === \"\"` y haz `throw`.", "t": "try{agregarTarea(\"   \");return false}catch(e){return e.message===\"La tarea no puede estar vacía\"}"}, {"d": "`contarVisita` suma 1 en cada llamada y devuelve un número", "h": "Convierte con `Number()` al leer.", "t": "localStorage.clear();var a=contarVisita(),b=contarVisita(),c=contarVisita();return a===1 && b===2 && c===3 && typeof c===\"number\""}]}</script>
+      </section>
+      <details>
+        <summary>✅ Ver una solución de ejemplo</summary>
+        <p>Intenta resolverlo antes de mirar. Tu versión puede ser distinta y también correcta.</p>
+        <div class="code">
+  <div class="code-head"><span>app.js</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">function</span> dividirSeguro(a, b) {
+  <span class="tk-tag">if</span> (b === <span class="tk-attr">0</span>) {
+    <span class="tk-tag">throw</span> <span class="tk-tag">new</span> Error(<span class="tk-val">"No se puede dividir entre cero"</span>);
+  }
+  <span class="tk-tag">return</span> a / b;
+}
+
+<span class="tk-tag">function</span> analizarJSON(texto) {
+  <span class="tk-tag">try</span> {
+    <span class="tk-tag">return</span> { ok: <span class="tk-tag">true</span>, datos: JSON.parse(texto) };
+  } <span class="tk-tag">catch</span> (error) {
+    <span class="tk-tag">return</span> { ok: <span class="tk-tag">false</span>, error: error.message };
+  }
+}
+
+<span class="tk-tag">function</span> leerTareas() {
+  <span class="tk-tag">try</span> {
+    <span class="tk-tag">return</span> JSON.parse(localStorage.getItem(<span class="tk-val">"tareas"</span>)) ?? [];
+  } <span class="tk-tag">catch</span> {
+    <span class="tk-tag">return</span> [];
+  }
+}
+
+<span class="tk-tag">function</span> guardarTareas(tareas) {
+  localStorage.setItem(<span class="tk-val">"tareas"</span>, JSON.stringify(tareas));
+}
+
+<span class="tk-tag">function</span> agregarTarea(texto) {
+  <span class="tk-tag">if</span> (texto.trim() === <span class="tk-val">""</span>) {
+    <span class="tk-tag">throw</span> <span class="tk-tag">new</span> Error(<span class="tk-val">"La tarea no puede estar vacía"</span>);
+  }
+  <span class="tk-tag">const</span> tareas = leerTareas();
+  tareas.push({ texto: texto.trim(), hecha: <span class="tk-tag">false</span> });
+  guardarTareas(tareas);
+  <span class="tk-tag">return</span> tareas;
+}
+
+<span class="tk-tag">function</span> contarVisita() {
+  <span class="tk-tag">const</span> total = Number(localStorage.getItem(<span class="tk-val">"visitas"</span>) ?? <span class="tk-attr">0</span>) + <span class="tk-attr">1</span>;
+  localStorage.setItem(<span class="tk-val">"visitas"</span>, String(total));
+  <span class="tk-tag">return</span> total;
+}</code></pre>
+</div>
+
+      </details>
+      <div class="callout consejo">
+<p class="callout-title">💡 🏁 Reto extra (opcional)</p>
+<p>Escribe <code>borrarTarea(indice)</code> y <code>marcarHecha(indice)</code> que modifiquen la lista guardada y devuelvan la lista actualizada, lanzando un error claro si el índice no existe.</p>
+</div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="./"><small>← Anterior</small>Volver a lección 11</a>
+        <a class="next" href="../proyecto-tareas/"><small>Siguiente →</small>Proyecto: lista de tareas</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de JavaScript · Ejercicio de lección 11 · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&title=%5BError%5D%20Ejercicio%20%C2%B7%20Errores%2C%20depuraci%C3%B3n%20y%20almacenamiento%20%C2%B7%20Curso%20de%20HTML&pagina=https%3A//cacg-code.github.io/PRACTICAS-HTML/javascript/11-errores-y-almacenamiento/ejercicio.html" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

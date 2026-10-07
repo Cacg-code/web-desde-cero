@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lección 7: Objetos y JSON · Curso de HTML</title>
+  <meta name="description" content="Objetos y JSON en JavaScript: propiedades, métodos, this, desestructuración, spread, Object.entries, encadenamiento opcional y arrays de objetos.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/javascript/07-objetos/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Lección 7: Objetos y JSON · Curso de HTML">
+  <meta property="og:description" content="Objetos y JSON en JavaScript: propiedades, métodos, this, desestructuración, spread, Object.entries, encadenamiento opcional y arrays de objetos.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/javascript/07-objetos/">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de JavaScript</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap lesson-layout" id="contenido">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#que-es">Qué es un objeto</a></li><li><a href="#metodos">Métodos y this</a></li><li><a href="#atajos">Atajos modernos: shorthand, desestructurar y spread</a></li><li><a href="#recorrer">Recorrer objetos</a></li><li><a href="#seguro">Acceso seguro: ?. y ??</a></li><li><a href="#json">JSON: el formato de intercambio</a></li><li><a href="#lista">Arrays de objetos: el patrón más común</a></li><li><a href="#clases">Un vistazo a las clases</a></li><li><a href="#errores">Errores frecuentes</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de JavaScript</a> › Lección 7</div>
+        <h1>Objetos y JSON</h1>
+        <ul class="meta"><li>⏱ 45 minutos</li><li>📶 Nivel: principiante</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Crear y modificar objetos, y acceder a sus propiedades de varias formas.</li><li>Usar desestructuración, spread y <code>Object.entries</code>.</li><li>Leer datos con seguridad usando <code>?.</code> y <code>??</code>.</li><li>Convertir datos a JSON y procesar listas de objetos.</li></ul>
+</div>
+
+<h2 id="que-es"><span class="n">1.</span>Qué es un objeto</h2>
+<p>Un <strong>objeto</strong> agrupa datos <strong>relacionados</strong> bajo <strong>nombres</strong> (propiedades). Mientras un array es una lista ordenada por posición (<code>[0]</code>, <code>[1]</code>…), un objeto es un <strong>conjunto de pares nombre–valor</strong>: describe una cosa con todas sus características.</p>
+<div class="code">
+  <div class="code-head"><span>Un objeto que describe a una persona</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">const</span> persona = {
+  nombre: <span class="tk-val">"Ana"</span>,
+  edad: <span class="tk-attr">28</span>,
+  activa: <span class="tk-tag">true</span>,
+  hobbies: [<span class="tk-val">"leer"</span>, <span class="tk-val">"correr"</span>],
+  direccion: { ciudad: <span class="tk-val">"Lima"</span>, pais: <span class="tk-val">"Perú"</span> }
+};
+
+console.log(persona.nombre);              <span class="tk-com">// notación de punto: "Ana"</span>
+console.log(persona[<span class="tk-val">"edad"</span>]);             <span class="tk-com">// notación de corchetes: 28</span>
+console.log(persona.direccion.ciudad);    <span class="tk-com">// objetos dentro de objetos: "Lima"</span>
+console.log(persona.hobbies[<span class="tk-attr">0</span>]);          <span class="tk-com">// "leer"</span></code></pre>
+</div>
+<div class="table-wrap"><table>
+<thead><tr><th><span class="sr-only">Aspecto</span></th><th>Array</th><th>Objeto</th></tr></thead>
+<tbody><tr><td>Se identifica por</td><td>Posición (<code>0</code>, <code>1</code>…)</td><td>Nombre (<code>"nombre"</code>)</td></tr><tr><td>Ideal para</td><td>Una <strong>lista</strong> de cosas parecidas</td><td><strong>Una</strong> cosa con varias características</td></tr><tr><td>Sintaxis</td><td><code>[ … ]</code></td><td><code>{ clave: valor }</code></td></tr></tbody>
+</table></div>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ Crear y modificar un objeto</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:240px">&lt;script&gt;
+  const libro = { titulo: "El principito", autor: "Saint-Exupéry", paginas: 96 };
+
+  console.log(libro.titulo);
+  libro.paginas = 100;               // modificar
+  libro.leido = true;                // añadir una propiedad
+  delete libro.autor;                // eliminar
+  console.log(libro);
+
+  const clave = "titulo";
+  console.log(libro[clave]);         // los corchetes admiten variables
+  console.log("leido" in libro);     // ¿existe la propiedad?
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+
+<h2 id="metodos"><span class="n">2.</span>Métodos y this</h2>
+<p>Una propiedad cuyo valor es una <strong>función</strong> se llama <strong>método</strong>. Dentro de él, <strong><code>this</code></strong> apunta al objeto que lo llamó:</p>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ Métodos</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:240px">&lt;script&gt;
+  const cuenta = {
+    titular: "Ana",
+    saldo: 100,
+    depositar(monto) {
+      this.saldo += monto;
+      return this.saldo;
+    },
+    resumen() {
+      return `${this.titular} tiene $${this.saldo}`;
+    }
+  };
+
+  cuenta.depositar(50);
+  console.log(cuenta.resumen());
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · <code>this</code> y las funciones flecha</p>
+<p>Las funciones flecha <strong>no tienen su propio <code>this</code></strong>: heredan el del lugar donde se escribieron. Por eso, para los <strong>métodos</strong> de un objeto, usa la forma normal (<code>nombre() { … }</code>), no una flecha.</p>
+</div>
+
+<h2 id="atajos"><span class="n">3.</span>Atajos modernos: shorthand, desestructurar y spread</h2>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ Sintaxis cómoda</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:240px">&lt;script&gt;
+  const nombre = "Ana", edad = 28;
+
+  // 1. Propiedades abreviadas: { nombre: nombre } → { nombre }
+  const persona = { nombre, edad };
+  console.log(persona);
+
+  // 2. Desestructurar: sacar propiedades en variables
+  const { nombre: n, edad: e, pais = "desconocido" } = persona;
+  console.log(n, e, pais);
+
+  // 3. Spread: copiar y actualizar sin modificar el original
+  const actualizada = { ...persona, edad: 29, ciudad: "Lima" };
+  console.log(persona.edad, actualizada);
+
+  // 4. Desestructurar en los parámetros de una función
+  function presentar({ nombre, edad }) { return `${nombre} (${edad})`; }
+  console.log(presentar(actualizada));
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+
+<h2 id="recorrer"><span class="n">4.</span>Recorrer objetos</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Función</th><th>Devuelve</th><th>Ejemplo</th></tr></thead>
+<tbody><tr><td><code>Object.keys(o)</code></td><td>Array con las <strong>claves</strong></td><td><code>["nombre", "edad"]</code></td></tr><tr><td><code>Object.values(o)</code></td><td>Array con los <strong>valores</strong></td><td><code>["Ana", 28]</code></td></tr><tr><td><code>Object.entries(o)</code></td><td>Array de pares <code>[clave, valor]</code></td><td><code>[["nombre","Ana"], ["edad",28]]</code></td></tr><tr><td><code>Object.assign(a, b)</code></td><td>Copia propiedades de <code>b</code> en <code>a</code></td><td>(mejor usa spread)</td></tr><tr><td><code>Object.fromEntries(pares)</code></td><td>Crea un objeto desde pares</td><td>Inverso de <code>entries</code></td></tr></tbody>
+</table></div>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ Recorrer un objeto</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:240px">&lt;script&gt;
+  const precios = { pan: 20, leche: 25, huevos: 45 };
+
+  for (const [producto, precio] of Object.entries(precios)) {
+    console.log(`${producto}: $${precio}`);
+  }
+
+  const total = Object.values(precios).reduce((s, p) =&gt; s + p, 0);
+  console.log("Total:", total);
+
+  // Transformar un objeto: subir todo un 10%
+  const nuevos = Object.fromEntries(
+    Object.entries(precios).map(([producto, precio]) =&gt; [producto, precio * 1.1])
+  );
+  console.log(nuevos);
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+
+<h2 id="seguro"><span class="n">5.</span>Acceso seguro: ?. y ??</h2>
+<p>Si pides una propiedad de algo que <strong>no existe</strong> (<code>undefined</code> o <code>null</code>), JavaScript lanza un error. El <strong>encadenamiento opcional</strong> <code>?.</code> lo evita:</p>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ Encadenamiento opcional</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:240px">&lt;script&gt;
+  const usuario = { nombre: "Ana", direccion: null };
+
+  // console.log(usuario.direccion.ciudad);   // ← TypeError: Cannot read properties of null
+  console.log(usuario.direccion?.ciudad);       // undefined, sin error
+  console.log(usuario.direccion?.ciudad ?? "sin ciudad");   // valor por defecto
+
+  console.log(usuario.hobbies?.[0]);            // también con arrays
+  console.log(usuario.saludar?.());             // y con métodos
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Combina <code>?.</code> y <code>??</code></p>
+<p><code>?.</code> devuelve <code>undefined</code> si algo en la cadena falta, y <code>??</code> aporta un valor por defecto solo para <code>null</code>/<code>undefined</code>. Son muy útiles con datos que llegan de internet, donde nunca sabes qué campos faltan.</p>
+</div>
+
+<h2 id="json"><span class="n">6.</span>JSON: el formato de intercambio</h2>
+<p><strong>JSON</strong> (*JavaScript Object Notation*) es un <strong>formato de texto</strong> para intercambiar datos entre programas. Se parece a un objeto de JavaScript, con reglas más estrictas: <strong>las claves y los textos van entre comillas dobles</strong> y no admite funciones ni <code>undefined</code>.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Función</th><th>Hace</th><th>Ejemplo</th></tr></thead>
+<tbody><tr><td><code>JSON.stringify(valor)</code></td><td>Convierte un valor <strong>a texto JSON</strong></td><td><code>JSON.stringify({a: 1})</code> → <code>'{"a":1}'</code></td></tr><tr><td><code>JSON.parse(texto)</code></td><td>Convierte texto JSON <strong>en un valor</strong></td><td><code>JSON.parse('{"a":1}')</code> → <code>{a: 1}</code></td></tr></tbody>
+</table></div>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ Ida y vuelta con JSON</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:240px">&lt;script&gt;
+  const tarea = { id: 1, texto: "Estudiar JS", hecha: false, etiquetas: ["curso", "web"] };
+
+  const texto = JSON.stringify(tarea);
+  console.log(texto);
+  console.log(typeof texto);
+
+  const bonito = JSON.stringify(tarea, null, 2);       // con sangría
+  console.log(bonito);
+
+  const vuelta = JSON.parse(texto);
+  console.log(vuelta.etiquetas[1], typeof vuelta);
+
+  // Una copia profunda
+  const copia = structuredClone(tarea);
+  copia.etiquetas.push("nuevo");
+  console.log(tarea.etiquetas.length, copia.etiquetas.length);
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · Para qué sirve</p>
+<p>JSON es el formato en que casi todas las <strong>APIs</strong> devuelven datos y en que se guardan cosas en <code>localStorage</code> (lecciones 10 y 11). Un error de sintaxis en el texto hace que <code>JSON.parse</code> lance una excepción, así que se suele envolver en <code>try…catch</code>.</p>
+</div>
+
+<h2 id="lista"><span class="n">7.</span>Arrays de objetos: el patrón más común</h2>
+<p>En la práctica, casi todos los datos son <strong>listas de objetos</strong>: usuarios, productos, tareas, mensajes. Y todo lo que aprendiste de arrays se aplica:</p>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ Una tienda pequeña</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:240px">&lt;script&gt;
+  const productos = [
+    { id: 1, nombre: "Cuaderno", precio: 25,  categoria: "papeleria", stock: 10 },
+    { id: 2, nombre: "Lápiz",    precio: 5,   categoria: "papeleria", stock: 0 },
+    { id: 3, nombre: "Mochila",  precio: 450, categoria: "bolsas",    stock: 3 },
+    { id: 4, nombre: "Regla",    precio: 12,  categoria: "papeleria", stock: 7 }
+  ];
+
+  const disponibles = productos.filter(p =&gt; p.stock &gt; 0);
+  console.log(disponibles.map(p =&gt; p.nombre));
+
+  const mochila = productos.find(p =&gt; p.id === 3);
+  console.log(mochila.nombre, mochila.precio);
+
+  const valorInventario = productos.reduce((s, p) =&gt; s + p.precio * p.stock, 0);
+  console.log("Inventario:", valorInventario);
+
+  const porCategoria = productos.reduce((grupos, p) =&gt; {
+    (grupos[p.categoria] ??= []).push(p.nombre);
+    return grupos;
+  }, {});
+  console.log(porCategoria);
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+
+<h2 id="clases"><span class="n">8.</span>Un vistazo a las clases</h2>
+<p>Cuando necesitas crear <strong>muchos objetos con la misma forma y comportamiento</strong>, existen las <strong>clases</strong>: moldes para fabricar objetos.</p>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ Una clase sencilla</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:240px">&lt;script&gt;
+  class Tarea {
+    constructor(texto) {
+      this.texto = texto;
+      this.hecha = false;
+    }
+    completar() {
+      this.hecha = true;
+    }
+    describir() {
+      return `${this.hecha ? "✔" : "·"} ${this.texto}`;
+    }
+  }
+
+  const t1 = new Tarea("Aprender clases");
+  const t2 = new Tarea("Practicar");
+  t1.completar();
+  console.log(t1.describir());
+  console.log(t2.describir());
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · No son imprescindibles</p>
+<p>Para empezar, <strong>funciones y objetos literales</strong> bastan para casi todo. Las clases te serán útiles más adelante, y las encontrarás en muchas bibliotecas. Con lo visto aquí ya puedes leerlas.</p>
+</div>
+
+<h2 id="errores"><span class="n">9.</span>Errores frecuentes</h2>
+<ul><li><strong>Confundir <code>.</code> con <code>[]</code>:</strong> <code>obj.clave</code> busca la propiedad literal «clave»; <code>obj[clave]</code> usa el <strong>valor</strong> de la variable.</li><li><strong>Pensar que <code>const</code> hace el objeto inmutable:</strong> solo impide reasignar la variable; puedes cambiar sus propiedades (<code>Object.freeze</code> lo impide).</li><li><strong>Copiar con <code>=</code> esperando una copia:</strong> <code>const b = a;</code> apunta al <strong>mismo</strong> objeto. Usa <code>{ ...a }</code> o <code>structuredClone(a)</code>.</li><li><strong>Usar una flecha como método</strong> y perder <code>this</code>.</li><li><strong>Leer una propiedad de <code>undefined</code>:</strong> usa <code>?.</code> o comprueba antes.</li><li><strong>Comparar objetos con <code>===</code>:</strong> dos objetos distintos con el mismo contenido <strong>no</strong> son iguales.</li><li><strong>JSON con comillas simples</strong> o con una coma final: no es válido.</li><li><strong>Olvidar la coma</strong> entre propiedades.</li></ul>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li>Un objeto agrupa datos relacionados en pares <code>clave: valor</code>; se accede con <code>obj.clave</code> o <code>obj["clave"]</code>.</li><li>Una propiedad que es una función es un <strong>método</strong>; <code>this</code> apunta al objeto. Usa la sintaxis normal, no flechas, para métodos.</li><li>Atajos: propiedades abreviadas <code>{ nombre }</code>, desestructuración <code>const { a, b } = obj</code> y spread <code>{ ...obj, a: 1 }</code>.</li><li><code>Object.keys/values/entries</code> convierten un objeto en arrays para recorrerlo.</li><li><code>?.</code> evita errores con valores que faltan y <code>??</code> aporta valores por defecto.</li><li><code>JSON.stringify</code> y <code>JSON.parse</code> convierten entre objetos y texto; <code>structuredClone</code> hace copias profundas.</li><li>Las <strong>listas de objetos</strong> son el formato más habitual de datos; los métodos de array funcionan igual.</li><li>Los objetos se copian y comparan <strong>por referencia</strong>, no por contenido.</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">10.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td>Objeto</td><td>Conjunto de pares nombre–valor que describe una cosa.</td></tr><tr><td>Propiedad</td><td>Un par nombre–valor dentro de un objeto.</td></tr><tr><td>Método</td><td>Propiedad cuyo valor es una función.</td></tr><tr><td><code>this</code></td><td>En un método, el objeto que lo llamó.</td></tr><tr><td>Desestructuración</td><td>Sacar propiedades de un objeto en variables: <code>const { a } = obj</code>.</td></tr><tr><td>JSON</td><td>Formato de texto para intercambiar datos.</td></tr><tr><td>Referencia</td><td>Dirección de un objeto: dos variables pueden apuntar al mismo.</td></tr><tr><td>Encadenamiento opcional</td><td>Operador <code>?.</code> que evita errores si algo es <code>null</code> o <code>undefined</code>.</td></tr></tbody>
+</table></div>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>¿Cómo accedes a la propiedad cuyo nombre está en la variable <code>clave</code>?</p><ul class="opts"><li><button type="button" class="opt"><code>obj.clave</code></button></li><li><button type="button" class="opt" data-ok><code>obj[clave]</code></button></li><li><button type="button" class="opt"><code>obj-&gt;clave</code></button></li><li><button type="button" class="opt"><code>obj.get(clave)</code></button></li></ul><p class="explain" hidden>Con corchetes se usa el valor de la variable; con punto, el nombre literal.</p></div>
+<div class="quiz-q"><p><code>const a = { x: 1 }; const b = a; b.x = 2;</code> ¿Cuánto vale <code>a.x</code>?</p><ul class="opts"><li><button type="button" class="opt"><code>1</code></button></li><li><button type="button" class="opt" data-ok><code>2</code></button></li><li><button type="button" class="opt"><code>undefined</code></button></li><li><button type="button" class="opt">Error</button></li></ul><p class="explain" hidden><code>b</code> y <code>a</code> apuntan al <strong>mismo</strong> objeto: los cambios se ven en ambos.</p></div>
+<div class="quiz-q"><p>¿Cuál es una forma correcta de copiar un objeto de un solo nivel?</p><ul class="opts"><li><button type="button" class="opt"><code>const b = a</code></button></li><li><button type="button" class="opt" data-ok><code>const b = { ...a }</code></button></li><li><button type="button" class="opt"><code>const b = a.copy()</code></button></li><li><button type="button" class="opt"><code>const b = new a</code></button></li></ul><p class="explain" hidden>El spread crea un objeto nuevo con las mismas propiedades.</p></div>
+<div class="quiz-q"><p><code>usuario?.direccion?.ciudad</code> cuando <code>direccion</code> es <code>null</code>, devuelve…</p><ul class="opts"><li><button type="button" class="opt">Un error</button></li><li><button type="button" class="opt"><code>null</code></button></li><li><button type="button" class="opt" data-ok><code>undefined</code></button></li><li><button type="button" class="opt"><code>""</code></button></li></ul><p class="explain" hidden>El encadenamiento opcional corta la cadena y devuelve <code>undefined</code>.</p></div>
+<div class="quiz-q"><p>¿Qué hace <code>JSON.parse('{"a":1}')</code>?</p><ul class="opts"><li><button type="button" class="opt">Convierte un objeto en texto</button></li><li><button type="button" class="opt" data-ok>Convierte el texto JSON en un objeto</button></li><li><button type="button" class="opt">Borra el JSON</button></li><li><button type="button" class="opt">Valida el HTML</button></li></ul><p class="explain" hidden><code>parse</code> pasa de texto a valor; <code>stringify</code> hace lo contrario.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="js-07">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../06-arrays/ejercicio.html"><small>← Anterior</small>Ejercicio: Arrays</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de JavaScript · Lección 7 · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&title=%5BError%5D%20Lecci%C3%B3n%207%3A%20Objetos%20y%20JSON%20%C2%B7%20Curso%20de%20HTML&pagina=https%3A//cacg-code.github.io/PRACTICAS-HTML/javascript/07-objetos/" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

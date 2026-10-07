@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lección 1: Primeros pasos con JavaScript · Curso de HTML</title>
+  <meta name="description" content="Primeros pasos con JavaScript: qué es, la consola, console.log, dónde escribirlo, cómo leer los errores y tu primera interacción con la página.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/javascript/01-primeros-pasos/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Lección 1: Primeros pasos con JavaScript · Curso de HTML">
+  <meta property="og:description" content="Primeros pasos con JavaScript: qué es, la consola, console.log, dónde escribirlo, cómo leer los errores y tu primera interacción con la página.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/javascript/01-primeros-pasos/">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de JavaScript</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap lesson-layout" id="contenido">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#que-es">Qué es JavaScript</a></li><li><a href="#consola">Tu primer programa: la consola</a></li><li><a href="#donde">Dónde se escribe JavaScript en una página</a></li><li><a href="#sintaxis">Las reglas básicas de escritura</a></li><li><a href="#errores">Leer los errores: tu mejor maestro</a></li><li><a href="#pagina">Tu primera interacción con la página</a></li><li><a href="#dialogos">alert, confirm y prompt: pequeños diálogos</a></li><li><a href="#buenas">Buenas costumbres desde el primer día</a></li><li><a href="#errores2">Errores frecuentes al empezar</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de JavaScript</a> › Lección 1</div>
+        <h1>Primeros pasos con JavaScript</h1>
+        <ul class="meta"><li>⏱ 35 minutos</li><li>📶 Nivel: principiante</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Explicar qué es JavaScript y qué lugar ocupa junto a HTML y CSS.</li><li>Escribir y ejecutar tus primeras instrucciones con <code>console.log</code>.</li><li>Enlazar un script a una página con <code>defer</code>.</li><li>Leer un mensaje de error y encontrar su causa.</li></ul>
+</div>
+
+<h2 id="que-es"><span class="n">1.</span>Qué es JavaScript</h2>
+<p><strong>JavaScript</strong> es el lenguaje de programación de la web. Mientras HTML da la estructura y CSS el aspecto, JavaScript da el <strong>comportamiento</strong>: reacciona cuando alguien pulsa un botón, valida un formulario, muestra datos que llegan de internet, guarda información, anima elementos y mucho más.</p>
+<div class="table-wrap"><table>
+<thead><tr><th><span class="sr-only">Aspecto</span></th><th>HTML</th><th>CSS</th><th>JavaScript</th></tr></thead>
+<tbody><tr><td>Rol</td><td>Estructura y contenido</td><td>Aspecto</td><td>Comportamiento</td></tr><tr><td>Es…</td><td>Un lenguaje de marcado</td><td>Un lenguaje de estilos</td><td>Un <strong>lenguaje de programación</strong></td></tr><tr><td>Ejemplo</td><td>«Aquí hay un botón»</td><td>«El botón es azul y redondo»</td><td>«Al pulsar el botón, se añade un producto al carrito»</td></tr></tbody>
+</table></div>
+<p>Un <strong>lenguaje de programación</strong> te permite dar <strong>instrucciones</strong> a la computadora: guardar datos, tomar decisiones, repetir tareas y reaccionar a lo que ocurre. Esa es la diferencia con HTML y CSS, que solo <strong>describen</strong>.</p>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · JavaScript no es Java</p>
+<p>A pesar del nombre, no tienen relación. Se llamó así por una cuestión de marketing en 1995. Hoy JavaScript corre en el navegador, en servidores (con <strong>Node.js</strong>), en aplicaciones de escritorio y de celular.</p>
+</div>
+<h3>Qué vas a poder hacer al final del curso</h3>
+<ul><li>Escribir programas con <strong>variables, decisiones, bucles y funciones</strong>.</li><li>Trabajar con <strong>listas de datos</strong> (arrays) y <strong>objetos</strong>.</li><li><strong>Cambiar la página</strong> en vivo y reaccionar a clics, teclas y formularios.</li><li>Pedir <strong>datos a internet</strong> y guardar información en el navegador.</li><li>Construir una <strong>aplicación de tareas</strong> completa.</li></ul>
+
+<h2 id="consola"><span class="n">2.</span>Tu primer programa: la consola</h2>
+<p>Antes de tocar la página, empecemos por lo más simple: pedirle a JavaScript que <strong>escriba un mensaje</strong>. Para eso existe <code>console.log()</code>, que muestra cualquier valor en la <strong>consola</strong>, una herramienta pensada para desarrolladores.</p>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ Hola, mundo</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:240px">&lt;script&gt;
+  console.log("¡Hola, mundo!");
+  console.log("Mi primer programa de JavaScript");
+  console.log(2 + 3);
+  console.log("2 + 3 =", 2 + 3);
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<p>Pulsa <strong>Ejecutar</strong> y mira la consola de abajo. Cambia los mensajes y vuelve a ejecutar. Equivocarte aquí no cuesta nada.</p>
+<h3>La consola de tu navegador</h3>
+<p>Todos los navegadores traen una consola real. Ábrela con <kbd>F12</kbd> y elige la pestaña <strong>Consola</strong>. Puedes escribir código ahí y ejecutarlo con <kbd>Enter</kbd>, y es donde aparecen los <strong>errores</strong> de cualquier página.</p>
+<figure class="gif-demo">
+  <button type="button" class="gif-btn" data-gif="../../assets/gif/js-consola.gif" aria-label="Reproducir animación: Se escribe código en el editor, se pulsa Ejecutar y el resultado aparece en la consola">
+    <img src="../../assets/gif/js-consola.png" alt="Se escribe código en el editor, se pulsa Ejecutar y el resultado aparece en la consola" width="640" height="448" loading="lazy">
+    <span class="gif-play">▶ Ver animación</span>
+  </button>
+  <figcaption>Así funcionan los editores del curso: escribes, pulsas <strong>Ejecutar</strong> y la consola muestra el resultado.</figcaption>
+</figure>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Tu laboratorio</p>
+<p>Abre la consola de tu navegador y úsala como <strong>cuaderno de pruebas</strong>: escribe <code>2 + 2</code>, <code>"hola".toUpperCase()</code> o <code>Math.random()</code> y mira qué responde. Es la mejor manera de explorar el lenguaje.</p>
+</div>
+
+<h2 id="donde"><span class="n">3.</span>Dónde se escribe JavaScript en una página</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Forma</th><th>Ejemplo</th><th>Cuándo usarla</th></tr></thead>
+<tbody><tr><td><strong>Archivo externo</strong></td><td><code>&lt;script src="js/app.js" defer&gt;&lt;/script&gt;</code></td><td><strong>Siempre que puedas</strong>: ordenado, reutilizable y con caché</td></tr><tr><td><strong>Bloque en la página</strong></td><td><code>&lt;script&gt; console.log("hola"); &lt;/script&gt;</code></td><td>Pruebas y ejemplos pequeños (como los de este curso)</td></tr><tr><td><strong>Atributo en la etiqueta</strong></td><td><code>&lt;button onclick="hacer()"&gt;</code></td><td><strong>Evítalo</strong>: mezcla HTML y lógica y es difícil de mantener</td></tr></tbody>
+</table></div>
+<div class="code">
+  <div class="code-head"><span>Así se enlaza un archivo JavaScript</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">&lt;!doctype html&gt;</span>
+<span class="tk-tag">&lt;html</span> <span class="tk-attr">lang</span>=<span class="tk-val">"es"</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;head</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;meta</span> <span class="tk-attr">charset</span>=<span class="tk-val">"UTF-8"</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;title</span><span class="tk-tag">&gt;</span>Mi página<span class="tk-tag">&lt;/title</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;script</span> <span class="tk-attr">src</span>=<span class="tk-val">"js/app.js"</span> <span class="tk-attr">defer</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;/script</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;/head</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;body</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;h1</span> <span class="tk-attr">id</span>=<span class="tk-val">"titulo"</span><span class="tk-tag">&gt;</span>Hola<span class="tk-tag">&lt;/h1</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;/body</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;/html</span><span class="tk-tag">&gt;</span></code></pre>
+</div>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · <code>defer</code></p>
+<p>El navegador lee la página <strong>de arriba abajo</strong>. Si el script está en el <code>&lt;head&gt;</code> y quiere modificar un elemento del <code>&lt;body&gt;</code>, ese elemento <strong>todavía no existe</strong>. El atributo <code>defer</code> hace que el script se ejecute <strong>cuando la página ya está lista</strong>. Úsalo en todos tus scripts externos.</p>
+</div>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · Los editores del curso</p>
+<p>En los editores de las lecciones escribes el código dentro de un bloque <code>&lt;script&gt;</code> junto a tu HTML. Fíjate en que el script está <strong>al final</strong> del contenido: así los elementos ya existen cuando se ejecuta.</p>
+</div>
+
+<h2 id="sintaxis"><span class="n">4.</span>Las reglas básicas de escritura</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Regla</th><th>Ejemplo</th></tr></thead>
+<tbody><tr><td>Las <strong>instrucciones</strong> se ejecutan en orden, de arriba abajo</td><td><code>console.log("a"); console.log("b");</code></td></tr><tr><td>Cada instrucción suele terminar en <strong>punto y coma</strong> <code>;</code></td><td><code>console.log("hola");</code></td></tr><tr><td><strong>Mayúsculas y minúsculas importan</strong></td><td><code>console.log</code> ≠ <code>Console.log</code></td></tr><tr><td>Los <strong>textos</strong> (cadenas) van entre comillas</td><td><code>"hola"</code>, <code>'hola'</code> o `<code> </code>hola<code> </code>`</td></tr><tr><td>Los <strong>comentarios</strong> no se ejecutan</td><td><code>// una línea</code> y <code>/* varias líneas */</code></td></tr><tr><td>Los <strong>bloques</strong> de código van entre llaves</td><td><code>{ … }</code></td></tr><tr><td>Los nombres no llevan espacios ni empiezan con número</td><td><code>miNombre</code>, <code>precio2</code></td></tr></tbody>
+</table></div>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ Orden y comentarios</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:240px">&lt;script&gt;
+  // Esto es un comentario: JavaScript lo ignora
+  console.log("1. Primero esto");
+  console.log("2. Después esto");
+
+  /* También puedes comentar
+     varias líneas */
+
+  // console.log("3. Esta línea está desactivada");
+  console.log("4. Y al final esto");
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<p>Prueba a quitar los <code>//</code> de la tercera línea y vuelve a ejecutar. <strong>Comentar</strong> código es la forma rápida de desactivar algo sin borrarlo.</p>
+
+<h2 id="errores"><span class="n">5.</span>Leer los errores: tu mejor maestro</h2>
+<p>Al programar vas a ver <strong>muchos errores</strong>. Es completamente normal y <strong>todo el mundo</strong> los ve, siempre. La consola te dice qué pasó y dónde. Aprender a leerlos es la habilidad más útil de este curso.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Mensaje</th><th>Qué significa</th><th>Causa típica</th></tr></thead>
+<tbody><tr><td><code>SyntaxError: Unexpected token</code></td><td>Escribiste algo que no es JavaScript válido</td><td>Un paréntesis, llave o comilla sin cerrar</td></tr><tr><td><code>ReferenceError: x is not defined</code></td><td>Usas un nombre que no existe</td><td>Errata, o usarlo antes de crearlo</td></tr><tr><td><code>TypeError: x is not a function</code></td><td>Intentas «llamar» a algo que no es una función</td><td>Nombre mal escrito</td></tr><tr><td><code>TypeError: Cannot read properties of null</code></td><td>Pides algo a un valor que no existe</td><td>Un elemento que no se encontró</td></tr></tbody>
+</table></div>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ Provoca y arregla errores</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:240px">&lt;script&gt;
+  console.log("Esto sí se ejecuta");
+  console.log(nombre);          // ReferenceError: nombre no existe
+  console.log("Esto ya no");    // el programa se detuvo en el error anterior
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<p>Lee el mensaje rojo de la consola. Arréglalo creando la variable (<code>const nombre = "Ana";</code> antes de usarla) y vuelve a ejecutar.</p>
+<ol class="steps"><li><strong>Lee el mensaje completo</strong>, no solo el principio.</li><li><strong>Fíjate en la línea</strong> que indica.</li><li><strong>Busca la errata</strong> más probable: nombres, comillas, paréntesis.</li><li><strong>Prueba con <code>console.log</code></strong> para ver qué valen las variables.</li></ol>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Un error detiene el programa</p>
+<p>Cuando JavaScript encuentra un error, <strong>deja de ejecutar</strong> el resto de ese script. Por eso a veces «no pasa nada»: un error anterior detuvo todo. Mira siempre la consola primero.</p>
+</div>
+
+<h2 id="pagina"><span class="n">6.</span>Tu primera interacción con la página</h2>
+<p>JavaScript puede <strong>leer y cambiar</strong> el HTML. Para empezar, una sola idea: buscar un elemento por su <code>id</code> y cambiar su texto.</p>
+<div class="code">
+  <div class="code-head"><span>Cambiar un texto de la página</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">const</span> saludo = document.getElementById(<span class="tk-val">"saludo"</span>);   <span class="tk-com">// 1. buscar el elemento</span>
+saludo.textContent = <span class="tk-val">"¡Hola desde JavaScript!"</span>;      <span class="tk-com">// 2. cambiar su texto</span></code></pre>
+</div>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ Cambia la página</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:240px">&lt;h1 id="titulo"&gt;Título original&lt;/h1&gt;
+&lt;p id="saludo"&gt;Texto original&lt;/p&gt;
+
+&lt;script&gt;
+  const titulo = document.getElementById("titulo");
+  const saludo = document.getElementById("saludo");
+
+  titulo.textContent = "Título cambiado con JavaScript";
+  saludo.textContent = "¡Hola desde el script!";
+  saludo.style.color = "#4f46e5";
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<p>Verás cómo cambia el contenido de la <strong>Página (resultado)</strong>. En la lección 8 estudiaremos el DOM a fondo; por ahora basta con que sepas que <code>document</code> representa la página y que con él puedes tocar cualquier elemento.</p>
+
+<h2 id="dialogos"><span class="n">7.</span>alert, confirm y prompt: pequeños diálogos</h2>
+<p>JavaScript puede abrir ventanas del navegador para <strong>avisar</strong> (<code>alert</code>), <strong>preguntar sí o no</strong> (<code>confirm</code>) y <strong>pedir un texto</strong> (<code>prompt</code>):</p>
+<div class="code">
+  <div class="code-head"><span>Los tres diálogos clásicos</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>alert(<span class="tk-val">"¡Hola!"</span>);                                  <span class="tk-com">// un aviso</span>
+<span class="tk-tag">const</span> ok = confirm(<span class="tk-val">"¿Quieres continuar?"</span>);         <span class="tk-com">// true o false</span>
+<span class="tk-tag">const</span> nombre = prompt(<span class="tk-val">"¿Cómo te llamas?"</span>);         <span class="tk-com">// el texto, o null si cancela</span></code></pre>
+</div>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · En los editores del curso no funcionan</p>
+<p>Por seguridad, los editores de este curso bloquean los diálogos (corren en un entorno aislado). Pruébalos en tu propio archivo o en la consola de tu navegador. Y úsalos poco: interrumpen y son poco accesibles; en el curso aprenderás mejores formas de mostrar mensajes dentro de la página.</p>
+</div>
+
+<h2 id="buenas"><span class="n">8.</span>Buenas costumbres desde el primer día</h2>
+<ul><li><strong>Escribe poco y prueba seguido.</strong> Ejecuta cada pocas líneas.</li><li><strong>Nombra las cosas con claridad:</strong> <code>precioTotal</code> en vez de <code>x</code>.</li><li><strong>Usa <code>console.log</code> para investigar:</strong> mira qué valen las cosas.</li><li><strong>Comenta el «por qué»,</strong> no el «qué».</li><li><strong>Sangra (indenta) el código</strong> para que se lea.</li><li><strong>Lee la documentación:</strong> <a href="https://developer.mozilla.org/es/docs/Web/JavaScript" target="_blank" rel="noopener">MDN</a> es tu mejor aliada.</li><li><strong>Equivocarse es parte del proceso.</strong> Nadie escribe programas perfectos a la primera.</li></ul>
+
+<h2 id="errores2"><span class="n">9.</span>Errores frecuentes al empezar</h2>
+<ul><li><strong>Olvidar cerrar</strong> una comilla, paréntesis o llave.</li><li><strong>Confundir mayúsculas y minúsculas:</strong> <code>getElementById</code>, no <code>getelementbyid</code>.</li><li><strong>Ejecutar el script antes de que exista el elemento</strong> (olvidar <code>defer</code> o ponerlo antes del HTML).</li><li><strong>Esperar que el código «recuerde» algo</strong> que no guardaste en una variable.</li><li><strong>No mirar la consola</strong> cuando algo no funciona.</li><li><strong>Copiar y pegar sin entender:</strong> cambia algo del ejemplo y observa qué pasa.</li><li><strong>Usar comillas «tipográficas»</strong> (<code>“ ”</code>) copiadas de un documento: JavaScript solo entiende las rectas (<code>" "</code>).</li></ul>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li>JavaScript es un <strong>lenguaje de programación</strong> que da comportamiento a la página; HTML estructura y CSS da estilo.</li><li><code>console.log()</code> muestra valores en la consola (<kbd>F12</kbd>); es tu herramienta para explorar y depurar.</li><li>Enlaza tu código con <code>&lt;script src="…" defer&gt;</code>; <code>defer</code> espera a que la página esté lista.</li><li>Las instrucciones se ejecutan en orden; terminan en <code>;</code>; distinguen mayúsculas; los comentarios son <code>//</code> y <code>/* */</code>.</li><li>Los errores son normales: lee el mensaje, mira la línea y busca la errata. Un error detiene el script.</li><li><code>document.getElementById("id")</code> busca un elemento y <code>.textContent</code> cambia su texto.</li><li><code>alert</code>, <code>confirm</code> y <code>prompt</code> abren diálogos, pero se usan poco y aquí no funcionan.</li><li>Escribe poco, prueba seguido y nombra bien las cosas.</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">10.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td>JavaScript</td><td>Lenguaje de programación que da comportamiento a las páginas web.</td></tr><tr><td>Consola</td><td>Herramienta del navegador donde se ven mensajes y errores y se prueba código.</td></tr><tr><td>Instrucción</td><td>Una orden que el programa ejecuta.</td></tr><tr><td>Cadena (string)</td><td>Texto entre comillas.</td></tr><tr><td><code>defer</code></td><td>Atributo que hace que un script se ejecute cuando la página ya cargó.</td></tr><tr><td>Comentario</td><td>Texto del código que se ignora al ejecutar.</td></tr><tr><td><code>document</code></td><td>Objeto que representa la página y permite leerla y modificarla.</td></tr><tr><td>Depurar</td><td>Buscar y corregir errores en el código.</td></tr></tbody>
+</table></div>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>¿Qué papel tiene JavaScript en una página?</p><ul class="opts"><li><button type="button" class="opt">Define la estructura</button></li><li><button type="button" class="opt">Define el aspecto</button></li><li><button type="button" class="opt" data-ok>Da comportamiento e interacción</button></li><li><button type="button" class="opt">Guarda las imágenes</button></li></ul><p class="explain" hidden>HTML estructura, CSS da estilo y JavaScript da comportamiento.</p></div>
+<div class="quiz-q"><p>¿Qué hace <code>console.log("hola")</code>?</p><ul class="opts"><li><button type="button" class="opt">Muestra «hola» en la página</button></li><li><button type="button" class="opt" data-ok>Muestra «hola» en la consola</button></li><li><button type="button" class="opt">Abre una ventana</button></li><li><button type="button" class="opt">Borra el texto</button></li></ul><p class="explain" hidden>Escribe el valor en la consola del navegador.</p></div>
+<div class="quiz-q"><p>Un script en el <code>&lt;head&gt;</code> no encuentra un elemento del <code>&lt;body&gt;</code>. ¿Qué soluciona el problema?</p><ul class="opts"><li><button type="button" class="opt">Escribirlo en mayúsculas</button></li><li><button type="button" class="opt" data-ok>Usar <code>defer</code></button></li><li><button type="button" class="opt">Quitar las comillas</button></li><li><button type="button" class="opt">Usar <code>alert</code></button></li></ul><p class="explain" hidden><code>defer</code> retrasa la ejecución hasta que la página está lista.</p></div>
+<div class="quiz-q"><p>JavaScript encuentra un error en la línea 3 de un script. ¿Qué pasa con las líneas siguientes?</p><ul class="opts"><li><button type="button" class="opt">Se ejecutan igualmente</button></li><li><button type="button" class="opt" data-ok>Ese script se detiene y no se ejecutan</button></li><li><button type="button" class="opt">Se ejecutan al revés</button></li><li><button type="button" class="opt">Se borran</button></li></ul><p class="explain" hidden>Un error sin controlar detiene el script en ese punto.</p></div>
+<div class="quiz-q"><p>¿Cuál de estas líneas es un comentario válido de una sola línea?</p><ul class="opts"><li><button type="button" class="opt"><code># comentario</code></button></li><li><button type="button" class="opt" data-ok><code>// comentario</code></button></li><li><button type="button" class="opt"><code>&lt;!-- comentario --&gt;</code></button></li><li><button type="button" class="opt"><code>** comentario **</code></button></li></ul><p class="explain" hidden>En JavaScript, <code>//</code> comenta una línea y <code>/* … */</code> varias.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="js-01">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../"><small>← Volver</small>Índice del curso</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de JavaScript · Lección 1 · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&title=%5BError%5D%20Lecci%C3%B3n%201%3A%20Primeros%20pasos%20con%20JavaScript%20%C2%B7%20Curso%20de%20HTML&pagina=https%3A//cacg-code.github.io/PRACTICAS-HTML/javascript/01-primeros-pasos/" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

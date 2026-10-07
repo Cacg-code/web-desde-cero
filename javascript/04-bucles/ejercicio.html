@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ejercicio · Bucles · Curso de HTML</title>
+  <meta name="description" content="Ejercicio práctico de: Bucles.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/javascript/04-bucles/ejercicio.html">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Ejercicio · Bucles · Curso de HTML">
+  <meta property="og:description" content="Ejercicio práctico de: Bucles.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/javascript/04-bucles/ejercicio.html">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de JavaScript</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap" id="contenido" style="max-width:820px;padding-top:2rem;padding-bottom:3rem">
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de JavaScript</a> › <a href="./">Lección 4</a> › Ejercicio</div>
+        <h1>Ejercicio: Bucles</h1>
+        <ul class="meta"><li>⏱ 40 minutos</li><li>📶 Nivel: principiante</li></ul>
+      </header>
+
+      <h2>Objetivo</h2>
+      <p>Escribir seis funciones con bucles: sumas, tablas, conteo de vocales, FizzBuzz, el valor máximo y la inversión de un texto.</p>
+
+      <h3>Antes de empezar</h3>
+      <p>Estas funciones no necesitan una página. Prueba con <code>console.log</code> en el editor y pega tu código en el comprobador.</p>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ Prueba tu código aquí (opcional)</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:240px">&lt;script&gt;
+  // escribe tu JavaScript
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+
+      <h2>Pasos</h2>
+      <p>Marca cada paso a medida que lo completes. Tu avance se guarda en este navegador.</p>
+      <div class="progress" aria-hidden="true"><div></div></div>
+      <p id="progreso-texto" style="color:var(--muted);font-size:.9rem" aria-live="polite"></p>
+      <ul class="checklist"><li><label><input type="checkbox" id="p1"><span>Escribe <code>sumaHasta(n)</code> que devuelva la suma de los números del 1 al <code>n</code> (con un bucle).</span></label></li><li><label><input type="checkbox" id="p2"><span>Escribe <code>tablaDel(n)</code> que devuelva un <strong>array</strong> de 10 textos con la tabla del <code>n</code>: <code>"3 x 1 = 3"</code>, <code>"3 x 2 = 6"</code>, … hasta <code>"3 x 10 = 30"</code>.</span></label></li><li><label><input type="checkbox" id="p3"><span>Escribe <code>contarVocales(texto)</code> que devuelva cuántas vocales (a, e, i, o, u, en minúscula o mayúscula) tiene el texto.</span></label></li><li><label><input type="checkbox" id="p4"><span>Escribe <code>fizzBuzz(n)</code> que devuelva un array con los números del 1 al <code>n</code>, pero sustituyendo los múltiplos de 3 por <code>"Fizz"</code>, los de 5 por <code>"Buzz"</code> y los de ambos por <code>"FizzBuzz"</code>.</span></label></li><li><label><input type="checkbox" id="p5"><span>Escribe <code>mayor(lista)</code> que devuelva el número más grande de un array (sin usar <code>Math.max</code>).</span></label></li><li><label><input type="checkbox" id="p6"><span>Escribe <code>invertir(texto)</code> que devuelva el texto al revés (con un bucle, sin usar <code>reverse</code>).</span></label></li></ul>
+      <details><summary>💡 Pista 1: `tablaDel`</summary><p>Crea un array vacío, usa un <code>for</code> de 1 a 10 y añade con <code>push</code> el texto `<code> </code>${n} x ${i} = ${n * i}<code> </code><code>. Al final, </code>return` el array.</p>
+</details>
+<details><summary>💡 Pista 2: FizzBuzz</summary><p>Comprueba <strong>primero</strong> los múltiplos de 15 (o de 3 y 5 a la vez); si no, el 3 y el 5 se «comerían» a ese caso.</p>
+</details>
+
+      <section class="checker" id="comprobador" aria-labelledby="t-chk">
+        <h2 id="t-chk">🔎 Comprueba tu trabajo</h2>
+        <p>Pega tu código y pulsa <strong>Comprobar</strong>. La revisión ocurre en tu navegador; nada se envía a ningún sitio. Cada punto en rojo incluye una pista.</p>
+        <label for="chk-code">Tu código JavaScript</label>
+        <textarea id="chk-code" rows="10" spellcheck="false" placeholder="Pega aquí solo tu JavaScript (sin la etiqueta script)"></textarea>
+        <div class="chk-actions"><button class="btn" type="button" id="chk-run">Comprobar</button><button class="icon-btn" type="button" id="chk-clear">Limpiar</button></div>
+        <p class="chk-sum" id="chk-sum" aria-live="polite"></p>
+        <ul class="chk-list" id="chk-list"></ul>
+        <script type="application/json" id="checks">{"mode": "js", "scaffold": "", "width": 800, "checks": [{"d": "`sumaHasta(10)` es 55 y `sumaHasta(100)` es 5050", "h": "Acumula en una variable `suma` dentro de un `for`.", "t": "return sumaHasta(10)===55 && sumaHasta(100)===5050 && sumaHasta(0)===0"}, {"d": "`tablaDel(3)` devuelve 10 textos con el formato correcto", "h": "Usa `` `${n} x ${i} = ${n * i}` ``.", "t": "var t=tablaDel(3);return Array.isArray(t) && t.length===10 && t[0]===\"3 x 1 = 3\" && t[9]===\"3 x 10 = 30\" && tablaDel(7)[5]===\"7 x 6 = 42\""}, {"d": "`contarVocales` cuenta 5 en «Murciélago» y 0 en «rhythm»", "h": "Pasa el texto a minúsculas y comprueba con `\"aeiou\".includes(letra)`.", "t": "return contarVocales(\"Murcielago\")===5 && contarVocales(\"rhythm\")===0 && contarVocales(\"AEIOU aeiou\")===10 && contarVocales(\"\")===0"}, {"d": "`fizzBuzz(15)` devuelve la secuencia correcta", "h": "Comprueba primero los múltiplos de 15.", "t": "var r=fizzBuzz(15);return r.length===15 && r[0]===1 && r[2]===\"Fizz\" && r[4]===\"Buzz\" && r[14]===\"FizzBuzz\" && r[9]===\"Buzz\" && r[5]===\"Fizz\""}, {"d": "`mayor` encuentra el máximo (también con negativos)", "h": "Recuerda el mayor visto hasta el momento.", "t": "return mayor([3,9,2])===9 && mayor([-5,-2,-9])===-2 && mayor([7])===7"}, {"d": "`mayor` no usa `Math.max`", "h": "Resuélvelo con un bucle.", "t": "return !/Math\\.max/.test(window.__src)"}, {"d": "`invertir(\"hola\")` devuelve «aloh»", "h": "Recorre el texto de atrás hacia delante acumulando letras.", "t": "return invertir(\"hola\")===\"aloh\" && invertir(\"\")===\"\" && invertir(\"a\")===\"a\" && invertir(\"Ana\")===\"anA\""}, {"d": "`invertir` no usa `reverse`", "h": "Usa un bucle `for`.", "t": "return !/\\.reverse\\(/.test(window.__src)"}, {"d": "Usas bucles (`for` o `while`)", "h": "Resuelve los ejercicios con bucles.", "t": "return /\\bfor\\s*\\(|\\bwhile\\s*\\(/.test(window.__src)"}]}</script>
+      </section>
+      <details>
+        <summary>✅ Ver una solución de ejemplo</summary>
+        <p>Intenta resolverlo antes de mirar. Tu versión puede ser distinta y también correcta.</p>
+        <div class="code">
+  <div class="code-head"><span>app.js</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">function</span> sumaHasta(n) {
+  <span class="tk-tag">let</span> suma = <span class="tk-attr">0</span>;
+  <span class="tk-tag">for</span> (<span class="tk-tag">let</span> i = <span class="tk-attr">1</span>; i &lt;= n; i++) suma += i;
+  <span class="tk-tag">return</span> suma;
+}
+
+<span class="tk-tag">function</span> tablaDel(n) {
+  <span class="tk-tag">const</span> filas = [];
+  <span class="tk-tag">for</span> (<span class="tk-tag">let</span> i = <span class="tk-attr">1</span>; i &lt;= <span class="tk-attr">10</span>; i++) {
+    filas.push(<span class="tk-val">`${n} x ${i} = ${n * i}`</span>);
+  }
+  <span class="tk-tag">return</span> filas;
+}
+
+<span class="tk-tag">function</span> contarVocales(texto) {
+  <span class="tk-tag">let</span> cuenta = <span class="tk-attr">0</span>;
+  <span class="tk-tag">for</span> (<span class="tk-tag">const</span> letra <span class="tk-tag">of</span> texto.toLowerCase()) {
+    <span class="tk-tag">if</span> (<span class="tk-val">"aeiou"</span>.includes(letra)) cuenta++;
+  }
+  <span class="tk-tag">return</span> cuenta;
+}
+
+<span class="tk-tag">function</span> fizzBuzz(n) {
+  <span class="tk-tag">const</span> resultado = [];
+  <span class="tk-tag">for</span> (<span class="tk-tag">let</span> i = <span class="tk-attr">1</span>; i &lt;= n; i++) {
+    <span class="tk-tag">if</span> (i % <span class="tk-attr">15</span> === <span class="tk-attr">0</span>) resultado.push(<span class="tk-val">"FizzBuzz"</span>);
+    <span class="tk-tag">else</span> <span class="tk-tag">if</span> (i % <span class="tk-attr">3</span> === <span class="tk-attr">0</span>) resultado.push(<span class="tk-val">"Fizz"</span>);
+    <span class="tk-tag">else</span> <span class="tk-tag">if</span> (i % <span class="tk-attr">5</span> === <span class="tk-attr">0</span>) resultado.push(<span class="tk-val">"Buzz"</span>);
+    <span class="tk-tag">else</span> resultado.push(i);
+  }
+  <span class="tk-tag">return</span> resultado;
+}
+
+<span class="tk-tag">function</span> mayor(lista) {
+  <span class="tk-tag">let</span> max = lista[<span class="tk-attr">0</span>];
+  <span class="tk-tag">for</span> (<span class="tk-tag">const</span> n <span class="tk-tag">of</span> lista) {
+    <span class="tk-tag">if</span> (n &gt; max) max = n;
+  }
+  <span class="tk-tag">return</span> max;
+}
+
+<span class="tk-tag">function</span> invertir(texto) {
+  <span class="tk-tag">let</span> resultado = <span class="tk-val">""</span>;
+  <span class="tk-tag">for</span> (<span class="tk-tag">let</span> i = texto.length - <span class="tk-attr">1</span>; i &gt;= <span class="tk-attr">0</span>; i--) {
+    resultado += texto[i];
+  }
+  <span class="tk-tag">return</span> resultado;
+}</code></pre>
+</div>
+
+      </details>
+      <div class="callout consejo">
+<p class="callout-title">💡 🏁 Reto extra (opcional)</p>
+<p>Escribe <code>esPrimo(n)</code>: devuelve <code>true</code> si <code>n</code> solo es divisible entre 1 y entre sí mismo. Después escribe <code>primosHasta(n)</code> que devuelva todos los primos hasta <code>n</code>.</p>
+</div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="./"><small>← Anterior</small>Volver a lección 4</a>
+        <a class="next" href="../05-funciones/"><small>Siguiente →</small>Funciones</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de JavaScript · Ejercicio de lección 4 · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&title=%5BError%5D%20Ejercicio%20%C2%B7%20Bucles%20%C2%B7%20Curso%20de%20HTML&pagina=https%3A//cacg-code.github.io/PRACTICAS-HTML/javascript/04-bucles/ejercicio.html" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

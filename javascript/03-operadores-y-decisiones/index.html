@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lección 3: Operadores y decisiones · Curso de HTML</title>
+  <meta name="description" content="Operadores y decisiones en JavaScript: comparación estricta, lógicos, truthy y falsy, if, else, ternario y switch.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/javascript/03-operadores-y-decisiones/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Lección 3: Operadores y decisiones · Curso de HTML">
+  <meta property="og:description" content="Operadores y decisiones en JavaScript: comparación estricta, lógicos, truthy y falsy, if, else, ternario y switch.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/javascript/03-operadores-y-decisiones/">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de JavaScript</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap lesson-layout" id="contenido">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#operadores">Operadores</a></li><li><a href="#comparacion">Comparar valores: `===` y `==`</a></li><li><a href="#logicos">Operadores lógicos y valores «verdaderos»</a></li><li><a href="#if">Tomar decisiones: if, else if y else</a></li><li><a href="#ternario">El operador ternario y el cortocircuito</a></li><li><a href="#switch">switch: muchas opciones sobre un mismo valor</a></li><li><a href="#funciones-decision">Decisiones dentro de funciones</a></li><li><a href="#errores">Errores frecuentes</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de JavaScript</a> › Lección 3</div>
+        <h1>Operadores y decisiones</h1>
+        <ul class="meta"><li>⏱ 40 minutos</li><li>📶 Nivel: principiante</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Elegir el operador correcto y preferir siempre <code>===</code>.</li><li>Combinar condiciones con <code>&amp;&amp;</code>, <code>||</code> y <code>!</code>.</li><li>Tomar decisiones con <code>if</code>, ternario y <code>switch</code>.</li><li>Escribir funciones que decidan y devuelvan un resultado.</li></ul>
+</div>
+
+<h2 id="operadores"><span class="n">1.</span>Operadores</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Tipo</th><th>Operadores</th><th>Ejemplo</th></tr></thead>
+<tbody><tr><td>Aritméticos</td><td><code>+  -  *  /  %  **</code></td><td><code>7 % 2</code> → <code>1</code></td></tr><tr><td>Asignación</td><td><code>=  +=  -=  *=  /=  ++  --</code></td><td><code>total += 5</code> (suma 5 a <code>total</code>)</td></tr><tr><td>Comparación</td><td><code>===  !==  &gt;  &lt;  &gt;=  &lt;=</code></td><td><code>3 &gt; 2</code> → <code>true</code></td></tr><tr><td>Lógicos</td><td><code>&amp;&amp;</code> (y)  <code>||</code> (o)  <code>!</code> (no)</td><td><code>edad &gt; 18 &amp;&amp; tieneId</code></td></tr><tr><td>Nulo/indefinido</td><td><code>??</code> (si es null o undefined)</td><td><code>nombre ?? "invitado"</code></td></tr><tr><td>Condicional</td><td><code>condición ? a : b</code></td><td><code>edad &gt;= 18 ? "adulto" : "menor"</code></td></tr></tbody>
+</table></div>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ Operadores</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:240px">&lt;script&gt;
+  let puntos = 10;
+  puntos += 5;           // 15
+  puntos *= 2;           // 30
+  puntos++;              // 31
+  console.log(puntos);
+
+  console.log(7 % 2);              // resto: 1
+  console.log(7 % 2 === 0);        // ¿es par? false
+  console.log(10 &gt; 3, 10 === 10, 10 !== 7);
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+
+<h2 id="comparacion"><span class="n">2.</span>Comparar valores: <code>===</code> y <code>==</code></h2>
+<p>Comparar es la base de las decisiones. Hay <strong>dos</strong> formas de preguntar «¿son iguales?», y una es mucho mejor:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Operador</th><th>Nombre</th><th>Qué hace</th></tr></thead>
+<tbody><tr><td><code>===</code></td><td>Igualdad <strong>estricta</strong></td><td>Compara el valor <strong>y el tipo</strong>. <strong>Úsala siempre</strong></td></tr><tr><td><code>==</code></td><td>Igualdad <strong>laxa</strong></td><td>Convierte tipos antes de comparar: resultados sorprendentes</td></tr><tr><td><code>!==</code></td><td>Desigualdad estricta</td><td>Lo contrario de <code>===</code></td></tr></tbody>
+</table></div>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ == frente a ===</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:240px">&lt;script&gt;
+  console.log(5 == "5");      // true   ← convierte el texto a número
+  console.log(5 === "5");     // false  ← tipos distintos
+  console.log(0 == false);    // true   (sorpresa)
+  console.log(0 === false);   // false
+  console.log(null == undefined);   // true
+  console.log(null === undefined);  // false
+
+  console.log("a" &lt; "b");     // true: se comparan alfabéticamente
+  console.log(10 &lt; 9);        // false
+  console.log("10" &lt; "9");    // true  (¡como texto, "1" &lt; "9"!)
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · Regla de oro</p>
+<p><strong>Usa siempre <code>===</code> y <code>!==</code>.</strong> <code>==</code> y <code>!=</code> hacen conversiones que producen resultados difíciles de predecir y son fuente habitual de errores.</p>
+</div>
+
+<h2 id="logicos"><span class="n">3.</span>Operadores lógicos y valores «verdaderos»</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Operador</th><th>Se lee</th><th>Es verdadero cuando…</th></tr></thead>
+<tbody><tr><td><code>a &amp;&amp; b</code></td><td>a <strong>y</strong> b</td><td><strong>ambos</strong> son verdaderos</td></tr><tr><td><code>a || b</code></td><td>a <strong>o</strong> b</td><td><strong>al menos uno</strong> es verdadero</td></tr><tr><td><code>!a</code></td><td><strong>no</strong> a</td><td><code>a</code> es falso</td></tr></tbody>
+</table></div>
+<div class="table-wrap"><table>
+<thead><tr><th><code>a</code></th><th><code>b</code></th><th><code>a &amp;&amp; b</code></th><th><code>a || b</code></th></tr></thead>
+<tbody><tr><td><code>true</code></td><td><code>true</code></td><td><code>true</code></td><td><code>true</code></td></tr><tr><td><code>true</code></td><td><code>false</code></td><td><code>false</code></td><td><code>true</code></td></tr><tr><td><code>false</code></td><td><code>true</code></td><td><code>false</code></td><td><code>true</code></td></tr><tr><td><code>false</code></td><td><code>false</code></td><td><code>false</code></td><td><code>false</code></td></tr></tbody>
+</table></div>
+<h3>Verdadero y falso («truthy» y «falsy»)</h3>
+<p>En una condición, JavaScript trata algunos valores como falsos aunque no sean <code>false</code>. Los <strong>valores falsos</strong> son solo estos seis: <code>false</code>, <code>0</code>, <code>""</code>, <code>null</code>, <code>undefined</code> y <code>NaN</code>. <strong>Todo lo demás es verdadero</strong>.</p>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ Truthy y falsy</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:240px">&lt;script&gt;
+  const valores = [false, 0, "", null, undefined, NaN, "0", "hola", [], {}, 42];
+  for (const v of valores) {
+    console.log(JSON.stringify(v), "→", v ? "verdadero" : "falso");
+  }
+
+  // &amp;&amp; y || devuelven uno de los valores, no solo true/false
+  const nombre = "";
+  console.log(nombre || "invitado");     // "invitado"
+  console.log(nombre ?? "invitado");     // ""  (?? solo mira null/undefined)
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · <code>||</code> frente a <code>??</code></p>
+<p><code>a || b</code> usa <code>b</code> si <code>a</code> es <strong>cualquier valor falso</strong> (incluido <code>0</code> o <code>""</code>). <code>a ?? b</code> usa <code>b</code> <strong>solo si <code>a</code> es <code>null</code> o <code>undefined</code></strong>. Para valores por defecto, <code>??</code> suele ser lo correcto.</p>
+</div>
+
+<h2 id="if"><span class="n">4.</span>Tomar decisiones: if, else if y else</h2>
+<div class="code">
+  <div class="code-head"><span>La estructura básica</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">if</span> (condicion) {
+  <span class="tk-com">// se ejecuta si la condición es verdadera</span>
+} <span class="tk-tag">else</span> <span class="tk-tag">if</span> (otraCondicion) {
+  <span class="tk-com">// se ejecuta si la primera falló y esta es verdadera</span>
+} <span class="tk-tag">else</span> {
+  <span class="tk-com">// se ejecuta si ninguna fue verdadera</span>
+}</code></pre>
+</div>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ Clasificar una nota</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:240px">&lt;script&gt;
+  const nota = 7.5;
+
+  if (nota &gt;= 9) {
+    console.log("Sobresaliente");
+  } else if (nota &gt;= 7) {
+    console.log("Notable");
+  } else if (nota &gt;= 5) {
+    console.log("Aprobado");
+  } else {
+    console.log("Reprobado");
+  }
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<p>Cambia el valor de <code>nota</code> y observa qué mensaje aparece. Se evalúan las condiciones <strong>de arriba abajo</strong> y se ejecuta <strong>solo la primera</strong> que sea verdadera; por eso el <strong>orden</strong> importa.</p>
+<h3>Combinar condiciones</h3>
+<div class="code">
+  <div class="code-head"><span>Y, O y NO</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">const</span> edad = <span class="tk-attr">20</span>, tieneEntrada = <span class="tk-tag">true</span>, esVip = <span class="tk-tag">false</span>;
+
+<span class="tk-tag">if</span> (edad &gt;= <span class="tk-attr">18</span> &amp;&amp; tieneEntrada) { console.log(<span class="tk-val">"Puede pasar"</span>); }
+<span class="tk-tag">if</span> (esVip || edad &gt;= <span class="tk-attr">65</span>)        { console.log(<span class="tk-val">"Acceso preferente"</span>); }
+<span class="tk-tag">if</span> (!tieneEntrada)              { console.log(<span class="tk-val">"Debe comprar entrada"</span>); }</code></pre>
+</div>
+
+<h2 id="ternario"><span class="n">5.</span>El operador ternario y el cortocircuito</h2>
+<p>Cuando solo necesitas elegir <strong>entre dos valores</strong>, el operador ternario es más breve que un <code>if</code>:</p>
+<div class="code">
+  <div class="code-head"><span>condición ? siEsVerdadera : siEsFalsa</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">const</span> edad = <span class="tk-attr">20</span>;
+<span class="tk-tag">const</span> tipo = edad &gt;= <span class="tk-attr">18</span> ? <span class="tk-val">"adulto"</span> : <span class="tk-val">"menor"</span>;
+console.log(tipo);                       <span class="tk-com">// "adulto"</span>
+
+console.log(<span class="tk-val">`Tienes ${edad} años y eres ${edad &gt;= 18 ? "mayor" : "menor"} de edad`</span>);</code></pre>
+</div>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Legibilidad primero</p>
+<p>Usa el ternario para decisiones <strong>simples</strong> y de una línea. Si necesitas varias condiciones o varias líneas, un <code>if</code> es más claro. Evita anidar ternarios: son difíciles de leer.</p>
+</div>
+
+<h2 id="switch"><span class="n">6.</span>switch: muchas opciones sobre un mismo valor</h2>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ Un menú con switch</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:240px">&lt;script&gt;
+  const dia = 3;
+  let nombre;
+
+  switch (dia) {
+    case 1:  nombre = "lunes"; break;
+    case 2:  nombre = "martes"; break;
+    case 3:  nombre = "miércoles"; break;
+    case 6:
+    case 7:  nombre = "fin de semana"; break;     // varios casos, mismo resultado
+    default: nombre = "día no válido";
+  }
+  console.log(nombre);
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<ul><li>Compara con <code>===</code> el valor con cada <code>case</code>.</li><li>Cada <code>case</code> termina con <strong><code>break</code></strong>; sin él, la ejecución <strong>«cae»</strong> al siguiente caso.</li><li><code>default</code> se ejecuta si ningún caso coincide.</li><li>Para pocas opciones, <code>if / else if</code> suele bastar; <code>switch</code> brilla con <strong>muchos valores concretos</strong>.</li></ul>
+
+<h2 id="funciones-decision"><span class="n">7.</span>Decisiones dentro de funciones</h2>
+<p>Casi todas las decisiones viven dentro de <strong>funciones</strong>, que verás a fondo en la lección 5. Por ahora, lo básico: una función recibe valores, <strong>decide</strong> y devuelve un resultado con <code>return</code>.</p>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ Tu primera función con decisión</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:240px">&lt;script&gt;
+  function esPar(numero) {
+    return numero % 2 === 0;
+  }
+
+  function categoriaEdad(edad) {
+    if (edad &lt; 13) return "niñez";
+    if (edad &lt; 18) return "adolescencia";
+    if (edad &lt; 65) return "adultez";
+    return "adultez mayor";
+  }
+
+  console.log(esPar(4), esPar(7));
+  console.log(categoriaEdad(10), categoriaEdad(30), categoriaEdad(70));
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · <code>return</code> termina la función</p>
+<p>Cuando una función ejecuta <code>return</code>, <strong>sale inmediatamente</strong>. Por eso en <code>categoriaEdad</code> no hace falta <code>else</code>: si la edad es menor de 13 ya devolvió «niñez» y no sigue leyendo.</p>
+</div>
+
+<h2 id="errores"><span class="n">8.</span>Errores frecuentes</h2>
+<ul><li><strong>Usar <code>=</code> en lugar de <code>===</code></strong> en una condición: <code>if (x = 5)</code> <strong>asigna</strong> y siempre es verdadero.</li><li><strong>Usar <code>==</code></strong> y llevarse conversiones sorpresa.</li><li><strong>Condiciones en el orden equivocado:</strong> <code>nota &gt;= 5</code> antes de <code>nota &gt;= 9</code> captura todo.</li><li><strong>Olvidar <code>break</code></strong> en un <code>switch</code>.</li><li><strong>Comparar textos como si fueran números</strong> (<code>"10" &lt; "9"</code> es <code>true</code>).</li><li><strong>Usar <code>||</code> para valores por defecto</strong> y descartar un <code>0</code> válido: usa <code>??</code>.</li><li><strong>Anidar demasiados <code>if</code>:</strong> usa retornos tempranos (<code>if (!valido) return;</code>).</li><li><strong>Olvidar las llaves</strong> en un <code>if</code> con varias instrucciones.</li></ul>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li>Los operadores aritméticos, de asignación (<code>+=</code>, <code>++</code>), de comparación y lógicos son la base de toda decisión.</li><li><strong>Usa siempre <code>===</code> y <code>!==</code></strong>, nunca <code>==</code>.</li><li><code>&amp;&amp;</code> = «y», <code>||</code> = «o», <code>!</code> = «no». Los valores falsos son solo <code>false</code>, <code>0</code>, <code>""</code>, <code>null</code>, <code>undefined</code> y <code>NaN</code>.</li><li><code>??</code> aplica un valor por defecto solo si el original es <code>null</code> o <code>undefined</code>.</li><li><code>if / else if / else</code> evalúa de arriba abajo y ejecuta <strong>solo la primera</strong> rama verdadera: el orden importa.</li><li>El ternario <code>cond ? a : b</code> sirve para elegir entre dos valores en una línea.</li><li><code>switch</code> compara un valor con varios casos; cada caso termina con <code>break</code>.</li><li><code>return</code> devuelve un valor y termina la función al instante.</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">9.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td>Operador</td><td>Símbolo que realiza una operación (<code>+</code>, <code>===</code>, <code>&amp;&amp;</code>).</td></tr><tr><td>Condición</td><td>Expresión que se evalúa como verdadera o falsa.</td></tr><tr><td>Booleano</td><td>Valor <code>true</code> o <code>false</code>.</td></tr><tr><td>Truthy / falsy</td><td>Valores que se comportan como verdadero o falso en una condición.</td></tr><tr><td>Igualdad estricta</td><td><code>===</code>: compara valor y tipo.</td></tr><tr><td>Ternario</td><td>Operador <code>cond ? a : b</code> que elige entre dos valores.</td></tr><tr><td>Cortocircuito</td><td>Evaluar solo lo necesario en <code>&amp;&amp;</code> y <code>||</code>.</td></tr><tr><td><code>switch</code></td><td>Estructura que compara un valor con varios casos.</td></tr></tbody>
+</table></div>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>¿Qué muestra <code>console.log(5 === "5")</code>?</p><ul class="opts"><li><button type="button" class="opt"><code>true</code></button></li><li><button type="button" class="opt" data-ok><code>false</code></button></li><li><button type="button" class="opt"><code>"5"</code></button></li><li><button type="button" class="opt">Error</button></li></ul><p class="explain" hidden><code>===</code> compara también el tipo: número y texto son distintos.</p></div>
+<div class="quiz-q"><p>¿Cuál de estos valores es <strong>verdadero</strong> en una condición?</p><ul class="opts"><li><button type="button" class="opt"><code>0</code></button></li><li><button type="button" class="opt"><code>""</code></button></li><li><button type="button" class="opt" data-ok><code>"0"</code></button></li><li><button type="button" class="opt"><code>null</code></button></li></ul><p class="explain" hidden>El texto <code>"0"</code> no está vacío, así que es verdadero. Los falsos son <code>false</code>, <code>0</code>, <code>""</code>, <code>null</code>, <code>undefined</code> y <code>NaN</code>.</p></div>
+<div class="quiz-q"><p><code>const n = 0; console.log(n || 10)</code> muestra…</p><ul class="opts"><li><button type="button" class="opt"><code>0</code></button></li><li><button type="button" class="opt" data-ok><code>10</code></button></li><li><button type="button" class="opt"><code>undefined</code></button></li><li><button type="button" class="opt">Error</button></li></ul><p class="explain" hidden><code>0</code> es falso, así que <code>||</code> devuelve <code>10</code>. Con <code>??</code> se mostraría <code>0</code>.</p></div>
+<div class="quiz-q"><p>Una cadena <code>if / else if</code> evalúa <code>nota &gt;= 5</code> antes que <code>nota &gt;= 9</code>. ¿Qué problema hay?</p><ul class="opts"><li><button type="button" class="opt">Ninguno</button></li><li><button type="button" class="opt" data-ok>Una nota de 10 entra en la primera condición y nunca llega a la segunda</button></li><li><button type="button" class="opt">Da un error</button></li><li><button type="button" class="opt">Se ejecutan todas</button></li></ul><p class="explain" hidden>Solo se ejecuta la primera rama verdadera: ordena de la condición más estricta a la más general.</p></div>
+<div class="quiz-q"><p>Olvidas <code>break</code> en un <code>case</code> de un <code>switch</code>. ¿Qué pasa?</p><ul class="opts"><li><button type="button" class="opt">Da error</button></li><li><button type="button" class="opt" data-ok>Se ejecuta también el siguiente <code>case</code></button></li><li><button type="button" class="opt">Se detiene el programa</button></li><li><button type="button" class="opt">Nada</button></li></ul><p class="explain" hidden>Sin <code>break</code>, la ejecución «cae» al caso siguiente.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="js-03">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../02-variables-y-tipos/ejercicio.html"><small>← Anterior</small>Ejercicio: Variables y tipos de datos</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de JavaScript · Lección 3 · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&title=%5BError%5D%20Lecci%C3%B3n%203%3A%20Operadores%20y%20decisiones%20%C2%B7%20Curso%20de%20HTML&pagina=https%3A//cacg-code.github.io/PRACTICAS-HTML/javascript/03-operadores-y-decisiones/" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

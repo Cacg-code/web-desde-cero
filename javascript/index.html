@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Curso de JavaScript</title>
+  <meta name="description" content="Curso gratuito de JavaScript en español, desde cero: variables, funciones, arrays, objetos, el DOM, eventos, asincronía y almacenamiento. Con editor y consola en cada lección y ejercicios que se corrigen solos.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/javascript/">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Curso de JavaScript">
+  <meta property="og:description" content="Curso gratuito de JavaScript en español, desde cero: variables, funciones, arrays, objetos, el DOM, eventos, asincronía y almacenamiento. Con editor y consola en cada lección y ejercicios que se corrigen solos.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/javascript/">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="./"><span class="brand-logo">&lt;/&gt;</span> Curso de JavaScript</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../" style="text-decoration:none">Todos los cursos</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap" id="contenido">
+    <div class="hero-grid">
+      <div class="hero">
+        <span class="eyebrow">Gratis · En español · Nivel 3</span>
+        <h1>JavaScript desde cero: aprende a programar la web</h1>
+        <p>Escribe tus primeros programas, haz que las páginas respondan a lo que hace la gente y termina construyendo una aplicación completa. Cada lección tiene un editor con consola donde probar el código al instante.</p>
+        <a class="btn" href="01-primeros-pasos/">Empezar la lección 1</a>
+        <a class="btn secondary" href="#temario">Ver el temario</a>
+        <div class="avance" id="avance"></div>
+      </div>
+      <div class="hero-demo" role="group" aria-label="Demostración: código que se escribe y su resultado">
+        <div class="win-bar"><i></i><i></i><i></i></div>
+        <pre id="typing" data-lines='["console.log(\"Hola, JavaScript\");", "const suma = 2 + 3;", "console.log(\"2 + 3 =\", suma);"]' data-outs='["Hola, JavaScript", "", "2 + 3 = 5"]'></pre>
+        <div class="hero-out" id="typing-out"></div>
+      </div>
+    </div>
+
+    <section class="features" aria-label="Qué incluye el curso">
+      <div class="feature"><div class="emoji">▶️</div><h2>Editor con consola</h2><p>Cada lección trae editores donde ejecutas código real y ves la salida al momento.</p></div>
+      <div class="feature"><div class="emoji">📝</div><h2>Apuntes claros</h2><p>Explicaciones con recuadros de nota, advertencia y consejo, y un glosario en cada lección.</p></div>
+      <div class="feature"><div class="emoji">✅</div><h2>Ejercicios que se corrigen solos</h2><p>Tu código se ejecuta de verdad y se prueba con casos reales, punto por punto.</p></div>
+      <div class="feature"><div class="emoji">🧠</div><h2>Autoevaluación</h2><p>Preguntas con respuesta inmediata y explicación al final de cada lección.</p></div>
+    </section>
+
+    <div class="two-col">
+      <section><h2 class="section-title" style="margin-top:0">Antes de empezar</h2><ul class="checks-list"><li>Haber hecho el <a href="../html/">curso de HTML</a> y, mejor, el <a href="../css/">de CSS</a>.</li><li>Un navegador moderno (el editor y la consola están dentro de cada lección).</li><li>Ninguna experiencia previa programando: empezamos desde la primera variable.</li></ul></section>
+      <section><h2 class="section-title" style="margin-top:0">Lo que construirás</h2><ul class="checks-list"><li>Programas con decisiones, bucles y funciones.</li><li>Listas de datos que filtras, transformas y ordenas.</li><li>Páginas que **reaccionan** a clics, teclas y formularios.</li><li>Datos que llegan de internet y se guardan en el navegador.</li><li>Una **aplicación de tareas** completa como proyecto final.</li></ul></section>
+    </div>
+
+    <h2 class="section-title" id="temario">Temario · ≈ 14 horas</h2>
+    <ul class="lessons">
+      <li><a class="lesson-card" href="01-primeros-pasos/" data-leccion="js-01">
+        <span class="lesson-num">LECCIÓN 01</span><h3>Primeros pasos con JavaScript</h3>
+        <p>Qué es JavaScript, la consola, console.log, dónde escribirlo y cómo leer los errores.</p><span class="tag open">Disponible</span></a></li>
+      <li><a class="lesson-card" href="02-variables-y-tipos/" data-leccion="js-02">
+        <span class="lesson-num">LECCIÓN 02</span><h3>Variables y tipos de datos</h3>
+        <p>const y let, tipos de datos, plantillas de texto, métodos de string y números.</p><span class="tag open">Disponible</span></a></li>
+      <li><a class="lesson-card" href="03-operadores-y-decisiones/" data-leccion="js-03">
+        <span class="lesson-num">LECCIÓN 03</span><h3>Operadores y decisiones</h3>
+        <p>Comparar, combinar condiciones y decidir con if, ternario y switch.</p><span class="tag open">Disponible</span></a></li>
+      <li><a class="lesson-card" href="04-bucles/" data-leccion="js-04">
+        <span class="lesson-num">LECCIÓN 04</span><h3>Bucles</h3>
+        <p>for, while, for…of, break, continue y los patrones de acumular, contar y buscar.</p><span class="tag open">Disponible</span></a></li>
+      <li><a class="lesson-card" href="05-funciones/" data-leccion="js-05">
+        <span class="lesson-num">LECCIÓN 05</span><h3>Funciones</h3>
+        <p>Parámetros, return, funciones flecha, ámbito, callbacks y closures.</p><span class="tag open">Disponible</span></a></li>
+      <li><a class="lesson-card" href="06-arrays/" data-leccion="js-06">
+        <span class="lesson-num">LECCIÓN 06</span><h3>Arrays</h3>
+        <p>Listas de datos: map, filter, reduce, find, sort y desestructuración.</p><span class="tag open">Disponible</span></a></li>
+      <li><a class="lesson-card" href="07-objetos/" data-leccion="js-07">
+        <span class="lesson-num">LECCIÓN 07</span><h3>Objetos y JSON</h3>
+        <p>Propiedades, métodos, spread, Object.entries, JSON y listas de objetos.</p><span class="tag open">Disponible</span></a></li>
+      <li><a class="lesson-card" href="08-dom/" data-leccion="js-08">
+        <span class="lesson-num">LECCIÓN 08</span><h3>El DOM: leer y cambiar la página</h3>
+        <p>Seleccionar, leer y cambiar elementos; crear y eliminar nodos de forma segura.</p><span class="tag open">Disponible</span></a></li>
+      <li><a class="lesson-card" href="09-eventos/" data-leccion="js-09">
+        <span class="lesson-num">LECCIÓN 09</span><h3>Eventos y formularios</h3>
+        <p>addEventListener, formularios, validación, burbujeo y delegación de eventos.</p><span class="tag open">Disponible</span></a></li>
+      <li><a class="lesson-card" href="10-asincronia/" data-leccion="js-10">
+        <span class="lesson-num">LECCIÓN 10</span><h3>Asincronía y APIs</h3>
+        <p>Temporizadores, promesas, async/await, fetch y los estados de carga.</p><span class="tag open">Disponible</span></a></li>
+      <li><a class="lesson-card" href="11-errores-y-almacenamiento/" data-leccion="js-11">
+        <span class="lesson-num">LECCIÓN 11</span><h3>Errores, depuración y almacenamiento</h3>
+        <p>try/catch, depuración, localStorage, módulos y hábitos de código limpio.</p><span class="tag open">Disponible</span></a></li>
+      <li><a class="lesson-card" href="proyecto-tareas/" data-leccion="js-P">
+        <span class="lesson-num">PROYECTO FINAL</span><h3>Proyecto: lista de tareas</h3>
+        <p>Una aplicación de tareas completa con filtros, contador y almacenamiento.</p><span class="tag open">Disponible</span></a></li>
+    </ul>
+  </main>
+
+  <footer class="site-footer">Curso de JavaScript · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&title=%5BError%5D%20Curso%20de%20JavaScript&pagina=https%3A//cacg-code.github.io/PRACTICAS-HTML/javascript/" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../assets/curso.js"></script>
+</body>
+</html>
