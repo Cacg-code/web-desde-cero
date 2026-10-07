@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400" role="img" aria-label="Ilustración vertical de montañas con un sol al atardecer">
+  <defs><linearGradient id="cielo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6366f1"/><stop offset="1" stop-color="#fbbf77"/></linearGradient></defs>
+  <rect width="300" height="400" fill="url(#cielo)"/>
+  <circle cx="210" cy="120" r="42" fill="#fff4c9"/>
+  <path d="M0 400V260l70-80 60 55 80-100 90 120v145z" fill="#3b3f8f"/>
+  <path d="M0 400V320l90-50 80 40 130-70v160z" fill="#1f2260"/>
+</svg>

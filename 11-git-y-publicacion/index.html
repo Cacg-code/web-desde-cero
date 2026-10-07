@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lección 11: Git y publicación · Curso de HTML</title>
+  <meta name="description" content="Git y GitHub para principiantes: guardar el historial de tu proyecto, subirlo a GitHub y publicarlo en línea con GitHub Pages.">
+  <link rel="stylesheet" href="../assets/estilos.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de HTML</a>
+    <div class="topbar-actions">
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <div class="wrap lesson-layout">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#que-es">Qué es Git y por qué lo necesitas</a></li><li><a href="#instalar">Instalación y configuración</a></li><li><a href="#flujo">El ciclo de trabajo</a></li><li><a href="#comandos">Tu primer repositorio</a></li><li><a href="#github">Subir tu proyecto a GitHub</a></li><li><a href="#pages">Publicar con GitHub Pages</a></li><li><a href="#dia-a-dia">Tu rutina de todos los días</a></li><li><a href="#ramas">Ramas y colaboración (un vistazo)</a></li><li><a href="#errores">Problemas frecuentes</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Inicio</a> › Lección 11</div>
+        <h1>Git y publicación</h1>
+        <ul class="meta"><li>⏱ 45 minutos</li><li>📶 Nivel: principiante</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Explicar qué son Git, GitHub, repositorio, commit y rama.</li><li>Crear un repositorio y guardar tus cambios con commits claros.</li><li>Subir tu proyecto a GitHub con <code>git push</code>.</li><li>Publicar tu sitio con GitHub Pages.</li></ul>
+</div>
+
+<h2 id="que-es"><span class="n">1.</span>Qué es Git y por qué lo necesitas</h2>
+<p>Imagina que cada vez que cambias tu página pudieras guardar una <strong>fotografía</strong> del proyecto con una nota que diga qué hiciste. Si algo se rompe, vuelves a una fotografía anterior. Eso hace <strong>Git</strong>: un sistema de <strong>control de versiones</strong>.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Concepto</th><th>Qué es</th></tr></thead>
+<tbody><tr><td><strong>Git</strong></td><td>La herramienta que corre en tu computadora y guarda el historial del proyecto</td></tr><tr><td><strong>GitHub</strong></td><td>Un sitio web que guarda copias de tus proyectos Git en internet, para compartirlos y publicarlos</td></tr><tr><td><strong>Repositorio</strong></td><td>Una carpeta de proyecto cuyo historial vigila Git</td></tr><tr><td><strong>Commit</strong></td><td>Una «fotografía» del proyecto en un momento, con un mensaje</td></tr><tr><td><strong>Rama</strong> (<em>branch</em>)</td><td>Una línea de trabajo; la principal se llama <code>main</code></td></tr><tr><td><strong>Remoto</strong> (<em>remote</em>)</td><td>La copia del repositorio que vive en GitHub, normalmente llamada <code>origin</code></td></tr></tbody>
+</table></div>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · Git y GitHub no son lo mismo</p>
+<p>Git funciona sin internet y sin cuenta. GitHub es solo uno de los lugares (junto con GitLab o Bitbucket) donde puedes guardar copias. Este curso está publicado en GitHub.</p>
+</div>
+<p>Tres razones para usarlo desde ya:</p>
+<ol class="steps"><li><strong>Puedes equivocarte sin miedo</strong>: cada versión anterior se puede recuperar.</li><li><strong>Publicas gratis</strong> con GitHub Pages, como lo hace este curso.</li><li><strong>Es el estándar</strong> en el trabajo de programación: aprenderlo ahora te abre puertas.</li></ol>
+
+<h2 id="instalar"><span class="n">2.</span>Instalación y configuración</h2>
+<ol class="steps"><li>Descarga Git desde <a href="https://git-scm.com/downloads" target="_blank" rel="noopener">git-scm.com</a> e instálalo con las opciones por defecto.</li><li>Abre una <strong>terminal</strong>: en Windows, «Git Bash» (se instala con Git); en Mac y Linux, la aplicación «Terminal». También sirve la terminal integrada de VS Code (<kbd>Ctrl</kbd> + <kbd>`</kbd>).</li><li>Comprueba la instalación con el comando de abajo.</li><li>Dile a Git quién eres (solo una vez por computadora).</li></ol>
+<div class="code">
+  <div class="code-head"><span>Comprobar y configurar</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>git --version
+git config --global user.name "Tu Nombre"
+git config --global user.email "tu-correo@ejemplo.com"
+git config --global init.defaultBranch main</code></pre>
+</div>
+<p>El correo debe ser el mismo de tu cuenta de GitHub, para que tus cambios se asocien contigo. Crea tu cuenta gratuita en <a href="https://github.com/" target="_blank" rel="noopener">github.com</a>.</p>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Comandos en una terminal</p>
+<p>Los comandos se escriben y se ejecutan con <kbd>Enter</kbd>. Con la flecha hacia arriba recuperas el anterior. <code>cd carpeta</code> entra a una carpeta, <code>cd ..</code> sube una y <code>ls</code> (o <code>dir</code> en Windows) lista los archivos.</p>
+</div>
+
+<h2 id="flujo"><span class="n">3.</span>El ciclo de trabajo</h2>
+<p>Todo lo que harás con Git sigue el mismo recorrido. Entiéndelo bien y el resto son detalles:</p>
+<div class="flow"><div class="node"><strong>Tu carpeta</strong><span>Editas archivos</span></div><div class="arrow">→<code>git add</code></div><div class="node"><strong>Área de preparación</strong><span>Eliges qué guardar</span></div><div class="arrow">→<code>git commit</code></div><div class="node"><strong>Historial local</strong><span>Fotografías guardadas</span></div><div class="arrow">→<code>git push</code></div><div class="node"><strong>GitHub</strong><span>Copia en internet</span></div></div>
+<ul><li><strong>Tu carpeta:</strong> donde editas tus archivos de siempre.</li><li><strong>Área de preparación</strong> (<em>staging</em>): eliges qué cambios entran en la próxima «fotografía».</li><li><strong>Historial local:</strong> cada <code>commit</code> queda guardado en tu computadora.</li><li><strong>GitHub:</strong> con <code>git push</code> subes tus commits a internet.</li></ul>
+
+<h2 id="comandos"><span class="n">4.</span>Tu primer repositorio</h2>
+<p>Vamos a convertir una carpeta con tu página en un repositorio. Los comandos se ejecutan <strong>dentro de la carpeta del proyecto</strong>.</p>
+<div class="code">
+  <div class="code-head"><span>Crear y guardar el primer commit</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>cd mi-pagina
+git init
+git status
+git add .
+git commit -m "Primera versión de mi página personal"
+git log --oneline</code></pre>
+</div>
+<div class="table-wrap"><table>
+<thead><tr><th>Comando</th><th>Qué hace</th></tr></thead>
+<tbody><tr><td><code>git init</code></td><td>Convierte la carpeta en un repositorio (crea una carpeta oculta <code>.git</code>)</td></tr><tr><td><code>git status</code></td><td>Muestra qué archivos cambiaron o están preparados. <strong>Úsalo todo el tiempo</strong></td></tr><tr><td><code>git add archivo</code></td><td>Prepara un archivo para el próximo commit; <code>git add .</code> prepara todo</td></tr><tr><td><code>git commit -m "mensaje"</code></td><td>Guarda una fotografía con tu mensaje</td></tr><tr><td><code>git log --oneline</code></td><td>Muestra el historial resumido</td></tr><tr><td><code>git diff</code></td><td>Muestra qué líneas cambiaste desde el último commit</td></tr></tbody>
+</table></div>
+<h3>Mensajes de commit que se entienden</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>Mal</th><th>Bien</th></tr></thead>
+<tbody><tr><td><code>cambios</code></td><td><code>Agrega sección de contacto con formulario</code></td></tr><tr><td><code>arreglo</code></td><td><code>Corrige la ruta de la imagen de perfil</code></td></tr><tr><td><code>asdf</code></td><td><code>Mejora el contraste de los enlaces del menú</code></td></tr></tbody>
+</table></div>
+<p>Un buen mensaje responde a «¿qué hace este cambio?». Dentro de unos meses, tu yo del futuro te lo agradecerá.</p>
+
+<h2 id="github"><span class="n">5.</span>Subir tu proyecto a GitHub</h2>
+<ol class="steps"><li>En GitHub, pulsa <strong>New repository</strong>. Elige un nombre (por ejemplo <code>mi-pagina</code>), déjalo <strong>público</strong> y <strong>no</strong> marques «Add a README» (ya tienes tus archivos).</li><li>GitHub te mostrará una dirección como <code>https://github.com/tu-usuario/mi-pagina.git</code>. Cópiala.</li><li>En tu terminal, conecta tu carpeta con ese repositorio y sube el historial.</li></ol>
+<div class="code">
+  <div class="code-head"><span>Conectar y subir</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>git remote add origin https://github.com/tu-usuario/mi-pagina.git
+git branch -M main
+git push -u origin main
+git remote -v</code></pre>
+</div>
+<ul><li><code>git remote add origin …</code> registra la dirección con el nombre <code>origin</code>.</li><li><code>git push -u origin main</code> sube la rama <code>main</code> y recuerda la conexión para las próximas veces.</li><li><code>git remote -v</code> muestra los remotos configurados.</li></ul>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · Autenticación</p>
+<p>GitHub ya no acepta la contraseña de tu cuenta en la terminal. La primera vez, te abrirá el navegador para iniciar sesión (con <strong>Git Credential Manager</strong>, incluido en la instalación de Windows y Mac), o puedes usar un <strong>token de acceso personal</strong> como contraseña. <strong>Nunca compartas tu token ni lo subas a un repositorio.</strong></p>
+</div>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · Sin terminal</p>
+<p>También puedes arrastrar archivos desde la web de GitHub («Add file → Upload files») o usar <strong>GitHub Desktop</strong>, un programa con botones que hace lo mismo. Conviene aprender la terminal, pero no es la única opción.</p>
+</div>
+
+<h2 id="pages"><span class="n">6.</span>Publicar con GitHub Pages</h2>
+<p>GitHub Pages publica gratis los archivos de un repositorio como un sitio web. Es lo que usa este curso.</p>
+<ol class="steps"><li>Abre tu repositorio en GitHub y entra a <strong>Settings → Pages</strong>.</li><li>En <strong>Source</strong>, elige <strong>Deploy from a branch</strong>.</li><li>Elige la rama <code>main</code> y la carpeta <code>/ (root)</code>. Pulsa <strong>Save</strong>.</li><li>Espera uno o dos minutos. Arriba verás la dirección: <code>https://tu-usuario.github.io/mi-pagina/</code>.</li></ol>
+<div class="table-wrap"><table>
+<thead><tr><th>Si el repositorio se llama…</th><th>La dirección es…</th></tr></thead>
+<tbody><tr><td><code>mi-pagina</code></td><td><code>https://tu-usuario.github.io/mi-pagina/</code></td></tr><tr><td><code>tu-usuario.github.io</code></td><td><code>https://tu-usuario.github.io/</code> (tu sitio principal)</td></tr></tbody>
+</table></div>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · Tu <code>index.html</code></p>
+<p>GitHub Pages muestra el archivo <code>index.html</code> de la carpeta raíz. Si tu archivo principal tiene otro nombre, verás un error 404. Y revisa las mayúsculas: en los servidores, <code>Foto.jpg</code> y <code>foto.jpg</code> son archivos distintos.</p>
+</div>
+<p>A partir de ahora, cada vez que hagas <code>git push</code>, GitHub Pages se actualiza solo.</p>
+
+<h2 id="dia-a-dia"><span class="n">7.</span>Tu rutina de todos los días</h2>
+<div class="code">
+  <div class="code-head"><span>El ciclo completo</span><button class="copy" type="button">Copiar</button></div>
+<pre><code># 1. Edita tus archivos y pruébalos en el navegador
+# 2. Mira qué cambió
+git status
+# 3. Prepara y guarda
+git add .
+git commit -m "Describe lo que hiciste"
+# 4. Sube a GitHub (y se publica solo)
+git push</code></pre>
+</div>
+<h3>Si trabajas desde dos computadoras</h3>
+<div class="code">
+  <div class="code-head"><span>Traer los cambios</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>git pull</code></pre>
+</div>
+<p><code>git pull</code> descarga lo que haya nuevo en GitHub. Hazlo <strong>antes</strong> de empezar a trabajar.</p>
+<h3>Ignorar archivos</h3>
+<p>Hay archivos que no deben subirse (contraseñas, archivos del sistema, carpetas pesadas). Se listan en un archivo llamado <code>.gitignore</code>:</p>
+<div class="code">
+  <div class="code-head"><span>.gitignore</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>.DS_Store
+Thumbs.db
+node_modules/
+.env
+*.log</code></pre>
+</div>
+
+<h2 id="ramas"><span class="n">8.</span>Ramas y colaboración (un vistazo)</h2>
+<p>Una <strong>rama</strong> es una línea de trabajo paralela: puedes probar una idea sin tocar <code>main</code>, y si funciona, la unes. Es la base de cómo se colabora.</p>
+<div class="code">
+  <div class="code-head"><span>Trabajar en una rama</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>git switch -c mejora-menu      # crea y entra a una rama nueva
+# …haces cambios y commits…
+git push -u origin mejora-menu # sube la rama
+git switch main                # vuelve a main</code></pre>
+</div>
+<p>En GitHub, una rama se propone para unirse a <code>main</code> mediante un <strong>Pull Request</strong> (PR): otras personas ven los cambios, los comentan y, cuando están conformes, los fusionan (<em>merge</em>). Este curso se actualizó justamente así.</p>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · Para empezar basta con <code>main</code></p>
+<p>Si trabajas tú solo en tu página, puedes usar solo <code>main</code>. Cuando colabores con otras personas, las ramas y los PR se vuelven indispensables.</p>
+</div>
+
+<h2 id="errores"><span class="n">9.</span>Problemas frecuentes</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Qué ves</th><th>Qué significa y cómo lo arreglas</th></tr></thead>
+<tbody><tr><td><code>fatal: not a git repository</code></td><td>No estás dentro de la carpeta del proyecto, o falta <code>git init</code>. Usa <code>cd</code> y verifica con <code>ls -a</code> que exista <code>.git</code></td></tr><tr><td><code>nothing to commit, working tree clean</code></td><td>No hay cambios nuevos. Edita algo y vuelve a intentarlo</td></tr><tr><td><code>Author identity unknown</code></td><td>Falta <code>git config --global user.name</code> y <code>user.email</code></td></tr><tr><td><code>rejected … non-fast-forward</code></td><td>GitHub tiene cambios que tú no tienes. Haz <code>git pull</code> y vuelve a <code>git push</code></td></tr><tr><td><code>remote origin already exists</code></td><td>Ya conectaste la carpeta. Verifica con <code>git remote -v</code></td></tr><tr><td><code>Authentication failed</code></td><td>Credenciales o token incorrectos. Inicia sesión de nuevo o crea un token</td></tr><tr><td>La página en línea no cambia</td><td>Espera uno o dos minutos y recarga con <kbd>Ctrl</kbd> + <kbd>F5</kbd>. Revisa en <strong>Actions</strong> que el despliegue haya terminado</td></tr></tbody>
+</table></div>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · Nunca subas secretos</p>
+<p>No subas contraseñas, tokens ni claves a un repositorio público. Aunque los borres después, quedan en el historial. Si pasa, <strong>cambia la clave de inmediato</strong>.</p>
+</div>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li>Git guarda el historial de tu proyecto; GitHub guarda una copia en internet.</li><li>Configura tu nombre y correo una vez con <code>git config --global</code>.</li><li>El ciclo es: editar → <code>git add</code> → <code>git commit -m "…"</code> → <code>git push</code>.</li><li><code>git status</code> te dice en qué punto estás; úsalo con frecuencia.</li><li>Escribe mensajes de commit que expliquen <strong>qué hace</strong> el cambio.</li><li><code>git remote add origin &lt;url&gt;</code> conecta tu carpeta con GitHub; <code>git push -u origin main</code> la sube.</li><li>GitHub Pages publica tu repositorio desde Settings → Pages (rama <code>main</code>, carpeta <code>/ (root)</code>).</li><li>Las ramas y los Pull Requests permiten probar cambios y colaborar; nunca subas contraseñas.</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">10.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td>Repositorio</td><td>Carpeta de proyecto cuyo historial vigila Git.</td></tr><tr><td>Commit</td><td>Fotografía del proyecto con un mensaje.</td></tr><tr><td>Rama</td><td>Línea de trabajo independiente; la principal es <code>main</code>.</td></tr><tr><td>Remoto / <code>origin</code></td><td>La copia del repositorio en GitHub y el nombre habitual para referirse a ella.</td></tr><tr><td><code>push</code> / <code>pull</code></td><td>Subir tus commits a GitHub / traer los cambios de GitHub.</td></tr><tr><td>Pull Request</td><td>Propuesta de unir los cambios de una rama a otra para revisarlos.</td></tr><tr><td><code>.gitignore</code></td><td>Lista de archivos que Git debe ignorar.</td></tr><tr><td>GitHub Pages</td><td>Servicio gratuito para publicar un repositorio como sitio web.</td></tr></tbody>
+</table></div>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>¿Cuál es la diferencia entre Git y GitHub?</p><ul class="opts"><li><button type="button" class="opt">Son lo mismo</button></li><li><button type="button" class="opt" data-ok>Git guarda el historial en tu computadora; GitHub guarda copias en internet</button></li><li><button type="button" class="opt">GitHub es un editor de código</button></li><li><button type="button" class="opt">Git solo funciona con internet</button></li></ul><p class="explain" hidden>Git es la herramienta de control de versiones. GitHub es un servicio web que aloja repositorios Git.</p></div>
+<div class="quiz-q"><p>¿Qué hace <code>git commit -m "mensaje"</code>?</p><ul class="opts"><li><button type="button" class="opt">Sube los cambios a GitHub</button></li><li><button type="button" class="opt" data-ok>Guarda una fotografía de los cambios preparados con ese mensaje</button></li><li><button type="button" class="opt">Descarga cambios</button></li><li><button type="button" class="opt">Borra el repositorio</button></li></ul><p class="explain" hidden><code>commit</code> guarda en el historial local; para subirlo a GitHub se usa <code>push</code>.</p></div>
+<div class="quiz-q"><p>¿En qué orden se hace el ciclo básico?</p><ul class="opts"><li><button type="button" class="opt">commit → add → push</button></li><li><button type="button" class="opt" data-ok>add → commit → push</button></li><li><button type="button" class="opt">push → add → commit</button></li><li><button type="button" class="opt">add → push → commit</button></li></ul><p class="explain" hidden>Primero preparas con <code>add</code>, luego guardas con <code>commit</code> y por último subes con <code>push</code>.</p></div>
+<div class="quiz-q"><p>Tu repositorio se llama <code>mi-pagina</code>. ¿Dónde se publica con GitHub Pages?</p><ul class="opts"><li><button type="button" class="opt"><code>https://mi-pagina.github.io/</code></button></li><li><button type="button" class="opt" data-ok><code>https://tu-usuario.github.io/mi-pagina/</code></button></li><li><button type="button" class="opt"><code>https://github.com/mi-pagina/</code></button></li><li><button type="button" class="opt">No se puede publicar</button></li></ul><p class="explain" hidden>Los repositorios con nombre normal se publican en una subcarpeta del dominio de tu usuario.</p></div>
+<div class="quiz-q"><p>Subiste sin querer una contraseña a un repositorio público. ¿Qué haces?</p><ul class="opts"><li><button type="button" class="opt">Nada, ya la borré del archivo</button></li><li><button type="button" class="opt" data-ok>Cambias la contraseña de inmediato</button></li><li><button type="button" class="opt">Borras el repositorio y listo</button></li><li><button type="button" class="opt">Esperas a que nadie la vea</button></li></ul><p class="explain" hidden>Aunque la borres, queda en el historial. La única solución segura es cambiar la clave.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="11">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../10-seo-y-metadatos/ejercicio.html"><small>← Anterior</small>Ejercicio: SEO y metadatos</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </div>
+
+  <footer class="site-footer">Curso de HTML · Lección 11</footer>
+  <script src="../assets/curso.js"></script>
+</body>
+</html>

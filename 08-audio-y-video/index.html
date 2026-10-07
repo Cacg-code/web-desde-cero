@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lección 8: Audio, video e imágenes adaptables · Curso de HTML</title>
+  <meta name="description" content="Cómo incluir audio, video, contenido incrustado e imágenes adaptables en una página web, con accesibilidad y buen rendimiento.">
+  <link rel="stylesheet" href="../assets/estilos.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de HTML</a>
+    <div class="topbar-actions">
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <div class="wrap lesson-layout">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#intro">Multimedia en la web</a></li><li><a href="#audio">Audio con la etiqueta audio</a></li><li><a href="#video">Video con la etiqueta video</a></li><li><a href="#accesibilidad">Multimedia accesible</a></li><li><a href="#iframe">Contenido incrustado con iframe</a></li><li><a href="#adaptables">Imágenes adaptables</a></li><li><a href="#peso">Peso y rendimiento</a></li><li><a href="#errores">Errores frecuentes</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Inicio</a> › Lección 8</div>
+        <h1>Audio, video e imágenes adaptables</h1>
+        <ul class="meta"><li>⏱ 35 minutos</li><li>📶 Nivel: principiante</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Insertar audio y video con <code>&lt;audio&gt;</code> y <code>&lt;video&gt;</code>.</li><li>Añadir subtítulos con <code>&lt;track&gt;</code> y entender por qué importan.</li><li>Incrustar contenido externo con <code>&lt;iframe&gt;</code> de forma segura.</li><li>Ofrecer imágenes adaptables con <code>srcset</code> y <code>&lt;picture&gt;</code>.</li></ul>
+</div>
+
+<h2 id="intro"><span class="n">1.</span>Multimedia en la web</h2>
+<p>Hasta ahora tu página tenía texto, imágenes, tablas y formularios. El <strong>audio</strong> y el <strong>video</strong> completan el cuadro: con dos etiquetas, <code>&lt;audio&gt;</code> y <code>&lt;video&gt;</code>, el navegador reproduce archivos sin necesidad de programas externos.</p>
+<p>Antes de usar multimedia, ten presentes tres ideas que se repiten en toda la lección:</p>
+<ol class="steps"><li><strong>Pesa mucho.</strong> Un video sin optimizar puede ser más grande que el resto de tu sitio junto. Usa archivos comprimidos y cortos.</li><li><strong>Debe ser accesible.</strong> Quien no oye necesita subtítulos; quien no ve necesita una descripción o una transcripción.</li><li><strong>No debe invadir.</strong> Nada de sonido que arranque solo: es de las cosas que más molestan y que más rápido hacen cerrar una página.</li></ol>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · Los ejemplos de esta lección</p>
+<p>Este curso incluye un sonido y un video de ejemplo (<code>campanilla.wav</code> y <code>demo.mp4</code>) para que puedas probar el código real en los editores. Cuando escribas tus propias páginas, usa tus archivos o los que tengas derecho a usar.</p>
+</div>
+
+<h2 id="audio"><span class="n">2.</span>Audio con la etiqueta audio</h2>
+<div class="code">
+  <div class="code-head"><span>Un reproductor de audio</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">&lt;audio</span> <span class="tk-attr">controls</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;source</span> <span class="tk-attr">src</span>=<span class="tk-val">"sonido.mp3"</span> <span class="tk-attr">type</span>=<span class="tk-val">"audio/mpeg"</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;source</span> <span class="tk-attr">src</span>=<span class="tk-val">"sonido.ogg"</span> <span class="tk-attr">type</span>=<span class="tk-val">"audio/ogg"</span><span class="tk-tag">&gt;</span>
+  Tu navegador no admite audio. <span class="tk-tag">&lt;a</span> <span class="tk-attr">href</span>=<span class="tk-val">"sonido.mp3"</span><span class="tk-tag">&gt;</span>Descarga el archivo<span class="tk-tag">&lt;/a</span><span class="tk-tag">&gt;</span>.
+<span class="tk-tag">&lt;/audio</span><span class="tk-tag">&gt;</span></code></pre>
+</div>
+<div class="table-wrap"><table>
+<thead><tr><th>Atributo</th><th>Qué hace</th><th>Observación</th></tr></thead>
+<tbody><tr><td><code>controls</code></td><td>Muestra los botones de reproducción</td><td><strong>Casi siempre lo necesitas</strong>; sin él no se ve nada</td></tr><tr><td><code>src</code></td><td>Ruta del archivo</td><td>Alternativa a usar <code>&lt;source&gt;</code></td></tr><tr><td><code>loop</code></td><td>Repite sin fin</td><td>Úsalo con moderación</td></tr><tr><td><code>muted</code></td><td>Inicia en silencio</td><td>Necesario si quieres <code>autoplay</code> en video</td></tr><tr><td><code>preload</code></td><td>Cuánto cargar de antemano</td><td><code>none</code>, <code>metadata</code> (solo duración) o <code>auto</code></td></tr><tr><td><code>autoplay</code></td><td>Empieza solo</td><td><strong>Evítalo</strong> con sonido; muchos navegadores lo bloquean</td></tr></tbody>
+</table></div>
+<p><code>&lt;source&gt;</code> permite ofrecer <strong>varias versiones</strong> del mismo archivo; el navegador usa la primera que entienda. El texto entre las etiquetas solo se muestra si el navegador es tan antiguo que no conoce <code>&lt;audio&gt;</code>.</p>
+<div class="playground">
+  <div class="pg-head"><span>✏️ Prueba el reproductor</span><button type="button" data-reset>Restablecer</button></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;h3&gt;Campanilla&lt;/h3&gt;
+&lt;audio controls preload="metadata"&gt;
+  &lt;source src="../assets/media/campanilla.wav" type="audio/wav"&gt;
+  Tu navegador no admite audio.
+&lt;/audio&gt;
+&lt;p&gt;Prueba agregando &lt;code&gt;loop&lt;/code&gt; o quitando &lt;code&gt;controls&lt;/code&gt;.&lt;/p&gt;</textarea></div>
+    <div><label>Resultado</label><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div>
+  </div>
+</div>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · Formatos</p>
+<p>MP3 es el formato más compatible; OGG y WAV son alternativas. El valor de <code>type</code> (por ejemplo <code>audio/mpeg</code>) le permite al navegador saltarse sin descargar los formatos que no entiende.</p>
+</div>
+
+<h2 id="video"><span class="n">3.</span>Video con la etiqueta video</h2>
+<p><code>&lt;video&gt;</code> funciona igual que <code>&lt;audio&gt;</code>, con algunos atributos más para la imagen:</p>
+<div class="code">
+  <div class="code-head"><span>Un video completo</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">&lt;video</span> <span class="tk-attr">controls</span> <span class="tk-attr">width</span>=<span class="tk-val">"480"</span> <span class="tk-attr">height</span>=<span class="tk-val">"270"</span> <span class="tk-attr">poster</span>=<span class="tk-val">"portada.jpg"</span> <span class="tk-attr">preload</span>=<span class="tk-val">"metadata"</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;source</span> <span class="tk-attr">src</span>=<span class="tk-val">"video.mp4"</span> <span class="tk-attr">type</span>=<span class="tk-val">"video/mp4"</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;source</span> <span class="tk-attr">src</span>=<span class="tk-val">"video.webm"</span> <span class="tk-attr">type</span>=<span class="tk-val">"video/webm"</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;track</span> <span class="tk-attr">kind</span>=<span class="tk-val">"captions"</span> <span class="tk-attr">src</span>=<span class="tk-val">"subtitulos.es.vtt"</span> <span class="tk-attr">srclang</span>=<span class="tk-val">"es"</span> <span class="tk-attr">label</span>=<span class="tk-val">"Español"</span> <span class="tk-attr">default</span><span class="tk-tag">&gt;</span>
+  Tu navegador no admite video. <span class="tk-tag">&lt;a</span> <span class="tk-attr">href</span>=<span class="tk-val">"video.mp4"</span><span class="tk-tag">&gt;</span>Descárgalo aquí<span class="tk-tag">&lt;/a</span><span class="tk-tag">&gt;</span>.
+<span class="tk-tag">&lt;/video</span><span class="tk-tag">&gt;</span></code></pre>
+</div>
+<div class="table-wrap"><table>
+<thead><tr><th>Atributo</th><th>Qué hace</th></tr></thead>
+<tbody><tr><td><code>width</code> / <code>height</code></td><td>Reservan el espacio en la página (evitan que el contenido «salte»)</td></tr><tr><td><code>poster</code></td><td>Imagen que se ve antes de reproducir</td></tr><tr><td><code>controls</code></td><td>Muestra los controles</td></tr><tr><td><code>muted</code>, <code>loop</code>, <code>autoplay</code></td><td>Para videos decorativos de fondo: deben ir <strong>juntos</strong>, sin sonido</td></tr><tr><td><code>playsinline</code></td><td>En iPhone evita que el video se abra a pantalla completa solo</td></tr><tr><td><code>preload</code></td><td><code>metadata</code> carga solo lo mínimo hasta que alguien pulsa reproducir</td></tr></tbody>
+</table></div>
+<div class="table-wrap"><table>
+<thead><tr><th>Formato</th><th>Contenedor y códec</th><th>Cuándo usarlo</th></tr></thead>
+<tbody><tr><td><strong>MP4</strong></td><td>H.264 + AAC</td><td>El más compatible: funciona en casi todo</td></tr><tr><td><strong>WebM</strong></td><td>VP9 + Opus</td><td>Más ligero; ideal como segunda opción</td></tr></tbody>
+</table></div>
+<div class="playground">
+  <div class="pg-head"><span>✏️ Prueba el video</span><button type="button" data-reset>Restablecer</button></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;video controls width="320" poster="../assets/img/paisaje.svg"&gt;
+  &lt;source src="../assets/media/demo.mp4" type="video/mp4"&gt;
+  &lt;track kind="captions" src="../assets/media/demo.es.vtt" srclang="es" label="Español" default&gt;
+  Tu navegador no admite video.
+&lt;/video&gt;</textarea></div>
+    <div><label>Resultado</label><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div>
+  </div>
+</div>
+<p>Observa que el <code>poster</code> se ve antes de pulsar reproducir. El <code>&lt;track&gt;</code> conecta un archivo de subtítulos: lo verás más abajo.</p>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Videos más ligeros</p>
+<p>Para videos propios, reduce la resolución (720p suele bastar) y la duración. Herramientas gratuitas como <strong>HandBrake</strong> o <strong>FFmpeg</strong> comprimen sin perder mucha calidad. Para videos largos, considera subirlos a una plataforma y usar <code>&lt;iframe&gt;</code>.</p>
+</div>
+
+<h2 id="accesibilidad"><span class="n">4.</span>Multimedia accesible</h2>
+<p>Un video sin subtítulos deja fuera a personas sordas o con dificultad auditiva, y también a quien lo ve en el transporte sin audífonos. Hay cuatro prácticas esenciales:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Necesidad</th><th>Solución</th><th>En HTML</th></tr></thead>
+<tbody><tr><td>No oír el audio</td><td><strong>Subtítulos</strong> (diálogos y sonidos relevantes)</td><td><code>&lt;track kind="captions"&gt;</code></td></tr><tr><td>No ver el video</td><td><strong>Descripción</strong> y transcripción en texto</td><td>Un enlace o sección con la transcripción</td></tr><tr><td>Preferir leer</td><td><strong>Transcripción</strong> del audio y de los videos</td><td>Texto en la página o en un archivo</td></tr><tr><td>Sensibilidad al movimiento</td><td>No iniciar solo ni en bucle</td><td>Evitar <code>autoplay</code> y respetar <code>prefers-reduced-motion</code></td></tr></tbody>
+</table></div>
+<h3>Los subtítulos: archivos .vtt</h3>
+<p>Los subtítulos se escriben en un archivo de texto con formato <strong>WebVTT</strong>. Cada bloque tiene un intervalo de tiempo y la frase:</p>
+<div class="code">
+  <div class="code-head"><span>subtitulos.es.vtt</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>WEBVTT
+
+00:00.000 --&gt; 00:01.500
+Un degradado de colores que cambia.
+
+00:01.500 --&gt; 00:03.000
+Este video de ejemplo dura tres segundos.</code></pre>
+</div>
+<ul><li><code>kind="captions"</code>: subtítulos para personas sordas (incluyen sonidos). <code>kind="subtitles"</code> es solo traducción de diálogos.</li><li><code>srclang="es"</code> indica el idioma y <code>label</code> es el nombre que se verá en el menú.</li><li><code>default</code> activa esa pista automáticamente.</li></ul>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · Autoplay</p>
+<p>Si un video se reproduce solo, debe estar <strong>silenciado</strong> (<code>muted</code>) y ser decorativo. Aun así, ofrece una forma de pausarlo: las animaciones continuas pueden resultar molestas o incluso causar mareos.</p>
+</div>
+
+<h2 id="iframe"><span class="n">5.</span>Contenido incrustado con iframe</h2>
+<p><code>&lt;iframe&gt;</code> muestra <strong>otra página dentro de la tuya</strong>: videos de YouTube, mapas de Google, formularios externos. Las plataformas te dan el código listo para pegar (botón «Compartir → Insertar»).</p>
+<div class="code">
+  <div class="code-head"><span>Un video de una plataforma (ejemplo)</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">&lt;iframe</span> <span class="tk-attr">src</span>=<span class="tk-val">"https://www.youtube.com/embed/CODIGO_DEL_VIDEO"</span>
+  <span class="tk-attr">title</span>=<span class="tk-val">"Introducción al HTML: primeros pasos"</span>
+  <span class="tk-attr">width</span>=<span class="tk-val">"560"</span> <span class="tk-attr">height</span>=<span class="tk-val">"315"</span>
+  <span class="tk-attr">loading</span>=<span class="tk-val">"lazy"</span>
+  <span class="tk-attr">allowfullscreen</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;/iframe</span><span class="tk-tag">&gt;</span></code></pre>
+</div>
+<ul><li><strong><code>title</code> es obligatorio</strong> para accesibilidad: describe el contenido del marco.</li><li><code>loading="lazy"</code> evita cargarlo hasta que se acerque a la pantalla.</li><li><code>allowfullscreen</code> permite la pantalla completa.</li><li><code>sandbox</code> restringe lo que el contenido externo puede hacer. Úsalo cuando el origen no sea de total confianza.</li></ul>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · Seguridad y privacidad</p>
+<p>Un <code>&lt;iframe&gt;</code> carga código de otro sitio dentro del tuyo. Incrusta solo contenido de fuentes en las que confíes. Además, estas plataformas pueden rastrear a tus visitantes; si te importa, busca opciones de «modo privado» o simplemente enlaza el video.</p>
+</div>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · Por qué no hay un editor aquí</p>
+<p>Los editores de esta lección no cargan contenido de otros sitios, así que no puedes probar un iframe con un video externo. Hazlo en tu propio archivo <code>.html</code>.</p>
+</div>
+
+<h2 id="adaptables"><span class="n">6.</span>Imágenes adaptables</h2>
+<p>Un celular, una tableta y un monitor grande no necesitan la <strong>misma imagen</strong>: descargar una foto enorme en un móvil gasta datos y tarda. HTML permite ofrecer varias versiones.</p>
+<h3>1. srcset y sizes: mismas imagen, distintos tamaños</h3>
+<div class="code">
+  <div class="code-head"><span>Varias resoluciones</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">&lt;img</span> <span class="tk-attr">src</span>=<span class="tk-val">"foto-800.jpg"</span>
+  <span class="tk-attr">srcset</span>=<span class="tk-val">"foto-400.jpg 400w, foto-800.jpg 800w, foto-1600.jpg 1600w"</span>
+  <span class="tk-attr">sizes</span>=<span class="tk-val">"(max-width: 600px) 100vw, 50vw"</span>
+  <span class="tk-attr">alt</span>=<span class="tk-val">"Mercado de frutas al amanecer"</span>
+  <span class="tk-attr">width</span>=<span class="tk-val">"800"</span> <span class="tk-attr">height</span>=<span class="tk-val">"533"</span><span class="tk-tag">&gt;</span></code></pre>
+</div>
+<ul><li><code>srcset</code> lista las versiones con su <strong>ancho real</strong> en píxeles (<code>400w</code>).</li><li><code>sizes</code> le dice al navegador <strong>qué tan ancha se mostrará</strong> la imagen: «100% del ancho en pantallas de hasta 600 px; si no, la mitad».</li><li>El navegador elige la mejor opción. <code>src</code> queda como respaldo.</li></ul>
+<h3>2. picture: imágenes distintas según la pantalla</h3>
+<p>A veces no basta con reducir la imagen: en vertical conviene un <strong>recorte distinto</strong> (a esto se le llama «dirección de arte»). Para eso existe <code>&lt;picture&gt;</code>:</p>
+<div class="playground">
+  <div class="pg-head"><span>✏️ Cambia entre dos imágenes</span><button type="button" data-reset>Restablecer</button></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;picture&gt;
+  &lt;source media="(min-width: 300px)" srcset="../assets/img/paisaje.svg"&gt;
+  &lt;img src="../assets/img/paisaje-vertical.svg"
+       alt="Montañas con un sol al atardecer"
+       width="300" height="200" style="max-width:100%;height:auto"&gt;
+&lt;/picture&gt;
+&lt;p&gt;Cambia &lt;code&gt;300px&lt;/code&gt; por &lt;code&gt;1000px&lt;/code&gt; y mira qué imagen aparece.&lt;/p&gt;</textarea></div>
+    <div><label>Resultado</label><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div>
+  </div>
+</div>
+<p>El navegador revisa los <code>&lt;source&gt;</code> de arriba abajo y usa el primero cuya condición se cumpla. El <code>&lt;img&gt;</code> final es <strong>obligatorio</strong>: es la imagen de respaldo y donde va el <code>alt</code>.</p>
+<h3>3. picture con formatos modernos</h3>
+<div class="code">
+  <div class="code-head"><span>WebP con respaldo en JPG</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">&lt;picture</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;source</span> <span class="tk-attr">type</span>=<span class="tk-val">"image/webp"</span> <span class="tk-attr">srcset</span>=<span class="tk-val">"foto.webp"</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;img</span> <span class="tk-attr">src</span>=<span class="tk-val">"foto.jpg"</span> <span class="tk-attr">alt</span>=<span class="tk-val">"Mercado de frutas al amanecer"</span> <span class="tk-attr">width</span>=<span class="tk-val">"800"</span> <span class="tk-attr">height</span>=<span class="tk-val">"533"</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;/picture</span><span class="tk-tag">&gt;</span></code></pre>
+</div>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Evita que la imagen se deforme</p>
+<p>En tu CSS, añade <code>img { max-width: 100%; height: auto; }</code>. La imagen nunca será más ancha que su contenedor y conservará su proporción. Con <code>object-fit: cover</code> puedes recortar sin deformar.</p>
+</div>
+
+<h2 id="peso"><span class="n">7.</span>Peso y rendimiento</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Recurso</th><th>Peso razonable</th><th>Cómo lograrlo</th></tr></thead>
+<tbody><tr><td>Foto en la página</td><td>Menos de 200 KB</td><td>Redimensiona al tamaño real de uso y comprime (Squoosh, TinyPNG)</td></tr><tr><td>Ilustración o ícono</td><td>Pocos KB</td><td>Usa <strong>SVG</strong> cuando puedas</td></tr><tr><td>Audio</td><td>Menos de 1 MB para clips</td><td>MP3 a 128 kbps basta para voz</td></tr><tr><td>Video corto</td><td>Unos pocos MB</td><td>720p, pocos segundos, sin audio si es decorativo</td></tr></tbody>
+</table></div>
+<ol class="steps"><li>Mide: abre las herramientas del navegador (<kbd>F12</kbd>), pestaña <strong>Red</strong>, y recarga la página para ver el peso de cada archivo.</li><li>Reduce: redimensiona y comprime antes de subir.</li><li>Difiere: usa <code>loading="lazy"</code> en imágenes y <code>preload="none"</code> en audio y video que no se verán de inmediato.</li></ol>
+
+<h2 id="errores"><span class="n">8.</span>Errores frecuentes</h2>
+<ul><li><strong><code>&lt;audio&gt;</code> o <code>&lt;video&gt;</code> sin <code>controls</code></strong>: quedan invisibles y nadie sabe que están ahí.</li><li><strong><code>autoplay</code> con sonido</strong>: la mayoría de los navegadores lo bloquea y a las personas les molesta.</li><li><strong>Subir videos de cientos de MB</strong> directamente a tu repositorio.</li><li><strong>Olvidar el texto alternativo</strong> del <code>&lt;iframe&gt;</code> (<code>title</code>) o de la imagen dentro de <code>&lt;picture&gt;</code>.</li><li><strong>Poner el <code>alt</code> en el <code>&lt;source&gt;</code></strong> en lugar del <code>&lt;img&gt;</code>: el <code>alt</code> siempre va en el <code>&lt;img&gt;</code> final.</li><li><strong>Rutas incorrectas o mayúsculas distintas</strong> en los archivos.</li><li><strong>Usar un archivo en un formato que el navegador no reproduce</strong> y no ofrecer alternativa.</li></ul>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li><code>&lt;audio controls&gt;</code> y <code>&lt;video controls&gt;</code> reproducen archivos; sin <code>controls</code> no se ve el reproductor.</li><li><code>&lt;source&gt;</code> ofrece varios formatos y el navegador elige el que entienda; el texto interior es respaldo.</li><li>En video, <code>width</code>, <code>height</code> y <code>poster</code> mejoran la carga y la presentación.</li><li><code>autoplay</code> solo con <code>muted</code> y para contenido decorativo; evítalo con sonido.</li><li>Los subtítulos se añaden con <code>&lt;track kind="captions" src="…vtt" srclang="es" label="Español"&gt;</code>.</li><li><code>&lt;iframe&gt;</code> incrusta contenido externo: <code>title</code> obligatorio, <code>loading="lazy"</code> y confianza en el origen.</li><li><code>srcset</code> y <code>sizes</code> ofrecen varios tamaños; <code>&lt;picture&gt;</code> cambia la imagen según condiciones o formato.</li><li>Controla el peso: comprime, redimensiona y difiere la carga.</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">9.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td><code>controls</code></td><td>Atributo que muestra los botones del reproductor.</td></tr><tr><td><code>&lt;source&gt;</code></td><td>Una de varias versiones del mismo archivo multimedia.</td></tr><tr><td>Códec</td><td>Método de compresión de audio o video (H.264, VP9…).</td></tr><tr><td>Poster</td><td>Imagen mostrada antes de reproducir un video.</td></tr><tr><td>WebVTT</td><td>Formato de texto para subtítulos (<code>.vtt</code>).</td></tr><tr><td><code>iframe</code></td><td>Marco que muestra otra página dentro de la tuya.</td></tr><tr><td><code>srcset</code></td><td>Lista de versiones de una imagen con su ancho real.</td></tr><tr><td>Dirección de arte</td><td>Mostrar recortes distintos de una imagen según la pantalla.</td></tr></tbody>
+</table></div>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>Un <code>&lt;video&gt;</code> sin <code>controls</code> y sin <code>autoplay</code> es…</p><ul class="opts"><li><button type="button" class="opt">Un reproductor que se ve normal</button></li><li><button type="button" class="opt" data-ok>Un espacio con la imagen pero sin forma de reproducirlo</button></li><li><button type="button" class="opt">Un video que se reproduce solo</button></li><li><button type="button" class="opt">Un error de HTML</button></li></ul><p class="explain" hidden>Sin <code>controls</code> no hay botones. Si tampoco hay <code>autoplay</code>, nadie puede iniciar el video.</p></div>
+<div class="quiz-q"><p>¿Para qué sirve <code>&lt;track kind="captions"&gt;</code>?</p><ul class="opts"><li><button type="button" class="opt">Para cambiar la velocidad</button></li><li><button type="button" class="opt" data-ok>Para añadir subtítulos</button></li><li><button type="button" class="opt">Para añadir una imagen</button></li><li><button type="button" class="opt">Para descargar el video</button></li></ul><p class="explain" hidden>Conecta un archivo <code>.vtt</code> con los subtítulos del video.</p></div>
+<div class="quiz-q"><p>Quieres un video decorativo de fondo que se reproduzca solo. ¿Qué atributos necesita?</p><ul class="opts"><li><button type="button" class="opt"><code>autoplay</code> solamente</button></li><li><button type="button" class="opt" data-ok><code>autoplay muted loop playsinline</code></button></li><li><button type="button" class="opt"><code>controls</code></button></li><li><button type="button" class="opt"><code>preload="none"</code></button></li></ul><p class="explain" hidden>Los navegadores solo permiten el autoplay si el video está silenciado (<code>muted</code>). <code>loop</code> lo repite y <code>playsinline</code> evita la pantalla completa en iPhone.</p></div>
+<div class="quiz-q"><p>¿Qué atributo es obligatorio en un <code>&lt;iframe&gt;</code> por accesibilidad?</p><ul class="opts"><li><button type="button" class="opt"><code>alt</code></button></li><li><button type="button" class="opt" data-ok><code>title</code></button></li><li><button type="button" class="opt"><code>lang</code></button></li><li><button type="button" class="opt"><code>name</code></button></li></ul><p class="explain" hidden><code>title</code> describe el contenido del marco para lectores de pantalla.</p></div>
+<div class="quiz-q"><p>En <code>&lt;picture&gt;</code>, ¿dónde va el atributo <code>alt</code>?</p><ul class="opts"><li><button type="button" class="opt">En cada <code>&lt;source&gt;</code></button></li><li><button type="button" class="opt">En <code>&lt;picture&gt;</code></button></li><li><button type="button" class="opt" data-ok>En el <code>&lt;img&gt;</code> final</button></li><li><button type="button" class="opt">No lleva</button></li></ul><p class="explain" hidden>El <code>&lt;img&gt;</code> es la imagen real; los <code>&lt;source&gt;</code> solo sugieren alternativas.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="08">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../07-introduccion-css/ejercicio.html"><small>← Anterior</small>Ejercicio: Introducción a CSS</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </div>
+
+  <footer class="site-footer">Curso de HTML · Lección 8</footer>
+  <script src="../assets/curso.js"></script>
+</body>
+</html>

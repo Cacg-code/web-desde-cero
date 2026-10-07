@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ejercicio · SEO y metadatos · Curso de HTML</title>
+  <meta name="description" content="Ejercicio práctico de: SEO y metadatos.">
+  <link rel="stylesheet" href="../assets/estilos.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de HTML</a>
+    <div class="topbar-actions">
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap" style="max-width:820px;padding-top:2rem;padding-bottom:3rem">
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Inicio</a> › <a href="./">Lección 10</a> › Ejercicio</div>
+        <h1>Ejercicio: SEO y metadatos</h1>
+        <ul class="meta"><li>⏱ 30 minutos</li><li>📶 Nivel: principiante</li></ul>
+      </header>
+
+      <h2>Objetivo</h2>
+      <p>Preparar el <code>&lt;head&gt;</code> completo de una página con las etiquetas de SEO y de vista previa que vimos, y comprobar la longitud de tu título y tu descripción.</p>
+
+      
+      <h2>Pasos</h2>
+      <p>Marca cada paso a medida que lo completes. Tu avance se guarda en este navegador.</p>
+      <div class="progress" aria-hidden="true"><div></div></div>
+      <p id="progreso-texto" style="color:var(--muted);font-size:.9rem" aria-live="polite"></p>
+      <ul class="checklist"><li><label><input type="checkbox" id="p1"><span>Crea <code>seo.html</code> con el esqueleto completo y <code>lang="es"</code>.</span></label></li><li><label><input type="checkbox" id="p2"><span>Escribe un <code>&lt;title&gt;</code> de entre 30 y 60 caracteres.</span></label></li><li><label><input type="checkbox" id="p3"><span>Agrega una <code>meta description</code> de entre 70 y 160 caracteres.</span></label></li><li><label><input type="checkbox" id="p4"><span>Agrega <code>&lt;link rel="canonical"&gt;</code> con la dirección completa de tu página.</span></label></li><li><label><input type="checkbox" id="p5"><span>Agrega un favicon con <code>&lt;link rel="icon"&gt;</code>.</span></label></li><li><label><input type="checkbox" id="p6"><span>Agrega <code>og:title</code>, <code>og:description</code>, <code>og:image</code> y <code>og:url</code>.</span></label></li><li><label><input type="checkbox" id="p7"><span>Agrega <code>twitter:card</code> con <code>summary_large_image</code>.</span></label></li><li><label><input type="checkbox" id="p8"><span>Agrega <code>&lt;meta name="theme-color"&gt;</code>.</span></label></li><li><label><input type="checkbox" id="p9"><span>Escribe un <code>&lt;h1&gt;</code> único y un párrafo en el <code>&lt;body&gt;</code>.</span></label></li><li><label><input type="checkbox" id="p10"><span>Agrega un bloque <code>&lt;script type="application/ld+json"&gt;</code> que describa tu página o tu curso.</span></label></li><li><label><input type="checkbox" id="p11"><span>Usa la vista previa de la lección para comprobar que tu título y tu descripción no se cortan.</span></label></li></ul>
+      <details><summary>💡 Pista 1: ¿cuántos caracteres tiene mi título?</summary><p>Pega tu título en el widget «Vista previa en buscadores» de la lección: te muestra el conteo y si está dentro del rango recomendado.</p>
+</details>
+<details><summary>💡 Pista 2: ¿qué valor pongo en og:image?</summary><p>Una dirección completa que empiece con <code>https://</code>, por ejemplo <code>https://tu-usuario.github.io/mi-sitio/img/compartir.png</code>. No sirve una ruta relativa.</p>
+</details>
+
+      <section class="checker" id="comprobador" aria-labelledby="t-chk">
+        <h2 id="t-chk">🔎 Comprueba tu trabajo</h2>
+        <p>Pega tu código y pulsa <strong>Comprobar</strong>. La revisión ocurre en tu navegador; nada se envía a ningún sitio. Cada punto en rojo incluye una pista.</p>
+        <label for="chk-code">Tu código HTML (el archivo completo)</label>
+        <textarea id="chk-code" rows="10" spellcheck="false" placeholder="Pega aquí el contenido completo de tu archivo .html"></textarea>
+        <div class="chk-actions"><button class="btn" type="button" id="chk-run">Comprobar</button><button class="icon-btn" type="button" id="chk-clear">Limpiar</button></div>
+        <p class="chk-sum" id="chk-sum" aria-live="polite"></p>
+        <ul class="chk-list" id="chk-list"></ul>
+        <script type="application/json" id="checks">{"mode": "html", "checks": [{"sel": "html", "attr": "lang", "d": "<html> declara el idioma", "h": "Agrega lang=\"es\"."}, {"t": "titlelen", "d": "Hay un <title> de entre 30 y 60 caracteres", "h": "Ajusta la longitud del título."}, {"t": "desclen", "d": "Hay meta description de entre 70 y 160 caracteres", "h": "Escribe una descripción útil dentro de ese rango."}, {"sel": "link[rel=\"canonical\"][href]", "d": "Hay un enlace canonical", "h": "Ej.: <link rel=\"canonical\" href=\"https://…\">"}, {"sel": "link[rel~=\"icon\"][href]", "d": "Hay un favicon", "h": "Ej.: <link rel=\"icon\" href=\"favicon.svg\">"}, {"t": "ogtexto", "d": "Hay og:title y og:description", "h": "Ej.: <meta property=\"og:title\" content=\"…\">"}, {"t": "ogimg", "d": "Hay og:image y og:url", "h": "Agrega og:image (imagen de 1200×630) y og:url."}, {"sel": "meta[name=\"twitter:card\"][content]", "d": "Hay twitter:card", "h": "Ej.: <meta name=\"twitter:card\" content=\"summary_large_image\">"}, {"sel": "meta[name=\"theme-color\"]", "d": "Hay meta theme-color", "h": "Ej.: <meta name=\"theme-color\" content=\"#4f46e5\">"}, {"sel": "h1", "min": 1, "max": 1, "d": "Hay un único <h1>", "h": "Usa un solo <h1> con el tema principal."}, {"sel": "script[type=\"application/ld+json\"]", "d": "Incluye datos estructurados JSON-LD", "h": "Agrega <script type=\"application/ld+json\"> con un objeto de schema.org."}]}</script>
+      </section>
+      <details>
+        <summary>✅ Ver una solución de ejemplo</summary>
+        <p>Intenta resolverlo antes de mirar. Tu versión puede ser distinta y también correcta.</p>
+        <div class="code">
+  <div class="code-head"><span>seo.html</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">&lt;!doctype html&gt;</span>
+<span class="tk-tag">&lt;html</span> <span class="tk-attr">lang</span>=<span class="tk-val">"es"</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;head</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;meta</span> <span class="tk-attr">charset</span>=<span class="tk-val">"UTF-8"</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;meta</span> <span class="tk-attr">name</span>=<span class="tk-val">"viewport"</span> <span class="tk-attr">content</span>=<span class="tk-val">"width=device-width, initial-scale=1.0"</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;title</span><span class="tk-tag">&gt;</span>Plantas Verdes · Tienda de plantas de interior<span class="tk-tag">&lt;/title</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;meta</span> <span class="tk-attr">name</span>=<span class="tk-val">"description"</span> <span class="tk-attr">content</span>=<span class="tk-val">"Plantas de interior fáciles de cuidar, con guías de riego y luz. Envíos a todo el país y asesoría gratuita."</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;link</span> <span class="tk-attr">rel</span>=<span class="tk-val">"canonical"</span> <span class="tk-attr">href</span>=<span class="tk-val">"https://tu-usuario.github.io/plantas/"</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;link</span> <span class="tk-attr">rel</span>=<span class="tk-val">"icon"</span> <span class="tk-attr">href</span>=<span class="tk-val">"favicon.svg"</span> <span class="tk-attr">type</span>=<span class="tk-val">"image/svg+xml"</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;meta</span> <span class="tk-attr">name</span>=<span class="tk-val">"theme-color"</span> <span class="tk-attr">content</span>=<span class="tk-val">"#166534"</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;meta</span> <span class="tk-attr">property</span>=<span class="tk-val">"og:type"</span> <span class="tk-attr">content</span>=<span class="tk-val">"website"</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;meta</span> <span class="tk-attr">property</span>=<span class="tk-val">"og:title"</span> <span class="tk-attr">content</span>=<span class="tk-val">"Plantas Verdes · Tienda de plantas de interior"</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;meta</span> <span class="tk-attr">property</span>=<span class="tk-val">"og:description"</span> <span class="tk-attr">content</span>=<span class="tk-val">"Plantas fáciles de cuidar, con guías de riego y luz."</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;meta</span> <span class="tk-attr">property</span>=<span class="tk-val">"og:url"</span> <span class="tk-attr">content</span>=<span class="tk-val">"https://tu-usuario.github.io/plantas/"</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;meta</span> <span class="tk-attr">property</span>=<span class="tk-val">"og:image"</span> <span class="tk-attr">content</span>=<span class="tk-val">"https://tu-usuario.github.io/plantas/img/compartir.png"</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;meta</span> <span class="tk-attr">name</span>=<span class="tk-val">"twitter:card"</span> <span class="tk-attr">content</span>=<span class="tk-val">"summary_large_image"</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;script</span> <span class="tk-attr">type</span>=<span class="tk-val">"application/ld+json"</span><span class="tk-tag">&gt;</span>
+  {
+    "@context": "https://schema.org",
+    "@type": "Store",
+    "name": "Plantas Verdes",
+    "description": "Tienda de plantas de interior",
+    "url": "https://tu-usuario.github.io/plantas/"
+  }
+  <span class="tk-tag">&lt;/script</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;/head</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;body</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;h1</span><span class="tk-tag">&gt;</span>Plantas Verdes<span class="tk-tag">&lt;/h1</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;p</span><span class="tk-tag">&gt;</span>Plantas de interior fáciles de cuidar.<span class="tk-tag">&lt;/p</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;/body</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;/html</span><span class="tk-tag">&gt;</span></code></pre>
+</div>
+
+      </details>
+      <div class="callout consejo">
+<p class="callout-title">💡 🏁 Reto extra (opcional)</p>
+<p>Crea un <code>robots.txt</code> y un <code>sitemap.xml</code> para tu sitio con al menos tres páginas, y súbelos a tu repositorio. Después verifica tu sitio en Google Search Console.</p>
+</div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="./"><small>← Anterior</small>Volver a lección 10</a>
+        <a class="next" href="../11-git-y-publicacion/"><small>Siguiente →</small>Git y publicación</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de HTML · Ejercicio de lección 10</footer>
+  <script src="../assets/curso.js"></script>
+</body>
+</html>

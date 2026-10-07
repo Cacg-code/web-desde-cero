@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lección 9: Accesibilidad · Curso de HTML</title>
+  <meta name="description" content="Accesibilidad web: HTML semántico, contraste, teclado, formularios, ARIA y cómo probar tu página para que todas las personas puedan usarla.">
+  <link rel="stylesheet" href="../assets/estilos.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de HTML</a>
+    <div class="topbar-actions">
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <div class="wrap lesson-layout">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#por-que">Qué es la accesibilidad y por qué importa</a></li><li><a href="#semantica">HTML correcto: el 80% del trabajo</a></li><li><a href="#contraste">Color y contraste</a></li><li><a href="#teclado">Teclado y foco</a></li><li><a href="#formularios">Formularios accesibles</a></li><li><a href="#aria">ARIA: cuándo y cómo</a></li><li><a href="#movimiento">Movimiento y tiempo</a></li><li><a href="#probar">Cómo probar tu página</a></li><li><a href="#errores">Errores frecuentes</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Inicio</a> › Lección 9</div>
+        <h1>Accesibilidad</h1>
+        <ul class="meta"><li>⏱ 40 minutos</li><li>📶 Nivel: principiante</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Explicar por qué la accesibilidad beneficia a todos y qué son los principios POUR.</li><li>Comprobar el contraste de color y no depender solo del color.</li><li>Hacer una página operable con teclado: foco visible y enlace para saltar.</li><li>Aplicar ARIA solo cuando hace falta, y probar tu página con herramientas y a mano.</li></ul>
+</div>
+
+<h2 id="por-que"><span class="n">1.</span>Qué es la accesibilidad y por qué importa</h2>
+<p>Una página es <strong>accesible</strong> cuando puede usarla cualquier persona, sin importar cómo vea, oiga, se mueva o piense. No es un lujo para «unos pocos»: casi todos necesitamos accesibilidad en algún momento.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Tipo de situación</th><th>Ejemplos</th></tr></thead>
+<tbody><tr><td><strong>Permanente</strong></td><td>Ceguera, sordera, baja visión, movilidad reducida, dislexia, daltonismo</td></tr><tr><td><strong>Temporal</strong></td><td>Un brazo enyesado, una infección en el ojo, una operación de cataratas</td></tr><tr><td><strong>Situacional</strong></td><td>Sol directo sobre la pantalla, un lugar ruidoso, un celular con una sola mano, conexión lenta</td></tr></tbody>
+</table></div>
+<p>Además, una página accesible suele ser <strong>mejor para todos</strong>: más clara, más rápida, más fácil de usar con teclado y mejor posicionada en buscadores. En muchos países también es una obligación legal para sitios públicos y comerciales.</p>
+<h3>Los cuatro principios (POUR)</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>Principio</th><th>Significa</th><th>Ejemplo</th></tr></thead>
+<tbody><tr><td><strong>P</strong>erceptible</td><td>La información se puede percibir con algún sentido</td><td>Texto alternativo en imágenes, subtítulos, buen contraste</td></tr><tr><td><strong>O</strong>perable</td><td>Se puede usar con distintos dispositivos</td><td>Todo se maneja con teclado; los botones son grandes</td></tr><tr><td><strong>U</strong>nderstandable (comprensible)</td><td>El contenido y el uso son claros</td><td>Idioma declarado, errores explicados, textos simples</td></tr><tr><td><strong>R</strong>obusto</td><td>Funciona con tecnologías de apoyo</td><td>HTML válido y semántico, uso correcto de ARIA</td></tr></tbody>
+</table></div>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · Qué es una tecnología de apoyo</p>
+<p>Son los programas y dispositivos que usan algunas personas para navegar: <strong>lectores de pantalla</strong> (leen la página en voz alta), <strong>ampliadores</strong>, <strong>control por voz</strong>, teclados especiales o conmutadores. Funcionan bien cuando tu HTML está bien escrito.</p>
+</div>
+
+<h2 id="semantica"><span class="n">2.</span>HTML correcto: el 80% del trabajo</h2>
+<p>Lo más importante ya lo aprendiste. Una página con HTML semántico es accesible <strong>casi sin esfuerzo extra</strong>:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Haz esto</th><th>Porque…</th></tr></thead>
+<tbody><tr><td>Usa <code>&lt;header&gt;</code>, <code>&lt;nav&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;footer&gt;</code></td><td>Los lectores de pantalla permiten saltar entre estas zonas</td></tr><tr><td>Declara <code>lang="es"</code> en <code>&lt;html&gt;</code></td><td>El lector pronuncia con el idioma correcto</td></tr><tr><td>Usa títulos en orden (<code>h1</code> → <code>h2</code> → <code>h3</code>)</td><td>Quien navega por títulos entiende la estructura</td></tr><tr><td>Usa <code>&lt;button&gt;</code> para acciones y <code>&lt;a&gt;</code> para ir a otro sitio</td><td>Ya funcionan con teclado y se anuncian bien</td></tr><tr><td>Usa listas y tablas reales</td><td>Se anuncia «lista de 5 elementos» o «tabla de 3 columnas»</td></tr><tr><td>Escribe <code>alt</code> en las imágenes y <code>title</code> en los iframe</td><td>Describen lo que no se ve</td></tr></tbody>
+</table></div>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · Un <code>&lt;div&gt;</code> no es un botón</p>
+<p>Si usas <code>&lt;div class="btn" onclick="…"&gt;</code>, no se puede alcanzar con el teclado, no se activa con <kbd>Enter</kbd> y el lector de pantalla no sabe que es un botón. Un <code>&lt;button&gt;</code> hace todo eso por ti, gratis.</p>
+</div>
+<div class="playground">
+  <div class="pg-head"><span>✏️ Compara: div contra button</span><button type="button" data-reset>Restablecer</button></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;style&gt;
+  .falso, button { padding: 8px 14px; border: 0; border-radius: 8px; background: #4f46e5; color: #fff; font: inherit; cursor: pointer; }
+&lt;/style&gt;
+&lt;p&gt;Pulsa &lt;kbd&gt;Tab&lt;/kbd&gt; dentro de esta zona y observa a cuál llega el foco.&lt;/p&gt;
+&lt;div class="falso"&gt;Soy un div&lt;/div&gt;
+&lt;br&gt;&lt;br&gt;
+&lt;button type="button"&gt;Soy un button&lt;/button&gt;</textarea></div>
+    <div><label>Resultado</label><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div>
+  </div>
+</div>
+<p>Haz clic dentro del resultado y pulsa <kbd>Tab</kbd>: el foco llega al botón real, pero ignora al <code>&lt;div&gt;</code>. Eso es lo que vive una persona que no usa ratón.</p>
+
+<h2 id="contraste"><span class="n">3.</span>Color y contraste</h2>
+<p>El texto debe distinguirse del fondo. El <strong>contraste</strong> se mide con una proporción (de 1:1, sin contraste, a 21:1, negro sobre blanco). Las pautas WCAG piden:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Nivel</th><th>Texto normal</th><th>Texto grande (≥ 24 px, o ≥ 19 px en negrita)</th></tr></thead>
+<tbody><tr><td><strong>AA</strong> (el mínimo recomendado)</td><td>4.5 : 1</td><td>3 : 1</td></tr><tr><td><strong>AAA</strong> (el ideal)</td><td>7 : 1</td><td>4.5 : 1</td></tr></tbody>
+</table></div>
+<p>Prueba tú mismo: el valor inicial es un gris claro sobre blanco, muy común… y que <strong>no pasa</strong>. Mueve los colores y mira cuándo se cumple cada nivel.</p>
+<div class="widget" data-widget="contrast">
+  <div class="w-head">🎨 Comprobador de contraste</div>
+  <div class="w-body">
+    <div class="w-row">
+      <label for="c-fg">Color del texto</label><input type="color" id="c-fg" class="c-fg" value="#8a8a8a">
+      <label for="c-bg">Color de fondo</label><input type="color" id="c-bg" class="c-bg" value="#ffffff">
+    </div>
+    <div class="c-sample">Texto de ejemplo: ¿se lee bien?</div>
+    <p class="c-ratio" aria-live="polite"></p>
+    <ul class="c-res"></ul>
+  </div>
+</div>
+<ul><li><strong>No dependas solo del color.</strong> Un campo con error no debe distinguirse únicamente por tener borde rojo: añade un texto o un ícono. Un 8% de los hombres tiene alguna forma de daltonismo.</li><li><strong>Subraya los enlaces</strong> dentro de párrafos, o dales otra señal además del color.</li><li><strong>Los textos sobre imágenes</strong> necesitan un fondo o sombra que garantice el contraste.</li><li><strong>Respeta el zoom.</strong> Usa <code>rem</code> o <code>%</code>, no <code>px</code>, para tamaños de texto, y no bloquees el zoom en el <code>&lt;meta viewport&gt;</code>.</li></ul>
+
+<h2 id="teclado"><span class="n">4.</span>Teclado y foco</h2>
+<p>Mucha gente no usa ratón: personas con discapacidad motriz, quienes usan lectores de pantalla y quienes prefieren la velocidad del teclado. Todo lo que se hace con clic debe poder hacerse con teclado.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Tecla</th><th>Qué hace</th></tr></thead>
+<tbody><tr><td><kbd>Tab</kbd> / <kbd>Shift</kbd> + <kbd>Tab</kbd></td><td>Avanza / retrocede entre enlaces, botones y campos</td></tr><tr><td><kbd>Enter</kbd></td><td>Activa un enlace o un botón</td></tr><tr><td><kbd>Espacio</kbd></td><td>Activa un botón, marca una casilla</td></tr><tr><td><kbd>Flechas</kbd></td><td>Cambia entre opciones de un grupo de radios o de un <code>select</code></td></tr><tr><td><kbd>Esc</kbd></td><td>Cierra menús y ventanas emergentes</td></tr></tbody>
+</table></div>
+<h3>1. El foco siempre debe verse</h3>
+<div class="code">
+  <div class="code-head"><span>Un foco claro</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>:<span class="tk-sel">focus-visible</span> {
+  <span class="tk-attr">outline</span>: <span class="tk-val">3px solid #f59e0b</span>;
+  <span class="tk-attr">outline-offset</span>: <span class="tk-val">3px</span>;
+}</code></pre>
+</div>
+<p><strong>Nunca</strong> escribas <code>outline: none</code> sin dar una alternativa: sería como esconder el cursor del ratón.</p>
+<h3>2. Enlace para saltar al contenido</h3>
+<p>Quien navega con teclado tendría que pulsar <kbd>Tab</kbd> sobre todo el menú en cada página. Un «enlace para saltar» al inicio lo evita:</p>
+<div class="code">
+  <div class="code-head"><span>Enlace para saltar</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">&lt;body</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;a</span> <span class="tk-attr">class</span>=<span class="tk-val">"saltar"</span> <span class="tk-attr">href</span>=<span class="tk-val">"#contenido"</span><span class="tk-tag">&gt;</span>Saltar al contenido<span class="tk-tag">&lt;/a</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;header</span><span class="tk-tag">&gt;</span>…menú largo…<span class="tk-tag">&lt;/header</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;main</span> <span class="tk-attr">id</span>=<span class="tk-val">"contenido"</span><span class="tk-tag">&gt;</span>…<span class="tk-tag">&lt;/main</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;/body</span><span class="tk-tag">&gt;</span>
+
+<span class="tk-tag">&lt;style</span><span class="tk-tag">&gt;</span>
+  .saltar { position: absolute; left: -999px; }
+  .saltar:focus { left: 8px; top: 8px; background: #fff; padding: 8px; z-index: 10; }
+<span class="tk-tag">&lt;/style</span><span class="tk-tag">&gt;</span></code></pre>
+</div>
+<p>El enlace está fuera de la pantalla hasta que recibe el foco con <kbd>Tab</kbd>; entonces aparece y, al pulsarlo, salta directo al <code>&lt;main&gt;</code>. Este curso lo usa: pulsa <kbd>Tab</kbd> al abrir cualquier lección.</p>
+<h3>3. El orden y tabindex</h3>
+<ul><li>El orden de <kbd>Tab</kbd> sigue el orden del HTML: escribe el código en el orden en que se debe leer.</li><li><code>tabindex="0"</code> hace que un elemento no interactivo reciba foco (rara vez lo necesitarás).</li><li><code>tabindex="-1"</code> permite enfocarlo con programación pero no con <kbd>Tab</kbd>.</li><li><strong>No uses valores positivos</strong> (<code>tabindex="3"</code>): desordenan la navegación.</li></ul>
+
+<h2 id="formularios"><span class="n">5.</span>Formularios accesibles</h2>
+<p>Ya viste en la lección 5 que cada campo necesita su <code>&lt;label&gt;</code>. Falta lo que ocurre cuando hay <strong>errores</strong>:</p>
+<div class="code">
+  <div class="code-head"><span>Un campo con mensaje de error</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">&lt;label</span> <span class="tk-attr">for</span>=<span class="tk-val">"correo"</span><span class="tk-tag">&gt;</span>Correo electrónico<span class="tk-tag">&lt;/label</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;input</span> <span class="tk-attr">type</span>=<span class="tk-val">"email"</span> <span class="tk-attr">id</span>=<span class="tk-val">"correo"</span> <span class="tk-attr">name</span>=<span class="tk-val">"correo"</span>
+       <span class="tk-attr">required</span> <span class="tk-attr">aria-invalid</span>=<span class="tk-val">"true"</span> <span class="tk-attr">aria-describedby</span>=<span class="tk-val">"error-correo"</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;p</span> <span class="tk-attr">id</span>=<span class="tk-val">"error-correo"</span> <span class="tk-attr">role</span>=<span class="tk-val">"alert"</span><span class="tk-tag">&gt;</span>Escribe un correo válido, por ejemplo ana@ejemplo.com.<span class="tk-tag">&lt;/p</span><span class="tk-tag">&gt;</span></code></pre>
+</div>
+<ul><li><code>aria-describedby</code> conecta el campo con el texto que lo explica; el lector lo lee después de la etiqueta.</li><li><code>aria-invalid="true"</code> avisa que el valor actual no es válido.</li><li><code>role="alert"</code> hace que el lector anuncie el mensaje en cuanto aparece.</li><li>El error debe explicar <strong>qué pasó y cómo corregirlo</strong>, no solo «campo inválido».</li><li>Usa <code>autocomplete</code> (por ejemplo <code>autocomplete="email"</code>) para que el navegador rellene los datos.</li></ul>
+<div class="playground">
+  <div class="pg-head"><span>✏️ Un formulario con ayuda y error</span><button type="button" data-reset>Restablecer</button></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;style&gt; .error { color: #b00020; font-weight: 600; } input { padding: 6px; } &lt;/style&gt;
+&lt;p&gt;
+  &lt;label for="correo"&gt;Correo&lt;/label&gt;&lt;br&gt;
+  &lt;input type="email" id="correo" aria-describedby="ayuda-correo" autocomplete="email"&gt;
+&lt;/p&gt;
+&lt;p id="ayuda-correo"&gt;Lo usaremos solo para responderte.&lt;/p&gt;
+&lt;p class="error" id="error-correo" role="alert"&gt;⚠ Error: escribe un correo válido, como ana@ejemplo.com.&lt;/p&gt;</textarea></div>
+    <div><label>Resultado</label><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div>
+  </div>
+</div>
+
+<h2 id="aria"><span class="n">6.</span>ARIA: cuándo y cómo</h2>
+<p><strong>ARIA</strong> es un conjunto de atributos que añaden información a las tecnologías de apoyo. Tiene una regla de oro:</p>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · Primera regla de ARIA</p>
+<p><strong>Si existe una etiqueta HTML que haga lo que necesitas, úsala en lugar de ARIA.</strong> <code>&lt;button&gt;</code> en vez de <code>&lt;div role="button"&gt;</code>. Un ARIA mal usado empeora la accesibilidad: es mejor no usarlo que usarlo mal.</p>
+</div>
+<div class="table-wrap"><table>
+<thead><tr><th>Atributo</th><th>Para qué sirve</th><th>Ejemplo</th></tr></thead>
+<tbody><tr><td><code>aria-label</code></td><td>Da un nombre cuando no hay texto visible</td><td><code>&lt;button aria-label="Cerrar"&gt;✕&lt;/button&gt;</code></td></tr><tr><td><code>aria-labelledby</code></td><td>Usa otro elemento como nombre</td><td><code>&lt;section aria-labelledby="titulo"&gt;</code></td></tr><tr><td><code>aria-describedby</code></td><td>Añade una descripción o ayuda</td><td>Campo de contraseña con requisitos</td></tr><tr><td><code>aria-live</code></td><td>Anuncia contenido que cambia</td><td><code>&lt;p aria-live="polite"&gt;Guardado&lt;/p&gt;</code></td></tr><tr><td><code>aria-hidden="true"</code></td><td>Oculta algo a los lectores</td><td>Íconos decorativos</td></tr><tr><td><code>aria-expanded</code></td><td>Indica si un menú está abierto</td><td><code>&lt;button aria-expanded="false"&gt;Menú&lt;/button&gt;</code></td></tr><tr><td><code>role</code></td><td>Cambia el rol de un elemento</td><td><code>role="status"</code>, <code>role="alert"</code></td></tr></tbody>
+</table></div>
+<div class="code">
+  <div class="code-head"><span>Botón de solo ícono</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">&lt;button</span> <span class="tk-attr">type</span>=<span class="tk-val">"button"</span> <span class="tk-attr">aria-label</span>=<span class="tk-val">"Abrir menú"</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;span</span> <span class="tk-attr">aria-hidden</span>=<span class="tk-val">"true"</span><span class="tk-tag">&gt;</span>☰<span class="tk-tag">&lt;/span</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;/button</span><span class="tk-tag">&gt;</span></code></pre>
+</div>
+<p>El botón solo muestra un símbolo, pero el lector de pantalla anuncia «Abrir menú, botón». El símbolo se oculta porque «tres rayas» no aporta nada.</p>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · <code>aria-live</code></p>
+<p>Cuando un mensaje aparece sin recargar la página (por ejemplo «Mensaje enviado»), el lector no lo notaría si no estuviera en una región <code>aria-live</code>. <code>polite</code> espera a que termine de leer lo actual; <code>assertive</code> interrumpe y se reserva para errores importantes.</p>
+</div>
+
+<h2 id="movimiento"><span class="n">7.</span>Movimiento y tiempo</h2>
+<ul><li><strong>Respeta <code>prefers-reduced-motion</code></strong>: quien lo activa en su sistema pide menos animación.</li><li><strong>Nada de parpadeos</strong> rápidos (más de 3 por segundo): pueden desencadenar convulsiones.</li><li><strong>Permite pausar</strong> carruseles, videos de fondo y animaciones largas.</li><li><strong>No limites el tiempo</strong> de lectura o de llenado sin avisar y sin permitir ampliarlo.</li></ul>
+<div class="code">
+  <div class="code-head"><span>Reducir animaciones</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-sel">.tarjeta</span> { <span class="tk-attr">transition</span>: <span class="tk-val">transform .3s</span>; }
+
+<span class="tk-sel">@media (prefers-reduced-motion: reduce)</span> {
+<span class="tk-sel">  *</span> { <span class="tk-attr">animation</span>: <span class="tk-val">none !important</span>; <span class="tk-attr">transition</span>: <span class="tk-val">none !important</span>; <span class="tk-attr">scroll-behavior</span>: <span class="tk-val">auto !important</span>; }
+}</code></pre>
+</div>
+<p>Las animaciones de este curso incluyen este bloque: si tu sistema pide reducir movimiento, desaparecen.</p>
+
+<h2 id="probar"><span class="n">8.</span>Cómo probar tu página</h2>
+<p>No necesitas ser experto: con estas pruebas de <strong>cinco minutos</strong> detectas la mayoría de los problemas.</p>
+<ol class="steps"><li><strong>Teclado:</strong> Deja el ratón. Recorre la página con <kbd>Tab</kbd>. ¿Ves siempre dónde estás? ¿Puedes llegar a todo y activarlo?</li><li><strong>Zoom:</strong> Amplía al 200% (<kbd>Ctrl</kbd> + <kbd>+</kbd>). ¿Se sigue leyendo sin desplazarte de lado?</li><li><strong>Contraste:</strong> Revisa colores con un comprobador como el de esta lección.</li><li><strong>Lector de pantalla:</strong> Prueba 5 minutos con <strong>NVDA</strong> (Windows, gratis), <strong>VoiceOver</strong> (Mac/iPhone) o <strong>TalkBack</strong> (Android).</li><li><strong>Herramientas:</strong> Ejecuta <strong>Lighthouse</strong> (pestaña en <kbd>F12</kbd> de Chrome), <strong>WAVE</strong> o <strong>axe DevTools</strong>. Detectan errores automáticos, pero solo una parte: la prueba humana sigue siendo necesaria.</li></ol>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Hazlo desde el principio</p>
+<p>Corregir la accesibilidad al final es caro y frustrante. Si desde la primera línea usas HTML semántico, <code>alt</code>, <code>label</code> y un buen contraste, el resto es mínimo.</p>
+</div>
+
+<h2 id="errores"><span class="n">9.</span>Errores frecuentes</h2>
+<ul><li><strong>Quitar el contorno de foco</strong> con <code>outline: none</code>.</li><li><strong>Usar <code>&lt;div&gt;</code> o <code>&lt;span&gt;</code> como botones o enlaces.</strong></li><li><strong>Enlaces como «haz clic aquí»</strong> o «leer más» sin contexto.</li><li><strong>Imágenes sin <code>alt</code></strong>, o con <code>alt</code> como «imagen1».</li><li><strong>Campos solo con <code>placeholder</code></strong>, sin <code>&lt;label&gt;</code>.</li><li><strong>Texto gris claro sobre fondo blanco.</strong></li><li><strong>Mensajes de error solo en rojo</strong>, sin texto que los explique.</li><li><strong>Abusar de ARIA</strong> o usarlo para tapar un HTML mal escrito.</li><li><strong>Saltar niveles de títulos</strong> para lograr un tamaño de letra.</li></ul>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li>La accesibilidad beneficia a todos: personas con discapacidad permanente, temporal o situacional.</li><li>Los principios WCAG son <strong>P</strong>erceptible, <strong>O</strong>perable, <strong>C</strong>omprensible y <strong>R</strong>obusto (POUR).</li><li>HTML semántico bien escrito resuelve la mayor parte: landmarks, títulos en orden, <code>lang</code>, <code>button</code> y <code>a</code>.</li><li>Contraste mínimo AA: <strong>4.5:1</strong> en texto normal y <strong>3:1</strong> en texto grande. No uses solo el color para dar información.</li><li>Todo debe ser operable con teclado, con foco siempre visible y un enlace «saltar al contenido».</li><li>Los errores de formulario se enlazan con <code>aria-describedby</code> y se anuncian con <code>role="alert"</code>.</li><li>ARIA: primero HTML nativo; <code>aria-label</code>, <code>aria-live</code> y <code>aria-hidden</code> en casos puntuales.</li><li>Prueba con teclado, zoom al 200%, un lector de pantalla y herramientas como Lighthouse.</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">10.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td>Accesibilidad</td><td>Que una página pueda ser usada por todas las personas.</td></tr><tr><td>WCAG</td><td>Pautas internacionales de accesibilidad web (niveles A, AA y AAA).</td></tr><tr><td>Lector de pantalla</td><td>Programa que lee en voz alta el contenido y la estructura.</td></tr><tr><td>Contraste</td><td>Diferencia de luminosidad entre el texto y su fondo.</td></tr><tr><td>Foco</td><td>El elemento que recibe las pulsaciones del teclado en ese momento.</td></tr><tr><td>ARIA</td><td>Atributos que dan información extra a las tecnologías de apoyo.</td></tr><tr><td>Landmark</td><td>Zona de la página (<code>header</code>, <code>nav</code>, <code>main</code>…) a la que se puede saltar.</td></tr><tr><td>Tecnología de apoyo</td><td>Software o dispositivo que ayuda a usar la web (lectores, ampliadores…).</td></tr></tbody>
+</table></div>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>Un texto gris claro sobre blanco con proporción de contraste de 3:1 en tamaño normal…</p><ul class="opts"><li><button type="button" class="opt">Cumple AA</button></li><li><button type="button" class="opt" data-ok>No cumple AA (necesita 4.5:1)</button></li><li><button type="button" class="opt">Cumple AAA</button></li><li><button type="button" class="opt">No importa el contraste</button></li></ul><p class="explain" hidden>Para texto normal, AA exige 4.5:1. 3:1 solo es suficiente para texto grande.</p></div>
+<div class="quiz-q"><p>¿Cuál es la mejor forma de crear un botón?</p><ul class="opts"><li><button type="button" class="opt"><code>&lt;div onclick="…"&gt;</code></button></li><li><button type="button" class="opt" data-ok><code>&lt;button type="button"&gt;</code></button></li><li><button type="button" class="opt"><code>&lt;span role="button"&gt;</code></button></li><li><button type="button" class="opt"><code>&lt;a&gt;</code> sin href</button></li></ul><p class="explain" hidden><code>&lt;button&gt;</code> ya funciona con teclado y se anuncia como botón. No necesita ARIA.</p></div>
+<div class="quiz-q"><p>Un botón con solo el símbolo ☰ debe llevar…</p><ul class="opts"><li><button type="button" class="opt"><code>alt="menú"</code></button></li><li><button type="button" class="opt" data-ok><code>aria-label="Abrir menú"</code></button></li><li><button type="button" class="opt">Nada</button></li><li><button type="button" class="opt"><code>title="x"</code></button></li></ul><p class="explain" hidden><code>aria-label</code> da el nombre que el lector anunciará cuando no hay texto visible.</p></div>
+<div class="quiz-q"><p>¿Para qué sirve un enlace «Saltar al contenido»?</p><ul class="opts"><li><button type="button" class="opt">Para decorar</button></li><li><button type="button" class="opt" data-ok>Para que quien usa teclado evite recorrer todo el menú</button></li><li><button type="button" class="opt">Para mejorar el SEO</button></li><li><button type="button" class="opt">Para descargar archivos</button></li></ul><p class="explain" hidden>Permite llegar al contenido principal con una sola pulsación.</p></div>
+<div class="quiz-q"><p>¿Cómo anunciar «Guardado» cuando aparece sin recargar la página?</p><ul class="opts"><li><button type="button" class="opt" data-ok>Con <code>aria-live="polite"</code> o <code>role="status"</code></button></li><li><button type="button" class="opt">Con <code>&lt;br&gt;</code></button></li><li><button type="button" class="opt">Con <code>tabindex="5"</code></button></li><li><button type="button" class="opt">Con <code>aria-hidden</code></button></li></ul><p class="explain" hidden>Las regiones <code>aria-live</code> hacen que el lector anuncie los cambios de contenido.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="09">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../08-audio-y-video/ejercicio.html"><small>← Anterior</small>Ejercicio: Audio, video e imágenes adaptables</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </div>
+
+  <footer class="site-footer">Curso de HTML · Lección 9</footer>
+  <script src="../assets/curso.js"></script>
+</body>
+</html>
