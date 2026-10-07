@@ -18,11 +18,22 @@
 ![Sin instalación](https://img.shields.io/badge/Sin%20instalaci%C3%B3n-4f46e5?style=for-the-badge)
 ![Gratis](https://img.shields.io/badge/100%25-Gratis-16a34a?style=for-the-badge)
 
+[![Stars](https://img.shields.io/github/stars/Cacg-code/PRACTICAS-HTML?style=social)](https://github.com/Cacg-code/PRACTICAS-HTML)
+
 **👉 [cacg-code.github.io/PRACTICAS-HTML](https://cacg-code.github.io/PRACTICAS-HTML/) 👈**
 
 *Se abre en tu navegador. Sin cuentas, sin descargas, sin instalar nada.*
 
 </div>
+
+<p align="center">
+  <a href="#-qué-es-esto"><b>Qué es</b></a> ·
+  <a href="#️-ruta-de-aprendizaje"><b>Ruta</b></a> ·
+  <a href="#-temario"><b>Temario</b></a> ·
+  <a href="#-chuleta-de-etiquetas"><b>Chuleta</b></a> ·
+  <a href="#-preguntas-frecuentes"><b>FAQ</b></a> ·
+  <a href="#-después-del-curso"><b>Después</b></a>
+</p>
 
 ---
 
@@ -92,6 +103,38 @@ Un adelanto de lo que escribirás en la primera lección:
   </body>
 </html>
 ```
+
+## 🧾 Chuleta de etiquetas
+
+Las que más usarás. Despliega para tenerlas a mano:
+
+<details>
+<summary><b>📋 Ver la chuleta</b></summary>
+
+<br>
+
+| Etiqueta | Para qué sirve | Ejemplo |
+|---|---|---|
+| `<h1>`–`<h6>` | Títulos (de más a menos importante) | `<h1>Mi web</h1>` |
+| `<p>` | Párrafo | `<p>Hola</p>` |
+| `<a href>` | Enlace | `<a href="https://mdn.dev">MDN</a>` |
+| `<img src alt>` | Imagen | `<img src="foto.jpg" alt="Mi foto">` |
+| `<ul>` `<ol>` `<li>` | Listas con viñetas / numeradas | `<ul><li>Uno</li></ul>` |
+| `<table>` `<tr>` `<td>` | Tablas | `<tr><td>Dato</td></tr>` |
+| `<form>` `<input>` `<button>` | Formularios | `<input type="email">` |
+| `<header>` `<main>` `<footer>` | Estructura semántica | `<main>…</main>` |
+| `<style>` | CSS dentro de la página | `p { color: teal; }` |
+
+</details>
+
+## 🚀 Después del curso
+
+Cuando termines el proyecto final, sigue por aquí:
+
+- 🎨 **CSS a fondo:** [MDN – Aprende CSS](https://developer.mozilla.org/es/docs/Learn/CSS)
+- ⚙️ **JavaScript:** [MDN – Aprende JavaScript](https://developer.mozilla.org/es/docs/Learn/JavaScript)
+- 🌐 **Publica tu página gratis** con [GitHub Pages](https://pages.github.com/)
+- 📱 **Hazla adaptable a celular** (diseño responsive)
 
 ## ❓ Preguntas frecuentes
 
