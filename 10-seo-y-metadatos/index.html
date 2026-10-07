@@ -5,9 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lección 10: SEO y metadatos · Curso de HTML</title>
   <meta name="description" content="SEO y metadatos: título, descripción, canonical, favicon, Open Graph, datos estructurados, robots.txt y sitemap.xml para que tu sitio se encuentre y se comparta bien.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/10-seo-y-metadatos/">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Curso de HTML desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Lección 10: SEO y metadatos · Curso de HTML">
+  <meta property="og:description" content="SEO y metadatos: título, descripción, canonical, favicon, Open Graph, datos estructurados, robots.txt y sitemap.xml para que tu sitio se encuentre y se comparta bien.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/10-seo-y-metadatos/">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Curso de HTML desde cero: apuntes, práctica en vivo y proyecto final">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="stylesheet" href="../assets/estilos.css">
 </head>
 <body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
   <header class="topbar">
     <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de HTML</a>
     <div class="topbar-actions">
@@ -16,10 +32,10 @@
     </div>
   </header>
 
-  <div class="wrap lesson-layout">
+  <main class="wrap lesson-layout" id="contenido">
     <nav class="toc" aria-label="Índice de la lección">
       <h4>En esta lección</h4>
-      <ol><li><a href="#que-es">Qué es el SEO</a></li><li><a href="#title-desc">Título y descripción</a></li><li><a href="#head">Las demás etiquetas del head</a></li><li><a href="#og">Vistas previas al compartir: Open Graph</a></li><li><a href="#contenido">Contenido y estructura</a></li><li><a href="#datos">Datos estructurados (JSON-LD)</a></li><li><a href="#archivos">robots.txt y sitemap.xml</a></li><li><a href="#errores">Errores frecuentes</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+      <ol><li><a href="#que-es">Qué es el SEO</a></li><li><a href="#title-desc">Título y descripción</a></li><li><a href="#head">Las demás etiquetas del head</a></li><li><a href="#og">Vistas previas al compartir: Open Graph</a></li><li><a href="#estructura-seo">Contenido y estructura</a></li><li><a href="#datos">Datos estructurados (JSON-LD)</a></li><li><a href="#archivos">robots.txt y sitemap.xml</a></li><li><a href="#errores">Errores frecuentes</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
     </nav>
 
     <article>
@@ -125,7 +141,7 @@
 <p>Las redes guardan en memoria las vistas previas. Si cambias algo y no se actualiza, usa el depurador de la red (por ejemplo, el de Facebook o el inspector de LinkedIn) para volver a leerla.</p>
 </div>
 
-<h2 id="contenido"><span class="n">5.</span>Contenido y estructura</h2>
+<h2 id="estructura-seo"><span class="n">5.</span>Contenido y estructura</h2>
 <p>Lo que más pesa en el SEO no está en el <code>&lt;head&gt;</code>: está en tu contenido. Lo que ya aprendiste ayuda directamente:</p>
 <div class="table-wrap"><table>
 <thead><tr><th>Práctica</th><th>Por qué ayuda</th></tr></thead>
@@ -226,9 +242,9 @@ Sitemap: https://cacg-code.github.io/PRACTICAS-HTML/sitemap.xml</code></pre>
         <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
       </nav>
     </article>
-  </div>
+  </main>
 
-  <footer class="site-footer">Curso de HTML · Lección 10</footer>
+  <footer class="site-footer">Curso de HTML · Lección 10 · Material elaborado con ayuda de inteligencia artificial.</footer>
   <script src="../assets/curso.js"></script>
 </body>
 </html>
