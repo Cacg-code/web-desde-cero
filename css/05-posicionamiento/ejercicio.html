@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ejercicio · Posicionamiento y capas · Curso de HTML</title>
+  <meta name="description" content="Ejercicio práctico de: Posicionamiento y capas.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/css/05-posicionamiento/ejercicio.html">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Ejercicio · Posicionamiento y capas · Curso de HTML">
+  <meta property="og:description" content="Ejercicio práctico de: Posicionamiento y capas.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/css/05-posicionamiento/ejercicio.html">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de CSS</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap" id="contenido" style="max-width:820px;padding-top:2rem;padding-bottom:3rem">
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de CSS</a> › <a href="./">Lección 5</a> › Ejercicio</div>
+        <h1>Ejercicio: Posicionamiento y capas</h1>
+        <ul class="meta"><li>⏱ 35 minutos</li><li>📶 Nivel: principiante</li></ul>
+      </header>
+
+      <h2>Objetivo</h2>
+      <p>Posicionar una barra pegajosa, una insignia, un botón de cierre y un modal centrado sobre una capa que cubre la pantalla.</p>
+
+      <h3>La página de partida</h3>
+      <p>Este es el HTML de tu página. <strong>No lo modifiques</strong>: escribe solo el CSS.</p>
+<div class="code">
+  <div class="code-head"><span>pagina.html</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">&lt;header</span> <span class="tk-attr">class</span>=<span class="tk-val">"barra"</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;strong</span><span class="tk-tag">&gt;</span>Mi sitio<span class="tk-tag">&lt;/strong</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;a</span> <span class="tk-attr">href</span>=<span class="tk-val">"#"</span><span class="tk-tag">&gt;</span>Inicio<span class="tk-tag">&lt;/a</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;/header</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;main</span> <span class="tk-attr">class</span>=<span class="tk-val">"contenido"</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;article</span> <span class="tk-attr">class</span>=<span class="tk-val">"producto"</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;span</span> <span class="tk-attr">class</span>=<span class="tk-val">"insignia"</span><span class="tk-tag">&gt;</span>Nuevo<span class="tk-tag">&lt;/span</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;div</span> <span class="tk-attr">class</span>=<span class="tk-val">"imagen"</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;/div</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;h2</span><span class="tk-tag">&gt;</span>Lámpara de mesa<span class="tk-tag">&lt;/h2</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;button</span> <span class="tk-attr">class</span>=<span class="tk-val">"cerrar"</span> <span class="tk-attr">aria-label</span>=<span class="tk-val">"Cerrar"</span><span class="tk-tag">&gt;</span>✕<span class="tk-tag">&lt;/button</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;/article</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;p</span> <span class="tk-attr">class</span>=<span class="tk-val">"relleno"</span><span class="tk-tag">&gt;</span>Contenido largo para poder desplazar la página. Contenido largo para poder desplazar la página.<span class="tk-tag">&lt;/p</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;p</span> <span class="tk-attr">class</span>=<span class="tk-val">"relleno"</span><span class="tk-tag">&gt;</span>Más contenido para poder desplazar la página. Más contenido para poder desplazar la página.<span class="tk-tag">&lt;/p</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;/main</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;div</span> <span class="tk-attr">class</span>=<span class="tk-val">"fondo-modal"</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;div</span> <span class="tk-attr">class</span>=<span class="tk-val">"modal"</span><span class="tk-tag">&gt;</span>Hola, soy un modal<span class="tk-tag">&lt;/div</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;/div</span><span class="tk-tag">&gt;</span></code></pre>
+</div>
+<div class="playground">
+  <div class="pg-head"><span>✏️ Prueba tu CSS aquí (opcional)</span><button type="button" data-reset>Restablecer</button></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;style&gt;
+  /* escribe tu CSS */
+&lt;/style&gt;
+&lt;header class="barra"&gt;
+  &lt;strong&gt;Mi sitio&lt;/strong&gt;
+  &lt;a href="#"&gt;Inicio&lt;/a&gt;
+&lt;/header&gt;
+&lt;main class="contenido"&gt;
+  &lt;article class="producto"&gt;
+    &lt;span class="insignia"&gt;Nuevo&lt;/span&gt;
+    &lt;div class="imagen"&gt;&lt;/div&gt;
+    &lt;h2&gt;Lámpara de mesa&lt;/h2&gt;
+    &lt;button class="cerrar" aria-label="Cerrar"&gt;✕&lt;/button&gt;
+  &lt;/article&gt;
+  &lt;p class="relleno"&gt;Contenido largo para poder desplazar la página. Contenido largo para poder desplazar la página.&lt;/p&gt;
+  &lt;p class="relleno"&gt;Más contenido para poder desplazar la página. Más contenido para poder desplazar la página.&lt;/p&gt;
+&lt;/main&gt;
+&lt;div class="fondo-modal"&gt;&lt;div class="modal"&gt;Hola, soy un modal&lt;/div&gt;&lt;/div&gt;</textarea></div>
+    <div><label>Resultado</label><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div>
+  </div>
+</div>
+
+      <h2>Pasos</h2>
+      <p>Marca cada paso a medida que lo completes. Tu avance se guarda en este navegador.</p>
+      <div class="progress" aria-hidden="true"><div></div></div>
+      <p id="progreso-texto" style="color:var(--muted);font-size:.9rem" aria-live="polite"></p>
+      <ul class="checklist"><li><label><input type="checkbox" id="p1"><span>Escribe <code>*, *::before, *::after { box-sizing: border-box; }</code> y <code>body { margin: 0; font-family: system-ui, sans-serif; }</code>.</span></label></li><li><label><input type="checkbox" id="p2"><span>Haz que <code>.barra</code> se quede pegada arriba al desplazar (<code>position: sticky; top: 0</code>) con fondo <code>#4f46e5</code>, texto blanco, <code>padding: 12px 16px</code> y <code>z-index: 10</code>.</span></label></li><li><label><input type="checkbox" id="p3"><span>Haz que <code>.producto</code> sea la referencia (<code>position: relative</code>) con borde <code>1px solid #dde2ef</code>, <code>padding: 16px</code> y <code>max-width: 280px</code>.</span></label></li><li><label><input type="checkbox" id="p4"><span>Coloca <code>.insignia</code> en la esquina superior derecha de <code>.producto</code>, a <code>12px</code> de cada borde, con fondo <code>#e11d48</code> y texto blanco.</span></label></li><li><label><input type="checkbox" id="p5"><span>Coloca <code>.cerrar</code> en la esquina superior izquierda del producto (<code>top: 8px; left: 8px</code>).</span></label></li><li><label><input type="checkbox" id="p6"><span>Haz que <code>.fondo-modal</code> cubra toda la ventana (<code>position: fixed; inset: 0</code>), con fondo <code>rgba(15, 18, 34, .6)</code> y <code>z-index: 100</code>, y centra el <code>.modal</code> con <code>display: grid; place-items: center</code>.</span></label></li><li><label><input type="checkbox" id="p7"><span>Da al <code>.modal</code> fondo blanco, <code>padding: 24px</code> y <code>border-radius: 16px</code>.</span></label></li></ul>
+      <details><summary>💡 Pista 1: mi insignia no se queda en la tarjeta</summary><p>Revisa que <code>.producto</code> tenga <code>position: relative</code> y que <code>.insignia</code> tenga <code>position: absolute</code> con <code>top: 12px; right: 12px</code>.</p>
+</details>
+<details><summary>💡 Pista 2: el modal no cubre toda la pantalla</summary><p><code>position: fixed; inset: 0;</code> lo extiende a los cuatro bordes de la ventana. Si no ves cambios, comprueba que no haya otro valor de <code>width</code>/<code>height</code> limitando.</p>
+</details>
+
+      <section class="checker" id="comprobador" aria-labelledby="t-chk">
+        <h2 id="t-chk">🔎 Comprueba tu trabajo</h2>
+        <p>Pega tu código y pulsa <strong>Comprobar</strong>. La revisión ocurre en tu navegador; nada se envía a ningún sitio. Cada punto en rojo incluye una pista.</p>
+        <label for="chk-code">Tu código CSS</label>
+        <textarea id="chk-code" rows="10" spellcheck="false" placeholder="Pega aquí solo tu CSS (sin la etiqueta style)"></textarea>
+        <div class="chk-actions"><button class="btn" type="button" id="chk-run">Comprobar</button><button class="icon-btn" type="button" id="chk-clear">Limpiar</button></div>
+        <p class="chk-sum" id="chk-sum" aria-live="polite"></p>
+        <ul class="chk-list" id="chk-list"></ul>
+        <script type="application/json" id="checks">{"mode": "cssl", "scaffold": "<header class=\"barra\">\n  <strong>Mi sitio<\/strong>\n  <a href=\"#\">Inicio<\/a>\n<\/header>\n<main class=\"contenido\">\n  <article class=\"producto\">\n    <span class=\"insignia\">Nuevo<\/span>\n    <div class=\"imagen\"><\/div>\n    <h2>Lámpara de mesa<\/h2>\n    <button class=\"cerrar\" aria-label=\"Cerrar\">✕<\/button>\n  <\/article>\n  <p class=\"relleno\">Contenido largo para poder desplazar la página. Contenido largo para poder desplazar la página.<\/p>\n  <p class=\"relleno\">Más contenido para poder desplazar la página. Más contenido para poder desplazar la página.<\/p>\n<\/main>\n<div class=\"fondo-modal\"><div class=\"modal\">Hola, soy un modal<\/div><\/div>", "width": 800, "checks": [{"d": "`.barra` es sticky, pegada arriba, con fondo #4f46e5 y z-index 10", "h": "Usa `position: sticky; top: 0; z-index: 10;` y el fondo indicado.", "t": "return getComputedStyle(document.querySelector(\".barra\")).position===\"sticky\" && getComputedStyle(document.querySelector(\".barra\")).top===\"0px\" && getComputedStyle(document.querySelector(\".barra\")).zIndex===\"10\" && getComputedStyle(document.querySelector(\".barra\")).backgroundColor===\"rgb(79, 70, 229)\""}, {"d": "`.barra` tiene texto blanco y padding 12px 16px", "h": "Escribe `color: #fff; padding: 12px 16px;`.", "t": "return getComputedStyle(document.querySelector(\".barra\")).color===\"rgb(255, 255, 255)\" && getComputedStyle(document.querySelector(\".barra\")).paddingTop===\"12px\" && getComputedStyle(document.querySelector(\".barra\")).paddingLeft===\"16px\""}, {"d": "`.producto` es la referencia (relative) con max-width 280px", "h": "Escribe `position: relative; max-width: 280px;`.", "t": "return getComputedStyle(document.querySelector(\".producto\")).position===\"relative\" && getComputedStyle(document.querySelector(\".producto\")).maxWidth===\"280px\""}, {"d": "La insignia está en la esquina superior derecha a 12px", "h": "Usa `position: absolute; top: 12px; right: 12px;`.", "t": "var p=document.querySelector(\".producto\").getBoundingClientRect();var i=document.querySelector(\".insignia\").getBoundingClientRect();return getComputedStyle(document.querySelector(\".insignia\")).position===\"absolute\" && Math.abs(i.top-p.top-13)<3 && Math.abs(p.right-i.right-13)<3"}, {"d": "La insignia tiene fondo #e11d48 y texto blanco", "h": "Escribe el fondo y el color.", "t": "return getComputedStyle(document.querySelector(\".insignia\")).backgroundColor===\"rgb(225, 29, 72)\" && getComputedStyle(document.querySelector(\".insignia\")).color===\"rgb(255, 255, 255)\""}, {"d": "El botón de cerrar está en la esquina superior izquierda", "h": "Usa `position: absolute; top: 8px; left: 8px;`.", "t": "var p=document.querySelector(\".producto\").getBoundingClientRect();var c=document.querySelector(\".cerrar\").getBoundingClientRect();return getComputedStyle(document.querySelector(\".cerrar\")).position===\"absolute\" && Math.abs(c.left-p.left-9)<3 && Math.abs(c.top-p.top-9)<3"}, {"d": "El fondo del modal cubre toda la ventana", "h": "Usa `position: fixed; inset: 0;`.", "t": "var f=document.querySelector(\".fondo-modal\");var r=f.getBoundingClientRect();return getComputedStyle(f).position===\"fixed\" && Math.abs(r.width-innerWidth)<2 && Math.abs(r.height-innerHeight)<2"}, {"d": "El fondo del modal es oscuro translúcido y está por encima (z-index 100)", "h": "Escribe `background: rgba(15, 18, 34, .6); z-index: 100;`.", "t": "return getComputedStyle(document.querySelector(\".fondo-modal\")).backgroundColor===\"rgba(15, 18, 34, 0.6)\" && getComputedStyle(document.querySelector(\".fondo-modal\")).zIndex===\"100\""}, {"d": "El `.modal` está centrado en la ventana", "h": "Usa `display: grid; place-items: center;` en `.fondo-modal`.", "t": "var m=document.querySelector(\".modal\").getBoundingClientRect();return Math.abs((m.left+m.width/2)-innerWidth/2)<3 && Math.abs((m.top+m.height/2)-innerHeight/2)<3"}, {"d": "El `.modal` es blanco con padding 24px y radio 16px", "h": "Escribe esas tres propiedades.", "t": "return getComputedStyle(document.querySelector(\".modal\")).backgroundColor===\"rgb(255, 255, 255)\" && getComputedStyle(document.querySelector(\".modal\")).paddingTop===\"24px\" && getComputedStyle(document.querySelector(\".modal\")).borderTopLeftRadius===\"16px\""}]}</script>
+      </section>
+      <details>
+        <summary>✅ Ver una solución de ejemplo</summary>
+        <p>Intenta resolverlo antes de mirar. Tu versión puede ser distinta y también correcta.</p>
+        <div class="code">
+  <div class="code-head"><span>estilos.css</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-sel">*, *::before, *::after</span> { <span class="tk-attr">box-sizing</span>: <span class="tk-val">border-box</span>; }
+<span class="tk-sel">body</span> { <span class="tk-attr">margin</span>: <span class="tk-val">0</span>; <span class="tk-attr">font-family</span>: <span class="tk-val">system-ui, sans-serif</span>; }
+
+<span class="tk-sel">.barra</span> {
+  <span class="tk-attr">position</span>: <span class="tk-val">sticky</span>;
+  <span class="tk-attr">top</span>: <span class="tk-val">0</span>;
+  <span class="tk-attr">z-index</span>: <span class="tk-val">10</span>;
+  <span class="tk-attr">background</span>: <span class="tk-val">#4f46e5</span>;
+  <span class="tk-attr">color</span>: <span class="tk-val">#fff</span>;
+  <span class="tk-attr">padding</span>: <span class="tk-val">12px 16px</span>;
+}
+<span class="tk-sel">.barra a</span> { <span class="tk-attr">color</span>: <span class="tk-val">#fff</span>; }
+
+<span class="tk-sel">.producto</span> {
+  <span class="tk-attr">position</span>: <span class="tk-val">relative</span>;
+  <span class="tk-attr">max-width</span>: <span class="tk-val">280px</span>;
+  <span class="tk-attr">padding</span>: <span class="tk-val">16px</span>;
+  <span class="tk-attr">border</span>: <span class="tk-val">1px solid #dde2ef</span>;
+}
+
+<span class="tk-sel">.insignia</span> {
+  <span class="tk-attr">position</span>: <span class="tk-val">absolute</span>;
+  <span class="tk-attr">top</span>: <span class="tk-val">12px</span>;
+  <span class="tk-attr">right</span>: <span class="tk-val">12px</span>;
+  <span class="tk-attr">background</span>: <span class="tk-val">#e11d48</span>;
+  <span class="tk-attr">color</span>: <span class="tk-val">#fff</span>;
+  <span class="tk-attr">padding</span>: <span class="tk-val">2px 10px</span>;
+  <span class="tk-attr">border-radius</span>: <span class="tk-val">999px</span>;
+}
+
+<span class="tk-sel">.cerrar</span> { <span class="tk-attr">position</span>: <span class="tk-val">absolute</span>; <span class="tk-attr">top</span>: <span class="tk-val">8px</span>; <span class="tk-attr">left</span>: <span class="tk-val">8px</span>; }
+
+<span class="tk-sel">.fondo-modal</span> {
+  <span class="tk-attr">position</span>: <span class="tk-val">fixed</span>;
+  <span class="tk-attr">inset</span>: <span class="tk-val">0</span>;
+  <span class="tk-attr">background</span>: <span class="tk-val">rgba(15, 18, 34, .6)</span>;
+  <span class="tk-attr">z-index</span>: <span class="tk-val">100</span>;
+  <span class="tk-attr">display</span>: <span class="tk-val">grid</span>;
+  <span class="tk-attr">place-items</span>: <span class="tk-val">center</span>;
+}
+
+<span class="tk-sel">.modal</span> {
+  <span class="tk-attr">background</span>: <span class="tk-val">#fff</span>;
+  <span class="tk-attr">padding</span>: <span class="tk-val">24px</span>;
+  <span class="tk-attr">border-radius</span>: <span class="tk-val">16px</span>;
+}</code></pre>
+</div>
+
+      </details>
+      <div class="callout consejo">
+<p class="callout-title">💡 🏁 Reto extra (opcional)</p>
+<p>Añade un botón flotante <code>position: fixed</code> en la esquina inferior derecha. ¿Qué pasa si reduces la ventana? ¿Tapa contenido? ¿Cómo evitarlo?</p>
+</div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="./"><small>← Anterior</small>Volver a lección 5</a>
+        <a class="next" href="../06-flexbox/"><small>Siguiente →</small>Flexbox</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de CSS · Ejercicio de lección 5 · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&title=%5BError%5D%20Ejercicio%20%C2%B7%20Posicionamiento%20y%20capas%20%C2%B7%20Curso%20de%20HTML&pagina=https%3A//cacg-code.github.io/PRACTICAS-HTML/css/05-posicionamiento/ejercicio.html" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

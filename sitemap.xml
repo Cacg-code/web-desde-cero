@@ -2,6 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://cacg-code.github.io/PRACTICAS-HTML/</loc></url>
   <url><loc>https://cacg-code.github.io/PRACTICAS-HTML/html/</loc></url>
+  <url><loc>https://cacg-code.github.io/PRACTICAS-HTML/css/</loc></url>
   <url><loc>https://cacg-code.github.io/PRACTICAS-HTML/01-primeros-pasos/</loc></url>
   <url><loc>https://cacg-code.github.io/PRACTICAS-HTML/01-primeros-pasos/ejercicio.html</loc></url>
   <url><loc>https://cacg-code.github.io/PRACTICAS-HTML/02-texto-y-enlaces/</loc></url>
@@ -26,4 +27,28 @@
   <url><loc>https://cacg-code.github.io/PRACTICAS-HTML/11-git-y-publicacion/ejercicio.html</loc></url>
   <url><loc>https://cacg-code.github.io/PRACTICAS-HTML/proyecto-pagina-personal/</loc></url>
   <url><loc>https://cacg-code.github.io/PRACTICAS-HTML/proyecto-pagina-personal/ejercicio.html</loc></url>
+  <url><loc>https://cacg-code.github.io/PRACTICAS-HTML/css/01-como-funciona/</loc></url>
+  <url><loc>https://cacg-code.github.io/PRACTICAS-HTML/css/01-como-funciona/ejercicio.html</loc></url>
+  <url><loc>https://cacg-code.github.io/PRACTICAS-HTML/css/02-selectores/</loc></url>
+  <url><loc>https://cacg-code.github.io/PRACTICAS-HTML/css/02-selectores/ejercicio.html</loc></url>
+  <url><loc>https://cacg-code.github.io/PRACTICAS-HTML/css/03-color-y-texto/</loc></url>
+  <url><loc>https://cacg-code.github.io/PRACTICAS-HTML/css/03-color-y-texto/ejercicio.html</loc></url>
+  <url><loc>https://cacg-code.github.io/PRACTICAS-HTML/css/04-caja-y-flujo/</loc></url>
+  <url><loc>https://cacg-code.github.io/PRACTICAS-HTML/css/04-caja-y-flujo/ejercicio.html</loc></url>
+  <url><loc>https://cacg-code.github.io/PRACTICAS-HTML/css/05-posicionamiento/</loc></url>
+  <url><loc>https://cacg-code.github.io/PRACTICAS-HTML/css/05-posicionamiento/ejercicio.html</loc></url>
+  <url><loc>https://cacg-code.github.io/PRACTICAS-HTML/css/06-flexbox/</loc></url>
+  <url><loc>https://cacg-code.github.io/PRACTICAS-HTML/css/06-flexbox/ejercicio.html</loc></url>
+  <url><loc>https://cacg-code.github.io/PRACTICAS-HTML/css/07-grid/</loc></url>
+  <url><loc>https://cacg-code.github.io/PRACTICAS-HTML/css/07-grid/ejercicio.html</loc></url>
+  <url><loc>https://cacg-code.github.io/PRACTICAS-HTML/css/08-responsivo/</loc></url>
+  <url><loc>https://cacg-code.github.io/PRACTICAS-HTML/css/08-responsivo/ejercicio.html</loc></url>
+  <url><loc>https://cacg-code.github.io/PRACTICAS-HTML/css/09-fondos-y-efectos/</loc></url>
+  <url><loc>https://cacg-code.github.io/PRACTICAS-HTML/css/09-fondos-y-efectos/ejercicio.html</loc></url>
+  <url><loc>https://cacg-code.github.io/PRACTICAS-HTML/css/10-animaciones/</loc></url>
+  <url><loc>https://cacg-code.github.io/PRACTICAS-HTML/css/10-animaciones/ejercicio.html</loc></url>
+  <url><loc>https://cacg-code.github.io/PRACTICAS-HTML/css/11-variables-y-temas/</loc></url>
+  <url><loc>https://cacg-code.github.io/PRACTICAS-HTML/css/11-variables-y-temas/ejercicio.html</loc></url>
+  <url><loc>https://cacg-code.github.io/PRACTICAS-HTML/css/proyecto-landing/</loc></url>
+  <url><loc>https://cacg-code.github.io/PRACTICAS-HTML/css/proyecto-landing/ejercicio.html</loc></url>
 </urlset>

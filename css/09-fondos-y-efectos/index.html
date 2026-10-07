@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lección 9: Fondos, bordes, sombras y degradados · Curso de HTML</title>
+  <meta name="description" content="Fondos, degradados, sombras, filtros y efectos en CSS: background en capas, gradientes, box-shadow, backdrop-filter, clip-path y texto con degradado.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/css/09-fondos-y-efectos/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Lección 9: Fondos, bordes, sombras y degradados · Curso de HTML">
+  <meta property="og:description" content="Fondos, degradados, sombras, filtros y efectos en CSS: background en capas, gradientes, box-shadow, backdrop-filter, clip-path y texto con degradado.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/css/09-fondos-y-efectos/">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de CSS</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap lesson-layout" id="contenido">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#fondos">Fondos: color, imagen y capas</a></li><li><a href="#degradados">Degradados</a></li><li><a href="#sombras">Sombras y profundidad</a></li><li><a href="#efectos">Opacidad, filtros y mezcla</a></li><li><a href="#texto-fondo">Texto con degradado y otros recursos</a></li><li><a href="#buenas">Buenas prácticas visuales</a></li><li><a href="#errores">Errores frecuentes</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de CSS</a> › Lección 9</div>
+        <h1>Fondos, bordes, sombras y degradados</h1>
+        <ul class="meta"><li>⏱ 40 minutos</li><li>📶 Nivel: principiante</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Componer fondos con color, imágenes y varios degradados.</li><li>Crear sombras sutiles y con profundidad.</li><li>Aplicar opacidad, filtros y efecto cristal.</li><li>Mantener el contraste y el rendimiento al usar efectos.</li></ul>
+</div>
+
+<h2 id="fondos"><span class="n">1.</span>Fondos: color, imagen y capas</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Propiedad</th><th>Qué hace</th><th>Valores útiles</th></tr></thead>
+<tbody><tr><td><code>background-color</code></td><td>Color de fondo</td><td><code>#eef2ff</code>, <code>transparent</code></td></tr><tr><td><code>background-image</code></td><td>Imagen o degradado</td><td><code>url("foto.jpg")</code>, <code>linear-gradient(…)</code></td></tr><tr><td><code>background-size</code></td><td>Tamaño de la imagen</td><td><code>cover</code> (llena y recorta), <code>contain</code> (entera), <code>200px auto</code></td></tr><tr><td><code>background-position</code></td><td>Dónde se coloca</td><td><code>center</code>, <code>top right</code>, <code>50% 20%</code></td></tr><tr><td><code>background-repeat</code></td><td>Si se repite</td><td><code>no-repeat</code>, <code>repeat-x</code></td></tr><tr><td><code>background-attachment</code></td><td>Comportamiento al desplazar</td><td><code>fixed</code> (efecto parallax simple)</td></tr><tr><td><code>background</code></td><td>Atajo de todas</td><td><code>url(a.jpg) center / cover no-repeat</code></td></tr></tbody>
+</table></div>
+<div class="code">
+  <div class="code-head"><span>Imagen de fondo que cubre su caja</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-sel">.hero</span> {
+  <span class="tk-attr">min-height</span>: <span class="tk-val">60vh</span>;
+  <span class="tk-attr">background</span>: <span class="tk-val">#1e2235 url("../img/portada.jpg") center / cover no-repeat</span>;
+  <span class="tk-attr">color</span>: <span class="tk-val">#fff</span>;
+}</code></pre>
+</div>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · Contraste sobre imágenes</p>
+<p>Si pones texto sobre una foto, <strong>asegura el contraste</strong>: añade una capa oscura (<code>linear-gradient(rgb(0 0 0 / .5), rgb(0 0 0 / .5))</code> como primer fondo) o una sombra de texto. Una foto bonita con texto ilegible no sirve.</p>
+</div>
+<p>Un elemento puede tener <strong>varios fondos apilados</strong>, separados por comas. El primero queda <strong>encima</strong>:</p>
+<div class="playground">
+  <div class="pg-head"><span>✏️ Fondos en capas</span><button type="button" data-reset>Restablecer</button></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;style&gt;
+  .hero { padding: 40px 20px; color: #fff; text-align: center; font-weight: 700; font-size: 1.4rem; border-radius: 12px;
+    background:
+      linear-gradient(rgb(15 18 34 / .55), rgb(15 18 34 / .55)),
+      linear-gradient(135deg, #4f46e5, #22d3ee 60%, #fbbf77);
+  }
+&lt;/style&gt;
+&lt;div class="hero"&gt;Texto legible sobre un fondo vistoso&lt;/div&gt;</textarea></div>
+    <div><label>Resultado</label><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div>
+  </div>
+</div>
+
+<h2 id="degradados"><span class="n">2.</span>Degradados</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Función</th><th>Efecto</th><th>Ejemplo</th></tr></thead>
+<tbody><tr><td><code>linear-gradient()</code></td><td>Cambia de color <strong>en línea recta</strong></td><td><code>linear-gradient(90deg, #4f46e5, #22d3ee)</code></td></tr><tr><td><code>radial-gradient()</code></td><td>Desde un <strong>centro</strong> hacia fuera</td><td><code>radial-gradient(circle at 30% 20%, #fff, #4f46e5)</code></td></tr><tr><td><code>conic-gradient()</code></td><td>Gira alrededor de un centro</td><td><code>conic-gradient(red, yellow, green, red)</code></td></tr><tr><td><code>repeating-linear-gradient()</code></td><td>Repite el patrón</td><td>Rayas</td></tr></tbody>
+</table></div>
+<ul><li>La <strong>dirección</strong> puede ser un ángulo (<code>45deg</code>, <code>90deg</code>) o una palabra (<code>to right</code>, <code>to bottom right</code>).</li><li>Puedes poner <strong>paradas de color</strong> con posición: <code>#4f46e5 0%, #22d3ee 60%</code>.</li><li>Un degradado es una <strong>imagen</strong>: va en <code>background</code> o <code>background-image</code>, no en <code>background-color</code>.</li></ul>
+<div class="playground">
+  <div class="pg-head"><span>✏️ Galería de degradados</span><button type="button" data-reset>Restablecer</button></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;style&gt;
+  .g { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; }
+  .g div { height: 90px; border-radius: 10px; }
+  .a { background: linear-gradient(90deg, #4f46e5, #22d3ee); }
+  .b { background: linear-gradient(135deg, #f43f5e, #fbbf24); }
+  .c { background: radial-gradient(circle at 30% 30%, #fff, #4f46e5 70%); }
+  .d { background: conic-gradient(from 0deg, #f43f5e, #fbbf24, #16a34a, #0ea5e9, #8b5cf6, #f43f5e); border-radius: 50% !important; }
+  .e { background: repeating-linear-gradient(45deg, #4f46e5 0 10px, #eef2ff 10px 20px); }
+  .f { background: linear-gradient(#fff0, #4f46e5), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10'%3E%3Ccircle cx='2' cy='2' r='1.5' fill='%234f46e5'/%3E%3C/svg%3E"); }
+&lt;/style&gt;
+&lt;div class="g"&gt;&lt;div class="a"&gt;&lt;/div&gt;&lt;div class="b"&gt;&lt;/div&gt;&lt;div class="c"&gt;&lt;/div&gt;&lt;div class="d"&gt;&lt;/div&gt;&lt;div class="e"&gt;&lt;/div&gt;&lt;div class="f"&gt;&lt;/div&gt;&lt;/div&gt;</textarea></div>
+    <div><label>Resultado</label><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div>
+  </div>
+</div>
+
+<h2 id="sombras"><span class="n">3.</span>Sombras y profundidad</h2>
+<div class="code">
+  <div class="code-head"><span>box-shadow</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-com">/* desplazamiento-x  desplazamiento-y  desenfoque  expansión  color */</span>
+<span class="tk-sel">.tarjeta</span> { <span class="tk-attr">box-shadow</span>: <span class="tk-val">0 4px 12px rgb(0 0 0 / .12)</span>; }
+
+<span class="tk-com">/* Varias sombras: más natural */</span>
+<span class="tk-sel">.elevada</span> {
+  <span class="tk-attr">box-shadow</span>:
+    <span class="tk-val">0 1px 2px rgb(0 0 0 / .08),</span>
+    0 8px 24px rgb(0 0 0 / .12);
+}
+
+<span class="tk-sel">.hundida</span> { <span class="tk-attr">box-shadow</span>: <span class="tk-val">inset 0 2px 6px rgb(0 0 0 / .25)</span>; }   <span class="tk-com">/* inset: hacia dentro */</span>
+<span class="tk-sel">.anillo</span>  { <span class="tk-attr">box-shadow</span>: <span class="tk-val">0 0 0 3px #4f46e5</span>; }                  <span class="tk-com">/* un «borde» que no ocupa espacio */</span></code></pre>
+</div>
+<ul><li><strong><code>text-shadow</code></strong> hace lo mismo con el texto: <code>text-shadow: 0 1px 3px rgb(0 0 0 / .5)</code>.</li><li><strong><code>filter: drop-shadow()</code></strong> sigue la forma real de imágenes con transparencia (PNG, SVG), cosa que <code>box-shadow</code> no hace.</li><li>Las sombras <strong>sutiles</strong> (poca opacidad, mucho desenfoque) se ven más profesionales que las duras.</li></ul>
+<div class="playground">
+  <div class="pg-head"><span>✏️ Elevación</span><button type="button" data-reset>Restablecer</button></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;style&gt;
+  .fila { display: flex; gap: 18px; flex-wrap: wrap; padding: 12px; background: #f1f5f9; }
+  .c { width: 110px; height: 80px; background: #fff; border-radius: 12px; display: grid; place-items: center; font-size: .85rem; }
+  .s1 { box-shadow: 0 1px 2px rgb(0 0 0 / .1); }
+  .s2 { box-shadow: 0 1px 2px rgb(0 0 0 / .08), 0 8px 24px rgb(0 0 0 / .12); }
+  .s3 { box-shadow: 0 20px 50px rgb(0 0 0 / .25); }
+  .s4 { box-shadow: inset 0 2px 8px rgb(0 0 0 / .25); }
+  .s5 { box-shadow: 0 0 0 3px #4f46e5; }
+&lt;/style&gt;
+&lt;div class="fila"&gt;&lt;div class="c s1"&gt;suave&lt;/div&gt;&lt;div class="c s2"&gt;capas&lt;/div&gt;&lt;div class="c s3"&gt;profunda&lt;/div&gt;&lt;div class="c s4"&gt;inset&lt;/div&gt;&lt;div class="c s5"&gt;anillo&lt;/div&gt;&lt;/div&gt;</textarea></div>
+    <div><label>Resultado</label><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div>
+  </div>
+</div>
+
+<h2 id="efectos"><span class="n">4.</span>Opacidad, filtros y mezcla</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Propiedad</th><th>Efecto</th><th>Ejemplo</th></tr></thead>
+<tbody><tr><td><code>opacity</code></td><td>Transparencia de <strong>todo</strong> el elemento</td><td><code>opacity: .6</code></td></tr><tr><td><code>rgb(… / %)</code></td><td>Transparencia <strong>solo del color</strong></td><td><code>background: rgb(79 70 229 / 20%)</code></td></tr><tr><td><code>filter</code></td><td>Efectos tipo foto</td><td><code>blur(4px)</code>, <code>grayscale(1)</code>, <code>brightness(1.2)</code>, <code>contrast(1.1)</code>, <code>saturate(1.4)</code></td></tr><tr><td><code>backdrop-filter</code></td><td>Efecto sobre <strong>lo que hay detrás</strong> (cristal esmerilado)</td><td><code>blur(10px)</code></td></tr><tr><td><code>mix-blend-mode</code></td><td>Cómo se mezcla con lo de abajo</td><td><code>multiply</code>, <code>screen</code>, <code>overlay</code></td></tr><tr><td><code>clip-path</code></td><td>Recorta con una forma</td><td><code>circle(50%)</code>, <code>polygon(…)</code></td></tr></tbody>
+</table></div>
+<div class="playground">
+  <div class="pg-head"><span>✏️ Efecto cristal y filtros</span><button type="button" data-reset>Restablecer</button></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;style&gt;
+  .fondo { position: relative; padding: 26px; border-radius: 14px; background: linear-gradient(135deg, #4f46e5, #22d3ee, #fbbf77); }
+  .vidrio { padding: 16px; border-radius: 12px; color: #fff; font-weight: 700;
+            background: rgb(255 255 255 / .18); backdrop-filter: blur(10px); border: 1px solid rgb(255 255 255 / .35); }
+  .fotos { display: flex; gap: 8px; margin-top: 12px; }
+  .f { width: 70px; height: 50px; border-radius: 8px; background: linear-gradient(135deg, #f43f5e, #fbbf24); }
+  .bn { filter: grayscale(1); } .bl { filter: blur(2px); } .br { filter: brightness(1.3) saturate(1.5); } .rec { clip-path: polygon(50% 0, 100% 100%, 0 100%); }
+&lt;/style&gt;
+&lt;div class="fondo"&gt;&lt;div class="vidrio"&gt;Cristal esmerilado&lt;/div&gt;
+  &lt;div class="fotos"&gt;&lt;div class="f"&gt;&lt;/div&gt;&lt;div class="f bn"&gt;&lt;/div&gt;&lt;div class="f bl"&gt;&lt;/div&gt;&lt;div class="f br"&gt;&lt;/div&gt;&lt;div class="f rec"&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</textarea></div>
+    <div><label>Resultado</label><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div>
+  </div>
+</div>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · Rendimiento</p>
+<p><code>backdrop-filter</code> y <code>filter: blur()</code> son costosos para el navegador, sobre todo con áreas grandes o animadas. Úsalos con moderación.</p>
+</div>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · <code>opacity</code> afecta a los hijos</p>
+<p>Un <code>opacity: .5</code> en un contenedor hace translúcido <strong>también a su texto y a todo lo que contiene</strong>. Si solo quieres un fondo translúcido, usa un color con alfa: <code>background: rgb(0 0 0 / .5)</code>.</p>
+</div>
+
+<h2 id="texto-fondo"><span class="n">5.</span>Texto con degradado y otros recursos</h2>
+<div class="code">
+  <div class="code-head"><span>Texto con degradado</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-sel">.logo</span> {
+  <span class="tk-attr">background</span>: <span class="tk-val">linear-gradient(90deg, #4f46e5, #22d3ee)</span>;
+  <span class="tk-attr">-webkit-background-clip</span>: <span class="tk-val">text</span>;
+  <span class="tk-attr">background-clip</span>: <span class="tk-val">text</span>;
+  <span class="tk-attr">color</span>: <span class="tk-val">transparent</span>;
+}</code></pre>
+</div>
+<div class="playground">
+  <div class="pg-head"><span>✏️ Texto con degradado</span><button type="button" data-reset>Restablecer</button></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;style&gt;
+  .logo { font: 800 2.4rem system-ui; background: linear-gradient(90deg, #4f46e5, #ec4899, #f59e0b); -webkit-background-clip: text; background-clip: text; color: transparent; }
+&lt;/style&gt;
+&lt;div class="logo"&gt;Texto con degradado&lt;/div&gt;</textarea></div>
+    <div><label>Resultado</label><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div>
+  </div>
+</div>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · Dar siempre una alternativa</p>
+<p>Un texto con <code>color: transparent</code> desaparece si el navegador no entiende <code>background-clip: text</code>. Define antes un <code>color</code> normal y deja <code>transparent</code> para cuando el soporte exista, o envuélvelo en <code>@supports (background-clip: text)</code>.</p>
+</div>
+
+<h2 id="buenas"><span class="n">6.</span>Buenas prácticas visuales</h2>
+<ul><li><strong>Menos es más:</strong> una o dos sombras y un par de degradados bastan. Cada efecto extra compite con el contenido.</li><li><strong>Consistencia:</strong> usa las mismas sombras y radios en todo el sitio (variables en la <a href="../11-variables-y-temas/">lección 11</a>).</li><li><strong>Contraste primero:</strong> comprueba el texto sobre cualquier fondo, también sobre degradados (revisa la zona más clara).</li><li><strong>Optimiza las imágenes de fondo:</strong> usa formatos modernos (WebP, AVIF) y tamaños adecuados.</li><li><strong>Respeta las preferencias:</strong> <code>prefers-contrast</code> y <code>prefers-reduced-transparency</code> existen para quien los necesita.</li></ul>
+
+<h2 id="errores"><span class="n">7.</span>Errores frecuentes</h2>
+<ul><li><strong>Poner un degradado en <code>background-color</code>:</strong> no funciona; va en <code>background</code> o <code>background-image</code>.</li><li><strong>Olvidar <code>background-size</code> y <code>no-repeat</code></strong> y que la imagen se repita o se vea enorme.</li><li><strong>Texto ilegible sobre una foto.</strong></li><li><strong><code>opacity</code> en vez de color con alfa</strong> y volver translúcido el texto.</li><li><strong>Sombras muy oscuras y duras</strong> que parecen de los años 2000.</li><li><strong>Abusar de <code>blur</code> y <code>backdrop-filter</code></strong> y ralentizar la página.</li><li><strong>Usar <code>box-shadow</code> para imágenes con transparencia</strong> (usa <code>drop-shadow</code>).</li></ul>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li><code>background</code> admite color, imágenes, degradados y <strong>varias capas</strong> (la primera queda encima).</li><li><code>background-size: cover</code> llena la caja recortando; <code>contain</code> la muestra entera; añade <code>no-repeat</code> y <code>center</code>.</li><li><code>linear-gradient</code>, <code>radial-gradient</code> y <code>conic-gradient</code> crean degradados: son imágenes.</li><li><code>box-shadow</code> (varias capas, <code>inset</code>, anillos) y <code>text-shadow</code> dan profundidad; las sutiles se ven mejor.</li><li><code>opacity</code> afecta a todo el elemento; <code>rgb(… / %)</code> solo al color.</li><li><code>filter</code> (<code>blur</code>, <code>grayscale</code>…), <code>backdrop-filter</code> y <code>clip-path</code> aportan efectos, con coste de rendimiento.</li><li>Sobre fondos con imágenes, asegura siempre el contraste del texto.</li><li><code>background-clip: text</code> crea texto con degradado, con alternativa.</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">8.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td>Degradado</td><td>Imagen generada por CSS que transiciona entre colores.</td></tr><tr><td><code>background-size</code></td><td>Tamaño de la imagen de fondo (<code>cover</code>, <code>contain</code>).</td></tr><tr><td>Capa de fondo</td><td>Cada imagen o degradado apilado en <code>background</code>.</td></tr><tr><td><code>box-shadow</code></td><td>Sombra alrededor de la caja de un elemento.</td></tr><tr><td>Alfa</td><td>Canal de transparencia de un color.</td></tr><tr><td><code>backdrop-filter</code></td><td>Aplica un efecto a lo que está detrás del elemento.</td></tr><tr><td><code>clip-path</code></td><td>Recorta un elemento con una forma.</td></tr><tr><td><code>drop-shadow</code></td><td>Sombra que sigue la forma del contenido, con transparencia.</td></tr></tbody>
+</table></div>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>¿Dónde se escribe un <code>linear-gradient()</code>?</p><ul class="opts"><li><button type="button" class="opt">En <code>background-color</code></button></li><li><button type="button" class="opt" data-ok>En <code>background</code> o <code>background-image</code></button></li><li><button type="button" class="opt">En <code>color</code></button></li><li><button type="button" class="opt">En <code>border-color</code></button></li></ul><p class="explain" hidden>Un degradado es una imagen, no un color.</p></div>
+<div class="quiz-q"><p>Quieres un fondo negro semitransparente <strong>sin afectar al texto</strong>. ¿Qué usas?</p><ul class="opts"><li><button type="button" class="opt"><code>opacity: .5</code></button></li><li><button type="button" class="opt" data-ok><code>background: rgb(0 0 0 / .5)</code></button></li><li><button type="button" class="opt"><code>filter: opacity(.5)</code></button></li><li><button type="button" class="opt"><code>visibility: .5</code></button></li></ul><p class="explain" hidden><code>opacity</code> volvería translúcido también el texto; un color con alfa solo afecta al fondo.</p></div>
+<div class="quiz-q"><p>¿Qué hace <code>background-size: cover</code>?</p><ul class="opts"><li><button type="button" class="opt">Estira la imagen deformándola</button></li><li><button type="button" class="opt" data-ok>Escala la imagen para llenar la caja, recortando lo que sobra</button></li><li><button type="button" class="opt">Repite la imagen</button></li><li><button type="button" class="opt">La muestra pequeña</button></li></ul><p class="explain" hidden><code>cover</code> mantiene la proporción y cubre toda la caja.</p></div>
+<div class="quiz-q"><p>¿Cuál de estas sombras suele verse más profesional?</p><ul class="opts"><li><button type="button" class="opt"><code>box-shadow: 5px 5px 0 #000</code></button></li><li><button type="button" class="opt" data-ok><code>box-shadow: 0 8px 24px rgb(0 0 0 / .12)</code></button></li><li><button type="button" class="opt"><code>box-shadow: 0 0 50px red</code></button></li><li><button type="button" class="opt"><code>box-shadow: 10px 10px 10px black</code></button></li></ul><p class="explain" hidden>Las sombras suaves (mucho desenfoque, poca opacidad) resultan más naturales.</p></div>
+<div class="quiz-q"><p>¿Cuál es el riesgo de abusar de <code>backdrop-filter: blur()</code>?</p><ul class="opts"><li><button type="button" class="opt">Que el texto cambie de idioma</button></li><li><button type="button" class="opt" data-ok>Que ralentice la página</button></li><li><button type="button" class="opt">Que no funcione en escritorio</button></li><li><button type="button" class="opt">Que se vea pixelado</button></li></ul><p class="explain" hidden>Los efectos de desenfoque son costosos de calcular, sobre todo en áreas grandes o animadas.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="css-09">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../08-responsivo/ejercicio.html"><small>← Anterior</small>Ejercicio: Diseño responsivo</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de CSS · Lección 9 · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&title=%5BError%5D%20Lecci%C3%B3n%209%3A%20Fondos%2C%20bordes%2C%20sombras%20y%20degradados%20%C2%B7%20Curso%20de%20HTML&pagina=https%3A//cacg-code.github.io/PRACTICAS-HTML/css/09-fondos-y-efectos/" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

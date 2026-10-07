@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ejercicio · Proyecto: landing page responsiva · Curso de HTML</title>
+  <meta name="description" content="Ejercicio práctico de: Proyecto: landing page responsiva.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/css/proyecto-landing/ejercicio.html">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Ejercicio · Proyecto: landing page responsiva · Curso de HTML">
+  <meta property="og:description" content="Ejercicio práctico de: Proyecto: landing page responsiva.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/css/proyecto-landing/ejercicio.html">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de CSS</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap" id="contenido" style="max-width:820px;padding-top:2rem;padding-bottom:3rem">
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de CSS</a> › <a href="./">Proyecto final</a> › Ejercicio</div>
+        <h1>Ejercicio: Proyecto: landing page responsiva</h1>
+        <ul class="meta"><li>⏱ 90 minutos</li><li>📶 Nivel: principiante</li></ul>
+      </header>
+
+      <h2>Objetivo</h2>
+      <p>Dar estilo completo a una landing page: cabecera pegajosa, hero con degradado, tarjetas con Grid, galería adaptable, formulario, modo oscuro y animaciones accesibles. El comprobador valida el resultado móvil real y que escribiste las reglas de escritorio.</p>
+
+      <h3>La página de partida</h3>
+      <p>Este es el HTML de la landing (semántico y accesible). <strong>No lo modifiques</strong>: tu trabajo es todo el CSS.</p>
+<div class="code">
+  <div class="code-head"><span>pagina.html</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">&lt;a</span> <span class="tk-attr">class</span>=<span class="tk-val">"saltar"</span> <span class="tk-attr">href</span>=<span class="tk-val">"#principal"</span><span class="tk-tag">&gt;</span>Saltar al contenido<span class="tk-tag">&lt;/a</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;header</span> <span class="tk-attr">class</span>=<span class="tk-val">"cabecera"</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;a</span> <span class="tk-attr">class</span>=<span class="tk-val">"marca"</span> <span class="tk-attr">href</span>=<span class="tk-val">"#"</span><span class="tk-tag">&gt;</span>Café Aurora<span class="tk-tag">&lt;/a</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;nav</span> <span class="tk-attr">class</span>=<span class="tk-val">"menu"</span> <span class="tk-attr">aria-label</span>=<span class="tk-val">"Principal"</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;a</span> <span class="tk-attr">href</span>=<span class="tk-val">"#carta"</span><span class="tk-tag">&gt;</span>Carta<span class="tk-tag">&lt;/a</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;a</span> <span class="tk-attr">href</span>=<span class="tk-val">"#galeria"</span><span class="tk-tag">&gt;</span>Galería<span class="tk-tag">&lt;/a</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;a</span> <span class="tk-attr">href</span>=<span class="tk-val">"#contacto"</span><span class="tk-tag">&gt;</span>Contacto<span class="tk-tag">&lt;/a</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;/nav</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;/header</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;main</span> <span class="tk-attr">id</span>=<span class="tk-val">"principal"</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;section</span> <span class="tk-attr">class</span>=<span class="tk-val">"hero"</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;h1</span> <span class="tk-attr">class</span>=<span class="tk-val">"hero__titulo"</span><span class="tk-tag">&gt;</span>El mejor café de la ciudad, recién tostado<span class="tk-tag">&lt;/h1</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;p</span> <span class="tk-attr">class</span>=<span class="tk-val">"hero__texto"</span><span class="tk-tag">&gt;</span>Granos de origen, tostado artesanal y un rincón tranquilo para trabajar o conversar.<span class="tk-tag">&lt;/p</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;a</span> <span class="tk-attr">class</span>=<span class="tk-val">"boton"</span> <span class="tk-attr">href</span>=<span class="tk-val">"#contacto"</span><span class="tk-tag">&gt;</span>Reservar una mesa<span class="tk-tag">&lt;/a</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;/section</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;section</span> <span class="tk-attr">class</span>=<span class="tk-val">"ventajas"</span> <span class="tk-attr">id</span>=<span class="tk-val">"carta"</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;article</span> <span class="tk-attr">class</span>=<span class="tk-val">"ventaja"</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;h2</span><span class="tk-tag">&gt;</span>Origen único<span class="tk-tag">&lt;/h2</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;p</span><span class="tk-tag">&gt;</span>Trabajamos con pequeños productores.<span class="tk-tag">&lt;/p</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;/article</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;article</span> <span class="tk-attr">class</span>=<span class="tk-val">"ventaja"</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;h2</span><span class="tk-tag">&gt;</span>Tostado diario<span class="tk-tag">&lt;/h2</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;p</span><span class="tk-tag">&gt;</span>Cada mañana, en nuestro propio taller.<span class="tk-tag">&lt;/p</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;/article</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;article</span> <span class="tk-attr">class</span>=<span class="tk-val">"ventaja"</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;h2</span><span class="tk-tag">&gt;</span>Para llevar<span class="tk-tag">&lt;/h2</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;p</span><span class="tk-tag">&gt;</span>Bolsas de 250 g o 1 kg, molidas a tu gusto.<span class="tk-tag">&lt;/p</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;/article</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;/section</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;section</span> <span class="tk-attr">class</span>=<span class="tk-val">"galeria"</span> <span class="tk-attr">id</span>=<span class="tk-val">"galeria"</span> <span class="tk-attr">aria-label</span>=<span class="tk-val">"Galería"</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;div</span> <span class="tk-attr">class</span>=<span class="tk-val">"foto"</span><span class="tk-tag">&gt;</span>1<span class="tk-tag">&lt;/div</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;div</span> <span class="tk-attr">class</span>=<span class="tk-val">"foto"</span><span class="tk-tag">&gt;</span>2<span class="tk-tag">&lt;/div</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;div</span> <span class="tk-attr">class</span>=<span class="tk-val">"foto"</span><span class="tk-tag">&gt;</span>3<span class="tk-tag">&lt;/div</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;div</span> <span class="tk-attr">class</span>=<span class="tk-val">"foto"</span><span class="tk-tag">&gt;</span>4<span class="tk-tag">&lt;/div</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;div</span> <span class="tk-attr">class</span>=<span class="tk-val">"foto"</span><span class="tk-tag">&gt;</span>5<span class="tk-tag">&lt;/div</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;div</span> <span class="tk-attr">class</span>=<span class="tk-val">"foto"</span><span class="tk-tag">&gt;</span>6<span class="tk-tag">&lt;/div</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;/section</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;section</span> <span class="tk-attr">class</span>=<span class="tk-val">"contacto"</span> <span class="tk-attr">id</span>=<span class="tk-val">"contacto"</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;h2</span><span class="tk-tag">&gt;</span>Escríbenos<span class="tk-tag">&lt;/h2</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;form</span> <span class="tk-attr">class</span>=<span class="tk-val">"form"</span><span class="tk-tag">&gt;</span>
+      <span class="tk-tag">&lt;label</span> <span class="tk-attr">for</span>=<span class="tk-val">"correo"</span><span class="tk-tag">&gt;</span>Tu correo<span class="tk-tag">&lt;/label</span><span class="tk-tag">&gt;</span>
+      <span class="tk-tag">&lt;input</span> <span class="tk-attr">id</span>=<span class="tk-val">"correo"</span> <span class="tk-attr">type</span>=<span class="tk-val">"email"</span> <span class="tk-attr">placeholder</span>=<span class="tk-val">"tu@correo.com"</span><span class="tk-tag">&gt;</span>
+      <span class="tk-tag">&lt;button</span> <span class="tk-attr">class</span>=<span class="tk-val">"boton"</span> <span class="tk-attr">type</span>=<span class="tk-val">"submit"</span><span class="tk-tag">&gt;</span>Enviar<span class="tk-tag">&lt;/button</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;/form</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;/section</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;/main</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;footer</span> <span class="tk-attr">class</span>=<span class="tk-val">"pie"</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;p</span><span class="tk-tag">&gt;</span>© 2026 Café Aurora<span class="tk-tag">&lt;/p</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;p</span><span class="tk-tag">&gt;</span>Calle del Sol 12<span class="tk-tag">&lt;/p</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;/footer</span><span class="tk-tag">&gt;</span></code></pre>
+</div>
+<div class="playground">
+  <div class="pg-head"><span>✏️ Prueba tu CSS aquí (opcional)</span><button type="button" data-reset>Restablecer</button></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;style&gt;
+  /* escribe tu CSS */
+&lt;/style&gt;
+&lt;a class="saltar" href="#principal"&gt;Saltar al contenido&lt;/a&gt;
+&lt;header class="cabecera"&gt;
+  &lt;a class="marca" href="#"&gt;Café Aurora&lt;/a&gt;
+  &lt;nav class="menu" aria-label="Principal"&gt;
+    &lt;a href="#carta"&gt;Carta&lt;/a&gt;
+    &lt;a href="#galeria"&gt;Galería&lt;/a&gt;
+    &lt;a href="#contacto"&gt;Contacto&lt;/a&gt;
+  &lt;/nav&gt;
+&lt;/header&gt;
+&lt;main id="principal"&gt;
+  &lt;section class="hero"&gt;
+    &lt;h1 class="hero__titulo"&gt;El mejor café de la ciudad, recién tostado&lt;/h1&gt;
+    &lt;p class="hero__texto"&gt;Granos de origen, tostado artesanal y un rincón tranquilo para trabajar o conversar.&lt;/p&gt;
+    &lt;a class="boton" href="#contacto"&gt;Reservar una mesa&lt;/a&gt;
+  &lt;/section&gt;
+  &lt;section class="ventajas" id="carta"&gt;
+    &lt;article class="ventaja"&gt;&lt;h2&gt;Origen único&lt;/h2&gt;&lt;p&gt;Trabajamos con pequeños productores.&lt;/p&gt;&lt;/article&gt;
+    &lt;article class="ventaja"&gt;&lt;h2&gt;Tostado diario&lt;/h2&gt;&lt;p&gt;Cada mañana, en nuestro propio taller.&lt;/p&gt;&lt;/article&gt;
+    &lt;article class="ventaja"&gt;&lt;h2&gt;Para llevar&lt;/h2&gt;&lt;p&gt;Bolsas de 250 g o 1 kg, molidas a tu gusto.&lt;/p&gt;&lt;/article&gt;
+  &lt;/section&gt;
+  &lt;section class="galeria" id="galeria" aria-label="Galería"&gt;
+    &lt;div class="foto"&gt;1&lt;/div&gt;&lt;div class="foto"&gt;2&lt;/div&gt;&lt;div class="foto"&gt;3&lt;/div&gt;
+    &lt;div class="foto"&gt;4&lt;/div&gt;&lt;div class="foto"&gt;5&lt;/div&gt;&lt;div class="foto"&gt;6&lt;/div&gt;
+  &lt;/section&gt;
+  &lt;section class="contacto" id="contacto"&gt;
+    &lt;h2&gt;Escríbenos&lt;/h2&gt;
+    &lt;form class="form"&gt;
+      &lt;label for="correo"&gt;Tu correo&lt;/label&gt;
+      &lt;input id="correo" type="email" placeholder="tu@correo.com"&gt;
+      &lt;button class="boton" type="submit"&gt;Enviar&lt;/button&gt;
+    &lt;/form&gt;
+  &lt;/section&gt;
+&lt;/main&gt;
+&lt;footer class="pie"&gt;&lt;p&gt;© 2026 Café Aurora&lt;/p&gt;&lt;p&gt;Calle del Sol 12&lt;/p&gt;&lt;/footer&gt;</textarea></div>
+    <div><label>Resultado</label><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div>
+  </div>
+</div>
+
+      <h2>Pasos</h2>
+      <p>Marca cada paso a medida que lo completes. Tu avance se guarda en este navegador.</p>
+      <div class="progress" aria-hidden="true"><div></div></div>
+      <p id="progreso-texto" style="color:var(--muted);font-size:.9rem" aria-live="polite"></p>
+      <ul class="checklist"><li><label><input type="checkbox" id="p1"><span>Define en <code>:root</code> al menos cuatro variables: <code>--fondo</code>, <code>--texto</code>, <code>--acento</code> y <code>--radio</code>, y úsalas con <code>var()</code>.</span></label></li><li><label><input type="checkbox" id="p2"><span>Escribe el reseteo (<code>box-sizing: border-box</code>, <code>margin: 0</code> en <code>body</code>) y una tipografía cómoda (<code>line-height</code> ≥ 1.5).</span></label></li><li><label><input type="checkbox" id="p3"><span>Haz la cabecera <strong>pegajosa</strong> (<code>position: sticky; top: 0</code>) con Flexbox (<code>justify-content: space-between</code>).</span></label></li><li><label><input type="checkbox" id="p4"><span>Da al <code>.hero</code> una altura mínima (<code>min-height: 60vh</code>), un fondo con <strong>degradado</strong> y texto centrado; el título con <code>clamp()</code>.</span></label></li><li><label><input type="checkbox" id="p5"><span>Haz que <code>.ventajas</code> sea una cuadrícula: <strong>una columna en móvil</strong>, y <strong>3 columnas</strong> a partir de <code>700px</code> con <code>@media (min-width: 700px)</code>.</span></label></li><li><label><input type="checkbox" id="p6"><span>Haz la galería con <code>repeat(auto-fit, minmax(…, 1fr))</code> y que cada <code>.foto</code> sea cuadrada (<code>aspect-ratio: 1</code>).</span></label></li><li><label><input type="checkbox" id="p7"><span>Da transiciones al <code>.boton</code> y a <code>.ventaja</code> (<code>transform</code>/<code>box-shadow</code>) con efecto <code>:hover</code>.</span></label></li><li><label><input type="checkbox" id="p8"><span>Añade <code>:focus-visible</code> con un contorno visible en enlaces, botones y campos.</span></label></li><li><label><input type="checkbox" id="p9"><span>Crea el tema oscuro con <code>[data-tema="oscuro"]</code> redefiniendo las variables, y escribe <code>@media (prefers-reduced-motion: reduce)</code>.</span></label></li><li><label><input type="checkbox" id="p10"><span>Oculta el enlace <code>.saltar</code> fuera de pantalla y haz que aparezca con <code>:focus</code>. Comprueba que <strong>no hay scroll horizontal</strong> a 400px.</span></label></li></ul>
+      <details><summary>💡 Pista 1: ¿cómo oculto el enlace para saltar?</summary><p><code>.saltar { position: absolute; left: -999px; }</code> y <code>.saltar:focus { left: 8px; top: 8px; }</code>. Así queda fuera de la pantalla hasta recibir el foco con <kbd>Tab</kbd>.</p>
+</details>
+<details><summary>💡 Pista 2: el comprobador prueba a 400px</summary><p>Eso significa que debes ver el diseño <strong>móvil</strong>: una columna, sin desplazamiento horizontal. Las medidas de escritorio se comprueban leyendo que escribiste las media queries.</p>
+</details>
+
+      <section class="checker" id="comprobador" aria-labelledby="t-chk">
+        <h2 id="t-chk">🔎 Comprueba tu trabajo</h2>
+        <p>Pega tu código y pulsa <strong>Comprobar</strong>. La revisión ocurre en tu navegador; nada se envía a ningún sitio. Cada punto en rojo incluye una pista.</p>
+        <label for="chk-code">Tu código CSS</label>
+        <textarea id="chk-code" rows="10" spellcheck="false" placeholder="Pega aquí solo tu CSS (sin la etiqueta style)"></textarea>
+        <div class="chk-actions"><button class="btn" type="button" id="chk-run">Comprobar</button><button class="icon-btn" type="button" id="chk-clear">Limpiar</button></div>
+        <p class="chk-sum" id="chk-sum" aria-live="polite"></p>
+        <ul class="chk-list" id="chk-list"></ul>
+        <script type="application/json" id="checks">{"mode": "cssl", "scaffold": "<a class=\"saltar\" href=\"#principal\">Saltar al contenido<\/a>\n<header class=\"cabecera\">\n  <a class=\"marca\" href=\"#\">Café Aurora<\/a>\n  <nav class=\"menu\" aria-label=\"Principal\">\n    <a href=\"#carta\">Carta<\/a>\n    <a href=\"#galeria\">Galería<\/a>\n    <a href=\"#contacto\">Contacto<\/a>\n  <\/nav>\n<\/header>\n<main id=\"principal\">\n  <section class=\"hero\">\n    <h1 class=\"hero__titulo\">El mejor café de la ciudad, recién tostado<\/h1>\n    <p class=\"hero__texto\">Granos de origen, tostado artesanal y un rincón tranquilo para trabajar o conversar.<\/p>\n    <a class=\"boton\" href=\"#contacto\">Reservar una mesa<\/a>\n  <\/section>\n  <section class=\"ventajas\" id=\"carta\">\n    <article class=\"ventaja\"><h2>Origen único<\/h2><p>Trabajamos con pequeños productores.<\/p><\/article>\n    <article class=\"ventaja\"><h2>Tostado diario<\/h2><p>Cada mañana, en nuestro propio taller.<\/p><\/article>\n    <article class=\"ventaja\"><h2>Para llevar<\/h2><p>Bolsas de 250 g o 1 kg, molidas a tu gusto.<\/p><\/article>\n  <\/section>\n  <section class=\"galeria\" id=\"galeria\" aria-label=\"Galería\">\n    <div class=\"foto\">1<\/div><div class=\"foto\">2<\/div><div class=\"foto\">3<\/div>\n    <div class=\"foto\">4<\/div><div class=\"foto\">5<\/div><div class=\"foto\">6<\/div>\n  <\/section>\n  <section class=\"contacto\" id=\"contacto\">\n    <h2>Escríbenos<\/h2>\n    <form class=\"form\">\n      <label for=\"correo\">Tu correo<\/label>\n      <input id=\"correo\" type=\"email\" placeholder=\"tu@correo.com\">\n      <button class=\"boton\" type=\"submit\">Enviar<\/button>\n    <\/form>\n  <\/section>\n<\/main>\n<footer class=\"pie\"><p>© 2026 Café Aurora<\/p><p>Calle del Sol 12<\/p><\/footer>", "width": 400, "checks": [{"d": "Definiste al menos 4 variables en `:root` y las usas con `var()`", "h": "Declara `--fondo`, `--texto`, `--acento` y `--radio`, y úsalas.", "t": "var r=getComputedStyle(document.documentElement);var n=[\"--fondo\",\"--texto\",\"--acento\",\"--radio\"].filter(function(v){return r.getPropertyValue(v).trim()!==\"\"}).length;return n===4 && (document.querySelector(\"style\").textContent.match(/var\\(\\s*--/g)||[]).length>=6"}, {"d": "El `body` usa el fondo y el color del texto de las variables", "h": "Escribe `background: var(--fondo); color: var(--texto);` en `body`.", "t": "var c=getComputedStyle(document.body);var r=getComputedStyle(document.documentElement);return c.marginTop===\"0px\" && c.backgroundColor!==\"rgba(0, 0, 0, 0)\" && /var\\(\\s*--fondo/.test(document.querySelector(\"style\").textContent)"}, {"d": "La cabecera es pegajosa y usa Flexbox con espacio entre elementos", "h": "Usa `position: sticky; top: 0; display: flex; justify-content: space-between;`.", "t": "var c=getComputedStyle(document.querySelector(\".cabecera\"));return c.position===\"sticky\" && c.top===\"0px\" && c.display===\"flex\" && c.justifyContent===\"space-between\""}, {"d": "El menú es una fila con separación", "h": "Usa `display: flex; gap: 1rem;` en `.menu`.", "t": "var c=getComputedStyle(document.querySelector(\".menu\"));return c.display===\"flex\" && parseFloat(c.columnGap)>0"}, {"d": "El hero mide al menos el 60% de la altura y usa un degradado", "h": "Usa `min-height: 60vh` y un `linear-gradient` en el fondo.", "t": "var c=getComputedStyle(document.querySelector(\".hero\"));return parseFloat(c.minHeight)>=innerHeight*0.59 && /linear-gradient/.test(c.backgroundImage)"}, {"d": "El título del hero es fluido con `clamp()`", "h": "Usa `font-size: clamp(…)` en `.hero__titulo`.", "t": "return /\\.hero__titulo[^}]*clamp\\(/.test(document.querySelector(\"style\").textContent)"}, {"d": "En móvil las ventajas ocupan una columna", "h": "Deja `display: grid; gap: 1rem;` en la base, sin columnas.", "t": "var a=[...document.querySelectorAll(\".ventaja\")].map(function(e){return Math.round(e.getBoundingClientRect().left)});return getComputedStyle(document.querySelector(\".ventajas\")).display===\"grid\" && a[0]===a[1] && a[1]===a[2]"}, {"d": "A partir de 700px las ventajas pasan a 3 columnas", "h": "Escribe `@media (min-width: 700px) { .ventajas { grid-template-columns: repeat(3, 1fr); } }`.", "t": "return /@media\\s*\\(\\s*min-width\\s*:\\s*700px\\s*\\)[\\s\\S]*?\\.ventajas[^}]*repeat\\(\\s*3\\s*,/.test(document.querySelector(\"style\").textContent)"}, {"d": "La galería usa `auto-fit` + `minmax()` y las fotos son cuadradas", "h": "Usa `repeat(auto-fit, minmax(150px, 1fr))` y `aspect-ratio: 1`.", "t": "var f=document.querySelector(\".foto\").getBoundingClientRect();return /auto-fit/.test(document.querySelector(\"style\").textContent) && Math.abs(f.width-f.height)<2 && getComputedStyle(document.querySelector(\".galeria\")).display===\"grid\""}, {"d": "El botón y las tarjetas tienen transición y efecto `:hover`", "h": "Escribe `transition` en `.boton` y `.ventaja`, y reglas `:hover`.", "t": "var s=document.querySelector(\"style\").textContent;return /transform/.test(getComputedStyle(document.querySelector(\".boton\")).transitionProperty) && /transform/.test(getComputedStyle(document.querySelector(\".ventaja\")).transitionProperty) && /\\.boton:hover/.test(s) && /\\.ventaja:hover/.test(s) && !/transition\\s*:\\s*all/.test(s)"}, {"d": "Definiste un estilo `:focus-visible`", "h": "Escribe `:focus-visible { outline: 3px solid var(--acento); }`.", "t": "return /:focus-visible\\s*\\{[^}]*outline/.test(document.querySelector(\"style\").textContent)"}, {"d": "El enlace «Saltar al contenido» está oculto y aparece con `:focus`", "h": "Usa `position: absolute; left: -999px;` y `.saltar:focus { left: 8px; }`.", "t": "var r=document.querySelector(\".saltar\").getBoundingClientRect();return r.right<=0 && /\\.saltar:focus[^}]*left\\s*:\\s*(0|[1-9])/.test(document.querySelector(\"style\").textContent)"}, {"d": "Existe el tema oscuro (`data-tema` y/o `prefers-color-scheme`)", "h": "Redefine las variables en `[data-tema=\"oscuro\"]`.", "t": "var s=document.querySelector(\"style\").textContent;return /data-tema=[\"']?oscuro[\"']?\\][^}]*--fondo/.test(s) && /color-scheme\\s*:\\s*dark/.test(s)"}, {"d": "Respetas `prefers-reduced-motion`", "h": "Escribe `@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }`.", "t": "return /@media\\s*\\(\\s*prefers-reduced-motion\\s*:\\s*reduce\\s*\\)/.test(document.querySelector(\"style\").textContent)"}, {"d": "No hay desplazamiento horizontal a 400px", "h": "Revisa que ningún ancho fijo supere la pantalla.", "t": "return document.documentElement.scrollWidth<=innerWidth"}]}</script>
+      </section>
+      <details>
+        <summary>✅ Ver una solución completa de ejemplo</summary>
+        <p>Intenta resolverlo antes de mirar. Tu versión puede ser distinta y también correcta.</p>
+        <div class="code">
+  <div class="code-head"><span>estilos.css</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>:<span class="tk-sel">root</span> {
+  <span class="tk-attr">--fondo</span>: <span class="tk-val">#fffaf5</span>;
+  <span class="tk-attr">--superficie</span>: <span class="tk-val">#ffffff</span>;
+  <span class="tk-attr">--texto</span>: <span class="tk-val">#2b1d14</span>;
+  <span class="tk-attr">--acento</span>: <span class="tk-val">#b45309</span>;
+  <span class="tk-attr">--borde</span>: <span class="tk-val">#ecdccc</span>;
+  <span class="tk-attr">--radio</span>: <span class="tk-val">14px</span>;
+  <span class="tk-attr">--sombra</span>: <span class="tk-val">0 1px 2px rgb(0 0 0 / .06), 0 10px 28px rgb(43 29 20 / .12)</span>;
+}
+:<span class="tk-sel">root[data-tema="oscuro"]</span> {
+  <span class="tk-attr">--fondo</span>: <span class="tk-val">#17110d</span>;
+  <span class="tk-attr">--superficie</span>: <span class="tk-val">#231a14</span>;
+  <span class="tk-attr">--texto</span>: <span class="tk-val">#f5ebe0</span>;
+  <span class="tk-attr">--acento</span>: <span class="tk-val">#f59e0b</span>;
+  <span class="tk-attr">--borde</span>: <span class="tk-val">#3a2c22</span>;
+  <span class="tk-attr">color-scheme</span>: <span class="tk-val">dark</span>;
+}
+
+<span class="tk-sel">*, *::before, *::after</span> { <span class="tk-attr">box-sizing</span>: <span class="tk-val">border-box</span>; }
+<span class="tk-sel">body</span> { <span class="tk-attr">margin</span>: <span class="tk-val">0</span>; <span class="tk-attr">background</span>: <span class="tk-val">var(--fondo)</span>; <span class="tk-attr">color</span>: <span class="tk-val">var(--texto)</span>; <span class="tk-attr">font</span>: <span class="tk-val">1.0625rem/1.65 system-ui, sans-serif</span>; }
+<span class="tk-sel">img, svg</span> { <span class="tk-attr">max-width</span>: <span class="tk-val">100%</span>; <span class="tk-attr">height</span>: <span class="tk-val">auto</span>; }
+
+:<span class="tk-sel">focus-visible</span> { <span class="tk-attr">outline</span>: <span class="tk-val">3px solid var(--acento)</span>; <span class="tk-attr">outline-offset</span>: <span class="tk-val">3px</span>; }
+<span class="tk-sel">.saltar</span> { <span class="tk-attr">position</span>: <span class="tk-val">absolute</span>; <span class="tk-attr">left</span>: <span class="tk-val">-999px</span>; <span class="tk-attr">top</span>: <span class="tk-val">0</span>; <span class="tk-attr">padding</span>: <span class="tk-val">.6rem 1rem</span>; <span class="tk-attr">background</span>: <span class="tk-val">var(--acento)</span>; <span class="tk-attr">color</span>: <span class="tk-val">#fff</span>; <span class="tk-attr">z-index</span>: <span class="tk-val">100</span>; }
+<span class="tk-sel">.saltar:focus</span> { <span class="tk-attr">left</span>: <span class="tk-val">8px</span>; <span class="tk-attr">top</span>: <span class="tk-val">8px</span>; }
+
+<span class="tk-sel">.cabecera</span> {
+  <span class="tk-attr">position</span>: <span class="tk-val">sticky</span>; <span class="tk-attr">top</span>: <span class="tk-val">0</span>; <span class="tk-attr">z-index</span>: <span class="tk-val">10</span>;
+  <span class="tk-attr">display</span>: <span class="tk-val">flex</span>; <span class="tk-attr">flex-wrap</span>: <span class="tk-val">wrap</span>; <span class="tk-attr">justify-content</span>: <span class="tk-val">space-between</span>; <span class="tk-attr">align-items</span>: <span class="tk-val">center</span>; <span class="tk-attr">gap</span>: <span class="tk-val">.5rem</span>;
+  <span class="tk-attr">padding</span>: <span class="tk-val">.75rem 1rem</span>;
+  <span class="tk-attr">background</span>: <span class="tk-val">var(--superficie)</span>;
+  <span class="tk-attr">border-bottom</span>: <span class="tk-val">1px solid var(--borde)</span>;
+}
+<span class="tk-sel">.marca</span> { <span class="tk-attr">font-weight</span>: <span class="tk-val">800</span>; <span class="tk-attr">color</span>: <span class="tk-val">var(--acento)</span>; <span class="tk-attr">text-decoration</span>: <span class="tk-val">none</span>; }
+<span class="tk-sel">.menu</span> { <span class="tk-attr">display</span>: <span class="tk-val">flex</span>; <span class="tk-attr">gap</span>: <span class="tk-val">1rem</span>; }
+<span class="tk-sel">.menu a</span> { <span class="tk-attr">color</span>: <span class="tk-val">var(--texto)</span>; <span class="tk-attr">text-decoration</span>: <span class="tk-val">none</span>; }
+
+<span class="tk-sel">.hero</span> {
+  <span class="tk-attr">min-height</span>: <span class="tk-val">60vh</span>;
+  <span class="tk-attr">display</span>: <span class="tk-val">grid</span>; <span class="tk-attr">place-content</span>: <span class="tk-val">center</span>; <span class="tk-attr">gap</span>: <span class="tk-val">1rem</span>; <span class="tk-attr">text-align</span>: <span class="tk-val">center</span>;
+  <span class="tk-attr">padding</span>: <span class="tk-val">3rem 1rem</span>;
+  <span class="tk-attr">background</span>: <span class="tk-val">linear-gradient(rgb(0 0 0 / .45), rgb(0 0 0 / .45)), linear-gradient(135deg, #b45309, #7c2d12)</span>;
+  <span class="tk-attr">color</span>: <span class="tk-val">#fff</span>;
+}
+<span class="tk-sel">.hero__titulo</span> { <span class="tk-attr">margin</span>: <span class="tk-val">0</span>; <span class="tk-attr">font-size</span>: <span class="tk-val">clamp(1.8rem, 1rem + 5vw, 3.5rem)</span>; <span class="tk-attr">line-height</span>: <span class="tk-val">1.1</span>; <span class="tk-attr">text-wrap</span>: <span class="tk-val">balance</span>; }
+
+<span class="tk-sel">.boton</span> {
+  <span class="tk-attr">display</span>: <span class="tk-val">inline-block</span>; <span class="tk-attr">justify-self</span>: <span class="tk-val">center</span>;
+  <span class="tk-attr">padding</span>: <span class="tk-val">.75rem 1.5rem</span>; <span class="tk-attr">border</span>: <span class="tk-val">0</span>; <span class="tk-attr">border-radius</span>: <span class="tk-val">var(--radio)</span>;
+  <span class="tk-attr">background</span>: <span class="tk-val">var(--acento)</span>; <span class="tk-attr">color</span>: <span class="tk-val">#fff</span>; <span class="tk-attr">font</span>: <span class="tk-val">inherit</span>; <span class="tk-attr">font-weight</span>: <span class="tk-val">700</span>; <span class="tk-attr">text-decoration</span>: <span class="tk-val">none</span>; <span class="tk-attr">cursor</span>: <span class="tk-val">pointer</span>;
+  <span class="tk-attr">transition</span>: <span class="tk-val">transform .2s, box-shadow .2s</span>;
+}
+<span class="tk-sel">.boton:hover</span> { <span class="tk-attr">transform</span>: <span class="tk-val">translateY(-2px)</span>; <span class="tk-attr">box-shadow</span>: <span class="tk-val">var(--sombra)</span>; }
+
+<span class="tk-sel">.ventajas</span> { <span class="tk-attr">display</span>: <span class="tk-val">grid</span>; <span class="tk-attr">gap</span>: <span class="tk-val">1rem</span>; <span class="tk-attr">padding</span>: <span class="tk-val">2rem 1rem</span>; }
+<span class="tk-sel">.ventaja</span> {
+  <span class="tk-attr">background</span>: <span class="tk-val">var(--superficie)</span>; <span class="tk-attr">border</span>: <span class="tk-val">1px solid var(--borde)</span>; <span class="tk-attr">border-radius</span>: <span class="tk-val">var(--radio)</span>; <span class="tk-attr">padding</span>: <span class="tk-val">1.25rem</span>;
+  <span class="tk-attr">transition</span>: <span class="tk-val">transform .25s, box-shadow .25s</span>;
+}
+<span class="tk-sel">.ventaja:hover</span> { <span class="tk-attr">transform</span>: <span class="tk-val">translateY(-4px)</span>; <span class="tk-attr">box-shadow</span>: <span class="tk-val">var(--sombra)</span>; }
+<span class="tk-sel">.ventaja h2</span> { <span class="tk-attr">margin-top</span>: <span class="tk-val">0</span>; }
+
+<span class="tk-sel">.galeria</span> { <span class="tk-attr">display</span>: <span class="tk-val">grid</span>; <span class="tk-attr">grid-template-columns</span>: <span class="tk-val">repeat(auto-fit, minmax(150px, 1fr))</span>; <span class="tk-attr">gap</span>: <span class="tk-val">.75rem</span>; <span class="tk-attr">padding</span>: <span class="tk-val">0 1rem 2rem</span>; }
+<span class="tk-sel">.foto</span> {
+  <span class="tk-attr">aspect-ratio</span>: <span class="tk-val">1</span>; <span class="tk-attr">display</span>: <span class="tk-val">grid</span>; <span class="tk-attr">place-items</span>: <span class="tk-val">center</span>; <span class="tk-attr">border-radius</span>: <span class="tk-val">var(--radio)</span>; <span class="tk-attr">color</span>: <span class="tk-val">#fff</span>; <span class="tk-attr">font-weight</span>: <span class="tk-val">700</span>;
+  <span class="tk-attr">background</span>: <span class="tk-val">linear-gradient(135deg, var(--acento), #7c2d12)</span>;
+}
+
+<span class="tk-sel">.contacto</span> { <span class="tk-attr">padding</span>: <span class="tk-val">2rem 1rem</span>; <span class="tk-attr">max-width</span>: <span class="tk-val">36rem</span>; <span class="tk-attr">margin-inline</span>: <span class="tk-val">auto</span>; }
+<span class="tk-sel">.form</span> { <span class="tk-attr">display</span>: <span class="tk-val">grid</span>; <span class="tk-attr">gap</span>: <span class="tk-val">.75rem</span>; }
+<span class="tk-sel">.form input</span> { <span class="tk-attr">padding</span>: <span class="tk-val">.7rem</span>; <span class="tk-attr">border</span>: <span class="tk-val">1px solid var(--borde)</span>; <span class="tk-attr">border-radius</span>: <span class="tk-val">10px</span>; <span class="tk-attr">font</span>: <span class="tk-val">inherit</span>; <span class="tk-attr">background</span>: <span class="tk-val">var(--superficie)</span>; <span class="tk-attr">color</span>: <span class="tk-val">var(--texto)</span>; }
+
+<span class="tk-sel">.pie</span> { <span class="tk-attr">display</span>: <span class="tk-val">flex</span>; <span class="tk-attr">flex-wrap</span>: <span class="tk-val">wrap</span>; <span class="tk-attr">justify-content</span>: <span class="tk-val">space-between</span>; <span class="tk-attr">gap</span>: <span class="tk-val">.5rem</span>; <span class="tk-attr">padding</span>: <span class="tk-val">1.5rem 1rem</span>; <span class="tk-attr">border-top</span>: <span class="tk-val">1px solid var(--borde)</span>; }
+
+<span class="tk-sel">@media (min-width: 700px)</span> {
+<span class="tk-sel">  .ventajas</span> { <span class="tk-attr">grid-template-columns</span>: <span class="tk-val">repeat(3, 1fr)</span>; <span class="tk-attr">padding-inline</span>: <span class="tk-val">2rem</span>; }
+<span class="tk-sel">  .cabecera</span> { <span class="tk-attr">padding-inline</span>: <span class="tk-val">2rem</span>; }
+}
+
+<span class="tk-sel">@media (prefers-color-scheme: dark)</span> {
+<span class="tk-sel">  :root:not([data-tema="claro"])</span> {
+    <span class="tk-attr">--fondo</span>: <span class="tk-val">#17110d</span>; <span class="tk-attr">--superficie</span>: <span class="tk-val">#231a14</span>; <span class="tk-attr">--texto</span>: <span class="tk-val">#f5ebe0</span>; <span class="tk-attr">--acento</span>: <span class="tk-val">#f59e0b</span>; <span class="tk-attr">--borde</span>: <span class="tk-val">#3a2c22</span>;
+    <span class="tk-attr">color-scheme</span>: <span class="tk-val">dark</span>;
+  }
+}
+
+<span class="tk-sel">@media (prefers-reduced-motion: reduce)</span> {
+<span class="tk-sel">  *</span> { <span class="tk-attr">animation</span>: <span class="tk-val">none !important</span>; <span class="tk-attr">transition</span>: <span class="tk-val">none !important</span>; <span class="tk-attr">scroll-behavior</span>: <span class="tk-val">auto !important</span>; }
+}</code></pre>
+</div>
+
+      </details>
+      <div class="callout consejo">
+<p class="callout-title">💡 🏁 Reto extra (opcional)</p>
+<p>Rediseña la landing con otra paleta (por ejemplo, verde y crema) cambiando <strong>solo</strong> las variables de <code>:root</code>. Si todo está bien hecho, no necesitas tocar nada más.</p>
+</div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="./"><small>← Anterior</small>Volver a proyecto final</a>
+        <a class="next" href="../"><small>¡Terminaste! →</small>Volver al índice del curso</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de CSS · Ejercicio de proyecto final · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&title=%5BError%5D%20Ejercicio%20%C2%B7%20Proyecto%3A%20landing%20page%20responsiva%20%C2%B7%20Curso%20de%20HTML&pagina=https%3A//cacg-code.github.io/PRACTICAS-HTML/css/proyecto-landing/ejercicio.html" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

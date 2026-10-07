@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lección 2: Selectores y especificidad · Curso de HTML</title>
+  <meta name="description" content="Selectores CSS a fondo: combinadores, atributos, pseudoclases, pseudoelementos y cómo calcular la especificidad.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/css/02-selectores/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Lección 2: Selectores y especificidad · Curso de HTML">
+  <meta property="og:description" content="Selectores CSS a fondo: combinadores, atributos, pseudoclases, pseudoelementos y cómo calcular la especificidad.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/css/02-selectores/">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de CSS</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap lesson-layout" id="contenido">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#basicos">Selectores básicos</a></li><li><a href="#combinadores">Combinadores: relaciones entre elementos</a></li><li><a href="#atributos">Selectores de atributo</a></li><li><a href="#pseudoclases">Pseudoclases: estados y posiciones</a></li><li><a href="#pseudoelementos">Pseudoelementos</a></li><li><a href="#especificidad">Especificidad: cómo se calcula</a></li><li><a href="#buenas">Estrategia para mantener la especificidad baja</a></li><li><a href="#errores">Errores frecuentes</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de CSS</a> › Lección 2</div>
+        <h1>Selectores y especificidad</h1>
+        <ul class="meta"><li>⏱ 40 minutos</li><li>📶 Nivel: principiante</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Elegir elementos con combinadores y selectores de atributo.</li><li>Aplicar estilos según estados y posiciones con pseudoclases.</li><li>Crear decoraciones con pseudoelementos.</li><li>Calcular la especificidad y escribir CSS fácil de mantener.</li></ul>
+</div>
+
+<h2 id="basicos"><span class="n">1.</span>Selectores básicos</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Selector</th><th>Elige…</th><th>Ejemplo</th></tr></thead>
+<tbody><tr><td>Universal</td><td>Todos los elementos</td><td><code>* { … }</code></td></tr><tr><td>Elemento</td><td>Todas las etiquetas de ese tipo</td><td><code>p { … }</code></td></tr><tr><td>Clase</td><td>Elementos con <code>class="aviso"</code></td><td><code>.aviso { … }</code></td></tr><tr><td>Identificador</td><td>El elemento con <code>id="portada"</code></td><td><code>#portada { … }</code></td></tr><tr><td>Agrupación</td><td>Varios selectores con una sola regla</td><td><code>h1, h2, h3 { … }</code></td></tr><tr><td>Elemento + clase</td><td>Solo los <code>p</code> con esa clase</td><td><code>p.aviso { … }</code></td></tr><tr><td>Varias clases</td><td>Elementos con <strong>ambas</strong> clases</td><td><code>.boton.grande { … }</code></td></tr></tbody>
+</table></div>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Clases, no ids</p>
+<p>Los <code>id</code> deben ser únicos y tienen mucha especificidad, lo que dificulta sobrescribirlos. Para dar estilo, <strong>usa clases</strong>. Reserva los <code>id</code> para enlaces ancla y para JavaScript.</p>
+</div>
+
+<h2 id="combinadores"><span class="n">2.</span>Combinadores: relaciones entre elementos</h2>
+<p>Los combinadores te permiten elegir un elemento por <strong>su posición</strong> respecto a otros:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Combinador</th><th>Significa</th><th>Ejemplo</th><th>Elige…</th></tr></thead>
+<tbody><tr><td>(espacio)</td><td>Descendiente (cualquier nivel)</td><td><code>nav a</code></td><td>Todos los <code>a</code> dentro de un <code>nav</code></td></tr><tr><td><code>&gt;</code></td><td>Hijo directo</td><td><code>ul &gt; li</code></td><td>Solo los <code>li</code> que son hijos directos del <code>ul</code></td></tr><tr><td><code>+</code></td><td>Hermano inmediato</td><td><code>h2 + p</code></td><td>El <code>p</code> justo después de un <code>h2</code></td></tr><tr><td><code>~</code></td><td>Cualquier hermano posterior</td><td><code>h2 ~ p</code></td><td>Todos los <code>p</code> posteriores al <code>h2</code> (mismo padre)</td></tr></tbody>
+</table></div>
+<div class="playground">
+  <div class="pg-head"><span>✏️ Combinadores</span><button type="button" data-reset>Restablecer</button></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;style&gt;
+  .caja &gt; p { color: #4f46e5; }
+  .caja p { font-weight: 700; }
+  h3 + p { background: #fff3cd; }
+  h3 ~ p { text-decoration: underline; }
+&lt;/style&gt;
+&lt;div class="caja"&gt;
+  &lt;h3&gt;Título&lt;/h3&gt;
+  &lt;p&gt;Párrafo 1 (hijo directo, justo después del h3)&lt;/p&gt;
+  &lt;p&gt;Párrafo 2 (hijo directo, hermano posterior)&lt;/p&gt;
+  &lt;div&gt;&lt;p&gt;Párrafo 3 (nieto: solo cumple el descendiente)&lt;/p&gt;&lt;/div&gt;
+&lt;/div&gt;</textarea></div>
+    <div><label>Resultado</label><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div>
+  </div>
+</div>
+<p>Observa que el párrafo 3 es negrita pero <strong>no</strong> azul: es descendiente, pero no hijo directo.</p>
+
+<h2 id="atributos"><span class="n">3.</span>Selectores de atributo</h2>
+<p>Eligen elementos según sus atributos. Son perfectos para formularios y enlaces, y evitan tener que inventar clases:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Selector</th><th>Elige…</th></tr></thead>
+<tbody><tr><td><code>[disabled]</code></td><td>Elementos que <strong>tienen</strong> el atributo</td></tr><tr><td><code>[type="email"]</code></td><td>Atributo con <strong>ese valor exacto</strong></td></tr><tr><td><code>[href^="https"]</code></td><td>El valor <strong>empieza</strong> con…</td></tr><tr><td><code>[href$=".pdf"]</code></td><td>El valor <strong>termina</strong> con…</td></tr><tr><td><code>[href*="ejemplo"]</code></td><td>El valor <strong>contiene</strong>…</td></tr><tr><td><code>[class~="a"]</code></td><td>Una palabra de la lista de clases</td></tr></tbody>
+</table></div>
+<div class="playground">
+  <div class="pg-head"><span>✏️ Enlaces externos y PDF</span><button type="button" data-reset>Restablecer</button></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;style&gt;
+  a[href^="https"]::after { content: " ↗"; }
+  a[href$=".pdf"]::before { content: "📄 "; }
+  input[type="email"] { border: 2px solid #4f46e5; }
+  input:required { border-left: 5px solid #e11d48; }
+&lt;/style&gt;
+&lt;p&gt;&lt;a href="https://ejemplo.com"&gt;Sitio externo&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="guia.pdf"&gt;Descargar guía&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="inicio.html"&gt;Enlace interno&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;input type="email" placeholder="correo"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;input type="text" required placeholder="obligatorio"&gt;&lt;/p&gt;</textarea></div>
+    <div><label>Resultado</label><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div>
+  </div>
+</div>
+
+<h2 id="pseudoclases"><span class="n">4.</span>Pseudoclases: estados y posiciones</h2>
+<p>Una <strong>pseudoclase</strong> (con un solo <code>:</code>) elige un elemento <strong>en cierto estado o posición</strong>, sin necesitar una clase en el HTML:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Pseudoclase</th><th>Cuándo se aplica</th></tr></thead>
+<tbody><tr><td><code>:hover</code></td><td>El cursor está encima</td></tr><tr><td><code>:focus</code> / <code>:focus-visible</code></td><td>El elemento tiene el foco (<code>:focus-visible</code> solo con teclado)</td></tr><tr><td><code>:active</code></td><td>Mientras se pulsa</td></tr><tr><td><code>:visited</code> / <code>:link</code></td><td>Enlace visitado / no visitado</td></tr><tr><td><code>:checked</code>, <code>:disabled</code>, <code>:required</code></td><td>Estados de los campos de formulario</td></tr><tr><td><code>:valid</code> / <code>:invalid</code></td><td>El campo cumple (o no) su validación</td></tr><tr><td><code>:first-child</code>, <code>:last-child</code></td><td>Primer / último hijo de su padre</td></tr><tr><td><code>:nth-child(n)</code></td><td>Por posición: <code>2</code>, <code>odd</code>, <code>even</code>, <code>3n</code>, <code>n+2</code></td></tr><tr><td><code>:not(selector)</code></td><td>Todo lo que <strong>no</strong> coincide con el selector</td></tr><tr><td><code>:is(a, b)</code> y <code>:where(a, b)</code></td><td>Agrupa selectores sin repetir (<code>:where</code> no añade especificidad)</td></tr><tr><td><code>:has(selector)</code></td><td>El elemento que <strong>contiene</strong> algo (el «selector padre»)</td></tr></tbody>
+</table></div>
+<div class="playground">
+  <div class="pg-head"><span>✏️ Estados y posiciones</span><button type="button" data-reset>Restablecer</button></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;style&gt;
+  li:nth-child(even) { background: #eef2ff; }
+  li:first-child { font-weight: 700; }
+  li:not(:last-child) { border-bottom: 1px solid #ccc; }
+  a:hover { color: crimson; }
+  input:focus-visible { outline: 3px solid #f59e0b; }
+  input:invalid { border-color: #e11d48; }
+  label:has(input:checked) { background: #dcfce7; padding: 4px 8px; }
+&lt;/style&gt;
+&lt;ul style="padding-left:0;list-style:none"&gt;
+  &lt;li&gt;Primero&lt;/li&gt;&lt;li&gt;Segundo&lt;/li&gt;&lt;li&gt;Tercero&lt;/li&gt;&lt;li&gt;Cuarto&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;a href="#"&gt;Pasa el cursor por aquí&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;input type="email" value="mal-correo"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;label&gt;&lt;input type="checkbox"&gt; Márcame&lt;/label&gt;&lt;/p&gt;</textarea></div>
+    <div><label>Resultado</label><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div>
+  </div>
+</div>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · <code>:has()</code></p>
+<p><code>:has()</code> es relativamente nuevo, pero ya funciona en todos los navegadores modernos. Permite cosas que antes necesitaban JavaScript, como estilizar una tarjeta según lo que contiene.</p>
+</div>
+
+<h2 id="pseudoelementos"><span class="n">5.</span>Pseudoelementos</h2>
+<p>Un <strong>pseudoelemento</strong> (con <code>::</code>) elige una <strong>parte</strong> de un elemento o crea una decorativa:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Pseudoelemento</th><th>Elige…</th></tr></thead>
+<tbody><tr><td><code>::before</code> / <code>::after</code></td><td>Contenido generado antes / después (requiere <code>content</code>)</td></tr><tr><td><code>::first-line</code></td><td>La primera línea de un texto</td></tr><tr><td><code>::first-letter</code></td><td>La primera letra (capitulares)</td></tr><tr><td><code>::marker</code></td><td>La viñeta o el número de una lista</td></tr><tr><td><code>::placeholder</code></td><td>El texto de ayuda de un campo</td></tr><tr><td><code>::selection</code></td><td>El texto seleccionado por la persona</td></tr></tbody>
+</table></div>
+<div class="playground">
+  <div class="pg-head"><span>✏️ Decoraciones con CSS</span><button type="button" data-reset>Restablecer</button></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;style&gt;
+  p::first-letter { font-size: 2.4em; font-weight: 700; color: #4f46e5; float: left; margin-right: 6px; line-height: 1; }
+  li::marker { color: crimson; content: "✔ "; }
+  input::placeholder { color: #94a3b8; font-style: italic; }
+  ::selection { background: #fde68a; }
+  .nuevo::after { content: "NUEVO"; margin-left: .5rem; padding: 2px 8px; border-radius: 999px; background: #16a34a; color: #fff; font-size: .7rem; }
+&lt;/style&gt;
+&lt;p&gt;Había una vez un texto con una letra capital que llama la atención del lector.&lt;/p&gt;
+&lt;ul&gt;&lt;li&gt;Primero&lt;/li&gt;&lt;li class="nuevo"&gt;Segundo&lt;/li&gt;&lt;/ul&gt;
+&lt;input placeholder="Escribe aquí"&gt;</textarea></div>
+    <div><label>Resultado</label><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div>
+  </div>
+</div>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · <code>content</code> y accesibilidad</p>
+<p>El texto generado con <code>content</code> <strong>no siempre lo leen los lectores de pantalla</strong> y no se puede seleccionar. Úsalo solo para decoración, nunca para información importante.</p>
+</div>
+
+<h2 id="especificidad"><span class="n">6.</span>Especificidad: cómo se calcula</h2>
+<p>Cuando dos reglas apuntan al mismo elemento, gana la de <strong>mayor especificidad</strong>. Se calcula como tres números, de más a menos importante:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Columna</th><th>Cuenta…</th><th>Ejemplos</th></tr></thead>
+<tbody><tr><td><strong>A</strong></td><td>Identificadores (<code>#id</code>)</td><td><code>#portada</code> → 1,0,0</td></tr><tr><td><strong>B</strong></td><td>Clases, atributos y pseudoclases</td><td><code>.aviso</code>, <code>[type]</code>, <code>:hover</code> → 0,1,0</td></tr><tr><td><strong>C</strong></td><td>Elementos y pseudoelementos</td><td><code>p</code>, <code>::before</code> → 0,0,1</td></tr></tbody>
+</table></div>
+<div class="table-wrap"><table>
+<thead><tr><th>Selector</th><th>Especificidad</th></tr></thead>
+<tbody><tr><td><code>p</code></td><td>0,0,1</td></tr><tr><td><code>.aviso</code></td><td>0,1,0</td></tr><tr><td><code>p.aviso</code></td><td>0,1,1</td></tr><tr><td><code>nav ul li a</code></td><td>0,0,4</td></tr><tr><td><code>.menu .item:hover</code></td><td>0,3,0</td></tr><tr><td><code>#portada</code></td><td>1,0,0</td></tr><tr><td><code>#portada .titulo</code></td><td>1,1,0</td></tr></tbody>
+</table></div>
+<p>Se comparan <strong>columna a columna de izquierda a derecha</strong>, no se suman como un número. Así, <strong>un solo <code>id</code> (1,0,0) gana a cien clases (0,100,0)</strong>.</p>
+<ul><li>El estilo en línea (<code>style="…"</code>) supera a todo lo anterior.</li><li><code>!important</code> supera incluso al estilo en línea.</li><li><code>*</code> y los combinadores no suman nada.</li><li><code>:where()</code> siempre vale 0; <code>:is()</code> y <code>:not()</code> toman el valor de su argumento más específico.</li></ul>
+<div class="playground">
+  <div class="pg-head"><span>✏️ ¿Quién gana?</span><button type="button" data-reset>Restablecer</button></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;style&gt;
+  #uno { color: green; }
+  .rojo.negrita { color: red; }
+  p.rojo { color: blue; }
+  p { color: orange !important; }
+&lt;/style&gt;
+&lt;p id="uno" class="rojo negrita"&gt;¿Qué color tengo?&lt;/p&gt;
+&lt;p class="rojo negrita"&gt;¿Y yo?&lt;/p&gt;</textarea></div>
+    <div><label>Resultado</label><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div>
+  </div>
+</div>
+<p>Calcula la especificidad de cada regla en papel antes de mirar el resultado. Después quita el <code>!important</code> y vuelve a predecir.</p>
+
+<h2 id="buenas"><span class="n">7.</span>Estrategia para mantener la especificidad baja</h2>
+<ul><li><strong>Usa clases</strong> casi siempre; evita <code>id</code> y <code>!important</code> en estilos.</li><li><strong>Evita selectores largos</strong> como <code>div.contenedor ul li a.enlace</code>: cuanto más largos, más difíciles de sobrescribir.</li><li><strong>Ordena</strong> de general a específico: elementos primero, componentes después, variantes al final.</li><li><strong>Nombra por función</strong>, no por apariencia: <code>.aviso</code>, no <code>.caja-amarilla</code>.</li><li><strong>Usa una convención</strong> como BEM (Bloque__Elemento--Modificador): <code>.tarjeta</code>, <code>.tarjeta__titulo</code>, <code>.tarjeta--destacada</code>.</li></ul>
+<div class="code">
+  <div class="code-head"><span>BEM en un ejemplo</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-sel">.tarjeta</span> { <span class="tk-attr">padding</span>: <span class="tk-val">1rem</span>; <span class="tk-attr">border</span>: <span class="tk-val">1px solid #ddd</span>; }
+<span class="tk-sel">.tarjeta__titulo</span> { <span class="tk-attr">font-size</span>: <span class="tk-val">1.2rem</span>; }
+<span class="tk-sel">.tarjeta--destacada</span> { <span class="tk-attr">border-color</span>: <span class="tk-val">#4f46e5</span>; }</code></pre>
+</div>
+<p>Con BEM cada selector tiene <strong>una sola clase</strong> (especificidad 0,1,0), así que el orden manda y nunca hay sorpresas.</p>
+
+<h2 id="errores"><span class="n">8.</span>Errores frecuentes</h2>
+<ul><li><strong>Confundir <code>:</code> con <code>::</code>:</strong> <code>:hover</code> es una pseudoclase; <code>::before</code> es un pseudoelemento.</li><li><strong>Dejar un espacio donde no va:</strong> <code>p .aviso</code> (descendiente) no es lo mismo que <code>p.aviso</code> (el <code>p</code> con esa clase).</li><li><strong>Olvidar <code>content</code> en <code>::before</code> y <code>::after</code>:</strong> sin él no aparece nada.</li><li><strong>Creer que <code>h2 ~ p</code> elige todos los párrafos:</strong> solo los hermanos posteriores con el mismo padre.</li><li><strong>Sumar especificidades como números:</strong> 0,1,10 no es 20.</li><li><strong>Subir la especificidad para ganar</strong> en lugar de reorganizar el CSS.</li></ul>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li>Elementos, clases (<code>.</code>), ids (<code>#</code>), universal (<code>*</code>) y agrupación con comas son la base.</li><li>Combinadores: espacio (descendiente), <code>&gt;</code> (hijo), <code>+</code> (hermano inmediato), <code>~</code> (hermanos posteriores).</li><li>Los selectores de atributo (<code>[type="email"]</code>, <code>[href^="https"]</code>) estilizan sin añadir clases.</li><li>Las pseudoclases (<code>:hover</code>, <code>:focus-visible</code>, <code>:nth-child()</code>, <code>:not()</code>, <code>:has()</code>) eligen por estado o posición.</li><li>Los pseudoelementos (<code>::before</code>, <code>::after</code>, <code>::first-letter</code>, <code>::marker</code>) eligen partes o crean decoración; <code>::before</code> y <code>::after</code> necesitan <code>content</code>.</li><li>Especificidad = (ids, clases/atributos/pseudoclases, elementos), comparada de izquierda a derecha.</li><li>Mantén la especificidad baja: clases, nombres por función y BEM.</li><li>Usa <code>!important</code> solo como último recurso.</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">9.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td>Combinador</td><td>Símbolo que relaciona dos selectores (espacio, <code>&gt;</code>, <code>+</code>, <code>~</code>).</td></tr><tr><td>Pseudoclase</td><td>Estado o posición de un elemento (<code>:hover</code>, <code>:first-child</code>).</td></tr><tr><td>Pseudoelemento</td><td>Parte de un elemento o contenido generado (<code>::before</code>).</td></tr><tr><td>Especificidad</td><td>Peso de un selector para decidir qué regla gana.</td></tr><tr><td>BEM</td><td>Convención de nombres: Bloque__Elemento--Modificador.</td></tr><tr><td><code>:has()</code></td><td>Pseudoclase que elige un elemento según lo que contiene.</td></tr><tr><td><code>content</code></td><td>Propiedad que define el texto o imagen de <code>::before</code> y <code>::after</code>.</td></tr><tr><td>Selector de atributo</td><td>Selector que elige por atributos y sus valores.</td></tr></tbody>
+</table></div>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>¿Qué elige <code>ul &gt; li</code>?</p><ul class="opts"><li><button type="button" class="opt">Todos los <code>li</code> dentro de un <code>ul</code>, a cualquier nivel</button></li><li><button type="button" class="opt" data-ok>Solo los <code>li</code> que son hijos directos de un <code>ul</code></button></li><li><button type="button" class="opt">El <code>li</code> que viene después de un <code>ul</code></button></li><li><button type="button" class="opt">Los <code>ul</code> que contienen un <code>li</code></button></li></ul><p class="explain" hidden><code>&gt;</code> es el combinador de hijo directo: no incluye nietos.</p></div>
+<div class="quiz-q"><p>¿Cuál tiene <strong>mayor</strong> especificidad?</p><ul class="opts"><li><button type="button" class="opt"><code>.a.b.c</code></button></li><li><button type="button" class="opt" data-ok><code>#a</code></button></li><li><button type="button" class="opt"><code>div p span</code></button></li><li><button type="button" class="opt"><code>p.aviso</code></button></li></ul><p class="explain" hidden>Un <code>id</code> (1,0,0) supera a cualquier cantidad de clases (0,3,0) o elementos (0,0,3).</p></div>
+<div class="quiz-q"><p>Escribes <code>.caja::before { color: red; }</code> y no aparece nada. ¿Qué falta?</p><ul class="opts"><li><button type="button" class="opt"><code>display: block</code></button></li><li><button type="button" class="opt" data-ok>La propiedad <code>content</code></button></li><li><button type="button" class="opt">Un <code>id</code></button></li><li><button type="button" class="opt"><code>position: absolute</code></button></li></ul><p class="explain" hidden><code>::before</code> y <code>::after</code> solo existen si tienen <code>content</code>, aunque sea <code>""</code>.</p></div>
+<div class="quiz-q"><p>¿Qué elige <code>a[href$=".pdf"]</code>?</p><ul class="opts"><li><button type="button" class="opt" data-ok>Enlaces cuyo <code>href</code> termina en <code>.pdf</code></button></li><li><button type="button" class="opt">Enlaces cuyo <code>href</code> empieza por <code>.pdf</code></button></li><li><button type="button" class="opt">Enlaces que contienen <code>pdf</code> en el texto</button></li><li><button type="button" class="opt">Todos los enlaces</button></li></ul><p class="explain" hidden><code>$=</code> significa «termina con»; <code>^=</code> «empieza con» y <code>*=</code> «contiene».</p></div>
+<div class="quiz-q"><p>¿Cuál es la especificidad de <code>#menu .item:hover</code>?</p><ul class="opts"><li><button type="button" class="opt">0,0,3</button></li><li><button type="button" class="opt" data-ok>1,2,0</button></li><li><button type="button" class="opt">1,0,2</button></li><li><button type="button" class="opt">0,3,0</button></li></ul><p class="explain" hidden>Un id (1), una clase y una pseudoclase (2 en la columna B) y ningún elemento (0): 1,2,0.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="css-02">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../01-como-funciona/ejercicio.html"><small>← Anterior</small>Ejercicio: Cómo funciona CSS</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de CSS · Lección 2 · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&title=%5BError%5D%20Lecci%C3%B3n%202%3A%20Selectores%20y%20especificidad%20%C2%B7%20Curso%20de%20HTML&pagina=https%3A//cacg-code.github.io/PRACTICAS-HTML/css/02-selectores/" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

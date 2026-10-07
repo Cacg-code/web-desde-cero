@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ejercicio · Selectores y especificidad · Curso de HTML</title>
+  <meta name="description" content="Ejercicio práctico de: Selectores y especificidad.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/css/02-selectores/ejercicio.html">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Ejercicio · Selectores y especificidad · Curso de HTML">
+  <meta property="og:description" content="Ejercicio práctico de: Selectores y especificidad.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/css/02-selectores/ejercicio.html">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de CSS</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap" id="contenido" style="max-width:820px;padding-top:2rem;padding-bottom:3rem">
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de CSS</a> › <a href="./">Lección 2</a> › Ejercicio</div>
+        <h1>Ejercicio: Selectores y especificidad</h1>
+        <ul class="meta"><li>⏱ 30 minutos</li><li>📶 Nivel: principiante</li></ul>
+      </header>
+
+      <h2>Objetivo</h2>
+      <p>Estilizar un menú, una lista y un formulario usando combinadores, selectores de atributo, pseudoclases y pseudoelementos, sin añadir una sola clase nueva al HTML.</p>
+
+      <h3>La página de partida</h3>
+      <p>Este es el HTML de tu página. <strong>No lo modifiques</strong>: escribe solo el CSS.</p>
+<div class="code">
+  <div class="code-head"><span>pagina.html</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">&lt;nav</span> <span class="tk-attr">class</span>=<span class="tk-val">"menu"</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;a</span> <span class="tk-attr">href</span>=<span class="tk-val">"#"</span> <span class="tk-attr">class</span>=<span class="tk-val">"activo"</span><span class="tk-tag">&gt;</span>Inicio<span class="tk-tag">&lt;/a</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;a</span> <span class="tk-attr">href</span>=<span class="tk-val">"#"</span><span class="tk-tag">&gt;</span>Cursos<span class="tk-tag">&lt;/a</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;a</span> <span class="tk-attr">href</span>=<span class="tk-val">"https://ejemplo.com"</span> <span class="tk-attr">class</span>=<span class="tk-val">"externo"</span><span class="tk-tag">&gt;</span>Blog<span class="tk-tag">&lt;/a</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;/nav</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;ul</span> <span class="tk-attr">class</span>=<span class="tk-val">"lista"</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;li</span><span class="tk-tag">&gt;</span>Uno<span class="tk-tag">&lt;/li</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;li</span><span class="tk-tag">&gt;</span>Dos<span class="tk-tag">&lt;/li</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;li</span><span class="tk-tag">&gt;</span>Tres<span class="tk-tag">&lt;/li</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;li</span><span class="tk-tag">&gt;</span>Cuatro<span class="tk-tag">&lt;/li</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;/ul</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;form</span> <span class="tk-attr">class</span>=<span class="tk-val">"form"</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;input</span> <span class="tk-attr">type</span>=<span class="tk-val">"text"</span> <span class="tk-attr">id</span>=<span class="tk-val">"nombre"</span> <span class="tk-attr">required</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;input</span> <span class="tk-attr">type</span>=<span class="tk-val">"email"</span> <span class="tk-attr">id</span>=<span class="tk-val">"correo"</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;button</span> <span class="tk-attr">type</span>=<span class="tk-val">"submit"</span><span class="tk-tag">&gt;</span>Enviar<span class="tk-tag">&lt;/button</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;/form</span><span class="tk-tag">&gt;</span></code></pre>
+</div>
+<div class="playground">
+  <div class="pg-head"><span>✏️ Prueba tu CSS aquí (opcional)</span><button type="button" data-reset>Restablecer</button></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;style&gt;
+  /* escribe tu CSS */
+&lt;/style&gt;
+&lt;nav class="menu"&gt;
+  &lt;a href="#" class="activo"&gt;Inicio&lt;/a&gt;
+  &lt;a href="#"&gt;Cursos&lt;/a&gt;
+  &lt;a href="https://ejemplo.com" class="externo"&gt;Blog&lt;/a&gt;
+&lt;/nav&gt;
+&lt;ul class="lista"&gt;
+  &lt;li&gt;Uno&lt;/li&gt;
+  &lt;li&gt;Dos&lt;/li&gt;
+  &lt;li&gt;Tres&lt;/li&gt;
+  &lt;li&gt;Cuatro&lt;/li&gt;
+&lt;/ul&gt;
+&lt;form class="form"&gt;
+  &lt;input type="text" id="nombre" required&gt;
+  &lt;input type="email" id="correo"&gt;
+  &lt;button type="submit"&gt;Enviar&lt;/button&gt;
+&lt;/form&gt;</textarea></div>
+    <div><label>Resultado</label><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div>
+  </div>
+</div>
+
+      <h2>Pasos</h2>
+      <p>Marca cada paso a medida que lo completes. Tu avance se guarda en este navegador.</p>
+      <div class="progress" aria-hidden="true"><div></div></div>
+      <p id="progreso-texto" style="color:var(--muted);font-size:.9rem" aria-live="polite"></p>
+      <ul class="checklist"><li><label><input type="checkbox" id="p1"><span>Convierte <code>.menu</code> en una fila de enlaces: <code>a</code> con <code>display: inline-block</code>, <code>padding: 8px 14px</code> y <code>text-decoration: none</code>.</span></label></li><li><label><input type="checkbox" id="p2"><span>Haz que el enlace con la clase <code>.activo</code> tenga fondo <code>#4f46e5</code> y color <code>#ffffff</code>.</span></label></li><li><label><input type="checkbox" id="p3"><span>Con un selector de atributo, haz que los enlaces que empiezan por <code>https</code> tengan <code>font-style: italic</code>.</span></label></li><li><label><input type="checkbox" id="p4"><span>Haz que los elementos pares de <code>.lista</code> (<code>li</code>) tengan fondo <code>#eef2ff</code>.</span></label></li><li><label><input type="checkbox" id="p5"><span>Haz que el primer <code>li</code> tenga <code>font-weight: 700</code>.</span></label></li><li><label><input type="checkbox" id="p6"><span>Con <code>:not(:last-child)</code>, da un borde inferior <code>1px solid #cccccc</code> a todos los <code>li</code> menos al último.</span></label></li><li><label><input type="checkbox" id="p7"><span>Haz que el campo <code>:required</code> tenga un borde izquierdo de <code>4px solid #e11d48</code>.</span></label></li><li><label><input type="checkbox" id="p8"><span>Con <code>::after</code>, añade el texto <code>" ↗"</code> a los enlaces externos (sin añadir clases al HTML).</span></label></li></ul>
+      <details><summary>💡 Pista 1: ¿cómo selecciono solo los hijos pares?</summary><p>Con <code>:nth-child(even)</code>. Si lo escribes como <code>.lista li:nth-child(even)</code>, solo afectará a los <code>li</code> de esa lista.</p>
+</details>
+<details><summary>💡 Pista 2: no veo el `::after`</summary><p>Recuerda <code>content: " ↗";</code>. Sin <code>content</code>, el pseudoelemento no se genera. Y escribe el selector como <code>a[href^="https"]::after</code>.</p>
+</details>
+
+      <section class="checker" id="comprobador" aria-labelledby="t-chk">
+        <h2 id="t-chk">🔎 Comprueba tu trabajo</h2>
+        <p>Pega tu código y pulsa <strong>Comprobar</strong>. La revisión ocurre en tu navegador; nada se envía a ningún sitio. Cada punto en rojo incluye una pista.</p>
+        <label for="chk-code">Tu código CSS</label>
+        <textarea id="chk-code" rows="10" spellcheck="false" placeholder="Pega aquí solo tu CSS (sin la etiqueta style)"></textarea>
+        <div class="chk-actions"><button class="btn" type="button" id="chk-run">Comprobar</button><button class="icon-btn" type="button" id="chk-clear">Limpiar</button></div>
+        <p class="chk-sum" id="chk-sum" aria-live="polite"></p>
+        <ul class="chk-list" id="chk-list"></ul>
+        <script type="application/json" id="checks">{"mode": "cssl", "scaffold": "<nav class=\"menu\">\n  <a href=\"#\" class=\"activo\">Inicio<\/a>\n  <a href=\"#\">Cursos<\/a>\n  <a href=\"https://ejemplo.com\" class=\"externo\">Blog<\/a>\n<\/nav>\n<ul class=\"lista\">\n  <li>Uno<\/li>\n  <li>Dos<\/li>\n  <li>Tres<\/li>\n  <li>Cuatro<\/li>\n<\/ul>\n<form class=\"form\">\n  <input type=\"text\" id=\"nombre\" required>\n  <input type=\"email\" id=\"correo\">\n  <button type=\"submit\">Enviar<\/button>\n<\/form>", "width": 800, "checks": [{"d": "Los enlaces del menú son inline-block con padding 8px 14px", "h": "Escribe `.menu a { display: inline-block; padding: 8px 14px; }`.", "t": "return getComputedStyle(document.querySelector(\".menu a\")).display===\"inline-block\" && getComputedStyle(document.querySelector(\".menu a\")).paddingTop===\"8px\" && getComputedStyle(document.querySelector(\".menu a\")).paddingLeft===\"14px\""}, {"d": "Los enlaces del menú no están subrayados", "h": "Usa `text-decoration: none;`.", "t": "return /none/.test(getComputedStyle(document.querySelector(\".menu a\")).textDecorationLine)"}, {"d": "`.activo` tiene fondo #4f46e5 y texto blanco", "h": "Escribe una regla `.menu a.activo` o `.activo`.", "t": "return getComputedStyle(document.querySelector(\".activo\")).backgroundColor===\"rgb(79, 70, 229)\" && getComputedStyle(document.querySelector(\".activo\")).color===\"rgb(255, 255, 255)\""}, {"d": "Los enlaces que empiezan por https van en cursiva", "h": "Usa el selector `a[href^=\"https\"]`.", "t": "return getComputedStyle(document.querySelector(\".externo\")).fontStyle===\"italic\" && getComputedStyle(document.querySelector(\".menu a\")).fontStyle!==\"italic\""}, {"d": "Los `li` pares tienen fondo #eef2ff y los impares no", "h": "Usa `:nth-child(even)`.", "t": "var l=document.querySelectorAll(\".lista li\");return getComputedStyle(l[1]).backgroundColor===\"rgb(238, 242, 255)\" && getComputedStyle(l[3]).backgroundColor===\"rgb(238, 242, 255)\" && getComputedStyle(l[0]).backgroundColor!==\"rgb(238, 242, 255)\""}, {"d": "El primer `li` está en negrita y los demás no", "h": "Usa `:first-child`.", "t": "var l=document.querySelectorAll(\".lista li\");return parseInt(getComputedStyle(l[0]).fontWeight)>=700 && parseInt(getComputedStyle(l[1]).fontWeight)<700"}, {"d": "Todos los `li` menos el último tienen borde inferior", "h": "Usa `li:not(:last-child)`.", "t": "var l=document.querySelectorAll(\".lista li\");return getComputedStyle(l[0]).borderBottomWidth===\"1px\" && getComputedStyle(l[2]).borderBottomWidth===\"1px\" && getComputedStyle(l[3]).borderBottomWidth===\"0px\""}, {"d": "El campo requerido tiene borde izquierdo rojo de 4px", "h": "Usa `input:required`.", "t": "return getComputedStyle(document.querySelector(\"#nombre\")).borderLeftWidth===\"4px\" && getComputedStyle(document.querySelector(\"#nombre\")).borderLeftColor===\"rgb(225, 29, 72)\" && getComputedStyle(document.querySelector(\"#correo\")).borderLeftWidth!==\"4px\""}, {"d": "Los enlaces externos muestran « ↗» con ::after", "h": "Escribe `a[href^=\"https\"]::after { content: \" ↗\"; }`.", "t": "return getComputedStyle(document.querySelector(\".externo\"),\"::after\").content.indexOf(\"↗\")>-1 && getComputedStyle(document.querySelector(\".menu a\"),\"::after\").content!==\"\\\" ↗\\\"\""}]}</script>
+      </section>
+      <details>
+        <summary>✅ Ver una solución de ejemplo</summary>
+        <p>Intenta resolverlo antes de mirar. Tu versión puede ser distinta y también correcta.</p>
+        <div class="code">
+  <div class="code-head"><span>estilos.css</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-sel">.menu a</span> {
+  <span class="tk-attr">display</span>: <span class="tk-val">inline-block</span>;
+  <span class="tk-attr">padding</span>: <span class="tk-val">8px 14px</span>;
+  <span class="tk-attr">text-decoration</span>: <span class="tk-val">none</span>;
+}
+<span class="tk-sel">.menu a.activo</span> { <span class="tk-attr">background</span>: <span class="tk-val">#4f46e5</span>; <span class="tk-attr">color</span>: <span class="tk-val">#ffffff</span>; }
+
+<span class="tk-sel">a[href^="https"]</span> { <span class="tk-attr">font-style</span>: <span class="tk-val">italic</span>; }
+<span class="tk-sel">a[href^="https"]::after</span> { <span class="tk-attr">content</span>: <span class="tk-val">" ↗"</span>; }
+
+<span class="tk-sel">.lista li:nth-child(even)</span> { <span class="tk-attr">background</span>: <span class="tk-val">#eef2ff</span>; }
+<span class="tk-sel">.lista li:first-child</span> { <span class="tk-attr">font-weight</span>: <span class="tk-val">700</span>; }
+<span class="tk-sel">.lista li:not(:last-child)</span> { <span class="tk-attr">border-bottom</span>: <span class="tk-val">1px solid #cccccc</span>; }
+
+<span class="tk-attr">input</span>:<span class="tk-val">required </span>{ <span class="tk-attr">border-left</span>: <span class="tk-val">4px solid #e11d48</span>; }</code></pre>
+</div>
+
+      </details>
+      <div class="callout consejo">
+<p class="callout-title">💡 🏁 Reto extra (opcional)</p>
+<p>Calcula la especificidad de cada selector de tu solución. ¿Puedes reescribir alguno para que tenga especificidad más baja sin cambiar el resultado?</p>
+</div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="./"><small>← Anterior</small>Volver a lección 2</a>
+        <a class="next" href="../03-color-y-texto/"><small>Siguiente →</small>Color, unidades y tipografía</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de CSS · Ejercicio de lección 2 · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&title=%5BError%5D%20Ejercicio%20%C2%B7%20Selectores%20y%20especificidad%20%C2%B7%20Curso%20de%20HTML&pagina=https%3A//cacg-code.github.io/PRACTICAS-HTML/css/02-selectores/ejercicio.html" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

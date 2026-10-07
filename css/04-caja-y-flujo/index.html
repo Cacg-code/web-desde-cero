@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lección 4: La caja y el flujo del documento · Curso de HTML</title>
+  <meta name="description" content="El modelo de caja en CSS: box-sizing, margin, padding, bordes, display, overflow y tamaños, con ejemplos interactivos.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/css/04-caja-y-flujo/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Lección 4: La caja y el flujo del documento · Curso de HTML">
+  <meta property="og:description" content="El modelo de caja en CSS: box-sizing, margin, padding, bordes, display, overflow y tamaños, con ejemplos interactivos.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/css/04-caja-y-flujo/">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de CSS</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap lesson-layout" id="contenido">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#caja">Todo es una caja</a></li><li><a href="#boxsizing">box-sizing: la propiedad que te ahorra dolores de cabeza</a></li><li><a href="#espacios">Margin y padding en detalle</a></li><li><a href="#bordes">Bordes, esquinas y contornos</a></li><li><a href="#display">display: bloque, en línea y los demás</a></li><li><a href="#overflow">Cuando el contenido no cabe: overflow</a></li><li><a href="#tamano">Tamaños: width, height y proporciones</a></li><li><a href="#errores">Errores frecuentes</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de CSS</a> › Lección 4</div>
+        <h1>La caja y el flujo del documento</h1>
+        <ul class="meta"><li>⏱ 40 minutos</li><li>📶 Nivel: principiante</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Predecir el tamaño real de una caja y usar <code>box-sizing: border-box</code>.</li><li>Manejar <code>margin</code> y <code>padding</code>, incluido el colapso de márgenes.</li><li>Elegir <code>display</code> y entender cómo fluye el contenido.</li><li>Controlar el desbordamiento y dimensionar con <code>max-width</code>, <code>aspect-ratio</code> y <code>object-fit</code>.</li></ul>
+</div>
+
+<h2 id="caja"><span class="n">1.</span>Todo es una caja</h2>
+<p>Para el navegador, <strong>cada elemento es una caja rectangular</strong>, sin excepción: un párrafo, una imagen, un enlace, incluso un círculo es una caja con las esquinas redondeadas. Entender las cajas es entender el 80% del diseño con CSS.</p>
+<div class="boxmodel"><div class="bm"><span class="t">margin (margen)</span><div class="bm-b"><span class="t">border (borde)</span><div class="bm-p"><span class="t">padding (relleno)</span><div class="bm-c">contenido</div></div></div></div></div>
+<div class="table-wrap"><table>
+<thead><tr><th>Capa</th><th>Propiedad</th><th>Qué hace</th><th>Se ve el fondo</th></tr></thead>
+<tbody><tr><td>Contenido</td><td><code>width</code>, <code>height</code></td><td>El espacio para el texto o la imagen</td><td>Sí</td></tr><tr><td>Relleno</td><td><code>padding</code></td><td>Espacio <strong>dentro</strong> de la caja</td><td>Sí (con el color de fondo del elemento)</td></tr><tr><td>Borde</td><td><code>border</code></td><td>La línea alrededor del relleno</td><td>Es visible</td></tr><tr><td>Margen</td><td><code>margin</code></td><td>Espacio <strong>fuera</strong>: separa de otros elementos</td><td>No (siempre transparente)</td></tr></tbody>
+</table></div>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Mira tus cajas</p>
+<p>En las herramientas del navegador (<kbd>F12</kbd>), al pasar el cursor sobre un elemento se colorean sus capas: <strong>azul</strong> = contenido, <strong>verde</strong> = relleno, <strong>amarillo</strong> = borde, <strong>naranja</strong> = margen. Es la mejor forma de entender por qué algo está donde está.</p>
+</div>
+
+<h2 id="boxsizing"><span class="n">2.</span>box-sizing: la propiedad que te ahorra dolores de cabeza</h2>
+<p>Por defecto, <code>width</code> mide <strong>solo el contenido</strong>. Si pones <code>width: 300px</code> y <code>padding: 20px</code> y <code>border: 5px</code>, la caja real mide 300 + 40 + 10 = <strong>350 px</strong>. Eso complica todos los cálculos.</p>
+<p>Con <code>box-sizing: border-box</code>, <code>width</code> incluye el relleno y el borde: la caja mide exactamente 300px.</p>
+<div class="playground">
+  <div class="pg-head"><span>✏️ Compara content-box y border-box</span><button type="button" data-reset>Restablecer</button></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;style&gt;
+  .a, .b { width: 200px; padding: 20px; border: 5px solid #4f46e5; background: #eef2ff; margin-bottom: 8px; }
+  .a { box-sizing: content-box; }  /* el valor por defecto */
+  .b { box-sizing: border-box; }
+&lt;/style&gt;
+&lt;div class="a"&gt;content-box: mide 250px&lt;/div&gt;
+&lt;div class="b"&gt;border-box: mide 200px&lt;/div&gt;</textarea></div>
+    <div><label>Resultado</label><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div>
+  </div>
+</div>
+<div class="code">
+  <div class="code-head"><span>La primera regla de casi todo proyecto</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-sel">*, *::before, *::after</span> {
+  <span class="tk-attr">box-sizing</span>: <span class="tk-val">border-box</span>;
+}</code></pre>
+</div>
+<p>Con esa regla, <code>width: 50%</code> significa <strong>la mitad del contenedor</strong>, incluidos relleno y borde. Es lo que esperas.</p>
+
+<h2 id="espacios"><span class="n">3.</span>Margin y padding en detalle</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Escritura</th><th>Significa</th></tr></thead>
+<tbody><tr><td><code>padding: 16px</code></td><td>Los cuatro lados</td></tr><tr><td><code>padding: 8px 16px</code></td><td>Arriba y abajo 8px · izquierda y derecha 16px</td></tr><tr><td><code>padding: 8px 16px 4px</code></td><td>Arriba 8 · laterales 16 · abajo 4</td></tr><tr><td><code>padding: 1px 2px 3px 4px</code></td><td>Arriba, derecha, abajo, izquierda (<strong>sentido del reloj</strong>)</td></tr><tr><td><code>padding-top</code>, <code>padding-left</code>…</td><td>Un solo lado</td></tr><tr><td><code>padding-inline</code>, <code>padding-block</code></td><td>Lados horizontales / verticales (según el idioma). Igual con <code>margin</code></td></tr></tbody>
+</table></div>
+<h3>Márgenes: tres comportamientos que sorprenden</h3>
+<ol class="steps"><li><strong><code>margin: 0 auto</code></strong> centra horizontalmente un bloque <strong>que tenga ancho</strong> (<code>width</code> o <code>max-width</code>).</li><li><strong>Los márgenes verticales se «colapsan»</strong>: dos bloques con <code>margin-bottom: 30px</code> y <code>margin-top: 20px</code> no se separan 50px, sino <strong>30px</strong> (se queda el mayor).</li><li><strong>Los márgenes pueden ser negativos</strong> (<code>margin-left: -10px</code>) para acercar o superponer elementos. Úsalo con cuidado.</li></ol>
+<div class="playground">
+  <div class="pg-head"><span>✏️ Colapso de márgenes</span><button type="button" data-reset>Restablecer</button></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;style&gt;
+  .caja { background: #eef2ff; border: 1px solid #4f46e5; padding: 8px; }
+  .uno { margin-bottom: 30px; }
+  .dos { margin-top: 20px; }
+  .centrada { width: 200px; margin: 20px auto; background: #fde68a; padding: 8px; }
+&lt;/style&gt;
+&lt;div class="caja uno"&gt;Margen inferior 30px&lt;/div&gt;
+&lt;div class="caja dos"&gt;Margen superior 20px (¿cuánta separación hay?)&lt;/div&gt;
+&lt;div class="centrada"&gt;margin: auto&lt;/div&gt;</textarea></div>
+    <div><label>Resultado</label><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div>
+  </div>
+</div>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · ¿Margin o padding?</p>
+<p>Una regla práctica: <strong><code>padding</code></strong> para el espacio <strong>interior</strong> de un componente; <strong><code>margin</code></strong> para separar un componente de otros; y para separar los <strong>hijos de un contenedor flex/grid</strong>, mejor <code>gap</code> (lo verás en las lecciones 6 y 7).</p>
+</div>
+
+<h2 id="bordes"><span class="n">4.</span>Bordes, esquinas y contornos</h2>
+<div class="code">
+  <div class="code-head"><span>Bordes</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-sel">.caja</span> {
+  <span class="tk-attr">border</span>: <span class="tk-val">2px solid #4f46e5</span>;            <span class="tk-com">/* ancho, estilo, color */</span>
+  <span class="tk-attr">border-bottom</span>: <span class="tk-val">4px dashed crimson</span>;    <span class="tk-com">/* un solo lado */</span>
+  <span class="tk-attr">border-radius</span>: <span class="tk-val">12px</span>;                  <span class="tk-com">/* esquinas redondeadas */</span>
+}
+<span class="tk-sel">.circulo</span> { <span class="tk-attr">width</span>: <span class="tk-val">80px</span>; <span class="tk-attr">height</span>: <span class="tk-val">80px</span>; <span class="tk-attr">border-radius</span>: <span class="tk-val">50%</span>; }
+<span class="tk-sel">.pildora</span> { <span class="tk-attr">border-radius</span>: <span class="tk-val">999px</span>; }</code></pre>
+</div>
+<ul><li><strong>Estilos de borde:</strong> <code>solid</code>, <code>dashed</code>, <code>dotted</code>, <code>double</code>, <code>none</code>.</li><li><code>border-radius: 50%</code> en una caja cuadrada la convierte en círculo; <code>999px</code> en una caja larga, en una píldora.</li><li><strong><code>outline</code></strong> parece un borde pero <strong>no ocupa espacio</strong> ni altera el diseño. Por eso lo usa el foco del teclado (<code>outline: 3px solid</code>).</li></ul>
+<div class="playground">
+  <div class="pg-head"><span>✏️ Formas con border-radius</span><button type="button" data-reset>Restablecer</button></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;style&gt;
+  div { width: 90px; height: 90px; background: #4f46e5; display: inline-block; margin: 6px; }
+  .c1 { border-radius: 12px; }
+  .c2 { border-radius: 50%; }
+  .c3 { border-radius: 50% 0 50% 0; }
+  .c4 { border-radius: 999px; width: 160px; height: 50px; }
+  .c5 { border-radius: 40% 60% 60% 40% / 60% 30% 70% 40%; }
+&lt;/style&gt;
+&lt;div class="c1"&gt;&lt;/div&gt;&lt;div class="c2"&gt;&lt;/div&gt;&lt;div class="c3"&gt;&lt;/div&gt;&lt;div class="c4"&gt;&lt;/div&gt;&lt;div class="c5"&gt;&lt;/div&gt;</textarea></div>
+    <div><label>Resultado</label><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div>
+  </div>
+</div>
+
+<h2 id="display"><span class="n">5.</span>display: bloque, en línea y los demás</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Valor</th><th>Comportamiento</th><th>Ejemplos</th></tr></thead>
+<tbody><tr><td><code>block</code></td><td>Ocupa <strong>todo el ancho</strong> y empieza en línea nueva. Acepta <code>width</code>, <code>height</code>, márgenes</td><td><code>div</code>, <code>p</code>, <code>h1</code>, <code>section</code></td></tr><tr><td><code>inline</code></td><td>Fluye <strong>dentro del texto</strong>. <strong>Ignora</strong> <code>width</code>/<code>height</code> y los márgenes verticales</td><td><code>span</code>, <code>a</code>, <code>strong</code>, <code>em</code></td></tr><tr><td><code>inline-block</code></td><td>Fluye como texto pero <strong>acepta</strong> ancho, alto y márgenes</td><td>Botones, etiquetas</td></tr><tr><td><code>none</code></td><td>El elemento <strong>desaparece</strong> (no ocupa espacio)</td><td>—</td></tr><tr><td><code>flex</code> / <code>grid</code></td><td>Convierten el elemento en un contenedor de layout</td><td>Lecciones 6 y 7</td></tr></tbody>
+</table></div>
+<div class="playground">
+  <div class="pg-head"><span>✏️ block, inline e inline-block</span><button type="button" data-reset>Restablecer</button></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;style&gt;
+  span, a { background: #fde68a; padding: 10px 20px; margin: 10px; width: 200px; height: 60px; }
+  .ib { display: inline-block; }
+  .bl { display: block; }
+&lt;/style&gt;
+&lt;p&gt;Estos son &lt;span&gt;span en línea&lt;/span&gt; y &lt;a href="#"&gt;enlace en línea&lt;/a&gt;: no respetan el ancho ni el alto.&lt;/p&gt;
+&lt;p&gt;Este es &lt;span class="ib"&gt;inline-block&lt;/span&gt; y este &lt;span class="ib"&gt;otro&lt;/span&gt;: sí respetan.&lt;/p&gt;
+&lt;span class="bl"&gt;Y este es block: ocupa su propia línea&lt;/span&gt;</textarea></div>
+    <div><label>Resultado</label><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div>
+  </div>
+</div>
+<h3>Ocultar un elemento: tres maneras distintas</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>Propiedad</th><th>Se ve</th><th>Ocupa espacio</th><th>Lector de pantalla</th></tr></thead>
+<tbody><tr><td><code>display: none</code></td><td>No</td><td>No</td><td>No lo lee</td></tr><tr><td><code>visibility: hidden</code></td><td>No</td><td><strong>Sí</strong></td><td>No lo lee</td></tr><tr><td><code>opacity: 0</code></td><td>No</td><td>Sí</td><td><strong>Sí lo lee</strong> (y se puede pulsar)</td></tr></tbody>
+</table></div>
+
+<h2 id="overflow"><span class="n">6.</span>Cuando el contenido no cabe: overflow</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Valor</th><th>Efecto</th></tr></thead>
+<tbody><tr><td><code>visible</code></td><td>El contenido se sale de la caja (valor por defecto)</td></tr><tr><td><code>hidden</code></td><td>Recorta lo que sobra</td></tr><tr><td><code>auto</code></td><td>Muestra barras de desplazamiento <strong>solo si hacen falta</strong></td></tr><tr><td><code>scroll</code></td><td>Siempre muestra barras</td></tr><tr><td><code>clip</code></td><td>Recorta sin crear un contenedor de scroll</td></tr></tbody>
+</table></div>
+<div class="code">
+  <div class="code-head"><span>Texto que se corta con puntos suspensivos</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-sel">.titulo-largo</span> {
+  <span class="tk-attr">white-space</span>: <span class="tk-val">nowrap</span>;       <span class="tk-com">/* no saltar de línea */</span>
+  <span class="tk-attr">overflow</span>: <span class="tk-val">hidden</span>;          <span class="tk-com">/* recortar lo que sobra */</span>
+  <span class="tk-attr">text-overflow</span>: <span class="tk-val">ellipsis</span>;   <span class="tk-com">/* terminar con … */</span>
+}
+
+<span class="tk-sel">.cuadro-scroll</span> { <span class="tk-attr">max-height</span>: <span class="tk-val">160px</span>; <span class="tk-attr">overflow-y</span>: <span class="tk-val">auto</span>; }</code></pre>
+</div>
+<div class="playground">
+  <div class="pg-head"><span>✏️ Overflow</span><button type="button" data-reset>Restablecer</button></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;style&gt;
+  .caja { width: 200px; height: 80px; border: 2px solid #4f46e5; margin: 8px 0; }
+  .h { overflow: hidden; }
+  .a { overflow: auto; }
+  .e { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; height: auto; }
+&lt;/style&gt;
+&lt;div class="caja"&gt;visible: el texto largo se sale de la caja por abajo y se ve igualmente, de forma desordenada.&lt;/div&gt;
+&lt;div class="caja h"&gt;hidden: el texto largo se recorta por abajo y no se ve más allá de la caja.&lt;/div&gt;
+&lt;div class="caja a"&gt;auto: aparece una barra de desplazamiento solo si el texto no cabe en la caja.&lt;/div&gt;
+&lt;div class="caja e"&gt;ellipsis: un texto largo que termina con puntos suspensivos&lt;/div&gt;</textarea></div>
+    <div><label>Resultado</label><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div>
+  </div>
+</div>
+
+<h2 id="tamano"><span class="n">7.</span>Tamaños: width, height y proporciones</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Propiedad</th><th>Para qué</th></tr></thead>
+<tbody><tr><td><code>width</code> / <code>height</code></td><td>Tamaño fijo o relativo</td></tr><tr><td><code>min-width</code> / <code>min-height</code></td><td><strong>Mínimo</strong>: la caja no se encoge por debajo</td></tr><tr><td><code>max-width</code> / <code>max-height</code></td><td><strong>Máximo</strong>: la caja no crece por encima</td></tr><tr><td><code>aspect-ratio</code></td><td>Mantiene una proporción (<code>16 / 9</code>, <code>1</code>)</td></tr><tr><td><code>object-fit</code></td><td>Cómo se ajusta una imagen a su caja: <code>cover</code> (recorta), <code>contain</code> (entera)</td></tr><tr><td><code>object-position</code></td><td>Qué parte de la imagen se ve cuando se recorta</td></tr></tbody>
+</table></div>
+<div class="code">
+  <div class="code-head"><span>Imagen que llena su caja sin deformarse</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-sel">.foto</span> {
+  <span class="tk-attr">width</span>: <span class="tk-val">100%</span>;
+  <span class="tk-attr">aspect-ratio</span>: <span class="tk-val">16 / 9</span>;
+  <span class="tk-attr">object-fit</span>: <span class="tk-val">cover</span>;
+}</code></pre>
+</div>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · <code>max-width</code> en lugar de <code>width</code></p>
+<p>Un bloque con <code>width: 800px</code> se desborda en un celular. Con <code>max-width: 800px; width: 100%;</code> (o simplemente <code>max-width</code>), se adapta: llega a 800px en pantallas grandes y se encoge en las pequeñas.</p>
+</div>
+
+<h2 id="errores"><span class="n">8.</span>Errores frecuentes</h2>
+<ul><li><strong>No usar <code>box-sizing: border-box</code></strong> y que los anchos «no cuadren».</li><li><strong>Esperar que <code>margin: auto</code> centre</strong> un bloque sin ancho: no hay nada que centrar.</li><li><strong>Dar <code>width</code>/<code>height</code> a un elemento <code>inline</code>:</strong> se ignora; cámbialo a <code>inline-block</code> o <code>block</code>.</li><li><strong>Margen vertical que «no suma»:</strong> es el colapso de márgenes.</li><li><strong>Usar <code>height</code> fijo</strong> para textos: si el texto crece, se sale. Prefiere <code>min-height</code>.</li><li><strong>Usar <code>margin</code> para separar elementos dentro de un flex/grid</strong> en lugar de <code>gap</code>.</li><li><strong>Esconder con <code>opacity: 0</code></strong> algo que no debe ser accesible.</li></ul>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li>Cada elemento es una caja: contenido, <code>padding</code>, <code>border</code> y <code>margin</code>.</li><li><code>box-sizing: border-box</code> hace que <code>width</code> incluya relleno y borde: ponlo en todo el proyecto.</li><li><code>padding</code> es interior y tiene el color de fondo; <code>margin</code> es exterior y siempre transparente.</li><li>Los márgenes verticales se colapsan y <code>margin: 0 auto</code> centra bloques con ancho.</li><li><code>border-radius</code> redondea (50% = círculo); <code>outline</code> no ocupa espacio.</li><li><code>block</code>, <code>inline</code>, <code>inline-block</code> y <code>none</code> cambian cómo fluye una caja; <code>visibility</code> y <code>opacity</code> ocultan de otras formas.</li><li><code>overflow</code> controla lo que no cabe; <code>text-overflow: ellipsis</code> recorta texto con «…».</li><li><code>max-width</code>, <code>min-height</code>, <code>aspect-ratio</code> y <code>object-fit</code> hacen cajas flexibles.</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">9.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td>Modelo de caja</td><td>Idea de que todo elemento es un rectángulo con contenido, relleno, borde y margen.</td></tr><tr><td><code>box-sizing</code></td><td>Define si <code>width</code> mide solo el contenido o también el relleno y el borde.</td></tr><tr><td>Colapso de márgenes</td><td>Fusión de márgenes verticales adyacentes: se aplica el mayor.</td></tr><tr><td>Bloque / en línea</td><td>Dos formas básicas de fluir: ocupar la línea completa o fluir con el texto.</td></tr><tr><td><code>overflow</code></td><td>Qué hacer con el contenido que excede su caja.</td></tr><tr><td><code>aspect-ratio</code></td><td>Proporción ancho/alto que mantiene una caja.</td></tr><tr><td><code>object-fit</code></td><td>Cómo se ajusta una imagen al tamaño de su caja.</td></tr><tr><td><code>outline</code></td><td>Contorno que no ocupa espacio, usado en el foco.</td></tr></tbody>
+</table></div>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>Una caja tiene <code>width: 300px; padding: 20px; border: 5px solid;</code> y <code>box-sizing: content-box</code>. ¿Cuánto mide en total?</p><ul class="opts"><li><button type="button" class="opt">300px</button></li><li><button type="button" class="opt">340px</button></li><li><button type="button" class="opt" data-ok>350px</button></li><li><button type="button" class="opt">325px</button></li></ul><p class="explain" hidden>300 + 20×2 + 5×2 = 350px. Con <code>border-box</code> mediría 300px.</p></div>
+<div class="quiz-q"><p>Dos bloques consecutivos: el primero con <code>margin-bottom: 30px</code>, el segundo con <code>margin-top: 20px</code>. ¿Cuánta separación hay?</p><ul class="opts"><li><button type="button" class="opt">50px</button></li><li><button type="button" class="opt" data-ok>30px</button></li><li><button type="button" class="opt">20px</button></li><li><button type="button" class="opt">10px</button></li></ul><p class="explain" hidden>Los márgenes verticales se colapsan: se queda el mayor, 30px.</p></div>
+<div class="quiz-q"><p><code>margin: 0 auto</code> no centra mi <code>div</code>. ¿Qué falta casi seguro?</p><ul class="opts"><li><button type="button" class="opt"><code>display: flex</code></button></li><li><button type="button" class="opt" data-ok>Un <code>width</code> o <code>max-width</code></button></li><li><button type="button" class="opt"><code>position: relative</code></button></li><li><button type="button" class="opt"><code>float: none</code></button></li></ul><p class="explain" hidden>Sin ancho, un bloque ya ocupa todo el espacio: no hay nada que centrar.</p></div>
+<div class="quiz-q"><p>¿Qué diferencia a <code>visibility: hidden</code> de <code>display: none</code>?</p><ul class="opts"><li><button type="button" class="opt">Ninguna</button></li><li><button type="button" class="opt" data-ok><code>visibility: hidden</code> conserva el espacio que ocupaba</button></li><li><button type="button" class="opt"><code>display: none</code> conserva el espacio</button></li><li><button type="button" class="opt"><code>visibility</code> es más rápido</button></li></ul><p class="explain" hidden>Con <code>visibility: hidden</code> el hueco permanece; con <code>display: none</code> desaparece del flujo.</p></div>
+<div class="quiz-q"><p>¿Qué hace <code>object-fit: cover</code> en una imagen?</p><ul class="opts"><li><button type="button" class="opt">La estira para llenar la caja</button></li><li><button type="button" class="opt" data-ok>La recorta para llenar la caja sin deformarla</button></li><li><button type="button" class="opt">La muestra entera con bandas</button></li><li><button type="button" class="opt">La oculta</button></li></ul><p class="explain" hidden><code>cover</code> mantiene la proporción y recorta lo que sobra; <code>contain</code> la muestra completa.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="css-04">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../03-color-y-texto/ejercicio.html"><small>← Anterior</small>Ejercicio: Color, unidades y tipografía</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de CSS · Lección 4 · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&title=%5BError%5D%20Lecci%C3%B3n%204%3A%20La%20caja%20y%20el%20flujo%20del%20documento%20%C2%B7%20Curso%20de%20HTML&pagina=https%3A//cacg-code.github.io/PRACTICAS-HTML/css/04-caja-y-flujo/" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

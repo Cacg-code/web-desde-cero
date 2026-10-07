@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ejercicio · La caja y el flujo del documento · Curso de HTML</title>
+  <meta name="description" content="Ejercicio práctico de: La caja y el flujo del documento.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/css/04-caja-y-flujo/ejercicio.html">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Ejercicio · La caja y el flujo del documento · Curso de HTML">
+  <meta property="og:description" content="Ejercicio práctico de: La caja y el flujo del documento.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/css/04-caja-y-flujo/ejercicio.html">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de CSS</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap" id="contenido" style="max-width:820px;padding-top:2rem;padding-bottom:3rem">
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de CSS</a> › <a href="./">Lección 4</a> › Ejercicio</div>
+        <h1>Ejercicio: La caja y el flujo del documento</h1>
+        <ul class="meta"><li>⏱ 30 minutos</li><li>📶 Nivel: principiante</li></ul>
+      </header>
+
+      <h2>Objetivo</h2>
+      <p>Construir una tarjeta de producto aplicando el modelo de caja: box-sizing, márgenes, relleno, bordes, display, overflow y proporciones.</p>
+
+      <h3>La página de partida</h3>
+      <p>Este es el HTML de tu página. <strong>No lo modifiques</strong>: escribe solo el CSS.</p>
+<div class="code">
+  <div class="code-head"><span>pagina.html</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">&lt;div</span> <span class="tk-attr">class</span>=<span class="tk-val">"pagina"</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;header</span> <span class="tk-attr">class</span>=<span class="tk-val">"cabecera"</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;h1</span><span class="tk-tag">&gt;</span>Tienda de plantas<span class="tk-tag">&lt;/h1</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;/header</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;section</span> <span class="tk-attr">class</span>=<span class="tk-val">"tarjeta"</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;img</span> <span class="tk-attr">class</span>=<span class="tk-val">"foto"</span> <span class="tk-attr">src</span>=<span class="tk-val">"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300'%3E%3Crect width='400' height='300' fill='%234f46e5'/%3E%3C/svg%3E"</span> <span class="tk-attr">alt</span>=<span class="tk-val">"Imagen de ejemplo"</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;h2</span> <span class="tk-attr">class</span>=<span class="tk-val">"titulo"</span><span class="tk-tag">&gt;</span>Monstera<span class="tk-tag">&lt;/h2</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;p</span> <span class="tk-attr">class</span>=<span class="tk-val">"texto"</span><span class="tk-tag">&gt;</span>Una planta de interior fácil de cuidar, con hojas grandes y muy decorativas.<span class="tk-tag">&lt;/p</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;span</span> <span class="tk-attr">class</span>=<span class="tk-val">"etiqueta"</span><span class="tk-tag">&gt;</span>Interior<span class="tk-tag">&lt;/span</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;span</span> <span class="tk-attr">class</span>=<span class="tk-val">"etiqueta"</span><span class="tk-tag">&gt;</span>Fácil<span class="tk-tag">&lt;/span</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;a</span> <span class="tk-attr">class</span>=<span class="tk-val">"boton"</span> <span class="tk-attr">href</span>=<span class="tk-val">"#"</span><span class="tk-tag">&gt;</span>Comprar<span class="tk-tag">&lt;/a</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;/section</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;/div</span><span class="tk-tag">&gt;</span></code></pre>
+</div>
+<div class="playground">
+  <div class="pg-head"><span>✏️ Prueba tu CSS aquí (opcional)</span><button type="button" data-reset>Restablecer</button></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;style&gt;
+  /* escribe tu CSS */
+&lt;/style&gt;
+&lt;div class="pagina"&gt;
+  &lt;header class="cabecera"&gt;&lt;h1&gt;Tienda de plantas&lt;/h1&gt;&lt;/header&gt;
+  &lt;section class="tarjeta"&gt;
+    &lt;img class="foto" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300'%3E%3Crect width='400' height='300' fill='%234f46e5'/%3E%3C/svg%3E" alt="Imagen de ejemplo"&gt;
+    &lt;h2 class="titulo"&gt;Monstera&lt;/h2&gt;
+    &lt;p class="texto"&gt;Una planta de interior fácil de cuidar, con hojas grandes y muy decorativas.&lt;/p&gt;
+    &lt;span class="etiqueta"&gt;Interior&lt;/span&gt;
+    &lt;span class="etiqueta"&gt;Fácil&lt;/span&gt;
+    &lt;a class="boton" href="#"&gt;Comprar&lt;/a&gt;
+  &lt;/section&gt;
+&lt;/div&gt;</textarea></div>
+    <div><label>Resultado</label><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div>
+  </div>
+</div>
+
+      <h2>Pasos</h2>
+      <p>Marca cada paso a medida que lo completes. Tu avance se guarda en este navegador.</p>
+      <div class="progress" aria-hidden="true"><div></div></div>
+      <p id="progreso-texto" style="color:var(--muted);font-size:.9rem" aria-live="polite"></p>
+      <ul class="checklist"><li><label><input type="checkbox" id="p1"><span>Escribe <code>*, *::before, *::after { box-sizing: border-box; }</code> y <code>body { margin: 0; font-family: system-ui, sans-serif; }</code>.</span></label></li><li><label><input type="checkbox" id="p2"><span>Haz que <code>.pagina</code> tenga <code>max-width: 640px</code> y esté centrada (<code>margin: 0 auto</code>) con <code>padding: 24px</code>.</span></label></li><li><label><input type="checkbox" id="p3"><span>Haz que <code>.tarjeta</code> tenga borde <code>1px solid #dde2ef</code>, <code>border-radius: 16px</code>, <code>padding: 20px</code> y <code>overflow: hidden</code>.</span></label></li><li><label><input type="checkbox" id="p4"><span>Haz que <code>.foto</code> ocupe <code>100%</code> de ancho con <code>aspect-ratio: 16 / 9</code> y <code>object-fit: cover</code>.</span></label></li><li><label><input type="checkbox" id="p5"><span>Haz que <code>.etiqueta</code> sea <code>inline-block</code> con <code>padding: 2px 10px</code>, <code>border-radius: 999px</code>, fondo <code>#eef2ff</code> y <code>margin-right: 6px</code>.</span></label></li><li><label><input type="checkbox" id="p6"><span>Haz que <code>.boton</code> sea <code>inline-block</code> con <code>padding: 10px 20px</code>, fondo <code>#4f46e5</code>, texto blanco, <code>border-radius: 10px</code> y sin subrayado.</span></label></li><li><label><input type="checkbox" id="p7"><span>Separa el título y el texto con <code>margin</code> para que <code>.titulo</code> tenga <code>margin: 16px 0 8px</code> y <code>.texto</code> <code>margin: 0 0 16px</code>.</span></label></li></ul>
+      <details><summary>💡 Pista 1: la foto sale deformada</summary><p>Con <code>width: 100%</code> y <code>aspect-ratio: 16 / 9</code>, añade <code>object-fit: cover</code> para que se recorte en lugar de estirarse. Si tiene un <code>height</code> fijo, quítalo.</p>
+</details>
+<details><summary>💡 Pista 2: `padding` en la etiqueta no hace nada vertical</summary><p>Un <code>span</code> es <code>inline</code> y el relleno vertical no empuja a las líneas vecinas. Con <code>display: inline-block</code> ya se comporta como esperas.</p>
+</details>
+
+      <section class="checker" id="comprobador" aria-labelledby="t-chk">
+        <h2 id="t-chk">🔎 Comprueba tu trabajo</h2>
+        <p>Pega tu código y pulsa <strong>Comprobar</strong>. La revisión ocurre en tu navegador; nada se envía a ningún sitio. Cada punto en rojo incluye una pista.</p>
+        <label for="chk-code">Tu código CSS</label>
+        <textarea id="chk-code" rows="10" spellcheck="false" placeholder="Pega aquí solo tu CSS (sin la etiqueta style)"></textarea>
+        <div class="chk-actions"><button class="btn" type="button" id="chk-run">Comprobar</button><button class="icon-btn" type="button" id="chk-clear">Limpiar</button></div>
+        <p class="chk-sum" id="chk-sum" aria-live="polite"></p>
+        <ul class="chk-list" id="chk-list"></ul>
+        <script type="application/json" id="checks">{"mode": "cssl", "scaffold": "<div class=\"pagina\">\n  <header class=\"cabecera\"><h1>Tienda de plantas<\/h1><\/header>\n  <section class=\"tarjeta\">\n    <img class=\"foto\" src=\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300'%3E%3Crect width='400' height='300' fill='%234f46e5'/%3E%3C/svg%3E\" alt=\"Imagen de ejemplo\">\n    <h2 class=\"titulo\">Monstera<\/h2>\n    <p class=\"texto\">Una planta de interior fácil de cuidar, con hojas grandes y muy decorativas.<\/p>\n    <span class=\"etiqueta\">Interior<\/span>\n    <span class=\"etiqueta\">Fácil<\/span>\n    <a class=\"boton\" href=\"#\">Comprar<\/a>\n  <\/section>\n<\/div>", "width": 800, "checks": [{"d": "Todo usa box-sizing: border-box", "h": "Escribe `*, *::before, *::after { box-sizing: border-box; }`.", "t": "return getComputedStyle(document.querySelector(\".tarjeta\")).boxSizing===\"border-box\" && getComputedStyle(document.querySelector(\".foto\")).boxSizing===\"border-box\""}, {"d": "El `body` no tiene margen", "h": "Escribe `body { margin: 0; }`.", "t": "return getComputedStyle(document.querySelector(\"body\")).marginTop===\"0px\""}, {"d": "`.pagina` mide como máximo 640px, está centrada y tiene padding 24px", "h": "Usa `max-width: 640px; margin: 0 auto; padding: 24px;`.", "t": "var c=getComputedStyle(document.querySelector(\".pagina\"));var r=document.querySelector(\".pagina\").getBoundingClientRect();return c.maxWidth===\"640px\" && c.paddingTop===\"24px\" && Math.abs(r.left-(innerWidth-r.width)/2)<2"}, {"d": "`.tarjeta` tiene borde 1px, radio 16px, padding 20px y overflow hidden", "h": "Revisa las cuatro propiedades de `.tarjeta`.", "t": "var c=getComputedStyle(document.querySelector(\".tarjeta\"));return c.borderTopWidth===\"1px\" && c.borderTopLeftRadius===\"16px\" && c.paddingLeft===\"20px\" && c.overflow===\"hidden\""}, {"d": "`.foto` ocupa todo el ancho con proporción 16/9 y object-fit cover", "h": "Usa `width: 100%; aspect-ratio: 16 / 9; object-fit: cover;`.", "t": "var f=document.querySelector(\".foto\");var c=getComputedStyle(f);var r=f.getBoundingClientRect();var t=document.querySelector(\".tarjeta\");return c.objectFit===\"cover\" && Math.abs(r.width/r.height-16/9)<0.03 && r.width>t.clientWidth-t.clientWidth*0.1"}, {"d": "Las etiquetas son inline-block con relleno 2px 10px y forma de píldora", "h": "Revisa `display`, `padding` y `border-radius`.", "t": "var c=getComputedStyle(document.querySelector(\".etiqueta\"));return c.display===\"inline-block\" && c.paddingTop===\"2px\" && c.paddingLeft===\"10px\" && parseFloat(c.borderTopLeftRadius)>=100 || (c.display===\"inline-block\" && c.paddingTop===\"2px\" && c.paddingLeft===\"10px\" && c.borderTopLeftRadius.indexOf(\"999\")>-1)"}, {"d": "Las etiquetas tienen fondo #eef2ff y margin-right 6px", "h": "Escribe el fondo y el margen derecho.", "t": "return getComputedStyle(document.querySelector(\".etiqueta\")).backgroundColor===\"rgb(238, 242, 255)\" && getComputedStyle(document.querySelector(\".etiqueta\")).marginRight===\"6px\""}, {"d": "El botón es inline-block, azul #4f46e5, texto blanco, sin subrayado", "h": "Revisa `display`, `background`, `color` y `text-decoration`.", "t": "var c=getComputedStyle(document.querySelector(\".boton\"));return c.display===\"inline-block\" && c.backgroundColor===\"rgb(79, 70, 229)\" && c.color===\"rgb(255, 255, 255)\" && /none/.test(c.textDecorationLine) && c.paddingLeft===\"20px\" && c.borderTopLeftRadius===\"10px\""}, {"d": "El título tiene margin 16px 0 8px y el texto 0 0 16px", "h": "Escribe los márgenes de `.titulo` y `.texto`.", "t": "return getComputedStyle(document.querySelector(\".titulo\")).marginTop===\"16px\" && getComputedStyle(document.querySelector(\".titulo\")).marginBottom===\"8px\" && getComputedStyle(document.querySelector(\".texto\")).marginTop===\"0px\" && getComputedStyle(document.querySelector(\".texto\")).marginBottom===\"16px\""}]}</script>
+      </section>
+      <details>
+        <summary>✅ Ver una solución de ejemplo</summary>
+        <p>Intenta resolverlo antes de mirar. Tu versión puede ser distinta y también correcta.</p>
+        <div class="code">
+  <div class="code-head"><span>estilos.css</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-sel">*, *::before, *::after</span> { <span class="tk-attr">box-sizing</span>: <span class="tk-val">border-box</span>; }
+<span class="tk-sel">body</span> { <span class="tk-attr">margin</span>: <span class="tk-val">0</span>; <span class="tk-attr">font-family</span>: <span class="tk-val">system-ui, sans-serif</span>; }
+
+<span class="tk-sel">.pagina</span> {
+  <span class="tk-attr">max-width</span>: <span class="tk-val">640px</span>;
+  <span class="tk-attr">margin</span>: <span class="tk-val">0 auto</span>;
+  <span class="tk-attr">padding</span>: <span class="tk-val">24px</span>;
+}
+
+<span class="tk-sel">.tarjeta</span> {
+  <span class="tk-attr">border</span>: <span class="tk-val">1px solid #dde2ef</span>;
+  <span class="tk-attr">border-radius</span>: <span class="tk-val">16px</span>;
+  <span class="tk-attr">padding</span>: <span class="tk-val">20px</span>;
+  <span class="tk-attr">overflow</span>: <span class="tk-val">hidden</span>;
+}
+
+<span class="tk-sel">.foto</span> {
+  <span class="tk-attr">width</span>: <span class="tk-val">100%</span>;
+  <span class="tk-attr">aspect-ratio</span>: <span class="tk-val">16 / 9</span>;
+  <span class="tk-attr">object-fit</span>: <span class="tk-val">cover</span>;
+}
+
+<span class="tk-sel">.titulo</span> { <span class="tk-attr">margin</span>: <span class="tk-val">16px 0 8px</span>; }
+<span class="tk-sel">.texto</span>  { <span class="tk-attr">margin</span>: <span class="tk-val">0 0 16px</span>; }
+
+<span class="tk-sel">.etiqueta</span> {
+  <span class="tk-attr">display</span>: <span class="tk-val">inline-block</span>;
+  <span class="tk-attr">padding</span>: <span class="tk-val">2px 10px</span>;
+  <span class="tk-attr">border-radius</span>: <span class="tk-val">999px</span>;
+  <span class="tk-attr">background</span>: <span class="tk-val">#eef2ff</span>;
+  <span class="tk-attr">margin-right</span>: <span class="tk-val">6px</span>;
+}
+
+<span class="tk-sel">.boton</span> {
+  <span class="tk-attr">display</span>: <span class="tk-val">inline-block</span>;
+  <span class="tk-attr">padding</span>: <span class="tk-val">10px 20px</span>;
+  <span class="tk-attr">background</span>: <span class="tk-val">#4f46e5</span>;
+  <span class="tk-attr">color</span>: <span class="tk-val">#fff</span>;
+  <span class="tk-attr">border-radius</span>: <span class="tk-val">10px</span>;
+  <span class="tk-attr">text-decoration</span>: <span class="tk-val">none</span>;
+}</code></pre>
+</div>
+
+      </details>
+      <div class="callout consejo">
+<p class="callout-title">💡 🏁 Reto extra (opcional)</p>
+<p>Haz que la tarjeta nunca supere <code>100%</code> del ancho de la pantalla en un celular (prueba el modo dispositivo con <kbd>F12</kbd>) y que la imagen no se desborde.</p>
+</div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="./"><small>← Anterior</small>Volver a lección 4</a>
+        <a class="next" href="../05-posicionamiento/"><small>Siguiente →</small>Posicionamiento y capas</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de CSS · Ejercicio de lección 4 · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&title=%5BError%5D%20Ejercicio%20%C2%B7%20La%20caja%20y%20el%20flujo%20del%20documento%20%C2%B7%20Curso%20de%20HTML&pagina=https%3A//cacg-code.github.io/PRACTICAS-HTML/css/04-caja-y-flujo/ejercicio.html" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

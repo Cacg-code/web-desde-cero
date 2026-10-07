@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Curso de CSS</title>
+  <meta name="description" content="Curso gratuito de CSS en español, del primer estilo al diseño profesional: selectores, caja, Flexbox, Grid, diseño responsivo, animaciones, variables y modo oscuro. Con práctica en vivo y ejercicios que se corrigen solos.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/css/">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Curso de CSS">
+  <meta property="og:description" content="Curso gratuito de CSS en español, del primer estilo al diseño profesional: selectores, caja, Flexbox, Grid, diseño responsivo, animaciones, variables y modo oscuro. Con práctica en vivo y ejercicios que se corrigen solos.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/css/">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="./"><span class="brand-logo">&lt;/&gt;</span> Curso de CSS</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../" style="text-decoration:none">Todos los cursos</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap" id="contenido">
+    <div class="hero-grid">
+      <div class="hero">
+        <span class="eyebrow">Gratis · En español · Nivel 2</span>
+        <h1>CSS a fondo: del primer estilo al diseño profesional</h1>
+        <p>Aprende a dar aspecto, orden y vida a tus páginas. Entenderás por qué un estilo se aplica y otro no, y construirás layouts modernos que se adaptan a cualquier pantalla.</p>
+        <a class="btn" href="01-como-funciona/">Empezar la lección 1</a>
+        <a class="btn secondary" href="#temario">Ver el temario</a>
+        <div class="avance" id="avance"></div>
+      </div>
+      <div class="hero-demo" role="group" aria-label="Demostración: código que se escribe y su resultado">
+        <div class="win-bar"><i></i><i></i><i></i></div>
+        <pre id="typing" data-lines='["<h1 style=\"color:#4f46e5\">Hola, CSS</h1>", "<p style=\"font-size:1.25rem\">El estilo da vida a la página.</p>", "<button style=\"background:#16a34a;color:#fff;border:0;padding:.55rem 1.1rem;border-radius:10px\">Un botón</button>"]'></pre>
+        <div class="hero-out" id="typing-out"></div>
+      </div>
+    </div>
+
+    <section class="features" aria-label="Qué incluye el curso">
+      <div class="feature"><div class="emoji">📝</div><h2>Apuntes claros</h2><p>Explicaciones con recuadros de nota, advertencia y consejo, y un glosario en cada lección.</p></div>
+      <div class="feature"><div class="emoji">✏️</div><h2>Práctica en vivo</h2><p>Editores dentro de la lección: cambias el código y ves el resultado al instante.</p></div>
+      <div class="feature"><div class="emoji">✅</div><h2>Ejercicios que se corrigen solos</h2><p>Pegas tu solución y el comprobador te dice punto por punto qué cumples.</p></div>
+      <div class="feature"><div class="emoji">🧠</div><h2>Autoevaluación</h2><p>Preguntas con respuesta inmediata y explicación al final de cada lección.</p></div>
+    </section>
+
+    <div class="two-col">
+      <section><h2 class="section-title" style="margin-top:0">Antes de empezar</h2><ul class="checks-list"><li>Haber hecho el <a href="../html/">curso de HTML</a> (o saber estructurar una página con etiquetas semánticas).</li><li>Un editor de código y un navegador moderno.</li><li>Ganas de probar y equivocarte: los editores en vivo están para eso.</li></ul></section>
+      <section><h2 class="section-title" style="margin-top:0">Lo que construirás</h2><ul class="checks-list"><li>Una tarjeta de producto con sombras y degradados.</li><li>Layouts reales con Flexbox y Grid.</li><li>Una galería que se adapta sola a cualquier pantalla.</li><li>Un tema claro y oscuro con variables.</li><li>Una **landing page completa** y responsiva como proyecto final.</li></ul></section>
+    </div>
+
+    <h2 class="section-title" id="temario">Temario · ≈ 12 horas</h2>
+    <ul class="lessons">
+      <li><a class="lesson-card" href="01-como-funciona/" data-leccion="css-01">
+        <span class="lesson-num">LECCIÓN 01</span><h3>Cómo funciona CSS</h3>
+        <p>La cascada, la herencia y cómo depurar con las herramientas del navegador.</p><span class="tag open">Disponible</span></a></li>
+      <li><a class="lesson-card" href="02-selectores/" data-leccion="css-02">
+        <span class="lesson-num">LECCIÓN 02</span><h3>Selectores y especificidad</h3>
+        <p>Combinadores, atributos, pseudoclases, pseudoelementos y especificidad.</p><span class="tag open">Disponible</span></a></li>
+      <li><a class="lesson-card" href="03-color-y-texto/" data-leccion="css-03">
+        <span class="lesson-num">LECCIÓN 03</span><h3>Color, unidades y tipografía</h3>
+        <p>Colores HSL, unidades, tipografía, fuentes web y texto fluido con clamp().</p><span class="tag open">Disponible</span></a></li>
+      <li><a class="lesson-card" href="04-caja-y-flujo/" data-leccion="css-04">
+        <span class="lesson-num">LECCIÓN 04</span><h3>La caja y el flujo del documento</h3>
+        <p>box-sizing, márgenes, relleno, bordes, display, overflow y proporciones.</p><span class="tag open">Disponible</span></a></li>
+      <li><a class="lesson-card" href="05-posicionamiento/" data-leccion="css-05">
+        <span class="lesson-num">LECCIÓN 05</span><h3>Posicionamiento y capas</h3>
+        <p>relative, absolute, fixed, sticky, z-index y un modal completo.</p><span class="tag open">Disponible</span></a></li>
+      <li><a class="lesson-card" href="06-flexbox/" data-leccion="css-06">
+        <span class="lesson-num">LECCIÓN 06</span><h3>Flexbox</h3>
+        <p>Contenedor, ítems, ejes, alineación y los patrones de todos los días.</p><span class="tag open">Disponible</span></a></li>
+      <li><a class="lesson-card" href="07-grid/" data-leccion="css-07">
+        <span class="lesson-num">LECCIÓN 07</span><h3>CSS Grid</h3>
+        <p>Columnas, fr, minmax, auto-fit, áreas con nombre y formularios alineados.</p><span class="tag open">Disponible</span></a></li>
+      <li><a class="lesson-card" href="08-responsivo/" data-leccion="css-08">
+        <span class="lesson-num">LECCIÓN 08</span><h3>Diseño responsivo</h3>
+        <p>Mobile-first, media queries, valores fluidos y container queries.</p><span class="tag open">Disponible</span></a></li>
+      <li><a class="lesson-card" href="09-fondos-y-efectos/" data-leccion="css-09">
+        <span class="lesson-num">LECCIÓN 09</span><h3>Fondos, bordes, sombras y degradados</h3>
+        <p>Degradados, sombras, filtros, efecto cristal y texto con degradado.</p><span class="tag open">Disponible</span></a></li>
+      <li><a class="lesson-card" href="10-animaciones/" data-leccion="css-10">
+        <span class="lesson-num">LECCIÓN 10</span><h3>Transiciones y animaciones</h3>
+        <p>Transiciones, transformaciones, @keyframes y movimiento accesible.</p><span class="tag open">Disponible</span></a></li>
+      <li><a class="lesson-card" href="11-variables-y-temas/" data-leccion="css-11">
+        <span class="lesson-num">LECCIÓN 11</span><h3>Variables, temas y organización</h3>
+        <p>Variables, modo oscuro, color-mix(), BEM, @layer y anidamiento.</p><span class="tag open">Disponible</span></a></li>
+      <li><a class="lesson-card" href="proyecto-landing/" data-leccion="css-P">
+        <span class="lesson-num">PROYECTO FINAL</span><h3>Proyecto: landing page responsiva</h3>
+        <p>Una landing page completa y responsiva, con modo oscuro y accesibilidad.</p><span class="tag open">Disponible</span></a></li>
+    </ul>
+  </main>
+
+  <footer class="site-footer">Curso de CSS · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&title=%5BError%5D%20Curso%20de%20CSS&pagina=https%3A//cacg-code.github.io/PRACTICAS-HTML/css/" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../assets/curso.js"></script>
+</body>
+</html>

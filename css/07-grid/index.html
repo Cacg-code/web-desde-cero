@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lección 7: CSS Grid · Curso de HTML</title>
+  <meta name="description" content="CSS Grid: columnas y filas, fr, minmax, auto-fit, áreas con nombre, alineación y formularios alineados.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/css/07-grid/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Lección 7: CSS Grid · Curso de HTML">
+  <meta property="og:description" content="CSS Grid: columnas y filas, fr, minmax, auto-fit, áreas con nombre, alineación y formularios alineados.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/css/07-grid/">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de CSS</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap lesson-layout" id="contenido">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#idea">Grid frente a Flexbox</a></li><li><a href="#columnas">Definir columnas y filas</a></li><li><a href="#responsivo">Cuadrículas que se adaptan solas</a></li><li><a href="#colocacion">Colocar ítems: líneas y span</a></li><li><a href="#areas">Layout con áreas con nombre</a></li><li><a href="#alineacion">Alineación en Grid</a></li><li><a href="#extras">Algunas ideas más</a></li><li><a href="#errores">Errores frecuentes</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de CSS</a> › Lección 7</div>
+        <h1>CSS Grid</h1>
+        <ul class="meta"><li>⏱ 45 minutos</li><li>📶 Nivel: principiante</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Definir cuadrículas con <code>grid-template-columns</code>, <code>fr</code>, <code>repeat()</code> y <code>minmax()</code>.</li><li>Crear una galería adaptable sin media queries.</li><li>Dibujar el layout de una página con <code>grid-template-areas</code>.</li><li>Alinear celdas e ítems y maquetar formularios.</li></ul>
+</div>
+
+<h2 id="idea"><span class="n">1.</span>Grid frente a Flexbox</h2>
+<p><strong>CSS Grid</strong> es el sistema de layout para <strong>dos dimensiones</strong>: filas <strong>y</strong> columnas a la vez. Donde Flexbox coloca los ítems en una línea, Grid dibuja una <strong>cuadrícula</strong> y tú decides qué ocupa cada celda.</p>
+<div class="table-wrap"><table>
+<thead><tr><th><span class="sr-only">Aspecto</span></th><th>Flexbox</th><th>Grid</th></tr></thead>
+<tbody><tr><td>Dimensiones</td><td>Una (fila <strong>o</strong> columna)</td><td>Dos (filas <strong>y</strong> columnas)</td></tr><tr><td>Parte de…</td><td>El contenido (los ítems deciden)</td><td>El diseño (la cuadrícula decide)</td></tr><tr><td>Ideal para</td><td>Barras, grupos de botones, tarjetas en fila</td><td>Layout de página, galerías, formularios alineados</td></tr></tbody>
+</table></div>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · No es uno u otro</p>
+<p>Se usan <strong>juntos</strong>: Grid para la estructura general de la página y Flexbox para alinear el contenido dentro de cada celda. Pregúntate: «¿necesito controlar filas <strong>y</strong> columnas? → Grid. ¿Solo una línea? → Flexbox».</p>
+</div>
+<p>Igual que en Flexbox, hay un <strong>contenedor</strong> (<code>display: grid</code>) y <strong>ítems</strong> (sus hijos directos).</p>
+
+<h2 id="columnas"><span class="n">2.</span>Definir columnas y filas</h2>
+<div class="code">
+  <div class="code-head"><span>Tres columnas</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-sel">.cuadricula</span> {
+  <span class="tk-attr">display</span>: <span class="tk-val">grid</span>;
+  <span class="tk-attr">grid-template-columns</span>: <span class="tk-val">200px 1fr 1fr</span>;   <span class="tk-com">/* una fija y dos flexibles */</span>
+  <span class="tk-attr">gap</span>: <span class="tk-val">16px</span>;
+}</code></pre>
+</div>
+<div class="table-wrap"><table>
+<thead><tr><th>Concepto</th><th>Significa</th><th>Ejemplo</th></tr></thead>
+<tbody><tr><td><code>fr</code></td><td>Una <strong>fracción</strong> del espacio libre</td><td><code>1fr 2fr</code> → la segunda es el doble</td></tr><tr><td><code>repeat(n, tamaño)</code></td><td>Repite una definición</td><td><code>repeat(3, 1fr)</code> = <code>1fr 1fr 1fr</code></td></tr><tr><td><code>minmax(min, max)</code></td><td>Un tamaño entre un mínimo y un máximo</td><td><code>minmax(200px, 1fr)</code></td></tr><tr><td><code>auto</code></td><td>Lo que necesite el contenido</td><td><code>auto 1fr auto</code></td></tr><tr><td><code>gap</code></td><td>Espacio entre filas y columnas</td><td><code>gap: 16px</code>, <code>gap: 12px 24px</code></td></tr><tr><td><code>grid-template-rows</code></td><td>Altura de las filas</td><td><code>80px 1fr</code></td></tr><tr><td><code>grid-auto-rows</code></td><td>Altura de las filas <strong>creadas automáticamente</strong></td><td><code>grid-auto-rows: minmax(100px, auto)</code></td></tr></tbody>
+</table></div>
+<div class="playground">
+  <div class="pg-head"><span>✏️ Tu primera cuadrícula</span><button type="button" data-reset>Restablecer</button></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;style&gt;
+  .cuadricula { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .cuadricula div { background: #4f46e5; color: #fff; padding: 20px; border-radius: 8px; text-align: center; font-weight: 700; }
+&lt;/style&gt;
+&lt;div class="cuadricula"&gt;
+  &lt;div&gt;1&lt;/div&gt;&lt;div&gt;2&lt;/div&gt;&lt;div&gt;3&lt;/div&gt;&lt;div&gt;4&lt;/div&gt;&lt;div&gt;5&lt;/div&gt;&lt;div&gt;6&lt;/div&gt;&lt;div&gt;7&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Cambia &lt;code&gt;repeat(3, 1fr)&lt;/code&gt; por &lt;code&gt;1fr 2fr 1fr&lt;/code&gt; o por &lt;code&gt;100px 1fr&lt;/code&gt;.&lt;/p&gt;</textarea></div>
+    <div><label>Resultado</label><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div>
+  </div>
+</div>
+
+<h2 id="responsivo"><span class="n">3.</span>Cuadrículas que se adaptan solas</h2>
+<p>La combinación más útil de Grid: columnas <strong>tan anchas como puedan, pero nunca menos de 200px</strong>, y tantas como quepan. Sin media queries:</p>
+<div class="code">
+  <div class="code-head"><span>La galería responsiva</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-sel">.galeria</span> {
+  <span class="tk-attr">display</span>: <span class="tk-val">grid</span>;
+  <span class="tk-attr">grid-template-columns</span>: <span class="tk-val">repeat(auto-fit, minmax(200px, 1fr))</span>;
+  <span class="tk-attr">gap</span>: <span class="tk-val">16px</span>;
+}</code></pre>
+</div>
+<ul><li><code>auto-fit</code> crea <strong>todas las columnas que caben</strong> y estira las que sobran.</li><li><code>auto-fill</code> también las crea, pero <strong>conserva los huecos vacíos</strong> (las columnas no se estiran).</li><li><code>minmax(200px, 1fr)</code>: mínimo 200px, máximo un reparto igual del espacio.</li></ul>
+<div class="playground stacked" data-widths>
+  <div class="pg-head"><span>✏️ Galería adaptable (prueba los anchos)</span><span class="pg-actions"><button type="button" data-w="375">📱 375</button><button type="button" data-w="768">📟 768</button><button type="button" data-w="100%">🖥 Completo</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;style&gt;
+  body { margin: 0; padding: 12px; }
+  .galeria { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 10px; list-style: none; padding: 0; }
+  .galeria li { background: #4f46e5; color: #fff; aspect-ratio: 1; display: grid; place-items: center; border-radius: 10px; font-weight: 700; }
+&lt;/style&gt;
+&lt;ul class="galeria"&gt;&lt;li&gt;1&lt;/li&gt;&lt;li&gt;2&lt;/li&gt;&lt;li&gt;3&lt;/li&gt;&lt;li&gt;4&lt;/li&gt;&lt;li&gt;5&lt;/li&gt;&lt;li&gt;6&lt;/li&gt;&lt;li&gt;7&lt;/li&gt;&lt;li&gt;8&lt;/li&gt;&lt;/ul&gt;</textarea></div>
+    <div><label>Resultado · ancho: <span class="pg-wlabel">completo</span></label><div class="pg-frame"><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div></div>
+  </div>
+</div>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · Una línea de CSS, muchas pantallas</p>
+<p>Esta sola regla sustituye a varias media queries: con 375px verás 2 columnas; con 768px, 5 o 6; con pantalla completa, aún más. Es probablemente el patrón más valioso de Grid.</p>
+</div>
+
+<h2 id="colocacion"><span class="n">4.</span>Colocar ítems: líneas y span</h2>
+<p>Las líneas de la cuadrícula se <strong>numeran desde 1</strong>. Un ítem puede ocupar de una línea a otra:</p>
+<div class="code">
+  <div class="code-head"><span>Un ítem que ocupa varias celdas</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-sel">.destacado</span> {
+  <span class="tk-attr">grid-column</span>: <span class="tk-val">1 / 3</span>;      <span class="tk-com">/* de la línea 1 a la 3 (2 columnas) */</span>
+  <span class="tk-attr">grid-row</span>: <span class="tk-val">span 2</span>;        <span class="tk-com">/* ocupa 2 filas */</span>
+}
+<span class="tk-sel">.ancho</span> { <span class="tk-attr">grid-column</span>: <span class="tk-val">1 / -1</span>; }     <span class="tk-com">/* de la primera a la última línea: toda la fila */</span>
+<span class="tk-sel">.doble</span> { <span class="tk-attr">grid-column</span>: <span class="tk-val">span 2</span>; }     <span class="tk-com">/* ocupa 2 columnas desde donde esté */</span></code></pre>
+</div>
+<div class="playground">
+  <div class="pg-head"><span>✏️ Ítems que se extienden</span><button type="button" data-reset>Restablecer</button></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;style&gt;
+  .g { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .g div { background: #4f46e5; color: #fff; padding: 14px; border-radius: 8px; text-align: center; }
+  .grande { grid-column: span 2; grid-row: span 2; background: #e11d48 !important; }
+  .toda { grid-column: 1 / -1; background: #16a34a !important; }
+&lt;/style&gt;
+&lt;div class="g"&gt;
+  &lt;div class="grande"&gt;grande (2×2)&lt;/div&gt;&lt;div&gt;2&lt;/div&gt;&lt;div&gt;3&lt;/div&gt;&lt;div&gt;4&lt;/div&gt;&lt;div&gt;5&lt;/div&gt;
+  &lt;div class="toda"&gt;toda la fila&lt;/div&gt;&lt;div&gt;7&lt;/div&gt;&lt;div&gt;8&lt;/div&gt;
+&lt;/div&gt;</textarea></div>
+    <div><label>Resultado</label><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div>
+  </div>
+</div>
+
+<h2 id="areas"><span class="n">5.</span>Layout con áreas con nombre</h2>
+<p>La forma más legible de maquetar una página: <strong>dibujas el diseño con texto</strong> y asignas cada elemento a su zona.</p>
+<div class="code">
+  <div class="code-head"><span>Un layout de página completo</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-sel">.pagina</span> {
+  <span class="tk-attr">display</span>: <span class="tk-val">grid</span>;
+  <span class="tk-attr">grid-template-columns</span>: <span class="tk-val">200px 1fr 160px</span>;
+  <span class="tk-attr">grid-template-rows</span>: <span class="tk-val">auto 1fr auto</span>;
+  <span class="tk-attr">grid-template-areas</span>:
+    <span class="tk-val">"cab  cab   cab"</span>
+    "lat  main  extra"
+    "pie  pie   pie";
+  <span class="tk-attr">gap</span>: <span class="tk-val">12px</span>;
+  <span class="tk-attr">min-height</span>: <span class="tk-val">100dvh</span>;
+}
+<span class="tk-sel">.cab</span>    { <span class="tk-attr">grid-area</span>: <span class="tk-val">cab</span>; }
+<span class="tk-sel">.lateral</span>{ <span class="tk-attr">grid-area</span>: <span class="tk-val">lat</span>; }
+<span class="tk-sel">.principal</span> { <span class="tk-attr">grid-area</span>: <span class="tk-val">main</span>; }
+<span class="tk-sel">.extra</span>  { <span class="tk-attr">grid-area</span>: <span class="tk-val">extra</span>; }
+<span class="tk-sel">.pie</span>    { <span class="tk-attr">grid-area</span>: <span class="tk-val">pie</span>; }</code></pre>
+</div>
+<div class="playground">
+  <div class="pg-head"><span>✏️ El layout «Santo Grial»</span><button type="button" data-reset>Restablecer</button></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;style&gt;
+  .pagina { display: grid; grid-template-columns: 120px 1fr 100px; grid-template-rows: auto 1fr auto; gap: 8px; min-height: 280px;
+            grid-template-areas: "cab cab cab" "lat main extra" "pie pie pie"; }
+  .pagina &gt; * { padding: 10px; border-radius: 8px; color: #fff; font-weight: 700; }
+  .cab { grid-area: cab; background: #4f46e5; } .lat { grid-area: lat; background: #0ea5e9; }
+  .main { grid-area: main; background: #16a34a; } .extra { grid-area: extra; background: #d97706; }
+  .pie { grid-area: pie; background: #475569; }
+&lt;/style&gt;
+&lt;div class="pagina"&gt;&lt;div class="cab"&gt;Cabecera&lt;/div&gt;&lt;div class="lat"&gt;Menú&lt;/div&gt;&lt;div class="main"&gt;Principal&lt;/div&gt;&lt;div class="extra"&gt;Extra&lt;/div&gt;&lt;div class="pie"&gt;Pie&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Reordena las áreas del texto &lt;code&gt;grid-template-areas&lt;/code&gt; y mira cómo se mueve todo.&lt;/p&gt;</textarea></div>
+    <div><label>Resultado</label><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div>
+  </div>
+</div>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Cambiar el diseño en móvil es trivial</p>
+<p>Con áreas con nombre, una media query puede <strong>redibujar</strong> el layout en una sola declaración: en pantallas pequeñas, <code>grid-template-areas: "cab" "main" "lat" "extra" "pie";</code> y <code>grid-template-columns: 1fr;</code>.</p>
+</div>
+
+<h2 id="alineacion"><span class="n">6.</span>Alineación en Grid</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Propiedad</th><th>Dónde actúa</th><th>Valores</th></tr></thead>
+<tbody><tr><td><code>justify-items</code></td><td>Dentro de <strong>cada celda</strong>, horizontal</td><td><code>start</code>, <code>center</code>, <code>end</code>, <code>stretch</code></td></tr><tr><td><code>align-items</code></td><td>Dentro de <strong>cada celda</strong>, vertical</td><td>Igual</td></tr><tr><td><code>place-items</code></td><td>Atajo de las dos anteriores</td><td><code>place-items: center</code></td></tr><tr><td><code>justify-content</code></td><td>La cuadrícula <strong>dentro</strong> del contenedor (si sobra espacio)</td><td><code>start</code>, <code>center</code>, <code>space-between</code>…</td></tr><tr><td><code>align-content</code></td><td>Igual en vertical</td><td></td></tr><tr><td><code>justify-self</code> / <code>align-self</code> / <code>place-self</code></td><td>Un <strong>solo</strong> ítem</td><td></td></tr></tbody>
+</table></div>
+<div class="code">
+  <div class="code-head"><span>Centrar con una línea</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-sel">.centro</span> { <span class="tk-attr">display</span>: <span class="tk-val">grid</span>; <span class="tk-attr">place-items</span>: <span class="tk-val">center</span>; <span class="tk-attr">min-height</span>: <span class="tk-val">100dvh</span>; }</code></pre>
+</div>
+<h3>Formularios alineados</h3>
+<p>Una cuadrícula de dos columnas alinea etiquetas y campos <strong>perfectamente</strong>, algo muy difícil con otros métodos:</p>
+<div class="playground">
+  <div class="pg-head"><span>✏️ Formulario alineado</span><button type="button" data-reset>Restablecer</button></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;style&gt;
+  .form { display: grid; grid-template-columns: max-content 1fr; gap: 10px 14px; align-items: center; max-width: 380px; }
+  .form input { padding: 6px; border: 1px solid #94a3b8; border-radius: 6px; }
+  .form button { grid-column: 2; justify-self: start; padding: 8px 16px; }
+&lt;/style&gt;
+&lt;div class="form"&gt;
+  &lt;label for="n"&gt;Nombre&lt;/label&gt;&lt;input id="n"&gt;
+  &lt;label for="c"&gt;Correo electrónico&lt;/label&gt;&lt;input id="c"&gt;
+  &lt;label for="t"&gt;Teléfono&lt;/label&gt;&lt;input id="t"&gt;
+  &lt;button&gt;Enviar&lt;/button&gt;
+&lt;/div&gt;</textarea></div>
+    <div><label>Resultado</label><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div>
+  </div>
+</div>
+
+<h2 id="extras"><span class="n">7.</span>Algunas ideas más</h2>
+<ul><li><strong><code>grid-auto-flow: dense</code>:</strong> rellena huecos con los ítems siguientes (útil en galerías con ítems de distintos tamaños).</li><li><strong><code>subgrid</code>:</strong> permite que una cuadrícula hija use las columnas de la cuadrícula padre, para alinear contenidos entre tarjetas.</li><li><strong>Líneas con nombre:</strong> <code>grid-template-columns: [inicio] 1fr [medio] 2fr [fin]</code>.</li><li><strong>Grid anidado:</strong> un ítem de la cuadrícula puede ser a su vez otra cuadrícula (o un contenedor flex).</li><li><strong>DevTools:</strong> en Chrome y Firefox, al inspeccionar un contenedor Grid, aparece un icono para <strong>dibujar la cuadrícula</strong> y numerar las líneas.</li></ul>
+<div class="callout ejemplo">
+<p class="callout-title">🔍 Ejemplo · Grid y Flex juntos</p>
+<p>Una tarjeta típica: la <strong>página</strong> es una cuadrícula de tarjetas (Grid); <strong>dentro de cada tarjeta</strong>, el pie con precio y botón está en una fila alineada (Flexbox).</p>
+</div>
+
+<h2 id="errores"><span class="n">8.</span>Errores frecuentes</h2>
+<ul><li><strong>Esperar que Grid actúe sobre los nietos:</strong> solo los hijos directos son ítems.</li><li><strong>Contar mal las líneas:</strong> hay una línea más que columnas (3 columnas → líneas 1 a 4).</li><li><strong>Olvidar <code>gap</code></strong> y usar márgenes en cada ítem.</li><li><strong>Usar <code>px</code> fijos en todas las columnas</strong> y perder la adaptabilidad; combina <code>fr</code>, <code>minmax()</code> y <code>auto-fit</code>.</li><li><strong>Confundir <code>auto-fit</code> con <code>auto-fill</code>.</strong></li><li><strong>Escribir un <code>grid-template-areas</code> con filas de distinto número de celdas:</strong> no es válido.</li><li><strong>Usar Grid para algo de una sola dimensión</strong> que Flexbox resuelve con menos código.</li></ul>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li>Grid maqueta en <strong>dos dimensiones</strong>; Flexbox en una. Se usan juntos.</li><li><code>grid-template-columns</code> / <code>-rows</code> definen la cuadrícula; <code>fr</code>, <code>repeat()</code> y <code>minmax()</code> la hacen flexible.</li><li><code>repeat(auto-fit, minmax(200px, 1fr))</code> crea una galería adaptable sin media queries.</li><li>Las líneas se numeran desde 1; <code>grid-column: 1 / -1</code> ocupa toda la fila; <code>span 2</code> ocupa 2 celdas.</li><li><code>grid-template-areas</code> permite dibujar el layout con texto y rediseñarlo fácilmente en móvil.</li><li><code>place-items: center</code> centra el contenido de cada celda; <code>justify-self</code>/<code>align-self</code> actúan sobre un ítem.</li><li>Una cuadrícula de dos columnas (<code>max-content 1fr</code>) alinea formularios.</li><li><code>gap</code> separa filas y columnas sin márgenes.</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">9.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td>Cuadrícula (grid)</td><td>Layout en filas y columnas.</td></tr><tr><td><code>fr</code></td><td>Unidad que reparte el espacio libre en fracciones.</td></tr><tr><td><code>minmax()</code></td><td>Función que define un tamaño mínimo y uno máximo.</td></tr><tr><td><code>auto-fit</code> / <code>auto-fill</code></td><td>Crean tantas columnas como quepan al usar <code>repeat()</code>.</td></tr><tr><td>Línea de la cuadrícula</td><td>Cada separación numerada entre columnas o filas.</td></tr><tr><td>Área con nombre</td><td>Zona de la cuadrícula identificada con <code>grid-template-areas</code>.</td></tr><tr><td><code>span</code></td><td>Palabra clave para ocupar varias celdas.</td></tr><tr><td><code>subgrid</code></td><td>Cuadrícula que hereda las líneas de la cuadrícula padre.</td></tr></tbody>
+</table></div>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>¿Cuándo conviene Grid en lugar de Flexbox?</p><ul class="opts"><li><button type="button" class="opt">Cuando solo hay una fila de botones</button></li><li><button type="button" class="opt" data-ok>Cuando necesitas controlar filas y columnas a la vez</button></li><li><button type="button" class="opt">Nunca, es antiguo</button></li><li><button type="button" class="opt">Solo para imágenes</button></li></ul><p class="explain" hidden>Grid es bidimensional; Flexbox, unidimensional.</p></div>
+<div class="quiz-q"><p>¿Qué significa <code>grid-template-columns: 1fr 2fr</code>?</p><ul class="opts"><li><button type="button" class="opt">Dos columnas de 1px y 2px</button></li><li><button type="button" class="opt" data-ok>Dos columnas: la segunda el doble de ancha que la primera</button></li><li><button type="button" class="opt">Una columna dividida en dos</button></li><li><button type="button" class="opt">Una fila y dos columnas</button></li></ul><p class="explain" hidden><code>fr</code> reparte el espacio libre en proporción: 1 parte y 2 partes.</p></div>
+<div class="quiz-q"><p>¿Qué hace <code>repeat(auto-fit, minmax(200px, 1fr))</code>?</p><ul class="opts"><li><button type="button" class="opt">Crea exactamente 200 columnas</button></li><li><button type="button" class="opt" data-ok>Crea tantas columnas de al menos 200px como quepan y las estira</button></li><li><button type="button" class="opt">Fija el ancho en 200px</button></li><li><button type="button" class="opt">Solo funciona en móvil</button></li></ul><p class="explain" hidden>Es el patrón de galería adaptable: columnas flexibles que se ajustan solas.</p></div>
+<div class="quiz-q"><p>Una cuadrícula tiene 3 columnas. ¿Cuántas líneas verticales tiene?</p><ul class="opts"><li><button type="button" class="opt">3</button></li><li><button type="button" class="opt" data-ok>4</button></li><li><button type="button" class="opt">2</button></li><li><button type="button" class="opt">6</button></li></ul><p class="explain" hidden>Siempre hay una línea más que columnas: 1, 2, 3 y 4.</p></div>
+<div class="quiz-q"><p>¿Qué hace <code>grid-column: 1 / -1</code>?</p><ul class="opts"><li><button type="button" class="opt">Oculta la primera columna</button></li><li><button type="button" class="opt" data-ok>Hace que el ítem ocupe desde la primera hasta la última línea (toda la fila)</button></li><li><button type="button" class="opt">Invierte las columnas</button></li><li><button type="button" class="opt">Crea una columna negativa</button></li></ul><p class="explain" hidden><code>-1</code> es la última línea: el ítem ocupa todo el ancho de la cuadrícula.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="css-07">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../06-flexbox/ejercicio.html"><small>← Anterior</small>Ejercicio: Flexbox</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de CSS · Lección 7 · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&title=%5BError%5D%20Lecci%C3%B3n%207%3A%20CSS%20Grid%20%C2%B7%20Curso%20de%20HTML&pagina=https%3A//cacg-code.github.io/PRACTICAS-HTML/css/07-grid/" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

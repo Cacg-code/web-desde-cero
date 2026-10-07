@@ -160,8 +160,10 @@
   var typing = document.getElementById('typing'), out = document.getElementById('typing-out');
   if (typing && out) {
     var lines = JSON.parse(typing.getAttribute('data-lines'));
+    var outs = typing.hasAttribute('data-outs') ? JSON.parse(typing.getAttribute('data-outs')) : null;
     var fin = function () { typing.classList.remove('caret'); };
-    if (reduce) { typing.textContent = lines.join('\n'); out.innerHTML = lines.join(''); }
+    var logLine = function (t) { var d = document.createElement('div'); d.className = 'hero-log'; d.textContent = t; out.appendChild(d); };
+    if (reduce) { typing.textContent = lines.join('\n'); if (outs) { out.innerHTML = ''; outs.forEach(function (t) { if (t) logLine(t); }); } else out.innerHTML = lines.join(''); }
     else {
       typing.textContent = ''; out.innerHTML = ''; typing.classList.add('caret');
       var li = 0, ci = 0;
@@ -169,7 +171,7 @@
         if (li >= lines.length) return fin();
         var ln = lines[li];
         if (ci < ln.length) { typing.textContent += ln[ci++]; setTimeout(step, 28); }
-        else { out.insertAdjacentHTML('beforeend', ln); typing.textContent += '\n'; li++; ci = 0; setTimeout(step, 450); }
+        else { if (outs) { if (outs[li]) logLine(outs[li]); } else out.insertAdjacentHTML('beforeend', ln); typing.textContent += '\n'; li++; ci = 0; setTimeout(step, 450); }
       };
       setTimeout(step, 600);
     }

@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lección 6: Flexbox · Curso de HTML</title>
+  <meta name="description" content="Flexbox: contenedor, ítems, ejes, alineación, crecimiento y los patrones más usados (centrar, barra de navegación, tarjetas, pie).">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/css/06-flexbox/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Lección 6: Flexbox · Curso de HTML">
+  <meta property="og:description" content="Flexbox: contenedor, ítems, ejes, alineación, crecimiento y los patrones más usados (centrar, barra de navegación, tarjetas, pie).">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/css/06-flexbox/">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de CSS</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap lesson-layout" id="contenido">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#idea">La idea de Flexbox</a></li><li><a href="#contenedor">Propiedades del contenedor</a></li><li><a href="#items">Propiedades de los ítems</a></li><li><a href="#patrones">Patrones que usarás todos los días</a></li><li><a href="#trampas">Trampas habituales</a></li><li><a href="#errores">Errores frecuentes</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de CSS</a> › Lección 6</div>
+        <h1>Flexbox</h1>
+        <ul class="meta"><li>⏱ 45 minutos</li><li>📶 Nivel: principiante</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Distinguir contenedor, ítems y los dos ejes de Flexbox.</li><li>Alinear y repartir con <code>justify-content</code>, <code>align-items</code> y <code>gap</code>.</li><li>Controlar el tamaño de los ítems con <code>flex</code>.</li><li>Resolver los patrones habituales: centrado, barra de navegación y tarjetas.</li></ul>
+</div>
+
+<h2 id="idea"><span class="n">1.</span>La idea de Flexbox</h2>
+<p><strong>Flexbox</strong> es el sistema de CSS para <strong>acomodar elementos en una sola dimensión</strong>: en una fila o en una columna. Resuelve de forma sencilla cosas que antes eran un dolor de cabeza: alinear, centrar, repartir espacio y hacer que los elementos se adapten.</p>
+<p>Todo parte de dos piezas:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Pieza</th><th>Qué es</th><th>Cómo se activa</th></tr></thead>
+<tbody><tr><td><strong>Contenedor flex</strong> (*flex container*)</td><td>El elemento <strong>padre</strong></td><td><code>display: flex</code> (o <code>inline-flex</code>)</td></tr><tr><td><strong>Ítems flex</strong> (*flex items*)</td><td>Los <strong>hijos directos</strong> del contenedor</td><td>Automático: todos los hijos directos</td></tr></tbody>
+</table></div>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · Solo los hijos directos</p>
+<p><code>display: flex</code> actúa <strong>solo sobre los hijos directos</strong>, no sobre los nietos. Si algo no se alinea como esperas, revisa en las herramientas de desarrollo cuál es realmente el contenedor y cuáles los ítems.</p>
+</div>
+<h3>Los dos ejes</h3>
+<p>Un contenedor flex tiene un <strong>eje principal</strong> (la dirección en que se colocan los ítems) y un <strong>eje transversal</strong> (perpendicular). Con <code>flex-direction: row</code> (por defecto), el eje principal es <strong>horizontal</strong>; con <code>column</code>, es <strong>vertical</strong>. Casi todas las propiedades se entienden a partir de aquí:</p>
+<div class="table-wrap"><table>
+<thead><tr><th><span class="sr-only">Aspecto</span></th><th>Eje principal</th><th>Eje transversal</th></tr></thead>
+<tbody><tr><td>Se controla con</td><td><code>justify-content</code></td><td><code>align-items</code></td></tr><tr><td>En <code>row</code> es</td><td>Horizontal →</td><td>Vertical ↓</td></tr><tr><td>En <code>column</code> es</td><td>Vertical ↓</td><td>Horizontal →</td></tr></tbody>
+</table></div>
+
+<h2 id="contenedor"><span class="n">2.</span>Propiedades del contenedor</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Propiedad</th><th>Qué hace</th><th>Valores principales</th></tr></thead>
+<tbody><tr><td><code>display: flex</code></td><td>Activa flexbox</td><td><code>flex</code>, <code>inline-flex</code></td></tr><tr><td><code>flex-direction</code></td><td>Dirección del eje principal</td><td><code>row</code>, <code>row-reverse</code>, <code>column</code>, <code>column-reverse</code></td></tr><tr><td><code>justify-content</code></td><td>Reparte <strong>a lo largo del eje principal</strong></td><td><code>flex-start</code>, <code>center</code>, <code>flex-end</code>, <code>space-between</code>, <code>space-around</code>, <code>space-evenly</code></td></tr><tr><td><code>align-items</code></td><td>Alinea <strong>en el eje transversal</strong></td><td><code>stretch</code> (por defecto), <code>flex-start</code>, <code>center</code>, <code>flex-end</code>, <code>baseline</code></td></tr><tr><td><code>flex-wrap</code></td><td>¿Pueden pasar a otra línea?</td><td><code>nowrap</code> (por defecto), <code>wrap</code></td></tr><tr><td><code>gap</code></td><td>Espacio entre ítems</td><td><code>16px</code>, <code>1rem</code>, <code>1rem 2rem</code> (fila / columna)</td></tr><tr><td><code>align-content</code></td><td>Reparte <strong>las líneas</strong> cuando hay <code>wrap</code></td><td>Igual que <code>justify-content</code></td></tr></tbody>
+</table></div>
+<figure class="gif-demo">
+  <button type="button" class="gif-btn" data-gif="../../assets/gif/flexbox.gif" aria-label="Reproducir animación: Se cambian justify-content, align-items y flex-direction en el editor y los tres ítems se reacomodan al instante">
+    <img src="../../assets/gif/flexbox.png" alt="Se cambian justify-content, align-items y flex-direction en el editor y los tres ítems se reacomodan al instante" width="640" height="360" loading="lazy">
+    <span class="gif-play">▶ Ver animación</span>
+  </button>
+  <figcaption>Así se comporta el contenedor al cambiar sus propiedades: pruébalo tú en el editor de abajo.</figcaption>
+</figure>
+<div class="playground">
+  <div class="pg-head"><span>✏️ Prueba todas las propiedades</span><button type="button" data-reset>Restablecer</button></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;style&gt;
+  .caja { display: flex; flex-direction: row; justify-content: flex-start; align-items: stretch; flex-wrap: nowrap; gap: 8px;
+          height: 160px; background: #eef2ff; border: 2px dashed #4f46e5; padding: 8px; }
+  .item { background: #4f46e5; color: #fff; padding: 12px; border-radius: 8px; font-weight: 700; }
+  .item:nth-child(2) { padding: 28px 12px; }
+&lt;/style&gt;
+&lt;div class="caja"&gt;
+  &lt;div class="item"&gt;1&lt;/div&gt;&lt;div class="item"&gt;2&lt;/div&gt;&lt;div class="item"&gt;3&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Cambia: &lt;code&gt;justify-content&lt;/code&gt; a &lt;b&gt;center&lt;/b&gt;, &lt;b&gt;space-between&lt;/b&gt;… &lt;code&gt;align-items&lt;/code&gt; a &lt;b&gt;center&lt;/b&gt;, &lt;b&gt;flex-end&lt;/b&gt;… y &lt;code&gt;flex-direction&lt;/code&gt; a &lt;b&gt;column&lt;/b&gt;.&lt;/p&gt;</textarea></div>
+    <div><label>Resultado</label><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div>
+  </div>
+</div>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · El truco para no confundirte</p>
+<p>Antes de escribir, pregunta: «¿hacia dónde va mi eje principal?». <code>justify-content</code> siempre trabaja <strong>a lo largo</strong> de él, y <code>align-items</code> <strong>a través</strong> de él. Si cambias a <code>column</code>, los dos intercambian su dirección visual.</p>
+</div>
+
+<h2 id="items"><span class="n">3.</span>Propiedades de los ítems</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Propiedad</th><th>Qué hace</th><th>Ejemplo</th></tr></thead>
+<tbody><tr><td><code>flex-grow</code></td><td>Cuánto <strong>crece</strong> para ocupar el espacio libre</td><td><code>flex-grow: 1</code></td></tr><tr><td><code>flex-shrink</code></td><td>Cuánto se <strong>encoge</strong> si no cabe (1 por defecto)</td><td><code>flex-shrink: 0</code> para que no se encoja</td></tr><tr><td><code>flex-basis</code></td><td>Tamaño <strong>inicial</strong> antes de crecer o encogerse</td><td><code>flex-basis: 200px</code></td></tr><tr><td><code>flex</code></td><td>Atajo de las tres anteriores</td><td><code>flex: 1</code>, <code>flex: 0 0 200px</code>, <code>flex: 1 1 250px</code></td></tr><tr><td><code>align-self</code></td><td>Alineación <strong>propia</strong> en el eje transversal</td><td><code>align-self: flex-end</code></td></tr><tr><td><code>order</code></td><td>Cambia el <strong>orden visual</strong></td><td><code>order: -1</code> (va primero)</td></tr></tbody>
+</table></div>
+<p>El atajo más usado es <strong><code>flex: 1</code></strong>: «reparte el espacio sobrante a partes iguales». Y <code>margin-left: auto</code> empuja un ítem al final:</p>
+<div class="playground">
+  <div class="pg-head"><span>✏️ Crecer y repartir</span><button type="button" data-reset>Restablecer</button></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;style&gt;
+  .caja { display: flex; gap: 8px; background: #eef2ff; padding: 8px; border: 2px dashed #4f46e5; margin-bottom: 10px; }
+  .caja &gt; div { background: #4f46e5; color: #fff; padding: 10px; border-radius: 8px; }
+  .a &gt; div:nth-child(2) { flex: 1; }
+  .b &gt; div { flex: 1; }
+  .c &gt; div:nth-child(1) { flex: 2; }
+  .c &gt; div:nth-child(2), .c &gt; div:nth-child(3) { flex: 1; }
+  .d &gt; div:last-child { margin-left: auto; }
+&lt;/style&gt;
+&lt;div class="caja a"&gt;&lt;div&gt;fijo&lt;/div&gt;&lt;div&gt;flex: 1&lt;/div&gt;&lt;div&gt;fijo&lt;/div&gt;&lt;/div&gt;
+&lt;div class="caja b"&gt;&lt;div&gt;1&lt;/div&gt;&lt;div&gt;1&lt;/div&gt;&lt;div&gt;1&lt;/div&gt;&lt;/div&gt;
+&lt;div class="caja c"&gt;&lt;div&gt;2&lt;/div&gt;&lt;div&gt;1&lt;/div&gt;&lt;div&gt;1&lt;/div&gt;&lt;/div&gt;
+&lt;div class="caja d"&gt;&lt;div&gt;logo&lt;/div&gt;&lt;div&gt;enlace&lt;/div&gt;&lt;div&gt;derecha (margin-left: auto)&lt;/div&gt;&lt;/div&gt;</textarea></div>
+    <div><label>Resultado</label><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div>
+  </div>
+</div>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · <code>flex: 1</code> no es «igual ancho»</p>
+<p><code>flex: 1</code> equivale a <code>flex: 1 1 0</code>: parte de <strong>ancho 0</strong> y reparte todo el espacio. Por eso los ítems resultan iguales. Con <code>flex: 1 1 auto</code>, parten de su tamaño natural y por eso no son iguales.</p>
+</div>
+
+<h2 id="patrones"><span class="n">4.</span>Patrones que usarás todos los días</h2>
+<h3>1. Centrar absolutamente</h3>
+<div class="code">
+  <div class="code-head"><span>Centrar en horizontal y vertical</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-sel">.centro</span> {
+  <span class="tk-attr">display</span>: <span class="tk-val">flex</span>;
+  <span class="tk-attr">justify-content</span>: <span class="tk-val">center</span>;
+  <span class="tk-attr">align-items</span>: <span class="tk-val">center</span>;
+  <span class="tk-attr">min-height</span>: <span class="tk-val">200px</span>;
+}</code></pre>
+</div>
+<h3>2. Barra de navegación</h3>
+<div class="playground">
+  <div class="pg-head"><span>✏️ Barra con logo, menú y botón</span><button type="button" data-reset>Restablecer</button></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;style&gt;
+  .barra { display: flex; align-items: center; gap: 16px; padding: 12px 16px; background: #1e2235; color: #fff; }
+  .barra .menu { display: flex; gap: 14px; margin-left: auto; }
+  .barra a { color: #fff; text-decoration: none; }
+  .barra .cta { background: #4f46e5; padding: 6px 14px; border-radius: 8px; }
+&lt;/style&gt;
+&lt;header class="barra"&gt;&lt;strong&gt;Logo&lt;/strong&gt;&lt;nav class="menu"&gt;&lt;a href="#"&gt;Inicio&lt;/a&gt;&lt;a href="#"&gt;Cursos&lt;/a&gt;&lt;a href="#"&gt;Blog&lt;/a&gt;&lt;/nav&gt;&lt;a class="cta" href="#"&gt;Entrar&lt;/a&gt;&lt;/header&gt;</textarea></div>
+    <div><label>Resultado</label><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div>
+  </div>
+</div>
+<h3>3. Tarjetas de la misma altura</h3>
+<p>Con <code>align-items: stretch</code> (el valor por defecto) todas las tarjetas de una fila <strong>miden lo mismo</strong>, aunque su contenido sea distinto. Añade <code>flex-wrap: wrap</code> y <code>flex: 1 1 220px</code> para que se acomoden solas:</p>
+<div class="playground">
+  <div class="pg-head"><span>✏️ Tarjetas que se adaptan</span><button type="button" data-reset>Restablecer</button></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;style&gt;
+  .fila { display: flex; flex-wrap: wrap; gap: 12px; }
+  .t { flex: 1 1 140px; padding: 12px; border: 1px solid #c7d2fe; border-radius: 12px; background: #fff; }
+  .t h4 { margin: 0 0 6px; }
+&lt;/style&gt;
+&lt;div class="fila"&gt;
+  &lt;div class="t"&gt;&lt;h4&gt;Uno&lt;/h4&gt;&lt;p&gt;Corto.&lt;/p&gt;&lt;/div&gt;
+  &lt;div class="t"&gt;&lt;h4&gt;Dos&lt;/h4&gt;&lt;p&gt;Un texto bastante más largo que obliga a la tarjeta a crecer.&lt;/p&gt;&lt;/div&gt;
+  &lt;div class="t"&gt;&lt;h4&gt;Tres&lt;/h4&gt;&lt;p&gt;Medio.&lt;/p&gt;&lt;/div&gt;
+  &lt;div class="t"&gt;&lt;h4&gt;Cuatro&lt;/h4&gt;&lt;p&gt;Otra tarjeta.&lt;/p&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Reduce el ancho de la ventana: las tarjetas pasan a otra fila sin media queries.&lt;/p&gt;</textarea></div>
+    <div><label>Resultado</label><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div>
+  </div>
+</div>
+<h3>4. Pie de página al fondo</h3>
+<div class="code">
+  <div class="code-head"><span>El pie siempre abajo</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-sel">body</span> { <span class="tk-attr">min-height</span>: <span class="tk-val">100dvh</span>; <span class="tk-attr">display</span>: <span class="tk-val">flex</span>; <span class="tk-attr">flex-direction</span>: <span class="tk-val">column</span>; }
+<span class="tk-sel">main</span> { <span class="tk-attr">flex</span>: <span class="tk-val">1</span>; }             <span class="tk-com">/* el contenido absorbe el espacio libre */</span>
+<span class="tk-com">/* el &lt;footer&gt; queda pegado al fondo aunque haya poco contenido */</span></code></pre>
+</div>
+
+<h2 id="trampas"><span class="n">5.</span>Trampas habituales</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Problema</th><th>Causa y solución</th></tr></thead>
+<tbody><tr><td>Mis ítems no se alinean</td><td><code>display: flex</code> está en el elemento equivocado: debe ir en el <strong>padre directo</strong></td></tr><tr><td><code>align-items: center</code> no centra en vertical</td><td>El contenedor <strong>no tiene alto</strong>; ponle <code>height</code> o <code>min-height</code></td></tr><tr><td>El texto largo desborda el ítem</td><td>Los ítems tienen <code>min-width: auto</code>; añade <code>min-width: 0</code> para permitir que se encojan</td></tr><tr><td>El ítem se encoge demasiado</td><td>Usa <code>flex-shrink: 0</code> o un <code>flex-basis</code> mínimo</td></tr><tr><td>No hay espacio entre ítems</td><td>Usa <code>gap</code> en el contenedor (mejor que márgenes)</td></tr><tr><td>El orden con <code>order</code> confunde</td><td><code>order</code> solo cambia lo visual; el <strong>teclado y lectores de pantalla siguen el orden del HTML</strong></td></tr></tbody>
+</table></div>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · <code>order</code> y accesibilidad</p>
+<p>Reordenar visualmente con <code>order</code> o <code>row-reverse</code> <strong>no</strong> cambia el orden en que se recorre la página con la tecla <kbd>Tab</kbd> o un lector de pantalla. Si quieres otro orden, cámbialo en el HTML.</p>
+</div>
+
+<h2 id="errores"><span class="n">6.</span>Errores frecuentes</h2>
+<ul><li><strong>Esperar que <code>flex</code> afecte a los nietos.</strong></li><li><strong>Confundir <code>justify-content</code> y <code>align-items</code></strong> al cambiar a <code>column</code>.</li><li><strong>Usar márgenes en lugar de <code>gap</code></strong> para separar ítems.</li><li><strong>Dar <code>width</code> fijo a ítems flexibles</strong> y luego extrañarse de que no se adapten: prefiere <code>flex-basis</code>.</li><li><strong>No poner <code>flex-wrap: wrap</code></strong> y que en pantallas pequeñas los ítems se aprieten o desborden.</li><li><strong>Olvidar <code>min-width: 0</code></strong> en ítems con texto largo o imágenes.</li><li><strong>Usar flexbox para una cuadrícula de dos dimensiones:</strong> para eso está Grid (próxima lección).</li></ul>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li><code>display: flex</code> convierte al padre en contenedor y a sus <strong>hijos directos</strong> en ítems.</li><li>Hay un eje principal (<code>flex-direction</code>) y uno transversal: <code>justify-content</code> trabaja en el principal y <code>align-items</code> en el transversal.</li><li><code>gap</code> separa los ítems; <code>flex-wrap: wrap</code> permite varias líneas.</li><li><code>flex: 1</code> reparte el espacio sobrante; <code>flex: 0 0 200px</code> fija un tamaño; <code>margin-left: auto</code> empuja un ítem al final.</li><li><code>align-items: stretch</code> iguala la altura de las tarjetas de una fila.</li><li><code>justify-content: center</code> + <code>align-items: center</code> centra en ambos ejes (con alto definido).</li><li><code>min-width: 0</code> evita que un ítem con texto largo desborde.</li><li><code>order</code> solo cambia lo visual, no el orden de lectura.</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">7.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td>Contenedor flex</td><td>El elemento con <code>display: flex</code>.</td></tr><tr><td>Ítem flex</td><td>Cada hijo directo de un contenedor flex.</td></tr><tr><td>Eje principal</td><td>La dirección en que se colocan los ítems (<code>flex-direction</code>).</td></tr><tr><td>Eje transversal</td><td>El eje perpendicular al principal.</td></tr><tr><td><code>gap</code></td><td>Espacio entre ítems, sin márgenes.</td></tr><tr><td><code>flex-basis</code></td><td>Tamaño inicial de un ítem antes de crecer o encogerse.</td></tr><tr><td><code>flex-grow</code> / <code>flex-shrink</code></td><td>Cuánto crece o se encoge un ítem.</td></tr><tr><td><code>order</code></td><td>Posición visual de un ítem.</td></tr></tbody>
+</table></div>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>¿Qué hace <code>justify-content</code>?</p><ul class="opts"><li><button type="button" class="opt">Alinea en el eje transversal</button></li><li><button type="button" class="opt" data-ok>Reparte los ítems a lo largo del eje principal</button></li><li><button type="button" class="opt">Cambia el orden</button></li><li><button type="button" class="opt">Crea espacio entre filas</button></li></ul><p class="explain" hidden><code>justify-content</code> trabaja en el eje principal; <code>align-items</code> en el transversal.</p></div>
+<div class="quiz-q"><p>Con <code>flex-direction: column</code>, ¿qué propiedad centra los ítems <strong>horizontalmente</strong>?</p><ul class="opts"><li><button type="button" class="opt"><code>justify-content</code></button></li><li><button type="button" class="opt" data-ok><code>align-items</code></button></li><li><button type="button" class="opt"><code>flex-wrap</code></button></li><li><button type="button" class="opt"><code>order</code></button></li></ul><p class="explain" hidden>En <code>column</code> el eje principal es vertical, así que el horizontal es el transversal: <code>align-items</code>.</p></div>
+<div class="quiz-q"><p>¿Cuál es la manera más cómoda de separar ítems flex?</p><ul class="opts"><li><button type="button" class="opt"><code>margin</code> en cada ítem</button></li><li><button type="button" class="opt" data-ok><code>gap</code> en el contenedor</button></li><li><button type="button" class="opt"><code>padding</code> en el body</button></li><li><button type="button" class="opt"><code>float</code></button></li></ul><p class="explain" hidden><code>gap</code> separa solo <strong>entre</strong> ítems y no necesita quitar el margen del último.</p></div>
+<div class="quiz-q"><p><code>align-items: center</code> no centra en vertical. ¿Qué falta probablemente?</p><ul class="opts"><li><button type="button" class="opt"><code>display: block</code></button></li><li><button type="button" class="opt" data-ok>Que el contenedor tenga altura</button></li><li><button type="button" class="opt"><code>flex-wrap</code></button></li><li><button type="button" class="opt"><code>z-index</code></button></li></ul><p class="explain" hidden>Sin altura, el contenedor mide lo que sus hijos y no hay espacio sobrante en vertical.</p></div>
+<div class="quiz-q"><p>¿Qué hace <code>flex: 1</code> en tres ítems hermanos?</p><ul class="opts"><li><button type="button" class="opt">Los hace pequeños</button></li><li><button type="button" class="opt" data-ok>Reparte el espacio libre a partes iguales</button></li><li><button type="button" class="opt">Los apila</button></li><li><button type="button" class="opt">Los oculta</button></li></ul><p class="explain" hidden>Equivale a <code>flex: 1 1 0</code>: los tres crecen por igual y quedan del mismo ancho.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="css-06">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../05-posicionamiento/ejercicio.html"><small>← Anterior</small>Ejercicio: Posicionamiento y capas</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de CSS · Lección 6 · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&title=%5BError%5D%20Lecci%C3%B3n%206%3A%20Flexbox%20%C2%B7%20Curso%20de%20HTML&pagina=https%3A//cacg-code.github.io/PRACTICAS-HTML/css/06-flexbox/" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>
