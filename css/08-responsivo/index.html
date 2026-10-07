@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lección 8: Diseño responsivo · Curso de HTML</title>
+  <meta name="description" content="Diseño responsivo con CSS: viewport, mobile-first, media queries, valores fluidos, imágenes y container queries.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/css/08-responsivo/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Lección 8: Diseño responsivo · Curso de HTML">
+  <meta property="og:description" content="Diseño responsivo con CSS: viewport, mobile-first, media queries, valores fluidos, imágenes y container queries.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/css/08-responsivo/">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de CSS</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap lesson-layout" id="contenido">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#que-es">Qué es el diseño responsivo</a></li><li><a href="#mobile-first">Primero el móvil (mobile-first)</a></li><li><a href="#mq">Media queries en detalle</a></li><li><a href="#fluido">Valores fluidos: menos media queries</a></li><li><a href="#imagenes">Imágenes y medios responsivos</a></li><li><a href="#container">Container queries: componentes que se adaptan a su espacio</a></li><li><a href="#probar">Cómo probar tu diseño responsivo</a></li><li><a href="#errores">Errores frecuentes</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de CSS</a> › Lección 8</div>
+        <h1>Diseño responsivo</h1>
+        <ul class="meta"><li>⏱ 40 minutos</li><li>📶 Nivel: principiante</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Preparar una página para móviles con <code>viewport</code> y un enfoque mobile-first.</li><li>Escribir media queries para ancho, color, movimiento y puntero.</li><li>Usar <code>min()</code>, <code>max()</code> y <code>clamp()</code> para valores fluidos.</li><li>Probar y depurar un diseño en distintos tamaños.</li></ul>
+</div>
+
+<h2 id="que-es"><span class="n">1.</span>Qué es el diseño responsivo</h2>
+<p>Tu página la verá gente con un celular de 360px, una tableta, un portátil y un monitor de 27 pulgadas. <strong>Diseño responsivo</strong> es que <strong>una sola página se adapte bien a todos</strong>, sin versiones separadas.</p>
+<p>Se apoya en tres ideas:</p>
+<ol class="steps"><li><strong>Layout fluido:</strong> anchos relativos (<code>%</code>, <code>fr</code>, <code>max-width</code>) en lugar de píxeles fijos.</li><li><strong>Contenido flexible:</strong> imágenes y textos que se ajustan a su contenedor.</li><li><strong>Media queries:</strong> reglas que cambian el diseño en ciertos tamaños o condiciones.</li></ol>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · El <code>viewport</code></p>
+<p>Sin esta etiqueta en el <code>&lt;head&gt;</code>, los celulares muestran la página como si fuera de escritorio y la encogen:</p>
+<div class="code">
+  <div class="code-head"><span>Imprescindible</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">&lt;meta</span> <span class="tk-attr">name</span>=<span class="tk-val">"viewport"</span> <span class="tk-attr">content</span>=<span class="tk-val">"width=device-width, initial-scale=1.0"</span><span class="tk-tag">&gt;</span></code></pre>
+</div>
+</div>
+
+<h2 id="mobile-first"><span class="n">2.</span>Primero el móvil (mobile-first)</h2>
+<p>La estrategia más sencilla: escribe tus estilos base <strong>pensando en la pantalla más pequeña</strong> y, a medida que el espacio crece, <strong>añade mejoras</strong> con media queries <code>min-width</code>.</p>
+<div class="table-wrap"><table>
+<thead><tr><th><span class="sr-only">Aspecto</span></th><th>Mobile-first</th><th>Desktop-first</th></tr></thead>
+<tbody><tr><td>Estilos base</td><td>Para pantallas pequeñas</td><td>Para pantallas grandes</td></tr><tr><td>Media queries</td><td><code>@media (min-width: …)</code> <strong>añaden</strong> complejidad</td><td><code>@media (max-width: …)</code> <strong>quitan</strong> complejidad</td></tr><tr><td>Ventaja</td><td>El móvil carga menos CSS y el código es más simple</td><td>—</td></tr></tbody>
+</table></div>
+<div class="code">
+  <div class="code-head"><span>Mobile-first en la práctica</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-com">/* Base: móvil, una columna */</span>
+<span class="tk-sel">.tarjetas</span> { <span class="tk-attr">display</span>: <span class="tk-val">grid</span>; <span class="tk-attr">gap</span>: <span class="tk-val">16px</span>; }
+
+<span class="tk-com">/* A partir de 600px: dos columnas */</span>
+<span class="tk-sel">@media (min-width: 600px)</span> {
+<span class="tk-sel">  .tarjetas</span> { <span class="tk-attr">grid-template-columns</span>: <span class="tk-val">repeat(2, 1fr)</span>; }
+}
+
+<span class="tk-com">/* A partir de 960px: cuatro columnas */</span>
+<span class="tk-sel">@media (min-width: 960px)</span> {
+<span class="tk-sel">  .tarjetas</span> { <span class="tk-attr">grid-template-columns</span>: <span class="tk-val">repeat(4, 1fr)</span>; }
+}</code></pre>
+</div>
+<figure class="gif-demo">
+  <button type="button" class="gif-btn" data-gif="../../assets/gif/responsivo.gif" aria-label="Reproducir animación: Se pulsan los botones de ancho 375, 768 y completo y la cuadrícula pasa de una columna a dos y a cuatro">
+    <img src="../../assets/gif/responsivo.png" alt="Se pulsan los botones de ancho 375, 768 y completo y la cuadrícula pasa de una columna a dos y a cuatro" width="640" height="512" loading="lazy">
+    <span class="gif-play">▶ Ver animación</span>
+  </button>
+  <figcaption>Los botones de ancho te dejan probar el diseño en un celular, una tableta y una pantalla grande.</figcaption>
+</figure>
+<div class="playground stacked" data-widths>
+  <div class="pg-head"><span>✏️ Cambia el ancho y mira el diseño</span><span class="pg-actions"><button type="button" data-w="375">📱 375</button><button type="button" data-w="768">📟 768</button><button type="button" data-w="100%">🖥 Completo</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;style&gt;
+  body { margin: 0; padding: 12px; font-family: system-ui, sans-serif; }
+  .tarjetas { display: grid; gap: 10px; }
+  .t { background: #4f46e5; color: #fff; padding: 20px; border-radius: 10px; text-align: center; font-weight: 700; }
+  @media (min-width: 500px) { .tarjetas { grid-template-columns: repeat(2, 1fr); } .t { background: #0ea5e9; } }
+  @media (min-width: 800px) { .tarjetas { grid-template-columns: repeat(4, 1fr); } .t { background: #16a34a; } }
+&lt;/style&gt;
+&lt;div class="tarjetas"&gt;&lt;div class="t"&gt;1&lt;/div&gt;&lt;div class="t"&gt;2&lt;/div&gt;&lt;div class="t"&gt;3&lt;/div&gt;&lt;div class="t"&gt;4&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Azul: &amp;lt; 500px · celeste: ≥ 500px · verde: ≥ 800px&lt;/p&gt;</textarea></div>
+    <div><label>Resultado · ancho: <span class="pg-wlabel">completo</span></label><div class="pg-frame"><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div></div>
+  </div>
+</div>
+
+<h2 id="mq"><span class="n">3.</span>Media queries en detalle</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Condición</th><th>Ejemplo</th><th>Para qué</th></tr></thead>
+<tbody><tr><td>Ancho</td><td><code>(min-width: 768px)</code>, <code>(max-width: 600px)</code></td><td>Cambiar el diseño según el espacio</td></tr><tr><td>Rango moderno</td><td><code>(600px &lt;= width &lt;= 900px)</code></td><td>Una franja concreta</td></tr><tr><td>Orientación</td><td><code>(orientation: landscape)</code></td><td>Horizontal o vertical</td></tr><tr><td>Esquema de color</td><td><code>(prefers-color-scheme: dark)</code></td><td>Tema oscuro del sistema</td></tr><tr><td>Movimiento reducido</td><td><code>(prefers-reduced-motion: reduce)</code></td><td>Quitar animaciones</td></tr><tr><td>Contraste</td><td><code>(prefers-contrast: more)</code></td><td>Más contraste</td></tr><tr><td>Puntero</td><td><code>(hover: hover)</code>, <code>(pointer: coarse)</code></td><td>Distinguir ratón de pantalla táctil</td></tr><tr><td>Impresión</td><td><code>print</code></td><td>Estilos para imprimir</td></tr></tbody>
+</table></div>
+<div class="code">
+  <div class="code-head"><span>Combinar condiciones</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-sel">@media (min-width: 768px) and (orientation: landscape)</span> { … }
+<span class="tk-sel">@media (max-width: 600px), print</span> { … }          <span class="tk-com">/* coma = "o" */</span>
+<span class="tk-sel">@media not print</span> { … }
+
+<span class="tk-com">/* Solo mostrar efectos hover donde hay ratón */</span>
+<span class="tk-sel">@media (hover: hover)</span> {<span class="tk-sel"> .tarjeta:hover</span> { <span class="tk-attr">transform</span>: <span class="tk-val">translateY(-4px)</span>; } }</code></pre>
+</div>
+<h3>¿Qué puntos de ruptura usar?</h3>
+<p>No existen medidas «oficiales». Una referencia común:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Nombre</th><th>Desde</th><th>Dispositivo típico</th></tr></thead>
+<tbody><tr><td>Móvil</td><td>(base)</td><td>Celulares</td></tr><tr><td>Tableta</td><td><code>600px</code> a <code>768px</code></td><td>Tabletas y celulares grandes en horizontal</td></tr><tr><td>Escritorio</td><td><code>960px</code> a <code>1024px</code></td><td>Portátiles</td></tr><tr><td>Pantalla ancha</td><td><code>1280px</code> o más</td><td>Monitores</td></tr></tbody>
+</table></div>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Rompe donde se rompe el contenido</p>
+<p>Los mejores puntos de ruptura <strong>no</strong> son los de los dispositivos, sino los de <strong>tu diseño</strong>: reduce la ventana y añade una media query justo cuando algo se vea mal. Así tu diseño funciona en cualquier tamaño, no solo en los «típicos».</p>
+</div>
+
+<h2 id="fluido"><span class="n">4.</span>Valores fluidos: menos media queries</h2>
+<p>Con unas pocas funciones puedes lograr que tamaños y espacios <strong>se adapten de forma continua</strong>:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Función</th><th>Qué hace</th><th>Ejemplo</th></tr></thead>
+<tbody><tr><td><code>min(a, b)</code></td><td>El <strong>menor</strong> de los dos</td><td><code>width: min(100%, 700px)</code></td></tr><tr><td><code>max(a, b)</code></td><td>El <strong>mayor</strong> de los dos</td><td><code>padding: max(16px, 4vw)</code></td></tr><tr><td><code>clamp(mín, ideal, máx)</code></td><td>Un valor que crece pero con límites</td><td><code>font-size: clamp(1rem, 2.5vw, 1.5rem)</code></td></tr><tr><td><code>calc()</code></td><td>Operaciones con unidades distintas</td><td><code>width: calc(100% - 2rem)</code></td></tr></tbody>
+</table></div>
+<div class="code">
+  <div class="code-head"><span>Contenedor, texto y espacios fluidos</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-sel">.contenido</span> {
+  <span class="tk-attr">width</span>: <span class="tk-val">min(100% - 2rem, 70rem)</span>;    <span class="tk-com">/* 1rem de aire a cada lado, máximo 70rem */</span>
+  <span class="tk-attr">margin-inline</span>: <span class="tk-val">auto</span>;
+}
+<span class="tk-sel">h1</span> { <span class="tk-attr">font-size</span>: <span class="tk-val">clamp(1.75rem, 1rem + 3vw, 3rem)</span>; }
+<span class="tk-sel">.seccion</span> { <span class="tk-attr">padding-block</span>: <span class="tk-val">clamp(2rem, 6vw, 5rem)</span>; }</code></pre>
+</div>
+<div class="playground stacked" data-widths>
+  <div class="pg-head"><span>✏️ Fluido sin media queries</span><span class="pg-actions"><button type="button" data-w="375">📱 375</button><button type="button" data-w="768">📟 768</button><button type="button" data-w="100%">🖥 Completo</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;style&gt;
+  body { margin: 0; font-family: system-ui, sans-serif; }
+  .c { width: min(100% - 2rem, 40rem); margin-inline: auto; }
+  h1 { font-size: clamp(1.4rem, 1rem + 4vw, 3rem); text-wrap: balance; }
+  .s { padding-block: clamp(.5rem, 4vw, 2rem); background: #eef2ff; }
+&lt;/style&gt;
+&lt;div class="c"&gt;&lt;div class="s"&gt;&lt;h1&gt;Un título y un espacio que se adaptan&lt;/h1&gt;&lt;/div&gt;&lt;p&gt;Sin una sola media query.&lt;/p&gt;&lt;/div&gt;</textarea></div>
+    <div><label>Resultado · ancho: <span class="pg-wlabel">completo</span></label><div class="pg-frame"><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div></div>
+  </div>
+</div>
+
+<h2 id="imagenes"><span class="n">5.</span>Imágenes y medios responsivos</h2>
+<div class="code">
+  <div class="code-head"><span>Que nada se desborde</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-sel">img, video, svg</span> {
+  <span class="tk-attr">max-width</span>: <span class="tk-val">100%</span>;
+  <span class="tk-attr">height</span>: <span class="tk-val">auto</span>;       <span class="tk-com">/* conserva la proporción */</span>
+  <span class="tk-attr">display</span>: <span class="tk-val">block</span>;
+}
+
+<span class="tk-sel">.hero-img</span> {
+  <span class="tk-attr">width</span>: <span class="tk-val">100%</span>;
+  <span class="tk-attr">aspect-ratio</span>: <span class="tk-val">16 / 9</span>;
+  <span class="tk-attr">object-fit</span>: <span class="tk-val">cover</span>;  <span class="tk-com">/* recorta en vez de deformar */</span>
+}</code></pre>
+</div>
+<ul><li>Ya viste en la <a href="../../08-audio-y-video/">lección 8 de HTML</a> cómo ofrecer <strong>imágenes distintas</strong> con <code>srcset</code> y <code>&lt;picture&gt;</code>.</li><li>Para videos incrustados con <code>&lt;iframe&gt;</code>, mantén la proporción con <code>aspect-ratio: 16 / 9; width: 100%; height: auto;</code>.</li><li>Las <strong>imágenes de fondo</strong> también pueden adaptarse con media queries: una versión ligera en móvil y una grande en escritorio.</li></ul>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · Peso, no solo tamaño</p>
+<p>Que una imagen de 4000px «quepa» en un celular con <code>max-width: 100%</code> <strong>no</strong> significa que cargue rápido: se descarga entera. Redimensiona y comprime antes de subir y usa <code>srcset</code> para los casos importantes.</p>
+</div>
+
+<h2 id="container"><span class="n">6.</span>Container queries: componentes que se adaptan a su espacio</h2>
+<p>Una media query mira <strong>la ventana</strong>. Pero un componente (una tarjeta) puede estar en una barra lateral estrecha o en una zona ancha <strong>en la misma pantalla</strong>. Con las <strong>container queries</strong> el componente responde al <strong>tamaño de su contenedor</strong>:</p>
+<div class="code">
+  <div class="code-head"><span>Una tarjeta que cambia según su contenedor</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-sel">.envoltura</span> { <span class="tk-attr">container-type</span>: <span class="tk-val">inline-size</span>; }
+
+<span class="tk-sel">.tarjeta</span> { <span class="tk-attr">display</span>: <span class="tk-val">grid</span>; <span class="tk-attr">gap</span>: <span class="tk-val">8px</span>; }
+
+<span class="tk-sel">@container (min-width: 420px)</span> {
+<span class="tk-sel">  .tarjeta</span> { <span class="tk-attr">grid-template-columns</span>: <span class="tk-val">120px 1fr</span>; }
+}</code></pre>
+</div>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · Ya se pueden usar</p>
+<p>Las container queries funcionan en todos los navegadores modernos. Son ideales para componentes reutilizables: la misma tarjeta se ve bien en cualquier parte, sin depender del ancho de la pantalla.</p>
+</div>
+
+<h2 id="probar"><span class="n">7.</span>Cómo probar tu diseño responsivo</h2>
+<ol class="steps"><li><strong>Modo dispositivo:</strong> en las herramientas (<kbd>F12</kbd>), pulsa el icono de móvil o <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>M</kbd>. Elige un celular o arrastra el borde para cualquier ancho.</li><li><strong>Reduce la ventana</strong> de tu navegador de escritorio hasta 320px: es el ancho más pequeño razonable.</li><li><strong>Aumenta el zoom</strong> al 200%: así se ve en pantallas pequeñas y para quien agranda el texto.</li><li><strong>Prueba en un celular real</strong>, al menos una vez. Lo táctil (botones de 44px o más) no se aprecia en el escritorio.</li><li><strong>Gira el dispositivo:</strong> vertical y horizontal.</li></ol>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Qué buscar</p>
+<p>Que <strong>no haya desplazamiento horizontal</strong>, que ningún texto se salga ni se superponga, que los botones sean fáciles de pulsar y que nada importante se oculte solo porque «no cabe».</p>
+</div>
+
+<h2 id="errores"><span class="n">8.</span>Errores frecuentes</h2>
+<ul><li><strong>Olvidar la etiqueta <code>viewport</code></strong> y preguntarse por qué las media queries no funcionan en el celular.</li><li><strong>Anchos fijos en <code>px</code></strong> (<code>width: 960px</code>): causan scroll horizontal.</li><li><strong>Mezclar <code>min-width</code> y <code>max-width</code></strong> sin plan y que las reglas se pisen.</li><li><strong>Ocultar contenido en móvil</strong> (<code>display: none</code>) en lugar de reorganizarlo.</li><li><strong>Texto demasiado pequeño</strong> en móvil (menos de 16px).</li><li><strong>Botones y enlaces diminutos:</strong> el área táctil mínima recomendada es ~44×44px.</li><li><strong>Probar solo en tu pantalla.</strong></li></ul>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li>Diseño responsivo = layout fluido + contenido flexible + media queries.</li><li>Imprescindible: <code>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</code>.</li><li><strong>Mobile-first</strong>: estilos base para móvil y <code>@media (min-width: …)</code> para añadir mejoras.</li><li>Las media queries también detectan <code>prefers-color-scheme</code>, <code>prefers-reduced-motion</code>, <code>hover</code> y <code>print</code>.</li><li>Elige los puntos de ruptura donde <strong>tu diseño</strong> se rompe, no los de dispositivos concretos.</li><li><code>min()</code>, <code>max()</code>, <code>clamp()</code> y <code>calc()</code> permiten valores fluidos sin media queries.</li><li><code>img { max-width: 100%; height: auto }</code> y <code>aspect-ratio</code>/<code>object-fit</code> mantienen las imágenes ordenadas.</li><li>Las container queries adaptan un componente al tamaño de su contenedor.</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">9.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td>Responsivo</td><td>Diseño que se adapta a cualquier tamaño de pantalla.</td></tr><tr><td>Media query</td><td>Condición que activa estilos solo si se cumple.</td></tr><tr><td>Punto de ruptura</td><td>Ancho donde el diseño cambia.</td></tr><tr><td>Mobile-first</td><td>Estrategia que parte del móvil y añade mejoras con <code>min-width</code>.</td></tr><tr><td><code>viewport</code></td><td>Área visible de la página; se configura con una etiqueta <code>meta</code>.</td></tr><tr><td><code>clamp()</code></td><td>Valor que crece entre un mínimo y un máximo.</td></tr><tr><td>Container query</td><td>Regla que depende del tamaño del contenedor, no de la ventana.</td></tr><tr><td>Layout fluido</td><td>Diseño con medidas relativas que se estiran y encogen.</td></tr></tbody>
+</table></div>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>¿Qué hace <code>@media (min-width: 600px)</code>?</p><ul class="opts"><li><button type="button" class="opt" data-ok>Aplica los estilos solo si la pantalla mide 600px <strong>o más</strong></button></li><li><button type="button" class="opt">Aplica los estilos si la pantalla mide <strong>menos</strong> de 600px</button></li><li><button type="button" class="opt">Fija el ancho en 600px</button></li><li><button type="button" class="opt">Oculta la página</button></li></ul><p class="explain" hidden><code>min-width</code> significa «a partir de este ancho».</p></div>
+<div class="quiz-q"><p>En una estrategia <strong>mobile-first</strong>, ¿qué tipo de media query se usa mayormente?</p><ul class="opts"><li><button type="button" class="opt"><code>max-width</code></button></li><li><button type="button" class="opt" data-ok><code>min-width</code></button></li><li><button type="button" class="opt"><code>print</code></button></li><li><button type="button" class="opt"><code>orientation</code></button></li></ul><p class="explain" hidden>Los estilos base son para móvil y <code>min-width</code> añade mejoras al crecer.</p></div>
+<div class="quiz-q"><p>Las media queries no funcionan en el celular. ¿Qué falta probablemente?</p><ul class="opts"><li><button type="button" class="opt"><code>display: flex</code></button></li><li><button type="button" class="opt" data-ok>La etiqueta <code>meta viewport</code></button></li><li><button type="button" class="opt">Un archivo extra</button></li><li><button type="button" class="opt"><code>z-index</code></button></li></ul><p class="explain" hidden>Sin <code>viewport</code>, el móvil renderiza como escritorio y encoge la página.</p></div>
+<div class="quiz-q"><p>¿Qué hace <code>font-size: clamp(1rem, 4vw, 2rem)</code>?</p><ul class="opts"><li><button type="button" class="opt">Siempre vale 4vw</button></li><li><button type="button" class="opt" data-ok>Crece con el ancho, entre 1rem y 2rem</button></li><li><button type="button" class="opt">Es lo mismo que <code>2rem</code></button></li><li><button type="button" class="opt">Solo vale en móvil</button></li></ul><p class="explain" hidden>El valor del centro se limita entre el mínimo y el máximo.</p></div>
+<div class="quiz-q"><p>¿Qué ventaja tienen las container queries?</p><ul class="opts"><li><button type="button" class="opt">Son más rápidas</button></li><li><button type="button" class="opt" data-ok>Un componente se adapta al tamaño de su contenedor, no al de la ventana</button></li><li><button type="button" class="opt">Sustituyen a Flexbox</button></li><li><button type="button" class="opt">Funcionan sin CSS</button></li></ul><p class="explain" hidden>Permiten componentes reutilizables que se ven bien en cualquier sitio.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="css-08">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../07-grid/ejercicio.html"><small>← Anterior</small>Ejercicio: CSS Grid</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de CSS · Lección 8 · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&title=%5BError%5D%20Lecci%C3%B3n%208%3A%20Dise%C3%B1o%20responsivo%20%C2%B7%20Curso%20de%20HTML&pagina=https%3A//cacg-code.github.io/PRACTICAS-HTML/css/08-responsivo/" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

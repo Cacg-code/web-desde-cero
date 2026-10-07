@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Proyecto final: Proyecto: landing page responsiva · Curso de HTML</title>
+  <meta name="description" content="Proyecto final de CSS: da estilo a la landing page de una cafetería con variables, Grid, Flexbox, diseño responsivo, modo oscuro y animaciones accesibles.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/css/proyecto-landing/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Proyecto final: Proyecto: landing page responsiva · Curso de HTML">
+  <meta property="og:description" content="Proyecto final de CSS: da estilo a la landing page de una cafetería con variables, Grid, Flexbox, diseño responsivo, modo oscuro y animaciones accesibles.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/css/proyecto-landing/">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de CSS</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap lesson-layout" id="contenido">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#que">Qué vas a construir</a></li><li><a href="#plan">Plan antes de escribir</a></li><li><a href="#estructura">Estructura de tu hoja de estilos</a></li><li><a href="#pasos">Paso a paso</a></li><li><a href="#revision">Revisión de calidad</a></li><li><a href="#publicar">Publicación y siguientes pasos</a></li><li><a href="#errores">Errores frecuentes en proyectos completos</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de CSS</a> › Proyecto final</div>
+        <h1>Proyecto: landing page responsiva</h1>
+        <ul class="meta"><li>⏱ 120 minutos</li><li>📶 Nivel: principiante</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Aplicar todo el curso en un proyecto completo.</li><li>Construir una página responsiva mobile-first con un sistema de variables.</li><li>Incluir modo oscuro, animaciones sutiles y accesibilidad.</li><li>Revisar y depurar un diseño antes de publicarlo.</li></ul>
+</div>
+
+<h2 id="que"><span class="n">1.</span>Qué vas a construir</h2>
+<p>Vas a darle estilo completo a la <strong>página de inicio de una cafetería</strong>. Recibirás el HTML ya escrito (con buena semántica) y tu trabajo es el <strong>CSS</strong>: que se vea profesional, <strong>se adapte desde 320px hasta pantallas grandes</strong>, tenga <strong>modo oscuro</strong>, pequeñas animaciones y buena accesibilidad.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Parte</th><th>Lo que aplicas</th><th>Lección</th></tr></thead>
+<tbody><tr><td>Variables y sistema de diseño</td><td><code>:root</code>, tokens de color, espacio y radio</td><td>11</td></tr><tr><td>Tipografía y color</td><td><code>rem</code>, <code>clamp()</code>, legibilidad, HSL</td><td>3</td></tr><tr><td>Cabecera fija</td><td><code>position: sticky</code>, Flexbox</td><td>5 y 6</td></tr><tr><td>Sección principal (hero)</td><td>Fondos, degradados, <code>min-height</code></td><td>9</td></tr><tr><td>Tarjetas de ventajas</td><td>Grid, sombras, transiciones</td><td>7, 9 y 10</td></tr><tr><td>Galería</td><td><code>auto-fit</code> + <code>minmax()</code>, <code>aspect-ratio</code></td><td>7 y 4</td></tr><tr><td>Formulario y pie</td><td>Grid/Flex, foco accesible</td><td>6, 7</td></tr><tr><td>Adaptación</td><td><code>min-width</code>, mobile-first</td><td>8</td></tr><tr><td>Modo oscuro y movimiento reducido</td><td>Variables, <code>prefers-color-scheme</code>, <code>prefers-reduced-motion</code></td><td>10 y 11</td></tr></tbody>
+</table></div>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Trabaja por capas</p>
+<p>No intentes hacer todo a la vez. Primero <strong>la base</strong> (variables, tipografía), luego <strong>el móvil</strong>, después <strong>escritorio</strong>, al final <strong>detalles</strong> (sombras, animaciones, modo oscuro). Así cada paso se ve y se corrige fácil.</p>
+</div>
+
+<h2 id="plan"><span class="n">2.</span>Plan antes de escribir</h2>
+<ol class="steps"><li><strong>Lee el HTML.</strong> Identifica los bloques: cabecera, hero, ventajas, galería, contacto, pie.</li><li><strong>Dibuja un boceto móvil</strong> (una sola columna, todo apilado) y luego uno de escritorio (3 columnas de ventajas, galería en cuadrícula).</li><li><strong>Elige tu paleta</strong>: un acento (el color del café, un naranja o marrón), un fondo claro y texto oscuro. Comprueba el contraste (mínimo 4.5:1).</li><li><strong>Define los espacios</strong>: una escala (0.5, 1, 2, 4 rem) y un radio.</li><li><strong>Decide tus puntos de ruptura</strong> a partir de donde el diseño se rompe.</li></ol>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · El HTML no se toca</p>
+<p>En un proyecto real puedes modificar el HTML, pero aquí el objetivo es practicar CSS: <strong>todo lo logras solo con estilos</strong>. Los nombres de clase siguen BEM (<code>.hero__titulo</code>) para que los selectores sean simples.</p>
+</div>
+
+<h2 id="estructura"><span class="n">3.</span>Estructura de tu hoja de estilos</h2>
+<div class="code">
+  <div class="code-head"><span>Orden recomendado</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-com">/* 1. Variables y tema */</span>
+:<span class="tk-sel">root</span> { … }
+:<span class="tk-sel">root[data-tema="oscuro"]</span> { … }
+
+<span class="tk-com">/* 2. Reseteo y base */</span>
+<span class="tk-sel">*, *::before, *::after</span> { <span class="tk-attr">box-sizing</span>: <span class="tk-val">border-box</span>; }
+<span class="tk-sel">body</span> { … }
+
+<span class="tk-com">/* 3. Componentes (móvil primero) */</span>
+<span class="tk-sel">.cabecera</span> { … }<span class="tk-sel">  .menu</span> { … }<span class="tk-sel">  .boton</span> { … }
+<span class="tk-sel">.hero</span> { … }<span class="tk-sel">  .ventajas</span> { … }<span class="tk-sel">  .galeria</span> { … }<span class="tk-sel">  .contacto</span> { … }<span class="tk-sel">  .pie</span> { … }
+
+<span class="tk-com">/* 4. Escritorio */</span>
+<span class="tk-sel">@media (min-width: 700px)</span> { … }
+<span class="tk-sel">@media (min-width: 1000px)</span> { … }
+
+<span class="tk-com">/* 5. Preferencias del usuario */</span>
+<span class="tk-sel">@media (prefers-reduced-motion: reduce)</span> { … }</code></pre>
+</div>
+
+<h2 id="pasos"><span class="n">4.</span>Paso a paso</h2>
+<h3>Paso 1: variables y base</h3>
+<div class="code">
+  <div class="code-head"><span>Tu punto de partida</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>:<span class="tk-sel">root</span> {
+  <span class="tk-attr">--fondo</span>: <span class="tk-val">#fffaf5</span>;      <span class="tk-attr">--superficie</span>: <span class="tk-val">#ffffff</span>;
+  <span class="tk-attr">--texto</span>: <span class="tk-val">#2b1d14</span>;      <span class="tk-attr">--texto-suave</span>: <span class="tk-val">#6b5648</span>;
+  <span class="tk-attr">--acento</span>: <span class="tk-val">#b45309</span>;     <span class="tk-attr">--borde</span>: <span class="tk-val">#ecdccc</span>;
+  <span class="tk-attr">--radio</span>: <span class="tk-val">14px</span>;         <span class="tk-attr">--espacio</span>: <span class="tk-val">1rem</span>;
+  <span class="tk-attr">--sombra</span>: <span class="tk-val">0 1px 2px rgb(0 0 0 / .06), 0 10px 28px rgb(43 29 20 / .12)</span>;
+}
+<span class="tk-sel">*, *::before, *::after</span> { <span class="tk-attr">box-sizing</span>: <span class="tk-val">border-box</span>; }
+<span class="tk-sel">body</span> { <span class="tk-attr">margin</span>: <span class="tk-val">0</span>; <span class="tk-attr">background</span>: <span class="tk-val">var(--fondo)</span>; <span class="tk-attr">color</span>: <span class="tk-val">var(--texto)</span>; <span class="tk-attr">font</span>: <span class="tk-val">1.0625rem/1.65 system-ui, sans-serif</span>; }</code></pre>
+</div>
+<h3>Paso 2: cabecera pegajosa y menú</h3>
+<p>Una cabecera con la marca a la izquierda y el menú a la derecha (Flexbox), que se queda arriba al desplazar (<code>position: sticky; top: 0; z-index: 10</code>) y con un fondo para que el contenido no se vea debajo.</p>
+<h3>Paso 3: hero</h3>
+<p>Una sección alta (<code>min-height</code>) con un fondo en capas (un degradado y, encima, una capa oscura) y el texto centrado. El título con <code>clamp()</code> y el botón con transición.</p>
+<h3>Paso 4: ventajas y galería</h3>
+<p>En móvil, una columna con <code>gap</code>. A partir de 700px, tres columnas (<code>repeat(3, 1fr)</code>). La galería con <code>repeat(auto-fit, minmax(150px, 1fr))</code> y cada <code>.foto</code> con <code>aspect-ratio: 1</code> y un degradado.</p>
+<h3>Paso 5: contacto y pie</h3>
+<p>El formulario como cuadrícula vertical con <code>gap</code> y campos que ocupan todo el ancho. El pie con <code>display: flex; justify-content: space-between; flex-wrap: wrap</code>.</p>
+<h3>Paso 6: detalles de calidad</h3>
+<ul><li><code>:focus-visible</code> con un contorno claro en enlaces, botones y campos.</li><li>Transiciones suaves en el botón y las tarjetas (<code>transform</code>, <code>box-shadow</code>).</li><li>Tema oscuro con <code>[data-tema="oscuro"]</code> y <code>@media (prefers-color-scheme: dark)</code>.</li><li><code>@media (prefers-reduced-motion: reduce)</code> para quitar el movimiento.</li><li>El enlace «Saltar al contenido» oculto fuera de pantalla hasta recibir el foco.</li></ul>
+
+<h2 id="revision"><span class="n">5.</span>Revisión de calidad</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Revisión</th><th>Cómo comprobarlo</th></tr></thead>
+<tbody><tr><td><strong>Responsivo</strong></td><td>Modo dispositivo de <kbd>F12</kbd>: 320, 375, 768, 1024 y 1440px. Sin desplazamiento horizontal.</td></tr><tr><td><strong>Contraste</strong></td><td>Texto normal ≥ 4.5:1, tanto en tema claro como oscuro.</td></tr><tr><td><strong>Teclado</strong></td><td>Con <kbd>Tab</kbd> todo se alcanza y se ve dónde está el foco. El enlace para saltar aparece.</td></tr><tr><td><strong>Zoom</strong></td><td>Al 200% nada se superpone ni se corta.</td></tr><tr><td><strong>Movimiento</strong></td><td>Con «reducir movimiento» activado, no hay animaciones.</td></tr><tr><td><strong>Rendimiento</strong></td><td>Sin imágenes enormes; sin <code>transition: all</code>; animaciones con <code>transform</code>/<code>opacity</code>.</td></tr><tr><td><strong>Código</strong></td><td>Sin valores repetidos (usa variables), sin <code>!important</code>, selectores cortos.</td></tr></tbody>
+</table></div>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Pásale Lighthouse</p>
+<p>En <kbd>F12</kbd> → <strong>Lighthouse</strong> obtienes una puntuación de rendimiento, accesibilidad y buenas prácticas. Apunta a <strong>90+</strong> en accesibilidad.</p>
+</div>
+
+<h2 id="publicar"><span class="n">6.</span>Publicación y siguientes pasos</h2>
+<p>Cuando tu landing esté lista, tienes dos caminos para mostrarla:</p>
+<ul><li><strong>Publicarla</strong> con GitHub Pages, como se explica en la <a href="../../11-git-y-publicacion/">lección 11 de HTML</a>.</li><li><strong>Ponerla en tu portafolio</strong> con una captura y el enlace al sitio.</li></ul>
+<p>Y para seguir avanzando, el siguiente paso natural es el <strong>curso de JavaScript</strong>: darle comportamiento a esta misma página (un menú móvil que se abre, un botón de tema claro/oscuro, validación del formulario).</p>
+<div class="callout ejemplo">
+<p class="callout-title">🔍 Ejemplo · Retos para ir más allá</p>
+<p>Una vez que cumplas todos los puntos: añade una sección de testimonios con una cuadrícula asimétrica, un efecto de cristal en la cabecera (<code>backdrop-filter</code>), una animación de entrada escalonada en las ventajas, o rediseña todo con otra paleta cambiando solo las variables.</p>
+</div>
+
+<h2 id="errores"><span class="n">7.</span>Errores frecuentes en proyectos completos</h2>
+<ul><li><strong>Empezar por escritorio</strong> y luego sufrir para adaptar a móvil.</li><li><strong>Escribir los colores a mano en cada regla</strong> en lugar de usar variables.</li><li><strong>Usar <code>px</code> fijos</strong> en anchos de contenedores.</li><li><strong>Olvidar el estado <code>:focus-visible</code>.</strong></li><li><strong>No probar entre los puntos de ruptura</strong> (por ejemplo, a 800px).</li><li><strong>Animar <code>width</code>/<code>top</code></strong> en vez de <code>transform</code>.</li><li><strong>Dejar selectores gigantes</strong> como <code>.contenedor .seccion .caja ul li a</code>.</li></ul>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li>Un proyecto CSS se trabaja por capas: <strong>variables → base → móvil → escritorio → detalles</strong>.</li><li>Un sistema de variables (<code>:root</code>) hace que cambiar la paleta o el espaciado sea cuestión de una línea.</li><li>El enfoque <strong>mobile-first</strong> escribe la base para móvil y añade <code>@media (min-width: …)</code>.</li><li>Combina Flexbox (cabecera, pie), Grid (ventajas, galería) y <code>position: sticky</code> para el layout.</li><li>La accesibilidad también es CSS: foco visible, contraste, enlace para saltar y <code>prefers-reduced-motion</code>.</li><li>El modo oscuro se logra redefiniendo variables, con <code>prefers-color-scheme</code> y un atributo para elegir a mano.</li><li>Revisa con el modo dispositivo, el zoom al 200% y Lighthouse antes de publicar.</li><li>El siguiente paso es JavaScript: dar comportamiento a la página.</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">8.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td>Landing page</td><td>Página de aterrizaje: una página pensada para presentar y convertir.</td></tr><tr><td>Hero</td><td>Sección principal y más visible en la parte superior de la página.</td></tr><tr><td>Mobile-first</td><td>Diseñar primero para el móvil y mejorar al crecer la pantalla.</td></tr><tr><td>Sistema de diseño</td><td>Conjunto de decisiones visuales reutilizables (colores, espacios, tipografías).</td></tr><tr><td>Punto de ruptura</td><td>Ancho donde el diseño cambia.</td></tr><tr><td>Lighthouse</td><td>Herramienta del navegador que audita rendimiento, accesibilidad y buenas prácticas.</td></tr><tr><td>BEM</td><td>Convención de nombres de clases: Bloque__Elemento--Modificador.</td></tr><tr><td>Foco visible</td><td>Indicación clara de qué elemento recibe las pulsaciones del teclado.</td></tr></tbody>
+</table></div>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>¿En qué orden conviene construir el CSS de una landing?</p><ul class="opts"><li><button type="button" class="opt">Escritorio, luego móvil</button></li><li><button type="button" class="opt" data-ok>Variables y base, luego móvil y después escritorio</button></li><li><button type="button" class="opt">Animaciones primero</button></li><li><button type="button" class="opt">Da igual</button></li></ul><p class="explain" hidden>Mobile-first es más simple: añades columnas y espacio al crecer la pantalla.</p></div>
+<div class="quiz-q"><p>¿Para qué sirven las variables en un proyecto grande?</p><ul class="opts"><li><button type="button" class="opt">Para que el CSS pese menos</button></li><li><button type="button" class="opt" data-ok>Para cambiar colores, espacios o radios en un solo lugar</button></li><li><button type="button" class="opt">Para evitar escribir selectores</button></li><li><button type="button" class="opt">Para usar JavaScript</button></li></ul><p class="explain" hidden>Un cambio en <code>:root</code> se refleja en todo el sitio.</p></div>
+<div class="quiz-q"><p>¿Qué es lo mínimo que debes hacer por la accesibilidad en CSS?</p><ul class="opts"><li><button type="button" class="opt">Ocultar el contorno de foco</button></li><li><button type="button" class="opt" data-ok>Mantener un foco visible, buen contraste y respetar <code>prefers-reduced-motion</code></button></li><li><button type="button" class="opt">Usar siempre negro sobre blanco</button></li><li><button type="button" class="opt">Quitar las animaciones</button></li></ul><p class="explain" hidden>Sin foco visible, quien usa teclado no sabe dónde está.</p></div>
+<div class="quiz-q"><p>¿Cuál es la mejor forma de comprobar tu diseño en pantallas pequeñas mientras desarrollas?</p><ul class="opts"><li><button type="button" class="opt">Adivinar</button></li><li><button type="button" class="opt" data-ok>El modo dispositivo de las herramientas del navegador</button></li><li><button type="button" class="opt">Imprimirlo</button></li><li><button type="button" class="opt">Dejar que lo pruebe el cliente</button></li></ul><p class="explain" hidden>Con <kbd>F12</kbd> puedes simular cualquier ancho al instante.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="css-P">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../11-variables-y-temas/ejercicio.html"><small>← Anterior</small>Ejercicio: Variables, temas y organización</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de CSS · Proyecto final · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&title=%5BError%5D%20Proyecto%20final%3A%20Proyecto%3A%20landing%20page%20responsiva%20%C2%B7%20Curso%20de%20HTML&pagina=https%3A//cacg-code.github.io/PRACTICAS-HTML/css/proyecto-landing/" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

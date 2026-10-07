@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lección 1: Cómo funciona CSS · Curso de HTML</title>
+  <meta name="description" content="Cómo funciona CSS: la cascada, la herencia, dónde escribir los estilos y cómo depurarlos con las herramientas del navegador.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/css/01-como-funciona/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Lección 1: Cómo funciona CSS · Curso de HTML">
+  <meta property="og:description" content="Cómo funciona CSS: la cascada, la herencia, dónde escribir los estilos y cómo depurarlos con las herramientas del navegador.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/css/01-como-funciona/">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de CSS</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap lesson-layout" id="contenido">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#que-hace">Qué hace CSS y cómo lo lee el navegador</a></li><li><a href="#anatomia">Anatomía de una regla</a></li><li><a href="#donde">Tres formas de añadir CSS</a></li><li><a href="#cascada">La cascada: quién gana</a></li><li><a href="#herencia">Herencia</a></li><li><a href="#navegador">Los estilos por defecto del navegador</a></li><li><a href="#devtools">Las herramientas del navegador: tu mejor aliada</a></li><li><a href="#errores">Errores frecuentes</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de CSS</a> › Lección 1</div>
+        <h1>Cómo funciona CSS</h1>
+        <ul class="meta"><li>⏱ 35 minutos</li><li>📶 Nivel: principiante</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Explicar cómo el navegador combina HTML y CSS para pintar una página.</li><li>Predecir qué regla gana usando la cascada.</li><li>Distinguir qué propiedades se heredan y cuáles no.</li><li>Usar las herramientas del navegador para entender por qué un estilo no se aplica.</li></ul>
+</div>
+
+<h2 id="que-hace"><span class="n">1.</span>Qué hace CSS y cómo lo lee el navegador</h2>
+<p>Cuando abres una página, el navegador hace tres cosas, en este orden:</p>
+<ol class="steps"><li><strong>Lee el HTML</strong> y construye un árbol con todos los elementos (el <em>DOM</em>).</li><li><strong>Lee el CSS</strong> y construye una lista de reglas (el <em>CSSOM</em>).</li><li><strong>Combina ambos</strong>: para cada elemento decide qué reglas le tocan, calcula su aspecto final, lo coloca en la pantalla y lo pinta.</li></ol>
+<p>Ese cálculo se repite si cambias el tamaño de la ventana, pasas el cursor por encima o añades una clase con JavaScript. Por eso un mismo HTML puede verse completamente distinto con otro CSS.</p>
+<div class="demo"><p class="demo-label">Dos archivos, una página</p><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem;text-align:center;font-size:.9rem"><div style="padding:.8rem;border:2px solid #4f46e5;border-radius:10px"><b>HTML</b><br>qué es cada cosa</div><div style="padding:.8rem;border:2px solid #22d3ee;border-radius:10px"><b>CSS</b><br>cómo se ve</div><div style="padding:.8rem;border:2px solid #16a34a;border-radius:10px"><b>Página</b><br>lo que ves</div></div></div>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · Qué sabes de antemano</p>
+<p>Este curso continúa el <a href="../../html/">curso de HTML</a>. Si ya hiciste la <a href="../../07-introduccion-css/">lección 7 de HTML</a>, esta primera lección te sonará, pero aquí vamos a fondo: entenderás <strong>por qué</strong> el navegador elige un estilo y no otro.</p>
+</div>
+
+<h2 id="anatomia"><span class="n">2.</span>Anatomía de una regla</h2>
+<div class="anatomy" role="img" aria-label="Una regla CSS: selector, propiedad y valor"><div class="part" style="--c:#7cc4ff"><span>p</span><span class="lbl">selector</span></div><div class="part" style="--c:#ff8fa3"><span> { </span><span class="lbl">&nbsp;</span></div><div class="part" style="--c:#ffd479"><span>color</span><span class="lbl">propiedad</span></div><div class="part" style="--c:#ff8fa3"><span>: </span><span class="lbl">&nbsp;</span></div><div class="part" style="--c:#8ee6a0"><span>teal</span><span class="lbl">valor</span></div><div class="part" style="--c:#ff8fa3"><span>; }</span><span class="lbl">&nbsp;</span></div></div>
+<ul><li>El <strong>selector</strong> elige los elementos a los que se aplica la regla.</li><li>Las <strong>declaraciones</strong> van entre llaves <code>{ }</code>. Cada una es una pareja <code>propiedad: valor;</code>.</li><li>Un <strong>punto y coma</strong> cierra cada declaración. Olvidarlo rompe la siguiente.</li><li>Los <strong>comentarios</strong> se escriben <code>/* así */</code> y el navegador los ignora.</li></ul>
+<div class="code">
+  <div class="code-head"><span>Dos reglas con comentario</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-com">/* Títulos: color y tamaño */</span>
+<span class="tk-sel">h1</span> {
+  <span class="tk-attr">color</span>: <span class="tk-val">#4f46e5</span>;
+  <span class="tk-attr">font-size</span>: <span class="tk-val">2rem</span>;
+}
+
+<span class="tk-sel">p</span> { <span class="tk-attr">line-height</span>: <span class="tk-val">1.7</span>; }</code></pre>
+</div>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · Si algo no se aplica</p>
+<p>El navegador <strong>no avisa</strong> de los errores de CSS: simplemente ignora la declaración que no entiende. Una propiedad mal escrita (<code>colour</code>), un valor inválido (<code>color: 10px</code>) o un <code>;</code> olvidado hacen que el estilo «no funcione» sin mensaje alguno. Aprenderás a detectarlo con las herramientas del navegador en la sección 7.</p>
+</div>
+
+<h2 id="donde"><span class="n">3.</span>Tres formas de añadir CSS</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Forma</th><th>Ejemplo</th><th>Cuándo usarla</th></tr></thead>
+<tbody><tr><td><strong>Archivo externo</strong></td><td><code>&lt;link rel="stylesheet" href="estilos.css"&gt;</code></td><td><strong>Siempre que puedas.</strong> Un archivo sirve a todas las páginas, se guarda en caché y mantiene el HTML limpio</td></tr><tr><td><strong>Etiqueta <code>&lt;style&gt;</code></strong></td><td><code>&lt;style&gt; p { color: red } &lt;/style&gt;</code></td><td>Pruebas, ejemplos y estilos críticos de una sola página</td></tr><tr><td><strong>Atributo <code>style</code></strong></td><td><code>&lt;p style="color: red"&gt;</code></td><td>Valores que cambian con JavaScript. Evítalo en el resto: no se puede reutilizar y tiene una prioridad muy alta</td></tr></tbody>
+</table></div>
+<div class="code">
+  <div class="code-head"><span>Enlazar CSS desde el head</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">&lt;head</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;meta</span> <span class="tk-attr">charset</span>=<span class="tk-val">"UTF-8"</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;title</span><span class="tk-tag">&gt;</span>Mi página<span class="tk-tag">&lt;/title</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;link</span> <span class="tk-attr">rel</span>=<span class="tk-val">"stylesheet"</span> <span class="tk-attr">href</span>=<span class="tk-val">"css/estilos.css"</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;/head</span><span class="tk-tag">&gt;</span></code></pre>
+</div>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Varios archivos</p>
+<p>Puedes enlazar varios archivos. Se aplican <strong>en el orden en que aparecen</strong>, y un archivo posterior puede cambiar lo que dijo uno anterior. Este mismo curso usa uno solo, <code>assets/estilos.css</code>.</p>
+</div>
+
+<h2 id="cascada"><span class="n">4.</span>La cascada: quién gana</h2>
+<p>Imagina que dos reglas piden cosas distintas para el mismo elemento:</p>
+<div class="code">
+  <div class="code-head"><span>¿De qué color será el título?</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-sel">h1</span> { <span class="tk-attr">color</span>: <span class="tk-val">blue</span>; }
+<span class="tk-sel">h1</span> { <span class="tk-attr">color</span>: <span class="tk-val">red</span>; }</code></pre>
+</div>
+<p>CSS significa <em>Cascading</em> Style Sheets («hojas de estilo <strong>en cascada</strong>») porque tiene reglas para resolver estos conflictos. El navegador revisa tres criterios, <strong>en este orden</strong>:</p>
+<ol class="steps"><li><strong>Importancia y origen.</strong> Las declaraciones con <code>!important</code> ganan a las normales (y los estilos del navegador son los más débiles).</li><li><strong>Especificidad.</strong> Un selector más específico (<code>#portada</code>, <code>.aviso</code>) gana a uno más general (<code>p</code>). La estudiarás a fondo en la próxima lección.</li><li><strong>Orden.</strong> Si todo lo anterior empata, <strong>gana la declaración que aparece después</strong>.</li></ol>
+<p>En el ejemplo, empatan en importancia y especificidad, así que gana la última: el título será <strong>rojo</strong>.</p>
+<div class="playground">
+  <div class="pg-head"><span>✏️ ¿Quién gana?</span><button type="button" data-reset>Restablecer</button></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;style&gt;
+  p { color: blue; }
+  .destacado { color: green; }
+  p { color: red; }
+&lt;/style&gt;
+&lt;p&gt;¿De qué color soy?&lt;/p&gt;
+&lt;p class="destacado"&gt;¿Y yo?&lt;/p&gt;</textarea></div>
+    <div><label>Resultado</label><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div>
+  </div>
+</div>
+<p>Predice el resultado antes de mirar. Después prueba mover las reglas de lugar y observa qué cambia (y qué <strong>no</strong> cambia).</p>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · No uses <code>!important</code> como atajo</p>
+<p><code>!important</code> parece una solución rápida, pero obliga a usar más <code>!important</code> para superarlo, y el código se vuelve imposible de mantener. Reserva su uso para casos muy concretos.</p>
+</div>
+
+<h2 id="herencia"><span class="n">5.</span>Herencia</h2>
+<p>Algunas propiedades <strong>pasan de un elemento a sus hijos</strong> sin que lo pidas. Si pones <code>color: navy</code> en el <code>&lt;body&gt;</code>, todos los textos dentro (párrafos, listas, enlaces…) se verán azules salvo que otra regla diga lo contrario.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Se heredan (texto)</th><th>No se heredan (caja)</th></tr></thead>
+<tbody><tr><td><code>color</code>, <code>font-family</code>, <code>font-size</code>, <code>font-weight</code>, <code>line-height</code>, <code>text-align</code>, <code>letter-spacing</code>, <code>list-style</code>, <code>cursor</code></td><td><code>margin</code>, <code>padding</code>, <code>border</code>, <code>background</code>, <code>width</code>, <code>height</code>, <code>display</code>, <code>position</code></td></tr></tbody>
+</table></div>
+<p>La lógica: si el texto de un contenedor es azul, es natural que lo de dentro también; pero que un párrafo tenga el borde de su contenedor sería absurdo.</p>
+<h3>Controlar la herencia</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>Valor</th><th>Qué hace</th></tr></thead>
+<tbody><tr><td><code>inherit</code></td><td>Fuerza a heredar el valor del padre</td></tr><tr><td><code>initial</code></td><td>Vuelve al valor inicial de CSS (no el del navegador)</td></tr><tr><td><code>unset</code></td><td><code>inherit</code> si la propiedad se hereda; <code>initial</code> si no</td></tr><tr><td><code>revert</code></td><td>Vuelve al estilo por defecto del navegador</td></tr></tbody>
+</table></div>
+<div class="playground">
+  <div class="pg-head"><span>✏️ Herencia en acción</span><button type="button" data-reset>Restablecer</button></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;style&gt;
+  article { color: #4f46e5; font-family: Georgia, serif; border: 2px solid #4f46e5; padding: 12px; }
+  .propio { color: crimson; }
+  .forzado { border: inherit; }
+&lt;/style&gt;
+&lt;article&gt;
+  &lt;p&gt;Hereda el color y la tipografía del artículo.&lt;/p&gt;
+  &lt;p class="propio"&gt;Este define su propio color.&lt;/p&gt;
+  &lt;p class="forzado"&gt;Este hereda el borde (algo que normalmente no pasa).&lt;/p&gt;
+&lt;/article&gt;</textarea></div>
+    <div><label>Resultado</label><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div>
+  </div>
+</div>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Aprovecha la herencia</p>
+<p>Define la tipografía y el color <strong>una sola vez</strong> en <code>body</code> y deja que todo lo herede. Así evitas repetir <code>font-family</code> en cada regla y, si mañana cambias de fuente, es una sola línea.</p>
+</div>
+
+<h2 id="navegador"><span class="n">6.</span>Los estilos por defecto del navegador</h2>
+<p>Aunque no escribas nada de CSS, la página no se ve «vacía»: los títulos son grandes, los párrafos tienen espacio, los enlaces son azules y subrayados. Es la <strong>hoja de estilos del navegador</strong>, y cada navegador tiene la suya con pequeñas diferencias.</p>
+<p>Por eso muchas personas empiezan sus proyectos con un <strong>reseteo</strong> que elimina esas diferencias. Este es uno moderno y breve, suficiente para empezar:</p>
+<div class="code">
+  <div class="code-head"><span>Un reseteo mínimo moderno</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-sel">*, *::before, *::after</span> { <span class="tk-attr">box-sizing</span>: <span class="tk-val">border-box</span>; }
+
+<span class="tk-sel">body</span> { <span class="tk-attr">margin</span>: <span class="tk-val">0</span>; <span class="tk-attr">line-height</span>: <span class="tk-val">1.6</span>; }
+
+<span class="tk-sel">img, video, svg</span> { <span class="tk-attr">max-width</span>: <span class="tk-val">100%</span>; <span class="tk-attr">height</span>: <span class="tk-val">auto</span>; <span class="tk-attr">display</span>: <span class="tk-val">block</span>; }
+
+<span class="tk-sel">input, button, textarea, select</span> { <span class="tk-attr">font</span>: <span class="tk-val">inherit</span>; }</code></pre>
+</div>
+<ul><li><code>box-sizing: border-box</code> hace que el ancho incluya el relleno y el borde (lo verás en la lección 4).</li><li><code>margin: 0</code> en el <code>body</code> elimina el margen de 8 px del navegador.</li><li>Las imágenes nunca serán más anchas que su contenedor.</li><li>Los campos de formulario heredan la tipografía de la página, en lugar de usar la suya.</li></ul>
+
+<h2 id="devtools"><span class="n">7.</span>Las herramientas del navegador: tu mejor aliada</h2>
+<p>Todos los navegadores modernos traen herramientas para <strong>ver y modificar</strong> el CSS de cualquier página. Se abren con <kbd>F12</kbd> (o clic derecho → <strong>Inspeccionar</strong>). Estas son las partes que más usarás:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Parte</th><th>Para qué sirve</th></tr></thead>
+<tbody><tr><td><strong>Elementos</strong></td><td>Ver el HTML y seleccionar un elemento con el icono del cursor</td></tr><tr><td><strong>Estilos</strong></td><td>Ver qué reglas se aplican, <strong>cuáles están tachadas</strong> (perdieron) y editar valores en vivo</td></tr><tr><td><strong>Calculado</strong> (<em>Computed</em>)</td><td>El valor final de cada propiedad después de la cascada</td></tr><tr><td><strong>Modelo de caja</strong></td><td>Un dibujo con el margen, borde, relleno y contenido del elemento</td></tr><tr><td><strong>Modo dispositivo</strong></td><td>Probar la página en pantallas de celular y tableta (<kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>M</kbd>)</td></tr></tbody>
+</table></div>
+<ol class="steps"><li>Haz clic derecho sobre un título de esta misma página y elige <strong>Inspeccionar</strong>.</li><li>En el panel <strong>Estilos</strong>, cambia el valor de <code>color</code> o desmarca una declaración con la casilla.</li><li>Observa cómo cambia la página al instante. Nada se guarda: al recargar vuelve todo como estaba.</li></ol>
+<div class="callout ejemplo">
+<p class="callout-title">🔍 Ejemplo · Un estilo que no se aplica</p>
+<p>Si escribes una regla y no ves efecto, abre las herramientas, selecciona el elemento y busca tu regla. Si aparece <strong>tachada</strong>, otra regla con más prioridad la ganó. Si <strong>no aparece</strong>, el selector no coincide con el elemento. Si aparece con un <strong>triángulo amarillo</strong>, la propiedad o el valor es inválido.</p>
+</div>
+
+<h2 id="errores"><span class="n">8.</span>Errores frecuentes</h2>
+<ul><li><strong>Olvidar <code>;</code> o <code>}</code>:</strong> el resto de reglas puede dejar de funcionar.</li><li><strong>Escribir mal una propiedad o un valor</strong> (<code>colour</code>, <code>font-size: 16</code>, sin unidad).</li><li><strong>Usar <code>id</code> para todo</strong> y luego no poder sobrescribir los estilos.</li><li><strong>Esperar que se herede lo que no se hereda</strong> (por ejemplo, un borde).</li><li><strong>Recargar sin guardar</strong> o con la caché del navegador (usa <kbd>Ctrl</kbd> + <kbd>F5</kbd>).</li><li><strong>La ruta del <code>&lt;link&gt;</code> equivocada:</strong> si ningún estilo cambia, revisa el <code>href</code> y la pestaña Red de las herramientas.</li><li><strong>Usar <code>!important</code> en lugar de entender la cascada.</strong></li></ul>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li>CSS describe <strong>cómo se ve</strong> el HTML; el navegador combina el DOM y el CSSOM para pintar la página.</li><li>Una regla es <code>selector { propiedad: valor; }</code>. Los errores se ignoran sin avisar.</li><li>Lo recomendable es un archivo <code>.css</code> enlazado con <code>&lt;link rel="stylesheet"&gt;</code>.</li><li>Conflictos: la <strong>cascada</strong> decide por importancia, <strong>especificidad</strong> y, al empatar, <strong>orden</strong> (gana lo último).</li><li>La <strong>herencia</strong> pasa propiedades de texto (<code>color</code>, <code>font-*</code>, <code>line-height</code>) a los hijos; las de caja no.</li><li><code>inherit</code>, <code>initial</code>, <code>unset</code> y <code>revert</code> controlan la herencia.</li><li>Un reseteo mínimo elimina diferencias entre navegadores: <code>box-sizing: border-box</code> y <code>margin: 0</code> en <code>body</code>.</li><li>Con <kbd>F12</kbd> inspeccionas, editas en vivo y descubres por qué un estilo no se aplica.</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">9.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td>DOM / CSSOM</td><td>Representaciones internas del HTML y del CSS que el navegador combina para pintar.</td></tr><tr><td>Selector</td><td>Parte de la regla que indica a qué elementos se aplica.</td></tr><tr><td>Declaración</td><td>Pareja <code>propiedad: valor;</code> dentro de las llaves.</td></tr><tr><td>Cascada</td><td>Sistema que decide qué regla gana cuando dos chocan.</td></tr><tr><td>Herencia</td><td>Paso automático de ciertas propiedades de un elemento a sus hijos.</td></tr><tr><td><code>!important</code></td><td>Marca una declaración como prioritaria; úsala con mucha precaución.</td></tr><tr><td>Reseteo</td><td>Conjunto breve de reglas que unifica el punto de partida entre navegadores.</td></tr><tr><td>Computed (calculado)</td><td>El valor final de una propiedad, ya resuelta la cascada.</td></tr></tbody>
+</table></div>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>Dos reglas con el <strong>mismo selector</strong> dan colores distintos al mismo elemento. ¿Cuál gana?</p><ul class="opts"><li><button type="button" class="opt">La primera</button></li><li><button type="button" class="opt" data-ok>La que aparece después</button></li><li><button type="button" class="opt">La más corta</button></li><li><button type="button" class="opt">La que tenga más propiedades</button></li></ul><p class="explain" hidden>Con igual importancia y especificidad, el orden decide: gana la última.</p></div>
+<div class="quiz-q"><p>¿Cuál de estas propiedades <strong>se hereda</strong> por defecto?</p><ul class="opts"><li><button type="button" class="opt"><code>border</code></button></li><li><button type="button" class="opt"><code>margin</code></button></li><li><button type="button" class="opt" data-ok><code>color</code></button></li><li><button type="button" class="opt"><code>background</code></button></li></ul><p class="explain" hidden><code>color</code> y las demás propiedades de texto se heredan; las de caja no.</p></div>
+<div class="quiz-q"><p>Una propiedad en las herramientas aparece <strong>tachada</strong>. ¿Qué significa?</p><ul class="opts"><li><button type="button" class="opt">Es inválida</button></li><li><button type="button" class="opt" data-ok>Otra regla con más prioridad la sobrescribió</button></li><li><button type="button" class="opt">No existe</button></li><li><button type="button" class="opt">Está desactivada por el navegador</button></li></ul><p class="explain" hidden>Una declaración tachada es válida pero perdió ante otra en la cascada.</p></div>
+<div class="quiz-q"><p>¿Cuál es la forma recomendada de añadir CSS a un sitio con varias páginas?</p><ul class="opts"><li><button type="button" class="opt"><code>style</code> en cada etiqueta</button></li><li><button type="button" class="opt" data-ok>Un archivo <code>.css</code> enlazado con <code>&lt;link&gt;</code></button></li><li><button type="button" class="opt">Copiar un <code>&lt;style&gt;</code> en cada página</button></li><li><button type="button" class="opt">Con <code>&lt;font&gt;</code></button></li></ul><p class="explain" hidden>Un archivo externo se escribe una vez, se guarda en caché y lo comparten todas las páginas.</p></div>
+<div class="quiz-q"><p>Escribes <code>colour: red;</code>. ¿Qué hace el navegador?</p><ul class="opts"><li><button type="button" class="opt">Muestra un error en pantalla</button></li><li><button type="button" class="opt">Pinta el texto rojo igualmente</button></li><li><button type="button" class="opt" data-ok>Ignora la declaración sin avisar</button></li><li><button type="button" class="opt">Detiene el resto del CSS</button></li></ul><p class="explain" hidden>Las propiedades desconocidas se descartan en silencio. Por eso conviene inspeccionar con las herramientas.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="css-01">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../"><small>← Volver</small>Índice del curso</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de CSS · Lección 1 · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&title=%5BError%5D%20Lecci%C3%B3n%201%3A%20C%C3%B3mo%20funciona%20CSS%20%C2%B7%20Curso%20de%20HTML&pagina=https%3A//cacg-code.github.io/PRACTICAS-HTML/css/01-como-funciona/" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

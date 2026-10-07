@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lección 11: Variables, temas y organización · Curso de HTML</title>
+  <meta name="description" content="Variables CSS, temas claro y oscuro, funciones (calc, clamp, color-mix), y cómo organizar y mantener tu CSS: BEM, @layer y anidamiento.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/css/11-variables-y-temas/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Lección 11: Variables, temas y organización · Curso de HTML">
+  <meta property="og:description" content="Variables CSS, temas claro y oscuro, funciones (calc, clamp, color-mix), y cómo organizar y mantener tu CSS: BEM, @layer y anidamiento.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/css/11-variables-y-temas/">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de CSS</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap lesson-layout" id="contenido">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#variables">Variables CSS (custom properties)</a></li><li><a href="#sistema">Un sistema de diseño en variables</a></li><li><a href="#oscuro">Modo oscuro con variables</a></li><li><a href="#funciones">Funciones de CSS que conviene dominar</a></li><li><a href="#organizar">Organizar tu CSS</a></li><li><a href="#rendimiento">Buenas prácticas de mantenimiento y rendimiento</a></li><li><a href="#errores">Errores frecuentes</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de CSS</a> › Lección 11</div>
+        <h1>Variables, temas y organización</h1>
+        <ul class="meta"><li>⏱ 45 minutos</li><li>📶 Nivel: principiante</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Crear un sistema de diseño con variables CSS.</li><li>Implementar un tema claro y oscuro sin duplicar estilos.</li><li>Usar <code>calc()</code>, <code>clamp()</code> y <code>color-mix()</code> para valores derivados.</li><li>Organizar y mantener un CSS grande.</li></ul>
+</div>
+
+<h2 id="variables"><span class="n">1.</span>Variables CSS (custom properties)</h2>
+<p>Una <strong>variable CSS</strong> guarda un valor con un nombre para <strong>reutilizarlo</strong> y cambiarlo en un solo lugar. Se declara con dos guiones y se usa con <code>var()</code>:</p>
+<div class="code">
+  <div class="code-head"><span>Declarar y usar</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>:<span class="tk-sel">root</span> {
+  <span class="tk-attr">--color-principal</span>: <span class="tk-val">#4f46e5</span>;
+  <span class="tk-attr">--espacio</span>: <span class="tk-val">1rem</span>;
+  <span class="tk-attr">--radio</span>: <span class="tk-val">12px</span>;
+}
+
+<span class="tk-sel">.boton</span> {
+  <span class="tk-attr">background</span>: <span class="tk-val">var(--color-principal)</span>;
+  <span class="tk-attr">padding</span>: <span class="tk-val">var(--espacio)</span>;
+  <span class="tk-attr">border-radius</span>: <span class="tk-val">var(--radio)</span>;
+}</code></pre>
+</div>
+<ul><li><strong><code>:root</code></strong> es el elemento raíz (<code>html</code>) con mayor alcance: las variables ahí valen <strong>para toda la página</strong>.</li><li>Los nombres <strong>distinguen mayúsculas</strong>: <code>--Color</code> y <code>--color</code> son distintos.</li><li><code>var(--x, valor)</code> admite un <strong>valor de respaldo</strong> si la variable no existe: <code>var(--color, black)</code>.</li><li>A diferencia de las variables de Sass, <strong>las de CSS siguen vivas en el navegador</strong>: se pueden cambiar con JavaScript, en media queries y en estados.</li></ul>
+<h3>Alcance: las variables también «heredan»</h3>
+<div class="playground">
+  <div class="pg-head"><span>✏️ Variables locales</span><button type="button" data-reset>Restablecer</button></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;style&gt;
+  :root { --color: #4f46e5; --radio: 10px; }
+  .caja { background: var(--color); color: #fff; padding: 14px; border-radius: var(--radio); margin: 8px 0; }
+  .especial { --color: #e11d48; }      /* cambia solo dentro de este elemento */
+&lt;/style&gt;
+&lt;div class="caja"&gt;Usa el color de :root&lt;/div&gt;
+&lt;div class="caja especial"&gt;Redefine --color localmente&lt;/div&gt;
+&lt;div class="especial"&gt;&lt;div class="caja"&gt;Y sus descendientes la heredan&lt;/div&gt;&lt;/div&gt;</textarea></div>
+    <div><label>Resultado</label><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div>
+  </div>
+</div>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Nombra por función</p>
+<p>Mejor <code>--color-fondo</code>, <code>--color-texto</code>, <code>--color-acento</code> que <code>--azul</code> o <code>--gris-claro</code>: si mañana el acento pasa a ser verde, el nombre sigue siendo cierto. Es la misma idea que los nombres de clase por función.</p>
+</div>
+
+<h2 id="sistema"><span class="n">2.</span>Un sistema de diseño en variables</h2>
+<p>Con variables puedes definir <strong>todas las decisiones visuales</strong> de un sitio en un solo bloque:</p>
+<div class="code">
+  <div class="code-head"><span>Tokens de diseño</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>:<span class="tk-sel">root</span> {
+  <span class="tk-com">/* color */</span>
+  <span class="tk-attr">--fondo</span>: <span class="tk-val">#f7f8fc</span>;     <span class="tk-attr">--superficie</span>: <span class="tk-val">#ffffff</span>;
+  <span class="tk-attr">--texto</span>: <span class="tk-val">#1e2235</span>;     <span class="tk-attr">--texto-suave</span>: <span class="tk-val">#5b6280</span>;
+  <span class="tk-attr">--acento</span>: <span class="tk-val">#4f46e5</span>;    <span class="tk-attr">--borde</span>: <span class="tk-val">#dde2ef</span>;
+
+  <span class="tk-com">/* espacio y forma */</span>
+  <span class="tk-attr">--e-1</span>: <span class="tk-val">.25rem</span>; <span class="tk-attr">--e-2</span>: <span class="tk-val">.5rem</span>; <span class="tk-attr">--e-3</span>: <span class="tk-val">1rem</span>; <span class="tk-attr">--e-4</span>: <span class="tk-val">2rem</span>;
+  <span class="tk-attr">--radio</span>: <span class="tk-val">12px</span>;
+  <span class="tk-attr">--sombra</span>: <span class="tk-val">0 1px 2px rgb(0 0 0 / .06), 0 8px 24px rgb(0 0 0 / .08)</span>;
+
+  <span class="tk-com">/* tipografía */</span>
+  <span class="tk-attr">--fuente</span>: <span class="tk-val">system-ui, sans-serif</span>;
+  <span class="tk-attr">--t-base</span>: <span class="tk-val">1.0625rem</span>; <span class="tk-attr">--t-grande</span>: <span class="tk-val">1.5rem</span>;
+}
+
+<span class="tk-sel">body</span> { <span class="tk-attr">background</span>: <span class="tk-val">var(--fondo)</span>; <span class="tk-attr">color</span>: <span class="tk-val">var(--texto)</span>; <span class="tk-attr">font</span>: <span class="tk-val">var(--t-base)/1.6 var(--fuente)</span>; }
+<span class="tk-sel">.tarjeta</span> { <span class="tk-attr">background</span>: <span class="tk-val">var(--superficie)</span>; <span class="tk-attr">border</span>: <span class="tk-val">1px solid var(--borde)</span>; <span class="tk-attr">border-radius</span>: <span class="tk-val">var(--radio)</span>; <span class="tk-attr">box-shadow</span>: <span class="tk-val">var(--sombra)</span>; <span class="tk-attr">padding</span>: <span class="tk-val">var(--e-3)</span>; }</code></pre>
+</div>
+<p>Si el cliente pide otro azul o más redondeo, <strong>cambias una línea</strong> y todo el sitio se actualiza.</p>
+
+<h2 id="oscuro"><span class="n">3.</span>Modo oscuro con variables</h2>
+<p>El modo oscuro es el mejor ejemplo del valor de las variables: <strong>solo redefines los colores</strong>; el resto del CSS no se toca. Hay tres piezas:</p>
+<ol class="steps"><li>Define los <strong>colores claros</strong> en <code>:root</code>.</li><li>Redefínelos dentro de <code>@media (prefers-color-scheme: dark)</code> (respeta la preferencia del sistema).</li><li>Añade además <code>[data-tema="oscuro"]</code> para permitir un <strong>botón</strong> que cambie el tema a mano.</li></ol>
+<div class="code">
+  <div class="code-head"><span>Tema claro y oscuro</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>:<span class="tk-sel">root</span> {
+  <span class="tk-attr">--fondo</span>: <span class="tk-val">#f7f8fc</span>;
+  <span class="tk-attr">--texto</span>: <span class="tk-val">#1e2235</span>;
+  <span class="tk-attr">--superficie</span>: <span class="tk-val">#ffffff</span>;
+  <span class="tk-attr">color-scheme</span>: <span class="tk-val">light</span>;
+}
+
+<span class="tk-sel">@media (prefers-color-scheme: dark)</span> {
+<span class="tk-sel">  :root:not([data-tema="claro"])</span> {
+    <span class="tk-attr">--fondo</span>: <span class="tk-val">#0f1222</span>;
+    <span class="tk-attr">--texto</span>: <span class="tk-val">#e8eaf6</span>;
+    <span class="tk-attr">--superficie</span>: <span class="tk-val">#181c33</span>;
+    <span class="tk-attr">color-scheme</span>: <span class="tk-val">dark</span>;
+  }
+}
+
+:<span class="tk-sel">root[data-tema="oscuro"]</span> {
+  <span class="tk-attr">--fondo</span>: <span class="tk-val">#0f1222</span>;
+  <span class="tk-attr">--texto</span>: <span class="tk-val">#e8eaf6</span>;
+  <span class="tk-attr">--superficie</span>: <span class="tk-val">#181c33</span>;
+  <span class="tk-attr">color-scheme</span>: <span class="tk-val">dark</span>;
+}</code></pre>
+</div>
+<ul><li><code>color-scheme: dark</code> hace que los controles nativos (campos, barras de desplazamiento) también se vean oscuros.</li><li>En vez de <strong>invertir</strong> los colores, <strong>diseña</strong> el tema oscuro: usa grises azulados en vez de negro puro y baja un poco la saturación.</li><li>Comprueba el <strong>contraste</strong> en ambos temas.</li></ul>
+<div class="playground">
+  <div class="pg-head"><span>✏️ Cambia entre temas</span><button type="button" data-reset>Restablecer</button></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;style&gt;
+  :root { --fondo: #f7f8fc; --texto: #1e2235; --superficie: #fff; --acento: #4f46e5; color-scheme: light; }
+  [data-tema="oscuro"] { --fondo: #0f1222; --texto: #e8eaf6; --superficie: #181c33; --acento: #a5a2ff; color-scheme: dark; }
+  body { margin: 0; padding: 16px; background: var(--fondo); color: var(--texto); font-family: system-ui; transition: background .3s, color .3s; }
+  .t { background: var(--superficie); border-radius: 12px; padding: 14px; border: 1px solid #8884; }
+  a { color: var(--acento); }
+&lt;/style&gt;
+&lt;body data-tema="claro"&gt;
+  &lt;div class="t"&gt;&lt;strong&gt;Tarjeta&lt;/strong&gt;&lt;p&gt;Cambia &lt;code&gt;data-tema="claro"&lt;/code&gt; por &lt;code&gt;"oscuro"&lt;/code&gt; en la etiqueta body.&lt;/p&gt;&lt;a href="#"&gt;Un enlace&lt;/a&gt;&lt;/div&gt;
+&lt;/body&gt;</textarea></div>
+    <div><label>Resultado</label><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div>
+  </div>
+</div>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · Así funciona el tema de este sitio</p>
+<p>Este curso usa exactamente este patrón: variables en <code>:root</code>, un bloque <code>prefers-color-scheme: dark</code> y un atributo <code>data-theme</code> que cambia el botón «Tema» (con un poco de JavaScript, que verás en el curso de JavaScript).</p>
+</div>
+
+<h2 id="funciones"><span class="n">4.</span>Funciones de CSS que conviene dominar</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Función</th><th>Para qué</th><th>Ejemplo</th></tr></thead>
+<tbody><tr><td><code>calc()</code></td><td>Operar con unidades distintas</td><td><code>width: calc(100% - 2rem)</code></td></tr><tr><td><code>min()</code> / <code>max()</code></td><td>El menor / el mayor de varios valores</td><td><code>width: min(100%, 60ch)</code></td></tr><tr><td><code>clamp()</code></td><td>Valor entre un mínimo y un máximo</td><td><code>font-size: clamp(1rem, 2.5vw, 2rem)</code></td></tr><tr><td><code>var()</code></td><td>Usar una variable</td><td><code>color: var(--acento, #4f46e5)</code></td></tr><tr><td><code>color-mix()</code></td><td>Mezclar colores</td><td><code>color-mix(in srgb, var(--acento) 20%, white)</code></td></tr><tr><td><code>attr()</code></td><td>Leer un atributo HTML</td><td><code>content: attr(data-etiqueta)</code></td></tr><tr><td><code>url()</code>, <code>rgb()</code>, <code>hsl()</code></td><td>Referencias y colores</td><td></td></tr></tbody>
+</table></div>
+<div class="code">
+  <div class="code-head"><span>Derivar colores desde uno solo</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>:<span class="tk-sel">root</span> { <span class="tk-attr">--acento</span>: <span class="tk-val">#4f46e5</span>; }
+
+<span class="tk-sel">.boton</span>       { <span class="tk-attr">background</span>: <span class="tk-val">var(--acento)</span>; }
+<span class="tk-sel">.boton:hover</span> { <span class="tk-attr">background</span>: <span class="tk-val">color-mix(in srgb, var(--acento) 85%, black)</span>; }
+<span class="tk-sel">.suave</span>       { <span class="tk-attr">background</span>: <span class="tk-val">color-mix(in srgb, var(--acento) 12%, white)</span>; }</code></pre>
+</div>
+<div class="playground">
+  <div class="pg-head"><span>✏️ Mezclar colores</span><button type="button" data-reset>Restablecer</button></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;style&gt;
+  :root { --acento: #4f46e5; }
+  .f { display: flex; gap: 8px; }
+  .f div { width: 80px; height: 60px; border-radius: 10px; display: grid; place-items: center; font-size: .75rem; color: #fff; }
+  .a { background: var(--acento); }
+  .b { background: color-mix(in srgb, var(--acento) 80%, black); }
+  .c { background: color-mix(in srgb, var(--acento) 50%, white); color: #1e2235 !important; }
+  .d { background: color-mix(in srgb, var(--acento) 12%, white); color: #1e2235 !important; }
+&lt;/style&gt;
+&lt;div class="f"&gt;&lt;div class="a"&gt;base&lt;/div&gt;&lt;div class="b"&gt;oscuro&lt;/div&gt;&lt;div class="c"&gt;claro&lt;/div&gt;&lt;div class="d"&gt;fondo&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Cambia &lt;code&gt;--acento&lt;/code&gt; y mira cómo toda la familia de tonos se actualiza.&lt;/p&gt;</textarea></div>
+    <div><label>Resultado</label><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div>
+  </div>
+</div>
+
+<h2 id="organizar"><span class="n">5.</span>Organizar tu CSS</h2>
+<p>Un CSS de 20 líneas se entiende solo. Uno de 2000 necesita <strong>orden</strong>. Una estructura que funciona:</p>
+<ol class="steps"><li><strong>Tokens y variables</strong> (<code>:root</code>).</li><li><strong>Reseteo y base</strong>: <code>box-sizing</code>, <code>body</code>, tipografía, enlaces.</li><li><strong>Layout</strong>: contenedores, cuadrículas, cabecera y pie.</li><li><strong>Componentes</strong>: <code>.tarjeta</code>, <code>.boton</code>, <code>.menu</code>… cada uno con su bloque.</li><li><strong>Utilidades y estados</strong>: <code>.oculto</code>, <code>.centrado</code>, variantes.</li><li><strong>Media queries</strong> al final (o junto a cada componente).</li></ol>
+<h3>Nombres: BEM</h3>
+<div class="code">
+  <div class="code-head"><span>Bloque, elemento, modificador</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-sel">.tarjeta</span> { … }                   <span class="tk-com">/* bloque */</span>
+<span class="tk-sel">.tarjeta__titulo</span> { … }           <span class="tk-com">/* elemento */</span>
+<span class="tk-sel">.tarjeta--destacada</span> { … }        <span class="tk-com">/* modificador */</span></code></pre>
+</div>
+<h3>Capas con @layer</h3>
+<p><code>@layer</code> te permite <strong>decidir qué grupo de reglas gana</strong> sin pelear con la especificidad:</p>
+<div class="code">
+  <div class="code-head"><span>Capas de CSS</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>@layer reset, base, componentes, utilidades;
+
+<span class="tk-sel">@layer reset</span>       {<span class="tk-sel"> *, *::before, *::after</span> { <span class="tk-attr">box-sizing</span>: <span class="tk-val">border-box</span>; } }
+<span class="tk-sel">@layer componentes</span> {<span class="tk-sel"> .boton</span> { <span class="tk-attr">background</span>: <span class="tk-val">var(--acento)</span>; } }
+<span class="tk-sel">@layer utilidades</span>  {<span class="tk-sel"> .oculto</span> { <span class="tk-attr">display</span>: <span class="tk-val">none</span>; } }   <span class="tk-com">/* gana a las capas anteriores */</span></code></pre>
+</div>
+<h3>Anidamiento nativo</h3>
+<div class="code">
+  <div class="code-head"><span>Sin Sass</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-sel">.tarjeta</span> {
+  <span class="tk-attr">padding</span>: <span class="tk-val">1rem</span>;
+  <span class="tk-attr">border</span>: <span class="tk-val">1px solid var(--borde)</span>;
+
+<span class="tk-sel">  &amp; h2</span> { <span class="tk-attr">margin-top</span>: <span class="tk-val">0</span>; }
+<span class="tk-sel">  &amp;:hover</span> { <span class="tk-attr">box-shadow</span>: <span class="tk-val">var(--sombra)</span>; }
+<span class="tk-sel">  @media (min-width: 700px)</span> { <span class="tk-attr">padding</span>: <span class="tk-val">2rem</span>; }
+}</code></pre>
+</div>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · ¿Y Sass o Tailwind?</p>
+<p>Muchos proyectos usan preprocesadores (<strong>Sass</strong>) o frameworks (<strong>Tailwind</strong>, <strong>Bootstrap</strong>). Con variables, anidamiento y capas nativas, CSS cubre hoy casi todo lo que Sass ofrecía. Aprender CSS a fondo, como en este curso, te sirve con <strong>cualquiera</strong> de ellos.</p>
+</div>
+
+<h2 id="rendimiento"><span class="n">6.</span>Buenas prácticas de mantenimiento y rendimiento</h2>
+<ul><li><strong>Un solo archivo CSS</strong> para el sitio (o pocos), enlazado en el <code>&lt;head&gt;</code>.</li><li><strong>Evita repetir valores:</strong> si lo escribes tres veces, que sea una variable.</li><li><strong>Selectores simples y cortos;</strong> evita anidar más de 2–3 niveles.</li><li><strong>Comenta el «por qué»</strong>, no el «qué»: <code>/* iOS necesita esto por… */</code>.</li><li><strong>Elimina el CSS que no se usa.</strong> Con las herramientas de desarrollo (pestaña Coverage) puedes detectarlo.</li><li><strong>Minifica en producción</strong> y activa la compresión del servidor.</li><li><strong>Prueba en varios navegadores</strong> y revisa cada propiedad nueva en <a href="https://caniuse.com/" target="_blank" rel="noopener">caniuse.com</a>.</li><li><strong>Usa <code>@supports</code></strong> para ofrecer una alternativa cuando una propiedad moderna no exista.</li></ul>
+<div class="code">
+  <div class="code-head"><span>Alternativa con @supports</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-sel">.galeria</span> { <span class="tk-attr">display</span>: <span class="tk-val">flex</span>; <span class="tk-attr">flex-wrap</span>: <span class="tk-val">wrap</span>; <span class="tk-attr">gap</span>: <span class="tk-val">1rem</span>; }       <span class="tk-com">/* respaldo */</span>
+
+<span class="tk-sel">@supports (display: grid)</span> {
+<span class="tk-sel">  .galeria</span> { <span class="tk-attr">display</span>: <span class="tk-val">grid</span>; <span class="tk-attr">grid-template-columns</span>: <span class="tk-val">repeat(auto-fit, minmax(200px, 1fr))</span>; }
+}</code></pre>
+</div>
+
+<h2 id="errores"><span class="n">7.</span>Errores frecuentes</h2>
+<ul><li><strong>Escribir <code>var(--x)</code> fuera de una propiedad válida</strong> o con un nombre mal escrito: la declaración se descarta sin avisar.</li><li><strong>Declarar variables en un selector que no alcanza a los elementos</strong> que las usan.</li><li><strong>Cambiar a tema oscuro invirtiendo los colores</strong> y dejando un contraste pésimo.</li><li><strong>Olvidar <code>color-scheme: dark</code>:</strong> los campos y barras de desplazamiento siguen claros.</li><li><strong>Variables con nombres según el valor</strong> (<code>--azul</code>) que luego dejan de ser azules.</li><li><strong>Convertir todo en variable:</strong> demasiadas variables hacen el código más difícil de seguir. Solo lo que se repite o puede cambiar.</li><li><strong>No poner un valor de respaldo</strong> en <code>var()</code> cuando la variable la define JavaScript.</li></ul>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li>Las <strong>variables CSS</strong> (<code>--nombre</code>) se declaran en <code>:root</code> y se usan con <code>var(--nombre, respaldo)</code>; se pueden redefinir localmente.</li><li>Un <strong>sistema de diseño</strong> reúne colores, espacios, radios y tipografías en variables para cambiar el sitio entero en una línea.</li><li>El <strong>modo oscuro</strong> redefine solo las variables de color: <code>prefers-color-scheme: dark</code> y un atributo <code>data-tema</code> para elegir a mano; añade <code>color-scheme</code>.</li><li><code>calc()</code>, <code>min()</code>, <code>max()</code>, <code>clamp()</code> y <code>color-mix()</code> ayudan a calcular y derivar valores.</li><li>Ordena el CSS: variables → base → layout → componentes → utilidades → media queries.</li><li>BEM, <code>@layer</code> y el anidamiento nativo evitan batallas de especificidad.</li><li><code>@supports</code> ofrece alternativas cuando una propiedad es nueva.</li><li>Mantén el CSS pequeño: evita duplicados, elimina lo que no uses y minifica.</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">8.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td>Variable CSS</td><td>Valor con nombre (<code>--x</code>) que se reutiliza con <code>var(--x)</code>.</td></tr><tr><td><code>:root</code></td><td>Selector del elemento raíz; ideal para variables globales.</td></tr><tr><td>Token de diseño</td><td>Decisión visual con nombre: color, espacio, radio…</td></tr><tr><td><code>color-scheme</code></td><td>Indica a los controles nativos si el tema es claro u oscuro.</td></tr><tr><td><code>color-mix()</code></td><td>Función que mezcla dos colores en una proporción.</td></tr><tr><td><code>@layer</code></td><td>Agrupa reglas en capas con prioridad explícita.</td></tr><tr><td>BEM</td><td>Convención de nombres: Bloque__Elemento--Modificador.</td></tr><tr><td><code>@supports</code></td><td>Aplica estilos solo si el navegador entiende una propiedad.</td></tr></tbody>
+</table></div>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>¿Cómo se declara y se usa una variable CSS?</p><ul class="opts"><li><button type="button" class="opt"><code>$color: red;</code> y <code>$color</code></button></li><li><button type="button" class="opt" data-ok><code>--color: red;</code> y <code>var(--color)</code></button></li><li><button type="button" class="opt"><code>@color: red;</code> y <code>@color</code></button></li><li><button type="button" class="opt"><code>color = red</code> y <code>color</code></button></li></ul><p class="explain" hidden>Se declara con dos guiones y se usa con <code>var()</code>.</p></div>
+<div class="quiz-q"><p>¿Dónde se declaran normalmente las variables globales?</p><ul class="opts"><li><button type="button" class="opt">En <code>.contenedor</code></button></li><li><button type="button" class="opt" data-ok>En <code>:root</code></button></li><li><button type="button" class="opt">En <code>body &gt; p</code></button></li><li><button type="button" class="opt">En un comentario</button></li></ul><p class="explain" hidden><code>:root</code> es el elemento raíz y las hereda toda la página.</p></div>
+<div class="quiz-q"><p>Para el modo oscuro, lo más práctico con variables es…</p><ul class="opts"><li><button type="button" class="opt">Reescribir todo el CSS</button></li><li><button type="button" class="opt" data-ok>Redefinir solo las variables de color en una media query o con un atributo</button></li><li><button type="button" class="opt">Usar <code>filter: invert(1)</code> en el body</button></li><li><button type="button" class="opt">Duplicar la página</button></li></ul><p class="explain" hidden>Las variables permiten cambiar los colores sin tocar el resto del CSS.</p></div>
+<div class="quiz-q"><p>¿Para qué sirve <code>color-scheme: dark</code>?</p><ul class="opts"><li><button type="button" class="opt">Para oscurecer imágenes</button></li><li><button type="button" class="opt" data-ok>Para que los controles nativos y barras de desplazamiento también se vean oscuros</button></li><li><button type="button" class="opt">Para cambiar la fuente</button></li><li><button type="button" class="opt">No sirve para nada</button></li></ul><p class="explain" hidden>Indica al navegador qué tema usa la página para pintar sus controles.</p></div>
+<div class="quiz-q"><p>¿Qué hace <code>var(--color, black)</code> si <code>--color</code> no existe?</p><ul class="opts"><li><button type="button" class="opt">Da error</button></li><li><button type="button" class="opt" data-ok>Usa <code>black</code> como valor de respaldo</button></li><li><button type="button" class="opt">Deja el elemento sin estilo</button></li><li><button type="button" class="opt">Usa el color del padre</button></li></ul><p class="explain" hidden>El segundo argumento es el valor por defecto.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="css-11">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../10-animaciones/ejercicio.html"><small>← Anterior</small>Ejercicio: Transiciones y animaciones</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de CSS · Lección 11 · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&title=%5BError%5D%20Lecci%C3%B3n%2011%3A%20Variables%2C%20temas%20y%20organizaci%C3%B3n%20%C2%B7%20Curso%20de%20HTML&pagina=https%3A//cacg-code.github.io/PRACTICAS-HTML/css/11-variables-y-temas/" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

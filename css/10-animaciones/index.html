@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lección 10: Transiciones y animaciones · Curso de HTML</title>
+  <meta name="description" content="Transiciones, transformaciones y animaciones CSS: transition, transform, @keyframes, patrones habituales y accesibilidad con prefers-reduced-motion.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/css/10-animaciones/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Lección 10: Transiciones y animaciones · Curso de HTML">
+  <meta property="og:description" content="Transiciones, transformaciones y animaciones CSS: transition, transform, @keyframes, patrones habituales y accesibilidad con prefers-reduced-motion.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/css/10-animaciones/">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de CSS</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap lesson-layout" id="contenido">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#por-que">Para qué sirve el movimiento</a></li><li><a href="#transition">Transiciones</a></li><li><a href="#transform">transform: mover, girar y escalar</a></li><li><a href="#keyframes">Animaciones con @keyframes</a></li><li><a href="#patrones">Patrones de animación frecuentes</a></li><li><a href="#reducido">Accesibilidad: respeta a quien no quiere movimiento</a></li><li><a href="#errores">Errores frecuentes</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de CSS</a> › Lección 10</div>
+        <h1>Transiciones y animaciones</h1>
+        <ul class="meta"><li>⏱ 40 minutos</li><li>📶 Nivel: principiante</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Suavizar cambios de estado con <code>transition</code>.</li><li>Mover, girar y escalar con <code>transform</code> sin afectar al layout.</li><li>Crear animaciones con <code>@keyframes</code>.</li><li>Aplicar buenas prácticas de rendimiento y accesibilidad.</li></ul>
+</div>
+
+<h2 id="por-que"><span class="n">1.</span>Para qué sirve el movimiento</h2>
+<p>Una animación bien hecha <strong>comunica</strong>: confirma que algo se pulsó, guía la mirada, muestra de dónde viene un elemento o indica que algo está cargando. Una animación mal hecha <strong>molesta</strong>: distrae, marea y ralentiza.</p>
+<p>CSS tiene dos herramientas:</p>
+<div class="table-wrap"><table>
+<thead><tr><th><span class="sr-only">Aspecto</span></th><th>Transiciones</th><th>Animaciones</th></tr></thead>
+<tbody><tr><td>Qué hacen</td><td>Pasan <strong>de un estado a otro</strong> de forma suave</td><td>Siguen una <strong>secuencia</strong> de pasos que tú defines</td></tr><tr><td>Se disparan</td><td>Con un <strong>cambio</strong> (hover, foco, clase…)</td><td>Solas, al cargar o al añadir la clase</td></tr><tr><td>Se escriben con</td><td><code>transition</code></td><td><code>@keyframes</code> + <code>animation</code></td></tr><tr><td>Ejemplo</td><td>Un botón que cambia de color al pasar el cursor</td><td>Un indicador de carga que gira sin parar</td></tr></tbody>
+</table></div>
+
+<h2 id="transition"><span class="n">2.</span>Transiciones</h2>
+<div class="code">
+  <div class="code-head"><span>Una transición completa</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-sel">.boton</span> {
+  <span class="tk-attr">background</span>: <span class="tk-val">#4f46e5</span>;
+  <span class="tk-attr">transition</span>: <span class="tk-val">background-color 0.25s ease, transform 0.25s ease</span>;
+}
+<span class="tk-sel">.boton:hover</span> {
+  <span class="tk-attr">background</span>: <span class="tk-val">#3730a3</span>;
+  <span class="tk-attr">transform</span>: <span class="tk-val">translateY(-3px)</span>;
+}</code></pre>
+</div>
+<div class="table-wrap"><table>
+<thead><tr><th>Propiedad</th><th>Qué define</th><th>Ejemplos</th></tr></thead>
+<tbody><tr><td><code>transition-property</code></td><td>Qué propiedad se anima</td><td><code>transform</code>, <code>background-color</code>, <code>all</code></td></tr><tr><td><code>transition-duration</code></td><td>Cuánto dura</td><td><code>200ms</code>, <code>0.3s</code></td></tr><tr><td><code>transition-timing-function</code></td><td>El ritmo</td><td><code>ease</code>, <code>linear</code>, <code>ease-in-out</code>, <code>cubic-bezier(…)</code></td></tr><tr><td><code>transition-delay</code></td><td>Espera antes de empezar</td><td><code>100ms</code></td></tr><tr><td><code>transition</code></td><td>Atajo</td><td><code>transform .25s ease .1s</code></td></tr></tbody>
+</table></div>
+<ul><li><strong>Escribe la transición en el estado base</strong>, no en el <code>:hover</code>: así también funciona al <strong>volver</strong>.</li><li>Dura entre <strong>150 y 300 ms</strong> para interacciones; más largo se siente lento.</li><li>Evita <code>transition: all</code>: anima propiedades que no esperabas y es menos eficiente. Nombra las que quieres.</li></ul>
+<div class="playground">
+  <div class="pg-head"><span>✏️ Tarjeta que se levanta</span><button type="button" data-reset>Restablecer</button></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;style&gt;
+  .tarjeta { width: 220px; padding: 16px; border-radius: 14px; background: #fff; border: 1px solid #dde2ef;
+             box-shadow: 0 1px 2px rgb(0 0 0 / .08);
+             transition: transform .25s ease, box-shadow .25s ease; }
+  .tarjeta:hover { transform: translateY(-6px); box-shadow: 0 14px 30px rgb(0 0 0 / .18); }
+  .boton { margin-top: 14px; padding: 10px 18px; border: 0; border-radius: 10px; background: #4f46e5; color: #fff; cursor: pointer;
+           transition: background-color .2s, transform .1s; }
+  .boton:hover { background: #3730a3; } .boton:active { transform: scale(.96); }
+&lt;/style&gt;
+&lt;div class="tarjeta"&gt;&lt;strong&gt;Pasa el cursor&lt;/strong&gt;&lt;p&gt;Prueba a cambiar la duración o a quitar la transición.&lt;/p&gt;&lt;/div&gt;
+&lt;button class="boton"&gt;Púlsame&lt;/button&gt;</textarea></div>
+    <div><label>Resultado</label><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div>
+  </div>
+</div>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Mismas curvas, mismo carácter</p>
+<p><code>ease-out</code> (empieza rápido y frena) es ideal para <strong>cosas que aparecen</strong>; <code>ease-in</code> (empieza lento y acelera) para <strong>cosas que se van</strong>. Mantén las mismas curvas y duraciones en todo el sitio: da coherencia.</p>
+</div>
+
+<h2 id="transform"><span class="n">3.</span>transform: mover, girar y escalar</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Función</th><th>Efecto</th><th>Ejemplo</th></tr></thead>
+<tbody><tr><td><code>translate(x, y)</code></td><td>Mueve (sin afectar al layout)</td><td><code>translate(10px, -4px)</code>, <code>translateY(-50%)</code></td></tr><tr><td><code>rotate(ángulo)</code></td><td>Gira</td><td><code>rotate(45deg)</code></td></tr><tr><td><code>scale(n)</code></td><td>Cambia el tamaño</td><td><code>scale(1.1)</code>, <code>scale(.9)</code></td></tr><tr><td><code>skew(ángulo)</code></td><td>Inclina</td><td><code>skewX(-10deg)</code></td></tr><tr><td><code>transform-origin</code></td><td>El punto alrededor del que se transforma</td><td><code>top left</code>, <code>50% 100%</code></td></tr></tbody>
+</table></div>
+<p>Se pueden <strong>combinar</strong> separándolas con espacios: <code>transform: translateY(-4px) rotate(3deg) scale(1.05)</code>. El <strong>orden</strong> importa: se aplican de derecha a izquierda.</p>
+<div class="playground">
+  <div class="pg-head"><span>✏️ Transformaciones</span><button type="button" data-reset>Restablecer</button></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;style&gt;
+  .fila { display: flex; gap: 28px; padding: 24px 12px; flex-wrap: wrap; }
+  .c { width: 70px; height: 70px; background: #4f46e5; border-radius: 12px; color: #fff; display: grid; place-items: center; font-size: .8rem; transition: transform .4s; }
+  .t:hover { transform: translateY(-14px); } .r:hover { transform: rotate(45deg); } .s:hover { transform: scale(1.3); }
+  .k:hover { transform: skewX(-15deg); } .o { transform-origin: top left; } .o:hover { transform: rotate(25deg); }
+&lt;/style&gt;
+&lt;div class="fila"&gt;&lt;div class="c t"&gt;mover&lt;/div&gt;&lt;div class="c r"&gt;girar&lt;/div&gt;&lt;div class="c s"&gt;escalar&lt;/div&gt;&lt;div class="c k"&gt;inclinar&lt;/div&gt;&lt;div class="c o"&gt;origen&lt;/div&gt;&lt;/div&gt;</textarea></div>
+    <div><label>Resultado</label><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div>
+  </div>
+</div>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · Por qué <code>transform</code> y no <code>top</code>/<code>left</code></p>
+<p><code>transform</code> y <code>opacity</code> se animan <strong>en la tarjeta gráfica</strong>, sin recalcular el layout: son fluidos incluso en celulares. Animar <code>top</code>, <code>left</code>, <code>width</code> o <code>margin</code> obliga al navegador a recolocar la página en cada fotograma. <strong>Prefiere siempre <code>transform</code> y <code>opacity</code>.</strong></p>
+</div>
+
+<h2 id="keyframes"><span class="n">4.</span>Animaciones con @keyframes</h2>
+<p>Una animación tiene dos partes: <strong>defines los pasos</strong> con <code>@keyframes</code> y <strong>la aplicas</strong> con <code>animation</code>.</p>
+<div class="code">
+  <div class="code-head"><span>Un fundido con deslizamiento</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-sel">@keyframes aparecer</span> {
+<span class="tk-sel">  from</span> { <span class="tk-attr">opacity</span>: <span class="tk-val">0</span>; <span class="tk-attr">transform</span>: <span class="tk-val">translateY(12px)</span>; }
+<span class="tk-sel">  to</span>   { <span class="tk-attr">opacity</span>: <span class="tk-val">1</span>; <span class="tk-attr">transform</span>: <span class="tk-val">none</span>; }
+}
+
+<span class="tk-sel">.aviso</span> {
+  <span class="tk-attr">animation</span>: <span class="tk-val">aparecer 0.5s ease-out both</span>;
+}</code></pre>
+</div>
+<div class="code">
+  <div class="code-head"><span>Pasos intermedios con porcentajes</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-sel">@keyframes latido</span> {
+<span class="tk-sel">  0%, 100%</span> { <span class="tk-attr">transform</span>: <span class="tk-val">scale(1)</span>; }
+<span class="tk-sel">  50%</span>      { <span class="tk-attr">transform</span>: <span class="tk-val">scale(1.25)</span>; }
+}
+<span class="tk-sel">.latido</span> { <span class="tk-attr">animation</span>: <span class="tk-val">latido 1.2s ease-in-out infinite</span>; }</code></pre>
+</div>
+<div class="table-wrap"><table>
+<thead><tr><th>Propiedad</th><th>Qué define</th><th>Valores</th></tr></thead>
+<tbody><tr><td><code>animation-name</code></td><td>Qué <code>@keyframes</code> usar</td><td><code>aparecer</code></td></tr><tr><td><code>animation-duration</code></td><td>Duración de un ciclo</td><td><code>1s</code></td></tr><tr><td><code>animation-timing-function</code></td><td>El ritmo</td><td><code>ease</code>, <code>linear</code>, <code>steps(4)</code></td></tr><tr><td><code>animation-delay</code></td><td>Espera inicial</td><td><code>.2s</code></td></tr><tr><td><code>animation-iteration-count</code></td><td>Cuántas veces</td><td><code>1</code>, <code>3</code>, <code>infinite</code></td></tr><tr><td><code>animation-direction</code></td><td>Sentido</td><td><code>normal</code>, <code>reverse</code>, <code>alternate</code></td></tr><tr><td><code>animation-fill-mode</code></td><td>Qué pasa antes y después</td><td><code>forwards</code>, <code>backwards</code>, <code>both</code></td></tr><tr><td><code>animation-play-state</code></td><td>Pausar o reanudar</td><td><code>paused</code>, <code>running</code></td></tr><tr><td><code>animation</code></td><td>Atajo</td><td><code>latido 1.2s ease-in-out infinite</code></td></tr></tbody>
+</table></div>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · <code>animation-fill-mode</code></p>
+<p>Sin <code>both</code> (o <code>backwards</code>), un elemento con <code>animation-delay</code> se ve <strong>ya en su estado final</strong> antes de empezar y luego «salta» al inicio. Con <code>forwards</code> (o <code>both</code>) conserva el estado final al terminar en vez de volver al principio.</p>
+</div>
+<div class="playground">
+  <div class="pg-head"><span>✏️ Tres animaciones</span><button type="button" data-reset>Restablecer</button></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;style&gt;
+  @keyframes aparecer { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+  @keyframes latido { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.25); } }
+  @keyframes girar { to { transform: rotate(360deg); } }
+  .fila { display: flex; gap: 30px; align-items: center; padding: 16px; }
+  .aviso { background: #eef2ff; padding: 10px 14px; border-radius: 10px; animation: aparecer .6s ease-out both; }
+  .corazon { font-size: 2rem; color: #e11d48; animation: latido 1.2s ease-in-out infinite; }
+  .spinner { width: 36px; height: 36px; border: 4px solid #c7d2fe; border-top-color: #4f46e5; border-radius: 50%; animation: girar .8s linear infinite; }
+&lt;/style&gt;
+&lt;div class="fila"&gt;&lt;div class="aviso"&gt;Aparezco&lt;/div&gt;&lt;div class="corazon"&gt;♥&lt;/div&gt;&lt;div class="spinner" role="status" aria-label="Cargando"&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Recarga el resultado con «Restablecer» para ver otra vez la entrada.&lt;/p&gt;</textarea></div>
+    <div><label>Resultado</label><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div>
+  </div>
+</div>
+
+<h2 id="patrones"><span class="n">5.</span>Patrones de animación frecuentes</h2>
+<h3>Entrada escalonada</h3>
+<div class="code">
+  <div class="code-head"><span>Cada elemento aparece un poco después</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-sel">.lista li</span> {
+  <span class="tk-attr">animation</span>: <span class="tk-val">aparecer .5s ease-out both</span>;
+  <span class="tk-attr">animation-delay</span>: <span class="tk-val">calc(var(--i) * 80ms)</span>;      <span class="tk-com">/* --i: 0, 1, 2… desde el HTML o JS */</span>
+}</code></pre>
+</div>
+<h3>Subrayado que crece</h3>
+<div class="code">
+  <div class="code-head"><span>Un enlace con detalle</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-sel">.enlace</span> { <span class="tk-attr">position</span>: <span class="tk-val">relative</span>; <span class="tk-attr">text-decoration</span>: <span class="tk-val">none</span>; }
+<span class="tk-sel">.enlace::after</span> {
+  <span class="tk-attr">content</span>: <span class="tk-val">""</span>; <span class="tk-attr">position</span>: <span class="tk-val">absolute</span>; <span class="tk-attr">left</span>: <span class="tk-val">0</span>; <span class="tk-attr">bottom</span>: <span class="tk-val">-2px</span>; <span class="tk-attr">height</span>: <span class="tk-val">2px</span>; <span class="tk-attr">width</span>: <span class="tk-val">100%</span>;
+  <span class="tk-attr">background</span>: <span class="tk-val">currentColor</span>;
+  <span class="tk-attr">transform</span>: <span class="tk-val">scaleX(0)</span>; <span class="tk-attr">transform-origin</span>: <span class="tk-val">left</span>;
+  <span class="tk-attr">transition</span>: <span class="tk-val">transform .25s ease</span>;
+}
+<span class="tk-sel">.enlace:hover::after</span> { <span class="tk-attr">transform</span>: <span class="tk-val">scaleX(1)</span>; }</code></pre>
+</div>
+<h3>Desplazamiento suave</h3>
+<div class="code">
+  <div class="code-head"><span>Navegación interna fluida</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-sel">html</span> { <span class="tk-attr">scroll-behavior</span>: <span class="tk-val">smooth</span>; }</code></pre>
+</div>
+<div class="playground">
+  <div class="pg-head"><span>✏️ Subrayado que crece</span><button type="button" data-reset>Restablecer</button></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;style&gt;
+  .enlace { position: relative; text-decoration: none; color: #4f46e5; font-weight: 700; font-size: 1.2rem; }
+  .enlace::after { content: ""; position: absolute; left: 0; bottom: -3px; height: 3px; width: 100%; background: currentColor;
+                   transform: scaleX(0); transform-origin: left; transition: transform .3s ease; }
+  .enlace:hover::after, .enlace:focus-visible::after { transform: scaleX(1); }
+&lt;/style&gt;
+&lt;p&gt;&lt;a class="enlace" href="#"&gt;Pasa el cursor o usa Tab&lt;/a&gt;&lt;/p&gt;</textarea></div>
+    <div><label>Resultado</label><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div>
+  </div>
+</div>
+
+<h2 id="reducido"><span class="n">6.</span>Accesibilidad: respeta a quien no quiere movimiento</h2>
+<p>Para algunas personas (con trastornos vestibulares, migrañas o epilepsia) el movimiento causa <strong>mareo o malestar</strong>. Los sistemas operativos tienen un ajuste «reducir movimiento» y CSS puede leerlo:</p>
+<div class="code">
+  <div class="code-head"><span>Apagar las animaciones cuando se pide</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-sel">@media (prefers-reduced-motion: reduce)</span> {
+<span class="tk-sel">  *, *::before, *::after</span> {
+    <span class="tk-attr">animation-duration</span>: <span class="tk-val">0.01ms !important</span>;
+    <span class="tk-attr">animation-iteration-count</span>: <span class="tk-val">1 !important</span>;
+    <span class="tk-attr">transition-duration</span>: <span class="tk-val">0.01ms !important</span>;
+    <span class="tk-attr">scroll-behavior</span>: <span class="tk-val">auto !important</span>;
+  }
+}</code></pre>
+</div>
+<ul><li><strong>Nada de parpadeos</strong> rápidos (más de 3 por segundo).</li><li>Las animaciones que se repiten sin fin deben poder <strong>pausarse</strong>.</li><li>No uses el movimiento como <strong>única</strong> forma de comunicar algo.</li><li>Una animación no debe retrasar una acción que la persona quiere hacer.</li></ul>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · Este mismo sitio lo hace</p>
+<p>Todas las animaciones de este curso se desactivan si tu sistema pide reducir movimiento. Pruébalo activando esa opción en la configuración de tu sistema.</p>
+</div>
+
+<h2 id="errores"><span class="n">7.</span>Errores frecuentes</h2>
+<ul><li><strong>Animar <code>width</code>, <code>height</code>, <code>top</code> o <code>left</code>:</strong> provoca tirones. Usa <code>transform</code>.</li><li><strong>Escribir la transición solo en <code>:hover</code>:</strong> la ida es suave pero la vuelta, brusca.</li><li><strong><code>transition: all</code></strong> en todo: efectos inesperados y gasto de rendimiento.</li><li><strong>Duraciones demasiado largas</strong> (1s para un botón).</li><li><strong>Olvidar <code>animation-fill-mode</code></strong> y ver saltos.</li><li><strong><code>display: none</code> ↔ <code>display: block</code>:</strong> no se puede animar; usa <code>opacity</code> + <code>visibility</code>, o <code>@starting-style</code> en navegadores modernos.</li><li><strong>Ignorar <code>prefers-reduced-motion</code>.</strong></li></ul>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li>Las <strong>transiciones</strong> suavizan un cambio de estado; las <strong>animaciones</strong> siguen una secuencia con <code>@keyframes</code>.</li><li>Escribe <code>transition</code> en el estado <strong>base</strong>, nombra las propiedades y usa 150–300 ms.</li><li><code>transform</code> (<code>translate</code>, <code>rotate</code>, <code>scale</code>, <code>skew</code>) y <code>opacity</code> son las propiedades fluidas: evita animar <code>top</code>, <code>left</code> o <code>width</code>.</li><li><code>@keyframes</code> define pasos (<code>from</code>/<code>to</code> o porcentajes); <code>animation</code> los aplica.</li><li><code>infinite</code>, <code>alternate</code> y <code>animation-fill-mode: both</code> controlan repetición, sentido y estado final/inicial.</li><li>Con <code>calc(var(--i) * 80ms)</code> se logra una entrada escalonada.</li><li>Respeta <code>@media (prefers-reduced-motion: reduce)</code> y evita parpadeos.</li><li><code>scroll-behavior: smooth</code> suaviza el desplazamiento interno.</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">8.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td>Transición</td><td>Cambio gradual entre dos estados de una propiedad.</td></tr><tr><td><code>@keyframes</code></td><td>Regla que define los pasos de una animación.</td></tr><tr><td><code>transform</code></td><td>Mueve, gira, escala o inclina un elemento sin alterar el layout.</td></tr><tr><td>Función de ritmo (timing)</td><td>Curva de aceleración: <code>ease</code>, <code>linear</code>, <code>cubic-bezier()</code>.</td></tr><tr><td><code>animation-fill-mode</code></td><td>Qué estilos se aplican antes y después de la animación.</td></tr><tr><td><code>prefers-reduced-motion</code></td><td>Preferencia del sistema para reducir el movimiento.</td></tr><tr><td>Fotograma (frame)</td><td>Cada imagen que se pinta; lo ideal son 60 por segundo.</td></tr><tr><td>Aceleración por hardware</td><td>Procesado en la GPU, típico de <code>transform</code> y <code>opacity</code>.</td></tr></tbody>
+</table></div>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>¿Dónde conviene escribir <code>transition</code> para que funcione también al volver?</p><ul class="opts"><li><button type="button" class="opt">En el estado <code>:hover</code></button></li><li><button type="button" class="opt" data-ok>En el estado base del elemento</button></li><li><button type="button" class="opt">En el <code>body</code></button></li><li><button type="button" class="opt">En un <code>@media</code></button></li></ul><p class="explain" hidden>En el estado base la transición se aplica al ir <strong>y</strong> al volver.</p></div>
+<div class="quiz-q"><p>¿Cuáles son las propiedades más fluidas para animar?</p><ul class="opts"><li><button type="button" class="opt"><code>width</code> y <code>height</code></button></li><li><button type="button" class="opt"><code>top</code> y <code>left</code></button></li><li><button type="button" class="opt" data-ok><code>transform</code> y <code>opacity</code></button></li><li><button type="button" class="opt"><code>margin</code> y <code>padding</code></button></li></ul><p class="explain" hidden>Se procesan en la tarjeta gráfica sin recalcular el layout.</p></div>
+<div class="quiz-q"><p>¿Qué hace <code>animation-iteration-count: infinite</code>?</p><ul class="opts"><li><button type="button" class="opt">La animación dura mucho</button></li><li><button type="button" class="opt" data-ok>Se repite sin parar</button></li><li><button type="button" class="opt">No se detiene al pasar el cursor</button></li><li><button type="button" class="opt">Empieza sola</button></li></ul><p class="explain" hidden>Repite el ciclo indefinidamente.</p></div>
+<div class="quiz-q"><p>¿Para qué sirve <code>@media (prefers-reduced-motion: reduce)</code>?</p><ul class="opts"><li><button type="button" class="opt">Para acelerar las animaciones</button></li><li><button type="button" class="opt" data-ok>Para ajustar o quitar el movimiento cuando la persona lo pide</button></li><li><button type="button" class="opt">Para pausar videos</button></li><li><button type="button" class="opt">Para cambiar el tema</button></li></ul><p class="explain" hidden>Respeta a quien se marea o molesta con el movimiento.</p></div>
+<div class="quiz-q"><p>Un elemento con <code>animation-delay</code> se ve en su estado final antes de empezar y luego salta. ¿Qué falta?</p><ul class="opts"><li><button type="button" class="opt" data-ok><code>animation-fill-mode: backwards</code> (o <code>both</code>)</button></li><li><button type="button" class="opt"><code>display: block</code></button></li><li><button type="button" class="opt"><code>z-index</code></button></li><li><button type="button" class="opt"><code>transition</code></button></li></ul><p class="explain" hidden><code>backwards</code> aplica el primer fotograma durante el retraso; <code>both</code> además conserva el último al final.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="css-10">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../09-fondos-y-efectos/ejercicio.html"><small>← Anterior</small>Ejercicio: Fondos, bordes, sombras y degradados</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de CSS · Lección 10 · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&title=%5BError%5D%20Lecci%C3%B3n%2010%3A%20Transiciones%20y%20animaciones%20%C2%B7%20Curso%20de%20HTML&pagina=https%3A//cacg-code.github.io/PRACTICAS-HTML/css/10-animaciones/" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

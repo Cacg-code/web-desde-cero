@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lección 3: Color, unidades y tipografía · Curso de HTML</title>
+  <meta name="description" content="Color, unidades y tipografía en CSS: hsl, rem, pilas de fuentes, legibilidad, Google Fonts, @font-face y clamp().">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/css/03-color-y-texto/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Lección 3: Color, unidades y tipografía · Curso de HTML">
+  <meta property="og:description" content="Color, unidades y tipografía en CSS: hsl, rem, pilas de fuentes, legibilidad, Google Fonts, @font-face y clamp().">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/css/03-color-y-texto/">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de CSS</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap lesson-layout" id="contenido">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#colores">Formas de escribir un color</a></li><li><a href="#unidades">Unidades: absolutas y relativas</a></li><li><a href="#fuentes">Tipografía: las propiedades que importan</a></li><li><a href="#legibilidad">Un texto cómodo de leer</a></li><li><a href="#web">Fuentes web: Google Fonts y @font-face</a></li><li><a href="#clamp">Texto que se adapta: clamp()</a></li><li><a href="#errores">Errores frecuentes</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de CSS</a> › Lección 3</div>
+        <h1>Color, unidades y tipografía</h1>
+        <ul class="meta"><li>⏱ 40 minutos</li><li>📶 Nivel: principiante</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Elegir y ajustar colores con <code>hsl()</code> y transparencia.</li><li>Usar la unidad correcta en cada caso (<code>rem</code>, <code>px</code>, <code>%</code>, <code>vw</code>, <code>ch</code>).</li><li>Dar un aspecto cómodo y legible al texto.</li><li>Cargar fuentes web con buen rendimiento y crear tamaños fluidos con <code>clamp()</code>.</li></ul>
+</div>
+
+<h2 id="colores"><span class="n">1.</span>Formas de escribir un color</h2>
+<p>CSS ofrece varias notaciones para el mismo color. Todas funcionan; cada una es cómoda para algo distinto:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Formato</th><th>Ejemplo</th><th>Cuándo usarlo</th></tr></thead>
+<tbody><tr><td><strong>Nombre</strong></td><td><code>crimson</code>, <code>teal</code>, <code>tomato</code></td><td>Pruebas rápidas (hay 140 nombres)</td></tr><tr><td><strong>Hexadecimal</strong></td><td><code>#4f46e5</code>, <code>#fff</code>, <code>#4f46e580</code></td><td>El más común; lo dan las herramientas de diseño</td></tr><tr><td><strong>RGB</strong></td><td><code>rgb(79 70 229)</code>, <code>rgb(79 70 229 / 50%)</code></td><td>Cuando necesitas transparencia</td></tr><tr><td><strong>HSL</strong></td><td><code>hsl(243 75% 59%)</code></td><td><strong>El más fácil de ajustar a mano</strong>: tono, saturación, luminosidad</td></tr><tr><td><strong>currentColor</strong></td><td><code>border: 1px solid currentColor</code></td><td>Reutiliza el color del texto del elemento</td></tr><tr><td><strong>transparent</strong></td><td><code>background: transparent</code></td><td>Sin color</td></tr></tbody>
+</table></div>
+<p><strong>HSL</strong> merece atención: el primer número es el <strong>tono</strong> (0–360, la rueda de colores), el segundo la <strong>saturación</strong> (0% gris, 100% vivo) y el tercero la <strong>luminosidad</strong> (0% negro, 100% blanco). Para hacer un tono más claro u oscuro solo cambias el último número.</p>
+<div class="playground">
+  <div class="pg-head"><span>✏️ Experimenta con HSL</span><button type="button" data-reset>Restablecer</button></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;style&gt;
+  .fila { display: flex; gap: 8px; margin: 8px 0; }
+  .c { width: 64px; height: 64px; border-radius: 10px; }
+  .a { background: hsl(243 75% 30%); }
+  .b { background: hsl(243 75% 45%); }
+  .d { background: hsl(243 75% 59%); }
+  .e { background: hsl(243 75% 75%); }
+  .f { background: hsl(243 75% 90%); }
+  .g { background: hsl(243 75% 59% / 40%); }
+&lt;/style&gt;
+&lt;p&gt;Mismo tono, distinta luminosidad:&lt;/p&gt;
+&lt;div class="fila"&gt;&lt;div class="c a"&gt;&lt;/div&gt;&lt;div class="c b"&gt;&lt;/div&gt;&lt;div class="c d"&gt;&lt;/div&gt;&lt;div class="c e"&gt;&lt;/div&gt;&lt;div class="c f"&gt;&lt;/div&gt;&lt;div class="c g"&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Cambia el &lt;b&gt;243&lt;/b&gt; por 0 (rojo), 120 (verde) o 30 (naranja).&lt;/p&gt;</textarea></div>
+    <div><label>Resultado</label><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div>
+  </div>
+</div>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · Contraste</p>
+<p>Un color bonito no sirve si el texto no se lee. Recuerda el mínimo de contraste: <strong>4.5 : 1</strong> para texto normal. Puedes comprobarlo con el <a href="../../09-accesibilidad/#contraste">comprobador de la lección de accesibilidad</a>.</p>
+</div>
+
+<h2 id="unidades"><span class="n">2.</span>Unidades: absolutas y relativas</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Unidad</th><th>Relativa a…</th><th>Úsala para…</th></tr></thead>
+<tbody><tr><td><code>px</code></td><td>Nada (píxel de pantalla)</td><td>Bordes finos, sombras, detalles que no deben escalar</td></tr><tr><td><code>rem</code></td><td>Tamaño de letra de la <strong>raíz</strong> (<code>html</code>, normalmente 16px)</td><td><strong>Tamaños de texto y espacios</strong>: respeta la preferencia de la persona</td></tr><tr><td><code>em</code></td><td>Tamaño de letra del <strong>propio elemento</strong></td><td>Espacios que deben crecer con el texto (botones)</td></tr><tr><td><code>%</code></td><td>La propiedad del <strong>padre</strong></td><td>Anchos fluidos</td></tr><tr><td><code>vw</code> / <code>vh</code></td><td>1% del ancho / alto de la ventana</td><td>Secciones a pantalla completa, texto fluido</td></tr><tr><td><code>dvh</code></td><td>Alto visible real en móvil (descuenta la barra del navegador)</td><td>Mejor que <code>vh</code> en celulares</td></tr><tr><td><code>ch</code></td><td>Ancho del carácter «0»</td><td>Limitar el ancho de un texto a ~65 caracteres</td></tr><tr><td><code>fr</code></td><td>Fracción del espacio libre (Grid)</td><td>Columnas flexibles</td></tr></tbody>
+</table></div>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · La regla práctica</p>
+<p>Texto y espacios: <strong><code>rem</code></strong>. Bordes y sombras: <strong><code>px</code></strong>. Anchos fluidos: <strong><code>%</code></strong>, <code>fr</code> o <code>min()</code>/<code>clamp()</code>. Si alguien aumenta el tamaño de letra de su navegador, solo lo que está en <code>rem</code> se agranda.</p>
+</div>
+<div class="playground">
+  <div class="pg-head"><span>✏️ rem frente a px</span><button type="button" data-reset>Restablecer</button></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;style&gt;
+  html { font-size: 20px; } /* cambia a 12px, 16px, 24px */
+  .px  { font-size: 16px; }
+  .rem { font-size: 1rem; }
+  .em  { font-size: 1.5em; }
+&lt;/style&gt;
+&lt;p class="px"&gt;Texto en 16px: no cambia&lt;/p&gt;
+&lt;p class="rem"&gt;Texto en 1rem: sigue a html&lt;/p&gt;
+&lt;p class="em"&gt;Texto en 1.5em: relativo a su padre&lt;/p&gt;</textarea></div>
+    <div><label>Resultado</label><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div>
+  </div>
+</div>
+<p>Cambia el <code>font-size</code> de <code>html</code> y observa qué textos se mueven. Esto es lo que ocurre cuando una persona ajusta el tamaño de texto en su navegador.</p>
+
+<h2 id="fuentes"><span class="n">3.</span>Tipografía: las propiedades que importan</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Propiedad</th><th>Qué controla</th><th>Valores útiles</th></tr></thead>
+<tbody><tr><td><code>font-family</code></td><td>La familia de letra (con alternativas)</td><td><code>system-ui, sans-serif</code></td></tr><tr><td><code>font-size</code></td><td>Tamaño</td><td><code>1rem</code>, <code>1.25rem</code>, <code>clamp(1rem, 2.5vw, 1.5rem)</code></td></tr><tr><td><code>font-weight</code></td><td>Grosor</td><td><code>400</code> (normal), <code>600</code>, <code>700</code> (negrita)</td></tr><tr><td><code>font-style</code></td><td>Cursiva</td><td><code>italic</code>, <code>normal</code></td></tr><tr><td><code>line-height</code></td><td>Altura de línea</td><td><code>1.6</code> <strong>sin unidad</strong> para texto corrido</td></tr><tr><td><code>letter-spacing</code></td><td>Espacio entre letras</td><td><code>0.05em</code> en mayúsculas, <code>-0.02em</code> en titulares grandes</td></tr><tr><td><code>text-align</code></td><td>Alineación</td><td><code>left</code>, <code>center</code>, <code>right</code>, <code>justify</code></td></tr><tr><td><code>text-transform</code></td><td>Mayúsculas y minúsculas</td><td><code>uppercase</code>, <code>capitalize</code></td></tr><tr><td><code>text-decoration</code></td><td>Subrayado, tachado</td><td><code>none</code>, <code>underline</code>, <code>line-through</code></td></tr><tr><td><code>text-wrap</code></td><td>Reparto de líneas</td><td><code>balance</code> en titulares, <code>pretty</code> en párrafos</td></tr><tr><td><code>white-space</code></td><td>Saltos y espacios</td><td><code>nowrap</code>, <code>pre-wrap</code></td></tr></tbody>
+</table></div>
+<h3>Pilas de fuentes (font-family)</h3>
+<p>Escribes <strong>varias</strong> familias, de preferida a alternativa. El navegador usa la primera que tenga. Termina siempre con una <strong>familia genérica</strong>: <code>serif</code>, <code>sans-serif</code>, <code>monospace</code>, <code>system-ui</code>.</p>
+<div class="code">
+  <div class="code-head"><span>Tres pilas útiles</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-sel">body</span> { <span class="tk-attr">font-family</span>: <span class="tk-val">system-ui, -apple-system, "Segoe UI", Roboto, sans-serif</span>; }
+<span class="tk-sel">h1</span>   { <span class="tk-attr">font-family</span>: <span class="tk-val">Georgia, "Times New Roman", serif</span>; }
+<span class="tk-sel">code</span> { <span class="tk-attr">font-family</span>: <span class="tk-val">ui-monospace, "Cascadia Code", Consolas, monospace</span>; }</code></pre>
+</div>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · Las comillas</p>
+<p>Los nombres de fuente con espacios (<code>"Segoe UI"</code>) van entre comillas. Los de una palabra (<code>Georgia</code>) no las necesitan.</p>
+</div>
+
+<h2 id="legibilidad"><span class="n">4.</span>Un texto cómodo de leer</h2>
+<p>Casi todo el contenido de un sitio es texto, y pequeñas decisiones lo cambian todo. Estos números funcionan casi siempre:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Ajuste</th><th>Valor recomendado</th><th>Por qué</th></tr></thead>
+<tbody><tr><td>Tamaño de texto corrido</td><td><code>1rem</code> a <code>1.125rem</code> (16–18px)</td><td>Más pequeño cansa; en móvil es el mínimo cómodo</td></tr><tr><td><code>line-height</code> del párrafo</td><td><code>1.5</code> a <code>1.7</code></td><td>Da aire entre líneas</td></tr><tr><td><code>line-height</code> de títulos</td><td><code>1.1</code> a <code>1.3</code></td><td>Los títulos grandes con mucha altura se ven sueltos</td></tr><tr><td>Ancho del texto</td><td><code>max-width: 65ch</code> (45–75 caracteres)</td><td>Líneas muy largas pierden al lector</td></tr><tr><td>Contraste</td><td>4.5:1 como mínimo</td><td>Accesibilidad</td></tr><tr><td>Jerarquía</td><td>Escala de tamaños: 1, 1.25, 1.5, 2, 2.5 rem</td><td>Tamaños consistentes y proporcionados</td></tr></tbody>
+</table></div>
+<div class="playground">
+  <div class="pg-head"><span>✏️ Antes y después</span><button type="button" data-reset>Restablecer</button></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;style&gt;
+  .bien { max-width: 60ch; font: 1.05rem/1.7 Georgia, serif; color: #1e2235; }
+  .bien h2 { font: 700 1.8rem/1.2 system-ui, sans-serif; text-wrap: balance; letter-spacing: -.01em; }
+  .mal  { font-size: 11px; line-height: 1; color: #999; }
+&lt;/style&gt;
+&lt;div class="mal"&gt;&lt;h2&gt;Un texto difícil de leer&lt;/h2&gt;&lt;p&gt;Letra pequeña, sin espacio entre líneas y con poco contraste: cansa en segundos y excluye a mucha gente.&lt;/p&gt;&lt;/div&gt;
+&lt;hr&gt;
+&lt;div class="bien"&gt;&lt;h2&gt;Un texto cómodo de leer en una columna estrecha&lt;/h2&gt;&lt;p&gt;Tamaño suficiente, buen interlineado y un ancho moderado hacen que la lectura sea fluida, incluso en textos largos.&lt;/p&gt;&lt;/div&gt;</textarea></div>
+    <div><label>Resultado</label><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div>
+  </div>
+</div>
+
+<h2 id="web"><span class="n">5.</span>Fuentes web: Google Fonts y @font-face</h2>
+<p>Las fuentes del sistema (<code>system-ui</code>, <code>Georgia</code>) son rápidas y siempre disponibles. Si quieres otra tipografía, hay dos caminos:</p>
+<h3>Opción 1: Google Fonts</h3>
+<ol class="steps"><li>Elige una fuente en <a href="https://fonts.google.com/" target="_blank" rel="noopener">fonts.google.com</a> y selecciona solo los <strong>pesos</strong> que vas a usar (cada peso es un archivo más).</li><li>Copia las líneas <code>&lt;link&gt;</code> en el <code>&lt;head&gt;</code> de tu HTML.</li><li>Úsala en tu CSS con una <strong>alternativa</strong> por si falla la descarga.</li></ol>
+<div class="code">
+  <div class="code-head"><span>En el head del HTML</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">&lt;link</span> <span class="tk-attr">rel</span>=<span class="tk-val">"preconnect"</span> <span class="tk-attr">href</span>=<span class="tk-val">"https://fonts.googleapis.com"</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;link</span> <span class="tk-attr">rel</span>=<span class="tk-val">"preconnect"</span> <span class="tk-attr">href</span>=<span class="tk-val">"https://fonts.gstatic.com"</span> <span class="tk-attr">crossorigin</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;link</span> <span class="tk-attr">rel</span>=<span class="tk-val">"stylesheet"</span> <span class="tk-attr">href</span>=<span class="tk-val">"https://fonts.googleapis.com/css2?family=Inter:wght@400;700&amp;display=swap"</span><span class="tk-tag">&gt;</span></code></pre>
+</div>
+<div class="code">
+  <div class="code-head"><span>En tu CSS</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-sel">body</span> { <span class="tk-attr">font-family</span>: <span class="tk-val">"Inter", system-ui, sans-serif</span>; }</code></pre>
+</div>
+<h3>Opción 2: @font-face (fuente propia)</h3>
+<div class="code">
+  <div class="code-head"><span>Cargar un archivo de fuente</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-sel">@font-face</span> {
+  <span class="tk-attr">font-family</span>: <span class="tk-val">"MiFuente"</span>;
+  <span class="tk-attr">src</span>: <span class="tk-val">url("../fonts/mifuente.woff2") format("woff2")</span>;
+  <span class="tk-attr">font-weight</span>: <span class="tk-val">400</span>;
+  <span class="tk-attr">font-display</span>: <span class="tk-val">swap</span>;
+}
+
+<span class="tk-sel">body</span> { <span class="tk-attr">font-family</span>: <span class="tk-val">"MiFuente", system-ui, sans-serif</span>; }</code></pre>
+</div>
+<ul><li><strong><code>font-display: swap</code></strong> muestra el texto con una fuente temporal mientras carga la tuya: nadie ve una página en blanco.</li><li>Usa el formato <strong><code>woff2</code></strong>: es el más ligero y lo entienden todos los navegadores actuales.</li><li>Las <strong>fuentes variables</strong> incluyen todos los pesos en un solo archivo y permiten valores como <code>font-weight: 550</code>.</li></ul>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · Rendimiento y privacidad</p>
+<p>Cada fuente web es una descarga más y retrasa la página. Usa <strong>máximo dos familias</strong> y pocos pesos. Además, descargar desde Google puede compartir datos de los visitantes con un tercero: si te importa, <strong>descarga los archivos y alójalos tú</strong> con <code>@font-face</code>.</p>
+</div>
+
+<h2 id="clamp"><span class="n">6.</span>Texto que se adapta: clamp()</h2>
+<p>Con la función <code>clamp(mínimo, ideal, máximo)</code> un tamaño crece con la pantalla pero <strong>nunca</strong> baja del mínimo ni sube del máximo:</p>
+<div class="code">
+  <div class="code-head"><span>Un título fluido</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-sel">h1</span> { <span class="tk-attr">font-size</span>: <span class="tk-val">clamp(1.75rem, 1rem + 3vw, 3rem)</span>; }</code></pre>
+</div>
+<p>Lee: «intenta <code>1rem + 3vw</code>, pero no menos de <code>1.75rem</code> ni más de <code>3rem</code>». En una pantalla angosta el título vale 1.75rem; en una grande, 3rem; en medio crece suave. Verás más funciones de este tipo en la lección 11.</p>
+<div class="playground">
+  <div class="pg-head"><span>✏️ Título fluido</span><button type="button" data-reset>Restablecer</button></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;style&gt;
+  h1 { font-size: clamp(1.5rem, 1rem + 4vw, 3.5rem); text-wrap: balance; line-height: 1.1; }
+&lt;/style&gt;
+&lt;h1&gt;Este título se adapta al ancho de la ventana&lt;/h1&gt;
+&lt;p&gt;Cambia el tamaño de tu ventana: el título crece y se reduce sin media queries.&lt;/p&gt;</textarea></div>
+    <div><label>Resultado</label><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div>
+  </div>
+</div>
+
+<h2 id="errores"><span class="n">7.</span>Errores frecuentes</h2>
+<ul><li><strong><code>line-height</code> con unidad</strong> (<code>line-height: 24px</code>): no escala si cambia el texto. Usa un número: <code>1.6</code>.</li><li><strong>Tamaños de letra en <code>px</code> en todo el sitio:</strong> no respetan la preferencia de la persona.</li><li><strong>Texto gris claro sobre blanco</strong> (contraste insuficiente).</li><li><strong>Párrafos a todo lo ancho</strong> de una pantalla grande: líneas demasiado largas.</li><li><strong>Cargar 5 familias y 10 pesos</strong> de Google Fonts.</li><li><strong>Olvidar la alternativa</strong> en <code>font-family</code>, o la familia genérica final.</li><li><strong><code>font-size: 16</code></strong> sin unidad: no vale.</li></ul>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li>Los colores se escriben con nombre, hexadecimal, <code>rgb()</code> o <code>hsl()</code> (el más fácil de ajustar); <code>/ 50%</code> añade transparencia.</li><li><code>rem</code> para texto y espacios (respeta la preferencia de la persona), <code>px</code> para bordes finos, <code>%</code>/<code>fr</code>/<code>clamp()</code> para anchos.</li><li><code>vw</code>, <code>vh</code> y <code>dvh</code> dependen de la ventana; <code>ch</code> limita el ancho de un texto en caracteres.</li><li><code>font-family</code> es una pila terminada en una familia genérica.</li><li>Texto cómodo: 16–18px, <code>line-height: 1.5–1.7</code> (sin unidad), <code>max-width: 65ch</code> y buen contraste.</li><li><code>text-wrap: balance</code> mejora los titulares.</li><li>Google Fonts: pocos pesos y <code>display=swap</code>; o <code>@font-face</code> con <code>woff2</code> y <code>font-display: swap</code>.</li><li><code>clamp(min, ideal, max)</code> crea tamaños fluidos sin media queries.</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">8.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td>HSL</td><td>Notación de color por tono, saturación y luminosidad.</td></tr><tr><td><code>rem</code></td><td>Unidad relativa al tamaño de letra de la raíz (<code>html</code>).</td></tr><tr><td><code>em</code></td><td>Unidad relativa al tamaño de letra del propio elemento.</td></tr><tr><td><code>ch</code></td><td>Unidad igual al ancho del carácter «0»; útil para limitar anchos de texto.</td></tr><tr><td>Familia genérica</td><td>Alternativa final de una pila: <code>serif</code>, <code>sans-serif</code>, <code>monospace</code>…</td></tr><tr><td><code>font-display</code></td><td>Define cómo se muestra el texto mientras carga una fuente web.</td></tr><tr><td><code>clamp()</code></td><td>Función que limita un valor entre un mínimo y un máximo.</td></tr><tr><td>Fuente variable</td><td>Archivo de fuente que contiene todos los pesos y anchos.</td></tr></tbody>
+</table></div>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>¿Qué unidad es <strong>mejor</strong> para tamaños de texto, pensando en accesibilidad?</p><ul class="opts"><li><button type="button" class="opt"><code>px</code></button></li><li><button type="button" class="opt" data-ok><code>rem</code></button></li><li><button type="button" class="opt"><code>pt</code></button></li><li><button type="button" class="opt"><code>vh</code></button></li></ul><p class="explain" hidden><code>rem</code> se basa en la preferencia de tamaño de la persona; <code>px</code> no.</p></div>
+<div class="quiz-q"><p>¿Cuál es la forma más fácil de obtener una versión <strong>más clara</strong> de un color?</p><ul class="opts"><li><button type="button" class="opt">Cambiar el tono en <code>hsl()</code></button></li><li><button type="button" class="opt" data-ok>Subir la luminosidad en <code>hsl()</code></button></li><li><button type="button" class="opt">Sumar al valor hexadecimal</button></li><li><button type="button" class="opt">Usar <code>opacity</code> negativa</button></li></ul><p class="explain" hidden>En HSL basta con aumentar el tercer número (luminosidad).</p></div>
+<div class="quiz-q"><p>¿Cuál es la manera correcta de escribir un interlineado de 1.6 veces el texto?</p><ul class="opts"><li><button type="button" class="opt" data-ok><code>line-height: 1.6</code></button></li><li><button type="button" class="opt"><code>line-height: 1.6px</code></button></li><li><button type="button" class="opt"><code>line-height: 160</code></button></li><li><button type="button" class="opt"><code>line-height: 1.6rem</code></button></li></ul><p class="explain" hidden>Sin unidad se multiplica por el tamaño de letra de cada elemento y escala bien.</p></div>
+<div class="quiz-q"><p>¿Qué hace <code>clamp(1rem, 4vw, 2rem)</code>?</p><ul class="opts"><li><button type="button" class="opt">Siempre vale 4vw</button></li><li><button type="button" class="opt" data-ok>Crece con la pantalla pero queda entre 1rem y 2rem</button></li><li><button type="button" class="opt">Vale la media de los tres</button></li><li><button type="button" class="opt">Solo funciona en títulos</button></li></ul><p class="explain" hidden>El valor del medio se limita al mínimo y al máximo.</p></div>
+<div class="quiz-q"><p>¿Para qué sirve <code>font-display: swap</code>?</p><ul class="opts"><li><button type="button" class="opt">Cambia la fuente por otra más ligera</button></li><li><button type="button" class="opt" data-ok>Muestra el texto con una fuente temporal mientras carga la web</button></li><li><button type="button" class="opt">Intercambia el orden de las fuentes</button></li><li><button type="button" class="opt">Descarga la fuente antes</button></li></ul><p class="explain" hidden>Evita que el texto quede invisible mientras se descarga la fuente.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="css-03">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../02-selectores/ejercicio.html"><small>← Anterior</small>Ejercicio: Selectores y especificidad</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de CSS · Lección 3 · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&title=%5BError%5D%20Lecci%C3%B3n%203%3A%20Color%2C%20unidades%20y%20tipograf%C3%ADa%20%C2%B7%20Curso%20de%20HTML&pagina=https%3A//cacg-code.github.io/PRACTICAS-HTML/css/03-color-y-texto/" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

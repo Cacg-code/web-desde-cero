@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ejercicio · CSS Grid · Curso de HTML</title>
+  <meta name="description" content="Ejercicio práctico de: CSS Grid.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/css/07-grid/ejercicio.html">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Ejercicio · CSS Grid · Curso de HTML">
+  <meta property="og:description" content="Ejercicio práctico de: CSS Grid.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/css/07-grid/ejercicio.html">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de CSS</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap" id="contenido" style="max-width:820px;padding-top:2rem;padding-bottom:3rem">
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de CSS</a> › <a href="./">Lección 7</a> › Ejercicio</div>
+        <h1>Ejercicio: CSS Grid</h1>
+        <ul class="meta"><li>⏱ 40 minutos</li><li>📶 Nivel: principiante</li></ul>
+      </header>
+
+      <h2>Objetivo</h2>
+      <p>Maquetar con Grid un layout de página con áreas con nombre, una galería adaptable y un formulario alineado.</p>
+
+      <h3>La página de partida</h3>
+      <p>Este es el HTML de tu página. <strong>No lo modifiques</strong>: escribe solo el CSS.</p>
+<div class="code">
+  <div class="code-head"><span>pagina.html</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">&lt;div</span> <span class="tk-attr">class</span>=<span class="tk-val">"pagina"</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;header</span> <span class="tk-attr">class</span>=<span class="tk-val">"cab"</span><span class="tk-tag">&gt;</span>Cabecera<span class="tk-tag">&lt;/header</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;nav</span> <span class="tk-attr">class</span>=<span class="tk-val">"lateral"</span><span class="tk-tag">&gt;</span>Menú<span class="tk-tag">&lt;/nav</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;main</span> <span class="tk-attr">class</span>=<span class="tk-val">"principal"</span><span class="tk-tag">&gt;</span>Contenido principal<span class="tk-tag">&lt;/main</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;aside</span> <span class="tk-attr">class</span>=<span class="tk-val">"extra"</span><span class="tk-tag">&gt;</span>Extra<span class="tk-tag">&lt;/aside</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;footer</span> <span class="tk-attr">class</span>=<span class="tk-val">"pie"</span><span class="tk-tag">&gt;</span>Pie<span class="tk-tag">&lt;/footer</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;/div</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;ul</span> <span class="tk-attr">class</span>=<span class="tk-val">"galeria"</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;li</span><span class="tk-tag">&gt;</span>1<span class="tk-tag">&lt;/li</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;li</span><span class="tk-tag">&gt;</span>2<span class="tk-tag">&lt;/li</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;li</span><span class="tk-tag">&gt;</span>3<span class="tk-tag">&lt;/li</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;li</span><span class="tk-tag">&gt;</span>4<span class="tk-tag">&lt;/li</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;li</span><span class="tk-tag">&gt;</span>5<span class="tk-tag">&lt;/li</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;li</span><span class="tk-tag">&gt;</span>6<span class="tk-tag">&lt;/li</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;li</span><span class="tk-tag">&gt;</span>7<span class="tk-tag">&lt;/li</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;/ul</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;div</span> <span class="tk-attr">class</span>=<span class="tk-val">"formulario"</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;label</span> <span class="tk-attr">for</span>=<span class="tk-val">"a"</span><span class="tk-tag">&gt;</span>Nombre<span class="tk-tag">&lt;/label</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;input</span> <span class="tk-attr">id</span>=<span class="tk-val">"a"</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;label</span> <span class="tk-attr">for</span>=<span class="tk-val">"b"</span><span class="tk-tag">&gt;</span>Correo<span class="tk-tag">&lt;/label</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;input</span> <span class="tk-attr">id</span>=<span class="tk-val">"b"</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;/div</span><span class="tk-tag">&gt;</span></code></pre>
+</div>
+<div class="playground">
+  <div class="pg-head"><span>✏️ Prueba tu CSS aquí (opcional)</span><button type="button" data-reset>Restablecer</button></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;style&gt;
+  /* escribe tu CSS */
+&lt;/style&gt;
+&lt;div class="pagina"&gt;
+  &lt;header class="cab"&gt;Cabecera&lt;/header&gt;
+  &lt;nav class="lateral"&gt;Menú&lt;/nav&gt;
+  &lt;main class="principal"&gt;Contenido principal&lt;/main&gt;
+  &lt;aside class="extra"&gt;Extra&lt;/aside&gt;
+  &lt;footer class="pie"&gt;Pie&lt;/footer&gt;
+&lt;/div&gt;
+&lt;ul class="galeria"&gt;
+  &lt;li&gt;1&lt;/li&gt;&lt;li&gt;2&lt;/li&gt;&lt;li&gt;3&lt;/li&gt;&lt;li&gt;4&lt;/li&gt;&lt;li&gt;5&lt;/li&gt;&lt;li&gt;6&lt;/li&gt;&lt;li&gt;7&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="formulario"&gt;
+  &lt;label for="a"&gt;Nombre&lt;/label&gt;&lt;input id="a"&gt;
+  &lt;label for="b"&gt;Correo&lt;/label&gt;&lt;input id="b"&gt;
+&lt;/div&gt;</textarea></div>
+    <div><label>Resultado</label><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div>
+  </div>
+</div>
+
+      <h2>Pasos</h2>
+      <p>Marca cada paso a medida que lo completes. Tu avance se guarda en este navegador.</p>
+      <div class="progress" aria-hidden="true"><div></div></div>
+      <p id="progreso-texto" style="color:var(--muted);font-size:.9rem" aria-live="polite"></p>
+      <ul class="checklist"><li><label><input type="checkbox" id="p1"><span>Escribe <code>*, *::before, *::after { box-sizing: border-box; }</code> y <code>body { margin: 0; font-family: system-ui, sans-serif; }</code>.</span></label></li><li><label><input type="checkbox" id="p2"><span>Haz de <code>.pagina</code> una cuadrícula con columnas <code>200px 1fr 160px</code>, filas <code>auto 1fr auto</code>, <code>gap: 12px</code> y <code>min-height: 400px</code>.</span></label></li><li><label><input type="checkbox" id="p3"><span>Define <code>grid-template-areas</code> con <code>"cab cab cab"</code>, <code>"lat main extra"</code> y <code>"pie pie pie"</code> y asigna cada elemento a su área.</span></label></li><li><label><input type="checkbox" id="p4"><span>Haz que <code>.galeria</code> use <code>repeat(auto-fit, minmax(120px, 1fr))</code> con <code>gap: 12px</code>, sin viñetas (<code>list-style: none</code>) y sin relleno (<code>padding: 0</code>).</span></label></li><li><label><input type="checkbox" id="p5"><span>Haz que los <code>li</code> de la galería sean cuadrados (<code>aspect-ratio: 1</code>) y centra su número con <code>display: grid; place-items: center</code>.</span></label></li><li><label><input type="checkbox" id="p6"><span>Haz que el primer <code>li</code> ocupe 2 columnas (<code>grid-column: span 2</code>).</span></label></li><li><label><input type="checkbox" id="p7"><span>Convierte <code>.formulario</code> en una cuadrícula de dos columnas <code>max-content 1fr</code>, con <code>gap: 10px 14px</code> y <code>align-items: center</code>.</span></label></li></ul>
+      <details><summary>💡 Pista 1: mis áreas no funcionan</summary><p>Cada fila de <code>grid-template-areas</code> debe tener el <strong>mismo número de celdas</strong>, y cada nombre tiene que usarse con <code>grid-area</code>. Revisa que no haya errores de escritura en los nombres.</p>
+</details>
+<details><summary>💡 Pista 2: la galería no se adapta</summary><p>Asegúrate de usar <code>auto-fit</code> (con <code>repeat</code>) y <code>minmax(120px, 1fr)</code>. Con <code>fr</code> fijos como <code>repeat(3, 1fr)</code> siempre tendrás 3 columnas.</p>
+</details>
+
+      <section class="checker" id="comprobador" aria-labelledby="t-chk">
+        <h2 id="t-chk">🔎 Comprueba tu trabajo</h2>
+        <p>Pega tu código y pulsa <strong>Comprobar</strong>. La revisión ocurre en tu navegador; nada se envía a ningún sitio. Cada punto en rojo incluye una pista.</p>
+        <label for="chk-code">Tu código CSS</label>
+        <textarea id="chk-code" rows="10" spellcheck="false" placeholder="Pega aquí solo tu CSS (sin la etiqueta style)"></textarea>
+        <div class="chk-actions"><button class="btn" type="button" id="chk-run">Comprobar</button><button class="icon-btn" type="button" id="chk-clear">Limpiar</button></div>
+        <p class="chk-sum" id="chk-sum" aria-live="polite"></p>
+        <ul class="chk-list" id="chk-list"></ul>
+        <script type="application/json" id="checks">{"mode": "cssl", "scaffold": "<div class=\"pagina\">\n  <header class=\"cab\">Cabecera<\/header>\n  <nav class=\"lateral\">Menú<\/nav>\n  <main class=\"principal\">Contenido principal<\/main>\n  <aside class=\"extra\">Extra<\/aside>\n  <footer class=\"pie\">Pie<\/footer>\n<\/div>\n<ul class=\"galeria\">\n  <li>1<\/li><li>2<\/li><li>3<\/li><li>4<\/li><li>5<\/li><li>6<\/li><li>7<\/li>\n<\/ul>\n<div class=\"formulario\">\n  <label for=\"a\">Nombre<\/label><input id=\"a\">\n  <label for=\"b\">Correo<\/label><input id=\"b\">\n<\/div>", "width": 800, "checks": [{"d": "`.pagina` es una cuadrícula con las columnas 200px 1fr 160px", "h": "Escribe `display: grid; grid-template-columns: 200px 1fr 160px;`.", "t": "var c=getComputedStyle(document.querySelector(\".pagina\"));var cols=c.gridTemplateColumns.split(\" \");return c.display===\"grid\" && cols.length===3 && cols[0]===\"200px\" && cols[2]===\"160px\""}, {"d": "Tiene gap de 12px y alto mínimo de 400px", "h": "Escribe `gap: 12px; min-height: 400px;`.", "t": "return getComputedStyle(document.querySelector(\".pagina\")).columnGap===\"12px\" && getComputedStyle(document.querySelector(\".pagina\")).rowGap===\"12px\" && document.querySelector(\".pagina\").getBoundingClientRect().height>=399"}, {"d": "La cabecera ocupa todo el ancho de la primera fila", "h": "Asigna `grid-area: cab` y define las áreas.", "t": "var p=document.querySelector(\".pagina\").getBoundingClientRect();var c=document.querySelector(\".cab\").getBoundingClientRect();return Math.abs(c.width-p.width)<2 && Math.abs(c.top-p.top)<2"}, {"d": "El menú queda a la izquierda, mide 200px y el contenido ocupa el centro", "h": "Asigna las áreas `lat` y `main`.", "t": "var l=document.querySelector(\".lateral\").getBoundingClientRect();var m=document.querySelector(\".principal\").getBoundingClientRect();var p=document.querySelector(\".pagina\").getBoundingClientRect();return Math.abs(l.width-200)<2 && m.left>l.right && Math.abs(m.width-(p.width-200-160-24))<3"}, {"d": "El bloque extra está a la derecha y el pie ocupa todo el ancho abajo", "h": "Asigna `grid-area: extra` y `grid-area: pie`.", "t": "var e=document.querySelector(\".extra\").getBoundingClientRect();var f=document.querySelector(\".pie\").getBoundingClientRect();var p=document.querySelector(\".pagina\").getBoundingClientRect();return Math.abs(e.width-160)<2 && Math.abs(f.width-p.width)<2 && f.top>e.bottom-1"}, {"d": "La galería usa auto-fit y minmax, sin viñetas ni relleno", "h": "Escribe `repeat(auto-fit, minmax(120px, 1fr))`, `list-style: none`, `padding: 0`.", "t": "var c=getComputedStyle(document.querySelector(\".galeria\"));return /auto-fit|repeat/.test(document.querySelector(\"style\").textContent) && /auto-fit/.test(document.querySelector(\"style\").textContent) && c.listStyleType===\"none\" && c.paddingLeft===\"0px\" && c.gridTemplateColumns.split(\" \").length>=5"}, {"d": "Los elementos de la galería son cuadrados con el número centrado", "h": "Usa `aspect-ratio: 1; display: grid; place-items: center;`.", "t": "var l=document.querySelectorAll(\".galeria li\");var r=l[1].getBoundingClientRect();return getComputedStyle(l[1]).display===\"grid\" && Math.abs(r.width-r.height)<2 && getComputedStyle(l[1]).placeItems.indexOf(\"center\")>-1"}, {"d": "El primer elemento de la galería ocupa dos columnas", "h": "Escribe `.galeria li:first-child { grid-column: span 2; }`.", "t": "var l=document.querySelectorAll(\".galeria li\");var a=l[0].getBoundingClientRect(),b=l[1].getBoundingClientRect();return a.width>b.width*1.8 && getComputedStyle(l[0]).gridColumnStart===\"span 2\" || a.width>b.width*1.8"}, {"d": "El formulario es una cuadrícula de 2 columnas con gap 10px 14px", "h": "Usa `grid-template-columns: max-content 1fr; gap: 10px 14px;`.", "t": "return getComputedStyle(document.querySelector(\".formulario\")).display===\"grid\" && getComputedStyle(document.querySelector(\".formulario\")).gridTemplateColumns.split(\" \").length===2 && getComputedStyle(document.querySelector(\".formulario\")).rowGap===\"10px\" && getComputedStyle(document.querySelector(\".formulario\")).columnGap===\"14px\""}, {"d": "Las etiquetas y los campos quedan alineados en columnas", "h": "Los dos `input` deben empezar en la misma posición horizontal.", "t": "var a=document.getElementById(\"a\").getBoundingClientRect(),b=document.getElementById(\"b\").getBoundingClientRect();return Math.abs(a.left-b.left)<2 && a.left>60"}]}</script>
+      </section>
+      <details>
+        <summary>✅ Ver una solución de ejemplo</summary>
+        <p>Intenta resolverlo antes de mirar. Tu versión puede ser distinta y también correcta.</p>
+        <div class="code">
+  <div class="code-head"><span>estilos.css</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-sel">*, *::before, *::after</span> { <span class="tk-attr">box-sizing</span>: <span class="tk-val">border-box</span>; }
+<span class="tk-sel">body</span> { <span class="tk-attr">margin</span>: <span class="tk-val">0</span>; <span class="tk-attr">font-family</span>: <span class="tk-val">system-ui, sans-serif</span>; }
+
+<span class="tk-sel">.pagina</span> {
+  <span class="tk-attr">display</span>: <span class="tk-val">grid</span>;
+  <span class="tk-attr">grid-template-columns</span>: <span class="tk-val">200px 1fr 160px</span>;
+  <span class="tk-attr">grid-template-rows</span>: <span class="tk-val">auto 1fr auto</span>;
+  <span class="tk-attr">grid-template-areas</span>:
+    <span class="tk-val">"cab  cab   cab"</span>
+    "lat  main  extra"
+    "pie  pie   pie";
+  <span class="tk-attr">gap</span>: <span class="tk-val">12px</span>;
+  <span class="tk-attr">min-height</span>: <span class="tk-val">400px</span>;
+}
+<span class="tk-sel">.cab</span>       { <span class="tk-attr">grid-area</span>: <span class="tk-val">cab</span>; }
+<span class="tk-sel">.lateral</span>   { <span class="tk-attr">grid-area</span>: <span class="tk-val">lat</span>; }
+<span class="tk-sel">.principal</span> { <span class="tk-attr">grid-area</span>: <span class="tk-val">main</span>; }
+<span class="tk-sel">.extra</span>     { <span class="tk-attr">grid-area</span>: <span class="tk-val">extra</span>; }
+<span class="tk-sel">.pie</span>       { <span class="tk-attr">grid-area</span>: <span class="tk-val">pie</span>; }
+
+<span class="tk-sel">.galeria</span> {
+  <span class="tk-attr">display</span>: <span class="tk-val">grid</span>;
+  <span class="tk-attr">grid-template-columns</span>: <span class="tk-val">repeat(auto-fit, minmax(120px, 1fr))</span>;
+  <span class="tk-attr">gap</span>: <span class="tk-val">12px</span>;
+  <span class="tk-attr">list-style</span>: <span class="tk-val">none</span>;
+  <span class="tk-attr">padding</span>: <span class="tk-val">0</span>;
+}
+<span class="tk-sel">.galeria li</span> {
+  <span class="tk-attr">aspect-ratio</span>: <span class="tk-val">1</span>;
+  <span class="tk-attr">display</span>: <span class="tk-val">grid</span>;
+  <span class="tk-attr">place-items</span>: <span class="tk-val">center</span>;
+  <span class="tk-attr">background</span>: <span class="tk-val">#4f46e5</span>;
+  <span class="tk-attr">color</span>: <span class="tk-val">#fff</span>;
+}
+<span class="tk-sel">.galeria li:first-child</span> { <span class="tk-attr">grid-column</span>: <span class="tk-val">span 2</span>; <span class="tk-attr">aspect-ratio</span>: <span class="tk-val">auto</span>; }
+
+<span class="tk-sel">.formulario</span> {
+  <span class="tk-attr">display</span>: <span class="tk-val">grid</span>;
+  <span class="tk-attr">grid-template-columns</span>: <span class="tk-val">max-content 1fr</span>;
+  <span class="tk-attr">gap</span>: <span class="tk-val">10px 14px</span>;
+  <span class="tk-attr">align-items</span>: <span class="tk-val">center</span>;
+}</code></pre>
+</div>
+
+      </details>
+      <div class="callout consejo">
+<p class="callout-title">💡 🏁 Reto extra (opcional)</p>
+<p>Haz que en pantallas menores de 700px las áreas se reorganicen en una sola columna (<code>grid-template-areas</code> con un nombre por fila). Pruébalo con el modo dispositivo de <kbd>F12</kbd>.</p>
+</div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="./"><small>← Anterior</small>Volver a lección 7</a>
+        <a class="next" href="../08-responsivo/"><small>Siguiente →</small>Diseño responsivo</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de CSS · Ejercicio de lección 7 · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&title=%5BError%5D%20Ejercicio%20%C2%B7%20CSS%20Grid%20%C2%B7%20Curso%20de%20HTML&pagina=https%3A//cacg-code.github.io/PRACTICAS-HTML/css/07-grid/ejercicio.html" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

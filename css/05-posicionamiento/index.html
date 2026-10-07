@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lección 5: Posicionamiento y capas · Curso de HTML</title>
+  <meta name="description" content="Posicionamiento en CSS: relative, absolute, fixed, sticky, z-index, contextos de apilamiento y un modal completo.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/css/05-posicionamiento/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Lección 5: Posicionamiento y capas · Curso de HTML">
+  <meta property="og:description" content="Posicionamiento en CSS: relative, absolute, fixed, sticky, z-index, contextos de apilamiento y un modal completo.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/css/05-posicionamiento/">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de CSS</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap lesson-layout" id="contenido">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#flujo">El flujo normal y por qué a veces hay que salirse</a></li><li><a href="#relative">relative: ajustar y servir de referencia</a></li><li><a href="#absolute">absolute: colocar con precisión</a></li><li><a href="#fixed-sticky">fixed y sticky</a></li><li><a href="#zindex">z-index y apilamiento</a></li><li><a href="#modal">Un caso completo: el cuadro modal</a></li><li><a href="#float">float: una pieza de historia</a></li><li><a href="#errores">Errores frecuentes</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de CSS</a> › Lección 5</div>
+        <h1>Posicionamiento y capas</h1>
+        <ul class="meta"><li>⏱ 40 minutos</li><li>📶 Nivel: principiante</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Elegir el valor de <code>position</code> adecuado para cada caso.</li><li>Colocar una insignia sobre una tarjeta con <code>relative</code> y <code>absolute</code>.</li><li>Crear encabezados pegajosos y elementos fijos.</li><li>Resolver problemas de apilamiento con <code>z-index</code>.</li></ul>
+</div>
+
+<h2 id="flujo"><span class="n">1.</span>El flujo normal y por qué a veces hay que salirse</h2>
+<p>Por defecto, los elementos se colocan <strong>uno tras otro</strong>, de arriba abajo (los de bloque) y de izquierda a derecha (los de línea). Es el <strong>flujo normal</strong> y casi siempre es lo que quieres.</p>
+<p>La propiedad <code>position</code> permite <strong>sacar un elemento del flujo</strong> o ajustarlo, para casos concretos: una insignia sobre una foto, un menú que se queda arriba al desplazarte, un cuadro de diálogo sobre toda la página. <strong>No sirve para maquetar columnas</strong>: para eso están Flexbox y Grid (lecciones 6 y 7).</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Valor</th><th>Ocupa lugar en el flujo</th><th>Se coloca respecto a…</th><th>Para qué</th></tr></thead>
+<tbody><tr><td><code>static</code></td><td>Sí</td><td>(valor por defecto, ignora <code>top</code>/<code>left</code>…)</td><td>Normal</td></tr><tr><td><code>relative</code></td><td>Sí (su hueco se conserva)</td><td>Su propia posición original</td><td>Ajustes mínimos y <strong>referencia para hijos <code>absolute</code></strong></td></tr><tr><td><code>absolute</code></td><td><strong>No</strong></td><td>El <strong>ancestro posicionado</strong> más cercano</td><td>Insignias, iconos, tooltips</td></tr><tr><td><code>fixed</code></td><td><strong>No</strong></td><td>La <strong>ventana</strong> del navegador</td><td>Barras fijas, botones flotantes</td></tr><tr><td><code>sticky</code></td><td>Sí</td><td>Se «pega» al llegar a un umbral al desplazar</td><td>Encabezados y tablas pegajosas</td></tr></tbody>
+</table></div>
+
+<h2 id="relative"><span class="n">2.</span>relative: ajustar y servir de referencia</h2>
+<p><code>position: relative</code> casi no cambia nada visible por sí solo. Su verdadero valor es otro: <strong>convierte al elemento en la referencia</strong> de los hijos con <code>position: absolute</code>.</p>
+<div class="code">
+  <div class="code-head"><span>El patrón más usado de posicionamiento</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-sel">.tarjeta</span> { <span class="tk-attr">position</span>: <span class="tk-val">relative</span>; }          <span class="tk-com">/* la referencia */</span>
+<span class="tk-sel">.insignia</span> {
+  <span class="tk-attr">position</span>: <span class="tk-val">absolute</span>;                     <span class="tk-com">/* sale del flujo */</span>
+  <span class="tk-attr">top</span>: <span class="tk-val">12px</span>;                              <span class="tk-com">/* a 12px del borde superior de .tarjeta */</span>
+  <span class="tk-attr">right</span>: <span class="tk-val">12px</span>;                            <span class="tk-com">/* y a 12px del derecho */</span>
+}</code></pre>
+</div>
+<div class="playground">
+  <div class="pg-head"><span>✏️ Insignia sobre una tarjeta</span><button type="button" data-reset>Restablecer</button></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;style&gt;
+  .tarjeta { position: relative; width: 240px; padding: 16px; border: 2px solid #4f46e5; border-radius: 12px; }
+  .insignia { position: absolute; top: -12px; right: -12px; background: #e11d48; color: #fff; padding: 4px 12px; border-radius: 999px; font-size: .8rem; font-weight: 700; }
+  .img { height: 100px; background: linear-gradient(135deg, #4f46e5, #22d3ee); border-radius: 8px; }
+&lt;/style&gt;
+&lt;div class="tarjeta"&gt;
+  &lt;span class="insignia"&gt;NUEVO&lt;/span&gt;
+  &lt;div class="img"&gt;&lt;/div&gt;
+  &lt;p&gt;Quita &lt;code&gt;position: relative&lt;/code&gt; de .tarjeta y mira dónde se va la insignia.&lt;/p&gt;
+&lt;/div&gt;</textarea></div>
+    <div><label>Resultado</label><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div>
+  </div>
+</div>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · Sin referencia, se va a otro sitio</p>
+<p>Un hijo <code>absolute</code> busca su <strong>ancestro posicionado más cercano</strong> (cualquier ancestro con <code>position</code> distinto de <code>static</code>). Si no encuentra ninguno, se coloca respecto a <strong>toda la página</strong>. Por eso casi siempre pones <code>position: relative</code> en el padre.</p>
+</div>
+
+<h2 id="absolute"><span class="n">3.</span>absolute: colocar con precisión</h2>
+<p>Con <code>top</code>, <code>right</code>, <code>bottom</code>, <code>left</code> (o el atajo <strong><code>inset</code></strong>) indicas la distancia a los bordes de la referencia. Algunos usos habituales:</p>
+<div class="code">
+  <div class="code-head"><span>Centrar un elemento dentro de su padre</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-sel">.padre</span> { <span class="tk-attr">position</span>: <span class="tk-val">relative</span>; }
+<span class="tk-sel">.hijo</span> {
+  <span class="tk-attr">position</span>: <span class="tk-val">absolute</span>;
+  <span class="tk-attr">inset</span>: <span class="tk-val">0</span>;                 <span class="tk-com">/* top, right, bottom y left: 0 → llena el padre */</span>
+  <span class="tk-attr">margin</span>: <span class="tk-val">auto</span>;             <span class="tk-com">/* con ancho y alto definidos, queda centrado */</span>
+  <span class="tk-attr">width</span>: <span class="tk-val">120px</span>; <span class="tk-attr">height</span>: <span class="tk-val">60px</span>;
+}
+
+<span class="tk-com">/* La otra manera clásica */</span>
+<span class="tk-sel">.hijo2</span> {
+  <span class="tk-attr">position</span>: <span class="tk-val">absolute</span>;
+  <span class="tk-attr">top</span>: <span class="tk-val">50%</span>; <span class="tk-attr">left</span>: <span class="tk-val">50%</span>;
+  <span class="tk-attr">transform</span>: <span class="tk-val">translate(-50%, -50%)</span>;
+}</code></pre>
+</div>
+<div class="playground">
+  <div class="pg-head"><span>✏️ Centrado absoluto</span><button type="button" data-reset>Restablecer</button></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;style&gt;
+  .padre { position: relative; height: 160px; border: 2px dashed #4f46e5; }
+  .hijo { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #4f46e5; color: #fff; padding: 10px 18px; border-radius: 8px; }
+  .esquina { position: absolute; bottom: 8px; right: 8px; font-size: .85rem; }
+&lt;/style&gt;
+&lt;div class="padre"&gt;&lt;div class="hijo"&gt;Centrado&lt;/div&gt;&lt;span class="esquina"&gt;esquina&lt;/span&gt;&lt;/div&gt;</textarea></div>
+    <div><label>Resultado</label><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div>
+  </div>
+</div>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · Hoy hay mejores opciones para centrar</p>
+<p>Para centrar contenido normal, <strong>Flexbox y Grid</strong> son más sencillos (<code>display: grid; place-items: center</code>). <code>absolute</code> se reserva para elementos que <strong>flotan sobre</strong> otros.</p>
+</div>
+
+<h2 id="fixed-sticky"><span class="n">4.</span>fixed y sticky</h2>
+<div class="table-wrap"><table>
+<thead><tr><th><span class="sr-only">Aspecto</span></th><th><code>fixed</code></th><th><code>sticky</code></th></tr></thead>
+<tbody><tr><td>Referencia</td><td>La ventana</td><td>Su contenedor (padre) al desplazar</td></tr><tr><td>Ocupa espacio</td><td>No (hay que dejar hueco)</td><td>Sí (conserva su sitio)</td></tr><tr><td>Comportamiento</td><td>Siempre en la misma posición de la pantalla</td><td>Fluye normal hasta alcanzar <code>top: …</code> y entonces se pega</td></tr><tr><td>Típico</td><td>Botón de WhatsApp, banner de cookies</td><td>Encabezado de sección, cabecera de tabla, índice lateral</td></tr></tbody>
+</table></div>
+<div class="code">
+  <div class="code-head"><span>Barra fija vs encabezado pegajoso</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-sel">.boton-flotante</span> { <span class="tk-attr">position</span>: <span class="tk-val">fixed</span>; <span class="tk-attr">right</span>: <span class="tk-val">16px</span>; <span class="tk-attr">bottom</span>: <span class="tk-val">16px</span>; }
+
+<span class="tk-sel">.encabezado</span> {
+  <span class="tk-attr">position</span>: <span class="tk-val">sticky</span>;
+  <span class="tk-attr">top</span>: <span class="tk-val">0</span>;                    <span class="tk-com">/* se pega al borde superior al desplazar */</span>
+  <span class="tk-attr">background</span>: <span class="tk-val">#fff</span>;
+  <span class="tk-attr">z-index</span>: <span class="tk-val">10</span>;
+}</code></pre>
+</div>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · Por qué mi sticky no se pega</p>
+<p>Las causas habituales: <strong>falta <code>top</code></strong> (o <code>bottom</code>/<code>left</code>…), o algún <strong>ancestro tiene <code>overflow: hidden/auto</code></strong>, que cambia la referencia del desplazamiento. Revisa la cadena de padres.</p>
+</div>
+<div class="playground">
+  <div class="pg-head"><span>✏️ Encabezado pegajoso (desplázate dentro del cuadro)</span><button type="button" data-reset>Restablecer</button></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;style&gt;
+  .scroll { height: 180px; overflow: auto; border: 2px solid #4f46e5; }
+  h3 { position: sticky; top: 0; margin: 0; padding: 8px; background: #4f46e5; color: #fff; }
+  p { padding: 0 8px; }
+&lt;/style&gt;
+&lt;div class="scroll"&gt;
+  &lt;h3&gt;Sección A&lt;/h3&gt;&lt;p&gt;Texto A1&lt;/p&gt;&lt;p&gt;Texto A2&lt;/p&gt;&lt;p&gt;Texto A3&lt;/p&gt;&lt;p&gt;Texto A4&lt;/p&gt;
+  &lt;h3&gt;Sección B&lt;/h3&gt;&lt;p&gt;Texto B1&lt;/p&gt;&lt;p&gt;Texto B2&lt;/p&gt;&lt;p&gt;Texto B3&lt;/p&gt;&lt;p&gt;Texto B4&lt;/p&gt;
+&lt;/div&gt;</textarea></div>
+    <div><label>Resultado</label><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div>
+  </div>
+</div>
+
+<h2 id="zindex"><span class="n">5.</span>z-index y apilamiento</h2>
+<p>Los elementos posicionados pueden <strong>superponerse</strong>. <code>z-index</code> decide quién queda encima: un número <strong>mayor</strong> se ve por delante. Solo funciona en elementos con <code>position</code> distinto de <code>static</code> (y en ítems de flex/grid).</p>
+<div class="playground">
+  <div class="pg-head"><span>✏️ Apilar tres tarjetas</span><button type="button" data-reset>Restablecer</button></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;style&gt;
+  .t { position: absolute; width: 120px; height: 90px; border-radius: 10px; color: #fff; padding: 8px; font-weight: 700; }
+  .a { background: #4f46e5; left: 10px;  top: 10px; z-index: 1; }
+  .b { background: #e11d48; left: 60px;  top: 40px; z-index: 3; }
+  .c { background: #16a34a; left: 110px; top: 20px; z-index: 2; }
+&lt;/style&gt;
+&lt;div style="position:relative;height:150px"&gt;
+  &lt;div class="t a"&gt;A · 1&lt;/div&gt;&lt;div class="t b"&gt;B · 3&lt;/div&gt;&lt;div class="t c"&gt;C · 2&lt;/div&gt;
+&lt;/div&gt;</textarea></div>
+    <div><label>Resultado</label><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div>
+  </div>
+</div>
+<h3>Contextos de apilamiento: la trampa del z-index</h3>
+<p>Cada elemento con ciertas propiedades (<code>position</code> + <code>z-index</code>, <code>opacity &lt; 1</code>, <code>transform</code>, <code>filter</code>…) crea un <strong>contexto de apilamiento</strong>: un «mundo aparte» donde los <code>z-index</code> de dentro <strong>no compiten</strong> con los de fuera. Por eso a veces un <code>z-index: 9999</code> no logra pasar por encima de otro elemento.</p>
+<ul><li>Un hijo <strong>nunca</strong> puede salir por encima de lo que está por encima de su contexto de apilamiento.</li><li>Usa valores <strong>pequeños y ordenados</strong> (1, 10, 100) y nómbralos con variables: <code>--z-menu: 10; --z-modal: 100;</code>.</li><li>Si no logras superponer algo, busca un ancestro con <code>transform</code>, <code>opacity</code> o <code>position</code> + <code>z-index</code> que cree un contexto.</li></ul>
+
+<h2 id="modal"><span class="n">6.</span>Un caso completo: el cuadro modal</h2>
+<p>Un modal combina todo lo anterior: una capa <strong>fija</strong> que cubre la pantalla, un contenido <strong>centrado</strong> y un <code>z-index</code> alto:</p>
+<div class="playground">
+  <div class="pg-head"><span>✏️ Modal</span><button type="button" data-reset>Restablecer</button></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;style&gt;
+  .fondo { position: fixed; inset: 0; background: rgba(15, 18, 34, .6); display: grid; place-items: center; z-index: 100; }
+  .modal { background: #fff; padding: 24px; border-radius: 16px; max-width: 280px; box-shadow: 0 20px 50px rgba(0,0,0,.35); }
+  .modal h3 { margin-top: 0; }
+  .cerrar { position: absolute; top: 8px; right: 12px; border: 0; background: none; font-size: 1.2rem; cursor: pointer; }
+  .modal { position: relative; }
+&lt;/style&gt;
+&lt;p&gt;Página de fondo con algo de texto.&lt;/p&gt;
+&lt;div class="fondo"&gt;
+  &lt;div class="modal"&gt;&lt;button class="cerrar" aria-label="Cerrar"&gt;✕&lt;/button&gt;&lt;h3&gt;¡Hola!&lt;/h3&gt;&lt;p&gt;Un modal con fondo oscuro, centrado y con un botón de cierre.&lt;/p&gt;&lt;/div&gt;
+&lt;/div&gt;</textarea></div>
+    <div><label>Resultado</label><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div>
+  </div>
+</div>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Accesibilidad de los modales</p>
+<p>Visualmente solo necesitas CSS, pero un modal real <strong>también</strong> necesita JavaScript y HTML correcto: usa la etiqueta <code>&lt;dialog&gt;</code>, que gestiona el foco, la tecla <kbd>Esc</kbd> y el fondo por ti. Lo verás en el curso de JavaScript.</p>
+</div>
+
+<h2 id="float"><span class="n">7.</span>float: una pieza de historia</h2>
+<p><code>float</code> hacía que un elemento se desplazara a un lado y el texto lo rodeara, como en una revista. Hoy se usa <strong>solo para eso</strong>: imágenes con texto alrededor. Para maquetar se usa Flexbox o Grid.</p>
+<div class="code">
+  <div class="code-head"><span>Texto alrededor de una imagen</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-sel">.foto-lateral</span> { <span class="tk-attr">float</span>: <span class="tk-val">left</span>; <span class="tk-attr">margin</span>: <span class="tk-val">0 16px 8px 0</span>; <span class="tk-attr">width</span>: <span class="tk-val">160px</span>; }
+<span class="tk-sel">.despues</span> { <span class="tk-attr">clear</span>: <span class="tk-val">both</span>; }      <span class="tk-com">/* el siguiente bloque ya no rodea la imagen */</span></code></pre>
+</div>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · Verás <code>float</code> en código antiguo</p>
+<p>Hasta hace unos años casi todos los diseños se hacían con <code>float</code>. Si ves código con <code>clearfix</code>, columnas con <code>float: left</code>, etc., es de esa época: puedes sustituirlo por Flexbox o Grid.</p>
+</div>
+
+<h2 id="errores"><span class="n">8.</span>Errores frecuentes</h2>
+<ul><li><strong>Usar <code>position: absolute</code> para todo el diseño:</strong> se rompe en cuanto cambia el tamaño de pantalla o el contenido.</li><li><strong>Olvidar <code>position: relative</code> en el padre:</strong> la insignia se coloca respecto a la página.</li><li><strong><code>z-index</code> sin <code>position</code>:</strong> no hace nada (salvo en flex/grid).</li><li><strong>Subir el <code>z-index</code> a 99999:</strong> no resuelve un contexto de apilamiento.</li><li><strong><code>sticky</code> sin <code>top</code></strong> o con un ancestro con <code>overflow</code>.</li><li><strong>Un elemento <code>fixed</code> tapa el contenido:</strong> deja espacio con <code>padding</code> en el <code>body</code>.</li><li><strong>Colocar con <code>top/left</code> en <code>px</code> en tamaños críticos:</strong> usa <code>%</code>, <code>inset</code> o unidades relativas.</li></ul>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li><code>position</code> saca elementos del flujo para casos puntuales; <strong>no es para maquetar columnas</strong>.</li><li><code>relative</code> conserva su sitio y sirve de <strong>referencia</strong> para los hijos <code>absolute</code>.</li><li><code>absolute</code> se coloca respecto al ancestro posicionado más cercano con <code>top/right/bottom/left</code> o <code>inset</code>.</li><li><code>fixed</code> se pega a la ventana; <code>sticky</code> fluye y se pega al llegar a su umbral (necesita <code>top</code>).</li><li><code>z-index</code> ordena elementos superpuestos, pero solo dentro de su contexto de apilamiento.</li><li><code>transform</code>, <code>opacity &lt; 1</code> y <code>filter</code> crean contextos de apilamiento nuevos.</li><li>Un modal = capa <code>fixed</code> + <code>inset: 0</code> + contenido centrado + <code>z-index</code> alto (y mejor con <code>&lt;dialog&gt;</code>).</li><li><code>float</code> queda para que el texto rodee imágenes.</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">9.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td>Flujo normal</td><td>La colocación por defecto: los elementos uno tras otro.</td></tr><tr><td>Ancestro posicionado</td><td>El ancestro más cercano con <code>position</code> distinto de <code>static</code>.</td></tr><tr><td><code>inset</code></td><td>Atajo para <code>top</code>, <code>right</code>, <code>bottom</code> y <code>left</code> a la vez.</td></tr><tr><td><code>z-index</code></td><td>Orden de apilamiento de elementos superpuestos.</td></tr><tr><td>Contexto de apilamiento</td><td>Grupo cuyos <code>z-index</code> internos no compiten con los de fuera.</td></tr><tr><td><code>sticky</code></td><td>Posición que se pega al desplazar al llegar a un umbral.</td></tr><tr><td><code>float</code></td><td>Hace que un elemento se desplace a un lado y el texto lo rodee.</td></tr><tr><td>Superposición</td><td>Elementos colocados unos sobre otros.</td></tr></tbody>
+</table></div>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>Un hijo con <code>position: absolute</code> se coloca respecto a…</p><ul class="opts"><li><button type="button" class="opt">Su padre siempre</button></li><li><button type="button" class="opt" data-ok>El ancestro posicionado más cercano (o la página)</button></li><li><button type="button" class="opt">La ventana siempre</button></li><li><button type="button" class="opt">El elemento anterior</button></li></ul><p class="explain" hidden>Busca el ancestro más cercano con <code>position</code> distinto de <code>static</code>; si no hay, usa la página.</p></div>
+<div class="quiz-q"><p>¿Qué necesita <code>position: sticky</code> para funcionar?</p><ul class="opts"><li><button type="button" class="opt"><code>z-index</code></button></li><li><button type="button" class="opt" data-ok>Un valor como <code>top: 0</code></button></li><li><button type="button" class="opt"><code>display: flex</code></button></li><li><button type="button" class="opt"><code>overflow: hidden</code> en el padre</button></li></ul><p class="explain" hidden>Sin un umbral (<code>top</code>, <code>bottom</code>…) no sabe cuándo pegarse.</p></div>
+<div class="quiz-q"><p><code>z-index: 9999</code> no logra poner un elemento encima de otro. ¿Qué es lo más probable?</p><ul class="opts"><li><button type="button" class="opt">El navegador tiene un límite</button></li><li><button type="button" class="opt" data-ok>Está dentro de otro contexto de apilamiento</button></li><li><button type="button" class="opt">Falta <code>display: block</code></button></li><li><button type="button" class="opt">Falta un <code>id</code></button></li></ul><p class="explain" hidden>Los <code>z-index</code> de dentro de un contexto no compiten con los de fuera.</p></div>
+<div class="quiz-q"><p>¿Qué diferencia hay entre <code>fixed</code> y <code>sticky</code>?</p><ul class="opts"><li><button type="button" class="opt">Ninguna</button></li><li><button type="button" class="opt" data-ok><code>fixed</code> se pega siempre a la ventana y sale del flujo; <code>sticky</code> fluye y se pega al llegar a un umbral</button></li><li><button type="button" class="opt"><code>sticky</code> es para escritorio y <code>fixed</code> para celular</button></li><li><button type="button" class="opt"><code>fixed</code> solo funciona con <code>top</code></button></li></ul><p class="explain" hidden><code>fixed</code> se coloca respecto a la ventana; <code>sticky</code> conserva su lugar en el flujo hasta que alcanza el umbral.</p></div>
+<div class="quiz-q"><p>¿Para qué conviene usar <code>float</code> hoy?</p><ul class="opts"><li><button type="button" class="opt">Para hacer columnas</button></li><li><button type="button" class="opt" data-ok>Para que el texto rodee una imagen</button></li><li><button type="button" class="opt">Para centrar</button></li><li><button type="button" class="opt">Para animar</button></li></ul><p class="explain" hidden>Las columnas se hacen con Flexbox o Grid; <code>float</code> queda para el texto alrededor de imágenes.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="css-05">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../04-caja-y-flujo/ejercicio.html"><small>← Anterior</small>Ejercicio: La caja y el flujo del documento</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de CSS · Lección 5 · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&title=%5BError%5D%20Lecci%C3%B3n%205%3A%20Posicionamiento%20y%20capas%20%C2%B7%20Curso%20de%20HTML&pagina=https%3A//cacg-code.github.io/PRACTICAS-HTML/css/05-posicionamiento/" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>
