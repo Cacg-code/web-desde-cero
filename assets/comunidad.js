@@ -3,8 +3,8 @@
    El navegador nunca escribe tablas: solo llama a funciones (RPC) que validan en el servidor. */
 (function () {
   'use strict';
-  var SUPA_URL = '';   // https://xxxx.supabase.co
-  var SUPA_KEY = '';   // anon key (pública por diseño)
+  var SUPA_URL = 'https://kypbeslnyxzynradjlkv.supabase.co';   // https://xxxx.supabase.co
+  var SUPA_KEY = 'sb_publishable_WyfGhjSy1cHCpJ19MjiCfg_hbleJJ3S';   // anon key (pública por diseño)
   var enabled = !!(SUPA_URL && SUPA_KEY);
   var api = { enabled: enabled };
   window.__comunidad = api;
@@ -56,7 +56,7 @@
       if (!c) { el.innerHTML = '<p class="pp-small">No se pudo conectar con la comunidad. Revisa tu conexión.</p>'; return; }
       if (!session) {
         el.innerHTML = '<p class="pp-small">El <b>reto del día</b>, el <b>ranking semanal</b> y tu <b>perfil público</b> necesitan una cuenta. Las lecciones siguen siendo libres y sin cuenta.</p>' +
-          '<div class="pp-actions"><button type="button" class="btn" data-p="google">Entrar con Google</button><button type="button" class="icon-btn" data-p="github">Entrar con GitHub</button></div>';
+          '<div class="pp-actions"><button type="button" class="btn" data-p="github">Entrar con GitHub</button></div>';
         Array.prototype.forEach.call(el.querySelectorAll('[data-p]'), function (b) { b.onclick = function () { entrar(b.getAttribute('data-p')); }; });
         return;
       }
