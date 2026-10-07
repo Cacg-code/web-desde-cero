@@ -293,4 +293,17 @@
     };
     [t, d, u].forEach(function (i) { i.addEventListener('input', upd); }); upd();
   });
+
+  // Regiones con desplazamiento: accesibles con teclado solo cuando de verdad se desbordan
+  var scrollers = document.querySelectorAll('.code pre, .table-wrap, .demo, .anatomy');
+  var markScrollers = function () {
+    scrollers.forEach(function (el) {
+      var over = el.scrollWidth > el.clientWidth + 1;
+      if (over) el.setAttribute('tabindex', '0');
+      else if (el.getAttribute('tabindex') === '0') el.removeAttribute('tabindex');
+    });
+  };
+  markScrollers();
+  addEventListener('resize', markScrollers);
+  addEventListener('load', markScrollers);
 })();
