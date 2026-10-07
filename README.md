@@ -52,17 +52,13 @@ Sigue el orden: cada curso se apoya en el anterior.
 
 <div align="center">
 
-<img src="assets/gif/practica-en-vivo.gif" alt="Editor con resultado instantáneo" width="48%">&nbsp;
-<img src="assets/gif/flexbox.gif" alt="Demostración interactiva de Flexbox" width="48%">
-
-<sub><b>✏️ Práctica en vivo</b> — escribes y ves el resultado &nbsp;·&nbsp; <b>🎨 Flexbox interactivo</b> — juega con las propiedades</sub>
+<img src="assets/readme/demos1.svg" alt="Práctica en vivo y Flexbox interactivo" width="100%">
+<img src="assets/gif/practica-en-vivo.gif" alt="Editor con resultado instantáneo" width="49%"><img src="assets/gif/flexbox.gif" alt="Demostración interactiva de Flexbox" width="49%">
 
 <br><br>
 
-<img src="assets/gif/js-consola.gif" alt="Editor de JavaScript con consola" width="48%">&nbsp;
-<img src="assets/gif/comprobador.gif" alt="Comprobador que revisa tu código" width="48%">
-
-<sub><b>⚡ JavaScript con consola</b> — ejecuta código real &nbsp;·&nbsp; <b>✅ Comprobador</b> — te dice qué cumples y qué falta</sub>
+<img src="assets/readme/demos2.svg" alt="JavaScript con consola y Comprobador" width="100%">
+<img src="assets/gif/js-consola.gif" alt="Editor de JavaScript con consola" width="49%"><img src="assets/gif/comprobador.gif" alt="Comprobador que revisa tu código" width="49%">
 
 </div>
 

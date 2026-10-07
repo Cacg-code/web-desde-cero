@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="96" viewBox="0 0 1000 96" role="img" aria-label="Práctica en vivo y Flexbox interactivo">
+<style>.t{font-family:Segoe UI,Helvetica,Arial,sans-serif}.pu{animation:p 3s ease-in-out infinite}@keyframes p{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}</style>
+<defs><linearGradient id="g0" x1="0" x2="1"><stop offset="0" stop-color="#6366f1"/><stop offset="1" stop-color="#a5b4fc"/></linearGradient></defs>
+<g transform="translate(0 0)"><rect width="495" height="96" rx="18" fill="#14172b"/><rect width="8" height="96" rx="4" fill="url(#g0)"/>
+<g class="pu" style="transform-origin:56px 48px;animation-delay:0.0s"><circle cx="56" cy="48" r="30" fill="url(#g0)" opacity=".22"/><text x="56" y="59" font-size="30" text-anchor="middle">✏️</text></g>
+<text class="t" x="104" y="42" font-size="21" font-weight="800" fill="#fff">Práctica en vivo</text>
+<text class="t" x="104" y="68" font-size="14" fill="#c3c9e8">Escribes código a la izquierda y ves el resultado al instante</text></g>
+<defs><linearGradient id="g1" x1="0" x2="1"><stop offset="0" stop-color="#1572b6"/><stop offset="1" stop-color="#7dd3fc"/></linearGradient></defs>
+<g transform="translate(505 0)"><rect width="495" height="96" rx="18" fill="#14172b"/><rect width="8" height="96" rx="4" fill="url(#g1)"/>
+<g class="pu" style="transform-origin:56px 48px;animation-delay:0.5s"><circle cx="56" cy="48" r="30" fill="url(#g1)" opacity=".22"/><text x="56" y="59" font-size="30" text-anchor="middle">🎨</text></g>
+<text class="t" x="104" y="42" font-size="21" font-weight="800" fill="#fff">Flexbox interactivo</text>
+<text class="t" x="104" y="68" font-size="14" fill="#c3c9e8">Cambia las propiedades y mira cómo se acomodan los elementos</text></g>
+</svg>
