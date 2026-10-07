@@ -813,3 +813,5 @@ html:root[data-skin="neon"][data-theme="dark"] { --accent: #f0abfc; --accent-sof
 .pp-dopts .chip.on:disabled { opacity: 1; }
 .pp-act0 { margin: 0 0 .5rem; }
 .pp-act0 a { text-decoration: none; color: var(--text); }
+.topbar-actions .icon-btn { white-space: nowrap; }
+@media (max-width: 520px) { .topbar-actions { gap: .35rem; } .topbar-actions .icon-btn { padding-inline: .6rem; } .xp .xp-bar { display: none; } }
