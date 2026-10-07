@@ -44,6 +44,8 @@
 
 Sigue el orden: cada curso se apoya en el anterior.
 
+> **Siguiente paso:** cuando termines JavaScript y Node, aprende a crear un bot real en el curso gratis [Chatbots de WhatsApp desde cero](https://cacg-code.github.io/chatbots-whatsapp-desde-cero/).
+
 <div align="center">
 
 <img src="assets/readme/cursos.svg" alt="Seis cursos: HTML, CSS, JavaScript, React, Node.js y Bases de datos" width="100%">
