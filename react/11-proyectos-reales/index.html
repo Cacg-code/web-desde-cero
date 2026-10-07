@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lección 11: Proyectos reales con Vite y el ecosistema · Curso de React</title>
+  <meta name="description" content="De los editores a proyectos reales: estructura de un proyecto con Vite, módulos, estilos, rutas con React Router, variables de entorno, publicación en GitHub Pages y el ecosistema de React.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/react/11-proyectos-reales/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Lección 11: Proyectos reales con Vite y el ecosistema · Curso de React">
+  <meta property="og:description" content="De los editores a proyectos reales: estructura de un proyecto con Vite, módulos, estilos, rutas con React Router, variables de entorno, publicación en GitHub Pages y el ecosistema de React.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/react/11-proyectos-reales/">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de React</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap lesson-layout" id="contenido">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#proyecto">Anatomía de un proyecto con Vite</a></li><li><a href="#modulos">Módulos: import y export</a></li><li><a href="#estilos">Estilos en un proyecto de React</a></li><li><a href="#router">Varias páginas: el enrutador</a></li><li><a href="#entorno">Variables de entorno</a></li><li><a href="#publicar">Publicar tu proyecto en GitHub Pages</a></li><li><a href="#ecosistema">El ecosistema: hacia dónde seguir</a></li><li><a href="#errores">Errores frecuentes</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de React</a> › Lección 11</div>
+        <h1>Proyectos reales con Vite y el ecosistema</h1>
+        <ul class="meta"><li>⏱ 55 minutos</li><li>📶 Nivel: principiante</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Crear y recorrer un proyecto de React con Vite.</li><li>Organizar componentes en módulos y estilos.</li><li>Entender cómo funcionan las rutas en una SPA.</li><li>Publicar una aplicación en GitHub Pages.</li></ul>
+</div>
+
+<h2 id="proyecto"><span class="n">1.</span>Anatomía de un proyecto con Vite</h2>
+<p>Hasta ahora escribiste todo en un solo cuadro. Un proyecto real separa el código en <strong>archivos y carpetas</strong>. Esta es la estructura que crea <code>npm create vite@latest mi-app -- --template react</code>:</p>
+<div class="code">
+  <div class="code-head"><span>Estructura del proyecto</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>mi-app/
+├── index.html          ← la única página; tiene &lt;div id="root"&gt;&lt;/div&gt;
+├── package.json        ← dependencias y comandos (dev, build, preview)
+├── vite.config.js      ← configuración de Vite
+├── public/             ← archivos estáticos que se copian tal cual (favicon…)
+└── src/
+    ├── main.jsx        ← punto de entrada: monta &lt;App /&gt; en #root
+    ├── App.jsx         ← tu componente principal
+    ├── App.css         ← estilos de App
+    ├── index.css       ← estilos globales
+    ├── assets/         ← imágenes y otros recursos importables
+    └── components/     ← (lo creas tú) un archivo por componente</code></pre>
+</div>
+<div class="table-wrap"><table>
+<thead><tr><th>Comando</th><th>Qué hace</th></tr></thead>
+<tbody><tr><td><code>npm install</code></td><td>Descarga las dependencias a <code>node_modules/</code> (una vez, o al añadir paquetes).</td></tr><tr><td><code>npm run dev</code></td><td>Arranca el servidor de desarrollo con recarga instantánea al guardar.</td></tr><tr><td><code>npm run build</code></td><td>Genera la versión optimizada para publicar en la carpeta <code>dist/</code>.</td></tr><tr><td><code>npm run preview</code></td><td>Sirve <code>dist/</code> localmente para probar el resultado final.</td></tr><tr><td><code>npm install paquete</code></td><td>Añade una biblioteca nueva (se anota en <code>package.json</code>).</td></tr></tbody>
+</table></div>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · Qué va en Git</p>
+<p>Sube a Git el código y <code>package.json</code>, pero <strong>no</strong> <code>node_modules/</code> ni <code>dist/</code>. El archivo <code>.gitignore</code> que crea Vite ya los excluye. Cualquiera puede recrear <code>node_modules/</code> con <code>npm install</code>.</p>
+</div>
+
+<h2 id="modulos"><span class="n">2.</span>Módulos: import y export</h2>
+<p>Cada archivo es un <strong>módulo</strong>. Un archivo <strong>exporta</strong> lo que quiere compartir y otro lo <strong>importa</strong>. En React lo normal es un componente por archivo, exportado por defecto:</p>
+<div class="code">
+  <div class="code-head"><span>src/components/Tarjeta.jsx</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">export</span> <span class="tk-tag">default</span> <span class="tk-tag">function</span> Tarjeta({ titulo, children }) {
+  <span class="tk-tag">return</span> (
+    <span class="tk-tag">&lt;article</span> <span class="tk-attr">className</span>=<span class="tk-val">"tarjeta"</span><span class="tk-tag">&gt;</span>
+      <span class="tk-tag">&lt;h2</span><span class="tk-tag">&gt;</span>{titulo}<span class="tk-tag">&lt;/h2</span><span class="tk-tag">&gt;</span>
+      {children}
+    <span class="tk-tag">&lt;/article</span><span class="tk-tag">&gt;</span>
+  );
+}</code></pre>
+</div>
+<div class="code">
+  <div class="code-head"><span>src/App.jsx</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">import</span> { useState } <span class="tk-tag">from</span> <span class="tk-val">"react"</span>;                  <span class="tk-com">// exportación con nombre</span>
+<span class="tk-tag">import</span> Tarjeta <span class="tk-tag">from</span> <span class="tk-val">"./components/Tarjeta.jsx"</span>;     <span class="tk-com">// exportación por defecto</span>
+<span class="tk-tag">import</span> <span class="tk-val">"./App.css"</span>;                                  <span class="tk-com">// solo estilos</span>
+
+<span class="tk-tag">export</span> <span class="tk-tag">default</span> <span class="tk-tag">function</span> App() {
+  <span class="tk-tag">const</span> [n, setN] = useState(<span class="tk-attr">0</span>);
+  <span class="tk-tag">return</span> (
+    <span class="tk-tag">&lt;Tarjeta</span> <span class="tk-attr">titulo</span>=<span class="tk-val">"Hola"</span><span class="tk-tag">&gt;</span>
+      <span class="tk-tag">&lt;button</span> <span class="tk-attr">onClick</span>={() =&gt; setN(<span class="tk-attr">n</span> + <span class="tk-attr">1</span>)}<span class="tk-tag">&gt;</span>Pulsado {n}<span class="tk-tag">&lt;/button</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;/Tarjeta</span><span class="tk-tag">&gt;</span>
+  );
+}</code></pre>
+</div>
+<div class="table-wrap"><table>
+<thead><tr><th>Tipo</th><th>Se exporta</th><th>Se importa</th></tr></thead>
+<tbody><tr><td><strong>Por defecto</strong> (una por archivo)</td><td><code>export default function Tarjeta() {}</code></td><td><code>import Tarjeta from "./Tarjeta.jsx"</code> (el nombre lo eliges tú)</td></tr><tr><td><strong>Con nombre</strong> (varias)</td><td><code>export function useTema() {}</code></td><td><code>import { useTema } from "./tema.js"</code> (nombre exacto, entre llaves)</td></tr></tbody>
+</table></div>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Rutas relativas</p>
+<p><code>./</code> significa «esta carpeta» y <code>../</code> «la carpeta de arriba». Los archivos de React llevan extensión <code>.jsx</code> y conviene escribirla en el <code>import</code>. Los paquetes de <code>npm</code> se importan solo por nombre: <code>import { useState } from "react"</code>.</p>
+</div>
+
+<h2 id="estilos"><span class="n">3.</span>Estilos en un proyecto de React</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Opción</th><th>Cómo funciona</th><th>Cuándo usarla</th></tr></thead>
+<tbody><tr><td><strong>CSS global</strong></td><td><code>import "./index.css"</code>; reglas normales para toda la página</td><td>Estilos base, variables, tipografía</td></tr><tr><td><strong>CSS por componente</strong></td><td><code>import "./Tarjeta.css"</code> junto al componente (siguen siendo globales)</td><td>Proyectos pequeños, con nombres de clase cuidados</td></tr><tr><td><strong>CSS Modules</strong></td><td>Archivo <code>Tarjeta.module.css</code>; las clases se vuelven <strong>únicas por componente</strong></td><td>Evitar choques de nombres</td></tr><tr><td><strong>Utilidades (Tailwind)</strong></td><td>Clases como <code>p-4 text-lg</code> directamente en el JSX</td><td>Equipos que prefieren velocidad sin escribir CSS</td></tr></tbody>
+</table></div>
+<div class="code">
+  <div class="code-head"><span>CSS Modules en acción</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-com">/* Tarjeta.module.css */</span>
+<span class="tk-sel">.caja</span> { <span class="tk-attr">border</span>: <span class="tk-val">1px solid #ccc</span>; <span class="tk-attr">border-radius</span>: <span class="tk-val">12px</span>; <span class="tk-attr">padding</span>: <span class="tk-val">1rem</span>; }
+<span class="tk-sel">.titulo</span> { <span class="tk-attr">color</span>: <span class="tk-val">#4f46e5</span>; }</code></pre>
+</div>
+<div class="code">
+  <div class="code-head"><span>Usarlo en el componente</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">import</span> estilos <span class="tk-tag">from</span> <span class="tk-val">"./Tarjeta.module.css"</span>;
+
+<span class="tk-tag">export</span> <span class="tk-tag">default</span> <span class="tk-tag">function</span> Tarjeta({ titulo }) {
+  <span class="tk-tag">return</span> (
+    <span class="tk-tag">&lt;article</span> <span class="tk-attr">className</span>={estilos.caja}<span class="tk-tag">&gt;</span>
+      <span class="tk-tag">&lt;h2</span> <span class="tk-attr">className</span>={estilos.titulo}<span class="tk-tag">&gt;</span>{titulo}<span class="tk-tag">&lt;/h2</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;/article</span><span class="tk-tag">&gt;</span>
+  );
+}</code></pre>
+</div>
+<p>Todo lo que aprendiste en el <a href="../../css/">curso de CSS</a> (Flexbox, Grid, variables, diseño responsivo) se aplica igual: React solo cambia <strong>cómo organizas</strong> los archivos.</p>
+
+<h2 id="router"><span class="n">4.</span>Varias páginas: el enrutador</h2>
+<p>Una aplicación de React es una <strong>sola página HTML</strong> (por eso se llama *SPA*, «aplicación de una página»). Para simular varias pantallas con su propia dirección (<code>/</code>, <code>/productos</code>, <code>/contacto</code>) se usa un <strong>enrutador</strong>. El estándar es <strong>React Router</strong>. Para entender qué hace, este es un enrutador de juguete con estado:</p>
+<div class="playground js" data-js data-react>
+  <div class="pg-head"><span>⚛️ Un enrutador de juguete</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de React" style="height:420px">import { useState } from "react";
+
+function Inicio()    { return &lt;h2&gt;🏠 Inicio&lt;/h2&gt;; }
+function Productos() { return &lt;h2&gt;🛍 Productos&lt;/h2&gt;; }
+function Contacto()  { return &lt;h2&gt;✉️ Contacto&lt;/h2&gt;; }
+
+const rutas = { "/": Inicio, "/productos": Productos, "/contacto": Contacto };
+
+function App() {
+  const [ruta, setRuta] = useState("/");
+  const Pagina = rutas[ruta];          // elige el componente según la ruta
+
+  return (
+    &lt;main&gt;
+      &lt;nav style={{ display: "flex", gap: 8 }}&gt;
+        {Object.keys(rutas).map((r) =&gt; (
+          &lt;button key={r} onClick={() =&gt; setRuta(r)} aria-current={ruta === r ? "page" : undefined}&gt;
+            {r}
+          &lt;/button&gt;
+        ))}
+      &lt;/nav&gt;
+      &lt;Pagina /&gt;
+    &lt;/main&gt;
+  );
+}</textarea></div>
+    <div><label>Resultado</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<div class="code">
+  <div class="code-head"><span>Lo mismo con React Router</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-com">// npm install react-router-dom</span>
+<span class="tk-tag">import</span> { BrowserRouter, Routes, Route, Link } <span class="tk-tag">from</span> <span class="tk-val">"react-router-dom"</span>;
+
+<span class="tk-tag">export</span> <span class="tk-tag">default</span> <span class="tk-tag">function</span> App() {
+  <span class="tk-tag">return</span> (
+    <span class="tk-tag">&lt;BrowserRouter</span><span class="tk-tag">&gt;</span>
+      <span class="tk-tag">&lt;nav</span><span class="tk-tag">&gt;</span>
+        <span class="tk-tag">&lt;Link</span> <span class="tk-attr">to</span>=<span class="tk-val">"/"</span><span class="tk-tag">&gt;</span>Inicio<span class="tk-tag">&lt;/Link</span><span class="tk-tag">&gt;</span> <span class="tk-tag">&lt;Link</span> <span class="tk-attr">to</span>=<span class="tk-val">"/productos"</span><span class="tk-tag">&gt;</span>Productos<span class="tk-tag">&lt;/Link</span><span class="tk-tag">&gt;</span>
+      <span class="tk-tag">&lt;/nav</span><span class="tk-tag">&gt;</span>
+      <span class="tk-tag">&lt;Routes</span><span class="tk-tag">&gt;</span>
+        <span class="tk-tag">&lt;Route</span> <span class="tk-attr">path</span>=<span class="tk-val">"/"</span> <span class="tk-attr">element</span>={<span class="tk-tag">&lt;Inicio</span> <span class="tk-tag">/&gt;</span>} <span class="tk-tag">/&gt;</span>
+        <span class="tk-tag">&lt;Route</span> <span class="tk-attr">path</span>=<span class="tk-val">"/productos"</span> <span class="tk-attr">element</span>={<span class="tk-tag">&lt;Productos</span> <span class="tk-tag">/&gt;</span>} <span class="tk-tag">/&gt;</span>
+        <span class="tk-tag">&lt;Route</span> <span class="tk-attr">path</span>=<span class="tk-val">"/productos/:id"</span> <span class="tk-attr">element</span>={<span class="tk-tag">&lt;Detalle</span> <span class="tk-tag">/&gt;</span>} <span class="tk-tag">/&gt;</span>   {<span class="tk-com">/* parámetro en la URL */</span>}
+      <span class="tk-tag">&lt;/Routes</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;/BrowserRouter</span><span class="tk-tag">&gt;</span>
+  );
+}</code></pre>
+</div>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · Por qué <code>Link</code> y no <code>&lt;a&gt;</code></p>
+<p>Un <code>&lt;a href&gt;</code> normal recarga la página completa. <code>Link</code> <strong>cambia la pantalla sin recargar</strong>, conservando el estado de la aplicación y haciendo la navegación instantánea.</p>
+</div>
+
+<h2 id="entorno"><span class="n">5.</span>Variables de entorno</h2>
+<p>A veces necesitas valores que <strong>cambian según el entorno</strong>: la dirección de la API en desarrollo y en producción, por ejemplo. En Vite se guardan en un archivo <code>.env</code> y los nombres deben empezar por <strong><code>VITE_</code></strong>:</p>
+<div class="code">
+  <div class="code-head"><span>.env</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>VITE_API_URL=https://api.ejemplo.com</code></pre>
+</div>
+<div class="code">
+  <div class="code-head"><span>Leerla en el código</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">const</span> url = <span class="tk-tag">import</span>.meta.env.VITE_API_URL;
+fetch(url + <span class="tk-val">"/usuarios"</span>);</code></pre>
+</div>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · Todo lo que empieza por <code>VITE_</code> se publica</p>
+<p>Esas variables <strong>se incluyen en el código final</strong> que descarga cualquiera. Sirven para direcciones y opciones, <strong>jamás para claves secretas o contraseñas</strong>. Y no subas tu <code>.env</code> a Git si contiene datos privados.</p>
+</div>
+
+<h2 id="publicar"><span class="n">6.</span>Publicar tu proyecto en GitHub Pages</h2>
+<p>El comando <code>npm run build</code> produce la carpeta <code>dist/</code>, que es <strong>HTML, CSS y JavaScript estáticos</strong>: puedes publicarla en GitHub Pages, Netlify, Vercel o cualquier hosting. En GitHub Pages hay dos detalles clave:</p>
+<ol><li><strong>La ruta base:</strong> tu sitio vive en <code>https://usuario.github.io/mi-app/</code>, no en la raíz. Díselo a Vite con <code>base: "/mi-app/"</code> en <code>vite.config.js</code>.</li><li><strong>La publicación automática:</strong> un flujo de <strong>GitHub Actions</strong> construye el proyecto en cada <code>push</code> y lo despliega.</li></ol>
+<div class="code">
+  <div class="code-head"><span>vite.config.js</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">import</span> { defineConfig } <span class="tk-tag">from</span> <span class="tk-val">"vite"</span>;
+<span class="tk-tag">import</span> react <span class="tk-tag">from</span> <span class="tk-val">"@vitejs/plugin-react"</span>;
+
+<span class="tk-tag">export</span> <span class="tk-tag">default</span> defineConfig({
+  plugins: [react()],
+  base: <span class="tk-val">"/mi-app/"</span>,        <span class="tk-com">// el nombre de tu repositorio</span>
+});</code></pre>
+</div>
+<div class="code">
+  <div class="code-head"><span>.github/workflows/deploy.yml</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>name: Publicar en GitHub Pages
+on:
+  push:
+    branches: [main]
+permissions:
+  pages: write
+  id-token: write
+  contents: read
+jobs:
+  desplegar:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm ci
+      - run: npm run build
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+      - uses: actions/deploy-pages@v4</code></pre>
+</div>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Activa Pages con Actions</p>
+<p>En el repositorio, ve a <strong>Settings → Pages</strong> y elige <strong>GitHub Actions</strong> como origen. Con el archivo anterior, cada vez que hagas <code>push</code> a <code>main</code> tu aplicación se actualiza sola. Repasa la <a href="../../11-git-y-publicacion/">lección de Git y publicación</a> si necesitas el flujo básico.</p>
+</div>
+
+<h2 id="ecosistema"><span class="n">7.</span>El ecosistema: hacia dónde seguir</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Necesidad</th><th>Herramientas habituales</th></tr></thead>
+<tbody><tr><td><strong>Sitios completos</strong> (rutas, servidor, SEO)</td><td><strong>Next.js</strong>, Remix, Astro (frameworks construidos sobre React)</td></tr><tr><td><strong>Datos del servidor</strong></td><td>TanStack Query, SWR</td></tr><tr><td><strong>Estado global grande</strong></td><td>Zustand, Redux Toolkit</td></tr><tr><td><strong>Formularios complejos</strong></td><td>React Hook Form, Zod (validación)</td></tr><tr><td><strong>Componentes ya hechos</strong></td><td>shadcn/ui, Material UI, Chakra UI</td></tr><tr><td><strong>Tipos y menos errores</strong></td><td><strong>TypeScript</strong> (casi estándar en equipos)</td></tr><tr><td><strong>Pruebas</strong></td><td>Vitest + Testing Library</td></tr><tr><td><strong>Animaciones</strong></td><td>Framer Motion</td></tr></tbody>
+</table></div>
+<p>No necesitas aprender todo: elige <strong>según el problema</strong> que tengas. Lo importante es dominar lo que has visto en este curso, porque <strong>todas esas herramientas están construidas sobre ello</strong>.</p>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · Una prueba pequeña con Testing Library</p>
+<p>Con <strong>Vitest</strong> y <strong>Testing Library</strong> pruebas tus componentes como lo haría una persona: <code>render(&lt;Contador /&gt;)</code>, <code>click</code> en el botón, y compruebas que aparece «1». Es el mismo enfoque que usan los comprobadores de los ejercicios de este curso.</p>
+</div>
+
+<h2 id="errores"><span class="n">8.</span>Errores frecuentes</h2>
+<ul><li><strong>Subir <code>node_modules/</code> a Git:</strong> pesa cientos de megas y es innecesario.</li><li><strong>Olvidar <code>base</code></strong> al publicar en GitHub Pages: la página queda en blanco y los archivos dan 404.</li><li><strong><code>import</code> con mayúsculas/minúsculas distintas</strong> (<code>./tarjeta.jsx</code> vs <code>Tarjeta.jsx</code>): funciona en tu PC y falla en el servidor.</li><li><strong>Olvidar la extensión <code>.jsx</code></strong> o la ruta relativa <code>./</code>.</li><li><strong>Guardar secretos en <code>.env</code> con prefijo <code>VITE_</code>:</strong> se publican con el código.</li><li><strong>Usar <code>&lt;a href&gt;</code> para navegar</strong> dentro de una SPA: recarga la página y pierde el estado.</li><li><strong>Instalar paquetes sin necesidad:</strong> cada biblioteca añade peso y mantenimiento.</li><li><strong>Probar solo con <code>npm run dev</code>:</strong> comprueba también <code>npm run build &amp;&amp; npm run preview</code> antes de publicar.</li></ul>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li>Un proyecto con <strong>Vite</strong> tiene <code>index.html</code>, <code>src/main.jsx</code>, <code>src/App.jsx</code> y <code>package.json</code>.</li><li>Comandos: <code>npm install</code>, <code>npm run dev</code>, <code>npm run build</code>, <code>npm run preview</code>.</li><li>Un archivo = un módulo; un componente por archivo con <strong><code>export default</code></strong> e <strong><code>import</code></strong>.</li><li>Estilos: CSS global, por componente, <strong>CSS Modules</strong> o utilidades (Tailwind).</li><li>Una app de React es una <strong>SPA</strong>; <strong>React Router</strong> gestiona las pantallas y rutas.</li><li>Variables de entorno <code>VITE_*</code> <strong>se publican</strong>: nada de claves secretas.</li><li>Para GitHub Pages: <strong><code>base: "/repositorio/"</code></strong> y un flujo de <strong>GitHub Actions</strong>.</li><li>Sube a Git el código, <strong>no</strong> <code>node_modules/</code> ni <code>dist/</code>.</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">9.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td>Vite</td><td>Herramienta de desarrollo que compila y sirve proyectos con recarga instantánea.</td></tr><tr><td>npm</td><td>Gestor de paquetes de Node.js para instalar bibliotecas.</td></tr><tr><td>Módulo</td><td>Archivo que exporta e importa código.</td></tr><tr><td>SPA</td><td>Aplicación de una sola página: el navegador no recarga entre pantallas.</td></tr><tr><td>React Router</td><td>Biblioteca estándar de rutas para aplicaciones de React.</td></tr><tr><td>CSS Modules</td><td>Archivos CSS cuyas clases se vuelven únicas para cada componente.</td></tr><tr><td><code>dist/</code></td><td>Carpeta con la versión final y optimizada que se publica.</td></tr><tr><td>GitHub Actions</td><td>Sistema de automatización de GitHub (por ejemplo, para construir y desplegar).</td></tr></tbody>
+</table></div>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>¿Qué comando genera la versión lista para publicar?</p><ul class="opts"><li><button type="button" class="opt"><code>npm run dev</code></button></li><li><button type="button" class="opt" data-ok><code>npm run build</code></button></li><li><button type="button" class="opt"><code>npm install</code></button></li><li><button type="button" class="opt"><code>npm start</code></button></li></ul><p class="explain" hidden><code>npm run build</code> crea la carpeta <code>dist/</code> optimizada.</p></div>
+<div class="quiz-q"><p>¿Qué NO debe subirse a Git?</p><ul class="opts"><li><button type="button" class="opt"><code>src/</code></button></li><li><button type="button" class="opt"><code>package.json</code></button></li><li><button type="button" class="opt" data-ok><code>node_modules/</code></button></li><li><button type="button" class="opt"><code>index.html</code></button></li></ul><p class="explain" hidden><code>node_modules/</code> se recrea con <code>npm install</code> y es enorme.</p></div>
+<div class="quiz-q"><p>¿Por qué hay que configurar <code>base</code> al publicar en GitHub Pages?</p><ul class="opts"><li><button type="button" class="opt">Para activar HTTPS</button></li><li><button type="button" class="opt" data-ok>Porque el sitio vive en una subcarpeta (<code>/mi-app/</code>) y los recursos deben buscarse allí</button></li><li><button type="button" class="opt">Para cambiar el idioma</button></li><li><button type="button" class="opt">Para hacerlo más rápido</button></li></ul><p class="explain" hidden>Sin <code>base</code>, los archivos se piden a la raíz del dominio y dan 404.</p></div>
+<div class="quiz-q"><p>Una variable <code>VITE_CLAVE_SECRETA</code> en <code>.env</code>, ¿es segura?</p><ul class="opts"><li><button type="button" class="opt">Sí, nadie la ve</button></li><li><button type="button" class="opt" data-ok>No: se incluye en el código que descarga el navegador</button></li><li><button type="button" class="opt">Sí, si el repositorio es privado</button></li><li><button type="button" class="opt">Solo en desarrollo</button></li></ul><p class="explain" hidden>Las variables <code>VITE_*</code> se publican; los secretos viven en un servidor.</p></div>
+<div class="quiz-q"><p>¿Qué ventaja tiene <code>Link</code> de React Router frente a <code>&lt;a&gt;</code>?</p><ul class="opts"><li><button type="button" class="opt">Es más bonito</button></li><li><button type="button" class="opt" data-ok>Navega sin recargar la página ni perder el estado</button></li><li><button type="button" class="opt">Funciona sin JavaScript</button></li><li><button type="button" class="opt">Evita escribir la ruta</button></li></ul><p class="explain" hidden>Cambia la pantalla dentro de la SPA sin recarga completa.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="react-11">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../10-datos-de-internet/ejercicio.html"><small>← Anterior</small>Ejercicio: Datos de internet</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de React · Lección 11 · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&title=%5BError%5D%20Lecci%C3%B3n%2011%3A%20Proyectos%20reales%20con%20Vite%20y%20el%20ecosistema%20%C2%B7%20Curso%20de%20React&pagina=https%3A//cacg-code.github.io/PRACTICAS-HTML/react/11-proyectos-reales/" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

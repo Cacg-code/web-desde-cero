@@ -101,6 +101,45 @@
     }
   });
 
+  // ---------- Soporte de React (Babel y React se cargan solo cuando hacen falta) ----------
+  var ASSETS = (document.currentScript && document.currentScript.src) ? new URL('.', document.currentScript.src).href : '';
+  var babelP = null;
+  var loadBabel = function () {
+    if (window.Babel) return Promise.resolve(window.Babel);
+    if (!babelP) babelP = new Promise(function (ok, ko) {
+      var s = document.createElement('script'); s.src = ASSETS + 'vendor/babel.min.js';
+      s.onload = function () { ok(window.Babel); }; s.onerror = function () { babelP = null; ko(new Error('No se pudo cargar el compilador de JSX. Revisa tu conexión.')); };
+      document.head.appendChild(s);
+    });
+    return babelP;
+  };
+  var REACT_LIBS = function () { return '<script src="' + ASSETS + 'vendor/react.development.js"><\/script><script src="' + ASSETS + 'vendor/react-dom.development.js"><\/script>'; };
+  var REACT_PRE = '<script>(function(){var R=window.React,D=window.ReactDOM;if(!R||!D){console.error("No se pudo cargar React.");return}' +
+    '["useState","useEffect","useLayoutEffect","useRef","useMemo","useCallback","useReducer","useContext","useId","createContext","Fragment","memo","forwardRef","StrictMode","Children","cloneElement","createElement","isValidElement","useTransition","useDeferredValue"].forEach(function(k){if(R[k])window[k]=R[k]});window.createRoot=D.createRoot;' +
+    'var fx=function(a){a=[].slice.call(a);if(typeof a[0]==="string"&&/%[sdoOif]/.test(a[0])){var i=1;a[0]=a[0].replace(/%[sdoOif]/g,function(t){return i<a.length?String(a[i++]):t});a=[a[0]]}if(typeof a[0]==="string")a[0]=a[0].split("\\n").filter(function(l){return !/^\\s+at /.test(l)}).join("\\n").trim();return a};' +
+    'window.__warns=[];["error","warn"].forEach(function(m){var o=console[m];console[m]=function(){var a=fx(arguments);window.__warns.push(String(a[0]));o.apply(console,a)}});var oi=console.info;console.info=function(){if(/React DevTools/.test(arguments[0]))return;oi.apply(console,arguments)}})();<\/script>';
+  var REACT_STYLE = '<style>body{font:16px/1.5 system-ui,sans-serif;padding:14px}button{font:inherit;cursor:pointer}input,select,textarea{font:inherit}</style>';
+  // Convierte el código del alumno (JSX con imports opcionales) en JavaScript ejecutable
+  var compileReact = function (B, code) {
+    var src = code.replace(/^\s*import\s+[^;]*?\s+from\s+['"](?:react|react-dom|react-dom\/client)['"]\s*;?[ \t]*$/gm, '')
+                  .replace(/^\s*import\s+['"][^'"]+\.css['"]\s*;?[ \t]*$/gm, '')
+                  .replace(/^\s*export\s+default\s+function\s+/gm, 'function ')
+                  .replace(/^\s*export\s+default\s+(\w+)\s*;?[ \t]*$/gm, '')
+                  .replace(/^\s*export\s+(?=function|const|let)/gm, '');
+    var out = B.transform(src, { presets: [['react', { runtime: 'classic' }]] }).code;
+    if (!/createRoot\s*\(|\.render\s*\(/.test(out)) {
+      out += '\n;(function(){if(typeof App==="function"){createRoot(document.getElementById("root")).render(React.createElement(App))}else{console.warn("Define un componente llamado App para verlo aquí.")}})();';
+    }
+    return out;
+  };
+  var babelMsg = function (e) {
+    var m = String(e && e.message || e).split('\n')[0].replace(/^unknown: /, '');
+    if (/Adjacent JSX elements/.test(m)) m += ' → Devuelve un solo elemento raíz: envuélvelos en <div>…</div> o en <>…</>.';
+    else if (/Expected corresponding JSX closing tag|Unterminated JSX/.test(m)) m += ' → Falta cerrar una etiqueta (o está mal escrita).';
+    else if (/Unexpected token|Unexpected reserved|Missing semicolon/.test(m)) m += ' → Revisa llaves { }, paréntesis ( ) y comas cerca de esa posición.';
+    return m;
+  };
+
   // Zona de práctica en vivo
   var BASE = '<meta charset="utf-8"><style>body{font:16px/1.6 system-ui,sans-serif;color:#1e2235;padding:12px;margin:0}img{max-width:100%;height:auto}table{border-collapse:collapse}</style>';
   document.querySelectorAll('.playground').forEach(function (pg) {
@@ -263,9 +302,17 @@
       var runner = '<script>(function(){var AF=Object.getPrototypeOf(async function(){}).constructor;var T=' + JSON.stringify(tests) + ';' +
         'var run=async function(){var res=[];for(var i=0;i<T.length;i++){var ok=false;try{ok=!!(await Promise.race([new AF(T[i])(),new Promise(function(r){setTimeout(function(){r(false)},1500)})]))}catch(e){ok=false}res.push(ok)}' +
         'parent.postMessage({ck:' + JSON.stringify(id) + ',res:res,err:window.__err},"*")};' +
-        'setTimeout(run,60)})();<\/script>';
-      var body = '<meta charset="utf-8">' + (cfg.mode === 'cssl' ? '<style>' + safe + '</style>' : '') + (cfg.scaffold || '') + shimCk +
-        (cfg.mode === 'js' ? '<script>' + safe + '<\/script>' : '') + runner;
+        'setTimeout(run,' + (cfg.mode === 'react' ? 200 : 60) + ')})();<\/script>';
+      var react = cfg.mode === 'react';
+      var helpers = react ? '<script>window.tick=function(ms){return new Promise(function(r){setTimeout(r,ms||40)})};window.$=function(s){return document.querySelector(s)};window.$$=function(s){return [].slice.call(document.querySelectorAll(s))};window.boton=function(t){t=String(t).toLowerCase();return window.$$("button").filter(function(b){return (b.textContent+" "+(b.getAttribute("aria-label")||"")).toLowerCase().indexOf(t)>-1})[0]};window.texto=function(s){var e=document.querySelector(s||"#root");return e?e.textContent.trim():""};' +
+        'window.click=async function(e){if(typeof e==="string")e=document.querySelector(e);e.click();await window.tick()};' +
+        'window.escribir=async function(e,v){if(typeof e==="string")e=document.querySelector(e);var pr=Object.getPrototypeOf(e);var d=Object.getOwnPropertyDescriptor(pr,e.type==="checkbox"?"checked":"value");d.set.call(e,v);e.dispatchEvent(new Event(e.type==="checkbox"?"click":"input",{bubbles:true}));await window.tick()};' +
+        'window.elegir=async function(e,v){if(typeof e==="string")e=document.querySelector(e);var d=Object.getOwnPropertyDescriptor(HTMLSelectElement.prototype,"value");d.set.call(e,v);e.dispatchEvent(new Event("change",{bubbles:true}));await window.tick()};<\/script>' : '';
+      var assemble = function (code) {
+        return '<meta charset="utf-8">' + (cfg.mode === 'cssl' ? '<style>' + safe + '</style>' : '') + (cfg.scaffold || '') + shimCk +
+          (react ? REACT_LIBS() + REACT_PRE + '<div id="root"></div>' + helpers + '<script>' + code.replace(/<\/(script)/gi, '<\\/$1') + '<\/script>' : '') +
+          (cfg.mode === 'js' ? '<script>' + safe + '<\/script>' : '') + runner;
+      };
       var done = false;
       var finish = function (res, err) {
         if (done) return; done = true; removeEventListener('message', onMsg); fr.remove();
@@ -276,13 +323,18 @@
       var onMsg = function (e) { var d = e.data; if (d && d.ck === id && e.source === fr.contentWindow) finish(d.res, d.err); };
       addEventListener('message', onMsg);
       setTimeout(function () { finish([], 'el código tardó demasiado en responder (¿hay un bucle infinito?)'); }, 12000);
-      fr.srcdoc = body; document.body.appendChild(fr);
+      if (!react) { fr.srcdoc = assemble(''); document.body.appendChild(fr); return; }
+      loadBabel().then(function (B) {
+        if (done) return;
+        var js; try { js = compileReact(B, src); } catch (e) { finish([], 'Error de sintaxis: ' + babelMsg(e)); return; }
+        fr.srcdoc = assemble(js); document.body.appendChild(fr);
+      }, function (e) { finish([], e.message); });
     };
     var run = function () {
       var src = cta.value;
       clist.innerHTML = ''; csum.className = 'chk-sum';
       if (!src.trim()) { csum.textContent = 'Pega primero tu código en el cuadro de arriba.'; return; }
-      if (cfg.mode === 'js' || cfg.mode === 'cssl') { runLive(src); return; }
+      if (cfg.mode === 'js' || cfg.mode === 'cssl' || cfg.mode === 'react') { runLive(src); return; }
       var doc = new DOMParser().parseFromString(src, 'text/html');
       var ok = 0;
       cfg.checks.forEach(function (c, i) {
@@ -394,14 +446,21 @@
   document.querySelectorAll('.playground[data-js]').forEach(function (pg) {
     var ta = pg.querySelector('.pg-code'), host = pg.querySelector('.pg-frame'), log = pg.querySelector('.pg-log');
     var original = ta.value;
+    var isReact = pg.hasAttribute('data-react');
     pg._run = function () {
       log.textContent = '';
       var id = 'pg' + Math.random().toString(36).slice(2);
       var fr = document.createElement('iframe');
       fr.className = 'pg-out'; fr.title = 'Resultado en vivo'; fr.setAttribute('sandbox', 'allow-scripts');
-      fr.srcdoc = BASE + shim(id) + ta.value;
-      host.innerHTML = ''; host.appendChild(fr);
       pg._id = id; pg._frame = fr;
+      if (!isReact) { fr.srcdoc = BASE + shim(id) + ta.value; host.innerHTML = ''; host.appendChild(fr); return; }
+      var fail = function (m) { var l = document.createElement('div'); l.className = 'log-error'; l.textContent = m; log.appendChild(l); };
+      loadBabel().then(function (B) {
+        if (pg._id !== id) return;
+        var js; try { js = compileReact(B, ta.value); } catch (e) { host.innerHTML = ''; fail('Error de sintaxis: ' + babelMsg(e)); return; }
+        fr.srcdoc = BASE + REACT_STYLE + shim(id) + REACT_LIBS() + REACT_PRE + '<div id="root"></div><script>' + js.replace(/<\/(script)/gi, '<\\/$1') + '<\/script>';
+        host.innerHTML = ''; host.appendChild(fr);
+      }, function (e) { fail(e.message); });
     };
     pg.querySelector('[data-run]').addEventListener('click', pg._run);
     pg.querySelector('[data-reset]').addEventListener('click', function () { ta.value = original; pg._run(); });

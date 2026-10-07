@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lección 4: Estado con useState · Curso de React</title>
+  <meta name="description" content="El estado en React: por qué una variable normal no basta, useState, eventos, actualizaciones funcionales, estado con objetos y arrays sin mutar, y estado independiente por componente.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/react/04-estado/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Lección 4: Estado con useState · Curso de React">
+  <meta property="og:description" content="El estado en React: por qué una variable normal no basta, useState, eventos, actualizaciones funcionales, estado con objetos y arrays sin mutar, y estado independiente por componente.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/react/04-estado/">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de React</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap lesson-layout" id="contenido">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#por-que">Por qué una variable normal no basta</a></li><li><a href="#usestate">useState: tu primera herramienta de estado</a></li><li><a href="#eventos">Eventos: responder a lo que hace la persona</a></li><li><a href="#actualizar">Actualizar con seguridad: la forma funcional</a></li><li><a href="#tipos">Estado con textos, booleanos, objetos y arrays</a></li><li><a href="#independiente">Cada componente tiene su propio estado</a></li><li><a href="#errores">Errores frecuentes</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de React</a> › Lección 4</div>
+        <h1>Estado con useState</h1>
+        <ul class="meta"><li>⏱ 55 minutos</li><li>📶 Nivel: principiante</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Guardar y actualizar datos con <code>useState</code>.</li><li>Responder a eventos pasando funciones.</li><li>Actualizar objetos y arrays sin mutarlos.</li><li>Usar la forma funcional cuando el valor nuevo depende del anterior.</li></ul>
+</div>
+
+<h2 id="por-que"><span class="n">1.</span>Por qué una variable normal no basta</h2>
+<p>Hasta ahora tus componentes mostraban datos <strong>fijos</strong>. Para que una interfaz reaccione (un contador, un menú que se abre, un campo que se escribe) el componente necesita <strong>recordar</strong> un valor y <strong>volver a dibujarse</strong> cuando ese valor cambie.</p>
+<p>Prueba con una variable normal. Pulsa el botón: el valor <strong>sí cambia</strong> en memoria (míralo en la consola), pero la pantalla <strong>no se actualiza</strong>:</p>
+<div class="playground js" data-js data-react>
+  <div class="pg-head"><span>⚛️ Una variable normal no actualiza la pantalla</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de React" style="height:270px">function App() {
+  let cuenta = 0;
+
+  function sumar() {
+    cuenta = cuenta + 1;
+    console.log("cuenta vale", cuenta);
+  }
+
+  return (
+    &lt;main&gt;
+      &lt;p&gt;Cuenta: {cuenta}&lt;/p&gt;
+      &lt;button onClick={sumar}&gt;Sumar&lt;/button&gt;
+    &lt;/main&gt;
+  );
+}</textarea></div>
+    <div><label>Resultado</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<div class="table-wrap"><table>
+<thead><tr><th>Problema</th><th>Por qué ocurre</th></tr></thead>
+<tbody><tr><td>La pantalla no cambia</td><td>React solo vuelve a dibujar un componente cuando <strong>él lo decide</strong>; cambiar una variable local no se lo avisa.</td></tr><tr><td>El valor se pierde</td><td>Cada vez que el componente se dibuja, la función se ejecuta <strong>de nuevo</strong> y <code>let cuenta = 0</code> empieza desde cero.</td></tr></tbody>
+</table></div>
+<p>Necesitamos algo que <strong>(1)</strong> conserve el valor entre dibujos y <strong>(2)</strong> avise a React de que debe volver a dibujar. Eso es el <strong>estado</strong>.</p>
+
+<h2 id="usestate"><span class="n">2.</span>useState: tu primera herramienta de estado</h2>
+<p><code>useState</code> es un <strong>hook</strong>: una función especial de React (siempre empieza por <code>use</code>) que añade memoria a un componente. Devuelve <strong>un par</strong>: el valor actual y una función para cambiarlo.</p>
+<div class="anatomy" role="img" aria-label="La forma de useState: valor, setter y valor inicial"><div class="part" style="--c:#ff8fa3"><span>const [</span><span class="lbl">&nbsp;</span></div><div class="part" style="--c:#ffd479"><span>cuenta</span><span class="lbl">valor actual</span></div><div class="part" style="--c:#ff8fa3"><span>, </span><span class="lbl">&nbsp;</span></div><div class="part" style="--c:#8ee6a0"><span>setCuenta</span><span class="lbl">función para cambiarlo</span></div><div class="part" style="--c:#ff8fa3"><span>] = useState(</span><span class="lbl">&nbsp;</span></div><div class="part" style="--c:#7cc4ff"><span>0</span><span class="lbl">valor inicial</span></div><div class="part" style="--c:#ff8fa3"><span>);</span><span class="lbl">&nbsp;</span></div></div>
+<div class="playground js" data-js data-react>
+  <div class="pg-head"><span>⚛️ Un contador de verdad</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de React" style="height:270px">import { useState } from "react";
+
+function App() {
+  const [cuenta, setCuenta] = useState(0);
+
+  return (
+    &lt;main&gt;
+      &lt;p&gt;Cuenta: {cuenta}&lt;/p&gt;
+      &lt;button onClick={() =&gt; setCuenta(cuenta + 1)}&gt;Sumar&lt;/button&gt;
+      &lt;button onClick={() =&gt; setCuenta(0)}&gt;Reiniciar&lt;/button&gt;
+    &lt;/main&gt;
+  );
+}</textarea></div>
+    <div><label>Resultado</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<figure class="gif-demo">
+  <button type="button" class="gif-btn" data-gif="../../assets/gif/react-estado.gif" aria-label="Reproducir animación: Un contador de React que sube al pulsar Sumar y vuelve a cero con Reiniciar">
+    <img src="../../assets/gif/react-estado.png" alt="Un contador de React que sube al pulsar Sumar y vuelve a cero con Reiniciar" width="640" height="448" loading="lazy">
+    <span class="gif-play">▶ Ver animación</span>
+  </button>
+  <figcaption>Cada clic cambia el estado con <code>setCuenta</code> y React <strong>vuelve a dibujar</strong> el número. «Reiniciar» lo devuelve a <code>0</code>.</figcaption>
+</figure>
+<ol class="steps"><li><strong>Declaras</strong> el estado con <code>useState(valorInicial)</code>.</li><li><strong>Lo lees</strong> como una variable normal: <code>{cuenta}</code>.</li><li><strong>Lo cambias</strong> solo con el setter: <code>setCuenta(nuevoValor)</code>. React guarda el valor nuevo y <strong>vuelve a dibujar</strong> el componente.</li></ol>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · Nunca modifiques el estado directamente</p>
+<p>Escribir <code>cuenta = cuenta + 1</code> o <code>cuenta++</code> <strong>no funciona</strong>: React no se entera. Usa siempre el <strong>setter</strong> (<code>setCuenta</code>). Por eso en el ejemplo se declara con <code>const</code>: no se reasigna jamás.</p>
+</div>
+
+<h2 id="eventos"><span class="n">3.</span>Eventos: responder a lo que hace la persona</h2>
+<p>Para reaccionar a clics, teclas o cambios usas <strong>atributos de evento en camelCase</strong> y les pasas <strong>una función</strong> (no el resultado de llamarla).</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Evento</th><th>Atributo en React</th><th>Cuándo se dispara</th></tr></thead>
+<tbody><tr><td>Clic</td><td><code>onClick</code></td><td>Al pulsar un elemento</td></tr><tr><td>Cambio de un campo</td><td><code>onChange</code></td><td>Cada vez que cambia el valor de un <code>&lt;input&gt;</code></td></tr><tr><td>Envío de formulario</td><td><code>onSubmit</code></td><td>Al enviar un <code>&lt;form&gt;</code></td></tr><tr><td>Tecla pulsada</td><td><code>onKeyDown</code></td><td>Al pulsar una tecla</td></tr><tr><td>Ratón encima</td><td><code>onMouseEnter</code></td><td>Al entrar el puntero</td></tr></tbody>
+</table></div>
+<div class="playground js" data-js data-react>
+  <div class="pg-head"><span>⚛️ Pasar la función, no llamarla</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de React" style="height:270px">function App() {
+  function saludar() {
+    console.log("¡Hola desde el clic!");
+  }
+
+  return (
+    &lt;main&gt;
+      {/* ✅ Pasas la función: React la llamará al hacer clic */}
+      &lt;button onClick={saludar}&gt;Correcto&lt;/button&gt;
+
+      {/* ✅ Función flecha cuando necesitas pasar argumentos */}
+      &lt;button onClick={() =&gt; console.log("Me pulsaron")}&gt;También correcto&lt;/button&gt;
+    &lt;/main&gt;
+  );
+}</textarea></div>
+    <div><label>Resultado</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · El error más común con eventos</p>
+<p>Escribir <code>onClick={saludar()}</code> <strong>llama a la función al dibujar</strong>, no al hacer clic. Debes pasar la función: <code>onClick={saludar}</code> o <code>onClick={() =&gt; saludar()}</code>. Con el setter pasa igual: <code>onClick={setCuenta(1)}</code> provocaría un bucle infinito.</p>
+</div>
+
+<h2 id="actualizar"><span class="n">4.</span>Actualizar con seguridad: la forma funcional</h2>
+<p>Cuando el valor nuevo <strong>depende del anterior</strong>, pásale al setter una <strong>función</strong> que recibe el valor previo. Es la forma segura, sobre todo si hay varias actualizaciones seguidas:</p>
+<div class="playground js" data-js data-react>
+  <div class="pg-head"><span>⚛️ Valor directo frente a forma funcional</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de React" style="height:300px">import { useState } from "react";
+
+function App() {
+  const [a, setA] = useState(0);
+  const [b, setB] = useState(0);
+
+  return (
+    &lt;main&gt;
+      &lt;p&gt;Directo: {a} · Funcional: {b}&lt;/p&gt;
+      &lt;button onClick={() =&gt; { setA(a + 1); setA(a + 1); setA(a + 1); }}&gt;
+        Sumar 3 (directo)
+      &lt;/button&gt;
+      &lt;button onClick={() =&gt; { setB(n =&gt; n + 1); setB(n =&gt; n + 1); setB(n =&gt; n + 1); }}&gt;
+        Sumar 3 (funcional)
+      &lt;/button&gt;
+    &lt;/main&gt;
+  );
+}</textarea></div>
+    <div><label>Resultado</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<p>El primer botón solo suma <strong>1</strong>, porque las tres llamadas leen el <strong>mismo</strong> valor de <code>a</code>. El segundo suma <strong>3</strong>, porque cada función recibe el resultado de la anterior.</p>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · El estado es una «foto»</p>
+<p>En cada dibujo, el valor del estado es <strong>fijo</strong>, como una fotografía. Llamar al setter <strong>no cambia</strong> la variable de ese dibujo: pide a React <strong>otro dibujo</strong> con el valor nuevo. Por eso <code>console.log(cuenta)</code> justo después de <code>setCuenta(cuenta + 1)</code> aún muestra el valor viejo.</p>
+</div>
+
+<h2 id="tipos"><span class="n">5.</span>Estado con textos, booleanos, objetos y arrays</h2>
+<p>El estado puede guardar <strong>cualquier valor</strong>. Con objetos y arrays hay una regla de oro: <strong>nunca los mutes; crea una copia nueva</strong> (con *spread* o con <code>map</code>/<code>filter</code>) y pásala al setter.</p>
+<div class="playground js" data-js data-react>
+  <div class="pg-head"><span>⚛️ Estado de distintos tipos</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de React" style="height:460px">import { useState } from "react";
+
+function App() {
+  const [abierto, setAbierto] = useState(false);          // booleano
+  const [usuario, setUsuario] = useState({ nombre: "Ana", puntos: 0 }); // objeto
+  const [colores, setColores] = useState(["rojo"]);        // array
+
+  return (
+    &lt;main&gt;
+      &lt;button onClick={() =&gt; setAbierto(!abierto)}&gt;
+        {abierto ? "Ocultar" : "Mostrar"} detalles
+      &lt;/button&gt;
+      {abierto &amp;&amp; &lt;p&gt;Estos son los detalles.&lt;/p&gt;}
+
+      &lt;p&gt;{usuario.nombre}: {usuario.puntos} puntos&lt;/p&gt;
+      &lt;button onClick={() =&gt; setUsuario({ ...usuario, puntos: usuario.puntos + 10 })}&gt;
+        +10 puntos
+      &lt;/button&gt;
+
+      &lt;p&gt;Colores: {colores.join(", ")}&lt;/p&gt;
+      &lt;button onClick={() =&gt; setColores([...colores, "azul"])}&gt;Añadir azul&lt;/button&gt;
+      &lt;button onClick={() =&gt; setColores(colores.filter(c =&gt; c !== "azul"))}&gt;Quitar azul&lt;/button&gt;
+    &lt;/main&gt;
+  );
+}</textarea></div>
+    <div><label>Resultado</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<div class="table-wrap"><table>
+<thead><tr><th>Quiero…</th><th>Hazlo así (sin mutar)</th></tr></thead>
+<tbody><tr><td>Cambiar una propiedad de un objeto</td><td><code>setUsuario({ ...usuario, puntos: 5 })</code></td></tr><tr><td>Añadir a un array</td><td><code>setLista([...lista, nuevo])</code></td></tr><tr><td>Quitar de un array</td><td><code>setLista(lista.filter(x =&gt; x.id !== id))</code></td></tr><tr><td>Cambiar un elemento de un array</td><td><code>setLista(lista.map(x =&gt; x.id === id ? { ...x, hecho: true } : x))</code></td></tr><tr><td><strong>Evita</strong></td><td><code>usuario.puntos = 5</code>, <code>lista.push(nuevo)</code>, <code>lista.sort()</code> (mutan)</td></tr></tbody>
+</table></div>
+
+<h2 id="independiente"><span class="n">6.</span>Cada componente tiene su propio estado</h2>
+<p>El estado pertenece a <strong>cada copia</strong> del componente. Si usas <code>&lt;Contador /&gt;</code> dos veces, cada una guarda <strong>su propio</strong> valor y no se mezclan:</p>
+<div class="playground js" data-js data-react>
+  <div class="pg-head"><span>⚛️ Dos contadores independientes</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de React" style="height:270px">import { useState } from "react";
+
+function Contador({ nombre }) {
+  const [n, setN] = useState(0);
+  return (
+    &lt;div style={{ margin: "8px 0" }}&gt;
+      &lt;strong&gt;{nombre}: {n}&lt;/strong&gt;{" "}
+      &lt;button onClick={() =&gt; setN(n + 1)}&gt;+1&lt;/button&gt;
+    &lt;/div&gt;
+  );
+}
+
+function App() {
+  return (
+    &lt;main&gt;
+      &lt;Contador nombre="Manzanas" /&gt;
+      &lt;Contador nombre="Peras" /&gt;
+    &lt;/main&gt;
+  );
+}</textarea></div>
+    <div><label>Resultado</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Reglas de los hooks</p>
+<p>Los hooks solo se llaman <strong>en el nivel superior</strong> de un componente (nunca dentro de <code>if</code>, bucles o funciones anidadas) y <strong>solo en componentes o en otros hooks</strong>. Así React siempre los ve en el mismo orden.</p>
+</div>
+
+<h2 id="errores"><span class="n">7.</span>Errores frecuentes</h2>
+<ul><li><strong>Modificar el estado directamente</strong> (<code>cuenta++</code>, <code>lista.push(x)</code>): la pantalla no se actualiza.</li><li><strong>Llamar a la función en lugar de pasarla:</strong> <code>onClick={sumar()}</code> vs. <code>onClick={sumar}</code>.</li><li><strong>Mutar objetos y arrays</strong> en lugar de crear copias nuevas.</li><li><strong>Esperar el valor nuevo justo después del setter:</strong> el estado es una foto; el valor nuevo llega en el siguiente dibujo.</li><li><strong>Guardar en estado algo que se puede calcular</strong> de otros datos (por ejemplo, el total): cálculalo en cada dibujo.</li><li><strong>Llamar a <code>useState</code> dentro de un <code>if</code> o un bucle:</strong> rompe el orden de los hooks.</li><li><strong>Olvidar el valor inicial:</strong> <code>useState()</code> empieza en <code>undefined</code>; inicializa siempre con un valor del tipo correcto.</li></ul>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li>El <strong>estado</strong> es la memoria de un componente; cuando cambia, React <strong>vuelve a dibujar</strong> el componente.</li><li><code>const [valor, setValor] = useState(inicial)</code> devuelve el valor actual y su setter.</li><li>Cambia el estado <strong>solo con el setter</strong>, nunca asignando directamente.</li><li>Para eventos pasa <strong>una función</strong>: <code>onClick={sumar}</code> o <code>onClick={() =&gt; …}</code>; no la llames.</li><li>Si el nuevo valor depende del anterior usa la <strong>forma funcional</strong>: <code>setN(n =&gt; n + 1)</code>.</li><li>Con objetos y arrays <strong>crea copias</strong> (<code>...</code>, <code>map</code>, <code>filter</code>) en vez de mutar.</li><li>Cada copia de un componente tiene <strong>su propio estado</strong>.</li><li>Los hooks se llaman <strong>siempre en el nivel superior</strong> del componente.</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">8.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td>Estado</td><td>Datos que un componente recuerda y que, al cambiar, provocan un nuevo dibujo.</td></tr><tr><td>Hook</td><td>Función de React que empieza por <code>use</code> y añade capacidades a un componente.</td></tr><tr><td>Setter</td><td>Función que devuelve <code>useState</code> para cambiar el valor y pedir un nuevo dibujo.</td></tr><tr><td>Evento</td><td>Algo que ocurre en la interfaz (un clic, una tecla) y al que puedes responder.</td></tr><tr><td>Inmutabilidad</td><td>Práctica de no modificar los datos existentes y crear copias nuevas.</td></tr><tr><td>Dibujar (render)</td><td>Ejecutar el componente para calcular qué debe mostrarse.</td></tr><tr><td>Spread <code>...</code></td><td>Sintaxis para copiar propiedades o elementos al crear un objeto o array nuevo.</td></tr></tbody>
+</table></div>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>¿Qué devuelve <code>useState(0)</code>?</p><ul class="opts"><li><button type="button" class="opt">Solo el número 0</button></li><li><button type="button" class="opt" data-ok>Un array con el valor actual y una función para cambiarlo</button></li><li><button type="button" class="opt">Un objeto con <code>get</code> y <code>set</code></button></li><li><button type="button" class="opt">Una promesa</button></li></ul><p class="explain" hidden>Devuelve un par: <code>[valor, setValor]</code>, que normalmente se desestructura.</p></div>
+<div class="quiz-q"><p>¿Por qué <code>cuenta++</code> no actualiza la pantalla?</p><ul class="opts"><li><button type="button" class="opt">Porque falta el punto y coma</button></li><li><button type="button" class="opt" data-ok>Porque React no se entera del cambio: hay que usar el setter</button></li><li><button type="button" class="opt">Porque <code>cuenta</code> es un texto</button></li><li><button type="button" class="opt">Porque los botones no admiten eventos</button></li></ul><p class="explain" hidden>Solo el setter avisa a React de que debe volver a dibujar.</p></div>
+<div class="quiz-q"><p>¿Cuál es la forma correcta de pasar el manejador de clic?</p><ul class="opts"><li><button type="button" class="opt"><code>onClick={sumar()}</code></button></li><li><button type="button" class="opt" data-ok><code>onClick={sumar}</code></button></li><li><button type="button" class="opt"><code>onClick="sumar"</code></button></li><li><button type="button" class="opt"><code>onclick={sumar}</code></button></li></ul><p class="explain" hidden><code>sumar()</code> ejecutaría la función al dibujar; hay que pasar la función misma.</p></div>
+<div class="quiz-q"><p>¿Cómo añades un elemento a un array guardado en estado?</p><ul class="opts"><li><button type="button" class="opt"><code>lista.push(x)</code></button></li><li><button type="button" class="opt" data-ok><code>setLista([...lista, x])</code></button></li><li><button type="button" class="opt"><code>lista[lista.length] = x</code></button></li><li><button type="button" class="opt"><code>lista = lista + x</code></button></li></ul><p class="explain" hidden>Se crea un array nuevo con una copia más el elemento, y se pasa al setter.</p></div>
+<div class="quiz-q"><p>Tres llamadas seguidas <code>setN(n + 1)</code> con <code>n</code> valiendo 0, ¿cuánto vale <code>n</code> en el siguiente dibujo?</p><ul class="opts"><li><button type="button" class="opt">3</button></li><li><button type="button" class="opt" data-ok>1</button></li><li><button type="button" class="opt">0</button></li><li><button type="button" class="opt"><code>undefined</code></button></li></ul><p class="explain" hidden>Las tres leen el mismo valor (0) de esa «foto». Con <code>setN(n =&gt; n + 1)</code> sumarían 3.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="react-04">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../03-componentes-y-props/ejercicio.html"><small>← Anterior</small>Ejercicio: Componentes y props</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de React · Lección 4 · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&title=%5BError%5D%20Lecci%C3%B3n%204%3A%20Estado%20con%20useState%20%C2%B7%20Curso%20de%20React&pagina=https%3A//cacg-code.github.io/PRACTICAS-HTML/react/04-estado/" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

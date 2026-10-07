@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lección 10: Datos de internet · Curso de React</title>
+  <meta name="description" content="Datos de internet en React: pedir datos con fetch dentro de useEffect, los estados de carga, error y éxito, respuestas obsoletas, hooks para reutilizar el patrón y bibliotecas de datos.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/react/10-datos-de-internet/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Lección 10: Datos de internet · Curso de React">
+  <meta property="og:description" content="Datos de internet en React: pedir datos con fetch dentro de useEffect, los estados de carga, error y éxito, respuestas obsoletas, hooks para reutilizar el patrón y bibliotecas de datos.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/react/10-datos-de-internet/">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de React</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap lesson-layout" id="contenido">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#idea">La idea: pedir datos desde un efecto</a></li><li><a href="#estados">Los tres estados de una petición</a></li><li><a href="#fetch-real">`fetch` de verdad</a></li><li><a href="#dependencias">Volver a pedir: dependencias y cancelación</a></li><li><a href="#hook">Reutilizar: un hook useDatos</a></li><li><a href="#errores">Errores frecuentes</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de React</a> › Lección 10</div>
+        <h1>Datos de internet</h1>
+        <ul class="meta"><li>⏱ 55 minutos</li><li>📶 Nivel: principiante</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Pedir datos con <code>fetch</code> desde un efecto.</li><li>Mostrar los estados de carga y error.</li><li>Evitar respuestas obsoletas.</li><li>Extraer el patrón a un hook reutilizable.</li></ul>
+</div>
+
+<h2 id="idea"><span class="n">1.</span>La idea: pedir datos desde un efecto</h2>
+<p>Casi toda aplicación real muestra datos que <strong>no están en el código</strong>: llegan de un <strong>servidor</strong> a través de una <strong>API</strong>. Pedir datos es un <strong>efecto secundario</strong> (sale de React hacia la red), así que se hace en <strong><code>useEffect</code></strong>, con el patrón de tres estados: <strong>cargando</strong>, <strong>error</strong> y <strong>datos</strong>.</p>
+<div class="code">
+  <div class="code-head"><span>El patrón básico</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>useEffect(() =&gt; {
+  <span class="tk-tag">async</span> <span class="tk-tag">function</span> cargar() {
+    <span class="tk-tag">try</span> {
+      <span class="tk-tag">const</span> respuesta = <span class="tk-tag">await</span> fetch(<span class="tk-val">"https://api.ejemplo.com/usuarios"</span>);
+      <span class="tk-tag">if</span> (!respuesta.ok) <span class="tk-tag">throw</span> <span class="tk-tag">new</span> Error(<span class="tk-val">"Error "</span> + respuesta.status);
+      <span class="tk-tag">const</span> datos = <span class="tk-tag">await</span> respuesta.json();
+      setUsuarios(datos);
+    } <span class="tk-tag">catch</span> (e) {
+      setError(e.message);
+    } <span class="tk-tag">finally</span> {
+      setCargando(<span class="tk-tag">false</span>);
+    }
+  }
+  cargar();
+}, []);</code></pre>
+</div>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · <code>fetch</code> y <code>async/await</code></p>
+<p>Si necesitas repasar promesas, <code>fetch</code> y <code>async/await</code>, revisa la <a href="../../javascript/10-asincronia/">lección 10 del curso de JavaScript</a>. Aquí las usamos tal cual.</p>
+</div>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · <code>useEffect(async …)</code> no se puede</p>
+<p>La función del efecto <strong>no puede ser <code>async</code></strong> porque devolvería una promesa, y React espera una función de limpieza (o nada). Por eso se define una función <code>async</code> <strong>dentro</strong> y se <strong>llama</strong> al final.</p>
+</div>
+
+<h2 id="estados"><span class="n">2.</span>Los tres estados de una petición</h2>
+<p>Una petición pasa por momentos distintos y tu interfaz debe <strong>decirle algo útil a la persona en cada uno</strong>. Para poder practicar sin depender de internet, estos ejemplos usan una API <strong>simulada</strong> (<code>pedirUsuarios</code>) que responde tras medio segundo, igual que lo haría una real.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Estado</th><th>Qué mostrar</th></tr></thead>
+<tbody><tr><td><strong>Cargando</strong></td><td>Un indicador: «Cargando…» o un spinner</td></tr><tr><td><strong>Error</strong></td><td>Un mensaje claro y, si se puede, un botón para <strong>reintentar</strong></td></tr><tr><td><strong>Éxito</strong></td><td>Los datos (o un aviso si la lista llegó vacía)</td></tr></tbody>
+</table></div>
+<div class="playground js" data-js data-react>
+  <div class="pg-head"><span>⚛️ Cargando, error y datos</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de React" style="height:620px">// Simula una API: responde tras un breve retraso (o falla)
+function pedirUsuarios(falla = false) {
+  return new Promise((resolver, rechazar) =&gt; {
+    setTimeout(() =&gt; {
+      if (falla) rechazar(new Error("No se pudo conectar con el servidor"));
+      else resolver([
+        { id: 1, nombre: "Ana Pérez", ciudad: "Lima" },
+        { id: 2, nombre: "Luis Gómez", ciudad: "Quito" },
+        { id: 3, nombre: "Marta Ríos", ciudad: "Bogotá" },
+      ]);
+    }, 500);
+  });
+}
+
+import { useState, useEffect } from "react";
+
+function App() {
+  const [usuarios, setUsuarios] = useState([]);
+  const [cargando, setCargando] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() =&gt; {
+    pedirUsuarios()
+      .then(setUsuarios)
+      .catch((e) =&gt; setError(e.message))
+      .finally(() =&gt; setCargando(false));
+  }, []);
+
+  if (cargando) return &lt;p&gt;⏳ Cargando usuarios…&lt;/p&gt;;
+  if (error) return &lt;p role="alert"&gt;⚠️ {error}&lt;/p&gt;;
+
+  return (
+    &lt;ul&gt;
+      {usuarios.map((u) =&gt; &lt;li key={u.id}&gt;{u.nombre} · {u.ciudad}&lt;/li&gt;)}
+    &lt;/ul&gt;
+  );
+}</textarea></div>
+    <div><label>Resultado</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Prueba el error</p>
+<p>Cambia <code>pedirUsuarios()</code> por <code>pedirUsuarios(true)</code> y pulsa <strong>Ejecutar</strong>: verás el camino del error. Probar los tres caminos es parte de construir una pantalla de datos.</p>
+</div>
+
+<h2 id="fetch-real"><span class="n">3.</span><code>fetch</code> de verdad</h2>
+<p>Esta es la petición real, con las comprobaciones importantes. Aquí <code>fetch</code> consulta un pequeño JSON incrustado en la propia dirección (una URL <code>data:</code>), de modo que funciona sin internet, pero el código es <strong>idéntico</strong> al que usarías con un servidor:</p>
+<div class="playground js" data-js data-react>
+  <div class="pg-head"><span>⚛️ fetch, ok y json()</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de React" style="height:480px">import { useState, useEffect } from "react";
+
+const URL_DATOS = "data:application/json," + encodeURIComponent(JSON.stringify([
+  { id: 1, titulo: "Aprender JSX" },
+  { id: 2, titulo: "Dominar useState" },
+  { id: 3, titulo: "Pedir datos con fetch" },
+]));
+
+function App() {
+  const [tareas, setTareas] = useState(null);
+  const [error, setError] = useState(null);
+
+  useEffect(() =&gt; {
+    fetch(URL_DATOS)
+      .then((res) =&gt; {
+        if (!res.ok) throw new Error("Respuesta " + res.status);
+        return res.json();
+      })
+      .then(setTareas)
+      .catch((e) =&gt; setError(e.message));
+  }, []);
+
+  if (error) return &lt;p&gt;⚠️ {error}&lt;/p&gt;;
+  if (!tareas) return &lt;p&gt;⏳ Cargando…&lt;/p&gt;;
+  return &lt;ul&gt;{tareas.map((t) =&gt; &lt;li key={t.id}&gt;{t.titulo}&lt;/li&gt;)}&lt;/ul&gt;;
+}</textarea></div>
+    <div><label>Resultado</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · <code>fetch</code> solo rechaza ante fallos de red</p>
+<p>Una respuesta <code>404</code> o <code>500</code> <strong>no lanza error</strong> en <code>fetch</code>: tú debes comprobar <code>respuesta.ok</code> (o <code>respuesta.status</code>) y lanzar el error. Sin esa línea, tu interfaz mostraría «éxito» con una página de error.</p>
+</div>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · CORS y claves</p>
+<p>Si la API pertenece a otro dominio, el servidor debe permitir tu origen (<strong>CORS</strong>). Y nunca pongas <strong>claves secretas</strong> en el código de React: cualquiera puede verlas en el navegador. Las claves privadas viven en un servidor.</p>
+</div>
+
+<h2 id="dependencias"><span class="n">4.</span>Volver a pedir: dependencias y cancelación</h2>
+<p>Si lo que pides <strong>depende de algo</strong> (una búsqueda, un id, una página), pon ese valor en las <strong>dependencias</strong>: el efecto vuelve a ejecutarse cuando cambia. Pero hay un riesgo: si la persona cambia rápido, las respuestas pueden <strong>llegar desordenadas</strong>. La solución es <strong>ignorar</strong> las respuestas obsoletas con una bandera en la limpieza:</p>
+<div class="code">
+  <div class="code-head"><span>Ignorar respuestas obsoletas</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>useEffect(() =&gt; {
+  <span class="tk-tag">let</span> vigente = <span class="tk-tag">true</span>;               <span class="tk-com">// «esta petición sigue siendo la actual»</span>
+
+  <span class="tk-tag">async</span> <span class="tk-tag">function</span> cargar() {
+    setCargando(<span class="tk-tag">true</span>);
+    <span class="tk-tag">const</span> datos = <span class="tk-tag">await</span> buscar(termino);
+    <span class="tk-tag">if</span> (vigente) {                  <span class="tk-com">// solo si no llegó otra búsqueda después</span>
+      setResultados(datos);
+      setCargando(<span class="tk-tag">false</span>);
+    }
+  }
+  cargar();
+
+  <span class="tk-tag">return</span> () =&gt; { vigente = <span class="tk-tag">false</span>; };   <span class="tk-com">// limpieza: marca esta petición como vieja</span>
+}, [termino]);</code></pre>
+</div>
+<p>Con <code>fetch</code> también puedes <strong>cancelar</strong> la petición de verdad usando un <code>AbortController</code> y pasando <code>{ signal }</code> a <code>fetch</code>; en la limpieza llamas a <code>controlador.abort()</code>.</p>
+
+<h2 id="hook"><span class="n">5.</span>Reutilizar: un hook useDatos</h2>
+<p>El patrón cargando/error/datos se repite en todas las pantallas. Es el candidato perfecto para un <strong>hook personalizado</strong>:</p>
+<div class="playground js" data-js data-react>
+  <div class="pg-head"><span>⚛️ useDatos: cargando, error y datos en un hook</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de React" style="height:700px">// Simula una API: responde tras un breve retraso (o falla)
+function pedirUsuarios(falla = false) {
+  return new Promise((resolver, rechazar) =&gt; {
+    setTimeout(() =&gt; {
+      if (falla) rechazar(new Error("No se pudo conectar con el servidor"));
+      else resolver([
+        { id: 1, nombre: "Ana Pérez", ciudad: "Lima" },
+        { id: 2, nombre: "Luis Gómez", ciudad: "Quito" },
+        { id: 3, nombre: "Marta Ríos", ciudad: "Bogotá" },
+      ]);
+    }, 500);
+  });
+}
+
+import { useState, useEffect } from "react";
+
+function useDatos(pedir, dependencias = []) {
+  const [estado, setEstado] = useState({ datos: null, cargando: true, error: null });
+
+  useEffect(() =&gt; {
+    let vigente = true;
+    setEstado((e) =&gt; ({ ...e, cargando: true, error: null }));
+    pedir()
+      .then((datos) =&gt; vigente &amp;&amp; setEstado({ datos, cargando: false, error: null }))
+      .catch((e) =&gt; vigente &amp;&amp; setEstado({ datos: null, cargando: false, error: e.message }));
+    return () =&gt; { vigente = false; };
+  }, dependencias);
+
+  return estado;
+}
+
+function App() {
+  const [falla, setFalla] = useState(false);
+  const { datos, cargando, error } = useDatos(() =&gt; pedirUsuarios(falla), [falla]);
+
+  return (
+    &lt;main&gt;
+      &lt;button onClick={() =&gt; setFalla(!falla)}&gt;
+        {falla ? "Pedir con éxito" : "Simular un fallo"}
+      &lt;/button&gt;
+      {cargando &amp;&amp; &lt;p&gt;⏳ Cargando…&lt;/p&gt;}
+      {error &amp;&amp; &lt;p role="alert"&gt;⚠️ {error}&lt;/p&gt;}
+      {datos &amp;&amp; &lt;ul&gt;{datos.map((u) =&gt; &lt;li key={u.id}&gt;{u.nombre}&lt;/li&gt;)}&lt;/ul&gt;}
+    &lt;/main&gt;
+  );
+}</textarea></div>
+    <div><label>Resultado</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Bibliotecas de datos</p>
+<p>En proyectos grandes se usan bibliotecas como <strong>TanStack Query</strong> o <strong>SWR</strong>, que ya incluyen caché, reintentos, actualización en segundo plano y cancelación. Entender este patrón manual te permite apreciar lo que hacen por ti.</p>
+</div>
+
+<h2 id="errores"><span class="n">6.</span>Errores frecuentes</h2>
+<ul><li><strong>No manejar el estado de carga:</strong> la interfaz parece rota o muestra datos vacíos un instante.</li><li><strong>No comprobar <code>res.ok</code>:</strong> un 404 se trata como éxito.</li><li><strong>Olvidar el arreglo de dependencias:</strong> el efecto pide datos en cada dibujo (y puede entrar en un bucle).</li><li><strong><code>useEffect(async () =&gt; …)</code>:</strong> no está permitido; usa una función <code>async</code> interna.</li><li><strong>Respuestas obsoletas:</strong> sin una bandera o <code>AbortController</code> ganan las respuestas lentas.</li><li><strong>Mostrar el mensaje técnico del error</strong> a la persona: traduce a algo comprensible.</li><li><strong>Guardar claves privadas en el código del navegador.</strong></li><li><strong>Empezar con <code>useState(null)</code> y recorrer con <code>map</code>:</strong> <code>null.map</code> falla; empieza con <code>[]</code> o comprueba antes.</li></ul>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li>Pedir datos es un <strong>efecto</strong>: va en <code>useEffect</code>.</li><li>Maneja siempre <strong>tres estados</strong>: cargando, error y datos.</li><li>La función del efecto <strong>no es <code>async</code></strong>; define una <code>async</code> dentro y llámala.</li><li><code>fetch</code> <strong>no rechaza</strong> por un 404/500: comprueba <strong><code>res.ok</code></strong>.</li><li>Si la petición depende de un valor, <strong>ponlo en las dependencias</strong> e <strong>ignora respuestas obsoletas</strong>.</li><li>Extrae el patrón a un <strong>hook personalizado</strong> (<code>useDatos</code>).</li><li>En proyectos grandes considera <strong>TanStack Query</strong> o <strong>SWR</strong>.</li><li>Nunca pongas <strong>claves secretas</strong> en el código del navegador.</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">7.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td>API</td><td>Servicio al que una aplicación hace peticiones para obtener o enviar datos.</td></tr><tr><td><code>fetch</code></td><td>Función del navegador para hacer peticiones HTTP; devuelve una promesa.</td></tr><tr><td><code>async</code> / <code>await</code></td><td>Sintaxis para escribir código asíncrono como si fuera secuencial.</td></tr><tr><td>Estado de carga</td><td>Indicador de que la petición sigue en curso.</td></tr><tr><td>CORS</td><td>Regla del navegador que decide qué orígenes pueden leer la respuesta de un servidor.</td></tr><tr><td><code>AbortController</code></td><td>Objeto que permite cancelar una petición <code>fetch</code> en curso.</td></tr><tr><td>TanStack Query</td><td>Biblioteca que gestiona datos del servidor: caché, reintentos y sincronización.</td></tr></tbody>
+</table></div>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>¿Dónde se piden normalmente los datos al montar un componente?</p><ul class="opts"><li><button type="button" class="opt">En el cuerpo del componente</button></li><li><button type="button" class="opt" data-ok>Dentro de <code>useEffect</code></button></li><li><button type="button" class="opt">Dentro del JSX</button></li><li><button type="button" class="opt">En el <code>return</code></button></li></ul><p class="explain" hidden>Es un efecto secundario; <code>useEffect</code> con <code>[]</code> lo ejecuta al aparecer.</p></div>
+<div class="quiz-q"><p>¿Por qué <code>useEffect(async () =&gt; …)</code> no es válido?</p><ul class="opts"><li><button type="button" class="opt">Porque <code>async</code> no existe en React</button></li><li><button type="button" class="opt" data-ok>Porque la función devolvería una promesa y React espera una función de limpieza o nada</button></li><li><button type="button" class="opt">Porque <code>await</code> está prohibido</button></li><li><button type="button" class="opt">Sí es válido</button></li></ul><p class="explain" hidden>Define una función <code>async</code> dentro del efecto y llámala.</p></div>
+<div class="quiz-q"><p>Una petición devuelve un 404. ¿Qué hace <code>fetch</code>?</p><ul class="opts"><li><button type="button" class="opt">Lanza un error automáticamente</button></li><li><button type="button" class="opt" data-ok>Se resuelve normalmente; tú debes revisar <code>res.ok</code></button></li><li><button type="button" class="opt">Reintenta solo</button></li><li><button type="button" class="opt">Cierra la aplicación</button></li></ul><p class="explain" hidden><code>fetch</code> solo rechaza por fallos de red, no por códigos HTTP de error.</p></div>
+<div class="quiz-q"><p>¿Cuáles son los tres estados que debes mostrar?</p><ul class="opts"><li><button type="button" class="opt">Inicio, medio y fin</button></li><li><button type="button" class="opt" data-ok>Cargando, error y datos</button></li><li><button type="button" class="opt">Claro, oscuro y automático</button></li><li><button type="button" class="opt">Props, estado y efecto</button></li></ul><p class="explain" hidden>La interfaz debe comunicar siempre en qué momento está la petición.</p></div>
+<div class="quiz-q"><p>¿Para qué sirve la bandera <code>vigente</code> en la limpieza del efecto?</p><ul class="opts"><li><button type="button" class="opt">Para acelerar la red</button></li><li><button type="button" class="opt" data-ok>Para ignorar respuestas de peticiones antiguas</button></li><li><button type="button" class="opt">Para cifrar los datos</button></li><li><button type="button" class="opt">Para evitar el <code>await</code></button></li></ul><p class="explain" hidden>Evita que una respuesta lenta pise el resultado de una petición más reciente.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="react-10">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../09-mas-hooks/ejercicio.html"><small>← Anterior</small>Ejercicio: Más hooks: useRef, useReducer y hooks propios</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de React · Lección 10 · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&title=%5BError%5D%20Lecci%C3%B3n%2010%3A%20Datos%20de%20internet%20%C2%B7%20Curso%20de%20React&pagina=https%3A//cacg-code.github.io/PRACTICAS-HTML/react/10-datos-de-internet/" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

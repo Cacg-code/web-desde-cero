@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lección 6: Formularios y componentes controlados · Curso de React</title>
+  <meta name="description" content="Formularios en React: componentes controlados, cada tipo de campo, un solo estado para muchos campos, onSubmit con preventDefault y validación derivada del estado.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/react/06-formularios/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Lección 6: Formularios y componentes controlados · Curso de React">
+  <meta property="og:description" content="Formularios en React: componentes controlados, cada tipo de campo, un solo estado para muchos campos, onSubmit con preventDefault y validación derivada del estado.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/react/06-formularios/">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de React</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap lesson-layout" id="contenido">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#controlado">Componentes controlados</a></li><li><a href="#tipos">Cada tipo de campo, a su manera</a></li><li><a href="#objeto">Muchos campos, un solo estado</a></li><li><a href="#envio">Enviar el formulario</a></li><li><a href="#validar">Validar y dar retroalimentación</a></li><li><a href="#errores">Errores frecuentes</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de React</a> › Lección 6</div>
+        <h1>Formularios y componentes controlados</h1>
+        <ul class="meta"><li>⏱ 55 minutos</li><li>📶 Nivel: principiante</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Crear campos controlados de todos los tipos.</li><li>Manejar un formulario completo con un solo objeto de estado.</li><li>Enviar un formulario con <code>onSubmit</code>.</li><li>Validar y dar retroalimentación al usuario.</li></ul>
+</div>
+
+<h2 id="controlado"><span class="n">1.</span>Componentes controlados</h2>
+<p>En HTML normal, un <code>&lt;input&gt;</code> guarda su propio valor: tú lo lees cuando lo necesitas. En React hay una forma más potente: el <strong>estado</strong> es la única fuente de la verdad y el campo <strong>solo muestra</strong> lo que dice el estado. A esto se le llama un <strong>componente controlado</strong>.</p>
+<div class="anatomy" role="img" aria-label="Un campo controlado: value desde el estado y onChange que lo actualiza"><div class="part" style="--c:#ff8fa3"><span>&lt;input </span><span class="lbl">&nbsp;</span></div><div class="part" style="--c:#ffd479"><span>value={nombre}</span><span class="lbl">muestra el estado</span></div><div class="part" style="--c:#ff8fa3"><span> </span><span class="lbl">&nbsp;</span></div><div class="part" style="--c:#8ee6a0"><span>onChange={e =&gt; setNombre(e.target.value)}</span><span class="lbl">actualiza el estado</span></div><div class="part" style="--c:#ff8fa3"><span> /&gt;</span><span class="lbl">&nbsp;</span></div></div>
+<div class="playground js" data-js data-react>
+  <div class="pg-head"><span>⚛️ Tu primer campo controlado</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de React" style="height:300px">import { useState } from "react";
+
+function App() {
+  const [nombre, setNombre] = useState("");
+
+  return (
+    &lt;main&gt;
+      &lt;label htmlFor="nombre"&gt;Tu nombre&lt;/label&gt;{" "}
+      &lt;input
+        id="nombre"
+        value={nombre}
+        onChange={(e) =&gt; setNombre(e.target.value)}
+      /&gt;
+      &lt;p&gt;Hola, {nombre || "desconocida"} 👋&lt;/p&gt;
+      &lt;p&gt;Tu nombre tiene {nombre.length} letras.&lt;/p&gt;
+    &lt;/main&gt;
+  );
+}</textarea></div>
+    <div><label>Resultado</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<ol class="steps"><li>El estado <code>nombre</code> guarda el texto.</li><li>El campo <strong>muestra</strong> <code>value={nombre}</code>.</li><li>Cada tecla dispara <code>onChange</code>, que <strong>actualiza</strong> el estado con <code>e.target.value</code>.</li><li>React vuelve a dibujar y el campo muestra el valor nuevo.</li></ol>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Ventajas</p>
+<p>Como el valor vive en el estado, puedes <strong>mostrarlo en otras partes</strong> (como el saludo y el contador de letras), <strong>validarlo</strong>, <strong>darle formato</strong> o <strong>borrarlo</strong> (<code>setNombre("")</code>) en cualquier momento.</p>
+</div>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · No olvides <code>onChange</code></p>
+<p>Si pones <code>value</code> <strong>sin</strong> <code>onChange</code>, el campo queda <strong>bloqueado</strong>: no puedes escribir y React avisa en la consola. Si solo quieres un valor inicial editable, usa <code>defaultValue</code>.</p>
+</div>
+
+<h2 id="tipos"><span class="n">2.</span>Cada tipo de campo, a su manera</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Campo</th><th>Propiedad que se controla</th><th>Valor que lees</th></tr></thead>
+<tbody><tr><td><code>&lt;input type="text"&gt;</code>, <code>email</code>, <code>number</code>…</td><td><code>value</code></td><td><code>e.target.value</code></td></tr><tr><td><code>&lt;textarea&gt;</code></td><td><code>value</code> (¡como un input!)</td><td><code>e.target.value</code></td></tr><tr><td><code>&lt;select&gt;</code></td><td><code>value</code></td><td><code>e.target.value</code></td></tr><tr><td><code>&lt;input type="checkbox"&gt;</code></td><td><code>checked</code></td><td><code>e.target.checked</code></td></tr><tr><td><code>&lt;input type="radio"&gt;</code></td><td><code>checked</code> de cada opción</td><td><code>e.target.value</code></td></tr></tbody>
+</table></div>
+<div class="playground js" data-js data-react>
+  <div class="pg-head"><span>⚛️ Texto, selección, casilla y opciones</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de React" style="height:520px">import { useState } from "react";
+
+function App() {
+  const [mensaje, setMensaje] = useState("");
+  const [pais, setPais] = useState("pe");
+  const [suscrito, setSuscrito] = useState(false);
+  const [plan, setPlan] = useState("gratis");
+
+  return (
+    &lt;main style={{ display: "grid", gap: 10 }}&gt;
+      &lt;textarea value={mensaje} onChange={(e) =&gt; setMensaje(e.target.value)} placeholder="Escribe un mensaje" /&gt;
+
+      &lt;select value={pais} onChange={(e) =&gt; setPais(e.target.value)}&gt;
+        &lt;option value="pe"&gt;Perú&lt;/option&gt;
+        &lt;option value="mx"&gt;México&lt;/option&gt;
+        &lt;option value="es"&gt;España&lt;/option&gt;
+      &lt;/select&gt;
+
+      &lt;label&gt;
+        &lt;input type="checkbox" checked={suscrito} onChange={(e) =&gt; setSuscrito(e.target.checked)} /&gt;{" "}
+        Recibir novedades
+      &lt;/label&gt;
+
+      &lt;fieldset&gt;
+        &lt;legend&gt;Plan&lt;/legend&gt;
+        {["gratis", "pro"].map((p) =&gt; (
+          &lt;label key={p} style={{ marginRight: 12 }}&gt;
+            &lt;input type="radio" name="plan" value={p} checked={plan === p} onChange={(e) =&gt; setPlan(e.target.value)} /&gt; {p}
+          &lt;/label&gt;
+        ))}
+      &lt;/fieldset&gt;
+
+      &lt;pre&gt;{JSON.stringify({ mensaje, pais, suscrito, plan }, null, 2)}&lt;/pre&gt;
+    &lt;/main&gt;
+  );
+}</textarea></div>
+    <div><label>Resultado</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+
+<h2 id="objeto"><span class="n">3.</span>Muchos campos, un solo estado</h2>
+<p>Con formularios largos, un <code>useState</code> por campo se vuelve pesado. Una técnica muy común es guardar <strong>un objeto</strong> y usar el atributo <code>name</code> de cada campo para actualizar la propiedad correcta con <strong>una sola función</strong>:</p>
+<div class="playground js" data-js data-react>
+  <div class="pg-head"><span>⚛️ Un manejador para todos los campos</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de React" style="height:330px">import { useState } from "react";
+
+function App() {
+  const [datos, setDatos] = useState({ nombre: "", correo: "", ciudad: "" });
+
+  function cambiar(e) {
+    const { name, value } = e.target;
+    setDatos({ ...datos, [name]: value });   // [name]: propiedad calculada
+  }
+
+  return (
+    &lt;main style={{ display: "grid", gap: 8, maxWidth: 320 }}&gt;
+      &lt;input name="nombre" value={datos.nombre} onChange={cambiar} placeholder="Nombre" /&gt;
+      &lt;input name="correo" value={datos.correo} onChange={cambiar} placeholder="Correo" /&gt;
+      &lt;input name="ciudad" value={datos.ciudad} onChange={cambiar} placeholder="Ciudad" /&gt;
+      &lt;p&gt;{datos.nombre} · {datos.correo} · {datos.ciudad}&lt;/p&gt;
+    &lt;/main&gt;
+  );
+}</textarea></div>
+    <div><label>Resultado</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · <code>[name]: value</code></p>
+<p>Los corchetes crean una <strong>propiedad calculada</strong>: si <code>name</code> vale <code>"correo"</code>, el objeto resultante cambia <code>correo</code>. Combinado con <code>...datos</code> (que copia lo demás) actualizas un campo sin tocar el resto.</p>
+</div>
+
+<h2 id="envio"><span class="n">4.</span>Enviar el formulario</h2>
+<p>Para manejar el envío usa <strong><code>onSubmit</code> en el <code>&lt;form&gt;</code></strong> (no <code>onClick</code> en el botón: así también funciona al pulsar <code>Enter</code>). <strong>Siempre</strong> empieza con <code>e.preventDefault()</code>; si no, el navegador recarga la página.</p>
+<div class="playground js" data-js data-react>
+  <div class="pg-head"><span>⚛️ onSubmit y preventDefault</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de React" style="height:340px">import { useState } from "react";
+
+function App() {
+  const [tarea, setTarea] = useState("");
+  const [tareas, setTareas] = useState([]);
+
+  function agregar(e) {
+    e.preventDefault();                 // evita que la página se recargue
+    const texto = tarea.trim();
+    if (!texto) return;                 // no agregues vacíos
+    setTareas([...tareas, { id: Date.now(), texto }]);
+    setTarea("");                       // limpia el campo
+  }
+
+  return (
+    &lt;main&gt;
+      &lt;form onSubmit={agregar}&gt;
+        &lt;input value={tarea} onChange={(e) =&gt; setTarea(e.target.value)} placeholder="Nueva tarea" /&gt;{" "}
+        &lt;button type="submit"&gt;Agregar&lt;/button&gt;
+      &lt;/form&gt;
+      &lt;ul&gt;
+        {tareas.map((t) =&gt; &lt;li key={t.id}&gt;{t.texto}&lt;/li&gt;)}
+      &lt;/ul&gt;
+    &lt;/main&gt;
+  );
+}</textarea></div>
+    <div><label>Resultado</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+
+<h2 id="validar"><span class="n">5.</span>Validar y dar retroalimentación</h2>
+<p>Como los datos están en el estado, validar es <strong>calcular</strong> en cada dibujo si son correctos. No hace falta un estado extra para los errores: se derivan.</p>
+<div class="playground js" data-js data-react>
+  <div class="pg-head"><span>⚛️ Validación derivada del estado</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de React" style="height:470px">import { useState } from "react";
+
+function App() {
+  const [correo, setCorreo] = useState("");
+  const [clave, setClave] = useState("");
+
+  // Valores derivados: se calculan, no se guardan
+  const correoValido = /^\S+@\S+\.\S+$/.test(correo);
+  const claveValida = clave.length &gt;= 8;
+  const puedeEnviar = correoValido &amp;&amp; claveValida;
+
+  return (
+    &lt;form onSubmit={(e) =&gt; e.preventDefault()} style={{ display: "grid", gap: 8, maxWidth: 320 }}&gt;
+      &lt;label&gt;Correo
+        &lt;input type="email" value={correo} onChange={(e) =&gt; setCorreo(e.target.value)} /&gt;
+      &lt;/label&gt;
+      {correo &amp;&amp; !correoValido &amp;&amp; &lt;small role="alert" style={{ color: "#b91c1c" }}&gt;Escribe un correo válido.&lt;/small&gt;}
+
+      &lt;label&gt;Contraseña
+        &lt;input type="password" value={clave} onChange={(e) =&gt; setClave(e.target.value)} /&gt;
+      &lt;/label&gt;
+      &lt;small&gt;{clave.length}/8 caracteres como mínimo&lt;/small&gt;
+
+      &lt;button disabled={!puedeEnviar}&gt;Crear cuenta&lt;/button&gt;
+    &lt;/form&gt;
+  );
+}</textarea></div>
+    <div><label>Resultado</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<ul><li><strong>Valida al escribir</strong> para guiar, y <strong>al enviar</strong> para asegurar.</li><li><strong>No muestres errores antes de tiempo:</strong> espera a que el campo tenga contenido o haya sido tocado.</li><li><strong>Deshabilita el botón</strong> solo si explicas por qué; mejor muestra el mensaje junto al campo.</li><li><strong>Recuerda:</strong> validar en el navegador mejora la experiencia, pero la validación de seguridad real siempre se hace en el <strong>servidor</strong>.</li></ul>
+
+<h2 id="errores"><span class="n">6.</span>Errores frecuentes</h2>
+<ul><li><strong><code>value</code> sin <code>onChange</code>:</strong> el campo se bloquea.</li><li><strong>Usar <code>e.target.value</code> para un checkbox:</strong> usa <code>e.target.checked</code>.</li><li><strong>Olvidar <code>e.preventDefault()</code></strong> en <code>onSubmit</code>: la página se recarga.</li><li><strong>Valor inicial <code>undefined</code>:</strong> empieza siempre con <code>""</code> (texto), <code>false</code> (casilla) o un valor definido; si no, pasarás de no controlado a controlado y React avisará.</li><li><strong>Mutar el objeto del formulario:</strong> crea siempre una copia con <code>{ ...datos, [name]: value }</code>.</li><li><strong>Convertir números:</strong> <code>e.target.value</code> es siempre <strong>texto</strong>; usa <code>Number(e.target.value)</code> o <code>e.target.valueAsNumber</code>.</li><li><strong>Olvidar <code>htmlFor</code>/<code>id</code>:</strong> los campos sin etiqueta asociada son inaccesibles.</li></ul>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li>Un campo <strong>controlado</strong> muestra <code>value</code> del estado y actualiza el estado en <code>onChange</code>.</li><li>Sin <code>onChange</code>, un campo con <code>value</code> queda bloqueado.</li><li>Textos, <code>textarea</code> y <code>select</code> usan <code>value</code>; las casillas y radios usan <code>checked</code>.</li><li>Con muchos campos, guarda <strong>un objeto</strong> y actualiza con <code>{ ...datos, [name]: value }</code>.</li><li>Usa <strong><code>onSubmit</code></strong> en el <code>&lt;form&gt;</code> y llama a <strong><code>e.preventDefault()</code></strong>.</li><li>La validación se <strong>deriva</strong> del estado: no necesitas estado extra para los errores.</li><li>La validación en el navegador es comodidad; la de seguridad va en el servidor.</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">7.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td>Componente controlado</td><td>Campo cuyo valor lo dicta el estado de React.</td></tr><tr><td><code>onChange</code></td><td>Evento que se dispara cuando cambia el valor de un campo.</td></tr><tr><td><code>e.target</code></td><td>El elemento que provocó el evento; <code>value</code> y <code>checked</code> salen de él.</td></tr><tr><td><code>preventDefault</code></td><td>Cancela la acción por defecto del navegador (por ejemplo, recargar al enviar).</td></tr><tr><td>Propiedad calculada</td><td>Sintaxis <code>{ [name]: value }</code> que usa una variable como nombre de propiedad.</td></tr><tr><td>Validación</td><td>Comprobar que los datos cumplen las reglas esperadas.</td></tr></tbody>
+</table></div>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>¿Qué hace controlado a un campo de texto?</p><ul class="opts"><li><button type="button" class="opt">Que tenga <code>id</code></button></li><li><button type="button" class="opt" data-ok>Que su <code>value</code> venga del estado y <code>onChange</code> lo actualice</button></li><li><button type="button" class="opt">Que use <code>type="text"</code></button></li><li><button type="button" class="opt">Que esté dentro de un <code>&lt;form&gt;</code></button></li></ul><p class="explain" hidden>El estado es la fuente de verdad; el campo solo refleja ese valor.</p></div>
+<div class="quiz-q"><p>¿Qué propiedad lees en un checkbox?</p><ul class="opts"><li><button type="button" class="opt"><code>e.target.value</code></button></li><li><button type="button" class="opt" data-ok><code>e.target.checked</code></button></li><li><button type="button" class="opt"><code>e.target.text</code></button></li><li><button type="button" class="opt"><code>e.target.selected</code></button></li></ul><p class="explain" hidden>Los checkboxes y radios usan <code>checked</code>.</p></div>
+<div class="quiz-q"><p>¿Qué pasa si olvidas <code>e.preventDefault()</code> en <code>onSubmit</code>?</p><ul class="opts"><li><button type="button" class="opt">Nada</button></li><li><button type="button" class="opt" data-ok>El navegador envía el formulario y recarga la página</button></li><li><button type="button" class="opt">React lanza un error</button></li><li><button type="button" class="opt">El botón se deshabilita</button></li></ul><p class="explain" hidden>Sin cancelarlo, el navegador hace su envío clásico y recarga.</p></div>
+<div class="quiz-q"><p>¿Para qué sirve <code>{ ...datos, [name]: value }</code>?</p><ul class="opts"><li><button type="button" class="opt">Para borrar el formulario</button></li><li><button type="button" class="opt" data-ok>Para copiar el objeto y cambiar solo la propiedad del campo editado</button></li><li><button type="button" class="opt">Para validar el correo</button></li><li><button type="button" class="opt">Para enviar datos al servidor</button></li></ul><p class="explain" hidden>Copia las propiedades existentes y reemplaza únicamente la que corresponde al campo.</p></div>
+<div class="quiz-q"><p><code>e.target.value</code> de un <code>&lt;input type="number"&gt;</code>, ¿qué tipo tiene?</p><ul class="opts"><li><button type="button" class="opt">Número</button></li><li><button type="button" class="opt" data-ok>Texto (string)</button></li><li><button type="button" class="opt">Booleano</button></li><li><button type="button" class="opt">Depende del navegador, a veces número</button></li></ul><p class="explain" hidden>Siempre es texto; conviértelo con <code>Number()</code> si lo necesitas.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="react-06">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../05-listas-y-condicionales/ejercicio.html"><small>← Anterior</small>Ejercicio: Listas, claves y renderizado condicional</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de React · Lección 6 · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&title=%5BError%5D%20Lecci%C3%B3n%206%3A%20Formularios%20y%20componentes%20controlados%20%C2%B7%20Curso%20de%20React&pagina=https%3A//cacg-code.github.io/PRACTICAS-HTML/react/06-formularios/" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

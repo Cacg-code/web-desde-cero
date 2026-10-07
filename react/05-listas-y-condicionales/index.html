@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lección 5: Listas, claves y renderizado condicional · Curso de React</title>
+  <meta name="description" content="Listas y renderizado condicional en React: map, listas de objetos, la prop key, ternarios, AND, retornos anticipados y filtros con valores derivados.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/react/05-listas-y-condicionales/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Lección 5: Listas, claves y renderizado condicional · Curso de React">
+  <meta property="og:description" content="Listas y renderizado condicional en React: map, listas de objetos, la prop key, ternarios, AND, retornos anticipados y filtros con valores derivados.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/react/05-listas-y-condicionales/">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de React</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap lesson-layout" id="contenido">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#map">Dibujar listas con map</a></li><li><a href="#objetos">Listas de objetos y componentes</a></li><li><a href="#claves">La prop key: la identidad de cada elemento</a></li><li><a href="#condicional">Mostrar u ocultar: renderizado condicional</a></li><li><a href="#filtrar">Filtrar y ordenar antes de dibujar</a></li><li><a href="#errores">Errores frecuentes</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de React</a> › Lección 5</div>
+        <h1>Listas, claves y renderizado condicional</h1>
+        <ul class="meta"><li>⏱ 50 minutos</li><li>📶 Nivel: principiante</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Dibujar listas de datos con <code>map</code>.</li><li>Elegir una <code>key</code> correcta.</li><li>Mostrar u ocultar contenido con ternario, <code>&amp;&amp;</code> y retorno anticipado.</li><li>Filtrar y ordenar sin duplicar estado.</li></ul>
+</div>
+
+<h2 id="map"><span class="n">1.</span>Dibujar listas con map</h2>
+<p>En casi toda aplicación hay listas: productos, mensajes, tareas, resultados. En React no escribes cada elemento a mano: <strong>transformas un array de datos en un array de JSX</strong> con <code>map</code>, y React lo dibuja.</p>
+<div class="playground js" data-js data-react>
+  <div class="pg-head"><span>⚛️ De datos a elementos</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de React" style="height:270px">const frutas = ["Manzana", "Pera", "Uva", "Mango"];
+
+function App() {
+  return (
+    &lt;main&gt;
+      &lt;h2&gt;Frutas&lt;/h2&gt;
+      &lt;ul&gt;
+        {frutas.map((fruta) =&gt; (
+          &lt;li key={fruta}&gt;{fruta}&lt;/li&gt;
+        ))}
+      &lt;/ul&gt;
+    &lt;/main&gt;
+  );
+}</textarea></div>
+    <div><label>Resultado</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<ol class="steps"><li><strong>Tienes datos:</strong> un array (de textos, números u objetos).</li><li><strong><code>map</code></strong> recorre cada elemento y devuelve un <code>&lt;li&gt;</code> por cada uno.</li><li><strong>React</strong> recibe el array de elementos y los dibuja en orden.</li></ol>
+<p>Si cambias el array (por ejemplo, con estado) y React vuelve a dibujar, la lista <strong>se actualiza sola</strong>. No tienes que añadir ni quitar <code>&lt;li&gt;</code> a mano.</p>
+
+<h2 id="objetos"><span class="n">2.</span>Listas de objetos y componentes</h2>
+<p>Lo normal es que cada elemento sea un <strong>objeto</strong> con varios datos. Un patrón muy limpio es crear un componente para el elemento y pasarle los datos como props:</p>
+<div class="playground js" data-js data-react>
+  <div class="pg-head"><span>⚛️ Una lista de objetos con un componente por elemento</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de React" style="height:380px">const productos = [
+  { id: 1, nombre: "Teclado", precio: 25 },
+  { id: 2, nombre: "Mouse", precio: 12.5 },
+  { id: 3, nombre: "Monitor", precio: 180 },
+];
+
+function Fila({ nombre, precio }) {
+  return (
+    &lt;li&gt;
+      {nombre} — ${precio.toFixed(2)}
+    &lt;/li&gt;
+  );
+}
+
+function App() {
+  return (
+    &lt;ul&gt;
+      {productos.map((p) =&gt; (
+        &lt;Fila key={p.id} nombre={p.nombre} precio={p.precio} /&gt;
+      ))}
+    &lt;/ul&gt;
+  );
+}</textarea></div>
+    <div><label>Resultado</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Spread de props</p>
+<p>Si el objeto tiene exactamente las props que espera el componente, puedes pasarlas de golpe: <code>&lt;Fila key={p.id} {...p} /&gt;</code>. Úsalo con moderación: pasar las props de forma explícita deja claro qué recibe cada componente.</p>
+</div>
+
+<h2 id="claves"><span class="n">3.</span>La prop key: la identidad de cada elemento</h2>
+<p>Seguramente notaste <code>key={...}</code> en los ejemplos. Es obligatoria en las listas: <strong><code>key</code> le dice a React qué elemento es cuál</strong> entre un dibujo y el siguiente, para actualizar solo lo necesario y <strong>no mezclar su estado</strong>.</p>
+<p>Ejecuta este ejemplo y abre la consola: React te <strong>avisa</strong> si falta la clave.</p>
+<div class="playground js" data-js data-react>
+  <div class="pg-head"><span>⚛️ ¿Qué pasa si falta la key?</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de React" style="height:230px">const nombres = ["Ana", "Luis", "Marta"];
+
+function App() {
+  return (
+    &lt;ul&gt;
+      {/* Falta key en el &lt;li&gt;: mira la consola. Añade key={n} para arreglarlo. */}
+      {nombres.map((n) =&gt; (
+        &lt;li&gt;{n}&lt;/li&gt;
+      ))}
+    &lt;/ul&gt;
+  );
+}</textarea></div>
+    <div><label>Resultado</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<div class="table-wrap"><table>
+<thead><tr><th>Regla de la clave</th><th>Por qué</th></tr></thead>
+<tbody><tr><td><strong>Única</strong> entre hermanos de la misma lista</td><td>Dos elementos con la misma clave se confunden</td></tr><tr><td><strong>Estable:</strong> no cambia entre dibujos</td><td>Si cambia, React cree que es otro elemento y lo reconstruye</td></tr><tr><td>Mejor un <strong><code>id</code> de los datos</strong></td><td>Identifica al dato aunque cambie de posición</td></tr><tr><td>Evita <code>Math.random()</code></td><td>Genera una clave nueva en cada dibujo y destruye el estado</td></tr><tr><td><strong>Índice</strong> solo en listas fijas que nunca se reordenan</td><td>Si se inserta, borra u ordena, las claves ya no corresponden a los mismos datos</td></tr></tbody>
+</table></div>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · Dónde va la key</p>
+<p>La <code>key</code> va en el <strong>elemento más externo que devuelve <code>map</code></strong> (el <code>&lt;li&gt;</code> o el componente <code>&lt;Fila /&gt;</code>), no dentro. Y no se recibe como prop: React la usa internamente.</p>
+</div>
+
+<h2 id="condicional"><span class="n">4.</span>Mostrar u ocultar: renderizado condicional</h2>
+<p>Como el JSX es JavaScript, decidir <strong>qué mostrar</strong> se hace con las herramientas de siempre. Hay tres patrones que usarás todos los días:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Patrón</th><th>Cuándo usarlo</th><th>Ejemplo</th></tr></thead>
+<tbody><tr><td><strong>Ternario</strong> <code>? :</code></td><td>Dos opciones: A <strong>o</strong> B</td><td><code>{conectado ? &lt;Panel /&gt; : &lt;Login /&gt;}</code></td></tr><tr><td><strong>AND</strong> <code>&amp;&amp;</code></td><td>Mostrar algo <strong>o nada</strong></td><td><code>{hayError &amp;&amp; &lt;p&gt;Error&lt;/p&gt;}</code></td></tr><tr><td><strong>Retorno anticipado</strong></td><td>Casos especiales al inicio del componente</td><td><code>if (cargando) return &lt;p&gt;Cargando…&lt;/p&gt;;</code></td></tr></tbody>
+</table></div>
+<div class="playground js" data-js data-react>
+  <div class="pg-head"><span>⚛️ Tres formas de decidir qué se ve</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de React" style="height:480px">import { useState } from "react";
+
+function Mensajes({ lista }) {
+  // 3) Retorno anticipado: caso especial primero
+  if (lista.length === 0) return &lt;p&gt;📭 No tienes mensajes.&lt;/p&gt;;
+  return &lt;ul&gt;{lista.map((m) =&gt; &lt;li key={m}&gt;{m}&lt;/li&gt;)}&lt;/ul&gt;;
+}
+
+function App() {
+  const [conectado, setConectado] = useState(false);
+  const [lista, setLista] = useState([]);
+
+  return (
+    &lt;main&gt;
+      {/* 1) Ternario: una cosa u otra */}
+      &lt;p&gt;Estado: {conectado ? "🟢 Conectado" : "⚪ Desconectado"}&lt;/p&gt;
+      &lt;button onClick={() =&gt; setConectado(!conectado)}&gt;Cambiar&lt;/button&gt;
+
+      {/* 2) AND: algo o nada */}
+      {conectado &amp;&amp; &lt;p&gt;¡Bienvenida de vuelta!&lt;/p&gt;}
+
+      &lt;h3&gt;Mensajes&lt;/h3&gt;
+      &lt;Mensajes lista={lista} /&gt;
+      &lt;button onClick={() =&gt; setLista([...lista, "Mensaje " + (lista.length + 1)])}&gt;Recibir&lt;/button&gt;
+    &lt;/main&gt;
+  );
+}</textarea></div>
+    <div><label>Resultado</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · La trampa del <code>0</code></p>
+<p><code>{lista.length &amp;&amp; &lt;Lista /&gt;}</code> dibuja un <strong><code>0</code></strong> cuando la lista está vacía, porque <code>0 &amp;&amp; …</code> vale <code>0</code> y React sí muestra los números. Escribe una comparación: <code>{lista.length &gt; 0 &amp;&amp; &lt;Lista /&gt;}</code>.</p>
+</div>
+
+<h2 id="filtrar"><span class="n">5.</span>Filtrar y ordenar antes de dibujar</h2>
+<p>Lo que <code>map</code> dibuja puede venir de <strong><code>filter</code></strong> o <strong><code>sort</code></strong>. Calcula la lista visible <strong>antes del <code>return</code></strong> y deja el JSX simple. Importante: <strong>no guardes en estado</strong> lo que puedes calcular a partir de otro estado.</p>
+<div class="playground js" data-js data-react>
+  <div class="pg-head"><span>⚛️ Un filtro con estado</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de React" style="height:520px">import { useState } from "react";
+
+const tareas = [
+  { id: 1, texto: "Estudiar JSX", hecha: true },
+  { id: 2, texto: "Practicar props", hecha: false },
+  { id: 3, texto: "Aprender estado", hecha: false },
+  { id: 4, texto: "Leer sobre listas", hecha: true },
+];
+
+function App() {
+  const [soloPendientes, setSoloPendientes] = useState(false);
+
+  // Valor derivado: se calcula en cada dibujo, no se guarda en estado
+  const visibles = soloPendientes ? tareas.filter((t) =&gt; !t.hecha) : tareas;
+
+  return (
+    &lt;main&gt;
+      &lt;label&gt;
+        &lt;input
+          type="checkbox"
+          checked={soloPendientes}
+          onChange={(e) =&gt; setSoloPendientes(e.target.checked)}
+        /&gt;{" "}
+        Solo pendientes
+      &lt;/label&gt;
+      &lt;p&gt;Mostrando {visibles.length} de {tareas.length}&lt;/p&gt;
+      &lt;ul&gt;
+        {visibles.map((t) =&gt; (
+          &lt;li key={t.id} style={{ textDecoration: t.hecha ? "line-through" : "none" }}&gt;
+            {t.texto}
+          &lt;/li&gt;
+        ))}
+      &lt;/ul&gt;
+    &lt;/main&gt;
+  );
+}</textarea></div>
+    <div><label>Resultado</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+
+<h2 id="errores"><span class="n">6.</span>Errores frecuentes</h2>
+<ul><li><strong>Olvidar la <code>key</code>:</strong> React avisa en la consola.</li><li><strong>Usar el índice como clave</strong> en listas que se reordenan o se editan.</li><li><strong>Poner la <code>key</code> dentro del elemento</strong> en lugar de en el elemento que devuelve <code>map</code>.</li><li><strong>Olvidar el <code>return</code></strong> en <code>map</code> con llaves: <code>lista.map(x =&gt; { &lt;li&gt;{x}&lt;/li&gt; })</code> devuelve <code>undefined</code>. Usa paréntesis <code>(…)</code> o escribe <code>return</code>.</li><li><strong><code>{n &amp;&amp; &lt;X /&gt;}</code> con <code>n = 0</code>:</strong> dibuja un <code>0</code>. Compara con <code>n &gt; 0</code>.</li><li><strong>Mutar el array con <code>sort()</code>:</strong> ordena <strong>sobre el original</strong>. Haz primero una copia: <code>[...lista].sort(…)</code>.</li><li><strong>Guardar en estado la lista filtrada:</strong> guarda la lista completa y el criterio; calcula lo visible.</li></ul>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li>Con <code>lista.map(x =&gt; &lt;li key={x.id}&gt;…&lt;/li&gt;)</code> conviertes datos en elementos.</li><li>Toda lista necesita una <strong><code>key</code> única y estable</strong>, preferiblemente el <code>id</code> del dato.</li><li>La <code>key</code> va en el <strong>elemento más externo</strong> que devuelve <code>map</code>.</li><li>Renderizado condicional: <strong>ternario</strong> (<code>a ? b : c</code>), <strong><code>&amp;&amp;</code></strong> (algo o nada) y <strong>retorno anticipado</strong>.</li><li>Cuidado con <code>{n &amp;&amp; …}</code>: si <code>n</code> es <code>0</code>, se dibuja un <code>0</code>.</li><li>Filtra y ordena <strong>antes del <code>return</code></strong>; no guardes en estado lo que puedes calcular.</li><li>Usa <code>[...lista].sort()</code> para no mutar el original.</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">7.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td><code>map</code></td><td>Método de arrays que transforma cada elemento y devuelve un array nuevo.</td></tr><tr><td><code>key</code></td><td>Identificador único y estable que React usa para distinguir los elementos de una lista.</td></tr><tr><td>Renderizado condicional</td><td>Decidir qué se muestra según una condición.</td></tr><tr><td>Valor derivado</td><td>Dato calculado a partir de otro estado o props; no se guarda aparte.</td></tr><tr><td>Retorno anticipado</td><td><code>return</code> temprano en un componente para manejar un caso especial.</td></tr><tr><td>Reconciliación</td><td>Proceso con el que React compara dibujos y actualiza solo lo que cambió.</td></tr></tbody>
+</table></div>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>¿Para qué sirve la prop <code>key</code>?</p><ul class="opts"><li><button type="button" class="opt">Para dar estilo a la lista</button></li><li><button type="button" class="opt" data-ok>Para identificar cada elemento entre dibujos</button></li><li><button type="button" class="opt">Para ordenar alfabéticamente</button></li><li><button type="button" class="opt">Para cifrar los datos</button></li></ul><p class="explain" hidden>Permite a React saber qué elemento es cuál al actualizar la lista.</p></div>
+<div class="quiz-q"><p>¿Qué es lo más recomendable como <code>key</code>?</p><ul class="opts"><li><button type="button" class="opt"><code>Math.random()</code></button></li><li><button type="button" class="opt">El índice, siempre</button></li><li><button type="button" class="opt" data-ok>Un <code>id</code> único del dato</button></li><li><button type="button" class="opt">El texto «key»</button></li></ul><p class="explain" hidden>Un id estable identifica al dato aunque cambie de posición.</p></div>
+<div class="quiz-q"><p>¿Qué dibuja <code>{items.length &amp;&amp; &lt;Lista /&gt;}</code> cuando <code>items</code> está vacío?</p><ul class="opts"><li><button type="button" class="opt">Nada</button></li><li><button type="button" class="opt" data-ok>Un <code>0</code></button></li><li><button type="button" class="opt">Un error</button></li><li><button type="button" class="opt"><code>&lt;Lista /&gt;</code></button></li></ul><p class="explain" hidden>React muestra los números, y <code>0 &amp;&amp; …</code> vale <code>0</code>. Usa <code>items.length &gt; 0 &amp;&amp; …</code>.</p></div>
+<div class="quiz-q"><p>¿Cuál es el patrón adecuado para «A o B»?</p><ul class="opts"><li><button type="button" class="opt"><code>&amp;&amp;</code></button></li><li><button type="button" class="opt" data-ok>El ternario <code>? :</code></button></li><li><button type="button" class="opt"><code>map</code></button></li><li><button type="button" class="opt"><code>key</code></button></li></ul><p class="explain" hidden>El ternario elige entre dos opciones; <code>&amp;&amp;</code> muestra algo o nada.</p></div>
+<div class="quiz-q"><p>¿Cómo ordenas una lista sin modificar el original?</p><ul class="opts"><li><button type="button" class="opt"><code>lista.sort()</code></button></li><li><button type="button" class="opt" data-ok><code>[...lista].sort()</code></button></li><li><button type="button" class="opt"><code>lista.reverse()</code></button></li><li><button type="button" class="opt"><code>lista.push()</code></button></li></ul><p class="explain" hidden><code>sort</code> muta el array; copiarlo primero con spread lo evita.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="react-05">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../04-estado/ejercicio.html"><small>← Anterior</small>Ejercicio: Estado con useState</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de React · Lección 5 · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&title=%5BError%5D%20Lecci%C3%B3n%205%3A%20Listas%2C%20claves%20y%20renderizado%20condicional%20%C2%B7%20Curso%20de%20React&pagina=https%3A//cacg-code.github.io/PRACTICAS-HTML/react/05-listas-y-condicionales/" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>
