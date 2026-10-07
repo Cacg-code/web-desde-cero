@@ -30,6 +30,7 @@
   <a href="#-qué-es-esto"><b>Qué es</b></a> ·
   <a href="#️-ruta-de-aprendizaje"><b>Ruta</b></a> ·
   <a href="#-temario"><b>Temario</b></a> ·
+  <a href="#-el-proyecto-final"><b>Proyecto</b></a> ·
   <a href="#-chuleta-de-etiquetas"><b>Chuleta</b></a> ·
   <a href="#-preguntas-frecuentes"><b>FAQ</b></a> ·
   <a href="#-después-del-curso"><b>Después</b></a>
@@ -51,6 +52,9 @@ Al terminar habrás construido **tu propia página personal** desde cero.
 | ⚡ | **Práctica en vivo** | Editores donde cambias el código y ves el resultado al instante |
 | ✅ | **Autoevaluación** | Preguntas con respuesta inmediata y explicación de por qué |
 | 🛠️ | **Ejercicio práctico** | Pasos, pistas y una solución de ejemplo para comparar |
+| 🔍 | **Comprobador de ejercicios** | Pega tu código y te dice qué requisitos cumples y cuáles faltan |
+| 📒 | **Apuntes y glosario** | Resumen al final de cada lección para repasar rápido |
+| 💾 | **Borrador automático** | Tu código del ejercicio se guarda mientras escribes |
 | 🔎 | **Comprobador automático** | Pegas tu código y te dice qué puntos cumples y cuáles faltan |
 | 📈 | **Progreso guardado** | Tu avance queda marcado en tu navegador |
 | 🌗 | **Modo claro y oscuro** | Se adapta a tu pantalla |
@@ -103,6 +107,24 @@ Un adelanto de lo que escribirás en la primera lección:
   </body>
 </html>
 ```
+
+## 🏆 El proyecto final
+
+Al terminar las 7 lecciones construyes **tu página personal completa**, siguiendo estos pasos:
+
+1. **Planifica** qué quieres mostrar
+2. Prepara la **carpeta** del proyecto
+3. Escribe el **HTML** y luego el **CSS**
+4. **Revisa** tu trabajo con una lista de control
+5. **Publícala** en internet
+
+## 💡 Consejos para sacarle provecho
+
+- ✍️ **Escribe el código tú mismo**, no lo copies: así se aprende.
+- 💥 **Rompe cosas a propósito** en los editores en vivo para ver qué pasa.
+- ⏱️ Mejor **una lección al día** que cinco de golpe.
+- 🔁 **Repite el ejercicio** sin mirar la solución cuando termines.
+- 🧪 Usa el **comprobador** antes de comparar con la solución de ejemplo.
 
 ## 🧾 Chuleta de etiquetas
 
