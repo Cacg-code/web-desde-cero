@@ -28,6 +28,7 @@
 
 <p align="center">
   <a href="#-qué-es-esto"><b>Qué es</b></a> ·
+  <a href="#-míralo-por-dentro"><b>Capturas</b></a> ·
   <a href="#️-ruta-de-aprendizaje"><b>Ruta</b></a> ·
   <a href="#-temario"><b>Temario</b></a> ·
   <a href="#-el-proyecto-final"><b>Proyecto</b></a> ·
@@ -58,6 +59,24 @@ Al terminar habrás construido **tu propia página personal** desde cero.
 | 🔎 | **Comprobador automático** | Pegas tu código y te dice qué puntos cumples y cuáles faltan |
 | 📈 | **Progreso guardado** | Tu avance queda marcado en tu navegador |
 | 🌗 | **Modo claro y oscuro** | Se adapta a tu pantalla |
+
+## 📸 Míralo por dentro
+
+<div align="center">
+
+**La portada, con tu avance**
+
+<a href="https://cacg-code.github.io/PRACTICAS-HTML/"><img src="assets/readme/captura-portada.png" alt="Portada del curso" width="90%"></a>
+
+**Práctica en vivo: escribes a la izquierda, ves el resultado a la derecha**
+
+<img src="assets/readme/captura-editor.png" alt="Editor en vivo con resultado instantáneo" width="70%">
+
+**Comprobador: te dice qué cumples y qué te falta, con pistas**
+
+<img src="assets/readme/captura-comprobador.png" alt="Comprobador de ejercicios" width="55%">
+
+</div>
 
 ## 🗺️ Ruta de aprendizaje
 
@@ -223,6 +242,6 @@ proyecto-pagina-personal/   Proyecto final
   <img src="assets/readme/boton.svg" alt="Entrar al curso" width="360">
 </a>
 
-<sub>Material educativo elaborado con ayuda de inteligencia artificial. Contrástalo con la documentación oficial: [MDN](https://developer.mozilla.org/es/).</sub>
+<sub>Licencia [MIT](LICENSE): úsalo, compártelo y modifícalo libremente.<br>Material educativo elaborado con ayuda de inteligencia artificial. Contrástalo con la documentación oficial: [MDN](https://developer.mozilla.org/es/).</sub>
 
 </div>
