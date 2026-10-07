@@ -1,7 +1,7 @@
 <div align="center">
 
 <a href="https://cacg-code.github.io/PRACTICAS-HTML/">
-  <img src="assets/readme/banner.svg" alt="Curso de HTML desde cero" width="100%">
+  <img src="assets/readme/banner.svg" alt="Aprende desarrollo web: HTML, CSS y JavaScript" width="100%">
 </a>
 
 <br>
@@ -15,233 +15,210 @@
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
-![Sin instalación](https://img.shields.io/badge/Sin%20instalaci%C3%B3n-4f46e5?style=for-the-badge)
 ![Gratis](https://img.shields.io/badge/100%25-Gratis-16a34a?style=for-the-badge)
-
-[![Stars](https://img.shields.io/github/stars/Cacg-code/PRACTICAS-HTML?style=social)](https://github.com/Cacg-code/PRACTICAS-HTML)
-
-**👉 [cacg-code.github.io/PRACTICAS-HTML](https://cacg-code.github.io/PRACTICAS-HTML/) 👈**
+![Sin instalación](https://img.shields.io/badge/Sin%20instalaci%C3%B3n-4f46e5?style=for-the-badge)
 
 *Se abre en tu navegador. Sin cuentas, sin descargas, sin instalar nada.*
+
+<img src="assets/readme/cifras.svg" alt="3 cursos, 33 lecciones, 3 proyectos, unas 36 horas, gratis" width="100%">
 
 </div>
 
 <p align="center">
-  <a href="#-qué-es-esto"><b>Qué es</b></a> ·
-  <a href="#-míralo-por-dentro"><b>Capturas</b></a> ·
-  <a href="#️-ruta-de-aprendizaje"><b>Ruta</b></a> ·
-  <a href="#-temario"><b>Temario</b></a> ·
-  <a href="#-el-proyecto-final"><b>Proyecto</b></a> ·
-  <a href="#-chuleta-de-etiquetas"><b>Chuleta</b></a> ·
-  <a href="#-preguntas-frecuentes"><b>FAQ</b></a> ·
-  <a href="#-después-del-curso"><b>Después</b></a>
+  <a href="#-los-cursos"><b>Cursos</b></a> ·
+  <a href="#-míralo-en-acción"><b>En acción</b></a> ·
+  <a href="#️-ruta"><b>Ruta</b></a> ·
+  <a href="#-cada-lección"><b>Lección</b></a> ·
+  <a href="#-chuleta"><b>Chuleta</b></a> ·
+  <a href="#-faq"><b>FAQ</b></a> ·
+  <a href="#-contribuir"><b>Contribuir</b></a>
 </p>
 
 ---
 
-## 🎯 ¿Qué es esto?
+## 🎓 Los cursos
 
-Un **curso gratuito de HTML en español**, hecho para quien nunca ha escrito una línea de código. No es solo texto para leer: en cada lección **escribes código y ves el resultado al instante**, te autoevalúas y practicas con ejercicios guiados.
+Sigue el orden: cada curso se apoya en el anterior.
 
-Al terminar habrás construido **tu propia página personal** desde cero: con tablas, formularios, estilo, multimedia, accesibilidad, SEO y publicada en internet.
+<table>
+<tr>
+<td align="center" width="33%">
 
-## ✨ Qué incluye cada lección
+### 1 · HTML
+**Estructura**<br>
+<sub>11 lecciones + proyecto · ≈ 10 h</sub>
 
-| | Componente | Para qué sirve |
-|:-:|---|---|
-| 📖 | **Apuntes claros** | Explicaciones cortas con recuadros de nota, advertencia, consejo y glosario |
-| ⚡ | **Práctica en vivo** | Editores donde cambias el código y ves el resultado al instante |
-| ✅ | **Autoevaluación** | Preguntas con respuesta inmediata y explicación de por qué |
-| 🛠️ | **Ejercicio práctico** | Pasos, pistas y una solución de ejemplo para comparar |
-| 🔍 | **Comprobador de ejercicios** | Pega tu código y te dice qué requisitos cumples y cuáles faltan |
-| 📒 | **Apuntes y glosario** | Resumen al final de cada lección para repasar rápido |
-| 💾 | **Borrador automático** | Tu código del ejercicio se guarda mientras escribes |
-| 📈 | **Progreso guardado** | Tu avance queda marcado en tu navegador |
-| 🌗 | **Modo claro y oscuro** | Se adapta a tu pantalla |
-| ♿ | **Accesible** | Navegable con teclado, con enlace para saltar al contenido y respeta «reducir movimiento» |
-| 📱 | **Adaptable a celular** | Se ve bien en móvil, tableta y escritorio |
+Texto, enlaces, tablas, formularios, accesibilidad, SEO y Git.
 
-## 📸 Míralo por dentro
+🏆 *Tu página personal publicada*
+
+**[▶ Empezar](https://cacg-code.github.io/PRACTICAS-HTML/html/)**
+</td>
+<td align="center" width="33%">
+
+### 2 · CSS
+**Estilo**<br>
+<sub>11 lecciones + proyecto · ≈ 12 h</sub>
+
+Selectores, Flexbox, Grid, responsivo, animaciones y modo oscuro.
+
+🏆 *Una landing page responsiva*
+
+**[▶ Empezar](https://cacg-code.github.io/PRACTICAS-HTML/css/)**
+</td>
+<td align="center" width="33%">
+
+### 3 · JavaScript
+**Lógica**<br>
+<sub>11 lecciones + proyecto · ≈ 14 h</sub>
+
+Variables, funciones, DOM, eventos, asincronía y almacenamiento.
+
+🏆 *Una app de tareas*
+
+**[▶ Empezar](https://cacg-code.github.io/PRACTICAS-HTML/javascript/)**
+</td>
+</tr>
+</table>
+
+## 🎬 Míralo en acción
 
 <div align="center">
-
-**La portada, con tu avance**
-
-<a href="https://cacg-code.github.io/PRACTICAS-HTML/"><img src="assets/readme/captura-portada.png" alt="Portada del curso" width="90%"></a>
-
-**Práctica en vivo: escribes a la izquierda, ves el resultado a la derecha**
-
-<img src="assets/readme/captura-editor.png" alt="Editor en vivo con resultado instantáneo" width="70%">
-
-**Comprobador: te dice qué cumples y qué te falta, con pistas**
-
-<img src="assets/readme/captura-comprobador.png" alt="Comprobador de ejercicios" width="55%">
-
+<table>
+<tr>
+<td align="center"><b>✏️ Práctica en vivo</b><br><img src="assets/gif/practica-en-vivo.gif" alt="Editor con resultado instantáneo" width="100%"></td>
+<td align="center"><b>🎨 Flexbox interactivo</b><br><img src="assets/gif/flexbox.gif" alt="Demostración interactiva de Flexbox" width="100%"></td>
+</tr>
+<tr>
+<td align="center"><b>⚡ JavaScript con consola</b><br><img src="assets/gif/js-consola.gif" alt="Editor de JavaScript con consola" width="100%"></td>
+<td align="center"><b>✅ Comprobador de ejercicios</b><br><img src="assets/gif/comprobador.gif" alt="Comprobador que revisa tu código" width="100%"></td>
+</tr>
+</table>
 </div>
 
-## 🗺️ Ruta de aprendizaje
+## 🗺️ Ruta
 
 <div align="center">
-  <img src="assets/readme/ruta.svg" alt="Ruta de aprendizaje animada: Inicio, 11 lecciones y proyecto final" width="100%">
+  <img src="assets/readme/ruta.svg" alt="Ruta: HTML, CSS, JavaScript y Git disponibles; React, Node.js, bases de datos y full stack próximamente" width="100%">
 </div>
 
-## 📚 Temario
-
-> Haz clic en cualquier lección para abrirla directamente en el navegador.
-
-| # | Lección | Aprenderás a… | Entrar |
-|:-:|---|---|:-:|
-| 01 | **Primeros pasos** | Crear tu primer archivo HTML y entender su estructura | [▶ Abrir](https://cacg-code.github.io/PRACTICAS-HTML/01-primeros-pasos/) |
-| 02 | **Texto, títulos y enlaces** | Dar formato al texto y conectar páginas | [▶ Abrir](https://cacg-code.github.io/PRACTICAS-HTML/02-texto-y-enlaces/) |
-| 03 | **Imágenes y listas** | Insertar imágenes y organizar información en listas | [▶ Abrir](https://cacg-code.github.io/PRACTICAS-HTML/03-imagenes-y-listas/) |
-| 04 | **Tablas** | Presentar datos en filas y columnas | [▶ Abrir](https://cacg-code.github.io/PRACTICAS-HTML/04-tablas/) |
-| 05 | **Formularios** | Pedir datos al usuario con campos y botones | [▶ Abrir](https://cacg-code.github.io/PRACTICAS-HTML/05-formularios/) |
-| 06 | **HTML semántico** | Estructurar la página con significado (header, main, footer…) | [▶ Abrir](https://cacg-code.github.io/PRACTICAS-HTML/06-html-semantico/) |
-| 07 | **Introducción a CSS** | Darle color, tipografía y estilo a tu página | [▶ Abrir](https://cacg-code.github.io/PRACTICAS-HTML/07-introduccion-css/) |
-| 08 | **Audio, video e imágenes adaptables** | Incrustar reproductores con subtítulos, contenido externo e imágenes que se ajustan a cada pantalla | [▶ Abrir](https://cacg-code.github.io/PRACTICAS-HTML/08-audio-y-video/) |
-| 09 | **Accesibilidad** | Hacer tu página usable por todas las personas: contraste, teclado, ARIA y pruebas | [▶ Abrir](https://cacg-code.github.io/PRACTICAS-HTML/09-accesibilidad/) |
-| 10 | **SEO y metadatos** | Mejorar título, descripción, vistas previas al compartir y datos para buscadores | [▶ Abrir](https://cacg-code.github.io/PRACTICAS-HTML/10-seo-y-metadatos/) |
-| 11 | **Git y publicación** | Guardar el historial de tu proyecto, subirlo a GitHub y publicarlo en línea | [▶ Abrir](https://cacg-code.github.io/PRACTICAS-HTML/11-git-y-publicacion/) |
-| 🏆 | **Proyecto final** | Construir tu página personal completa | [▶ Abrir](https://cacg-code.github.io/PRACTICAS-HTML/proyecto-pagina-personal/) |
-
-## 🧪 Así se ve una lección
-
-Cada tema sigue el mismo ciclo, para que aprendas haciendo:
+## 🔁 Cada lección
 
 ```text
-  1. LEE      →  apuntes cortos con ejemplos
-  2. PRUEBA   →  edita el código en vivo y mira qué cambia
-  3. COMPRUEBA →  responde la autoevaluación
-  4. PRACTICA →  resuelve el ejercicio con pistas
-  5. COMPARA  →  revisa la solución de ejemplo
+  📖 LEE  →  ⚡ PRUEBA  →  ✅ EVALÚATE  →  🛠️ PRACTICA  →  🔍 COMPRUEBA
+ apuntes     editor en     preguntas con    ejercicio       te dice qué
+ cortos      vivo          explicación      con pistas      cumples
 ```
 
-Un adelanto de lo que escribirás en la primera lección:
-
-```html
-<!DOCTYPE html>
-<html lang="es">
-  <head>
-    <meta charset="UTF-8">
-    <title>Mi primera página</title>
-  </head>
-  <body>
-    <h1>Hola, mundo</h1>
-    <p>Mi primera <strong>página</strong> web.</p>
-  </body>
-</html>
-```
-
-## 🏆 El proyecto final
-
-Al terminar las 11 lecciones construyes **tu página personal completa**, siguiendo estos pasos:
-
-1. **Planifica** qué quieres mostrar
-2. Prepara la **carpeta** del proyecto
-3. Escribe el **HTML** y luego el **CSS**
-4. **Revisa** tu trabajo con una lista de control
-5. **Publícala** en internet
-
-## 💡 Consejos para sacarle provecho
-
-- ✍️ **Escribe el código tú mismo**, no lo copies: así se aprende.
-- 💥 **Rompe cosas a propósito** en los editores en vivo para ver qué pasa.
-- ⏱️ Mejor **una lección al día** que cinco de golpe.
-- 🔁 **Repite el ejercicio** sin mirar la solución cuando termines.
-- 🧪 Usa el **comprobador** antes de comparar con la solución de ejemplo.
-
-## 🧾 Chuleta de etiquetas
-
-Las que más usarás. Despliega para tenerlas a mano:
+| | Incluye |
+|:-:|---|
+| ⚡ | Editores en vivo (y **consola** en JavaScript) |
+| 🔍 | **Comprobador** que revisa tu código punto por punto |
+| 💾 | Borrador y **progreso guardados** en tu navegador |
+| 🌗 | Modo claro y oscuro |
+| ♿ | Accesible: teclado, contraste y «reducir movimiento» |
+| 📱 | Se ve bien en celular, tableta y escritorio |
 
 <details>
-<summary><b>📋 Ver la chuleta</b></summary>
+<summary><b>📚 Ver temario completo (33 lecciones)</b></summary>
 
 <br>
 
-| Etiqueta | Para qué sirve | Ejemplo |
-|---|---|---|
-| `<h1>`–`<h6>` | Títulos (de más a menos importante) | `<h1>Mi web</h1>` |
-| `<p>` | Párrafo | `<p>Hola</p>` |
-| `<a href>` | Enlace | `<a href="https://mdn.dev">MDN</a>` |
-| `<img src alt>` | Imagen | `<img src="foto.jpg" alt="Mi foto">` |
-| `<ul>` `<ol>` `<li>` | Listas con viñetas / numeradas | `<ul><li>Uno</li></ul>` |
-| `<table>` `<tr>` `<td>` | Tablas | `<tr><td>Dato</td></tr>` |
-| `<form>` `<input>` `<button>` | Formularios | `<input type="email">` |
-| `<header>` `<main>` `<footer>` | Estructura semántica | `<main>…</main>` |
-| `<style>` | CSS dentro de la página | `p { color: teal; }` |
-| `<audio>` `<video>` `<track>` | Reproductores y subtítulos | `<video controls src="demo.mp4"></video>` |
-| `<picture>` `srcset` | Imágenes adaptables | `<img srcset="m.jpg 600w, g.jpg 1200w" alt="…">` |
-| `aria-label` `role` | Accesibilidad | `<nav aria-label="Principal">` |
-| `<meta>` `<link rel>` | SEO y vista previa al compartir | `<meta name="description" content="…">` |
+| | HTML | CSS | JavaScript |
+|:-:|---|---|---|
+| 01 | [Primeros pasos](https://cacg-code.github.io/PRACTICAS-HTML/01-primeros-pasos/) | [Cómo funciona CSS](https://cacg-code.github.io/PRACTICAS-HTML/css/01-como-funciona/) | [Primeros pasos](https://cacg-code.github.io/PRACTICAS-HTML/javascript/01-primeros-pasos/) |
+| 02 | [Texto y enlaces](https://cacg-code.github.io/PRACTICAS-HTML/02-texto-y-enlaces/) | [Selectores y especificidad](https://cacg-code.github.io/PRACTICAS-HTML/css/02-selectores/) | [Variables y tipos](https://cacg-code.github.io/PRACTICAS-HTML/javascript/02-variables-y-tipos/) |
+| 03 | [Imágenes y listas](https://cacg-code.github.io/PRACTICAS-HTML/03-imagenes-y-listas/) | [Color y tipografía](https://cacg-code.github.io/PRACTICAS-HTML/css/03-color-y-texto/) | [Operadores y decisiones](https://cacg-code.github.io/PRACTICAS-HTML/javascript/03-operadores-y-decisiones/) |
+| 04 | [Tablas](https://cacg-code.github.io/PRACTICAS-HTML/04-tablas/) | [La caja y el flujo](https://cacg-code.github.io/PRACTICAS-HTML/css/04-caja-y-flujo/) | [Bucles](https://cacg-code.github.io/PRACTICAS-HTML/javascript/04-bucles/) |
+| 05 | [Formularios](https://cacg-code.github.io/PRACTICAS-HTML/05-formularios/) | [Posicionamiento](https://cacg-code.github.io/PRACTICAS-HTML/css/05-posicionamiento/) | [Funciones](https://cacg-code.github.io/PRACTICAS-HTML/javascript/05-funciones/) |
+| 06 | [HTML semántico](https://cacg-code.github.io/PRACTICAS-HTML/06-html-semantico/) | [Flexbox](https://cacg-code.github.io/PRACTICAS-HTML/css/06-flexbox/) | [Arrays](https://cacg-code.github.io/PRACTICAS-HTML/javascript/06-arrays/) |
+| 07 | [Introducción a CSS](https://cacg-code.github.io/PRACTICAS-HTML/07-introduccion-css/) | [CSS Grid](https://cacg-code.github.io/PRACTICAS-HTML/css/07-grid/) | [Objetos y JSON](https://cacg-code.github.io/PRACTICAS-HTML/javascript/07-objetos/) |
+| 08 | [Audio y video](https://cacg-code.github.io/PRACTICAS-HTML/08-audio-y-video/) | [Diseño responsivo](https://cacg-code.github.io/PRACTICAS-HTML/css/08-responsivo/) | [El DOM](https://cacg-code.github.io/PRACTICAS-HTML/javascript/08-dom/) |
+| 09 | [Accesibilidad](https://cacg-code.github.io/PRACTICAS-HTML/09-accesibilidad/) | [Fondos y degradados](https://cacg-code.github.io/PRACTICAS-HTML/css/09-fondos-y-efectos/) | [Eventos y formularios](https://cacg-code.github.io/PRACTICAS-HTML/javascript/09-eventos/) |
+| 10 | [SEO y metadatos](https://cacg-code.github.io/PRACTICAS-HTML/10-seo-y-metadatos/) | [Animaciones](https://cacg-code.github.io/PRACTICAS-HTML/css/10-animaciones/) | [Asincronía y APIs](https://cacg-code.github.io/PRACTICAS-HTML/javascript/10-asincronia/) |
+| 11 | [Git y publicación](https://cacg-code.github.io/PRACTICAS-HTML/11-git-y-publicacion/) | [Variables y temas](https://cacg-code.github.io/PRACTICAS-HTML/css/11-variables-y-temas/) | [Errores y almacenamiento](https://cacg-code.github.io/PRACTICAS-HTML/javascript/11-errores-y-almacenamiento/) |
+| 🏆 | [Tu página personal](https://cacg-code.github.io/PRACTICAS-HTML/proyecto-pagina-personal/) | [Landing responsiva](https://cacg-code.github.io/PRACTICAS-HTML/css/proyecto-landing/) | [Lista de tareas](https://cacg-code.github.io/PRACTICAS-HTML/javascript/proyecto-tareas/) |
 
 </details>
 
-## 🚀 Después del curso
+## 🧾 Chuleta
 
-Cuando termines el proyecto final, sigue por aquí:
+<details>
+<summary><b>📋 Las etiquetas que más usarás</b></summary>
 
-- 🎨 **CSS a fondo:** [MDN – Aprende CSS](https://developer.mozilla.org/es/docs/Learn/CSS)
-- ⚙️ **JavaScript:** [MDN – Aprende JavaScript](https://developer.mozilla.org/es/docs/Learn/JavaScript)
-- 🌐 **Publica tu página gratis** con [GitHub Pages](https://pages.github.com/) (la lección 11 te guía paso a paso)
-- 📱 **Hazla adaptable a celular** (diseño responsive)
+<br>
 
-## ❓ Preguntas frecuentes
+| Etiqueta | Para qué sirve |
+|---|---|
+| `<h1>`–`<h6>` · `<p>` | Títulos y párrafos |
+| `<a href>` · `<img src alt>` | Enlaces e imágenes |
+| `<ul>` `<ol>` `<li>` | Listas |
+| `<table>` `<tr>` `<td>` | Tablas |
+| `<form>` `<input>` `<button>` | Formularios |
+| `<header>` `<main>` `<footer>` | Estructura con significado |
+| `<audio>` `<video>` `<track>` | Multimedia y subtítulos |
+| `aria-label` · `role` | Accesibilidad |
+| `<meta>` · `<link rel>` | SEO y vista previa al compartir |
+
+</details>
+
+## 💡 Consejos
+
+✍️ **Escribe el código tú**, no lo copies · 💥 **Rompe cosas** en los editores para ver qué pasa · ⏱️ **Una lección al día** mejor que cinco de golpe · 🔁 **Repite el ejercicio** sin mirar la solución.
+
+## ❓ FAQ
 
 <details>
 <summary><b>¿Necesito saber programar?</b></summary>
 
-<br>No. El curso empieza desde cero y no asume ningún conocimiento previo.
+<br>No. Empieza desde cero.
 </details>
 
 <details>
-<summary><b>¿Qué necesito para empezar?</b></summary>
+<summary><b>¿Qué necesito?</b></summary>
 
-<br>Solo un navegador (Chrome, Firefox, Edge, Safari). Para los ejercicios fuera del curso te servirá un editor de texto como [VS Code](https://code.visualstudio.com/).
+<br>Un navegador. Para tus propios proyectos, un editor como [VS Code](https://code.visualstudio.com/).
 </details>
 
 <details>
 <summary><b>¿Se guarda mi progreso?</b></summary>
 
-<br>Sí, en tu propio navegador. No hay cuentas ni se envía nada a ningún servidor. Si borras los datos del sitio, el progreso se reinicia.
+<br>Sí, en tu navegador. Sin cuentas ni servidores. Si borras los datos del sitio, se reinicia.
 </details>
 
 <details>
-<summary><b>¿Puedo usarlo sin internet?</b></summary>
+<summary><b>¿Funciona sin internet?</b></summary>
 
-<br>Sí. Clona el repositorio y abre `index.html` con doble clic.
+<br>Sí: clona el repo y abre `index.html`.
 </details>
 
-<details>
-<summary><b>¿Cuánto cuesta?</b></summary>
-
-<br>Nada. Es gratuito y de código abierto.
-</details>
-
-## 💻 Úsalo en tu computadora
+## 💻 En tu computadora
 
 ```bash
 git clone https://github.com/Cacg-code/PRACTICAS-HTML.git
 cd PRACTICAS-HTML
-# abre index.html en tu navegador (doble clic)
+# abre index.html en tu navegador
 ```
 
 <details>
-<summary><b>📁 Estructura del repositorio</b></summary>
+<summary><b>📁 Estructura</b></summary>
 
 ```text
-index.html                  Portada con el temario y el avance
-404.html                    Página de error personalizada
-sitemap.xml                 Mapa del sitio para buscadores
-assets/                     Estilos (estilos.css), script (curso.js), favicon, imágenes y multimedia (audio, video, subtítulos)
-NN-nombre-leccion/          Una carpeta por lección (index.html + ejercicio.html)
-proyecto-pagina-personal/   Proyecto final
+index.html        Portada con los 3 cursos y la ruta
+html/ css/ javascript/   Una carpeta por curso (lecciones + proyecto)
+NN-nombre/        Lecciones del curso de HTML
+assets/           Estilos, script, GIFs, imágenes y multimedia
+404.html · sitemap.xml
 ```
 </details>
 
 ## 🤝 Contribuir
 
-¿Encontraste un error o tienes una idea? Abre un [issue](https://github.com/Cacg-code/PRACTICAS-HTML/issues) o envía un pull request.
+<div align="center">
+
+[🐞 Reportar un error](https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml) · [💡 Sugerir un tema](https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=sugerencia.yml) · [❓ Preguntar una duda](https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=duda.yml) · [⭐ Dar una estrella](https://github.com/Cacg-code/PRACTICAS-HTML)
+
+</div>
 
 ---
 
@@ -253,6 +230,6 @@ proyecto-pagina-personal/   Proyecto final
   <img src="assets/readme/boton.svg" alt="Entrar al curso" width="360">
 </a>
 
-<sub>Licencia [MIT](LICENSE): úsalo, compártelo y modifícalo libremente.<br>Material educativo elaborado con ayuda de inteligencia artificial. Contrástalo con la documentación oficial: [MDN](https://developer.mozilla.org/es/).</sub>
+<sub>Código bajo licencia [MIT](LICENSE) · contenido en [LICENSE-CONTENIDO.md](LICENSE-CONTENIDO.md).<br>Material educativo elaborado con ayuda de inteligencia artificial. Contrástalo con [MDN](https://developer.mozilla.org/es/).</sub>
 
 </div>
