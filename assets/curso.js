@@ -725,3 +725,282 @@
     }
   } catch (err) { /* opcional */ }
 })();
+
+// ---------- UI v5 · progreso (nivel, XP, racha, logros, metas), ruta y temario animados ----------
+(function () {
+  try {
+    var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var cs = document.currentScript;
+    var BASE = cs && cs.src ? new URL('.', cs.src).href : '';
+    var $ = function (s, r) { return (r || document).querySelector(s); };
+    var $$ = function (s, r) { return [].slice.call((r || document).querySelectorAll(s)); };
+    var store = {
+      get: function (k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+      set: function (k, v) { try { localStorage.setItem(k, v); } catch (e) {} },
+      keys: function () { var o = []; try { for (var i = 0; i < localStorage.length; i++) o.push(localStorage.key(i)); } catch (e) {} return o; }
+    };
+    var json = function (k, d) { try { return JSON.parse(store.get(k)) || d; } catch (e) { return d; } };
+    var say = function (m) { var box = $('.toasts'); if (!box) return; var t = document.createElement('div'); t.className = 'toast'; t.textContent = m; box.appendChild(t); setTimeout(function () { t.remove(); }, 3200); };
+    var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
+
+    // ----- Cursos y lecciones (se leen de assets/indice.json) -----
+    var COURSES = [
+      { id: 'html', pre: '', name: 'HTML', dir: '', home: 'html/', emoji: '🧱' },
+      { id: 'css', pre: 'css-', name: 'CSS', dir: 'css/', home: 'css/', emoji: '🎨' },
+      { id: 'js', pre: 'js-', name: 'JavaScript', dir: 'javascript/', home: 'javascript/', emoji: '⚙️' },
+      { id: 'react', pre: 'react-', name: 'React', dir: 'react/', home: 'react/', emoji: '⚛️' },
+      { id: 'node', pre: 'node-', name: 'Node.js', dir: 'node/', home: 'node/', emoji: '🟢' },
+      { id: 'bd', pre: 'bd-', name: 'Bases de datos', dir: 'bd/', home: 'bd/', emoji: '🗄️' }
+    ];
+    var DIRS = { css: 1, javascript: 1, react: 1, node: 1, bd: 1, html: 1 };
+    var data = null; // { courses: [{...c, lessons:[{path,title,key}]}] }
+    var load = function () {
+      return fetch(BASE + 'indice.json').then(function (r) { return r.json(); }).then(function (idx) {
+        var cs2 = COURSES.map(function (c) { var o = {}; for (var k in c) o[k] = c[k]; o.lessons = []; return o; });
+        idx.forEach(function (it) {
+          var p = it[0], m = /^(?:(css|javascript|react|node|bd)\/)?(\d\d)-/.exec(p), pj = /^(?:(css|javascript|react|node|bd)\/)?proyecto/.exec(p);
+          if (!m && !pj) return;
+          var dir = (m || pj)[1] ? (m || pj)[1] + '/' : '', c = cs2.filter(function (x) { return x.dir === dir; })[0];
+          if (c) c.lessons.push({ path: p, title: it[1], key: c.pre + (m ? m[2] : 'P') });
+        });
+        data = cs2.filter(function (c) { return c.lessons.length; });
+        return data;
+      }, function () { data = []; return data; });
+    };
+    var isDone = function (key) { return store.get('leccion:' + key) === '1'; };
+
+    // ----- Estado de progreso -----
+    var ymd = function (d) { d = d || new Date(); return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2); };
+    var addDays = function (n) { var d = new Date(); d.setDate(d.getDate() + n); return d; };
+    var activity = function () { return json('actividad', {}); };
+    var streaks = function () {
+      var a = activity(), cur = 0, d = 0;
+      if (!a[ymd(addDays(0))]) d = -1; // si hoy aún no estudias, la racha de ayer sigue viva
+      while (a[ymd(addDays(d))]) { cur++; d--; }
+      var days = Object.keys(a).sort(), best = 0, run = 0, prev = null;
+      days.forEach(function (k) {
+        var t = new Date(k + 'T00:00:00');
+        run = prev && Math.round((t - prev) / 864e5) === 1 ? run + 1 : 1; prev = t; if (run > best) best = run;
+      });
+      return { cur: cur, best: Math.max(best, cur), todayDone: !!a[ymd()] };
+    };
+    var lessonsDone = function () { return store.keys().filter(function (k) { return k.indexOf('leccion:') === 0 && store.get(k) === '1'; }).length; };
+    var perfectQuizzes = function () { return store.keys().filter(function (k) { return k.indexOf('logro:quiz:') === 0; }).length; };
+    var courseStats = function (c) { var n = 0; c.lessons.forEach(function (l) { if (isDone(l.key)) n++; }); return { done: n, total: c.lessons.length, pct: c.lessons.length ? n / c.lessons.length : 0 }; };
+    var coursesFinished = function () { return data ? data.filter(function (c) { return courseStats(c).done === c.lessons.length; }) : []; };
+    var xpNow = function () { return lessonsDone() * 100 + perfectQuizzes() * 50 + coursesFinished().length * 300; };
+    var levelOf = function (xp) { return Math.floor(Math.sqrt(xp / 100)) + 1; };
+    var TITLES = ['Curioso', 'Aprendiz', 'Explorador', 'Constructor', 'Dev junior', 'Dev', 'Maestro', 'Leyenda'];
+    var AVATARS = ['🌱', '🔰', '🧭', '🛠️', '💻', '🚀', '🧙', '👑'];
+    var weekCount = function () { var a = activity(), n = 0; for (var i = 0; i < 7; i++) n += a[ymd(addDays(-i))] || 0; return n; };
+
+    var LOGROS = [
+      { id: 'primero', ico: '🌱', t: 'Primer paso', d: 'Completa tu primera lección', ok: function () { return lessonsDone() >= 1; } },
+      { id: 'cinco', ico: '📚', t: 'Constante', d: 'Completa 5 lecciones', ok: function () { return lessonsDone() >= 5; } },
+      { id: 'diez', ico: '🏃', t: 'En marcha', d: 'Completa 10 lecciones', ok: function () { return lessonsDone() >= 10; } },
+      { id: 'veinte', ico: '🏆', t: 'Imparable', d: 'Completa 25 lecciones', ok: function () { return lessonsDone() >= 25; } },
+      { id: 'racha3', ico: '🔥', t: 'Calentando', d: 'Racha de 3 días', ok: function () { return streaks().best >= 3; } },
+      { id: 'racha7', ico: '⚡', t: 'Semana perfecta', d: 'Racha de 7 días', ok: function () { return streaks().best >= 7; } },
+      { id: 'quiz1', ico: '🎯', t: 'Puntería', d: 'Un quiz con todas correctas', ok: function () { return perfectQuizzes() >= 1; } },
+      { id: 'quiz5', ico: '🧠', t: 'Mente brillante', d: '5 quizzes perfectos', ok: function () { return perfectQuizzes() >= 5; } },
+      { id: 'curso', ico: '🥇', t: 'Curso completo', d: 'Termina un curso entero', ok: function () { return coursesFinished().length >= 1; } },
+      { id: 'front', ico: '🌟', t: 'Frontend', d: 'Completa HTML, CSS, JavaScript y React', ok: function () { var ids = coursesFinished().map(function (c) { return c.id; }); return ['html', 'css', 'js', 'react'].every(function (i) { return ids.indexOf(i) > -1; }); } },
+      { id: 'meta', ico: '🎖️', t: 'Meta cumplida', d: 'Alcanza tu meta semanal', ok: function () { return weekCount() >= (+store.get('meta') || 3); } }
+    ];
+    var unlocked = function () { return LOGROS.filter(function (l) { return l.ok(); }).map(function (l) { return l.id; }); };
+    var checkLogros = function () {
+      var now = unlocked(), prev = store.get('logros');
+      if (prev === null) { store.set('logros', JSON.stringify(now)); return; }
+      var old = json('logros', []);
+      LOGROS.forEach(function (l) {
+        if (now.indexOf(l.id) > -1 && old.indexOf(l.id) < 0) { say(l.ico + ' Logro: ' + l.t); }
+      });
+      store.set('logros', JSON.stringify(now));
+    };
+
+    // ----- Insignia de la barra superior -----
+    var bar = $('.topbar-actions'), chip = null;
+    var paintChip = function (bump) {
+      if (!chip) return;
+      var xp = xpNow(), lvl = levelOf(xp), base = Math.pow(lvl - 1, 2) * 100, nxt = Math.pow(lvl, 2) * 100, s = streaks();
+      chip.title = 'Nivel ' + lvl + ' · ' + xp + ' XP · abre tu panel de progreso';
+      chip.innerHTML = '<span aria-hidden="true">⚡</span> Nv <b>' + lvl + '</b><span class="xp-bar"><i style="width:' + Math.round((xp - base) / (nxt - base) * 100) + '%"></i></span><span class="xp-streak" aria-hidden="true">🔥 ' + s.cur + '</span><span class="sr-only">Abrir mi progreso</span>';
+      if (bump) { chip.classList.remove('bump'); void chip.offsetWidth; chip.classList.add('bump'); }
+    };
+    var old = $('.xp'); if (old) old.remove();
+    if (bar) {
+      chip = document.createElement('button'); chip.type = 'button'; chip.className = 'xp'; chip.setAttribute('aria-haspopup', 'dialog');
+      bar.insertBefore(chip, bar.firstChild); paintChip(false);
+      chip.addEventListener('click', function () { openPanel(); });
+    }
+
+    // ----- Registrar actividad al completar lecciones y quizzes perfectos -----
+    var record = function () { var a = activity(), k = ymd(); a[k] = (a[k] || 0) + 1; store.set('actividad', JSON.stringify(a)); };
+    $$('[data-complete]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var lv0 = levelOf(xpNow());
+        if (b.classList.contains('done')) record();
+        setTimeout(function () {
+          paintChip(true); checkLogros();
+          var lv1 = levelOf(xpNow());
+          if (lv1 > lv0) say('🚀 ¡Nivel ' + lv1 + ' · ' + TITLES[Math.min(lv1 - 1, TITLES.length - 1)] + '!');
+        }, 0);
+      });
+    });
+    $$('.quiz-score').forEach(function (s) {
+      new MutationObserver(function () {
+        if (/Excelente/.test(s.textContent) && store.get('logro:quiz:' + location.pathname) !== '1') { store.set('logro:quiz:' + location.pathname, '1'); paintChip(true); checkLogros(); }
+      }).observe(s, { childList: true, characterData: true, subtree: true });
+    });
+
+    // ----- Panel «Mi progreso» -----
+    var panel = null;
+    var countUp = function (el, to) {
+      if (reduce) { el.textContent = to; return; }
+      var t0 = performance.now();
+      (function f(t) { var p = Math.min(1, (t - t0) / 800); el.textContent = Math.round(to * (1 - Math.pow(1 - p, 3))); if (p < 1) requestAnimationFrame(f); })(t0);
+    };
+    var nextLesson = function () {
+      if (!data) return null;
+      for (var i = 0; i < data.length; i++) for (var j = 0; j < data[i].lessons.length; j++) if (!isDone(data[i].lessons[j].key)) return { c: data[i], l: data[i].lessons[j] };
+      return null;
+    };
+    var openPanel = function () {
+      load().then(function () {
+        if (!panel) {
+          panel = document.createElement('div'); panel.className = 'pal prog-pal'; panel.setAttribute('role', 'dialog'); panel.setAttribute('aria-modal', 'true'); panel.setAttribute('aria-label', 'Mi progreso');
+          document.body.appendChild(panel);
+          panel.addEventListener('mousedown', function (e) { if (e.target === panel) closePanel(); });
+          addEventListener('keydown', function (e) { if (e.key === 'Escape') closePanel(); });
+        }
+        renderPanel(); panel.classList.add('open'); var cb = $('.pp-close', panel); if (cb) cb.focus();
+      });
+    };
+    var closePanel = function () { if (panel) panel.classList.remove('open'); if (chip) paintChip(false); };
+    var renderPanel = function () {
+      var xp = xpNow(), lvl = levelOf(xp), base = Math.pow(lvl - 1, 2) * 100, nxt = Math.pow(lvl, 2) * 100, ti = Math.min(lvl - 1, TITLES.length - 1), s = streaks(), un = unlocked();
+      var meta = +store.get('meta') || 3, wk = weekCount(), a = activity(), nl = nextLesson();
+      var week = '';
+      for (var i = 6; i >= 0; i--) { var d = addDays(-i), n = a[ymd(d)] || 0; week += '<div class="pp-day' + (n ? ' on' : '') + (i === 0 ? ' today' : '') + '" title="' + n + ' lección(es)"><i style="height:' + Math.min(100, 18 + n * 28) + '%"></i><span>' + 'DLMMJVS'.charAt(d.getDay()) + '</span></div>'; }
+      var courses = (data || []).map(function (c) {
+        var st = courseStats(c), done = st.done === st.total;
+        return '<a class="pp-course" href="' + BASE + '../' + c.home + '"><span>' + c.emoji + ' ' + esc(c.name) + '</span><div class="progress"><div style="width:' + Math.round(st.pct * 100) + '%"></div></div><small>' + (done ? '🎉 Completo' : st.done + ' / ' + st.total) + '</small></a>';
+      }).join('');
+      var logros = LOGROS.map(function (l, i) { var on = un.indexOf(l.id) > -1; return '<li class="pp-logro' + (on ? ' on' : '') + '" style="--i:' + i + '" title="' + esc(l.d) + '"><span class="ico">' + (on ? l.ico : '🔒') + '</span><b>' + esc(l.t) + '</b><small>' + esc(l.d) + '</small></li>'; }).join('');
+      panel.innerHTML = '<div class="pal-box pp-box"><button type="button" class="pp-close icon-btn" aria-label="Cerrar">✕</button>' +
+        '<div class="pp-head"><div class="pp-av" aria-hidden="true">' + AVATARS[ti] + '</div><div><p class="pp-kicker">Nivel <span id="pp-lvl">0</span> · ' + TITLES[ti] + '</p><h2>Mi progreso</h2>' +
+        '<div class="progress"><div style="width:0" id="pp-xpbar"></div></div><p class="pp-small"><span id="pp-xp">0</span> XP · faltan ' + (nxt - xp) + ' para el nivel ' + (lvl + 1) + '</p></div></div>' +
+        '<div class="pp-stats"><div><b id="pp-s1">0</b><span>lecciones</span></div><div><b>🔥 <span id="pp-s2">0</span></b><span>racha (días)</span></div><div><b id="pp-s3">0</b><span>mejor racha</span></div><div><b id="pp-s4">0</b><span>quizzes perfectos</span></div></div>' +
+        (nl ? '<a class="btn pp-cta" href="' + BASE + '../' + nl.l.path + '">▶ Continuar: ' + esc(nl.l.title) + ' <small>(' + esc(nl.c.name) + ')</small></a>' : '<p class="pp-small">🎉 ¡Completaste todo lo disponible!</p>') +
+        '<h3>Meta de la semana</h3><div class="pp-goal"><div class="pp-week">' + week + '</div><div><p><b>' + Math.min(wk, 99) + '</b> de <b>' + meta + '</b> lecciones en los últimos 7 días' + (wk >= meta ? ' ✅' : '') + '</p><label>Mi meta: <select id="pp-meta">' + [1, 2, 3, 5, 7, 10].map(function (n) { return '<option' + (n === meta ? ' selected' : '') + '>' + n + '</option>'; }).join('') + '</select> lecciones por semana</label>' + (s.todayDone ? '<p class="pp-small">✔ Hoy ya estudiaste. ¡Racha a salvo!</p>' : '<p class="pp-small">' + (s.cur ? '⚠ Completa una lección hoy para mantener tu racha de ' + s.cur + '.' : 'Completa una lección hoy para empezar tu racha.') + '</p>') + '</div></div>' +
+        '<h3>Mis cursos</h3><div class="pp-courses">' + courses + '</div>' +
+        '<h3>Logros <small>' + un.length + ' / ' + LOGROS.length + '</small></h3><ul class="pp-logros">' + logros + '</ul>' +
+        '<details class="pp-backup"><summary>Respaldar o pasar mi progreso a otro dispositivo</summary><p class="pp-small">Tu progreso vive solo en este navegador. Copia el código y pégalo en el otro dispositivo (o guárdalo como respaldo).</p><textarea id="pp-code" rows="3" readonly aria-label="Código de mi progreso"></textarea><div class="pp-actions"><button type="button" class="icon-btn" id="pp-copy">Copiar código</button><button type="button" class="icon-btn" id="pp-restore">Restaurar desde el código pegado</button></div></details></div>';
+      requestAnimationFrame(function () {
+        countUp($('#pp-lvl', panel), lvl); countUp($('#pp-xp', panel), xp); countUp($('#pp-s1', panel), lessonsDone()); countUp($('#pp-s2', panel), s.cur); countUp($('#pp-s3', panel), s.best); countUp($('#pp-s4', panel), perfectQuizzes());
+        setTimeout(function () { var b = $('#pp-xpbar', panel); if (b) b.style.width = Math.round((xp - base) / (nxt - base) * 100) + '%'; $$('.pp-course .progress > div', panel).forEach(function (x) { x.style.transition = 'width 1s'; }); }, 60);
+      });
+      $('.pp-close', panel).addEventListener('click', closePanel);
+      $('#pp-meta', panel).addEventListener('change', function (e) { store.set('meta', e.target.value); renderPanel(); checkLogros(); });
+      var code = $('#pp-code', panel), snapshot = function () {
+        var o = {}; store.keys().forEach(function (k) { if (/^(leccion:|logro:|actividad|meta|logros|racha|tema|check:)/.test(k)) o[k] = store.get(k); });
+        return btoa(unescape(encodeURIComponent(JSON.stringify(o))));
+      };
+      code.value = snapshot();
+      $('#pp-copy', panel).addEventListener('click', function () { (navigator.clipboard ? navigator.clipboard.writeText(code.value) : Promise.reject()).then(function () { say('📋 Código copiado'); }, function () { code.select(); }); });
+      $('#pp-restore', panel).addEventListener('click', function () {
+        code.removeAttribute('readonly'); code.value = ''; code.placeholder = 'Pega aquí tu código y vuelve a pulsar «Restaurar»'; code.focus();
+        $('#pp-restore', panel).onclick = function () {
+          try {
+            var o = JSON.parse(decodeURIComponent(escape(atob(code.value.trim()))));
+            Object.keys(o).forEach(function (k) { if (/^(leccion:|logro:|actividad|meta|logros|racha|tema|check:)/.test(k)) store.set(k, o[k]); });
+            say('✅ Progreso restaurado'); location.reload();
+          } catch (e) { say('⚠ El código no es válido'); }
+        };
+      });
+    };
+
+    // ----- Temario animado: filtros, anillo de avance y "sigue aquí" -----
+    var lessons = $('.lessons');
+    if (lessons && $$('[data-leccion]', lessons).length) {
+      var cards = $$('li', lessons), total = cards.filter(function (li) { return $('a[data-leccion]', li); }).length;
+      var doneN = cards.filter(function (li) { var a = $('a[data-leccion]', li); return a && isDone(a.getAttribute('data-leccion')); }).length;
+      var tb = document.createElement('div'); tb.className = 'tema-bar';
+      var C = 2 * Math.PI * 22;
+      tb.innerHTML = '<div class="ring" role="img" aria-label="' + doneN + ' de ' + total + ' lecciones"><svg viewBox="0 0 52 52" aria-hidden="true"><circle cx="26" cy="26" r="22" class="r-bg"/><circle cx="26" cy="26" r="22" class="r-fg" stroke-dasharray="' + C.toFixed(1) + '" stroke-dashoffset="' + C.toFixed(1) + '"/></svg><b>' + Math.round(total ? doneN / total * 100 : 0) + '%</b></div>' +
+        '<div class="tema-txt"><strong>' + doneN + ' de ' + total + ' lecciones</strong><span>' + (doneN === total && total ? '🎉 ¡Curso completado!' : doneN ? 'Sigue así, vas ' + (doneN / total > .5 ? 'muy bien' : 'avanzando') + '.' : 'Aún no empiezas. ¡Anímate con la primera!') + '</span></div>' +
+        '<div class="chips" role="group" aria-label="Filtrar lecciones"><button type="button" class="chip on" data-f="all">Todas</button><button type="button" class="chip" data-f="todo">Pendientes</button><button type="button" class="chip" data-f="done">Completadas</button></div>';
+      lessons.parentNode.insertBefore(tb, lessons);
+      setTimeout(function () { var fg = $('.r-fg', tb); if (fg) fg.style.strokeDashoffset = (C * (1 - (total ? doneN / total : 0))).toFixed(1); }, 200);
+      var first = null;
+      cards.forEach(function (li) { var a = $('a[data-leccion]', li); if (a && !first && !isDone(a.getAttribute('data-leccion'))) { first = a; } });
+      if (first) { first.classList.add('here'); var hb = document.createElement('span'); hb.className = 'here-badge'; hb.textContent = '👉 Sigue aquí'; first.appendChild(hb); }
+      $$('.chip', tb).forEach(function (ch) {
+        ch.addEventListener('click', function () {
+          $$('.chip', tb).forEach(function (x) { x.classList.toggle('on', x === ch); });
+          var f = ch.getAttribute('data-f'), n = 0;
+          cards.forEach(function (li) {
+            var a = $('a[data-leccion]', li), d = a && isDone(a.getAttribute('data-leccion')), show = f === 'all' || (f === 'done' ? d : !d);
+            li.hidden = !show; if (show) { li.style.animation = 'none'; void li.offsetWidth; li.style.animation = 'rise .4s ease both'; li.style.animationDelay = (n++ * 40) + 'ms'; }
+          });
+        });
+      });
+      if ('IntersectionObserver' in window && !reduce) {
+        var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('seen'); io.unobserve(e.target); } }); }, { threshold: .3 });
+        cards.forEach(function (li) { io.observe(li); });
+      }
+    }
+
+    // ----- Ruta animada: pista con hitos, progreso por paso y "estás aquí" -----
+    var route = $('.route');
+    if (route) {
+      load().then(function () {
+        var items = $$('li', route), steps = [], track = document.createElement('div');
+        items.forEach(function (li) {
+          var a = $('a', li), href = a ? a.getAttribute('href') : '', c = null;
+          (data || []).forEach(function (x) { if (href === x.home || (x.id === 'html' && /^11-git/.test(href))) c = x; });
+          var st = { li: li, c: c, pct: 0, label: '', done: false };
+          if (/^11-git/.test(href)) { st.pct = isDone('11') ? 1 : 0; st.label = st.pct ? 'Completada' : 'Lección 11 de HTML'; st.done = !!st.pct; }
+          else if (c) { var cstat = courseStats(c); st.pct = cstat.pct; st.done = cstat.done === cstat.total; st.label = st.done ? '🎉 Completo' : cstat.done + ' de ' + cstat.total; }
+          else if (li.classList.contains('soon')) st.label = 'Próximamente';
+          steps.push(st);
+        });
+        var cur = -1; steps.forEach(function (s, i) { if (cur < 0 && !s.done && !s.li.classList.contains('soon')) cur = i; });
+        var reached = cur < 0 ? steps.length : cur;
+        track.className = 'route-track'; track.setAttribute('aria-hidden', 'true');
+        track.innerHTML = '<div class="rt-line"><i style="--w:' + (steps.length > 1 ? Math.min(100, (reached) / (steps.length - 1) * 100) : 0) + '%"></i></div>' + steps.map(function (s, i) { return '<span class="rt-dot' + (s.done ? ' done' : '') + (i === cur ? ' cur' : '') + (s.li.classList.contains('soon') ? ' soon' : '') + '" style="--i:' + i + '">' + (s.done ? '✓' : i + 1) + '</span>'; }).join('');
+        route.parentNode.insertBefore(track, route);
+        steps.forEach(function (s, i) {
+          var s2 = $('.route-s', s.li); if (s2 && s.label) s2.textContent = s.label;
+          if (s.pct > 0 || (s.c && !s.li.classList.contains('soon'))) { var pb = document.createElement('span'); pb.className = 'route-bar'; pb.innerHTML = '<i style="width:' + Math.round(s.pct * 100) + '%"></i>'; (s.li.querySelector('a') || s.li).appendChild(pb); }
+          if (s.done) s.li.classList.add('finished');
+          if (i === cur) { s.li.classList.add('current'); var tg = document.createElement('span'); tg.className = 'here-badge'; tg.textContent = '📍 Estás aquí'; (s.li.querySelector('a') || s.li).appendChild(tg); }
+          s.li.style.setProperty('--i', i);
+        });
+        if ('IntersectionObserver' in window && !reduce) {
+          route.classList.add('pre');
+          var io2 = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { route.classList.remove('pre'); track.classList.add('go'); io2.disconnect(); } }); }, { threshold: .2 });
+          io2.observe(route);
+        } else track.classList.add('go');
+        var nl = nextLesson();
+        if (nl) {
+          var cta = document.createElement('a'); cta.className = 'btn route-cta'; cta.href = BASE + '../' + nl.l.path;
+          cta.innerHTML = (isDone(nl.c.pre + '01') || lessonsDone() ? '▶ Continuar: ' : '▶ Empezar: ') + esc(nl.l.title);
+          route.parentNode.insertBefore(cta, track);
+        }
+      });
+    }
+
+    load().then(function () { paintChip(false); checkLogros(); });
+    window.__progreso = { open: openPanel };
+  } catch (err) { /* opcional */ }
+})();
+
+// ---------- PWA: registrar el service worker (uso sin conexión) ----------
+(function () {
+  try {
+    if (!('serviceWorker' in navigator) || !/^https?:$/.test(location.protocol)) return;
+    var base = new URL('../', document.currentScript.src).href;
+    addEventListener('load', function () { navigator.serviceWorker.register(base + 'sw.js', { scope: base }).catch(function () {}); });
+  } catch (err) { /* opcional */ }
+})();
