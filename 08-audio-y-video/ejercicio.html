@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ejercicio · Audio, video e imágenes adaptables · Curso de HTML</title>
+  <meta name="description" content="Ejercicio práctico de: Audio, video e imágenes adaptables.">
+  <link rel="stylesheet" href="../assets/estilos.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de HTML</a>
+    <div class="topbar-actions">
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap" style="max-width:820px;padding-top:2rem;padding-bottom:3rem">
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Inicio</a> › <a href="./">Lección 8</a> › Ejercicio</div>
+        <h1>Ejercicio: Audio, video e imágenes adaptables</h1>
+        <ul class="meta"><li>⏱ 30 minutos</li><li>📶 Nivel: principiante</li></ul>
+      </header>
+
+      <h2>Objetivo</h2>
+      <p>Crear una página con audio, video con subtítulos, un contenido incrustado y imágenes adaptables, aplicando las prácticas de accesibilidad y rendimiento de la lección.</p>
+
+      
+      <h2>Pasos</h2>
+      <p>Marca cada paso a medida que lo completes. Tu avance se guarda en este navegador.</p>
+      <div class="progress" aria-hidden="true"><div></div></div>
+      <p id="progreso-texto" style="color:var(--muted);font-size:.9rem" aria-live="polite"></p>
+      <ul class="checklist"><li><label><input type="checkbox" id="p1"><span>Crea <code>multimedia.html</code> con el esqueleto completo y un <code>&lt;h1&gt;</code>.</span></label></li><li><label><input type="checkbox" id="p2"><span>Agrega un <code>&lt;audio controls&gt;</code> con una fuente y un texto de respaldo.</span></label></li><li><label><input type="checkbox" id="p3"><span>Agrega un <code>&lt;video controls&gt;</code> con <code>width</code>, <code>height</code>, <code>poster</code> y una fuente.</span></label></li><li><label><input type="checkbox" id="p4"><span>Dentro del video, incluye un <code>&lt;track kind="captions"&gt;</code> con <code>srclang="es"</code> y <code>label</code>.</span></label></li><li><label><input type="checkbox" id="p5"><span>Dentro del video, escribe un texto de respaldo con un enlace de descarga.</span></label></li><li><label><input type="checkbox" id="p6"><span>Agrega un <code>&lt;iframe&gt;</code> con <code>title</code> y <code>loading="lazy"</code> (puede ser un mapa o un video de una plataforma).</span></label></li><li><label><input type="checkbox" id="p7"><span>Agrega una imagen con <code>srcset</code> y <code>sizes</code>, y su <code>alt</code>.</span></label></li><li><label><input type="checkbox" id="p8"><span>Agrega un <code>&lt;picture&gt;</code> con un <code>&lt;source media&gt;</code> y un <code>&lt;img&gt;</code> final con <code>alt</code>.</span></label></li><li><label><input type="checkbox" id="p9"><span>Envuelve alguno de los elementos en <code>&lt;figure&gt;</code> con <code>&lt;figcaption&gt;</code>.</span></label></li><li><label><input type="checkbox" id="p10"><span>Abre la página, prueba los controles y revisa la pestaña Red (<kbd>F12</kbd>) para ver el peso de lo que cargas.</span></label></li></ul>
+      <details><summary>💡 Pista 1: el video no se ve</summary><p>Revisa la ruta del <code>src</code>, que el archivo esté en la carpeta y que el <code>type</code> coincida con su formato (<code>video/mp4</code>). Si tienes <code>&lt;source&gt;</code>, no necesitas <code>src</code> en <code>&lt;video&gt;</code>.</p>
+</details>
+<details><summary>💡 Pista 2: ¿qué valores uso en sizes?</summary><p>Una opción sencilla: <code>sizes="(max-width: 600px) 100vw, 50vw"</code>. Significa «en pantallas de hasta 600 px ocupa todo el ancho; en las demás, la mitad».</p>
+</details>
+
+      <section class="checker" id="comprobador" aria-labelledby="t-chk">
+        <h2 id="t-chk">🔎 Comprueba tu trabajo</h2>
+        <p>Pega tu código y pulsa <strong>Comprobar</strong>. La revisión ocurre en tu navegador; nada se envía a ningún sitio. Cada punto en rojo incluye una pista.</p>
+        <label for="chk-code">Tu código HTML (el archivo completo)</label>
+        <textarea id="chk-code" rows="10" spellcheck="false" placeholder="Pega aquí el contenido completo de tu archivo .html"></textarea>
+        <div class="chk-actions"><button class="btn" type="button" id="chk-run">Comprobar</button><button class="icon-btn" type="button" id="chk-clear">Limpiar</button></div>
+        <p class="chk-sum" id="chk-sum" aria-live="polite"></p>
+        <ul class="chk-list" id="chk-list"></ul>
+        <script type="application/json" id="checks">{"mode": "html", "checks": [{"sel": "audio[controls]", "d": "Hay un <audio> con controls", "h": "Escribe <audio controls> con una fuente."}, {"t": "audiosrc", "d": "El audio tiene una fuente (src o <source>)", "h": "Agrega <source src=\"…\" type=\"audio/…\"> dentro del audio."}, {"sel": "video[controls][width][height]", "d": "Hay un <video> con controls, width y height", "h": "Ej.: <video controls width=\"320\" height=\"180\">"}, {"sel": "video[poster]", "d": "El video tiene poster", "h": "Agrega poster=\"ruta-de-imagen\"."}, {"sel": "video source[src][type]", "d": "El video tiene una fuente <source> con type", "h": "Ej.: <source src=\"video.mp4\" type=\"video/mp4\">"}, {"sel": "video track[kind=\"captions\"][srclang][label]", "d": "El video incluye <track kind=\"captions\"> con srclang y label", "h": "Ej.: <track kind=\"captions\" src=\"subtitulos.vtt\" srclang=\"es\" label=\"Español\">"}, {"sel": "video a[href]", "d": "El video tiene texto de respaldo con un enlace", "h": "Escribe texto y un <a href> antes de cerrar <\/video>."}, {"sel": "iframe[title][loading=\"lazy\"]", "d": "Hay un <iframe> con title y loading=\"lazy\"", "h": "Ej.: <iframe src=\"…\" title=\"Mapa\" loading=\"lazy\">"}, {"sel": "img[srcset][sizes][alt]", "d": "Hay una imagen con srcset, sizes y alt", "h": "Ej.: <img src srcset sizes alt>"}, {"t": "picture", "d": "Hay un <picture> con <source media> e <img> con alt", "h": "La imagen final de <picture> necesita alt."}, {"sel": "figure figcaption", "d": "Usas <figure> con <figcaption>", "h": "Envuelve un elemento en <figure> y agrega <figcaption>."}]}</script>
+      </section>
+      <details>
+        <summary>✅ Ver una solución de ejemplo</summary>
+        <p>Intenta resolverlo antes de mirar. Tu versión puede ser distinta y también correcta.</p>
+        <div class="code">
+  <div class="code-head"><span>multimedia.html (dentro de body)</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">&lt;h1</span><span class="tk-tag">&gt;</span>Mi galería multimedia<span class="tk-tag">&lt;/h1</span><span class="tk-tag">&gt;</span>
+
+<span class="tk-tag">&lt;h2</span><span class="tk-tag">&gt;</span>Audio<span class="tk-tag">&lt;/h2</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;audio</span> <span class="tk-attr">controls</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;source</span> <span class="tk-attr">src</span>=<span class="tk-val">"media/campanilla.wav"</span> <span class="tk-attr">type</span>=<span class="tk-val">"audio/wav"</span><span class="tk-tag">&gt;</span>
+  Tu navegador no admite audio.
+<span class="tk-tag">&lt;/audio</span><span class="tk-tag">&gt;</span>
+
+<span class="tk-tag">&lt;h2</span><span class="tk-tag">&gt;</span>Video<span class="tk-tag">&lt;/h2</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;figure</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;video</span> <span class="tk-attr">controls</span> <span class="tk-attr">width</span>=<span class="tk-val">"320"</span> <span class="tk-attr">height</span>=<span class="tk-val">"180"</span> <span class="tk-attr">poster</span>=<span class="tk-val">"img/paisaje.svg"</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;source</span> <span class="tk-attr">src</span>=<span class="tk-val">"media/demo.mp4"</span> <span class="tk-attr">type</span>=<span class="tk-val">"video/mp4"</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;track</span> <span class="tk-attr">kind</span>=<span class="tk-val">"captions"</span> <span class="tk-attr">src</span>=<span class="tk-val">"media/demo.es.vtt"</span> <span class="tk-attr">srclang</span>=<span class="tk-val">"es"</span> <span class="tk-attr">label</span>=<span class="tk-val">"Español"</span> <span class="tk-attr">default</span><span class="tk-tag">&gt;</span>
+    Tu navegador no admite video. <span class="tk-tag">&lt;a</span> <span class="tk-attr">href</span>=<span class="tk-val">"media/demo.mp4"</span><span class="tk-tag">&gt;</span>Descárgalo aquí<span class="tk-tag">&lt;/a</span><span class="tk-tag">&gt;</span>.
+  <span class="tk-tag">&lt;/video</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;figcaption</span><span class="tk-tag">&gt;</span>Un video de ejemplo con subtítulos.<span class="tk-tag">&lt;/figcaption</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;/figure</span><span class="tk-tag">&gt;</span>
+
+<span class="tk-tag">&lt;h2</span><span class="tk-tag">&gt;</span>Mapa<span class="tk-tag">&lt;/h2</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;iframe</span> <span class="tk-attr">src</span>=<span class="tk-val">"https://www.openstreetmap.org/export/embed.html"</span> <span class="tk-attr">title</span>=<span class="tk-val">"Mapa de mi ciudad"</span> <span class="tk-attr">width</span>=<span class="tk-val">"400"</span> <span class="tk-attr">height</span>=<span class="tk-val">"250"</span> <span class="tk-attr">loading</span>=<span class="tk-val">"lazy"</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;/iframe</span><span class="tk-tag">&gt;</span>
+
+<span class="tk-tag">&lt;h2</span><span class="tk-tag">&gt;</span>Imágenes adaptables<span class="tk-tag">&lt;/h2</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;img</span> <span class="tk-attr">src</span>=<span class="tk-val">"img/foto-800.jpg"</span>
+     <span class="tk-attr">srcset</span>=<span class="tk-val">"img/foto-400.jpg 400w, img/foto-800.jpg 800w"</span>
+     <span class="tk-attr">sizes</span>=<span class="tk-val">"(max-width: 600px) 100vw, 50vw"</span>
+     <span class="tk-attr">alt</span>=<span class="tk-val">"Mercado de frutas al amanecer"</span> <span class="tk-attr">width</span>=<span class="tk-val">"800"</span> <span class="tk-attr">height</span>=<span class="tk-val">"533"</span><span class="tk-tag">&gt;</span>
+
+<span class="tk-tag">&lt;picture</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;source</span> <span class="tk-attr">media</span>=<span class="tk-val">"(min-width: 600px)"</span> <span class="tk-attr">srcset</span>=<span class="tk-val">"img/paisaje.svg"</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;img</span> <span class="tk-attr">src</span>=<span class="tk-val">"img/paisaje-vertical.svg"</span> <span class="tk-attr">alt</span>=<span class="tk-val">"Montañas con un sol al atardecer"</span> <span class="tk-attr">width</span>=<span class="tk-val">"300"</span> <span class="tk-attr">height</span>=<span class="tk-val">"400"</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;/picture</span><span class="tk-tag">&gt;</span></code></pre>
+</div>
+
+      </details>
+      <div class="callout consejo">
+<p class="callout-title">💡 🏁 Reto extra (opcional)</p>
+<p>Escribe tu propio archivo de subtítulos <code>.vtt</code> de al menos 4 frases para un audio de unos 15 segundos que grabes tú, y añádelo con <code>&lt;track&gt;</code>.</p>
+</div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="./"><small>← Anterior</small>Volver a lección 8</a>
+        <a class="next" href="../09-accesibilidad/"><small>Siguiente →</small>Accesibilidad</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de HTML · Ejercicio de lección 8</footer>
+  <script src="../assets/curso.js"></script>
+</body>
+</html>

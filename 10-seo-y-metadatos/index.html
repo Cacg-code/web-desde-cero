@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lección 10: SEO y metadatos · Curso de HTML</title>
+  <meta name="description" content="SEO y metadatos: título, descripción, canonical, favicon, Open Graph, datos estructurados, robots.txt y sitemap.xml para que tu sitio se encuentre y se comparta bien.">
+  <link rel="stylesheet" href="../assets/estilos.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de HTML</a>
+    <div class="topbar-actions">
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <div class="wrap lesson-layout">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#que-es">Qué es el SEO</a></li><li><a href="#title-desc">Título y descripción</a></li><li><a href="#head">Las demás etiquetas del head</a></li><li><a href="#og">Vistas previas al compartir: Open Graph</a></li><li><a href="#contenido">Contenido y estructura</a></li><li><a href="#datos">Datos estructurados (JSON-LD)</a></li><li><a href="#archivos">robots.txt y sitemap.xml</a></li><li><a href="#errores">Errores frecuentes</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Inicio</a> › Lección 10</div>
+        <h1>SEO y metadatos</h1>
+        <ul class="meta"><li>⏱ 35 minutos</li><li>📶 Nivel: principiante</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Escribir un <code>&lt;title&gt;</code> y una <code>meta description</code> efectivos.</li><li>Añadir favicon, canonical y etiquetas Open Graph.</li><li>Describir tu contenido con datos estructurados JSON-LD.</li><li>Crear un <code>robots.txt</code> y un <code>sitemap.xml</code>.</li></ul>
+</div>
+
+<h2 id="que-es"><span class="n">1.</span>Qué es el SEO</h2>
+<p><strong>SEO</strong> (<em>Search Engine Optimization</em>) es el conjunto de prácticas para que los buscadores <strong>entiendan tu página</strong> y la muestren a quien la necesita. No es un truco para «engañar a Google»: es, sobre todo, escribir un HTML claro y contenido útil.</p>
+<p>Los buscadores recorren la web con programas llamados <em>rastreadores</em>, leen tu HTML y deciden de qué trata cada página. Tú no controlas su decisión, pero <strong>sí puedes darles las señales correctas</strong>, y casi todas se escriben en el <code>&lt;head&gt;</code>.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Señal</th><th>Dónde</th><th>Qué comunica</th></tr></thead>
+<tbody><tr><td>Título</td><td><code>&lt;title&gt;</code></td><td>De qué trata la página (lo más importante)</td></tr><tr><td>Descripción</td><td><code>&lt;meta name="description"&gt;</code></td><td>Un resumen que suele aparecer bajo el título en los resultados</td></tr><tr><td>Contenido</td><td><code>&lt;h1&gt;</code>, <code>&lt;h2&gt;</code>, texto, <code>alt</code></td><td>La estructura y el significado</td></tr><tr><td>Dirección</td><td>La URL</td><td>Un nombre claro: <code>/cursos/html</code> es mejor que <code>/p?id=374</code></td></tr><tr><td>Vistas previas</td><td>Etiquetas Open Graph</td><td>Cómo se ve al compartirla en redes</td></tr></tbody>
+</table></div>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · Paciencia</p>
+<p>Los buscadores tardan días o semanas en descubrir un sitio nuevo. No existe un SEO instantáneo: construye bien la base y mejora con el tiempo.</p>
+</div>
+
+<h2 id="title-desc"><span class="n">2.</span>Título y descripción</h2>
+<p>Son lo primero que ve una persona en una lista de resultados. Juntos funcionan como el anuncio de tu página:</p>
+<div class="code">
+  <div class="code-head"><span>En el head</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">&lt;title</span><span class="tk-tag">&gt;</span>Curso de HTML desde cero · Gratis y en español<span class="tk-tag">&lt;/title</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;meta</span> <span class="tk-attr">name</span>=<span class="tk-val">"description"</span> <span class="tk-attr">content</span>=<span class="tk-val">"Aprende HTML paso a paso con apuntes, práctica en vivo, autoevaluaciones y un proyecto final."</span><span class="tk-tag">&gt;</span></code></pre>
+</div>
+<ul><li><strong>Título:</strong> único para cada página, entre <strong>30 y 60 caracteres</strong>, con lo más importante al principio.</li><li><strong>Descripción:</strong> entre <strong>70 y 160 caracteres</strong>, que invite a hacer clic y describa el contenido con verdad.</li><li>Si son más largos, el buscador los <strong>corta con «…»</strong>.</li><li>No repitas el mismo título en todas las páginas.</li></ul>
+<p>Escribe abajo y mira, en tiempo real, cómo podría verse tu página en una lista de resultados:</p>
+<div class="widget" data-widget="serp">
+  <div class="w-head">🔍 Vista previa en buscadores</div>
+  <div class="w-body">
+    <div>
+      <label for="s-title"><strong>Título</strong> (la etiqueta <code>&lt;title&gt;</code>)</label>
+      <input type="text" id="s-title" class="s-title" value="Curso de HTML desde cero · Gratis y en español">
+      <p class="counter count-title"></p>
+    </div>
+    <div>
+      <label for="s-desc"><strong>Descripción</strong> (<code>meta description</code>)</label>
+      <input type="text" id="s-desc" class="s-desc" value="Aprende HTML paso a paso con apuntes, práctica en vivo, autoevaluaciones y un proyecto final.">
+      <p class="counter count-desc"></p>
+    </div>
+    <div>
+      <label for="s-url"><strong>Dirección</strong></label>
+      <input type="text" id="s-url" class="s-url" value="https://cacg-code.github.io/PRACTICAS-HTML/">
+    </div>
+    <div class="serp-prev" role="group" aria-label="Así podría verse en una lista de resultados">
+      <div class="serp-url"></div><div class="serp-title"></div><div class="serp-desc"></div>
+    </div>
+  </div>
+</div>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Escribe para personas</p>
+<p>No llenes el título de palabras clave («html curso html gratis html español»). Un título natural y claro funciona mejor y es más fácil de entender para todos.</p>
+</div>
+
+<h2 id="head"><span class="n">3.</span>Las demás etiquetas del head</h2>
+<div class="code">
+  <div class="code-head"><span>Un head completo</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">&lt;head</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;meta</span> <span class="tk-attr">charset</span>=<span class="tk-val">"UTF-8"</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;meta</span> <span class="tk-attr">name</span>=<span class="tk-val">"viewport"</span> <span class="tk-attr">content</span>=<span class="tk-val">"width=device-width, initial-scale=1.0"</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;title</span><span class="tk-tag">&gt;</span>Curso de HTML desde cero · Gratis y en español<span class="tk-tag">&lt;/title</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;meta</span> <span class="tk-attr">name</span>=<span class="tk-val">"description"</span> <span class="tk-attr">content</span>=<span class="tk-val">"Aprende HTML paso a paso con apuntes, práctica en vivo y un proyecto final."</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;link</span> <span class="tk-attr">rel</span>=<span class="tk-val">"canonical"</span> <span class="tk-attr">href</span>=<span class="tk-val">"https://cacg-code.github.io/PRACTICAS-HTML/"</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;link</span> <span class="tk-attr">rel</span>=<span class="tk-val">"icon"</span> <span class="tk-attr">href</span>=<span class="tk-val">"favicon.svg"</span> <span class="tk-attr">type</span>=<span class="tk-val">"image/svg+xml"</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;meta</span> <span class="tk-attr">name</span>=<span class="tk-val">"theme-color"</span> <span class="tk-attr">content</span>=<span class="tk-val">"#4f46e5"</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;/head</span><span class="tk-tag">&gt;</span></code></pre>
+</div>
+<div class="table-wrap"><table>
+<thead><tr><th>Etiqueta</th><th>Para qué sirve</th></tr></thead>
+<tbody><tr><td><code>meta charset</code></td><td>Codificación de caracteres. Debe ir primero en el <code>&lt;head&gt;</code></td></tr><tr><td><code>meta viewport</code></td><td>Hace que la página se adapte a pantallas de celular</td></tr><tr><td><code>link rel="canonical"</code></td><td>Indica <strong>la dirección oficial</strong> de la página cuando existe en varias versiones</td></tr><tr><td><code>link rel="icon"</code></td><td>El <strong>favicon</strong>: el iconito de la pestaña</td></tr><tr><td><code>meta name="theme-color"</code></td><td>Color de la barra del navegador en el celular</td></tr><tr><td><code>meta name="robots"</code></td><td><code>noindex</code> pide que <strong>no</strong> aparezca en buscadores; úsalo en páginas privadas</td></tr></tbody>
+</table></div>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · noindex no es una contraseña</p>
+<p><code>noindex</code> solo le pide al buscador que no la muestre; cualquiera con la dirección puede abrirla. Para contenido realmente privado necesitas protección de acceso.</p>
+</div>
+<div class="callout ejemplo">
+<p class="callout-title">🔍 Ejemplo · Un favicon en SVG</p>
+<p>Un favicon puede ser un archivo SVG pequeño. Este curso usa el suyo con <code>&lt;link rel="icon" href="…svg" type="image/svg+xml"&gt;</code>. Para compatibilidad antigua se añade además un <code>favicon.ico</code>.</p>
+</div>
+
+<h2 id="og"><span class="n">4.</span>Vistas previas al compartir: Open Graph</h2>
+<p>Cuando alguien pega tu enlace en WhatsApp, Facebook, LinkedIn o Slack, la tarjeta con título, descripción e imagen sale de las etiquetas <strong>Open Graph</strong>:</p>
+<div class="code">
+  <div class="code-head"><span>Open Graph y Twitter Card</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">&lt;meta</span> <span class="tk-attr">property</span>=<span class="tk-val">"og:type"</span> <span class="tk-attr">content</span>=<span class="tk-val">"website"</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;meta</span> <span class="tk-attr">property</span>=<span class="tk-val">"og:title"</span> <span class="tk-attr">content</span>=<span class="tk-val">"Curso de HTML desde cero"</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;meta</span> <span class="tk-attr">property</span>=<span class="tk-val">"og:description"</span> <span class="tk-attr">content</span>=<span class="tk-val">"Aprende HTML paso a paso, gratis y en español."</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;meta</span> <span class="tk-attr">property</span>=<span class="tk-val">"og:url"</span> <span class="tk-attr">content</span>=<span class="tk-val">"https://cacg-code.github.io/PRACTICAS-HTML/"</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;meta</span> <span class="tk-attr">property</span>=<span class="tk-val">"og:image"</span> <span class="tk-attr">content</span>=<span class="tk-val">"https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png"</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;meta</span> <span class="tk-attr">property</span>=<span class="tk-val">"og:locale"</span> <span class="tk-attr">content</span>=<span class="tk-val">"es_MX"</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;meta</span> <span class="tk-attr">name</span>=<span class="tk-val">"twitter:card"</span> <span class="tk-attr">content</span>=<span class="tk-val">"summary_large_image"</span><span class="tk-tag">&gt;</span></code></pre>
+</div>
+<ul><li><code>og:image</code> debe ser una <strong>dirección completa</strong> (con <code>https://</code>), idealmente de <strong>1200 × 630 px</strong>.</li><li><code>og:url</code> es la dirección que quieres que se asocie.</li><li><code>twitter:card</code> con <code>summary_large_image</code> muestra una tarjeta grande.</li></ul>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Prueba tus tarjetas</p>
+<p>Las redes guardan en memoria las vistas previas. Si cambias algo y no se actualiza, usa el depurador de la red (por ejemplo, el de Facebook o el inspector de LinkedIn) para volver a leerla.</p>
+</div>
+
+<h2 id="contenido"><span class="n">5.</span>Contenido y estructura</h2>
+<p>Lo que más pesa en el SEO no está en el <code>&lt;head&gt;</code>: está en tu contenido. Lo que ya aprendiste ayuda directamente:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Práctica</th><th>Por qué ayuda</th></tr></thead>
+<tbody><tr><td>Un solo <code>&lt;h1&gt;</code> con el tema principal</td><td>Es la señal más clara del tema de la página</td></tr><tr><td>Subtítulos <code>&lt;h2&gt;</code>, <code>&lt;h3&gt;</code> en orden</td><td>Estructuran las ideas y permiten fragmentos destacados</td></tr><tr><td>Texto original, claro y útil</td><td>Los buscadores premian el contenido que ayuda a las personas</td></tr><tr><td><code>alt</code> descriptivo en imágenes</td><td>Las imágenes pueden aparecer en la búsqueda de imágenes</td></tr><tr><td>Texto de enlace descriptivo</td><td>«Guía de HTML» dice más que «haz clic aquí»</td></tr><tr><td>Etiquetas semánticas</td><td><code>&lt;main&gt;</code>, <code>&lt;article&gt;</code>, <code>&lt;nav&gt;</code>… aclaran qué es cada zona</td></tr><tr><td>Páginas rápidas y adaptadas al celular</td><td>La velocidad y el uso móvil son factores de calidad</td></tr></tbody>
+</table></div>
+<h3>URLs con sentido</h3>
+<ul><li>Cortas y en minúsculas: <code>/lecciones/html-semantico</code>.</li><li>Guiones (<code>-</code>) para separar palabras, no guiones bajos ni espacios.</li><li>Sin tildes ni caracteres especiales, y estables: cambiarlas rompe los enlaces que ya existen.</li></ul>
+
+<h2 id="datos"><span class="n">6.</span>Datos estructurados (JSON-LD)</h2>
+<p>Los <strong>datos estructurados</strong> describen tu página con un vocabulario estándar, <a href="https://schema.org/" target="_blank" rel="noopener">schema.org</a>, para que los buscadores entiendan cosas concretas: un curso, una receta, un evento, un producto.</p>
+<div class="code">
+  <div class="code-head"><span>JSON-LD de un curso</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">&lt;script</span> <span class="tk-attr">type</span>=<span class="tk-val">"application/ld+json"</span><span class="tk-tag">&gt;</span>
+{
+  "@context": "https://schema.org",
+  "@type": "Course",
+  "name": "Curso de HTML desde cero",
+  "description": "Aprende HTML paso a paso, gratis y en español.",
+  "inLanguage": "es",
+  "provider": {
+    "@type": "Person",
+    "name": "Tu nombre"
+  }
+}
+<span class="tk-tag">&lt;/script</span><span class="tk-tag">&gt;</span></code></pre>
+</div>
+<p>Se escribe dentro de un <code>&lt;script type="application/ld+json"&gt;</code>. No se ve en la página: solo lo leen las máquinas. A veces permite que el buscador muestre resultados enriquecidos (estrellas, fechas, precios).</p>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · Verifica siempre</p>
+<p>Google ofrece la <strong>Prueba de resultados enriquecidos</strong> para comprobar que tu JSON-LD es válido. Un dato incorrecto es peor que no tenerlo: describe solo lo que realmente está en tu página.</p>
+</div>
+
+<h2 id="archivos"><span class="n">7.</span>robots.txt y sitemap.xml</h2>
+<p>Son dos archivos de texto que se colocan en la <strong>raíz</strong> del sitio y hablan directamente con los rastreadores:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Archivo</th><th>Función</th></tr></thead>
+<tbody><tr><td><code>robots.txt</code></td><td>Dice qué partes del sitio pueden o no recorrer los rastreadores</td></tr><tr><td><code>sitemap.xml</code></td><td>Lista las páginas que quieres que encuentren</td></tr></tbody>
+</table></div>
+<div class="code">
+  <div class="code-head"><span>robots.txt</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>User-agent: *
+Allow: /
+
+Sitemap: https://cacg-code.github.io/PRACTICAS-HTML/sitemap.xml</code></pre>
+</div>
+<div class="code">
+  <div class="code-head"><span>sitemap.xml</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"&gt;
+  &lt;url&gt;&lt;loc&gt;https://cacg-code.github.io/PRACTICAS-HTML/&lt;/loc&gt;&lt;/url&gt;
+  &lt;url&gt;&lt;loc&gt;https://cacg-code.github.io/PRACTICAS-HTML/01-primeros-pasos/&lt;/loc&gt;&lt;/url&gt;
+  &lt;url&gt;&lt;loc&gt;https://cacg-code.github.io/PRACTICAS-HTML/02-texto-y-enlaces/&lt;/loc&gt;&lt;/url&gt;
+&lt;/urlset&gt;</code></pre>
+</div>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · Los sitios con carpeta de proyecto</p>
+<p>En un repositorio de GitHub Pages que se publica en una subcarpeta (como <code>/PRACTICAS-HTML/</code>), los rastreadores buscan <code>robots.txt</code> en la raíz del dominio, no en la subcarpeta. El <code>robots.txt</code> que cuenta es el de <code>tu-usuario.github.io</code>. El <code>sitemap.xml</code> sí puede estar dentro de tu proyecto, y puedes enviarlo desde <strong>Google Search Console</strong>.</p>
+</div>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Search Console</p>
+<p><strong>Google Search Console</strong> es gratuito. Te muestra si tu sitio está indexado, con qué búsquedas aparece y qué errores hay. Verifica tu sitio y envía tu <code>sitemap.xml</code>.</p>
+</div>
+
+<h2 id="errores"><span class="n">8.</span>Errores frecuentes</h2>
+<ul><li><strong>Mismo <code>&lt;title&gt;</code> y la misma descripción en todas las páginas.</strong></li><li><strong>Títulos muy largos</strong> que se cortan, o tan cortos como «Inicio».</li><li><strong>Más de un <code>&lt;h1&gt;</code></strong> o ninguno.</li><li><strong>Imágenes sin <code>alt</code></strong> y enlaces como «clic aquí».</li><li><strong>Rellenar de palabras clave</strong> (técnica que los buscadores penalizan).</li><li><strong>Olvidar <code>og:image</code> con una dirección completa</strong>: la tarjeta sale sin imagen.</li><li><strong>Dejar <code>noindex</code> puesto</strong> después de terminar el sitio, y preguntarse por qué no aparece.</li><li><strong>Cambiar las URLs sin redirigir</strong>, y perder todos los enlaces anteriores.</li><li><strong>Prometer en la descripción algo que la página no tiene.</strong></li></ul>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li>SEO es ayudar a los buscadores a entender tu página; casi todo se escribe en el <code>&lt;head&gt;</code> y en el contenido.</li><li><code>&lt;title&gt;</code>: único por página, de 30 a 60 caracteres. <code>meta description</code>: de 70 a 160 caracteres.</li><li><code>canonical</code> indica la dirección oficial; <code>icon</code> define el favicon; <code>theme-color</code>, el color del navegador móvil.</li><li>Open Graph (<code>og:title</code>, <code>og:description</code>, <code>og:image</code>, <code>og:url</code>) controla la tarjeta al compartir en redes.</li><li>Un solo <code>&lt;h1&gt;</code>, títulos en orden, <code>alt</code>, enlaces descriptivos y HTML semántico ayudan al posicionamiento.</li><li>Los datos estructurados JSON-LD describen el contenido con el vocabulario de schema.org.</li><li><code>robots.txt</code> y <code>sitemap.xml</code> van en la raíz del sitio y guían a los rastreadores.</li><li>El mejor SEO es contenido original y útil, páginas rápidas y adaptadas al celular.</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">9.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td>SEO</td><td>Optimización para motores de búsqueda.</td></tr><tr><td>Rastreador</td><td>Programa que recorre la web leyendo páginas para el buscador.</td></tr><tr><td>Indexar</td><td>Guardar una página en la base del buscador para poder mostrarla.</td></tr><tr><td>Meta description</td><td>Resumen de una página que suele aparecer bajo el título en los resultados.</td></tr><tr><td>Canonical</td><td>Dirección oficial de una página que existe en varias versiones.</td></tr><tr><td>Open Graph</td><td>Etiquetas que definen la tarjeta al compartir un enlace en redes.</td></tr><tr><td>JSON-LD</td><td>Formato para datos estructurados que leen las máquinas.</td></tr><tr><td>Favicon</td><td>Icono pequeño que se ve en la pestaña del navegador.</td></tr></tbody>
+</table></div>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>¿Entre cuántos caracteres conviene que esté un <code>&lt;title&gt;</code>?</p><ul class="opts"><li><button type="button" class="opt">1 a 10</button></li><li><button type="button" class="opt" data-ok>30 a 60</button></li><li><button type="button" class="opt">100 a 200</button></li><li><button type="button" class="opt">No importa</button></li></ul><p class="explain" hidden>Más allá de unos 60 caracteres, el buscador suele cortarlo con «…».</p></div>
+<div class="quiz-q"><p>¿Qué etiquetas controlan la tarjeta que se ve al compartir un enlace en WhatsApp?</p><ul class="opts"><li><button type="button" class="opt" data-ok>Open Graph (<code>og:</code>)</button></li><li><button type="button" class="opt"><code>&lt;aside&gt;</code></button></li><li><button type="button" class="opt"><code>&lt;table&gt;</code></button></li><li><button type="button" class="opt"><code>&lt;caption&gt;</code></button></li></ul><p class="explain" hidden><code>og:title</code>, <code>og:description</code> e <code>og:image</code> forman la vista previa.</p></div>
+<div class="quiz-q"><p>¿Cuántos <code>&lt;h1&gt;</code> conviene tener por página?</p><ul class="opts"><li><button type="button" class="opt" data-ok>Uno</button></li><li><button type="button" class="opt">Cinco</button></li><li><button type="button" class="opt">Ninguno</button></li><li><button type="button" class="opt">Todos los que se pueda</button></li></ul><p class="explain" hidden>Un único <code>&lt;h1&gt;</code> aclara el tema principal.</p></div>
+<div class="quiz-q"><p><code>&lt;meta name="robots" content="noindex"&gt;</code> sirve para…</p><ul class="opts"><li><button type="button" class="opt">Proteger la página con contraseña</button></li><li><button type="button" class="opt" data-ok>Pedir que la página no aparezca en buscadores</button></li><li><button type="button" class="opt">Hacerla más rápida</button></li><li><button type="button" class="opt">Traducirla</button></li></ul><p class="explain" hidden>Solo pide que no se indexe; no impide que alguien con la dirección la abra.</p></div>
+<div class="quiz-q"><p>¿Dónde debe ir <code>og:image</code>?</p><ul class="opts"><li><button type="button" class="opt" data-ok>Con una dirección completa (<code>https://…</code>)</button></li><li><button type="button" class="opt">Con una ruta como <code>../img/a.png</code></button></li><li><button type="button" class="opt">En el <code>&lt;body&gt;</code></button></li><li><button type="button" class="opt">En un comentario</button></li></ul><p class="explain" hidden>Las redes sociales necesitan una URL absoluta para descargar la imagen.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="10">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../09-accesibilidad/ejercicio.html"><small>← Anterior</small>Ejercicio: Accesibilidad</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </div>
+
+  <footer class="site-footer">Curso de HTML · Lección 10</footer>
+  <script src="../assets/curso.js"></script>
+</body>
+</html>

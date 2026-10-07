@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ejercicio · Accesibilidad · Curso de HTML</title>
+  <meta name="description" content="Ejercicio práctico de: Accesibilidad.">
+  <link rel="stylesheet" href="../assets/estilos.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de HTML</a>
+    <div class="topbar-actions">
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap" style="max-width:820px;padding-top:2rem;padding-bottom:3rem">
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Inicio</a> › <a href="./">Lección 9</a> › Ejercicio</div>
+        <h1>Ejercicio: Accesibilidad</h1>
+        <ul class="meta"><li>⏱ 35 minutos</li><li>📶 Nivel: principiante</li></ul>
+      </header>
+
+      <h2>Objetivo</h2>
+      <p>Corregir una página con problemas de accesibilidad y comprobar, punto por punto, que cada uno quedó resuelto.</p>
+
+      <h3>El código con problemas</h3>
+      <p>Copia este código en un archivo, ábrelo y arréglalo siguiendo los pasos. <strong>No cambies</strong> lo que hace la página, solo cómo se escribe.</p>
+      <div class="code">
+  <div class="code-head"><span>pagina-con-problemas.html</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">&lt;!doctype html&gt;</span>
+<span class="tk-tag">&lt;html</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;head</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;meta</span> <span class="tk-attr">charset</span>=<span class="tk-val">"UTF-8"</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;title</span><span class="tk-tag">&gt;</span>Tienda de plantas<span class="tk-tag">&lt;/title</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;style</span><span class="tk-tag">&gt;</span>
+    a { color: #aaa; text-decoration: none; }
+    .btn { background: #8ad; color: white; padding: 8px; cursor: pointer; }
+    .mover { animation: girar 2s infinite; }
+  <span class="tk-tag">&lt;/style</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;/head</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;body</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;div</span> <span class="tk-attr">class</span>=<span class="tk-val">"menu"</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;a</span> <span class="tk-attr">href</span>=<span class="tk-val">"inicio.html"</span><span class="tk-tag">&gt;</span>Inicio<span class="tk-tag">&lt;/a</span><span class="tk-tag">&gt;</span> <span class="tk-tag">&lt;a</span> <span class="tk-attr">href</span>=<span class="tk-val">"tienda.html"</span><span class="tk-tag">&gt;</span>Tienda<span class="tk-tag">&lt;/a</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;/div</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;div</span> <span class="tk-attr">class</span>=<span class="tk-val">"contenido"</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;h3</span><span class="tk-tag">&gt;</span>Bienvenida a Plantas Verdes<span class="tk-tag">&lt;/h3</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;img</span> <span class="tk-attr">src</span>=<span class="tk-val">"monstera.jpg"</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;p</span><span class="tk-tag">&gt;</span>Descubre nuestras plantas. <span class="tk-tag">&lt;a</span> <span class="tk-attr">href</span>=<span class="tk-val">"catalogo.html"</span><span class="tk-tag">&gt;</span>Haz clic aquí<span class="tk-tag">&lt;/a</span><span class="tk-tag">&gt;</span> para ver el catálogo.<span class="tk-tag">&lt;/p</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;div</span> <span class="tk-attr">class</span>=<span class="tk-val">"btn"</span> <span class="tk-attr">onclick</span>=<span class="tk-val">"comprar()"</span><span class="tk-tag">&gt;</span>Comprar ahora<span class="tk-tag">&lt;/div</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;h1</span><span class="tk-tag">&gt;</span>Escríbenos<span class="tk-tag">&lt;/h1</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;input</span> <span class="tk-attr">type</span>=<span class="tk-val">"text"</span> <span class="tk-attr">placeholder</span>=<span class="tk-val">"Tu nombre"</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;input</span> <span class="tk-attr">type</span>=<span class="tk-val">"email"</span> <span class="tk-attr">placeholder</span>=<span class="tk-val">"Tu correo"</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;p</span> <span class="tk-attr">class</span>=<span class="tk-val">"error"</span><span class="tk-tag">&gt;</span>Escribe un correo válido<span class="tk-tag">&lt;/p</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;/div</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;/body</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;/html</span><span class="tk-tag">&gt;</span></code></pre>
+</div>
+
+      <h2>Pasos</h2>
+      <p>Marca cada paso a medida que lo completes. Tu avance se guarda en este navegador.</p>
+      <div class="progress" aria-hidden="true"><div></div></div>
+      <p id="progreso-texto" style="color:var(--muted);font-size:.9rem" aria-live="polite"></p>
+      <ul class="checklist"><li><label><input type="checkbox" id="p1"><span>Agrega <code>lang="es"</code> a la etiqueta <code>&lt;html&gt;</code>.</span></label></li><li><label><input type="checkbox" id="p2"><span>Agrega un enlace «Saltar al contenido» al inicio del <code>&lt;body&gt;</code>, que apunte a <code>#contenido</code>.</span></label></li><li><label><input type="checkbox" id="p3"><span>Cambia <code>&lt;div class="menu"&gt;</code> por <code>&lt;nav aria-label="Principal"&gt;</code> y <code>&lt;div class="contenido"&gt;</code> por <code>&lt;main id="contenido"&gt;</code>.</span></label></li><li><label><input type="checkbox" id="p4"><span>Ordena los títulos: el <code>&lt;h1&gt;</code> debe ser el primero («Bienvenida a Plantas Verdes») y «Escríbenos» debe ser un <code>&lt;h2&gt;</code>.</span></label></li><li><label><input type="checkbox" id="p5"><span>Agrega un <code>alt</code> útil a la imagen (por ejemplo, «Planta monstera en una maceta blanca»).</span></label></li><li><label><input type="checkbox" id="p6"><span>Cambia «Haz clic aquí» por un texto que describa el destino, como «Ver el catálogo de plantas».</span></label></li><li><label><input type="checkbox" id="p7"><span>Reemplaza el <code>&lt;div class="btn" onclick&gt;</code> por un <code>&lt;button type="button"&gt;</code>.</span></label></li><li><label><input type="checkbox" id="p8"><span>Agrega un <code>&lt;label&gt;</code> con <code>for</code> para cada campo del formulario (nombre y correo), con su <code>id</code>.</span></label></li><li><label><input type="checkbox" id="p9"><span>Convierte el mensaje de error en <code>&lt;p role="alert" aria-live="polite"&gt;</code> o <code>role="status"</code>.</span></label></li><li><label><input type="checkbox" id="p10"><span>Mejora el contraste del enlace (usa un color más oscuro que <code>#aaa</code>) y agrega <code>:focus-visible</code> a tu CSS.</span></label></li><li><label><input type="checkbox" id="p11"><span>Agrega al CSS un bloque <code>@media (prefers-reduced-motion: reduce)</code>.</span></label></li></ul>
+      <details><summary>💡 Pista 1: ¿cómo queda el enlace para saltar?</summary><p>Escribe <code>&lt;a class="saltar" href="#contenido"&gt;Saltar al contenido&lt;/a&gt;</code> justo después de <code>&lt;body&gt;</code>. El <code>&lt;main&gt;</code> debe tener <code>id="contenido"</code>.</p>
+</details>
+<details><summary>💡 Pista 2: ¿cómo ordeno los títulos?</summary><p>La página debe tener un solo <code>&lt;h1&gt;</code>, y los siguientes niveles deben ir en orden: después del <code>&lt;h1&gt;</code> va un <code>&lt;h2&gt;</code>, no un <code>&lt;h3&gt;</code>.</p>
+</details>
+
+      <section class="checker" id="comprobador" aria-labelledby="t-chk">
+        <h2 id="t-chk">🔎 Comprueba tu trabajo</h2>
+        <p>Pega tu código y pulsa <strong>Comprobar</strong>. La revisión ocurre en tu navegador; nada se envía a ningún sitio. Cada punto en rojo incluye una pista.</p>
+        <label for="chk-code">Tu código HTML (el archivo completo)</label>
+        <textarea id="chk-code" rows="10" spellcheck="false" placeholder="Pega aquí el contenido completo de tu archivo .html"></textarea>
+        <div class="chk-actions"><button class="btn" type="button" id="chk-run">Comprobar</button><button class="icon-btn" type="button" id="chk-clear">Limpiar</button></div>
+        <p class="chk-sum" id="chk-sum" aria-live="polite"></p>
+        <ul class="chk-list" id="chk-list"></ul>
+        <script type="application/json" id="checks">{"mode": "html", "checks": [{"sel": "html", "attr": "lang", "d": "<html> declara el idioma", "h": "Agrega lang=\"es\" a <html>."}, {"t": "saltar", "d": "Hay un enlace «saltar al contenido» al inicio", "h": "Ej.: <a href=\"#contenido\" class=\"saltar\">Saltar al contenido<\/a> antes del header."}, {"sel": "main#contenido", "d": "Hay un único <main> con id=\"contenido\"", "h": "Agrega id=\"contenido\" a <main>."}, {"t": "imgalt", "d": "Todas las imágenes informativas tienen alt útil", "h": "Describe cada imagen; usa alt=\"\" solo en las decorativas."}, {"t": "niveles", "d": "Hay exactamente un <h1> y no se saltan niveles", "h": "Ordena h1 → h2 → h3 sin saltos."}, {"t": "labels", "d": "Cada campo del formulario tiene un <label> asociado", "h": "Enlaza label for con el id del campo."}, {"sel": "button", "t": "sinclic", "d": "Los botones usan <button> (no <div> con clic)", "h": "Reemplaza el div por <button type=\"button\">."}, {"t": "enlaces", "d": "Los enlaces tienen texto que se entiende solo", "h": "Evita «clic aquí»: describe el destino."}, {"sel": "nav[aria-label]", "d": "El navegación principal usa <nav> con aria-label", "h": "Envuelve el menú en <nav aria-label=\"Principal\">."}, {"sel": "div[onclick], span[onclick]", "min": 0, "max": 0, "d": "No hay elementos <div> con onclick", "h": "Elimina onclick de los div y usa <button> o <a>."}, {"sel": "[aria-live], [role=\"status\"], [role=\"alert\"]", "d": "Hay un mensaje dinámico con aria-live o role", "h": "Ej.: <p role=\"status\" aria-live=\"polite\">"}, {"raw": "prefers-reduced-motion", "d": "Incluye prefers-reduced-motion en el CSS", "h": "Agrega @media (prefers-reduced-motion: reduce) { … }"}]}</script>
+      </section>
+      <details>
+        <summary>✅ Ver la página corregida</summary>
+        <p>Intenta resolverlo antes de mirar. Tu versión puede ser distinta y también correcta.</p>
+        <div class="code">
+  <div class="code-head"><span>pagina-corregida.html</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">&lt;!doctype html&gt;</span>
+<span class="tk-tag">&lt;html</span> <span class="tk-attr">lang</span>=<span class="tk-val">"es"</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;head</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;meta</span> <span class="tk-attr">charset</span>=<span class="tk-val">"UTF-8"</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;title</span><span class="tk-tag">&gt;</span>Tienda de plantas<span class="tk-tag">&lt;/title</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;style</span><span class="tk-tag">&gt;</span>
+    a { color: #1d4ed8; }
+    .saltar { position: absolute; left: -999px; }
+    .saltar:focus { left: 8px; top: 8px; background: #fff; padding: 8px; }
+    :focus-visible { outline: 3px solid #f59e0b; outline-offset: 3px; }
+    .btn { background: #1d4ed8; color: white; padding: 8px 14px; border: 0; border-radius: 6px; cursor: pointer; }
+    .mover { animation: girar 2s infinite; }
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+  <span class="tk-tag">&lt;/style</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;/head</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;body</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;a</span> <span class="tk-attr">class</span>=<span class="tk-val">"saltar"</span> <span class="tk-attr">href</span>=<span class="tk-val">"#contenido"</span><span class="tk-tag">&gt;</span>Saltar al contenido<span class="tk-tag">&lt;/a</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;nav</span> <span class="tk-attr">aria-label</span>=<span class="tk-val">"Principal"</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;a</span> <span class="tk-attr">href</span>=<span class="tk-val">"inicio.html"</span><span class="tk-tag">&gt;</span>Inicio<span class="tk-tag">&lt;/a</span><span class="tk-tag">&gt;</span> <span class="tk-tag">&lt;a</span> <span class="tk-attr">href</span>=<span class="tk-val">"tienda.html"</span><span class="tk-tag">&gt;</span>Tienda<span class="tk-tag">&lt;/a</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;/nav</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;main</span> <span class="tk-attr">id</span>=<span class="tk-val">"contenido"</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;h1</span><span class="tk-tag">&gt;</span>Bienvenida a Plantas Verdes<span class="tk-tag">&lt;/h1</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;img</span> <span class="tk-attr">src</span>=<span class="tk-val">"monstera.jpg"</span> <span class="tk-attr">alt</span>=<span class="tk-val">"Planta monstera en una maceta blanca"</span> <span class="tk-attr">width</span>=<span class="tk-val">"300"</span> <span class="tk-attr">height</span>=<span class="tk-val">"300"</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;p</span><span class="tk-tag">&gt;</span>Descubre nuestras plantas. <span class="tk-tag">&lt;a</span> <span class="tk-attr">href</span>=<span class="tk-val">"catalogo.html"</span><span class="tk-tag">&gt;</span>Ver el catálogo de plantas<span class="tk-tag">&lt;/a</span><span class="tk-tag">&gt;</span>.<span class="tk-tag">&lt;/p</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;button</span> <span class="tk-attr">type</span>=<span class="tk-val">"button"</span> <span class="tk-attr">class</span>=<span class="tk-val">"btn"</span><span class="tk-tag">&gt;</span>Comprar ahora<span class="tk-tag">&lt;/button</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;h2</span><span class="tk-tag">&gt;</span>Escríbenos<span class="tk-tag">&lt;/h2</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;p</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;label</span> <span class="tk-attr">for</span>=<span class="tk-val">"nombre"</span><span class="tk-tag">&gt;</span>Nombre<span class="tk-tag">&lt;/label</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;br</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;input</span> <span class="tk-attr">type</span>=<span class="tk-val">"text"</span> <span class="tk-attr">id</span>=<span class="tk-val">"nombre"</span> <span class="tk-attr">name</span>=<span class="tk-val">"nombre"</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;/p</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;p</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;label</span> <span class="tk-attr">for</span>=<span class="tk-val">"correo"</span><span class="tk-tag">&gt;</span>Correo<span class="tk-tag">&lt;/label</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;br</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;input</span> <span class="tk-attr">type</span>=<span class="tk-val">"email"</span> <span class="tk-attr">id</span>=<span class="tk-val">"correo"</span> <span class="tk-attr">name</span>=<span class="tk-val">"correo"</span><span class="tk-tag">&gt;</span><span class="tk-tag">&lt;/p</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;p</span> <span class="tk-attr">role</span>=<span class="tk-val">"alert"</span> <span class="tk-attr">aria-live</span>=<span class="tk-val">"polite"</span><span class="tk-tag">&gt;</span>Escribe un correo válido, como ana@ejemplo.com.<span class="tk-tag">&lt;/p</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;/main</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;/body</span><span class="tk-tag">&gt;</span>
+<span class="tk-tag">&lt;/html</span><span class="tk-tag">&gt;</span></code></pre>
+</div>
+
+      </details>
+      <div class="callout consejo">
+<p class="callout-title">💡 🏁 Reto extra (opcional)</p>
+<p>Pasa tu página corregida por Lighthouse (<kbd>F12</kbd> → Lighthouse → Accesibilidad). ¿Qué puntuación obtienes? Busca qué te señala y corrígelo.</p>
+</div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="./"><small>← Anterior</small>Volver a lección 9</a>
+        <a class="next" href="../10-seo-y-metadatos/"><small>Siguiente →</small>SEO y metadatos</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de HTML · Ejercicio de lección 9</footer>
+  <script src="../assets/curso.js"></script>
+</body>
+</html>
