@@ -85,7 +85,7 @@ a:hover { text-decoration-thickness: 2px; }
 .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin: 1rem 0 3rem; }
 .feature { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem; box-shadow: var(--shadow); }
 .feature .emoji { font-size: 1.7rem; }
-.feature h3 { margin: .4rem 0 .2rem; font-size: 1.05rem; }
+.feature h2, .feature h3 { margin: .4rem 0 .2rem; font-size: 1.05rem; }
 .feature p { margin: 0; color: var(--muted); font-size: .95rem; line-height: 1.55; }
 
 h2.section-title { font-size: 1.7rem; margin: 2.5rem 0 1rem; letter-spacing: -.01em; }
@@ -317,3 +317,36 @@ a.lesson-card:hover .lesson-num::after { width: 3rem; }
 article :not(pre) > code { overflow-wrap: anywhere; }
 .hero-grid .avance { margin-left: 0; }
 @media (max-width: 860px) { .hero-grid .avance { margin-inline: auto; } }
+@media print { .js .reveal { opacity: 1; transform: none; } }
+
+/* Cuadros de demostración («Así se ve») */
+.demo { margin: 1.25rem 0; padding: 1.25rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); overflow-x: auto; }
+.demo-label { margin: 0 0 .5rem; font-size: .8rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+.demo img { border-radius: 10px; }
+.demo figure { margin: 0; }
+.demo figcaption { margin-top: .5rem; font-size: .9rem; color: var(--muted); }
+.table-wrap td:first-child code, .table-wrap th code { white-space: nowrap; overflow-wrap: normal; }
+
+/* Comprobador de ejercicios */
+.checker { margin: 2rem 0; padding: 1.5rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow); }
+.checker h2 { margin: 0 0 .5rem !important; }
+.checker label { display: block; margin: 1rem 0 .4rem; font-weight: 600; }
+.checker textarea { display: block; width: 100%; min-height: 200px; resize: vertical; padding: .9rem; border: 1px solid var(--border); border-radius: 10px; background: var(--code-bg); color: var(--code-text); font-family: var(--mono); font-size: .9rem; line-height: 1.6; tab-size: 2; }
+.chk-actions { display: flex; gap: .6rem; flex-wrap: wrap; margin: 1rem 0; }
+.chk-sum { margin: 0 0 .75rem; font-weight: 700; min-height: 1.5rem; }
+.chk-sum.all { color: var(--consejo); animation: pop .5s both; }
+.chk-list { list-style: none; margin: 0; padding: 0 !important; display: grid; gap: .5rem; }
+.chk-list li { display: grid; grid-template-columns: auto 1fr; gap: .1rem .7rem; align-items: start; padding: .6rem .9rem; border: 1px solid var(--border); border-radius: 10px; background: var(--bg); animation: rise .35s both; animation-delay: calc(var(--i, 0) * 40ms); }
+.chk-list li::before { content: "✗"; grid-row: span 2; display: grid; place-items: center; width: 1.5rem; height: 1.5rem; border-radius: 50%; background: color-mix(in srgb, var(--importante) 18%, var(--surface)); color: var(--importante); font-weight: 700; font-size: .85rem; }
+.chk-list li.ok { border-color: color-mix(in srgb, var(--consejo) 45%, var(--border)); }
+.chk-list li.ok::before { content: "✓"; background: color-mix(in srgb, var(--consejo) 20%, var(--surface)); color: var(--consejo); }
+.chk-list .hint { grid-column: 2; color: var(--muted); font-size: .9rem; }
+.chk-list li.ok .hint { display: none; }
+@media (prefers-reduced-motion: reduce) { .chk-list li, .chk-sum.all { animation: none !important; } }
+
+/* Barra superior compacta en móvil */
+@media (max-width: 520px) {
+  .topbar { padding: .6rem .9rem; }
+  .brand { white-space: nowrap; font-size: .95rem; }
+  .topbar-actions a.icon-btn { display: none; }
+}

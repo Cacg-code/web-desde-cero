@@ -40,6 +40,7 @@ Al terminar habrás construido **tu propia página personal** desde cero.
 | ⚡ | **Práctica en vivo** | Editores donde cambias el código y ves el resultado al instante |
 | ✅ | **Autoevaluación** | Preguntas con respuesta inmediata y explicación de por qué |
 | 🛠️ | **Ejercicio práctico** | Pasos, pistas y una solución de ejemplo para comparar |
+| 🔎 | **Comprobador automático** | Pegas tu código y te dice qué puntos cumples y cuáles faltan |
 | 📈 | **Progreso guardado** | Tu avance queda marcado en tu navegador |
 | 🌗 | **Modo claro y oscuro** | Se adapta a tu pantalla |
 

@@ -1,11 +1,11 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ejercicio · HTML semántico · Curso de HTML</title>
-  <meta name="description" content="Ejercicio práctico de: HTML semántico." />
-  <link rel="stylesheet" href="../assets/estilos.css" />
+  <meta name="description" content="Ejercicio práctico de: HTML semántico.">
+  <link rel="stylesheet" href="../assets/estilos.css">
 </head>
 <body>
   <header class="topbar">
@@ -30,12 +30,22 @@
       <p>Marca cada paso a medida que lo completes. Tu avance se guarda en este navegador.</p>
       <div class="progress" aria-hidden="true"><div></div></div>
       <p id="progreso-texto" style="color:var(--muted);font-size:.9rem" aria-live="polite"></p>
-      <ul class="checklist"><li><label><input type="checkbox" id="p1" /><span>Crea <code>inicio.html</code> con el esqueleto completo, <code>lang="es"</code> y un <code>title</code>.</span></label></li><li><label><input type="checkbox" id="p2" /><span>Agrega un <code>&lt;header&gt;</code> con el nombre de tu sitio en un <code>&lt;h1&gt;</code>.</span></label></li><li><label><input type="checkbox" id="p3" /><span>Dentro del <code>&lt;header&gt;</code>, crea un <code>&lt;nav&gt;</code> con <code>aria-label="Principal"</code> y una lista de 3 enlaces.</span></label></li><li><label><input type="checkbox" id="p4" /><span>Agrega un único <code>&lt;main&gt;</code> con dos <code>&lt;section&gt;</code>, cada una con su <code>&lt;h2&gt;</code>.</span></label></li><li><label><input type="checkbox" id="p5" /><span>En una de las secciones, agrega dos <code>&lt;article&gt;</code> con título <code>&lt;h3&gt;</code>, párrafo y una fecha con <code>&lt;time datetime&gt;</code>.</span></label></li><li><label><input type="checkbox" id="p6" /><span>Agrega un <code>&lt;aside&gt;</code> con un dato curioso o un enlace relacionado.</span></label></li><li><label><input type="checkbox" id="p7" /><span>Agrega un <code>&lt;footer&gt;</code> con <code>© año</code>, tu nombre y una <code>&lt;address&gt;</code> con un correo.</span></label></li><li><label><input type="checkbox" id="p8" /><span>Revisa que no haya <code>&lt;div&gt;</code> innecesarios y que exista un solo <code>&lt;main&gt;</code> y un solo <code>&lt;h1&gt;</code>.</span></label></li></ul>
+      <ul class="checklist"><li><label><input type="checkbox" id="p1"><span>Crea <code>inicio.html</code> con el esqueleto completo, <code>lang="es"</code> y un <code>title</code>.</span></label></li><li><label><input type="checkbox" id="p2"><span>Agrega un <code>&lt;header&gt;</code> con el nombre de tu sitio en un <code>&lt;h1&gt;</code>.</span></label></li><li><label><input type="checkbox" id="p3"><span>Dentro del <code>&lt;header&gt;</code>, crea un <code>&lt;nav&gt;</code> con <code>aria-label="Principal"</code> y una lista de 3 enlaces.</span></label></li><li><label><input type="checkbox" id="p4"><span>Agrega un único <code>&lt;main&gt;</code> con dos <code>&lt;section&gt;</code>, cada una con su <code>&lt;h2&gt;</code>.</span></label></li><li><label><input type="checkbox" id="p5"><span>En una de las secciones, agrega dos <code>&lt;article&gt;</code> con título <code>&lt;h3&gt;</code>, párrafo y una fecha con <code>&lt;time datetime&gt;</code>.</span></label></li><li><label><input type="checkbox" id="p6"><span>Agrega un <code>&lt;aside&gt;</code> con un dato curioso o un enlace relacionado.</span></label></li><li><label><input type="checkbox" id="p7"><span>Agrega un <code>&lt;footer&gt;</code> con <code>© año</code>, tu nombre y una <code>&lt;address&gt;</code> con un correo.</span></label></li><li><label><input type="checkbox" id="p8"><span>Revisa que no haya <code>&lt;div&gt;</code> innecesarios y que exista un solo <code>&lt;main&gt;</code> y un solo <code>&lt;h1&gt;</code>.</span></label></li></ul>
       <details><summary>💡 Pista 1: no sé si usar section o article</summary><p>Pregúntate: ¿esto podría publicarse solo y seguir teniendo sentido? Si sí, es <code>article</code>. Si es un apartado de la página con un tema propio, es <code>section</code>.</p>
 </details>
 <details><summary>💡 Pista 2: ¿dónde va el aside?</summary><p>Puede ir dentro de <code>&lt;main&gt;</code> si se relaciona con ese contenido, o junto a <code>&lt;main&gt;</code> si es una barra lateral general. En este ejercicio, déjalo dentro de <code>&lt;main&gt;</code>.</p>
 </details>
 
+      <section class="checker" id="comprobador" aria-labelledby="t-chk">
+        <h2 id="t-chk">🔎 Comprueba tu trabajo</h2>
+        <p>Pega tu código y pulsa <strong>Comprobar</strong>. La revisión ocurre en tu navegador; nada se envía a ningún sitio. Cada punto en rojo incluye una pista.</p>
+        <label for="chk-code">Tu código HTML (el archivo completo)</label>
+        <textarea id="chk-code" rows="10" spellcheck="false" placeholder="Pega aquí el contenido completo de tu archivo .html"></textarea>
+        <div class="chk-actions"><button class="btn" type="button" id="chk-run">Comprobar</button><button class="icon-btn" type="button" id="chk-clear">Limpiar</button></div>
+        <p class="chk-sum" id="chk-sum" aria-live="polite"></p>
+        <ul class="chk-list" id="chk-list"></ul>
+        <script type="application/json" id="checks">{"mode": "html", "checks": [{"sel": "html", "attr": "lang", "d": "<html> declara el idioma", "h": "Agrega lang=\"es\" a <html>."}, {"sel": "header h1", "min": 1, "max": 1, "d": "Hay un <header> con un único <h1>", "h": "Pon el nombre del sitio en un <h1> dentro de <header>."}, {"t": "nav", "d": "El <nav> tiene aria-label y al menos 3 enlaces", "h": "Ej.: <nav aria-label=\"Principal\"> con lista de 3 <a>."}, {"sel": "main", "min": 1, "max": 1, "d": "Hay exactamente un <main>", "h": "Una página debe tener un solo <main>."}, {"t": "sections", "d": "<main> contiene al menos 2 <section> con <h2>", "h": "Cada section lleva su <h2>."}, {"sel": "article", "min": 2, "d": "Hay al menos 2 <article>", "h": "Agrega dos <article> con <h3>."}, {"sel": "article time[datetime]", "min": 2, "d": "Los <article> usan <time datetime>", "h": "Ej.: <time datetime=\"2026-10-04\">4 de octubre<\/time>"}, {"sel": "aside", "d": "Hay un <aside>", "h": "Agrega un <aside> con un dato curioso."}, {"sel": "footer address", "d": "Hay un <footer> con <address>", "h": "Agrega <footer> con una <address>."}, {"sel": "div", "min": 0, "max": 0, "d": "No usas <div>", "h": "Reemplaza cada <div> por la etiqueta semántica que corresponda."}]}</script>
+      </section>
       <details>
         <summary>✅ Ver una solución de ejemplo</summary>
         <p>Intenta resolverlo antes de mirar. Tu versión puede ser distinta y también correcta.</p>

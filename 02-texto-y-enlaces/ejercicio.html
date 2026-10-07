@@ -1,11 +1,11 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ejercicio de la lección 2 · Curso de HTML</title>
-  <meta name="description" content="Ejercicio práctico: crea una página de recomendaciones con títulos, texto y enlaces." />
-  <link rel="stylesheet" href="../assets/estilos.css" />
+  <meta name="description" content="Ejercicio práctico: crea una página de recomendaciones con títulos, texto y enlaces.">
+  <link rel="stylesheet" href="../assets/estilos.css">
 </head>
 <body>
   <header class="topbar">
@@ -32,15 +32,15 @@
       <p id="progreso-texto" style="color:var(--muted);font-size:.9rem" aria-live="polite"></p>
 
       <ul class="checklist">
-        <li><label><input type="checkbox" id="p1" /><span>Crea <code>recomendaciones.html</code> con el esqueleto completo y un <code>title</code> adecuado.</span></label></li>
-        <li><label><input type="checkbox" id="p2" /><span>Escribe un único <code>&lt;h1&gt;</code> con el tema de tu página.</span></label></li>
-        <li><label><input type="checkbox" id="p3" /><span>Crea al menos dos secciones con <code>&lt;h2&gt;</code> y, en una de ellas, un <code>&lt;h3&gt;</code>.</span></label></li>
-        <li><label><input type="checkbox" id="p4" /><span>Escribe un párrafo debajo de cada título.</span></label></li>
-        <li><label><input type="checkbox" id="p5" /><span>Usa <code>&lt;strong&gt;</code> y <code>&lt;em&gt;</code> al menos una vez cada uno, con intención.</span></label></li>
-        <li><label><input type="checkbox" id="p6" /><span>Agrega un enlace externo con <code>target="_blank"</code> y <code>rel="noopener"</code>.</span></label></li>
-        <li><label><input type="checkbox" id="p7" /><span>Agrega un índice al inicio con enlaces ancla (<code>#id</code>) a tus secciones.</span></label></li>
-        <li><label><input type="checkbox" id="p8" /><span>Agrega un enlace <code>mailto:</code> y una línea <code>&lt;hr&gt;</code> antes del pie.</span></label></li>
-        <li><label><input type="checkbox" id="p9" /><span>Prueba todos los enlaces en el navegador.</span></label></li>
+        <li><label><input type="checkbox" id="p1"><span>Crea <code>recomendaciones.html</code> con el esqueleto completo y un <code>title</code> adecuado.</span></label></li>
+        <li><label><input type="checkbox" id="p2"><span>Escribe un único <code>&lt;h1&gt;</code> con el tema de tu página.</span></label></li>
+        <li><label><input type="checkbox" id="p3"><span>Crea al menos dos secciones con <code>&lt;h2&gt;</code> y, en una de ellas, un <code>&lt;h3&gt;</code>.</span></label></li>
+        <li><label><input type="checkbox" id="p4"><span>Escribe un párrafo debajo de cada título.</span></label></li>
+        <li><label><input type="checkbox" id="p5"><span>Usa <code>&lt;strong&gt;</code> y <code>&lt;em&gt;</code> al menos una vez cada uno, con intención.</span></label></li>
+        <li><label><input type="checkbox" id="p6"><span>Agrega un enlace externo con <code>target="_blank"</code> y <code>rel="noopener"</code>.</span></label></li>
+        <li><label><input type="checkbox" id="p7"><span>Agrega un índice al inicio con enlaces ancla (<code>#id</code>) a tus secciones.</span></label></li>
+        <li><label><input type="checkbox" id="p8"><span>Agrega un enlace <code>mailto:</code> y una línea <code>&lt;hr&gt;</code> antes del pie.</span></label></li>
+        <li><label><input type="checkbox" id="p9"><span>Prueba todos los enlaces en el navegador.</span></label></li>
       </ul>
 
       <details>
@@ -51,6 +51,17 @@
         <summary>💡 Pista 2: mi enlace externo no abre el sitio</summary>
         <p>Asegúrate de escribir la dirección completa con <code>https://</code>. Sin eso, el navegador busca un archivo local con ese nombre.</p>
       </details>
+
+      <section class="checker" id="comprobador" aria-labelledby="t-chk">
+        <h2 id="t-chk">🔎 Comprueba tu trabajo</h2>
+        <p>Pega tu código y pulsa <strong>Comprobar</strong>. La revisión ocurre en tu navegador; nada se envía a ningún sitio. Cada punto en rojo incluye una pista.</p>
+        <label for="chk-code">Tu código HTML (el archivo completo)</label>
+        <textarea id="chk-code" rows="10" spellcheck="false" placeholder="Pega aquí el contenido completo de tu archivo .html"></textarea>
+        <div class="chk-actions"><button class="btn" type="button" id="chk-run">Comprobar</button><button class="icon-btn" type="button" id="chk-clear">Limpiar</button></div>
+        <p class="chk-sum" id="chk-sum" aria-live="polite"></p>
+        <ul class="chk-list" id="chk-list"></ul>
+        <script type="application/json" id="checks">{"mode": "html", "checks": [{"sel": "body h1", "min": 1, "max": 1, "d": "Hay exactamente un <h1>", "h": "Usa un solo <h1> para el tema de la página."}, {"sel": "h2", "min": 2, "d": "Hay al menos dos <h2>", "h": "Crea dos secciones con <h2>."}, {"sel": "h3", "d": "Hay al menos un <h3>", "h": "Agrega un <h3> dentro de una de las secciones."}, {"sel": "p", "min": 2, "d": "Hay al menos dos párrafos", "h": "Escribe un párrafo debajo de cada título."}, {"sel": "strong", "d": "Usas <strong>", "h": "Resalta algo importante con <strong>."}, {"sel": "em", "d": "Usas <em>", "h": "Pon énfasis a una palabra con <em>."}, {"sel": "a[href^=\"http\"][target=\"_blank\"][rel~=\"noopener\"]", "d": "Hay un enlace externo con target=\"_blank\" y rel=\"noopener\"", "h": "Ej.: <a href=\"https://…\" target=\"_blank\" rel=\"noopener\">…<\/a>"}, {"sel": "a[href^=\"#\"]", "min": 2, "d": "Hay al menos dos enlaces ancla (#id)", "h": "Crea un índice con <a href=\"#seccion\"> que lleve a tus secciones."}, {"t": "anclas", "d": "Los enlaces ancla apuntan a un id que existe", "h": "Cada href=\"#x\" necesita un elemento con id=\"x\"."}, {"sel": "a[href^=\"mailto:\"]", "d": "Hay un enlace mailto:", "h": "Agrega <a href=\"mailto:tu@correo.com\">."}, {"sel": "hr", "d": "Hay una línea <hr>", "h": "Agrega <hr> antes del pie."}]}</script>
+      </section>
 
       <details>
         <summary>✅ Ver una solución de ejemplo</summary>

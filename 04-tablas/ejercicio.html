@@ -1,11 +1,11 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ejercicio · Tablas · Curso de HTML</title>
-  <meta name="description" content="Ejercicio práctico de: Tablas." />
-  <link rel="stylesheet" href="../assets/estilos.css" />
+  <meta name="description" content="Ejercicio práctico de: Tablas.">
+  <link rel="stylesheet" href="../assets/estilos.css">
 </head>
 <body>
   <header class="topbar">
@@ -30,12 +30,22 @@
       <p>Marca cada paso a medida que lo completes. Tu avance se guarda en este navegador.</p>
       <div class="progress" aria-hidden="true"><div></div></div>
       <p id="progreso-texto" style="color:var(--muted);font-size:.9rem" aria-live="polite"></p>
-      <ul class="checklist"><li><label><input type="checkbox" id="p1" /><span>Crea <code>tabla.html</code> con el esqueleto completo y un <code>title</code>.</span></label></li><li><label><input type="checkbox" id="p2" /><span>Escribe un <code>&lt;h1&gt;</code> con el tema de tu tabla (por ejemplo, «Mi horario semanal»).</span></label></li><li><label><input type="checkbox" id="p3" /><span>Crea la tabla con <code>&lt;caption&gt;</code>, <code>&lt;thead&gt;</code>, <code>&lt;tbody&gt;</code> y <code>&lt;tfoot&gt;</code>.</span></label></li><li><label><input type="checkbox" id="p4" /><span>En <code>&lt;thead&gt;</code>, usa <code>&lt;th scope="col"&gt;</code> para al menos 4 columnas (por ejemplo: Hora, Lunes, Martes, Miércoles).</span></label></li><li><label><input type="checkbox" id="p5" /><span>Agrega al menos 4 filas de datos y usa <code>&lt;th scope="row"&gt;</code> en la primera celda de cada fila.</span></label></li><li><label><input type="checkbox" id="p6" /><span>Combina dos celdas con <code>rowspan</code> o <code>colspan</code> (por ejemplo, una clase de dos horas seguidas).</span></label></li><li><label><input type="checkbox" id="p7" /><span>Agrega una fila en <code>&lt;tfoot&gt;</code> con una nota o un total.</span></label></li><li><label><input type="checkbox" id="p8" /><span>Pega el estilo básico de tablas dentro de un <code>&lt;style&gt;</code> en el <code>&lt;head&gt;</code> y comprueba que se vea ordenada.</span></label></li></ul>
+      <ul class="checklist"><li><label><input type="checkbox" id="p1"><span>Crea <code>tabla.html</code> con el esqueleto completo y un <code>title</code>.</span></label></li><li><label><input type="checkbox" id="p2"><span>Escribe un <code>&lt;h1&gt;</code> con el tema de tu tabla (por ejemplo, «Mi horario semanal»).</span></label></li><li><label><input type="checkbox" id="p3"><span>Crea la tabla con <code>&lt;caption&gt;</code>, <code>&lt;thead&gt;</code>, <code>&lt;tbody&gt;</code> y <code>&lt;tfoot&gt;</code>.</span></label></li><li><label><input type="checkbox" id="p4"><span>En <code>&lt;thead&gt;</code>, usa <code>&lt;th scope="col"&gt;</code> para al menos 3 columnas (por ejemplo: Hora, Materia, Salón).</span></label></li><li><label><input type="checkbox" id="p5"><span>Agrega al menos 3 filas de datos en <code>&lt;tbody&gt;</code> y usa <code>&lt;th scope="row"&gt;</code> en la primera celda de cada fila.</span></label></li><li><label><input type="checkbox" id="p6"><span>Combina dos celdas con <code>rowspan</code> o <code>colspan</code> (por ejemplo, una clase de dos horas seguidas).</span></label></li><li><label><input type="checkbox" id="p7"><span>Agrega una fila en <code>&lt;tfoot&gt;</code> con una nota o un total.</span></label></li><li><label><input type="checkbox" id="p8"><span>Pega el estilo básico de tablas dentro de un <code>&lt;style&gt;</code> en el <code>&lt;head&gt;</code> y comprueba que se vea ordenada.</span></label></li></ul>
       <details><summary>💡 Pista 1: mi tabla se ve torcida</summary><p>Cuenta las celdas de cada fila. Si usas <code>rowspan</code>, la fila de abajo debe tener una celda menos, porque esa posición ya está ocupada. Si usas <code>colspan="2"</code>, esa celda cuenta como dos.</p>
 </details>
 <details><summary>💡 Pista 2: no veo los bordes</summary><p>El navegador no dibuja bordes si no se lo pides. Agrega el bloque de estilo de la sección «Estilo básico de tabla» de la lección.</p>
 </details>
 
+      <section class="checker" id="comprobador" aria-labelledby="t-chk">
+        <h2 id="t-chk">🔎 Comprueba tu trabajo</h2>
+        <p>Pega tu código y pulsa <strong>Comprobar</strong>. La revisión ocurre en tu navegador; nada se envía a ningún sitio. Cada punto en rojo incluye una pista.</p>
+        <label for="chk-code">Tu código HTML (el archivo completo)</label>
+        <textarea id="chk-code" rows="10" spellcheck="false" placeholder="Pega aquí el contenido completo de tu archivo .html"></textarea>
+        <div class="chk-actions"><button class="btn" type="button" id="chk-run">Comprobar</button><button class="icon-btn" type="button" id="chk-clear">Limpiar</button></div>
+        <p class="chk-sum" id="chk-sum" aria-live="polite"></p>
+        <ul class="chk-list" id="chk-list"></ul>
+        <script type="application/json" id="checks">{"mode": "html", "checks": [{"sel": "table caption", "text": "\\S", "d": "Hay una <table> con <caption>", "h": "Agrega <caption> justo después de abrir <table>."}, {"t": "secciones", "d": "La tabla tiene <thead>, <tbody> y <tfoot>", "h": "Divide la tabla en las tres secciones."}, {"sel": "thead th[scope=\"col\"]", "min": 3, "d": "Hay al menos 3 encabezados de columna con scope=\"col\"", "h": "Usa <th scope=\"col\"> en la fila de encabezado."}, {"sel": "tbody tr", "min": 3, "d": "Hay al menos 3 filas de datos en <tbody>", "h": "Agrega más <tr> dentro de <tbody>."}, {"sel": "tbody th[scope=\"row\"]", "min": 3, "d": "Los encabezados de fila usan <th scope=\"row\">", "h": "La primera celda de cada fila debe ser <th scope=\"row\">."}, {"sel": "[rowspan], [colspan]", "d": "Combinas celdas con rowspan o colspan", "h": "Agrega rowspan=\"2\" o colspan=\"2\" a una celda."}, {"sel": "tfoot tr", "d": "Hay una fila en <tfoot>", "h": "Agrega una fila con una nota o un total."}, {"raw": "border-collapse\\s*:\\s*collapse", "d": "Incluye estilo con border-collapse", "h": "Pega el estilo básico dentro de <style> en el <head>."}]}</script>
+      </section>
       <details>
         <summary>✅ Ver una solución de ejemplo</summary>
         <p>Intenta resolverlo antes de mirar. Tu versión puede ser distinta y también correcta.</p>
