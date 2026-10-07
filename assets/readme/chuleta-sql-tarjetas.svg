@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="443" viewBox="0 0 1000 443" role="img" aria-label="Tarjetas de la chuleta de sql">
+<style>.t{font-family:Segoe UI,Helvetica,Arial,sans-serif}.m{font-family:Consolas,Menlo,monospace}</style>
+<defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7c3aed"/><stop offset="1" stop-color="#c4b5fd"/></linearGradient></defs>
+<g transform="translate(0 3)"><rect width="490" height="96" rx="14" fill="#14172b"/><rect width="7" height="96" rx="3.5" fill="url(#g)"/>
+<text class="t" x="24" y="30" font-size="17" font-weight="700" fill="#fff">🔎 Leer</text>
+<text class="m" x="24" y="52" font-size="13" fill="#c4b5fd">SELECT FROM WHERE</text>
+<rect x="20" y="62" width="452" height="26" rx="7" fill="#0b0d1a" stroke="#2b3158"/><text class="m" x="30" y="79" font-size="13" fill="#e0e7ff">SELECT * FROM clientes WHERE edad &gt; 18;</text></g>
+<g transform="translate(510 3)"><rect width="490" height="96" rx="14" fill="#14172b"/><rect width="7" height="96" rx="3.5" fill="url(#g)"/>
+<text class="t" x="24" y="30" font-size="17" font-weight="700" fill="#fff">➕ Insertar</text>
+<text class="m" x="24" y="52" font-size="13" fill="#c4b5fd">INSERT INTO</text>
+<rect x="20" y="62" width="452" height="26" rx="7" fill="#0b0d1a" stroke="#2b3158"/><text class="m" x="30" y="79" font-size="13" fill="#e0e7ff">INSERT INTO clientes (nombre) VALUES (&quot;Ana&quot;);</text></g>
+<g transform="translate(0 113)"><rect width="490" height="96" rx="14" fill="#14172b"/><rect width="7" height="96" rx="3.5" fill="url(#g)"/>
+<text class="t" x="24" y="30" font-size="17" font-weight="700" fill="#fff">✏️ Actualizar</text>
+<text class="m" x="24" y="52" font-size="13" fill="#c4b5fd">UPDATE SET</text>
+<rect x="20" y="62" width="452" height="26" rx="7" fill="#0b0d1a" stroke="#2b3158"/><text class="m" x="30" y="79" font-size="13" fill="#e0e7ff">UPDATE clientes SET edad = 30 WHERE id = 1;</text></g>
+<g transform="translate(510 113)"><rect width="490" height="96" rx="14" fill="#14172b"/><rect width="7" height="96" rx="3.5" fill="url(#g)"/>
+<text class="t" x="24" y="30" font-size="17" font-weight="700" fill="#fff">🗑️ Borrar</text>
+<text class="m" x="24" y="52" font-size="13" fill="#c4b5fd">DELETE</text>
+<rect x="20" y="62" width="452" height="26" rx="7" fill="#0b0d1a" stroke="#2b3158"/><text class="m" x="30" y="79" font-size="13" fill="#e0e7ff">DELETE FROM clientes WHERE id = 1;</text></g>
+<g transform="translate(0 223)"><rect width="490" height="96" rx="14" fill="#14172b"/><rect width="7" height="96" rx="3.5" fill="url(#g)"/>
+<text class="t" x="24" y="30" font-size="17" font-weight="700" fill="#fff">🧱 Crear tabla</text>
+<text class="m" x="24" y="52" font-size="13" fill="#c4b5fd">CREATE TABLE PRIMARY KEY</text>
+<rect x="20" y="62" width="452" height="26" rx="7" fill="#0b0d1a" stroke="#2b3158"/><text class="m" x="30" y="79" font-size="13" fill="#e0e7ff">CREATE TABLE t (id INTEGER PRIMARY KEY);</text></g>
+<g transform="translate(510 223)"><rect width="490" height="96" rx="14" fill="#14172b"/><rect width="7" height="96" rx="3.5" fill="url(#g)"/>
+<text class="t" x="24" y="30" font-size="17" font-weight="700" fill="#fff">🔗 Unir tablas</text>
+<text class="m" x="24" y="52" font-size="13" fill="#c4b5fd">JOIN ON</text>
+<rect x="20" y="62" width="452" height="26" rx="7" fill="#0b0d1a" stroke="#2b3158"/><text class="m" x="30" y="79" font-size="13" fill="#e0e7ff">... JOIN clientes c ON c.id = p.cliente_id</text></g>
+<g transform="translate(0 333)"><rect width="490" height="96" rx="14" fill="#14172b"/><rect width="7" height="96" rx="3.5" fill="url(#g)"/>
+<text class="t" x="24" y="30" font-size="17" font-weight="700" fill="#fff">📊 Resumir</text>
+<text class="m" x="24" y="52" font-size="13" fill="#c4b5fd">GROUP BY COUNT SUM</text>
+<rect x="20" y="62" width="452" height="26" rx="7" fill="#0b0d1a" stroke="#2b3158"/><text class="m" x="30" y="79" font-size="13" fill="#e0e7ff">SELECT COUNT(*) FROM pedidos GROUP BY cliente_id;</text></g>
+<g transform="translate(510 333)"><rect width="490" height="96" rx="14" fill="#14172b"/><rect width="7" height="96" rx="3.5" fill="url(#g)"/>
+<text class="t" x="24" y="30" font-size="17" font-weight="700" fill="#fff">🛡️ Evitar inyección</text>
+<text class="m" x="24" y="52" font-size="13" fill="#c4b5fd">consultas con parámetros</text>
+<rect x="20" y="62" width="452" height="26" rx="7" fill="#0b0d1a" stroke="#2b3158"/><text class="m" x="30" y="79" font-size="13" fill="#e0e7ff">db.query(&quot;… WHERE id = $1&quot;, [id]);</text></g>
+</svg>

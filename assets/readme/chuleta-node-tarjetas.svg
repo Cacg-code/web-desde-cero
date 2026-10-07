@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="443" viewBox="0 0 1000 443" role="img" aria-label="Tarjetas de la chuleta de node">
+<style>.t{font-family:Segoe UI,Helvetica,Arial,sans-serif}.m{font-family:Consolas,Menlo,monospace}</style>
+<defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#15803d"/><stop offset="1" stop-color="#86efac"/></linearGradient></defs>
+<g transform="translate(0 3)"><rect width="490" height="96" rx="14" fill="#14172b"/><rect width="7" height="96" rx="3.5" fill="url(#g)"/>
+<text class="t" x="24" y="30" font-size="17" font-weight="700" fill="#fff">▶️ Ejecutar un archivo</text>
+<text class="m" x="24" y="52" font-size="13" fill="#86efac">node</text>
+<rect x="20" y="62" width="452" height="26" rx="7" fill="#0b0d1a" stroke="#2b3158"/><text class="m" x="30" y="79" font-size="13" fill="#e0e7ff">node app.js</text></g>
+<g transform="translate(510 3)"><rect width="490" height="96" rx="14" fill="#14172b"/><rect width="7" height="96" rx="3.5" fill="url(#g)"/>
+<text class="t" x="24" y="30" font-size="17" font-weight="700" fill="#fff">📦 Módulos</text>
+<text class="m" x="24" y="52" font-size="13" fill="#86efac">require import</text>
+<rect x="20" y="62" width="452" height="26" rx="7" fill="#0b0d1a" stroke="#2b3158"/><text class="m" x="30" y="79" font-size="13" fill="#e0e7ff">import fs from &quot;node:fs&quot;;</text></g>
+<g transform="translate(0 113)"><rect width="490" height="96" rx="14" fill="#14172b"/><rect width="7" height="96" rx="3.5" fill="url(#g)"/>
+<text class="t" x="24" y="30" font-size="17" font-weight="700" fill="#fff">📁 Archivos y rutas</text>
+<text class="m" x="24" y="52" font-size="13" fill="#86efac">fs path</text>
+<rect x="20" y="62" width="452" height="26" rx="7" fill="#0b0d1a" stroke="#2b3158"/><text class="m" x="30" y="79" font-size="13" fill="#e0e7ff">fs.readFileSync(&quot;a.txt&quot;, &quot;utf8&quot;)</text></g>
+<g transform="translate(510 113)"><rect width="490" height="96" rx="14" fill="#14172b"/><rect width="7" height="96" rx="3.5" fill="url(#g)"/>
+<text class="t" x="24" y="30" font-size="17" font-weight="700" fill="#fff">📚 Paquetes</text>
+<text class="m" x="24" y="52" font-size="13" fill="#86efac">npm init npm install</text>
+<rect x="20" y="62" width="452" height="26" rx="7" fill="#0b0d1a" stroke="#2b3158"/><text class="m" x="30" y="79" font-size="13" fill="#e0e7ff">npm install express</text></g>
+<g transform="translate(0 223)"><rect width="490" height="96" rx="14" fill="#14172b"/><rect width="7" height="96" rx="3.5" fill="url(#g)"/>
+<text class="t" x="24" y="30" font-size="17" font-weight="700" fill="#fff">🌐 Servidor</text>
+<text class="m" x="24" y="52" font-size="13" fill="#86efac">express app.listen</text>
+<rect x="20" y="62" width="452" height="26" rx="7" fill="#0b0d1a" stroke="#2b3158"/><text class="m" x="30" y="79" font-size="13" fill="#e0e7ff">app.get(&quot;/&quot;, (req, res) =&gt; res.send(&quot;Hola&quot;));</text></g>
+<g transform="translate(510 223)"><rect width="490" height="96" rx="14" fill="#14172b"/><rect width="7" height="96" rx="3.5" fill="url(#g)"/>
+<text class="t" x="24" y="30" font-size="17" font-weight="700" fill="#fff">🔌 API REST</text>
+<text class="m" x="24" y="52" font-size="13" fill="#86efac">GET POST PUT DELETE</text>
+<rect x="20" y="62" width="452" height="26" rx="7" fill="#0b0d1a" stroke="#2b3158"/><text class="m" x="30" y="79" font-size="13" fill="#e0e7ff">app.post(&quot;/tareas&quot;, crear);</text></g>
+<g transform="translate(0 333)"><rect width="490" height="96" rx="14" fill="#14172b"/><rect width="7" height="96" rx="3.5" fill="url(#g)"/>
+<text class="t" x="24" y="30" font-size="17" font-weight="700" fill="#fff">🔐 Variables secretas</text>
+<text class="m" x="24" y="52" font-size="13" fill="#86efac">process.env .env</text>
+<rect x="20" y="62" width="452" height="26" rx="7" fill="#0b0d1a" stroke="#2b3158"/><text class="m" x="30" y="79" font-size="13" fill="#e0e7ff">const puerto = process.env.PORT;</text></g>
+<g transform="translate(510 333)"><rect width="490" height="96" rx="14" fill="#14172b"/><rect width="7" height="96" rx="3.5" fill="url(#g)"/>
+<text class="t" x="24" y="30" font-size="17" font-weight="700" fill="#fff">🛡️ Errores</text>
+<text class="m" x="24" y="52" font-size="13" fill="#86efac">try…catch middleware</text>
+<rect x="20" y="62" width="452" height="26" rx="7" fill="#0b0d1a" stroke="#2b3158"/><text class="m" x="30" y="79" font-size="13" fill="#e0e7ff">res.status(400).json({ error: &quot;…&quot; });</text></g>
+</svg>

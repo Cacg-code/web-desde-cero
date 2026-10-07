@@ -71,9 +71,8 @@ Sigue el orden: cada curso se apoya en el anterior.
 
 <br><br><br>
 
-**🟣 SQL con simulador interactivo** &nbsp;·&nbsp; **🏅 Panel de progreso, retos y recompensas**
-
-<img src="assets/readme/captura-sql.png" alt="Simulador de consultas SELECT en el curso de Bases de datos" width="47%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="assets/readme/captura-progreso.png" alt="Panel Mi progreso con nivel, racha, reto del día y temas" width="47%">
+<img src="assets/readme/demos4.svg" alt="Simulador SQL y panel Mi progreso" width="100%">
+<img src="assets/gif/sql-simulador.gif" alt="Simulador de consultas SELECT en el curso de Bases de datos" width="47%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="assets/gif/panel-progreso.gif" alt="Panel Mi progreso con nivel, racha, reto del día y temas" width="47%">
 
 </div>
 
@@ -246,7 +245,12 @@ Pulsa el chip de XP de la barra superior para abrir **Mi progreso**. Todo se gua
 </details>
 
 
-### 🟢 Node.js
+<img src="assets/readme/chuleta-node.svg" alt="Chuleta de Node.js" width="100%">
+
+<img src="assets/readme/chuleta-node-tarjetas.svg" alt="Tarjetas de la chuleta de node" width="100%">
+
+<details>
+<summary>📎 Versión para copiar</summary>
 
 | Para… | Usa | Ejemplo |
 |---|---|---|
@@ -259,7 +263,15 @@ Pulsa el chip de XP de la barra superior para abrir **Mi progreso**. Todo se gua
 | 🔐 Variables secretas | `process.env` | `process.env.PORT` |
 | 🛡️ Errores | `try…catch` · middleware | `res.status(400).json({ error: "…" })` |
 
-### 🟣 SQL
+</details>
+
+
+<img src="assets/readme/chuleta-sql.svg" alt="Chuleta de SQL" width="100%">
+
+<img src="assets/readme/chuleta-sql-tarjetas.svg" alt="Tarjetas de la chuleta de sql" width="100%">
+
+<details>
+<summary>📎 Versión para copiar</summary>
 
 | Para… | Usa | Ejemplo |
 |---|---|---|
@@ -271,6 +283,9 @@ Pulsa el chip de XP de la barra superior para abrir **Mi progreso**. Todo se gua
 | 🔗 Unir tablas | `JOIN` `ON` | `SELECT * FROM pedidos p JOIN clientes c ON c.id = p.cliente_id;` |
 | 📊 Resumir | `GROUP BY` `COUNT` `SUM` | `SELECT cliente_id, COUNT(*) FROM pedidos GROUP BY cliente_id;` |
 | 🛡️ Evitar inyección | consultas con parámetros | `db.query("… WHERE id = $1", [id])` |
+
+</details>
+
 
 <img src="assets/readme/chuleta-git.svg" alt="Chuleta de Git" width="100%">
 
