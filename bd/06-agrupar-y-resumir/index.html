@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lección 6: Agrupar y resumir · Curso de Bases de datos con SQL</title>
+  <meta name="description" content="Resume datos con COUNT, SUM, AVG, MIN y MAX, agrúpalos con GROUP BY y filtra los grupos con HAVING, con un laboratorio interactivo.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/bd/06-agrupar-y-resumir/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#0e7490">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Lección 6: Agrupar y resumir · Curso de Bases de datos con SQL">
+  <meta property="og:description" content="Resume datos con COUNT, SUM, AVG, MIN y MAX, agrúpalos con GROUP BY y filtra los grupos con HAVING, con un laboratorio interactivo.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/bd/06-agrupar-y-resumir/">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+  <style>
+    .sqlsim select, .sqlsim input[type="number"] { padding: .5rem .6rem; border: 1px solid var(--border); border-radius: 8px; background: var(--bg); color: var(--text); font: inherit; max-width: 100%; }
+    .sqlsim .sql-out { margin: 0; padding: .8rem 1rem; border-radius: 10px; background: var(--code-bg); color: var(--code-text); font-family: var(--mono); font-size: .88rem; line-height: 1.6; white-space: pre-wrap; overflow-wrap: anywhere; }
+    .sqlsim .msg { margin: 0; font-weight: 600; }
+    .sqlsim .msg.err { color: #b91c1c; }
+    .sqlsim .msg.okk { color: #15803d; }
+    :root[data-theme="dark"] .sqlsim .msg.err { color: #fca5a5; }
+    :root[data-theme="dark"] .sqlsim .msg.okk { color: #86efac; }
+    @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .sqlsim .msg.err { color: #fca5a5; } :root:not([data-theme="light"]) .sqlsim .msg.okk { color: #86efac; } }
+    .sqlsim .w-row button { cursor: pointer; }
+    .sqlsim .w-row label { display: inline-flex; gap: .4rem; align-items: center; }
+    .sqlsim td.hl, .sqlsim th.hl, .sqlsim tr.hl td { background: color-mix(in srgb, var(--accent) 22%, transparent); }
+    .sqlsim tr.gone td { text-decoration: line-through; opacity: .5; }
+    .sqlsim tr.new td { background: color-mix(in srgb, #22c55e 22%, transparent); }
+    .sqlsim tr.chg td { background: color-mix(in srgb, #f59e0b 25%, transparent); }
+  </style>
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Bases de datos con SQL</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap lesson-layout" id="contenido">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#agregar">Funciones de agregación</a></li><li><a href="#nulos">Cómo tratan los NULL</a></li><li><a href="#group">GROUP BY: un resumen por grupo</a></li><li><a href="#join">Agrupar con JOIN: informes reales</a></li><li><a href="#having">HAVING: filtrar grupos</a></li><li><a href="#laboratorio">Pruébalo: laboratorio de resúmenes</a></li><li><a href="#errores">Errores frecuentes</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de Bases de datos con SQL</a> › Lección 6</div>
+        <h1>Agrupar y resumir</h1>
+        <ul class="meta"><li>⏱ 55 minutos</li><li>📶 Nivel: principiante</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Usar <code>COUNT</code>, <code>SUM</code>, <code>AVG</code>, <code>MIN</code> y <code>MAX</code>.</li><li>Agrupar con <code>GROUP BY</code> y combinarlo con <code>JOIN</code>.</li><li>Filtrar grupos con <code>HAVING</code> y distinguirlo de <code>WHERE</code>.</li><li>Manejar los <code>NULL</code> en agregaciones con <code>COUNT(columna)</code> y <code>COALESCE</code>.</li></ul>
+</div>
+
+<h2 id="agregar"><span class="n">1.</span>Funciones de agregación</h2>
+
+<p>Hasta ahora cada fila del resultado era una fila de la tabla. Las <strong>funciones de agregación</strong> resumen muchas filas en un solo valor:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Función</th><th>Qué calcula</th></tr></thead>
+<tbody>
+<tr><td><code>COUNT(*)</code></td><td>Cuántas filas hay</td></tr>
+<tr><td><code>SUM(col)</code></td><td>La suma de los valores</td></tr>
+<tr><td><code>AVG(col)</code></td><td>El promedio</td></tr>
+<tr><td><code>MIN(col)</code> / <code>MAX(col)</code></td><td>El menor y el mayor valor</td></tr>
+</tbody></table></div>
+<div class="code">
+  <div class="code-head"><span>Un resumen de todo el catálogo</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">SELECT</span> <span class="tk-tag">COUNT</span>(*)    <span class="tk-tag">AS</span> cuantos,
+       <span class="tk-tag">SUM</span>(stock)   <span class="tk-tag">AS</span> stock_total,
+       <span class="tk-tag">AVG</span>(precio)  <span class="tk-tag">AS</span> promedio,
+       <span class="tk-tag">MIN</span>(precio)  <span class="tk-tag">AS</span> barato,
+       <span class="tk-tag">MAX</span>(precio)  <span class="tk-tag">AS</span> caro
+<span class="tk-tag">FROM</span> productos;</code></pre>
+</div>
+<p><strong>Resultado esperado</strong></p>
+<div class="table-wrap"><table>
+<thead><tr><th>cuantos</th><th>stock_total</th><th>promedio</th><th>barato</th><th>caro</th></tr></thead>
+<tbody><tr><td>8</td><td>203</td><td>258.55</td><td>15.00</td><td>899.00</td></tr></tbody>
+</table></div>
+
+<p>Sin <code>GROUP BY</code>, toda la tabla (o las filas que pasen el <code>WHERE</code>) se resume en <strong>una sola fila</strong>. No puedes mezclar una columna normal con una agregada si no la agrupas.</p>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · COUNT(*) frente a COUNT(columna)</p>
+<p><code>COUNT(*)</code> cuenta filas; <code>COUNT(columna)</code> cuenta solo las filas donde esa columna <strong>no es NULL</strong>. Del mismo modo, <code>SUM</code>, <code>AVG</code>, <code>MIN</code> y <code>MAX</code> ignoran los <code>NULL</code>.</p>
+</div>
+
+<h2 id="nulos"><span class="n">2.</span>Cómo tratan los NULL</h2>
+
+<p>Al unir clientes con pedidos con <code>LEFT JOIN</code> (lección 5), Diego aparece con <code>NULL</code> en el pedido. Mira la diferencia:</p>
+<div class="code">
+  <div class="code-head"><span>COUNT(*) y COUNT(p.id)</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">SELECT</span> <span class="tk-tag">COUNT</span>(*) <span class="tk-tag">AS</span> filas, <span class="tk-tag">COUNT</span>(p.id) <span class="tk-tag">AS</span> con_pedido
+<span class="tk-tag">FROM</span> clientes c
+<span class="tk-tag">LEFT</span> <span class="tk-tag">JOIN</span> pedidos p <span class="tk-tag">ON</span> p.cliente_id = c.id;</code></pre>
+</div>
+<p><strong>Resultado esperado</strong></p>
+<div class="table-wrap"><table>
+<thead><tr><th>filas</th><th>con_pedido</th></tr></thead>
+<tbody><tr><td>5</td><td>4</td></tr></tbody>
+</table></div>
+
+<p>Hay 5 filas (4 pedidos y la fila de Diego), pero solo 4 tienen pedido. Elegir bien entre <code>COUNT(*)</code> y <code>COUNT(columna)</code> es el error más común al contar «cuántos hay».</p>
+<h2 id="group"><span class="n">3.</span>GROUP BY: un resumen por grupo</h2>
+
+<p><code>GROUP BY</code> reúne las filas que comparten el mismo valor en una columna y aplica la función a <strong>cada grupo</strong>:</p>
+<div class="code">
+  <div class="code-head"><span>Resumen por categoría</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">SELECT</span> categoria,
+       <span class="tk-tag">COUNT</span>(*)    <span class="tk-tag">AS</span> cuantos,
+       <span class="tk-tag">AVG</span>(precio) <span class="tk-tag">AS</span> promedio,
+       <span class="tk-tag">SUM</span>(stock)  <span class="tk-tag">AS</span> stock_total
+<span class="tk-tag">FROM</span> productos
+<span class="tk-tag">GROUP</span> <span class="tk-tag">BY</span> categoria
+<span class="tk-tag">ORDER</span> <span class="tk-tag">BY</span> categoria;</code></pre>
+</div>
+<p><strong>Resultado esperado</strong></p>
+<div class="table-wrap"><table>
+<thead><tr><th>categoria</th><th>cuantos</th><th>promedio</th><th>stock_total</th></tr></thead>
+<tbody><tr><td>Accesorios</td><td>1</td><td>15.00</td><td>100</td></tr><tr><td>Audio</td><td>2</td><td>94.45</td><td>25</td></tr><tr><td>Pantallas</td><td>2</td><td>774.50</td><td>11</td></tr><tr><td>Periféricos</td><td>3</td><td>105.17</td><td>67</td></tr></tbody>
+</table></div>
+
+<p>La regla: toda columna del <code>SELECT</code> debe estar en el <code>GROUP BY</code> o dentro de una función de agregación. Aquí, <code>categoria</code> está agrupada y el resto va dentro de <code>COUNT</code>, <code>AVG</code> y <code>SUM</code>.</p>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · Qué pasa si se incumple</p>
+<p>PostgreSQL rechaza una columna no agrupada. SQLite lo permite y elige un valor cualquiera del grupo, lo que da resultados engañosos. Escribe siempre las consultas como si el motor fuera estricto.</p>
+</div>
+
+<h2 id="join"><span class="n">4.</span>Agrupar con JOIN: informes reales</h2>
+
+<p>Lo potente llega al combinar <code>JOIN</code> y <code>GROUP BY</code>. ¿Cuántos pedidos ha hecho y cuánto ha gastado cada cliente? El gasto de cada línea es <code>cantidad × precio</code>.</p>
+<div class="code">
+  <div class="code-head"><span>Gasto por cliente</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">SELECT</span> c.nombre,
+       <span class="tk-tag">COUNT</span>(<span class="tk-tag">DISTINCT</span> p.id) <span class="tk-tag">AS</span> pedidos,
+       COALESCE(<span class="tk-tag">SUM</span>(l.cantidad * pr.precio), <span class="tk-attr">0</span>) <span class="tk-tag">AS</span> gasto
+<span class="tk-tag">FROM</span> clientes c
+<span class="tk-tag">LEFT</span> <span class="tk-tag">JOIN</span> pedidos p       <span class="tk-tag">ON</span> p.cliente_id = c.id
+<span class="tk-tag">LEFT</span> <span class="tk-tag">JOIN</span> lineas_pedido l <span class="tk-tag">ON</span> l.pedido_id  = p.id
+<span class="tk-tag">LEFT</span> <span class="tk-tag">JOIN</span> productos pr    <span class="tk-tag">ON</span> pr.id        = l.producto_id
+<span class="tk-tag">GROUP</span> <span class="tk-tag">BY</span> c.id
+<span class="tk-tag">ORDER</span> <span class="tk-tag">BY</span> gasto <span class="tk-tag">DESC</span>;</code></pre>
+</div>
+<p><strong>Resultado esperado</strong></p>
+<div class="table-wrap"><table>
+<thead><tr><th>nombre</th><th>pedidos</th><th>gasto</th></tr></thead>
+<tbody><tr><td>Luis Pérez</td><td>1</td><td>929.00</td></tr><tr><td>Marta Ruiz</td><td>1</td><td>334.50</td></tr><tr><td>Ana Torres</td><td>2</td><td>315.50</td></tr><tr><td>Diego Soto</td><td>0</td><td>0.00</td></tr></tbody>
+</table></div>
+
+<ul>
+<li><code>LEFT JOIN</code> mantiene a Diego en el informe.</li>
+<li><code>COUNT(DISTINCT p.id)</code> cuenta pedidos distintos (un pedido con varias líneas aparece varias veces antes de agrupar).</li>
+<li><code>COALESCE(valor, 0)</code> sustituye <code>NULL</code> por 0: así Diego muestra 0.00 y no <code>NULL</code>.</li>
+</ul>
+<h2 id="having"><span class="n">5.</span>HAVING: filtrar grupos</h2>
+
+<p><code>WHERE</code> filtra <strong>filas antes de agrupar</strong>. Para filtrar <strong>grupos ya calculados</strong> (por ejemplo «solo las categorías con 2 o más productos») se usa <code>HAVING</code>:</p>
+<div class="code">
+  <div class="code-head"><span>Categorías con al menos 2 productos</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">SELECT</span> categoria, <span class="tk-tag">COUNT</span>(*) <span class="tk-tag">AS</span> cuantos
+<span class="tk-tag">FROM</span> productos
+<span class="tk-tag">GROUP</span> <span class="tk-tag">BY</span> categoria
+<span class="tk-tag">HAVING</span> <span class="tk-tag">COUNT</span>(*) &gt;= <span class="tk-attr">2</span>;</code></pre>
+</div>
+<p><strong>Resultado esperado</strong></p>
+<div class="table-wrap"><table>
+<thead><tr><th>categoria</th><th>cuantos</th></tr></thead>
+<tbody><tr><td>Audio</td><td>2</td></tr><tr><td>Pantallas</td><td>2</td></tr><tr><td>Periféricos</td><td>3</td></tr></tbody>
+</table></div>
+
+<p>Y puedes combinar ambos: primero <code>WHERE</code> descarta los productos baratos y después <code>HAVING</code> exige 2 o más por categoría:</p>
+<div class="code">
+  <div class="code-head"><span>Productos de más de 50 y categorías con 2 o más</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">SELECT</span> categoria, <span class="tk-tag">COUNT</span>(*) <span class="tk-tag">AS</span> cuantos
+<span class="tk-tag">FROM</span> productos
+<span class="tk-tag">WHERE</span> precio &gt; <span class="tk-attr">50</span>
+<span class="tk-tag">GROUP</span> <span class="tk-tag">BY</span> categoria
+<span class="tk-tag">HAVING</span> <span class="tk-tag">COUNT</span>(*) &gt;= <span class="tk-attr">2</span>;</code></pre>
+</div>
+<p><strong>Resultado esperado</strong></p>
+<div class="table-wrap"><table>
+<thead><tr><th>categoria</th><th>cuantos</th></tr></thead>
+<tbody><tr><td>Audio</td><td>2</td></tr><tr><td>Pantallas</td><td>2</td></tr><tr><td>Periféricos</td><td>2</td></tr></tbody>
+</table></div>
+
+<p>Esto es el orden en que el motor trabaja:</p>
+<div class="flow"><span>FROM / JOIN</span><span>WHERE</span><span>GROUP BY</span><span>HAVING</span><span>SELECT</span><span>ORDER BY</span><span>LIMIT</span></div>
+<p>Por eso en <code>WHERE</code> no se puede usar <code>COUNT(*)</code> (los grupos aún no existen) y en <code>HAVING</code> sí.</p>
+<h2 id="laboratorio"><span class="n">6.</span>Pruébalo: laboratorio de resúmenes</h2>
+
+<p>Elige la función, si quieres agrupar por categoría y si quieres exigir al menos 2 productos por grupo. Cada combinación es una consulta real ejecutada en SQLite sobre <code>productos</code>.</p>
+<div class="widget sqlsim" data-sim="agg">
+  <div class="w-head">📊 Laboratorio de GROUP BY y HAVING</div>
+  <div class="w-body">
+    <div class="w-row">
+      <label for="a-func">Función</label>
+      <select id="a-func">
+        <option value="count">COUNT(*)</option>
+        <option value="sum">SUM(stock)</option>
+        <option value="avg">AVG(precio)</option>
+        <option value="min">MIN(precio)</option>
+        <option value="max">MAX(precio)</option>
+      </select>
+      <label><input type="checkbox" id="a-group"> GROUP BY categoria</label>
+      <label><input type="checkbox" id="a-having"> HAVING COUNT(*) &gt;= 2</label>
+    </div>
+    <pre class="sql-out" id="a-sql"></pre>
+    <p class="msg" id="a-msg" aria-live="polite"></p>
+    <div class="table-wrap" style="margin:0"><table id="a-tabla"><thead></thead><tbody></tbody></table></div>
+  </div>
+</div>
+<div class="callout ejemplo">
+<p class="callout-title">🧪 Ejemplo · Experimentos</p>
+<p>1) Sin agrupar, cada función devuelve una sola fila. 2) Activa <code>GROUP BY</code>: ahora una por categoría. 3) Activa <code>HAVING</code> con <code>COUNT(*)</code>: desaparece <code>Accesorios</code>, que solo tiene un producto. 4) Mira que <code>HAVING</code> solo se puede activar si hay <code>GROUP BY</code>.</p>
+</div>
+
+<h2 id="errores"><span class="n">7.</span>Errores frecuentes</h2>
+<ul><li><strong>Columna sin agrupar:</strong> <code>SELECT categoria, nombre, COUNT(*) … GROUP BY categoria</code> mezcla una columna que no está agrupada. PostgreSQL da error; SQLite devuelve un valor cualquiera.</li><li><strong>Usar <code>WHERE COUNT(*) &gt; 1</code>:</strong> los grupos aún no existen en el <code>WHERE</code>. Usa <code>HAVING</code>.</li><li><strong>Confundir <code>COUNT(*)</code> con <code>COUNT(columna)</code></strong> cuando hay <code>NULL</code> (por ejemplo tras un <code>LEFT JOIN</code>).</li><li><strong>Contar filas duplicadas por un JOIN:</strong> si un pedido tiene 3 líneas, aparece 3 veces. Usa <code>COUNT(DISTINCT p.id)</code>.</li><li><strong>Olvidar que <code>AVG</code> ignora los <code>NULL</code></strong>: el promedio es solo de los valores que existen.</li><li><strong>Filtrar con <code>HAVING</code> algo que podía ir en <code>WHERE</code>:</strong> funciona, pero es menos eficiente porque agrupa más filas de las necesarias.</li><li><strong>Mostrar decimales largos:</strong> redondea con <code>ROUND(AVG(precio), 2)</code>.</li></ul>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li><code>COUNT</code>, <code>SUM</code>, <code>AVG</code>, <code>MIN</code> y <code>MAX</code> resumen muchas filas en un valor.</li><li><code>COUNT(*)</code> cuenta filas; <code>COUNT(col)</code> cuenta las que no son <code>NULL</code>. El resto de agregaciones ignoran los <code>NULL</code>.</li><li><code>GROUP BY col</code> calcula la agregación por cada valor distinto de <code>col</code>.</li><li>Toda columna del <code>SELECT</code> debe estar agrupada o dentro de una función de agregación.</li><li><code>WHERE</code> filtra filas antes de agrupar; <code>HAVING</code> filtra grupos después.</li><li>Orden de ejecución: <code>FROM/JOIN → WHERE → GROUP BY → HAVING → SELECT → ORDER BY → LIMIT</code>.</li><li><code>COALESCE(x, 0)</code> sustituye <code>NULL</code> por un valor; <code>COUNT(DISTINCT x)</code> cuenta valores distintos.</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">8.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td>Agregación</td><td>Cálculo que resume varias filas en un solo valor.</td></tr><tr><td>COUNT(*)</td><td>Cuenta las filas del grupo o de la tabla.</td></tr><tr><td>SUM / AVG</td><td>Suma y promedio de los valores de una columna, ignorando <code>NULL</code>.</td></tr><tr><td>MIN / MAX</td><td>Menor y mayor valor de una columna.</td></tr><tr><td>GROUP BY</td><td>Cláusula que reúne las filas con el mismo valor para calcular un resumen por grupo.</td></tr><tr><td>HAVING</td><td>Cláusula que filtra grupos después de calcular las agregaciones.</td></tr><tr><td>COALESCE</td><td>Función que devuelve el primer valor que no es <code>NULL</code>.</td></tr><tr><td>DISTINCT</td><td>Palabra que elimina duplicados, también dentro de <code>COUNT(DISTINCT …)</code>.</td></tr></tbody>
+</table></div>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>¿Qué devuelve <code>SELECT COUNT(*) FROM productos;</code>?</p><ul class="opts"><li><button type="button" class="opt">Los nombres de los productos</button></li><li><button type="button" class="opt" data-ok>Una sola fila con el número de filas de la tabla</button></li><li><button type="button" class="opt">Una fila por producto</button></li><li><button type="button" class="opt">La suma de los precios</button></li></ul><p class="explain" hidden>Sin <code>GROUP BY</code>, una agregación resume toda la tabla en una fila.</p></div>
+<div class="quiz-q"><p>¿Cuál es la diferencia entre <code>COUNT(*)</code> y <code>COUNT(columna)</code>?</p><ul class="opts"><li><button type="button" class="opt">Ninguna</button></li><li><button type="button" class="opt" data-ok><code>COUNT(columna)</code> no cuenta los <code>NULL</code></button></li><li><button type="button" class="opt"><code>COUNT(*)</code> ignora las filas repetidas</button></li><li><button type="button" class="opt"><code>COUNT(columna)</code> suma los valores</button></li></ul><p class="explain" hidden><code>COUNT(*)</code> cuenta todas las filas; <code>COUNT(columna)</code> solo las que tienen valor en esa columna.</p></div>
+<div class="quiz-q"><p>¿Qué hace <code>GROUP BY categoria</code>?</p><ul class="opts"><li><button type="button" class="opt">Ordena por categoría</button></li><li><button type="button" class="opt" data-ok>Calcula los resúmenes una vez por cada categoría</button></li><li><button type="button" class="opt">Elimina las categorías repetidas de la tabla</button></li><li><button type="button" class="opt">Filtra las categorías</button></li></ul><p class="explain" hidden>Reúne las filas con la misma categoría y aplica las funciones de agregación a cada grupo.</p></div>
+<div class="quiz-q"><p>¿Cómo se filtran las categorías que tienen al menos 2 productos?</p><ul class="opts"><li><button type="button" class="opt"><code>WHERE COUNT(*) &gt;= 2</code></button></li><li><button type="button" class="opt" data-ok><code>HAVING COUNT(*) &gt;= 2</code></button></li><li><button type="button" class="opt"><code>LIMIT 2</code></button></li><li><button type="button" class="opt"><code>ORDER BY COUNT(*)</code></button></li></ul><p class="explain" hidden>El resultado de <code>COUNT(*)</code> existe después de agrupar, así que se filtra con <code>HAVING</code>.</p></div>
+<div class="quiz-q"><p>¿Cuál es el orden correcto de ejecución?</p><ul class="opts"><li><button type="button" class="opt"><code>SELECT → FROM → WHERE → GROUP BY</code></button></li><li><button type="button" class="opt" data-ok><code>FROM → WHERE → GROUP BY → HAVING → SELECT</code></button></li><li><button type="button" class="opt"><code>GROUP BY → WHERE → FROM</code></button></li><li><button type="button" class="opt"><code>HAVING → WHERE → GROUP BY</code></button></li></ul><p class="explain" hidden>Primero se obtienen las filas, luego se filtran, se agrupan, se filtran los grupos y al final se eligen las columnas.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="bd-06">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../05-relaciones-y-join/ejercicio.html"><small>← Anterior</small>Ejercicio de la lección 5</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de Bases de datos con SQL · Lección 6 · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&title=%5BError%5D%20Lecci%C3%B3n%206%3A%20Agrupar%20y%20resumir%20%C2%B7%20Curso%20de%20Bases%20de%20datos%20con%20SQL&pagina=https%3A//cacg-code.github.io/PRACTICAS-HTML/bd/06-agrupar-y-resumir/" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+  <script>
+
+(function () {
+  var w = document.querySelector('[data-sim="agg"]'); if (!w) return;
+  var D = {"count": {"sql": "SELECT COUNT(*) AS cuantos\nFROM productos;", "head": ["cuantos"], "rows": [[8]]}, "countg": {"sql": "SELECT categoria, COUNT(*) AS cuantos\nFROM productos\nGROUP BY categoria\nORDER BY categoria;", "head": ["categoria", "cuantos"], "rows": [["Accesorios", 1], ["Audio", 2], ["Pantallas", 2], ["Periféricos", 3]]}, "countgh": {"sql": "SELECT categoria, COUNT(*) AS cuantos\nFROM productos\nGROUP BY categoria\nHAVING COUNT(*) >= 2\nORDER BY categoria;", "head": ["categoria", "cuantos"], "rows": [["Audio", 2], ["Pantallas", 2], ["Periféricos", 3]]}, "sum": {"sql": "SELECT SUM(stock) AS stock_total\nFROM productos;", "head": ["stock_total"], "rows": [[203]]}, "sumg": {"sql": "SELECT categoria, SUM(stock) AS stock_total\nFROM productos\nGROUP BY categoria\nORDER BY categoria;", "head": ["categoria", "stock_total"], "rows": [["Accesorios", 100], ["Audio", 25], ["Pantallas", 11], ["Periféricos", 67]]}, "sumgh": {"sql": "SELECT categoria, SUM(stock) AS stock_total\nFROM productos\nGROUP BY categoria\nHAVING COUNT(*) >= 2\nORDER BY categoria;", "head": ["categoria", "stock_total"], "rows": [["Audio", 25], ["Pantallas", 11], ["Periféricos", 67]]}, "avg": {"sql": "SELECT AVG(precio) AS promedio\nFROM productos;", "head": ["promedio"], "rows": [["258.55"]]}, "avgg": {"sql": "SELECT categoria, AVG(precio) AS promedio\nFROM productos\nGROUP BY categoria\nORDER BY categoria;", "head": ["categoria", "promedio"], "rows": [["Accesorios", "15.00"], ["Audio", "94.45"], ["Pantallas", "774.50"], ["Periféricos", "105.17"]]}, "avggh": {"sql": "SELECT categoria, AVG(precio) AS promedio\nFROM productos\nGROUP BY categoria\nHAVING COUNT(*) >= 2\nORDER BY categoria;", "head": ["categoria", "promedio"], "rows": [["Audio", "94.45"], ["Pantallas", "774.50"], ["Periféricos", "105.17"]]}, "min": {"sql": "SELECT MIN(precio) AS barato\nFROM productos;", "head": ["barato"], "rows": [["15.00"]]}, "ming": {"sql": "SELECT categoria, MIN(precio) AS barato\nFROM productos\nGROUP BY categoria\nORDER BY categoria;", "head": ["categoria", "barato"], "rows": [["Accesorios", "15.00"], ["Audio", "89.90"], ["Pantallas", "650.00"], ["Periféricos", "45.50"]]}, "mingh": {"sql": "SELECT categoria, MIN(precio) AS barato\nFROM productos\nGROUP BY categoria\nHAVING COUNT(*) >= 2\nORDER BY categoria;", "head": ["categoria", "barato"], "rows": [["Audio", "89.90"], ["Pantallas", "650.00"], ["Periféricos", "45.50"]]}, "max": {"sql": "SELECT MAX(precio) AS caro\nFROM productos;", "head": ["caro"], "rows": [["899.00"]]}, "maxg": {"sql": "SELECT categoria, MAX(precio) AS caro\nFROM productos\nGROUP BY categoria\nORDER BY categoria;", "head": ["categoria", "caro"], "rows": [["Accesorios", "15.00"], ["Audio", "99.00"], ["Pantallas", "899.00"], ["Periféricos", "150.00"]]}, "maxgh": {"sql": "SELECT categoria, MAX(precio) AS caro\nFROM productos\nGROUP BY categoria\nHAVING COUNT(*) >= 2\nORDER BY categoria;", "head": ["categoria", "caro"], "rows": [["Audio", "99.00"], ["Pantallas", "899.00"], ["Periféricos", "150.00"]]}};
+  var $ = function (s) { return w.querySelector(s); };
+  var esc = function (v) { return v === null ? '<em>NULL</em>' : String(v).replace(/&/g, '&amp;').replace(/</g, '&lt;'); };
+  function draw() {
+    var g = $('#a-group').checked;
+    $('#a-having').disabled = !g;
+    if (!g) $('#a-having').checked = false;
+    var k = $('#a-func').value + (g ? 'g' : '') + ($('#a-having').checked ? 'h' : '');
+    var d = D[k];
+    $('#a-sql').textContent = d.sql;
+    $('#a-tabla thead').innerHTML = '<tr>' + d.head.map(function (h) { return '<th>' + esc(h) + '</th>'; }).join('') + '</tr>';
+    $('#a-tabla tbody').innerHTML = d.rows.map(function (r) { return '<tr>' + r.map(function (v) { return '<td>' + esc(v) + '</td>'; }).join('') + '</tr>'; }).join('');
+    $('#a-msg').textContent = d.rows.length + (d.rows.length === 1 ? ' fila.' : ' filas.');
+    $('#a-msg').className = 'msg okk';
+  }
+  ['#a-func', '#a-group', '#a-having'].forEach(function (s) { $(s).addEventListener('change', draw); });
+  draw();
+})();
+
+  </script>
+</body>
+</html>

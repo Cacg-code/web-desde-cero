@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lección 5: API REST y verbos HTTP · Curso de Node.js y APIs</title>
+  <meta name="description" content="Aprende qué es una API REST: recursos, verbos GET, POST, PUT, PATCH y DELETE, códigos de estado y un CRUD completo con Express en memoria.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/node/05-api-rest/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Lección 5: API REST y verbos HTTP · Curso de Node.js y APIs">
+  <meta property="og:description" content="Aprende qué es una API REST: recursos, verbos GET, POST, PUT, PATCH y DELETE, códigos de estado y un CRUD completo con Express en memoria.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/node/05-api-rest/">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de Node.js y APIs</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap lesson-layout" id="contenido">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#que-es">Qué es una API REST</a></li><li><a href="#verbos">Seguros e idempotentes</a></li><li><a href="#crud">Un CRUD completo en memoria</a></li><li><a href="#probar">Probar tu API</a></li><li><a href="#diseno">Buenas prácticas de diseño</a></li><li><a href="#errores">Errores frecuentes</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de Node.js y APIs</a> › Lección 5</div>
+        <h1>API REST y verbos HTTP</h1>
+        <ul class="meta"><li>⏱ 60 minutos</li><li>📶 Nivel: intermedio</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Explicar qué es un recurso y qué hace cada verbo HTTP.</li><li>Distinguir <code>PUT</code> de <code>PATCH</code> y entender la idempotencia.</li><li>Construir un CRUD completo con Express.</li><li>Elegir el código de estado correcto en cada caso.</li><li>Probar tu API con <code>curl</code> o una extensión.</li></ul>
+</div>
+
+<h2 id="que-es"><span class="n">1.</span>Qué es una API REST</h2>
+
+<p>Una <strong>API</strong> es la «puerta» que un programa ofrece para que otros programas lo usen. Una <strong>API REST</strong> hace eso sobre HTTP: en lugar de páginas para leer, ofrece <strong>recursos</strong> (tareas, usuarios, productos…) que otros programas piden y modifican, casi siempre en formato <strong>JSON</strong>.</p>
+<p>REST se apoya en dos ideas sencillas:</p>
+<ul><li>Cada <strong>recurso</strong> tiene una dirección propia (una URL): <code>/tareas</code> es la colección y <code>/tareas/7</code> es una tarea concreta.</li><li>El <strong>verbo HTTP</strong> indica la acción: leer, crear, reemplazar, modificar o borrar.</li></ul>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Sustantivos en la URL, verbos en el método</p>
+<p>Escribe <code>GET /tareas</code>, no <code>/obtenerTareas</code>. La acción ya la dice el método; la URL solo nombra el recurso, en plural.</p>
+</div>
+
+<div class="table-wrap"><table>
+<thead><tr><th>Verbo</th><th>Ruta de ejemplo</th><th>Qué hace</th><th>Éxito</th></tr></thead>
+<tbody><tr><td><code>GET</code></td><td><code>/tareas</code></td><td>Lista todas las tareas</td><td><code>200</code></td></tr><tr><td><code>GET</code></td><td><code>/tareas/7</code></td><td>Devuelve la tarea 7</td><td><code>200</code></td></tr><tr><td><code>POST</code></td><td><code>/tareas</code></td><td>Crea una tarea nueva</td><td><code>201</code></td></tr><tr><td><code>PUT</code></td><td><code>/tareas/7</code></td><td><strong>Reemplaza</strong> la tarea 7 entera</td><td><code>200</code></td></tr><tr><td><code>PATCH</code></td><td><code>/tareas/7</code></td><td>Cambia <strong>solo algunos campos</strong></td><td><code>200</code></td></tr><tr><td><code>DELETE</code></td><td><code>/tareas/7</code></td><td>Borra la tarea 7</td><td><code>204</code></td></tr></tbody>
+</table></div>
+
+<p>A este conjunto de operaciones se le llama <strong>CRUD</strong>: <em>Create</em> (crear), <em>Read</em> (leer), <em>Update</em> (actualizar) y <em>Delete</em> (borrar). Puedes ver la definición oficial de cada método en <a href="https://developer.mozilla.org/es/docs/Web/HTTP/Methods" target="_blank" rel="noopener">MDN</a>.</p>
+
+<h2 id="verbos"><span class="n">2.</span>Seguros e idempotentes</h2>
+
+<p>Dos propiedades explican por qué cada verbo se usa como se usa:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Verbo</th><th>¿Seguro? (no modifica datos)</th><th>¿Idempotente? (repetirlo deja el mismo resultado)</th></tr></thead>
+<tbody><tr><td><code>GET</code></td><td>Sí</td><td>Sí</td></tr><tr><td><code>POST</code></td><td>No</td><td><strong>No</strong>: cada llamada crea otro recurso</td></tr><tr><td><code>PUT</code></td><td>No</td><td>Sí: reemplazar dos veces con lo mismo da igual</td></tr><tr><td><code>PATCH</code></td><td>No</td><td>Depende de cómo se use</td></tr><tr><td><code>DELETE</code></td><td>No</td><td>Sí: borrar algo ya borrado no cambia nada más</td></tr></tbody>
+</table></div>
+
+<p>Por eso un navegador puede repetir un <code>GET</code> sin riesgo (por ejemplo, al recargar), pero te avisa antes de reenviar un <code>POST</code>: podría crear un pedido duplicado.</p>
+<h3>PUT frente a PATCH</h3>
+<p>Imagina la tarea <code>{ "id": 7, "titulo": "Comprar pan", "hecha": false }</code>:</p>
+<div class="code">
+  <div class="code-head"><span>Dos formas de marcarla como hecha</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>PUT   /tareas/7   cuerpo: { &quot;titulo&quot;: &quot;Comprar pan&quot;, &quot;hecha&quot;: true }   // hay que enviar TODO
+PATCH /tareas/7   cuerpo: { &quot;hecha&quot;: true }                           // solo lo que cambia</code></pre>
+</div>
+
+<p><code>PUT</code> sustituye el recurso completo (lo que no envíes desaparece); <code>PATCH</code> fusiona los cambios con lo que ya había.</p>
+
+<h2 id="crud"><span class="n">3.</span>Un CRUD completo en memoria</h2>
+
+<p>Vamos a construir una API de tareas. Para empezar, guardamos los datos en un <strong>array en memoria</strong>: es lo más simple, aunque se pierde al reiniciar el servidor (en el proyecto final los guardaremos en un archivo).</p>
+<div class="code">
+  <div class="code-head"><span>index.js</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>import express from &quot;express&quot;;
+
+const app = express();
+app.use(express.json());
+
+let tareas = [
+  { id: 1, titulo: &quot;Aprender Express&quot;, hecha: false },
+  { id: 2, titulo: &quot;Crear mi primera API&quot;, hecha: false },
+];
+let siguienteId = 3;
+
+// LEER todas
+app.get(&quot;/tareas&quot;, (req, res) =&gt; {
+  res.json(tareas);
+});
+
+// LEER una
+app.get(&quot;/tareas/:id&quot;, (req, res) =&gt; {
+  const tarea = tareas.find((t) =&gt; t.id === Number(req.params.id));
+  if (!tarea) return res.status(404).json({ error: &quot;Tarea no encontrada&quot; });
+  res.json(tarea);
+});
+
+// CREAR
+app.post(&quot;/tareas&quot;, (req, res) =&gt; {
+  const { titulo } = req.body ?? {};
+  if (typeof titulo !== &quot;string&quot; || titulo.trim() === &quot;&quot;) {
+    return res.status(400).json({ error: &quot;El título es obligatorio&quot; });
+  }
+  const nueva = { id: siguienteId++, titulo: titulo.trim(), hecha: false };
+  tareas.push(nueva);
+  res.status(201).json(nueva);
+});
+
+// REEMPLAZAR
+app.put(&quot;/tareas/:id&quot;, (req, res) =&gt; {
+  const i = tareas.findIndex((t) =&gt; t.id === Number(req.params.id));
+  if (i === -1) return res.status(404).json({ error: &quot;Tarea no encontrada&quot; });
+  const { titulo, hecha } = req.body ?? {};
+  if (typeof titulo !== &quot;string&quot; || typeof hecha !== &quot;boolean&quot;) {
+    return res.status(400).json({ error: &quot;Se requieren titulo y hecha&quot; });
+  }
+  tareas[i] = { id: tareas[i].id, titulo, hecha };
+  res.json(tareas[i]);
+});
+
+// MODIFICAR parcialmente
+app.patch(&quot;/tareas/:id&quot;, (req, res) =&gt; {
+  const tarea = tareas.find((t) =&gt; t.id === Number(req.params.id));
+  if (!tarea) return res.status(404).json({ error: &quot;Tarea no encontrada&quot; });
+  const { titulo, hecha } = req.body ?? {};
+  if (titulo !== undefined) tarea.titulo = titulo;
+  if (hecha !== undefined) tarea.hecha = hecha;
+  res.json(tarea);
+});
+
+// BORRAR
+app.delete(&quot;/tareas/:id&quot;, (req, res) =&gt; {
+  const i = tareas.findIndex((t) =&gt; t.id === Number(req.params.id));
+  if (i === -1) return res.status(404).json({ error: &quot;Tarea no encontrada&quot; });
+  tareas.splice(i, 1);
+  res.sendStatus(204);
+});
+
+app.listen(3000, () =&gt; console.log(&quot;API en http://localhost:3000&quot;));</code></pre>
+</div>
+
+<p>Fíjate en los patrones que se repiten: <strong>buscar</strong> el recurso, responder <code>404</code> si no existe, <strong>validar</strong> los datos y responder <code>400</code> si están mal, y por último actuar y devolver el código correcto.</p>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · Validar siempre</p>
+<p>Nunca guardes lo que llega en <code>req.body</code> sin comprobarlo. Aquí solo mirábamos el tipo del título; en la lección 7 verás cómo validar de forma más completa.</p>
+</div>
+
+
+<h2 id="probar"><span class="n">4.</span>Probar tu API</h2>
+
+<p>Con el servidor en marcha, prueba cada verbo. En macOS, Linux o Git Bash:</p>
+<div class="code">
+  <div class="code-head"><span>Terminal</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>curl http://localhost:3000/tareas
+curl -X POST http://localhost:3000/tareas -H &quot;Content-Type: application/json&quot; -d &#x27;{&quot;titulo&quot;:&quot;Probar mi API&quot;}&#x27;
+curl -X PATCH http://localhost:3000/tareas/1 -H &quot;Content-Type: application/json&quot; -d &#x27;{&quot;hecha&quot;:true}&#x27;
+curl -X DELETE http://localhost:3000/tareas/2 -i</code></pre>
+</div>
+<div class="code">
+  <div class="code-head"><span>Salida esperada</span></div>
+<pre><code>[{&quot;id&quot;:1,&quot;titulo&quot;:&quot;Aprender Express&quot;,&quot;hecha&quot;:false},{&quot;id&quot;:2,&quot;titulo&quot;:&quot;Crear mi primera API&quot;,&quot;hecha&quot;:false}]
+{&quot;id&quot;:3,&quot;titulo&quot;:&quot;Probar mi API&quot;,&quot;hecha&quot;:false}
+{&quot;id&quot;:1,&quot;titulo&quot;:&quot;Aprender Express&quot;,&quot;hecha&quot;:true}
+HTTP/1.1 204 No Content</code></pre>
+</div>
+
+<p>Si prefieres una interfaz gráfica, extensiones de VS Code como <strong>REST Client</strong> o <strong>Thunder Client</strong> permiten escribir y enviar peticiones sin recordar la sintaxis de <code>curl</code>. En PowerShell usa <code>curl.exe</code> (y escapa las comillas del JSON, como viste en la lección 4).</p>
+<p>Mientras tanto, practica en el navegador la lógica del CRUD con este editor, que usa solo JavaScript puro:</p>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ CRUD sobre un array</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:560px">&lt;script&gt;
+let tareas = [{ id: 1, titulo: "Aprender Node", hecha: false }];
+let siguienteId = 2;
+
+function crear(titulo) {
+  const t = { id: siguienteId++, titulo, hecha: false };
+  tareas.push(t);
+  return t;
+}
+
+function actualizar(id, cambios) {
+  const t = tareas.find((x) =&gt; x.id === id);
+  if (!t) return null;
+  Object.assign(t, cambios);   // PATCH: fusiona
+  return t;
+}
+
+function borrar(id) {
+  const i = tareas.findIndex((x) =&gt; x.id === id);
+  if (i === -1) return false;
+  tareas.splice(i, 1);
+  return true;
+}
+
+crear("Practicar REST");
+actualizar(1, { hecha: true });
+console.log(tareas);
+console.log("Borrar 99:", borrar(99));
+console.log("Borrar 2:", borrar(2));
+console.log(tareas.length);
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+
+
+<h2 id="diseno"><span class="n">5.</span>Buenas prácticas de diseño</h2>
+
+<ul>
+<li><strong>URLs en plural y en minúsculas</strong>: <code>/tareas</code>, <code>/usuarios/3/pedidos</code>.</li>
+<li><strong>Código de estado correcto</strong>: <code>201</code> al crear, <code>204</code> al borrar, <code>404</code> si no existe, <code>400</code> si los datos son inválidos.</li>
+<li><strong>Siempre JSON</strong>, también en los errores, con un formato constante como <code>{ "error": "mensaje" }</code>.</li>
+<li><strong>Filtros y orden con query</strong>: <code>GET /tareas?hecha=true</code> en lugar de rutas nuevas.</li>
+<li><strong>Sin lógica en las rutas cuando crezca</strong>: pasa a funciones o módulos aparte (lo verás en el proyecto final).</li>
+<li><strong>Versiona</strong> la API si va a tener clientes externos: <code>/api/v1/tareas</code>.</li>
+</ul>
+<div class="code">
+  <div class="code-head"><span>Filtrar con query en GET /tareas</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>app.get(&quot;/tareas&quot;, (req, res) =&gt; {
+  let resultado = tareas;
+  if (req.query.hecha !== undefined) {
+    const hecha = req.query.hecha === &quot;true&quot;;
+    resultado = resultado.filter((t) =&gt; t.hecha === hecha);
+  }
+  res.json(resultado);
+});</code></pre>
+</div>
+
+<div class="callout nota">
+<p class="callout-title">📌 Nota · Express Router</p>
+<p>Para no tener todas las rutas en un archivo, Express ofrece <code>express.Router()</code>: agrupas las rutas de <code>/tareas</code> en un módulo y lo montas con <code>app.use("/tareas", enrutador)</code>. Está explicado en <a href="https://expressjs.com/es/guide/routing.html" target="_blank" rel="noopener">la guía de enrutamiento de Express</a> y lo usarás en el proyecto final.</p>
+</div>
+
+
+<h2 id="errores"><span class="n">6.</span>Errores frecuentes</h2>
+<ul><li><strong>Verbos en la URL</strong> (<code>/crearTarea</code>): usa <code>POST /tareas</code>.</li><li><strong>Responder 200 a todo</strong>: crear es <code>201</code>, borrar suele ser <code>204</code> y lo inexistente <code>404</code>.</li><li><strong>Comparar ids de distinto tipo</strong>: <code>req.params.id</code> es texto; conviértelo con <code>Number</code> antes de comparar con <code>===</code>.</li><li><strong>Confundir PUT y PATCH</strong>: <code>PUT</code> exige el recurso completo.</li><li><strong>No validar el cuerpo</strong>: guardas basura y la API falla más tarde.</li><li><strong>Olvidar <code>express.json()</code></strong>: <code>req.body</code> llega sin datos.</li><li><strong>Esperar que los datos persistan</strong>: un array en memoria desaparece al reiniciar.</li></ul>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li>Una API REST expone <strong>recursos</strong> con URLs en plural y usa el <strong>verbo</strong> para la acción.</li><li><strong>GET</strong> lee, <strong>POST</strong> crea (201), <strong>PUT</strong> reemplaza, <strong>PATCH</strong> modifica parte, <strong>DELETE</strong> borra (204).</li><li><code>GET</code> es seguro e idempotente; <code>POST</code> no es idempotente.</li><li>CRUD = Create, Read, Update, Delete.</li><li>Patrón de cada ruta: buscar, 404 si no existe, validar, 400 si es inválido, actuar y responder.</li><li>Los errores también se devuelven en JSON, con un formato constante.</li><li>Los filtros van en la query (<code>?hecha=true</code>), no en rutas nuevas.</li><li>Un array en memoria sirve para aprender; para guardar de verdad se usa un archivo o una base de datos.</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">7.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td>API</td><td>Conjunto de operaciones que un programa ofrece para que otros lo usen.</td></tr><tr><td>REST</td><td>Estilo de diseño de APIs basado en recursos con URL y verbos HTTP.</td></tr><tr><td>Recurso</td><td>Cosa que gestiona la API (tarea, usuario, producto).</td></tr><tr><td>CRUD</td><td>Crear, leer, actualizar y borrar.</td></tr><tr><td>Idempotente</td><td>Operación que repetida produce el mismo resultado que una sola vez.</td></tr><tr><td>Colección</td><td>Recurso en plural que agrupa varios elementos: <code>/tareas</code>.</td></tr><tr><td>Payload</td><td>Datos que viajan en el cuerpo de una petición o respuesta.</td></tr><tr><td>Endpoint</td><td>Combinación de método y ruta que ofrece la API.</td></tr></tbody>
+</table></div>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>¿Qué verbo usarías para crear una tarea nueva?</p><ul class="opts"><li><button type="button" class="opt"><code>GET</code></button></li><li><button type="button" class="opt" data-ok><code>POST</code></button></li><li><button type="button" class="opt"><code>DELETE</code></button></li><li><button type="button" class="opt"><code>PATCH</code></button></li></ul><p class="explain" hidden><code>POST</code> sobre la colección (<code>/tareas</code>) crea un recurso y devuelve <code>201</code>.</p></div>
+<div class="quiz-q"><p>¿Cuál es la diferencia entre <code>PUT</code> y <code>PATCH</code>?</p><ul class="opts"><li><button type="button" class="opt">Ninguna</button></li><li><button type="button" class="opt" data-ok><code>PUT</code> reemplaza el recurso entero; <code>PATCH</code> cambia solo algunos campos</button></li><li><button type="button" class="opt"><code>PATCH</code> borra y <code>PUT</code> crea</button></li><li><button type="button" class="opt"><code>PUT</code> es solo para archivos</button></li></ul><p class="explain" hidden><code>PUT</code> envía el recurso completo; <code>PATCH</code> envía solo lo que cambia.</p></div>
+<div class="quiz-q"><p>¿Qué código suele devolverse tras borrar con éxito y sin cuerpo?</p><ul class="opts"><li><button type="button" class="opt">200</button></li><li><button type="button" class="opt">201</button></li><li><button type="button" class="opt" data-ok>204</button></li><li><button type="button" class="opt">400</button></li></ul><p class="explain" hidden><code>204 No Content</code>: todo fue bien y no hay nada que devolver.</p></div>
+<div class="quiz-q"><p>¿Cuál es una URL de recurso bien diseñada?</p><ul class="opts"><li><button type="button" class="opt"><code>/obtenerTareas</code></button></li><li><button type="button" class="opt"><code>/tarea/crear</code></button></li><li><button type="button" class="opt" data-ok><code>/tareas/7</code></button></li><li><button type="button" class="opt"><code>/Tareas_Todas</code></button></li></ul><p class="explain" hidden>Sustantivo en plural y el id al final; la acción la indica el verbo.</p></div>
+<div class="quiz-q"><p>¿Por qué <code>POST</code> no es idempotente?</p><ul class="opts"><li><button type="button" class="opt">Porque es lento</button></li><li><button type="button" class="opt" data-ok>Porque cada repetición crea otro recurso</button></li><li><button type="button" class="opt">Porque no lleva cuerpo</button></li><li><button type="button" class="opt">Porque no usa JSON</button></li></ul><p class="explain" hidden>Enviar dos veces el mismo <code>POST</code> crea dos recursos, así que el resultado cambia.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="node-05">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../04-servidor-express/"><small>← Anterior</small>Servidor HTTP con Express</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de Node.js y APIs · Lección 5 · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&amp;title=%5BError%5D%20Lecci%C3%B3n%205%3A%20API%20REST%20y%20verbos%20HTTP%20%C2%B7%20Curso%20de%20Node.js%20y%20APIs&amp;pagina=https://cacg-code.github.io/PRACTICAS-HTML/node/05-api-rest/" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

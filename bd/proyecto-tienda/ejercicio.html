@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ejercicio · Proyecto: base de datos de una tienda · Curso de Bases de datos con SQL</title>
+  <meta name="description" content="Ejercicio práctico de: Proyecto: base de datos de una tienda.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/bd/proyecto-tienda/ejercicio.html">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#0e7490">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Ejercicio · Proyecto: base de datos de una tienda · Curso de Bases de datos con SQL">
+  <meta property="og:description" content="Ejercicio práctico de: Proyecto: base de datos de una tienda.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/bd/proyecto-tienda/ejercicio.html">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+  <style>
+    .sqlsim select, .sqlsim input[type="number"] { padding: .5rem .6rem; border: 1px solid var(--border); border-radius: 8px; background: var(--bg); color: var(--text); font: inherit; max-width: 100%; }
+    .sqlsim .sql-out { margin: 0; padding: .8rem 1rem; border-radius: 10px; background: var(--code-bg); color: var(--code-text); font-family: var(--mono); font-size: .88rem; line-height: 1.6; white-space: pre-wrap; overflow-wrap: anywhere; }
+    .sqlsim .msg { margin: 0; font-weight: 600; }
+    .sqlsim .msg.err { color: #b91c1c; }
+    .sqlsim .msg.okk { color: #15803d; }
+    :root[data-theme="dark"] .sqlsim .msg.err { color: #fca5a5; }
+    :root[data-theme="dark"] .sqlsim .msg.okk { color: #86efac; }
+    @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .sqlsim .msg.err { color: #fca5a5; } :root:not([data-theme="light"]) .sqlsim .msg.okk { color: #86efac; } }
+    .sqlsim .w-row button { cursor: pointer; }
+    .sqlsim .w-row label { display: inline-flex; gap: .4rem; align-items: center; }
+    .sqlsim td.hl, .sqlsim th.hl, .sqlsim tr.hl td { background: color-mix(in srgb, var(--accent) 22%, transparent); }
+    .sqlsim tr.gone td { text-decoration: line-through; opacity: .5; }
+    .sqlsim tr.new td { background: color-mix(in srgb, #22c55e 22%, transparent); }
+    .sqlsim tr.chg td { background: color-mix(in srgb, #f59e0b 25%, transparent); }
+  </style>
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Bases de datos con SQL</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap" id="contenido" style="max-width:820px;padding-top:2rem;padding-bottom:3rem">
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de Bases de datos con SQL</a> › <a href="./">Proyecto final</a> › Ejercicio</div>
+        <h1>Ejercicio: Proyecto: base de datos de una tienda</h1>
+        <ul class="meta"><li>⏱ 90 minutos</li><li>📶 Nivel: principiante</li></ul>
+      </header>
+
+      <h2>Objetivo</h2>
+      <p>Construir tu propia versión de la base de datos de la tienda, ampliarla con tus datos e informes y dejarla documentada y protegida.</p>
+
+      <h3>Cómo se trabaja</h3>
+      <p>Trabaja en una carpeta <code>tienda/</code> con tu archivo <code>tienda.sql</code> y una base <code>tienda.db</code>. Parte del script de la lección y haz crecer el proyecto. Marca cada entrega a medida que la completes.</p>
+
+      <h2>Pasos</h2>
+      <p>Marca cada paso a medida que lo completes. Tu avance se guarda en este navegador.</p>
+      <div class="progress" aria-hidden="true"><div></div></div>
+      <p id="progreso-texto" style="color:var(--muted);font-size:.9rem" aria-live="polite"></p>
+      <ul class="checklist"><li><label><input type="checkbox" id="p1"><span>Crea la carpeta <code>tienda/</code>, guarda el script de la lección como <code>tienda.sql</code> y cárgalo: <code>sqlite3 tienda.db ".read tienda.sql"</code>. Comprueba el conteo de filas.</span></label></li><li><label><input type="checkbox" id="p2"><span>Añade a tu script <strong>2 productos nuevos</strong>, <strong>2 clientes nuevos</strong> y <strong>3 pedidos</strong> con sus líneas, cuidando el orden (primero lo que no depende de nada).</span></label></li><li><label><input type="checkbox" id="p3"><span>Registra un pedido más usando una <strong>transacción</strong> que también descuente el stock, y comprueba el stock después.</span></label></li><li><label><input type="checkbox" id="p4"><span>Escribe los <strong>5 informes</strong> del panel y añade 2 informes propios (por ejemplo ticket promedio y clientes que gastan más de 300).</span></label></li><li><label><input type="checkbox" id="p5"><span>Prueba que tu base se defiende: intenta crear un pedido con un cliente inexistente y una línea con cantidad 0, y anota los errores.</span></label></li><li><label><input type="checkbox" id="p6"><span>Escribe en un archivo <code>seguridad.md</code>: qué rol crearías para la aplicación, sus <code>GRANT</code>, y el comando de copia de seguridad que programarías.</span></label></li><li><label><input type="checkbox" id="p7"><span>Sube la carpeta a un repositorio (sin la base <code>tienda.db</code> si tiene datos reales; el script basta) y escribe un <code>README</code> corto con cómo cargarla.</span></label></li></ul>
+      <details><summary>💡 Pista 1: orden de carga</summary><p>Primero <code>productos</code> y <code>clientes</code>; después <code>pedidos</code>; al final <code>lineas_pedido</code>, que depende de las otras.</p></details>
+      <details><summary>💡 Pista 2: los informes propios</summary><p>El ticket promedio es el promedio de los totales por pedido: agrupa por pedido en una subconsulta y calcula <code>AVG</code> fuera.</p></details>
+      <details>
+        <summary>✅ Ver una solución posible</summary>
+        <p>Intenta resolverlo antes de mirar. Tu versión puede ser distinta y también correcta.</p>
+<p>Cada persona tendrá datos distintos, pero estos son dos informes extra con el script original (resultados verificados):</p><div class="code">
+  <div class="code-head"><span>Ticket promedio</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">SELECT</span> <span class="tk-tag">AVG</span>(total) <span class="tk-tag">AS</span> promedio
+<span class="tk-tag">FROM</span> (
+  <span class="tk-tag">SELECT</span> p.id, <span class="tk-tag">SUM</span>(l.cantidad * pr.precio) <span class="tk-tag">AS</span> total
+  <span class="tk-tag">FROM</span> pedidos p
+  <span class="tk-tag">JOIN</span> lineas_pedido l <span class="tk-tag">ON</span> l.pedido_id = p.id
+  <span class="tk-tag">JOIN</span> productos pr    <span class="tk-tag">ON</span> pr.id       = l.producto_id
+  <span class="tk-tag">GROUP</span> <span class="tk-tag">BY</span> p.id
+);</code></pre>
+</div>
+<p><strong>Resultado esperado</strong></p>
+<div class="table-wrap"><table>
+<thead><tr><th>promedio</th></tr></thead>
+<tbody><tr><td>394.75</td></tr></tbody>
+</table></div>
+<div class="code">
+  <div class="code-head"><span>Clientes que gastan más de 300</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">SELECT</span> c.nombre, <span class="tk-tag">SUM</span>(l.cantidad * pr.precio) <span class="tk-tag">AS</span> gasto
+<span class="tk-tag">FROM</span> clientes c
+<span class="tk-tag">JOIN</span> pedidos p       <span class="tk-tag">ON</span> p.cliente_id = c.id
+<span class="tk-tag">JOIN</span> lineas_pedido l <span class="tk-tag">ON</span> l.pedido_id  = p.id
+<span class="tk-tag">JOIN</span> productos pr    <span class="tk-tag">ON</span> pr.id        = l.producto_id
+<span class="tk-tag">GROUP</span> <span class="tk-tag">BY</span> c.id
+<span class="tk-tag">HAVING</span> <span class="tk-tag">SUM</span>(l.cantidad * pr.precio) &gt; <span class="tk-attr">300</span>
+<span class="tk-tag">ORDER</span> <span class="tk-tag">BY</span> gasto <span class="tk-tag">DESC</span>;</code></pre>
+</div>
+<p><strong>Resultado esperado</strong></p>
+<div class="table-wrap"><table>
+<thead><tr><th>nombre</th><th>gasto</th></tr></thead>
+<tbody><tr><td>Luis Pérez</td><td>929.00</td></tr><tr><td>Marta Ruiz</td><td>334.50</td></tr><tr><td>Ana Torres</td><td>315.50</td></tr></tbody>
+</table></div>
+<p>Para los errores del paso 5, con claves foráneas activas:</p><div class="code">
+  <div class="code-head"><span>Cliente inexistente y cantidad 0</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">INSERT</span> <span class="tk-tag">INTO</span> pedidos (cliente_id, fecha) <span class="tk-tag">VALUES</span> (<span class="tk-attr">99</span>, <span class="tk-val">'2026-10-06'</span>);
+<span class="tk-tag">INSERT</span> <span class="tk-tag">INTO</span> lineas_pedido (pedido_id, producto_id, cantidad) <span class="tk-tag">VALUES</span> (<span class="tk-attr">1</span>, <span class="tk-attr">3</span>, <span class="tk-attr">0</span>);</code></pre>
+</div>
+<pre class="sql-out">Error: FOREIGN KEY constraint failed
+Error: CHECK constraint failed: cantidad > 0</pre>
+<div class="code">
+  <div class="code-head"><span>Ejemplo de seguridad.md</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>Rol de la aplicación: tienda_app
+GRANT SELECT ON productos, clientes TO tienda_app;
+GRANT SELECT, INSERT ON pedidos, lineas_pedido TO tienda_app;
+GRANT UPDATE (stock) ON productos TO tienda_app;
+
+Copia diaria: sqlite3 tienda.db ".backup 'copia.db'"</code></pre>
+</div>
+
+      </details>
+      <div class="callout consejo">
+<p class="callout-title">💡 🏁 Reto extra (opcional)</p>
+<p>Guarda el precio vendido en <code>lineas_pedido</code> (columna <code>precio_unitario</code>) y recalcula los informes con ese precio. Después añade una tabla <code>categorias</code> y relaciona <code>productos</code> con ella.</p>
+</div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="./"><small>← Anterior</small>Volver a Proyecto final</a>
+        <a class="next" href="../"><small>Siguiente →</small>Volver al índice del curso</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de Bases de datos con SQL · Ejercicio de proyecto final · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&title=%5BError%5D%20Ejercicio%20%C2%B7%20Proyecto%3A%20base%20de%20datos%20de%20una%20tienda%20%C2%B7%20Curso%20de%20Bases%20de%20datos%20con%20SQL&pagina=https%3A//cacg-code.github.io/PRACTICAS-HTML/bd/proyecto-tienda/ejercicio.html" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

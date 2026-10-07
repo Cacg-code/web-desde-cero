@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lección 8: Despliegue de tu API · Curso de Node.js y APIs</title>
+  <meta name="description" content="Prepara tu API de Node para producción: script start, variable PORT, variables de entorno, ruta de salud y publicación en la nube paso a paso.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/node/08-despliegue/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Lección 8: Despliegue de tu API · Curso de Node.js y APIs">
+  <meta property="og:description" content="Prepara tu API de Node para producción: script start, variable PORT, variables de entorno, ruta de salud y publicación en la nube paso a paso.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/node/08-despliegue/">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de Node.js y APIs</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap lesson-layout" id="contenido">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#idea">Qué significa desplegar</a></li><li><a href="#preparar">Preparar el proyecto</a></li><li><a href="#variables">Variables de entorno en producción</a></li><li><a href="#publicar">Publicar paso a paso</a></li><li><a href="#errores">Errores frecuentes</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de Node.js y APIs</a> › Lección 8</div>
+        <h1>Despliegue de tu API</h1>
+        <ul class="meta"><li>⏱ 45 minutos</li><li>📶 Nivel: intermedio</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Explicar qué significa desplegar una aplicación.</li><li>Preparar <code>package.json</code> con <code>start</code> y <code>engines</code>.</li><li>Leer el puerto y la configuración desde variables de entorno.</li><li>Simular una instalación limpia con <code>npm ci</code>.</li><li>Publicar la API siguiendo los pasos genéricos de una plataforma y diagnosticar fallos típicos.</li></ul>
+</div>
+
+<h2 id="idea"><span class="n">1.</span>Qué significa desplegar</h2>
+
+<p>Hasta ahora tu API vive en <code>localhost</code>: solo tú puedes llamarla, y solo mientras tu computadora está encendida. <strong>Desplegar</strong> es ponerla en un servidor que esté siempre encendido y tenga una dirección pública (por ejemplo <code>https://mi-api.ejemplo.app</code>) para que cualquiera, o cualquier aplicación, pueda usarla.</p>
+<div class="flow"><div class="node"><strong>Tu código</strong><span>en tu computadora</span></div><div class="arrow">→<code>git push</code></div><div class="node"><strong>Repositorio</strong><span>GitHub</span></div><div class="arrow">→<code>despliegue</code></div><div class="node"><strong>Servidor en la nube</strong><span>URL pública con HTTPS</span></div></div>
+<p>Existen muchas plataformas que ejecutan aplicaciones de Node leyendo tu repositorio (Render, Railway, Fly.io, entre otras). Cambian la interfaz y los planes gratuitos, pero <strong>el proceso es el mismo</strong>, y esa es la parte que aprenderás: preparar el proyecto para que funcione en cualquier sitio.</p>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · Planes gratuitos</p>
+<p>Los planes gratis suelen «dormir» la aplicación tras un rato sin visitas (la primera petición tarda unos segundos) y pueden cambiar sus condiciones. Revisa siempre qué ofrece la plataforma antes de elegirla.</p>
+</div>
+
+
+<h2 id="preparar"><span class="n">2.</span>Preparar el proyecto</h2>
+
+<p>Haz este repaso antes de subir nada. Cada punto evita un error típico de «en mi computadora funcionaba».</p>
+<h3>1. Un script <code>start</code></h3>
+<p>La plataforma arrancará tu app con <code>npm start</code>. Define ese script <strong>sin</strong> <code>--watch</code> (que es solo para desarrollo):</p>
+<div class="code">
+  <div class="code-head"><span>package.json</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>{
+  &quot;name&quot;: &quot;api-tareas&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;type&quot;: &quot;module&quot;,
+  &quot;main&quot;: &quot;index.js&quot;,
+  &quot;scripts&quot;: {
+    &quot;start&quot;: &quot;node index.js&quot;,
+    &quot;dev&quot;: &quot;node --watch --env-file=.env index.js&quot;
+  },
+  &quot;engines&quot;: {
+    &quot;node&quot;: &quot;&gt;=20&quot;
+  },
+  &quot;dependencies&quot;: {
+    &quot;express&quot;: &quot;^5.1.0&quot;,
+    &quot;cors&quot;: &quot;^2.8.5&quot;
+  }
+}</code></pre>
+</div>
+
+<p>El campo <code>engines</code> indica la versión de Node que necesita tu proyecto; muchas plataformas lo leen para elegir la correcta. Las herramientas que solo usas mientras programas van en <code>devDependencies</code> (<code>npm install -D nombre</code>), no en <code>dependencies</code>.</p>
+<h3>2. El puerto lo decide la plataforma</h3>
+<p>En producción no puedes elegir el puerto: la plataforma te lo entrega en la variable <code>PORT</code>. Por eso tu código debe leerlo (lección 6) y no escribirlo a mano:</p>
+<div class="code">
+  <div class="code-head"><span>index.js</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>const PORT = Number(process.env.PORT) || 3000;
+app.listen(PORT, () =&gt; console.log(`API escuchando en el puerto ${PORT}`));</code></pre>
+</div>
+
+<h3>3. Nada de secretos en el código</h3>
+<p>Claves, contraseñas y direcciones de otras apps van en <strong>variables de entorno</strong>. Comprueba que <code>.env</code> y <code>node_modules</code> estén en <code>.gitignore</code> (<code>git status</code> no debe mostrarlos).</p>
+<h3>4. Una ruta de salud</h3>
+<p>Muchas plataformas comprueban que tu app responde. Una ruta simple lo facilita, y a ti te sirve para saber si está viva:</p>
+<div class="code">
+  <div class="code-head"><span>index.js</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>const inicio = Date.now();
+
+app.get(&quot;/salud&quot;, (req, res) =&gt; {
+  res.json({ estado: &quot;ok&quot;, uptimeSegundos: Math.floor((Date.now() - inicio) / 1000) });
+});</code></pre>
+</div>
+
+<h3>5. Prueba el arranque limpio</h3>
+<p>La plataforma instalará las dependencias desde cero. Simúlalo tú:</p>
+<div class="code">
+  <div class="code-head"><span>Terminal</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>rm -rf node_modules       # en PowerShell: Remove-Item -Recurse -Force node_modules
+npm ci --omit=dev          # instala exactamente lo del package-lock.json, sin devDependencies
+NODE_ENV=production npm start</code></pre>
+</div>
+
+<p><code>npm ci</code> usa el <code>package-lock.json</code> (¡súbelo a Git!) para instalar versiones idénticas en todas partes y falla si el lock y el <code>package.json</code> no coinciden.</p>
+
+<h2 id="variables"><span class="n">3.</span>Variables de entorno en producción</h2>
+
+<p>El archivo <code>.env</code> <strong>no viaja</strong> a la nube (está en <code>.gitignore</code>). En su lugar, la plataforma tiene un panel donde escribes cada variable con su valor. Debes crear allí las mismas que en tu <code>.env</code>:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Variable</th><th>Valor en producción</th><th>Para qué sirve</th></tr></thead>
+<tbody><tr><td><code>NODE_ENV</code></td><td><code>production</code></td><td>Activa optimizaciones y comportamientos de producción (Express oculta detalles de errores)</td></tr><tr><td><code>PORT</code></td><td>Lo pone la plataforma</td><td>Puerto en el que escuchar</td></tr><tr><td><code>API_KEY</code></td><td>Tu clave real</td><td>Secretos de servicios externos</td></tr><tr><td><code>ORIGENES</code></td><td><code>https://mi-sitio.com</code></td><td>Sitios autorizados por CORS, separados por comas</td></tr></tbody>
+</table></div>
+
+<p>Una función que lea y valide la configuración al arrancar evita sorpresas: si falta algo, el programa avisa de inmediato en lugar de fallar a mitad de una petición.</p>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ Configuración que avisa a tiempo</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:440px">&lt;script&gt;
+function leerConfig(env) {
+  const requeridas = ["API_KEY"];
+  const faltan = requeridas.filter((k) =&gt; !env[k]);
+  if (faltan.length &gt; 0) {
+    throw new Error("Faltan variables: " + faltan.join(", "));
+  }
+  return {
+    puerto: Number(env.PORT) || 3000,
+    produccion: env.NODE_ENV === "production",
+    origenes: (env.ORIGENES ?? "").split(",").map((o) =&gt; o.trim()).filter(Boolean),
+  };
+}
+
+console.log(leerConfig({ API_KEY: "x", PORT: "8080", ORIGENES: "https://a.com, https://b.com" }));
+
+try {
+  leerConfig({});
+} catch (e) {
+  console.log("Error:", e.message);
+}
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+
+
+<h2 id="publicar"><span class="n">4.</span>Publicar paso a paso</h2>
+
+<p>El recorrido típico, sea cual sea la plataforma:</p>
+<ol class="steps">
+<li><strong>Sube tu proyecto a GitHub.</strong> Crea un repositorio, <code>git add .</code>, <code>git commit -m "API lista"</code> y <code>git push</code>. Verifica en la web que <code>.env</code> <strong>no</strong> está.</li>
+<li><strong>Crea una cuenta</strong> en la plataforma elegida y un nuevo «servicio web» a partir de tu repositorio.</li>
+<li><strong>Configura los comandos:</strong> instalación <code>npm ci</code> (o <code>npm install</code>) y arranque <code>npm start</code>.</li>
+<li><strong>Carga las variables de entorno</strong> en el panel (<code>NODE_ENV</code>, claves, orígenes).</li>
+<li><strong>Despliega.</strong> La plataforma instala, arranca y te da una URL pública con HTTPS.</li>
+<li><strong>Prueba</strong> la ruta de salud y el resto con <code>curl</code>.</li>
+</ol>
+<div class="code">
+  <div class="code-head"><span>Terminal</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>curl https://tu-api.ejemplo.app/salud
+curl https://tu-api.ejemplo.app/tareas</code></pre>
+</div>
+<div class="code">
+  <div class="code-head"><span>Salida esperada</span></div>
+<pre><code>{&quot;estado&quot;:&quot;ok&quot;,&quot;uptimeSegundos&quot;:42}
+[]</code></pre>
+</div>
+
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · Los archivos no siempre persisten</p>
+<p>En muchas plataformas el disco es <strong>efímero</strong>: si guardas datos en un archivo JSON, se borran cada vez que la aplicación se reinicia o se vuelve a desplegar. Sirve para aprender, pero una API real necesita una base de datos o un disco persistente. Es el siguiente paso natural después de este curso.</p>
+</div>
+
+<p>Cada vez que hagas <code>git push</code> a la rama configurada, la mayoría de plataformas <strong>vuelven a desplegar solas</strong>. Si algo falla, abre los <strong>registros (logs)</strong> en el panel: ahí aparecerán tus <code>console.log</code> y los errores.</p>
+<h3>Cuando algo sale mal</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>Síntoma</th><th>Causa probable</th></tr></thead>
+<tbody><tr><td>Falla al construir: «Cannot find module»</td><td>Una dependencia está en <code>devDependencies</code> o falta en <code>package.json</code>.</td></tr><tr><td>Arranca pero «no responde»</td><td>Escuchas en un puerto fijo en vez de <code>process.env.PORT</code>.</td></tr><tr><td>Funciona pero el navegador muestra error de CORS</td><td>El origen de tu página no está en la lista de <code>ORIGENES</code>.</td></tr><tr><td>Error por variable <code>undefined</code></td><td>Olvidaste crear esa variable en el panel.</td></tr><tr><td>Los datos desaparecen</td><td>El disco es efímero; usa una base de datos.</td></tr><tr><td>La primera petición tarda mucho</td><td>El plan gratuito «despertó» la aplicación.</td></tr></tbody>
+</table></div>
+
+
+<h2 id="errores"><span class="n">5.</span>Errores frecuentes</h2>
+<ul><li><strong>Dejar el puerto fijo</strong>: la plataforma asigna el puerto con <code>PORT</code>.</li><li><strong>Usar <code>node --watch</code> en <code>start</code></strong>: ese modo es solo para desarrollo.</li><li><strong>Subir <code>.env</code> o <code>node_modules</code></strong> al repositorio.</li><li><strong>Olvidar subir <code>package-lock.json</code></strong>: las versiones instaladas pueden cambiar.</li><li><strong>Poner en <code>devDependencies</code> algo que se usa en producción</strong>: falla al arrancar.</li><li><strong>Olvidar crear las variables de entorno</strong> en el panel de la plataforma.</li><li><strong>Guardar datos en un archivo</strong> en una plataforma con disco efímero y perderlos en cada reinicio.</li></ul>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li>Desplegar = poner tu app en un servidor siempre encendido con una URL pública.</li><li>Necesitas un script <code>"start": "node index.js"</code> y, conviene, <code>engines.node</code>.</li><li>El puerto sale de <code>process.env.PORT</code>.</li><li>Las herramientas de desarrollo van en <code>devDependencies</code>; las que usa la app en producción, en <code>dependencies</code>.</li><li>El <code>.env</code> no se sube: las variables se escriben en el panel de la plataforma.</li><li><code>NODE_ENV=production</code> activa el modo de producción.</li><li>Una ruta <code>/salud</code> permite comprobar que la app está viva.</li><li>Flujo: GitHub, servicio web, <code>npm ci</code>, <code>npm start</code>, variables, URL pública; después, <code>git push</code> redespliega.</li><li>Muchos discos son efímeros: para datos persistentes usa una base de datos.</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">6.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td>Despliegue</td><td>Proceso de poner una aplicación en un servidor accesible públicamente.</td></tr><tr><td>Producción</td><td>Entorno real donde la usan los usuarios, frente a desarrollo.</td></tr><tr><td><code>npm ci</code></td><td>Instala exactamente lo indicado en <code>package-lock.json</code>; pensado para despliegues.</td></tr><tr><td><code>engines</code></td><td>Campo de <code>package.json</code> que indica versiones compatibles de Node.</td></tr><tr><td>Variable de entorno</td><td>Configuración que se define fuera del código, en el panel de la plataforma.</td></tr><tr><td>Health check</td><td>Ruta que sirve para comprobar si la aplicación responde.</td></tr><tr><td>Logs</td><td>Registros de lo que imprime tu aplicación.</td></tr><tr><td>Disco efímero</td><td>Almacenamiento que se borra al reiniciar o redesplegar.</td></tr></tbody>
+</table></div>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>¿Qué debe usar tu código para saber en qué puerto escuchar en producción?</p><ul class="opts"><li><button type="button" class="opt">Siempre 3000</button></li><li><button type="button" class="opt" data-ok><code>process.env.PORT</code></button></li><li><button type="button" class="opt">El nombre de la carpeta</button></li><li><button type="button" class="opt">El puerto 80 fijo</button></li></ul><p class="explain" hidden>La plataforma asigna el puerto y lo entrega en la variable <code>PORT</code>.</p></div>
+<div class="quiz-q"><p>¿Cuál debe ser el script <code>start</code>?</p><ul class="opts"><li><button type="button" class="opt"><code>node --watch index.js</code></button></li><li><button type="button" class="opt" data-ok><code>node index.js</code></button></li><li><button type="button" class="opt"><code>npm test</code></button></li><li><button type="button" class="opt"><code>nodemon</code></button></li></ul><p class="explain" hidden>En producción se ejecuta <code>node index.js</code> sin el modo de vigilancia.</p></div>
+<div class="quiz-q"><p>¿Por qué no se sube <code>.env</code> a GitHub?</p><ul class="opts"><li><button type="button" class="opt">Pesa mucho</button></li><li><button type="button" class="opt" data-ok>Contiene secretos reales</button></li><li><button type="button" class="opt">No lo lee Node</button></li><li><button type="button" class="opt">Lo bloquea npm</button></li></ul><p class="explain" hidden>Tiene claves y contraseñas; en producción se escriben en el panel de la plataforma.</p></div>
+<div class="quiz-q"><p>¿Qué hace <code>npm ci</code>?</p><ul class="opts"><li><button type="button" class="opt">Actualiza todo a la última versión</button></li><li><button type="button" class="opt" data-ok>Instala exactamente las versiones del <code>package-lock.json</code></button></li><li><button type="button" class="opt">Borra el proyecto</button></li><li><button type="button" class="opt">Crea un <code>package.json</code></button></li></ul><p class="explain" hidden>Garantiza instalaciones idénticas y repetibles, ideal para despliegues.</p></div>
+<div class="quiz-q"><p>Guardas tareas en un archivo JSON y tras redesplegar desaparecen. ¿Por qué?</p><ul class="opts"><li><button type="button" class="opt">Es un error de Express</button></li><li><button type="button" class="opt" data-ok>El disco de la plataforma es efímero</button></li><li><button type="button" class="opt">Node borra los archivos</button></li><li><button type="button" class="opt">Faltó <code>express.json()</code></button></li></ul><p class="explain" hidden>Muchas plataformas reinician desde cero el sistema de archivos; para datos persistentes se usa una base de datos o un disco persistente.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="node-08">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../07-errores-y-seguridad/"><small>← Anterior</small>Errores, validación y seguridad básica</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de Node.js y APIs · Lección 8 · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&amp;title=%5BError%5D%20Lecci%C3%B3n%208%3A%20Despliegue%20de%20tu%20API%20%C2%B7%20Curso%20de%20Node.js%20y%20APIs&amp;pagina=https://cacg-code.github.io/PRACTICAS-HTML/node/08-despliegue/" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

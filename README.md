@@ -21,7 +21,7 @@
 
 *Se abre en tu navegador. Sin cuentas, sin descargas, sin instalar nada.*
 
-<img src="assets/readme/cifras.svg" alt="4 cursos, 44 lecciones, 4 proyectos, unas 50 horas, gratis" width="100%">
+<img src="assets/readme/cifras.svg" alt="6 cursos, 60 lecciones, 6 proyectos, unas 75 horas, gratis" width="100%">
 
 </div>
 
@@ -45,7 +45,7 @@ Sigue el orden: cada curso se apoya en el anterior.
 
 <img src="assets/readme/cursos.svg" alt="Cuatro cursos: HTML, CSS, JavaScript y React" width="100%">
 
-**[▶ Empezar HTML](https://cacg-code.github.io/PRACTICAS-HTML/html/)** &nbsp;·&nbsp; **[▶ Empezar CSS](https://cacg-code.github.io/PRACTICAS-HTML/css/)** &nbsp;·&nbsp; **[▶ Empezar JavaScript](https://cacg-code.github.io/PRACTICAS-HTML/javascript/)** &nbsp;·&nbsp; **[▶ Empezar React](https://cacg-code.github.io/PRACTICAS-HTML/react/)**
+**[▶ Empezar HTML](https://cacg-code.github.io/PRACTICAS-HTML/html/)** &nbsp;·&nbsp; **[▶ Empezar CSS](https://cacg-code.github.io/PRACTICAS-HTML/css/)** &nbsp;·&nbsp; **[▶ Empezar JavaScript](https://cacg-code.github.io/PRACTICAS-HTML/javascript/)** &nbsp;·&nbsp; **[▶ Empezar React](https://cacg-code.github.io/PRACTICAS-HTML/react/)** &nbsp;·&nbsp; **[▶ Node.js](https://cacg-code.github.io/PRACTICAS-HTML/node/)** &nbsp;·&nbsp; **[▶ Bases de datos](https://cacg-code.github.io/PRACTICAS-HTML/bd/)**
 
 </div>
 
@@ -86,13 +86,13 @@ Sigue el orden: cada curso se apoya en el anterior.
 
 </div>
 
-### 📚 Temario completo · 44 lecciones y 4 proyectos
+### 📚 Temario completo · 60 lecciones y 6 proyectos
 
 <div align="center">
 
-<img src="assets/readme/temario.svg" alt="Temario: 44 lecciones y 4 proyectos en HTML, CSS, JavaScript y React" width="100%">
+<img src="assets/readme/temario.svg" alt="Temario: 60 lecciones y 6 proyectos en HTML, CSS, JavaScript, React, Node.js y Bases de datos" width="100%">
 
-**[▶ HTML](https://cacg-code.github.io/PRACTICAS-HTML/html/)** &nbsp;·&nbsp; **[▶ CSS](https://cacg-code.github.io/PRACTICAS-HTML/css/)** &nbsp;·&nbsp; **[▶ JavaScript](https://cacg-code.github.io/PRACTICAS-HTML/javascript/)** &nbsp;·&nbsp; **[▶ React](https://cacg-code.github.io/PRACTICAS-HTML/react/)**
+**[▶ HTML](https://cacg-code.github.io/PRACTICAS-HTML/html/)** &nbsp;·&nbsp; **[▶ CSS](https://cacg-code.github.io/PRACTICAS-HTML/css/)** &nbsp;·&nbsp; **[▶ JavaScript](https://cacg-code.github.io/PRACTICAS-HTML/javascript/)** &nbsp;·&nbsp; **[▶ React](https://cacg-code.github.io/PRACTICAS-HTML/react/)** &nbsp;·&nbsp; **[▶ Node.js](https://cacg-code.github.io/PRACTICAS-HTML/node/)** &nbsp;·&nbsp; **[▶ Bases de datos](https://cacg-code.github.io/PRACTICAS-HTML/bd/)**
 
 </div>
 
@@ -324,7 +324,7 @@ cd PRACTICAS-HTML
 
 ```text
 index.html        Portada con los 4 cursos y la ruta
-html/ css/ javascript/ react/   Una carpeta por curso (lecciones + proyecto)
+html/ css/ javascript/ react/ node/ bd/   Una carpeta por curso (lecciones + proyecto)
 NN-nombre/        Lecciones del curso de HTML
 assets/           Estilos, script, GIFs, imágenes y multimedia
 404.html · sitemap.xml

@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lección 6: Consumir APIs con fetch y variables de entorno · Curso de Node.js y APIs</title>
+  <meta name="description" content="Usa fetch en Node para llamar a otras APIs, comprueba errores HTTP, construye URLs con URLSearchParams y guarda claves con process.env y archivos .env.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/node/06-consumir-apis/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Lección 6: Consumir APIs con fetch y variables de entorno · Curso de Node.js y APIs">
+  <meta property="og:description" content="Usa fetch en Node para llamar a otras APIs, comprueba errores HTTP, construye URLs con URLSearchParams y guarda claves con process.env y archivos .env.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/node/06-consumir-apis/">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de Node.js y APIs</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap lesson-layout" id="contenido">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#fetch">fetch también existe en Node</a></li><li><a href="#errores">fetch no falla con un 404</a></li><li><a href="#opciones">Enviar datos y cabeceras</a></li><li><a href="#env">Variables de entorno con process.env</a></li><li><a href="#dotenv">El archivo .env</a></li><li><a href="#juntos">Todo junto: tu servidor consume una API</a></li><li><a href="#errores">Errores frecuentes</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de Node.js y APIs</a> › Lección 6</div>
+        <h1>Consumir APIs con fetch y variables de entorno</h1>
+        <ul class="meta"><li>⏱ 60 minutos</li><li>📶 Nivel: intermedio</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Llamar a una API externa con <code>fetch</code> desde Node.</li><li>Comprobar <code>respuesta.ok</code> y manejar errores de red y de HTTP.</li><li>Enviar JSON y cabeceras con <code>POST</code>.</li><li>Construir URLs con <code>URL</code> y <code>URLSearchParams</code>.</li><li>Leer configuración y secretos con <code>process.env</code> y <code>.env</code>.</li></ul>
+</div>
+
+<h2 id="fetch"><span class="n">1.</span>fetch también existe en Node</h2>
+
+<p>Hasta ahora tu servidor <strong>recibía</strong> peticiones. Muchas veces también necesitará <strong>hacerlas</strong>: pedir el clima a otro servicio, validar un pago, traer datos de otra API. Desde Node 18, la función <code>fetch</code> que ya conoces del navegador viene incluida, sin instalar nada. Está documentada en <a href="https://developer.mozilla.org/es/docs/Web/API/Fetch_API" target="_blank" rel="noopener">MDN</a> y en <a href="https://nodejs.org/en/learn/getting-started/fetch" target="_blank" rel="noopener">nodejs.org</a>.</p>
+<div class="code">
+  <div class="code-head"><span>pedir.js</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>const respuesta = await fetch(&quot;https://jsonplaceholder.typicode.com/todos/1&quot;);
+const dato = await respuesta.json();
+
+console.log(respuesta.status);
+console.log(dato);</code></pre>
+</div>
+<div class="code">
+  <div class="code-head"><span>Salida esperada</span></div>
+<pre><code>200
+{ userId: 1, id: 1, title: &#x27;delectus aut autem&#x27;, completed: false }</code></pre>
+</div>
+
+<p>Como tu proyecto usa ES Modules (lección 2), puedes escribir <code>await</code> directamente en el nivel superior del archivo, sin envolverlo en una función <code>async</code>.</p>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · Es una API de pruebas</p>
+<p><code>jsonplaceholder.typicode.com</code> es un servicio público pensado para practicar: devuelve datos falsos y no guarda nada. Necesitas conexión a internet para ejecutar el ejemplo.</p>
+</div>
+
+<p>La respuesta (<code>Response</code>) trae tres cosas que mirarás siempre:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Propiedad o método</th><th>Qué es</th></tr></thead>
+<tbody><tr><td><code>respuesta.ok</code></td><td><code>true</code> si el estado está entre 200 y 299</td></tr><tr><td><code>respuesta.status</code></td><td>El código numérico (200, 404, 500…)</td></tr><tr><td><code>await respuesta.json()</code></td><td>Lee el cuerpo y lo convierte de JSON a objeto (también hay <code>.text()</code>)</td></tr></tbody>
+</table></div>
+
+
+<h2 id="errores"><span class="n">2.</span>fetch no falla con un 404</h2>
+
+<p>Este es el error más común: <strong><code>fetch</code> solo rechaza la promesa si no consigue comunicarse</strong> (sin internet, dominio inexistente, servidor caído). Si el servidor responde con <code>404</code> o <code>500</code>, <code>fetch</code> considera que todo fue bien porque <em>sí hubo respuesta</em>. Debes comprobar <code>respuesta.ok</code> tú mismo:</p>
+<div class="code">
+  <div class="code-head"><span>pedir.js</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>async function obtenerJson(url) {
+  const respuesta = await fetch(url);
+
+  if (!respuesta.ok) {
+    throw new Error(`HTTP ${respuesta.status} al pedir ${url}`);
+  }
+  return respuesta.json();
+}
+
+try {
+  const dato = await obtenerJson(&quot;https://jsonplaceholder.typicode.com/todos/99999&quot;);
+  console.log(dato);
+} catch (error) {
+  console.error(&quot;No se pudo:&quot;, error.message);
+}</code></pre>
+</div>
+<div class="code">
+  <div class="code-head"><span>Salida esperada</span></div>
+<pre><code>No se pudo: HTTP 404 al pedir https://jsonplaceholder.typicode.com/todos/99999</code></pre>
+</div>
+
+<p>El patrón completo tiene tres capas: <strong>1)</strong> <code>try/catch</code> para los fallos de red, <strong>2)</strong> comprobar <code>ok</code> para los errores HTTP y <strong>3)</strong> un mensaje claro que diga qué pasó y con qué dirección.</p>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Pon un tiempo máximo</p>
+<p>Una petición lenta puede dejar tu servidor esperando mucho. <code>fetch(url, { signal: AbortSignal.timeout(5000) })</code> la cancela a los 5 segundos con un error.</p>
+</div>
+
+
+<h2 id="opciones"><span class="n">3.</span>Enviar datos y cabeceras</h2>
+
+<p>El segundo argumento de <code>fetch</code> es un objeto de opciones. Con él cambias el método, añades cabeceras y envías un cuerpo:</p>
+<div class="code">
+  <div class="code-head"><span>crear.js</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>const respuesta = await fetch(&quot;https://jsonplaceholder.typicode.com/posts&quot;, {
+  method: &quot;POST&quot;,
+  headers: { &quot;Content-Type&quot;: &quot;application/json&quot; },
+  body: JSON.stringify({ title: &quot;Hola&quot;, body: &quot;Mi primer post&quot;, userId: 1 }),
+});
+
+console.log(respuesta.status);
+console.log(await respuesta.json());</code></pre>
+</div>
+<div class="code">
+  <div class="code-head"><span>Salida esperada</span></div>
+<pre><code>201
+{ title: &#x27;Hola&#x27;, body: &#x27;Mi primer post&#x27;, userId: 1, id: 101 }</code></pre>
+</div>
+
+<p>Dos detalles importantes: el cuerpo debe ser <strong>texto</strong>, por eso se usa <code>JSON.stringify</code>, y la cabecera <code>Content-Type</code> avisa al servidor de que ese texto es JSON.</p>
+<h3>Construir la dirección con query</h3>
+<p>No concatenes textos a mano para armar una URL con parámetros: los espacios y símbolos romperían la dirección. Usa <code>URLSearchParams</code>, que codifica todo correctamente:</p>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ URLSearchParams</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:340px">&lt;script&gt;
+const params = new URLSearchParams({ q: "café con leche", pagina: 2 });
+console.log(params.toString());
+
+const url = "https://api.ejemplo.com/buscar?" + params;
+console.log(url);
+
+const completa = new URL("/buscar", "https://api.ejemplo.com");
+completa.searchParams.set("q", "ñandú &amp; más");
+console.log(completa.href);
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+
+<p><code>URL</code> y <code>URLSearchParams</code> están disponibles tanto en el navegador como en Node.</p>
+
+<h2 id="env"><span class="n">4.</span>Variables de entorno con process.env</h2>
+
+<p>Las <strong>variables de entorno</strong> son valores que el sistema le pasa a tu programa desde fuera. Sirven para dos cosas: <strong>configurar</strong> (en qué puerto escuchar) y <strong>guardar secretos</strong> (claves de API, contraseñas) sin escribirlos en el código. En Node las lees con <code>process.env</code>, y siempre son <strong>texto</strong>:</p>
+<div class="code">
+  <div class="code-head"><span>config.js</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>const puerto = Number(process.env.PORT) || 3000;
+const modo = process.env.NODE_ENV ?? &quot;development&quot;;
+
+console.log(`Puerto: ${puerto}, modo: ${modo}`);</code></pre>
+</div>
+<div class="code">
+  <div class="code-head"><span>Salida esperada</span></div>
+<pre><code>Puerto: 3000, modo: development</code></pre>
+</div>
+
+<p>Para probar otros valores sin cambiar el código, defínelas al ejecutar:</p>
+<div class="code">
+  <div class="code-head"><span>Terminal (macOS, Linux, Git Bash)</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>PORT=8080 NODE_ENV=production node config.js</code></pre>
+</div>
+<div class="code">
+  <div class="code-head"><span>Salida esperada</span></div>
+<pre><code>Puerto: 8080, modo: production</code></pre>
+</div>
+
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · En Windows</p>
+<p>En PowerShell se hace en dos pasos: <code>$env:PORT = "8080"</code> y luego <code>node config.js</code>. En <code>cmd</code>: <code>set PORT=8080</code>. Por eso casi todo el mundo usa un archivo <code>.env</code>, que funciona igual en todos los sistemas.</p>
+</div>
+
+<p>La pareja <code>Number(valor) || 3000</code> es un patrón útil: si la variable no existe o no es un número, <code>Number</code> da <code>NaN</code> (que es «falso») y se usa el valor por defecto.</p>
+
+<h2 id="dotenv"><span class="n">5.</span>El archivo .env</h2>
+
+<p>Un archivo <code>.env</code> guarda variables, una por línea, en formato <code>CLAVE=valor</code>:</p>
+<div class="code">
+  <div class="code-head"><span>.env</span><button class="copy" type="button">Copiar</button></div>
+<pre><code># Configuración local (NO se sube a Git)
+PORT=4000
+API_KEY=abc123-clave-secreta
+NODE_ENV=development</code></pre>
+</div>
+
+<p>Node puede cargarlo <strong>sin instalar nada</strong> con la opción <code>--env-file</code> (disponible desde Node 20.6):</p>
+<div class="code">
+  <div class="code-head"><span>Terminal</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>node --env-file=.env index.js</code></pre>
+</div>
+
+<p>Y puedes dejarlo fijo en los scripts de <code>package.json</code> para no olvidarlo:</p>
+<div class="code">
+  <div class="code-head"><span>package.json (fragmento)</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>&quot;scripts&quot;: {
+  &quot;start&quot;: &quot;node index.js&quot;,
+  &quot;dev&quot;: &quot;node --watch --env-file=.env index.js&quot;
+}</code></pre>
+</div>
+
+<p>Dentro del código, ya está en <code>process.env</code>:</p>
+<div class="code">
+  <div class="code-head"><span>index.js</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>console.log(process.env.API_KEY);   // &quot;abc123-clave-secreta&quot; </code></pre>
+</div>
+
+<div class="callout nota">
+<p class="callout-title">📌 Nota · ¿Y el paquete dotenv?</p>
+<p>Antes de existir <code>--env-file</code> todos instalaban el paquete <code>dotenv</code> (<code>import "dotenv/config"</code>). Sigue funcionando y lo verás en muchos proyectos, pero en Node moderno ya no hace falta.</p>
+</div>
+
+<h3>Reglas de seguridad</h3>
+<ul>
+<li><strong>Nunca subas <code>.env</code> a Git.</strong> Añade <code>.env</code> a tu <code>.gitignore</code> (lección 3). Si una clave llega a un repositorio público, considérala robada y créala de nuevo.</li>
+<li>Sube en su lugar un <strong><code>.env.example</code></strong> con los nombres de las variables y valores falsos, para que otros sepan qué configurar.</li>
+<li>Una clave en el <strong>código del navegador</strong> la ve cualquiera. Las claves secretas solo van en el servidor.</li>
+</ul>
+<div class="code">
+  <div class="code-head"><span>.env.example</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>PORT=3000
+API_KEY=pon-aqui-tu-clave
+NODE_ENV=development</code></pre>
+</div>
+
+
+<h2 id="juntos"><span class="n">6.</span>Todo junto: tu servidor consume una API</h2>
+
+<p>Un servidor intermediario es un caso muy habitual: tu API recibe una petición, consulta otro servicio con tu clave secreta y devuelve el resultado.</p>
+<div class="code">
+  <div class="code-head"><span>index.js</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>import express from &quot;express&quot;;
+
+const app = express();
+const PORT = Number(process.env.PORT) || 3000;
+const API_KEY = process.env.API_KEY;
+
+if (!API_KEY) {
+  console.error(&quot;Falta la variable API_KEY en .env&quot;);
+  process.exit(1);
+}
+
+app.get(&quot;/pronostico/:ciudad&quot;, async (req, res) =&gt; {
+  const url = new URL(&quot;https://api.ejemplo.com/clima&quot;);
+  url.searchParams.set(&quot;ciudad&quot;, req.params.ciudad);
+
+  const respuesta = await fetch(url, {
+    headers: { Authorization: `Bearer ${API_KEY}` },
+    signal: AbortSignal.timeout(5000),
+  });
+
+  if (!respuesta.ok) {
+    return res.status(502).json({ error: &quot;El servicio externo falló&quot; });
+  }
+  res.json(await respuesta.json());
+});
+
+app.listen(PORT, () =&gt; console.log(`API en http://localhost:${PORT}`));</code></pre>
+</div>
+
+<p>Observa tres decisiones: la clave se lee de <code>process.env</code> y el programa se detiene al arrancar si falta; la URL se construye con <code>URL</code>; y si el servicio externo falla se responde <code>502 Bad Gateway</code>, el código que indica «el problema está en otro servidor». Gracias a Express 5, un error dentro de la función <code>async</code> también llegaría al manejador de errores.</p>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · Ejemplo ilustrativo</p>
+<p><code>api.ejemplo.com</code> no existe: sustitúyela por una API real que tenga documentación y te dé una clave.</p>
+</div>
+
+
+<h2 id="errores"><span class="n">7.</span>Errores frecuentes</h2>
+<ul><li><strong>Creer que <code>fetch</code> falla con un 404</strong>: solo rechaza si no hay comunicación; comprueba <code>ok</code>.</li><li><strong>Olvidar <code>await</code></strong> antes de <code>fetch</code> o de <code>.json()</code>: obtienes una promesa en lugar de datos.</li><li><strong>Enviar un objeto sin <code>JSON.stringify</code></strong>: el cuerpo llega como <code>[object Object]</code>.</li><li><strong>Olvidar la cabecera <code>Content-Type: application/json</code></strong>: el servidor no interpreta el cuerpo.</li><li><strong>Subir <code>.env</code> a Git</strong>: filtra tus claves. Añádelo a <code>.gitignore</code>.</li><li><strong>Tratar <code>process.env.PORT</code> como número</strong>: siempre es texto; usa <code>Number</code>.</li><li><strong>Concatenar parámetros a mano</strong> en la URL: usa <code>URLSearchParams</code> para codificarlos.</li></ul>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li><code>fetch</code> viene incluido en Node desde la versión 18.</li><li><code>fetch</code> rechaza solo por fallos de red; los errores HTTP se detectan con <code>respuesta.ok</code> o <code>respuesta.status</code>.</li><li><code>await respuesta.json()</code> convierte el cuerpo en un objeto.</li><li>Para enviar JSON: <code>method</code>, <code>headers</code> con <code>Content-Type</code> y <code>body: JSON.stringify(...)</code>.</li><li><code>URLSearchParams</code> y <code>URL</code> arman direcciones con parámetros codificados.</li><li><code>process.env.NOMBRE</code> lee variables de entorno, siempre como texto.</li><li><code>node --env-file=.env</code> carga el archivo <code>.env</code> sin paquetes extra.</li><li><code>.env</code> a <code>.gitignore</code>, <code>.env.example</code> al repositorio; las claves secretas solo van en el servidor.</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">8.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td>fetch</td><td>Función que hace peticiones HTTP y devuelve una promesa.</td></tr><tr><td>Response</td><td>Objeto con la respuesta: estado, cabeceras y cuerpo.</td></tr><tr><td>Variable de entorno</td><td>Valor de configuración que el sistema entrega al programa.</td></tr><tr><td><code>.env</code></td><td>Archivo local con variables de entorno, una por línea.</td></tr><tr><td>API key</td><td>Clave que identifica a quien usa una API y que debe mantenerse en secreto.</td></tr><tr><td>Timeout</td><td>Tiempo máximo que se espera una respuesta antes de cancelar.</td></tr><tr><td>502 Bad Gateway</td><td>Código que indica que un servidor intermedio recibió una respuesta inválida de otro.</td></tr><tr><td>Query string</td><td>Parámetros de la URL que van tras el <code>?</code>.</td></tr></tbody>
+</table></div>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>¿Qué pasa con <code>fetch</code> si el servidor responde 404?</p><ul class="opts"><li><button type="button" class="opt">La promesa se rechaza</button></li><li><button type="button" class="opt" data-ok>La promesa se cumple y <code>ok</code> vale <code>false</code></button></li><li><button type="button" class="opt">Node se detiene</button></li><li><button type="button" class="opt">Reintenta solo</button></li></ul><p class="explain" hidden><code>fetch</code> solo rechaza si no logra comunicarse; con un 404 hay respuesta, así que debes mirar <code>ok</code>.</p></div>
+<div class="quiz-q"><p>¿Qué hay que hacer para enviar un objeto como JSON?</p><ul class="opts"><li><button type="button" class="opt">Pasarlo directamente a <code>body</code></button></li><li><button type="button" class="opt" data-ok><code>JSON.stringify</code> y la cabecera <code>Content-Type</code></button></li><li><button type="button" class="opt">Usar <code>GET</code></button></li><li><button type="button" class="opt">Nada, es automático</button></li></ul><p class="explain" hidden>El cuerpo debe ser texto y la cabecera avisa de que ese texto es JSON.</p></div>
+<div class="quiz-q"><p>¿De qué tipo es siempre <code>process.env.PORT</code>?</p><ul class="opts"><li><button type="button" class="opt">Número</button></li><li><button type="button" class="opt" data-ok>Texto (o <code>undefined</code>)</button></li><li><button type="button" class="opt">Booleano</button></li><li><button type="button" class="opt">Objeto</button></li></ul><p class="explain" hidden>Las variables de entorno son cadenas; conviértelas con <code>Number</code> si hace falta.</p></div>
+<div class="quiz-q"><p>¿Cómo cargas un archivo <code>.env</code> sin instalar paquetes?</p><ul class="opts"><li><button type="button" class="opt" data-ok><code>node --env-file=.env index.js</code></button></li><li><button type="button" class="opt"><code>npm run env</code></button></li><li><button type="button" class="opt"><code>import .env</code></button></li><li><button type="button" class="opt">No se puede</button></li></ul><p class="explain" hidden>Desde Node 20.6 existe la opción <code>--env-file</code>.</p></div>
+<div class="quiz-q"><p>¿Qué archivo debe ir a <code>.gitignore</code>?</p><ul class="opts"><li><button type="button" class="opt"><code>.env.example</code></button></li><li><button type="button" class="opt" data-ok><code>.env</code></button></li><li><button type="button" class="opt"><code>package.json</code></button></li><li><button type="button" class="opt"><code>index.js</code></button></li></ul><p class="explain" hidden><code>.env</code> contiene secretos reales y nunca debe subirse; el <code>.env.example</code> sí.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="node-06">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../05-api-rest/"><small>← Anterior</small>API REST y verbos HTTP</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de Node.js y APIs · Lección 6 · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&amp;title=%5BError%5D%20Lecci%C3%B3n%206%3A%20Consumir%20APIs%20con%20fetch%20y%20variables%20de%20entorno%20%C2%B7%20Curso%20de%20Node.js%20y%20APIs&amp;pagina=https://cacg-code.github.io/PRACTICAS-HTML/node/06-consumir-apis/" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

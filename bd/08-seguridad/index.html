@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lección 8: Seguridad: inyección SQL, contraseñas y copias · Curso de Bases de datos con SQL</title>
+  <meta name="description" content="Protege tu base de datos: inyección SQL y consultas parametrizadas, contraseñas con hash, permisos de mínimo privilegio y copias de seguridad, con un laboratorio de ataque y defensa.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/bd/08-seguridad/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#0e7490">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Lección 8: Seguridad: inyección SQL, contraseñas y copias · Curso de Bases de datos con SQL">
+  <meta property="og:description" content="Protege tu base de datos: inyección SQL y consultas parametrizadas, contraseñas con hash, permisos de mínimo privilegio y copias de seguridad, con un laboratorio de ataque y defensa.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/bd/08-seguridad/">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+  <style>
+    .sqlsim select, .sqlsim input[type="number"] { padding: .5rem .6rem; border: 1px solid var(--border); border-radius: 8px; background: var(--bg); color: var(--text); font: inherit; max-width: 100%; }
+    .sqlsim .sql-out { margin: 0; padding: .8rem 1rem; border-radius: 10px; background: var(--code-bg); color: var(--code-text); font-family: var(--mono); font-size: .88rem; line-height: 1.6; white-space: pre-wrap; overflow-wrap: anywhere; }
+    .sqlsim .msg { margin: 0; font-weight: 600; }
+    .sqlsim .msg.err { color: #b91c1c; }
+    .sqlsim .msg.okk { color: #15803d; }
+    :root[data-theme="dark"] .sqlsim .msg.err { color: #fca5a5; }
+    :root[data-theme="dark"] .sqlsim .msg.okk { color: #86efac; }
+    @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .sqlsim .msg.err { color: #fca5a5; } :root:not([data-theme="light"]) .sqlsim .msg.okk { color: #86efac; } }
+    .sqlsim .w-row button { cursor: pointer; }
+    .sqlsim .w-row label { display: inline-flex; gap: .4rem; align-items: center; }
+    .sqlsim td.hl, .sqlsim th.hl, .sqlsim tr.hl td { background: color-mix(in srgb, var(--accent) 22%, transparent); }
+    .sqlsim tr.gone td { text-decoration: line-through; opacity: .5; }
+    .sqlsim tr.new td { background: color-mix(in srgb, #22c55e 22%, transparent); }
+    .sqlsim tr.chg td { background: color-mix(in srgb, #f59e0b 25%, transparent); }
+  </style>
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Bases de datos con SQL</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap lesson-layout" id="contenido">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#inyeccion">Qué es la inyección SQL</a></li><li><a href="#parametros">La defensa: consultas parametrizadas</a></li><li><a href="#claves">Contraseñas: nunca en texto plano</a></li><li><a href="#permisos">Permisos: el principio del mínimo privilegio</a></li><li><a href="#copias">Copias de seguridad</a></li><li><a href="#laboratorio">Pruébalo: ataque y defensa</a></li><li><a href="#errores">Errores frecuentes</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de Bases de datos con SQL</a> › Lección 8</div>
+        <h1>Seguridad: inyección SQL, contraseñas y copias</h1>
+        <ul class="meta"><li>⏱ 60 minutos</li><li>📶 Nivel: principiante</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Reconocer y evitar la <strong>inyección SQL</strong> con consultas parametrizadas.</li><li>Guardar contraseñas con <strong>hash</strong> y sal.</li><li>Dar permisos mínimos con <code>GRANT</code> y <code>REVOKE</code>.</li><li>Hacer y restaurar <strong>copias de seguridad</strong> en SQLite y PostgreSQL.</li></ul>
+</div>
+
+<h2 id="inyeccion"><span class="n">1.</span>Qué es la inyección SQL</h2>
+
+<p>La <strong>inyección SQL</strong> ocurre cuando un programa construye una consulta <strong>pegando texto que escribió el usuario</strong> dentro del SQL. Si ese texto contiene comillas y palabras de SQL, el usuario deja de dar datos y empieza a <strong>escribir instrucciones</strong>. Es una de las vulnerabilidades más antiguas, más comunes y más dañinas de las aplicaciones web.</p>
+<p>Imagina un formulario de acceso y una tabla de usuarios. (Para el ejemplo guardamos la clave en texto plano; en la sección 3 verás por qué no se debe hacer.)</p>
+<div class="code">
+  <div class="code-head"><span>Tabla de ejemplo</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">CREATE</span> <span class="tk-tag">TABLE</span> usuarios (
+  id     <span class="tk-tag">INTEGER</span> <span class="tk-tag">PRIMARY</span> <span class="tk-tag">KEY</span>,
+  nombre <span class="tk-tag">TEXT</span> <span class="tk-tag">NOT</span> <span class="tk-tag">NULL</span> <span class="tk-tag">UNIQUE</span>,
+  clave  <span class="tk-tag">TEXT</span> <span class="tk-tag">NOT</span> <span class="tk-tag">NULL</span>,
+  rol    <span class="tk-tag">TEXT</span> <span class="tk-tag">NOT</span> <span class="tk-tag">NULL</span> <span class="tk-tag">DEFAULT</span> <span class="tk-val">'cliente'</span>
+);
+<span class="tk-tag">INSERT</span> <span class="tk-tag">INTO</span> usuarios (id, nombre, clave, rol) <span class="tk-tag">VALUES</span>
+  (<span class="tk-attr">1</span>, <span class="tk-val">'ana'</span>,   <span class="tk-val">'clave123'</span>, <span class="tk-val">'cliente'</span>),
+  (<span class="tk-attr">2</span>, <span class="tk-val">'admin'</span>, <span class="tk-val">'s3cret'</span>,   <span class="tk-val">'administrador'</span>);</code></pre>
+</div>
+
+<p>El código del servidor construye la consulta así (<strong>forma incorrecta</strong>):</p>
+<div class="code">
+  <div class="code-head"><span>Código vulnerable (JavaScript)</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>const sql = "SELECT id, nombre, rol FROM usuarios WHERE nombre = '" + nombre + "' AND clave = '" + clave + "'";</code></pre>
+</div>
+
+<p>Con un usuario honesto todo parece correcto:</p>
+<div class="code">
+  <div class="code-head"><span>nombre = ana, clave = clave123</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">SELECT</span> id, nombre, rol <span class="tk-tag">FROM</span> usuarios <span class="tk-tag">WHERE</span> nombre = <span class="tk-val">'ana'</span> <span class="tk-tag">AND</span> clave = <span class="tk-val">'clave123'</span></code></pre>
+</div>
+<div class="table-wrap"><table>
+<thead><tr><th>id</th><th>nombre</th><th>rol</th></tr></thead>
+<tbody><tr><td>1</td><td>ana</td><td>cliente</td></tr></tbody>
+</table></div>
+
+<p>Pero si el atacante escribe como nombre <code>admin' --</code>, el apóstrofo cierra el texto y <code>--</code> convierte en comentario todo lo que sigue, incluida la comprobación de la clave:</p>
+<div class="code">
+  <div class="code-head"><span>nombre = admin' --</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">SELECT</span> id, nombre, rol <span class="tk-tag">FROM</span> usuarios <span class="tk-tag">WHERE</span> nombre = <span class="tk-val">'admin'</span> <span class="tk-com">--' AND clave = 'lo-que-sea'</span></code></pre>
+</div>
+<div class="table-wrap"><table>
+<thead><tr><th>id</th><th>nombre</th><th>rol</th></tr></thead>
+<tbody><tr><td>2</td><td>admin</td><td>administrador</td></tr></tbody>
+</table></div>
+
+<p>Entró como administrador <strong>sin conocer su clave</strong>. Y con <code>' OR '1'='1</code> en ambos campos la condición se vuelve siempre verdadera:</p>
+<div class="code">
+  <div class="code-head"><span>nombre y clave = ' OR '1'='1</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">SELECT</span> id, nombre, rol <span class="tk-tag">FROM</span> usuarios <span class="tk-tag">WHERE</span> nombre = <span class="tk-val">''</span> <span class="tk-tag">OR</span> <span class="tk-val">'1'</span>=<span class="tk-val">'1'</span> <span class="tk-tag">AND</span> clave = <span class="tk-val">''</span> <span class="tk-tag">OR</span> <span class="tk-val">'1'</span>=<span class="tk-val">'1'</span></code></pre>
+</div>
+<div class="table-wrap"><table>
+<thead><tr><th>id</th><th>nombre</th><th>rol</th></tr></thead>
+<tbody><tr><td>1</td><td>ana</td><td>cliente</td></tr><tr><td>2</td><td>admin</td><td>administrador</td></tr></tbody>
+</table></div>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · Puede ser peor</p>
+<p>Si el motor o el driver admiten varias instrucciones en una sola llamada, un atacante puede añadir <code>; DROP TABLE usuarios; --</code> y borrar datos. La inyección también sirve para <strong>leer</strong> tablas completas que nunca debieron mostrarse.</p>
+</div>
+
+<h2 id="parametros"><span class="n">2.</span>La defensa: consultas parametrizadas</h2>
+
+<p>La solución es <strong>no mezclar nunca datos con instrucciones</strong>. En una consulta parametrizada el SQL se escribe con marcadores (<code>?</code> en SQLite, <code>$1</code> en PostgreSQL) y los valores se envían <strong>aparte</strong>. El motor sabe que lo que llega en los parámetros es solo un dato, aunque contenga comillas o <code>--</code>.</p>
+<div class="code">
+  <div class="code-head"><span>Consulta parametrizada</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">SELECT</span> id, nombre, rol
+<span class="tk-tag">FROM</span> usuarios
+<span class="tk-tag">WHERE</span> nombre = ? <span class="tk-tag">AND</span> clave = ?;</code></pre>
+</div>
+
+<p>Con el mismo ataque <code>' OR '1'='1</code> como nombre y clave, ahora el motor busca un usuario que se llame literalmente <code>' OR '1'='1</code>:</p>
+<p><em>(0 filas: acceso denegado)</em></p>
+<p>Así se escribe en cada entorno:</p>
+<div class="code">
+  <div class="code-head"><span>SQLite en Node.js (better-sqlite3)</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>const fila = db
+  .prepare('SELECT id, nombre, rol FROM usuarios WHERE nombre = ? AND clave_hash = ?')
+  .get(nombre, clave);</code></pre>
+</div>
+<div class="code">
+  <div class="code-head"><span>PostgreSQL en Node.js (pg)</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>const { rows } = await pool.query(
+  'SELECT id, nombre, rol FROM usuarios WHERE nombre = $1',
+  [nombre]
+);</code></pre>
+</div>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · Qué NO se puede parametrizar</p>
+<p>Los parámetros sustituyen <strong>valores</strong>, no nombres de tablas, de columnas ni palabras como <code>ASC</code>. Si necesitas elegir una columna para ordenar, compárala con una <strong>lista blanca</strong> escrita por ti (<code>['precio', 'nombre']</code>) y nunca la pegues tal como llega.</p>
+</div>
+
+<p>Otras defensas útiles, que no sustituyen a la anterior: validar el tipo y la longitud de los datos, no mostrar al usuario los mensajes de error de la base de datos y usar un rol con pocos permisos (sección 4).</p>
+<h2 id="claves"><span class="n">3.</span>Contraseñas: nunca en texto plano</h2>
+
+<p>Si alguien accede a tu base de datos (por una inyección, una copia perdida o un error de configuración) y las claves están en texto plano, <strong>todas las cuentas quedan expuestas</strong>, y como muchas personas repiten la clave en otros sitios, el daño se extiende. La solución es guardar solo un <strong>hash</strong>: el resultado de una función matemática de un solo sentido. Del hash no se puede recuperar la clave; para comprobar un acceso se calcula el hash de lo que escribe el usuario y se compara.</p>
+<p>Un hash cambia por completo con una letra distinta. Estos son los SHA-256 reales de <code>clave123</code> y <code>clave124</code>:</p>
+<div class="code">
+  <div class="code-head"><span>SHA-256</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>clave123 → 5ac0852e770506dcd80f1a36d20ba7878bf82244b836d9324593bd14bc56dcb5
+clave124 → be287a79904331fa824b91a1bb762cb2c35d48088f60d8a722e426fb8af1c3ae</code></pre>
+</div>
+
+<p>Pero <strong>SHA-256 no basta para contraseñas</strong>: es tan rápido que se pueden probar miles de millones de claves por segundo, y el mismo texto siempre da el mismo hash (los atacantes usan tablas ya calculadas). Para claves usa un algoritmo diseñado para ser <strong>lento y con sal aleatoria</strong>: <strong>bcrypt</strong>, <strong>scrypt</strong> o <strong>Argon2</strong>. La sal es un valor aleatorio distinto para cada clave, por lo que dos usuarios con la misma contraseña tienen hashes diferentes.</p>
+<div class="code">
+  <div class="code-head"><span>Registro y acceso con bcrypt (Node.js)</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>import bcrypt from 'bcrypt';
+
+// Registro: guardar solo el hash
+const hash = await bcrypt.hash(clave, 12);
+await pool.query(
+  'INSERT INTO usuarios (nombre, clave_hash) VALUES ($1, $2)',
+  [nombre, hash]
+);
+
+// Acceso: buscar por nombre y comparar
+const { rows } = await pool.query(
+  'SELECT id, clave_hash FROM usuarios WHERE nombre = $1',
+  [nombre]
+);
+const ok = rows.length &gt; 0 &amp;&amp; await bcrypt.compare(clave, rows[0].clave_hash);</code></pre>
+</div>
+
+<p>Observa que primero se busca <strong>solo por nombre</strong> y la clave se verifica con <code>bcrypt.compare</code>; nunca se envía la clave a la consulta. La columna del esquema se llama <code>clave_hash</code>:</p>
+<div class="code">
+  <div class="code-head"><span>Esquema correcto</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">CREATE</span> <span class="tk-tag">TABLE</span> usuarios (
+  id         <span class="tk-tag">INTEGER</span> <span class="tk-tag">PRIMARY</span> <span class="tk-tag">KEY</span>,
+  nombre     <span class="tk-tag">TEXT</span> <span class="tk-tag">NOT</span> <span class="tk-tag">NULL</span> <span class="tk-tag">UNIQUE</span>,
+  clave_hash <span class="tk-tag">TEXT</span> <span class="tk-tag">NOT</span> <span class="tk-tag">NULL</span>,
+  rol        <span class="tk-tag">TEXT</span> <span class="tk-tag">NOT</span> <span class="tk-tag">NULL</span> <span class="tk-tag">DEFAULT</span> <span class="tk-val">'cliente'</span>
+);</code></pre>
+</div>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Mensajes de acceso</p>
+<p>Ante un fallo responde siempre con el mismo mensaje («usuario o contraseña incorrectos»), para no revelar si el usuario existe.</p>
+</div>
+
+<h2 id="permisos"><span class="n">4.</span>Permisos: el principio del mínimo privilegio</h2>
+
+<p>Si tu aplicación se conecta con una cuenta que puede <em>todo</em>, un fallo de seguridad lo pone todo en riesgo. El <strong>principio del mínimo privilegio</strong> dice que cada cuenta debe tener solo los permisos que necesita. En PostgreSQL los permisos se gestionan con <code>GRANT</code> y <code>REVOKE</code>:</p>
+<div class="code">
+  <div class="code-head"><span>Roles con permisos limitados (PostgreSQL)</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-com">-- La aplicación web puede leer el catálogo y registrar pedidos</span>
+<span class="tk-tag">CREATE</span> ROLE tienda_app LOGIN PASSWORD <span class="tk-val">'cambia-esta-clave'</span>;
+GRANT <span class="tk-tag">SELECT</span> <span class="tk-tag">ON</span> productos, clientes <span class="tk-tag">TO</span> tienda_app;
+GRANT <span class="tk-tag">SELECT</span>, <span class="tk-tag">INSERT</span> <span class="tk-tag">ON</span> pedidos, lineas_pedido <span class="tk-tag">TO</span> tienda_app;
+
+<span class="tk-com">-- Un analista solo puede leer</span>
+<span class="tk-tag">CREATE</span> ROLE analista LOGIN PASSWORD <span class="tk-val">'otra-clave-distinta'</span>;
+GRANT <span class="tk-tag">SELECT</span> <span class="tk-tag">ON</span> <span class="tk-tag">ALL</span> TABLES <span class="tk-tag">IN</span> SCHEMA public <span class="tk-tag">TO</span> analista;
+
+<span class="tk-com">-- Quitar un permiso</span>
+REVOKE <span class="tk-tag">INSERT</span> <span class="tk-tag">ON</span> pedidos <span class="tk-tag">FROM</span> tienda_app;</code></pre>
+</div>
+
+<p>Con estos permisos, aunque alguien lograra inyectar un <code>DROP TABLE</code> a través de <code>tienda_app</code>, el motor lo rechazaría. SQLite no tiene usuarios ni <code>GRANT</code>: la protección es la del archivo (permisos del sistema operativo) y lo que hace tu programa. Una opción útil es abrir la base en <strong>modo de solo lectura</strong> cuando el programa no necesita escribir:</p>
+<div class="code">
+  <div class="code-head"><span>Solo lectura en SQLite (better-sqlite3)</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>const db = new Database('tienda.db', { readonly: true });</code></pre>
+</div>
+
+<h2 id="copias"><span class="n">5.</span>Copias de seguridad</h2>
+
+<p>Los datos se pierden por errores humanos (un <code>DELETE</code> sin <code>WHERE</code>), fallos de disco, virus o ataques. Una copia que nunca has probado restaurar <strong>no es una copia</strong>. Regla práctica <strong>3-2-1</strong>: 3 copias, en 2 tipos de soporte distintos y 1 fuera de tu casa u oficina.</p>
+<div class="code">
+  <div class="code-head"><span>SQLite: copiar el archivo de forma segura</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>sqlite3 tienda.db ".backup 'copia-2026-10-06.db'"
+
+# Restaurar: copiar el archivo de vuelta y abrirlo
+cp copia-2026-10-06.db tienda.db</code></pre>
+</div>
+
+<p>Usa <code>.backup</code> en lugar de copiar el archivo a mano cuando la base está en uso: copiar mientras alguien escribe puede dejar una copia dañada.</p>
+<div class="code">
+  <div class="code-head"><span>PostgreSQL: volcar y restaurar</span><button class="copy" type="button">Copiar</button></div>
+<pre><code># Copia (formato personalizado, comprimido)
+pg_dump -U postgres -F c -f tienda.backup tienda
+
+# Restaurar en una base nueva y vacía
+createdb -U postgres tienda_restaurada
+pg_restore -U postgres -d tienda_restaurada tienda.backup</code></pre>
+</div>
+
+<p>Programa las copias para que se hagan solas (con <code>cron</code> en Linux o el Programador de tareas en Windows), <strong>cifra</strong> las que salgan de tu máquina y comprueba de vez en cuando que se pueden restaurar.</p>
+<h2 id="laboratorio"><span class="n">6.</span>Pruébalo: ataque y defensa</h2>
+
+<p>Elige un caso de acceso y alterna entre la consulta con texto pegado (vulnerable) y la parametrizada. Los resultados provienen de SQLite real sobre la tabla <code>usuarios</code> de esta lección.</p>
+<div class="widget sqlsim" data-sim="inyeccion">
+  <div class="w-head">🛡️ Laboratorio de inyección SQL</div>
+  <div class="w-body">
+    <div class="w-row">
+      <label for="i-caso">Caso</label><select id="i-caso"></select>
+      <label for="i-modo">Consulta</label>
+      <select id="i-modo"><option value="vuln">Pegando texto (vulnerable)</option><option value="safe">Parametrizada (segura)</option></select>
+    </div>
+    <div class="w-row">
+      <label for="i-n">nombre</label><input id="i-n" type="text" readonly style="max-width:12rem">
+      <label for="i-c">clave</label><input id="i-c" type="text" readonly style="max-width:12rem">
+    </div>
+    <pre class="sql-out" id="i-sql"></pre>
+    <p class="msg" id="i-msg" aria-live="polite"></p>
+    <div class="table-wrap" style="margin:0"><table id="i-tabla"><thead></thead><tbody></tbody></table></div>
+  </div>
+</div>
+<div class="callout ejemplo">
+<p class="callout-title">🧪 Ejemplo · Experimentos</p>
+<p>1) Con el caso «Entrar como admin sin su clave» y la consulta vulnerable, entras como <code>admin</code>. 2) Cambia a «Parametrizada»: ya no entra nadie. 3) Haz lo mismo con «Entrar como cualquiera»: con texto pegado devuelve a <strong>todos</strong> los usuarios. 4) Comprueba que el usuario legítimo entra en ambos modos: la defensa no molesta al uso normal.</p>
+</div>
+
+<h2 id="errores"><span class="n">7.</span>Errores frecuentes</h2>
+<ul><li><strong>Construir consultas con <code>+</code> o con plantillas de texto</strong> (<code>`... ${nombre} ...`</code>) usando datos del usuario.</li><li><strong>Creer que «escapar comillas a mano» es suficiente:</strong> es fácil olvidar un caso. Usa parámetros.</li><li><strong>Guardar contraseñas en texto plano</strong> o con un hash rápido sin sal (MD5, SHA-1, SHA-256 a secas).</li><li><strong>Conectar la aplicación con la cuenta de administrador</strong> de la base de datos.</li><li><strong>Mostrar el error de la base de datos al usuario:</strong> revela nombres de tablas y ayuda al atacante. Regístralo en el servidor y muestra un mensaje genérico.</li><li><strong>Pegar el nombre de una columna elegida por el usuario</strong> en <code>ORDER BY</code> sin validarla con una lista blanca.</li><li><strong>No probar nunca la restauración de las copias de seguridad.</strong></li><li><strong>Subir contraseñas o la cadena de conexión a un repositorio público.</strong></li></ul>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li>La <strong>inyección SQL</strong> aparece al pegar texto del usuario dentro del SQL; el atacante añade sus propias instrucciones.</li><li>Defensa principal: <strong>consultas parametrizadas</strong> (<code>?</code> en SQLite, <code>$1</code> en PostgreSQL). Datos e instrucciones viajan por separado.</li><li>Los parámetros solo sustituyen valores; para nombres de columnas o de tablas usa una <strong>lista blanca</strong>.</li><li>Guarda solo el <strong>hash</strong> de las contraseñas, con <strong>bcrypt</strong>, <strong>scrypt</strong> o <strong>Argon2</strong> (lentos y con sal).</li><li><strong>Mínimo privilegio</strong>: roles con <code>GRANT</code> y <code>REVOKE</code> para dar solo lo necesario; en SQLite, modo de solo lectura cuando se pueda.</li><li>Copias de seguridad: <code>.backup</code> en SQLite, <code>pg_dump</code> y <code>pg_restore</code> en PostgreSQL; regla 3-2-1 y restauración probada.</li><li>Credenciales en variables de entorno, errores genéricos para el usuario y detalles solo en el registro del servidor.</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">8.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td>Inyección SQL</td><td>Ataque que introduce instrucciones SQL a través de datos que el programa pega dentro de una consulta.</td></tr><tr><td>Consulta parametrizada</td><td>Consulta con marcadores (<code>?</code>, <code>$1</code>) cuyos valores se envían aparte del texto SQL.</td></tr><tr><td>Hash</td><td>Resultado de una función de un solo sentido; no permite recuperar el texto original.</td></tr><tr><td>Sal</td><td>Valor aleatorio añadido a la clave antes de calcular el hash para que claves iguales den hashes distintos.</td></tr><tr><td>bcrypt / Argon2</td><td>Algoritmos diseñados para guardar contraseñas: lentos a propósito y con sal.</td></tr><tr><td>Mínimo privilegio</td><td>Principio de dar a cada cuenta solo los permisos imprescindibles.</td></tr><tr><td>GRANT / REVOKE</td><td>Instrucciones de PostgreSQL para dar y quitar permisos a un rol.</td></tr><tr><td>Lista blanca</td><td>Lista de valores permitidos con la que se compara una entrada antes de usarla.</td></tr></tbody>
+</table></div>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>¿Qué causa una inyección SQL?</p><ul class="opts"><li><button type="button" class="opt">Usar índices en las tablas</button></li><li><button type="button" class="opt" data-ok>Pegar texto escrito por el usuario dentro de la consulta</button></li><li><button type="button" class="opt">Tener demasiadas tablas</button></li><li><button type="button" class="opt">Usar <code>JOIN</code></button></li></ul><p class="explain" hidden>El usuario puede escribir comillas y SQL que cambian el significado de la consulta.</p></div>
+<div class="quiz-q"><p>¿Cuál es la defensa principal contra la inyección SQL?</p><ul class="opts"><li><button type="button" class="opt">Prohibir las comillas en los formularios</button></li><li><button type="button" class="opt" data-ok>Usar consultas parametrizadas</button></li><li><button type="button" class="opt">Poner el nombre de la tabla en mayúsculas</button></li><li><button type="button" class="opt">Esconder el formulario</button></li></ul><p class="explain" hidden>Con parámetros, el motor trata lo recibido siempre como dato, nunca como instrucciones.</p></div>
+<div class="quiz-q"><p>¿Cómo se deben guardar las contraseñas de los usuarios?</p><ul class="opts"><li><button type="button" class="opt">En texto plano para poder recuperarlas</button></li><li><button type="button" class="opt">Con SHA-256 sin sal</button></li><li><button type="button" class="opt" data-ok>Como hash con bcrypt, scrypt o Argon2</button></li><li><button type="button" class="opt">Cifradas con una clave guardada en la misma tabla</button></li></ul><p class="explain" hidden>Un hash lento y con sal impide recuperar la clave y dificulta los ataques de fuerza bruta.</p></div>
+<div class="quiz-q"><p>¿Qué dice el principio del mínimo privilegio?</p><ul class="opts"><li><button type="button" class="opt">La base de datos debe tener pocas tablas</button></li><li><button type="button" class="opt" data-ok>Cada cuenta debe tener solo los permisos que necesita</button></li><li><button type="button" class="opt">Solo debe haber un administrador por país</button></li><li><button type="button" class="opt">Las claves deben ser cortas</button></li></ul><p class="explain" hidden>Así, si una cuenta se ve comprometida, el daño queda limitado.</p></div>
+<div class="quiz-q"><p>¿Qué indica la regla de copias 3-2-1?</p><ul class="opts"><li><button type="button" class="opt">3 tablas, 2 índices y 1 clave</button></li><li><button type="button" class="opt" data-ok>3 copias, en 2 tipos de soporte, 1 de ellas fuera del lugar principal</button></li><li><button type="button" class="opt">Copiar cada 3 días, 2 horas y 1 minuto</button></li><li><button type="button" class="opt">3 usuarios, 2 contraseñas y 1 rol</button></li></ul><p class="explain" hidden>Varias copias, en soportes distintos y una lejos, protegen contra fallos, robos y desastres.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="bd-08">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../07-sqlite-y-postgresql/ejercicio.html"><small>← Anterior</small>Ejercicio de la lección 7</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de Bases de datos con SQL · Lección 8 · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&title=%5BError%5D%20Lecci%C3%B3n%208%3A%20Seguridad%3A%20inyecci%C3%B3n%20SQL%2C%20contrase%C3%B1as%20y%20copias%20%C2%B7%20Curso%20de%20Bases%20de%20datos%20con%20SQL&pagina=https%3A//cacg-code.github.io/PRACTICAS-HTML/bd/08-seguridad/" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+  <script>
+
+(function () {
+  var w = document.querySelector('[data-sim="inyeccion"]'); if (!w) return;
+  var D = [{"t": "Usuario legítimo", "n": "ana", "c": "clave123", "vuln": {"sql": "SELECT id, nombre, rol FROM usuarios WHERE nombre = 'ana' AND clave = 'clave123'", "head": ["id", "nombre", "rol"], "rows": [[1, "ana", "cliente"]]}, "safe": {"sql": "SELECT id, nombre, rol FROM usuarios WHERE nombre = ? AND clave = ?", "params": ["ana", "clave123"], "head": ["id", "nombre", "rol"], "rows": [[1, "ana", "cliente"]]}}, {"t": "Contraseña incorrecta", "n": "ana", "c": "mala", "vuln": {"sql": "SELECT id, nombre, rol FROM usuarios WHERE nombre = 'ana' AND clave = 'mala'", "head": ["id", "nombre", "rol"], "rows": []}, "safe": {"sql": "SELECT id, nombre, rol FROM usuarios WHERE nombre = ? AND clave = ?", "params": ["ana", "mala"], "head": ["id", "nombre", "rol"], "rows": []}}, {"t": "Entrar como admin sin su clave", "n": "admin' --", "c": "lo-que-sea", "vuln": {"sql": "SELECT id, nombre, rol FROM usuarios WHERE nombre = 'admin' --' AND clave = 'lo-que-sea'", "head": ["id", "nombre", "rol"], "rows": [[2, "admin", "administrador"]]}, "safe": {"sql": "SELECT id, nombre, rol FROM usuarios WHERE nombre = ? AND clave = ?", "params": ["admin' --", "lo-que-sea"], "head": ["id", "nombre", "rol"], "rows": []}}, {"t": "Entrar como cualquiera", "n": "' OR '1'='1", "c": "' OR '1'='1", "vuln": {"sql": "SELECT id, nombre, rol FROM usuarios WHERE nombre = '' OR '1'='1' AND clave = '' OR '1'='1'", "head": ["id", "nombre", "rol"], "rows": [[1, "ana", "cliente"], [2, "admin", "administrador"]]}, "safe": {"sql": "SELECT id, nombre, rol FROM usuarios WHERE nombre = ? AND clave = ?", "params": ["' OR '1'='1", "' OR '1'='1"], "head": ["id", "nombre", "rol"], "rows": []}}];
+  var $ = function (s) { return w.querySelector(s); };
+  var esc = function (v) { return v === null ? '<em>NULL</em>' : String(v).replace(/&/g, '&amp;').replace(/</g, '&lt;'); };
+  var sel = $('#i-caso');
+  sel.innerHTML = D.map(function (x, i) { return '<option value="' + i + '">' + x.t + '</option>'; }).join('');
+  function draw() {
+    var x = D[+sel.value], m = $('#i-modo').value, d = x[m];
+    $('#i-n').value = x.n; $('#i-c').value = x.c;
+    $('#i-sql').textContent = d.sql + (m === 'safe' ? '\n-- parámetros: [' + d.params.map(function (p) { return JSON.stringify(p); }).join(', ') + ']' : ';');
+    $('#i-tabla thead').innerHTML = '<tr>' + d.head.map(function (h) { return '<th>' + esc(h) + '</th>'; }).join('') + '</tr>';
+    $('#i-tabla tbody').innerHTML = d.rows.map(function (r) { return '<tr class="' + (m === 'vuln' && x.n !== 'ana' ? 'chg' : '') + '">' + r.map(function (v) { return '<td>' + esc(v) + '</td>'; }).join('') + '</tr>'; }).join('');
+    var msg = $('#i-msg');
+    if (d.rows.length === 0) { msg.textContent = 'Acceso denegado: 0 filas.'; msg.className = 'msg okk'; }
+    else if (m === 'vuln' && x.n !== 'ana') { msg.textContent = 'Ataque con éxito: entra sin la clave (' + d.rows.length + (d.rows.length === 1 ? ' fila' : ' filas') + ').'; msg.className = 'msg err'; }
+    else { msg.textContent = 'Acceso concedido como ' + d.rows[0][1] + '.'; msg.className = 'msg okk'; }
+  }
+  sel.addEventListener('change', draw);
+  $('#i-modo').addEventListener('change', draw);
+  draw();
+})();
+
+  </script>
+</body>
+</html>

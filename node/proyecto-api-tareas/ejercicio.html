@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ejercicio · Proyecto: API de tareas · Curso de Node.js y APIs</title>
+  <meta name="description" content="Ejercicio práctico de: Proyecto: API de tareas.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/node/proyecto-api-tareas/ejercicio.html">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Ejercicio · Proyecto: API de tareas · Curso de Node.js y APIs">
+  <meta property="og:description" content="Ejercicio práctico de: Proyecto: API de tareas.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/node/proyecto-api-tareas/ejercicio.html">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de Node.js y APIs</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap" id="contenido" style="max-width:820px;padding-top:2rem;padding-bottom:3rem">
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de Node.js y APIs</a> › <a href="./">Proyecto final</a> › Ejercicio</div>
+        <h1>Ejercicio: Proyecto: API de tareas</h1>
+        <ul class="meta"><li>⏱ 120 minutos</li><li>📶 Nivel: intermedio</li></ul>
+      </header>
+
+      <h2>Objetivo</h2>
+      <p>Construir en tu computadora la API de tareas completa y reproducir en JavaScript puro sus cuatro piezas centrales: validación, filtros, paginación y almacén.</p>
+
+      <h3>Cómo se trabaja</h3>
+      <p>La <strong>parte A</strong> es el proyecto real: sigue los pasos de la página del proyecto en tu terminal. La <strong>parte B</strong> comprueba en el navegador las cuatro piezas que lo sostienen. Pega solo el JavaScript (sin <code>import</code>, <code>export</code> ni <code>&lt;script&gt;</code>): las cuatro funciones juntas en el comprobador.</p>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ Prueba tu código aquí (opcional)</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:300px">&lt;script&gt;
+// Escribe aquí y prueba con console.log
+function paginar(items, pagina, limite) {
+  // ...
+}
+
+console.log(paginar([1, 2, 3, 4, 5], 2, 2));
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+
+      <h2>Pasos</h2>
+      <p>Marca cada paso a medida que lo completes. Tu avance se guarda en este navegador.</p>
+      <div class="progress" aria-hidden="true"><div></div></div>
+      <p id="progreso-texto" style="color:var(--muted);font-size:.9rem" aria-live="polite"></p>
+      <ul class="checklist"><li><label><input type="checkbox" id="p1"><span><strong>Parte A.</strong> Crea el proyecto <code>api-tareas</code> con <code>npm init -y</code>, instala <code>express</code> y <code>cors</code>, configura <code>"type": "module"</code>, los scripts, <code>.gitignore</code> y <code>.env.example</code>.</span></label></li><li><label><input type="checkbox" id="p2"><span><strong>Parte A.</strong> Escribe <code>config.js</code>, <code>errores.js</code>, <code>validar.js</code> y <code>consultas.js</code>.</span></label></li><li><label><input type="checkbox" id="p3"><span><strong>Parte A.</strong> Escribe <code>almacen.js</code> con <code>crearAlmacen</code> y <code>crearAlmacenEnArchivo</code>.</span></label></li><li><label><input type="checkbox" id="p4"><span><strong>Parte A.</strong> Escribe el <code>Router</code> de tareas, <code>app.js</code> e <code>index.js</code>. Arranca con <code>npm run dev</code>.</span></label></li><li><label><input type="checkbox" id="p5"><span><strong>Parte A.</strong> Prueba todos los endpoints con <code>curl</code>, incluyendo los casos de error, y comprueba que <code>datos/tareas.json</code> se actualiza y sobrevive a un reinicio.</span></label></li><li><label><input type="checkbox" id="p6"><span><strong>Parte A.</strong> Recorre la revisión de calidad de la página del proyecto y sube el código a GitHub (sin <code>.env</code> ni <code>datos/</code>).</span></label></li><li><label><input type="checkbox" id="p7"><span><strong>Parte B.</strong> Escribe <code>validarTarea</code>, <code>filtrarTareas</code> y <code>paginar</code>.</span></label></li><li><label><input type="checkbox" id="p8"><span><strong>Parte B.</strong> Escribe <code>crearAlmacen(leer, escribir)</code>. Pasa los ocho puntos del comprobador.</span></label></li></ul>
+      <details><summary>💡 Pista 1: el servidor no arranca</summary><p>Lee el mensaje: <code>Cannot find module</code> suele ser una ruta de <code>import</code> mal escrita (en ES Modules hay que poner la extensión <code>.js</code>).</p>
+</details>
+<details><summary>💡 Pista 2: paginar</summary><p>Convierte con <code>Number</code> y <code>Math.floor</code>. Una condición como <code>!(p &gt;= 1)</code> también atrapa <code>NaN</code>.</p>
+</details>
+<details><summary>💡 Pista 3: crearAlmacen</summary><p>Es una función que devuelve un objeto con <code>listar</code>, <code>crear</code>, <code>actualizar</code> y <code>borrar</code>, todas <code>async</code>. <code>cargar</code> y <code>guardar</code> son auxiliares internas.</p>
+</details>
+
+      <section class="checker" id="comprobador" aria-labelledby="t-chk">
+        <h2 id="t-chk">🔎 Comprueba tu trabajo</h2>
+        <p>Pega tu código y pulsa <strong>Comprobar</strong>. La revisión ocurre en tu navegador; nada se envía a ningún sitio. Cada punto en rojo incluye una pista. Pega solo el JavaScript, <strong>sin</strong> las etiquetas <code>&lt;script&gt;</code>.</p>
+        <label for="chk-code">Tu código de JavaScript</label>
+        <textarea id="chk-code" rows="10" spellcheck="false" placeholder="Pega aquí tus funciones"></textarea>
+        <div class="chk-actions"><button class="btn" type="button" id="chk-run">Comprobar</button><button class="icon-btn" type="button" id="chk-clear">Limpiar</button></div>
+        <p class="chk-sum" id="chk-sum" aria-live="polite"></p>
+        <ul class="chk-list" id="chk-list"></ul>
+        <script type="application/json" id="checks">{"mode": "js", "scaffold": "", "width": 800, "checks": [{"d": "`validarTarea` acepta una tarea completa válida", "h": "Si todo es correcto devuelve un array vacío.", "t": "return validarTarea({titulo:\"Estudiar\",hecha:false,prioridad:\"alta\"}).length===0"}, {"d": "`validarTarea` exige título y limita su longitud", "h": "Mensajes: `titulo obligatorio` y `titulo demasiado largo` (más de 100).", "t": "return validarTarea({}).join()===\"titulo obligatorio\" && validarTarea(null).join()===\"titulo obligatorio\" && validarTarea({titulo:\"a\".repeat(101)}).join()===\"titulo demasiado largo\""}, {"d": "`validarTarea(datos, true)` (modo parcial) no exige título, pero valida lo que venga", "h": "En modo parcial, `titulo === undefined` es válido; si viene, debe cumplir las reglas. También se validan `hecha` y `prioridad`.", "t": "return validarTarea({hecha:true},true).length===0 && validarTarea({},true).length===0 && validarTarea({titulo:\"\"},true).join()===\"titulo obligatorio\" && validarTarea({hecha:\"si\",prioridad:\"x\"},true).join(\"|\")===\"hecha debe ser booleano|prioridad invalida\""}, {"d": "`filtrarTareas` filtra por `hecha`, `prioridad` y texto `q` (sin distinguir mayúsculas)", "h": "`hecha` llega como `\"true\"` o `\"false\"` (texto). `q` busca dentro del título en minúsculas.", "t": "var t=[{id:1,titulo:\"Comprar Pan\",hecha:true,prioridad:\"alta\"},{id:2,titulo:\"Estudiar\",hecha:false,prioridad:\"alta\"},{id:3,titulo:\"Pan dulce\",hecha:false,prioridad:\"baja\"}];return filtrarTareas(t,{hecha:\"true\"}).length===1 && filtrarTareas(t,{hecha:\"false\"}).length===2 && filtrarTareas(t,{prioridad:\"alta\"}).length===2 && filtrarTareas(t,{q:\"pan\"}).length===2 && filtrarTareas(t,{}).length===3 && filtrarTareas(t,{q:\"pan\",hecha:\"false\"})[0].id===3"}, {"d": "`paginar` devuelve la página pedida con `total`, `pagina`, `limite` y `paginas`", "h": "`items.slice(inicio, inicio + limite)` con `inicio = (pagina - 1) * limite`. `paginas` es `Math.ceil(total / limite)`.", "t": "var items=[1,2,3,4,5,6,7];var r=paginar(items,\"2\",\"3\");return r.datos.join()===\"4,5,6\" && r.total===7 && r.pagina===2 && r.limite===3 && r.paginas===3 && paginar(items,3,3).datos.join()===\"7\""}, {"d": "`paginar` usa valores por defecto (página 1, límite 10) y limita el máximo a 50", "h": "Si el valor no es un número válido mayor o igual que 1, usa el defecto. `Math.min(limite, 50)`.", "t": "var a=paginar([1,2,3],undefined,undefined);var b=paginar([1],\"abc\",\"-4\");var c=paginar(new Array(100).fill(0),1,500);return a.pagina===1 && a.limite===10 && b.pagina===1 && b.limite===10 && c.limite===50 && c.datos.length===50 && paginar([],1,10).paginas===1"}, {"d": "`crearAlmacen` lista `[]` si el archivo no existe (`ENOENT`) y asigna ids máximo + 1", "h": "Captura el error en la lectura: si `error.code === \"ENOENT\"` devuelve `[]`. El id es el mayor existente más uno.", "t": "var texto;var escrituras=0;var leer=async function(){if(texto===undefined){var e=new Error(\"no\");e.code=\"ENOENT\";throw e}return texto};var escribir=async function(t){texto=t;escrituras++};var a=crearAlmacen(leer,escribir);var vacio=await a.listar();var t1=await a.crear({titulo:\"A\"});var t2=await a.crear({titulo:\"B\"});var guardado=JSON.parse(texto);texto='[{\"id\":5,\"titulo\":\"X\"}]';var t3=await a.crear({titulo:\"Y\"});return vacio.length===0 && t1.id===1 && t2.id===2 && guardado.length===2 && escrituras===2+1 && t3.id===6"}, {"d": "`actualizar` fusiona y persiste (o devuelve `null`); `borrar` devuelve `true` o `false` y persiste", "h": "Carga, busca con `findIndex`, modifica la lista, guarda con `escribir` y devuelve el resultado. Si no existe, no escribas nada.", "t": "var texto='[{\"id\":1,\"titulo\":\"A\",\"hecha\":false},{\"id\":2,\"titulo\":\"B\",\"hecha\":false}]';var escrituras=0;var a=crearAlmacen(async function(){return texto},async function(t){texto=t;escrituras++});var u=await a.actualizar(2,{hecha:true});var n1=await a.actualizar(9,{});var b1=await a.borrar(1);var b2=await a.borrar(1);var final=JSON.parse(texto);return u.titulo===\"B\" && u.hecha===true && u.id===2 && n1===null && b1===true && b2===false && final.length===1 && final[0].hecha===true && escrituras===2"}]}</script>
+      </section>
+      <details>
+        <summary>✅ Ver una solución posible</summary>
+        <p>Intenta resolverlo antes de mirar. Tu versión puede ser distinta y también correcta.</p>
+        <div class="code">
+  <div class="code-head"><span>proyecto.js</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>function validarTarea(datos, parcial = false) {
+  const errores = [];
+  const t = datos?.titulo;
+
+  if (t === undefined &amp;&amp; parcial) {
+    // en modo parcial el título es opcional
+  } else if (typeof t !== &quot;string&quot; || t.trim() === &quot;&quot;) {
+    errores.push(&quot;titulo obligatorio&quot;);
+  } else if (t.length &gt; 100) {
+    errores.push(&quot;titulo demasiado largo&quot;);
+  }
+  if (datos?.hecha !== undefined &amp;&amp; typeof datos.hecha !== &quot;boolean&quot;) {
+    errores.push(&quot;hecha debe ser booleano&quot;);
+  }
+  if (datos?.prioridad !== undefined &amp;&amp; ![&quot;baja&quot;, &quot;media&quot;, &quot;alta&quot;].includes(datos.prioridad)) {
+    errores.push(&quot;prioridad invalida&quot;);
+  }
+  return errores;
+}
+
+function filtrarTareas(tareas, query = {}) {
+  return tareas.filter((t) =&gt; {
+    if (query.hecha !== undefined &amp;&amp; t.hecha !== (query.hecha === &quot;true&quot;)) return false;
+    if (query.prioridad !== undefined &amp;&amp; t.prioridad !== query.prioridad) return false;
+    if (query.q &amp;&amp; !t.titulo.toLowerCase().includes(String(query.q).toLowerCase())) return false;
+    return true;
+  });
+}
+
+function paginar(items, pagina, limite) {
+  let p = Math.floor(Number(pagina));
+  let l = Math.floor(Number(limite));
+  if (!(p &gt;= 1)) p = 1;
+  if (!(l &gt;= 1)) l = 10;
+  l = Math.min(l, 50);
+
+  const inicio = (p - 1) * l;
+  return {
+    datos: items.slice(inicio, inicio + l),
+    total: items.length,
+    pagina: p,
+    limite: l,
+    paginas: Math.max(1, Math.ceil(items.length / l)),
+  };
+}
+
+function crearAlmacen(leer, escribir) {
+  async function cargar() {
+    try {
+      return JSON.parse(await leer());
+    } catch (error) {
+      if (error.code === &quot;ENOENT&quot;) return [];
+      throw error;
+    }
+  }
+  async function guardar(tareas) {
+    await escribir(JSON.stringify(tareas, null, 2));
+  }
+
+  return {
+    listar: cargar,
+    async crear(datos) {
+      const tareas = await cargar();
+      const id = tareas.reduce((max, t) =&gt; Math.max(max, t.id), 0) + 1;
+      const nueva = { id, ...datos };
+      tareas.push(nueva);
+      await guardar(tareas);
+      return nueva;
+    },
+    async actualizar(id, cambios) {
+      const tareas = await cargar();
+      const i = tareas.findIndex((t) =&gt; t.id === id);
+      if (i === -1) return null;
+      tareas[i] = { ...tareas[i], ...cambios, id };
+      await guardar(tareas);
+      return tareas[i];
+    },
+    async borrar(id) {
+      const tareas = await cargar();
+      const i = tareas.findIndex((t) =&gt; t.id === id);
+      if (i === -1) return false;
+      tareas.splice(i, 1);
+      await guardar(tareas);
+      return true;
+    },
+  };
+}</code></pre>
+</div>
+
+      </details>
+      <div class="callout consejo">
+<p class="callout-title">💡 🏁 Reto extra (opcional)</p>
+<p>Añade a <code>filtrarTareas</code> el parámetro <code>orden</code> para ordenar por título (<code>orden=titulo</code>, y <code>orden=-titulo</code> en descendente) y escribe una prueba con <code>node:test</code>.</p>
+</div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="./"><small>← Anterior</small>Volver a proyecto final</a>
+        <a class="next" href="../"><small>Siguiente →</small>Índice del curso</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de Node.js y APIs · Ejercicio de proyecto final · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&amp;title=%5BError%5D%20Ejercicio%20%C2%B7%20Proyecto%3A%20API%20de%20tareas%20%C2%B7%20Curso%20de%20Node.js%20y%20APIs&amp;pagina=https://cacg-code.github.io/PRACTICAS-HTML/node/proyecto-api-tareas/ejercicio.html" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

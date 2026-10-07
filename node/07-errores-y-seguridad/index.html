@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lección 7: Errores, validación y seguridad básica · Curso de Node.js y APIs</title>
+  <meta name="description" content="Maneja errores en Express con un manejador central, valida los datos de entrada, configura CORS y aplica buenas prácticas básicas de seguridad en tu API.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/node/07-errores-y-seguridad/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Lección 7: Errores, validación y seguridad básica · Curso de Node.js y APIs">
+  <meta property="og:description" content="Maneja errores en Express con un manejador central, valida los datos de entrada, configura CORS y aplica buenas prácticas básicas de seguridad en tu API.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/node/07-errores-y-seguridad/">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de Node.js y APIs</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap lesson-layout" id="contenido">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#errores">Tipos de error en un servidor</a></li><li><a href="#manejador">Un manejador de errores central</a></li><li><a href="#validar">Validar la entrada</a></li><li><a href="#seguridad">CORS y buenas prácticas básicas</a></li><li><a href="#errores">Errores frecuentes</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de Node.js y APIs</a> › Lección 7</div>
+        <h1>Errores, validación y seguridad básica</h1>
+        <ul class="meta"><li>⏱ 60 minutos</li><li>📶 Nivel: intermedio</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Distinguir errores <code>4xx</code> de errores <code>5xx</code>.</li><li>Crear un manejador de errores central que no revele detalles internos.</li><li>Validar la entrada y responder <code>400</code> con una lista de problemas.</li><li>Explicar qué es CORS y configurarlo con el paquete <code>cors</code>.</li><li>Aplicar una lista de buenas prácticas básicas de seguridad.</li></ul>
+</div>
+
+<h2 id="errores"><span class="n">1.</span>Tipos de error en un servidor</h2>
+
+<p>En un servidor, los errores no son una excepción: son parte del trabajo. Conviene distinguir dos familias:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Tipo</th><th>De quién es la culpa</th><th>Ejemplo</th><th>Código</th></tr></thead>
+<tbody><tr><td>Error del <strong>cliente</strong></td><td>Quien llama a tu API</td><td>Falta un campo, el id no existe, no hay permiso</td><td><code>4xx</code> (<code>400</code>, <code>404</code>…)</td></tr><tr><td>Error del <strong>servidor</strong></td><td>Tu código o tus dependencias</td><td>Un archivo no existe, una API externa falló, un <code>undefined</code> inesperado</td><td><code>5xx</code> (<code>500</code>, <code>502</code>…)</td></tr></tbody>
+</table></div>
+
+<p>El cliente debe recibir siempre una respuesta <strong>útil y coherente</strong>, y tú, un registro de lo que pasó. Lo que <strong>nunca</strong> debe ocurrir es que el servidor se caiga o que la petición se quede colgada.</p>
+<h3>try/catch en rutas async</h3>
+<p>Ya conoces <code>try/catch</code> con <code>await</code>. Úsalo cuando puedas <strong>recuperarte</strong> del error en esa misma ruta:</p>
+<div class="code">
+  <div class="code-head"><span>index.js</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>import { readFile } from &quot;node:fs/promises&quot;;
+
+app.get(&quot;/config&quot;, async (req, res) =&gt; {
+  try {
+    const texto = await readFile(&quot;config.json&quot;, &quot;utf8&quot;);
+    res.json(JSON.parse(texto));
+  } catch (error) {
+    if (error.code === &quot;ENOENT&quot;) {
+      return res.json({});   // no hay archivo: usamos valores por defecto
+    }
+    throw error;               // cualquier otro error sube al manejador general
+  }
+});</code></pre>
+</div>
+
+<p>Fíjate en el <code>throw error</code>: si no sabes arreglar el problema, <strong>relánzalo</strong> para que lo trate el manejador de errores central, en vez de tragártelo.</p>
+
+<h2 id="manejador"><span class="n">2.</span>Un manejador de errores central</h2>
+
+<p>En la lección 4 viste que un middleware con <strong>cuatro parámetros</strong> es un manejador de errores. En <strong>Express 5</strong>, además, si una función <code>async</code> lanza un error o rechaza una promesa, Express lo envía solo a ese manejador. Así puedes escribir rutas limpias:</p>
+<div class="code">
+  <div class="code-head"><span>errores.js</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>export function crearErrorHttp(estado, mensaje) {
+  const error = new Error(mensaje);
+  error.status = estado;
+  return error;
+}
+
+export function manejarErrores(err, req, res, next) {
+  const estado = err.status ?? 500;
+  const esServidor = estado &gt;= 500;
+
+  if (esServidor) console.error(err);   // el detalle va al registro, no al cliente
+
+  res.status(estado).json({
+    error: esServidor ? &quot;Error interno del servidor&quot; : err.message,
+  });
+}</code></pre>
+</div>
+
+<div class="code">
+  <div class="code-head"><span>index.js</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>import { crearErrorHttp, manejarErrores } from &quot;./errores.js&quot;;
+
+app.get(&quot;/tareas/:id&quot;, async (req, res) =&gt; {
+  const tarea = await buscarTarea(Number(req.params.id));   // si falla, llega al manejador
+  if (!tarea) throw crearErrorHttp(404, &quot;Tarea no encontrada&quot;);
+  res.json(tarea);
+});
+
+// ... resto de rutas ...
+
+app.use((req, res) =&gt; res.status(404).json({ error: &quot;Ruta no encontrada&quot; }));
+app.use(manejarErrores);   // siempre el último</code></pre>
+</div>
+
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · No enseñes los detalles internos</p>
+<p>Un mensaje como <code>ECONNREFUSED 10.0.0.5:5432</code> o un <em>stack trace</em> le dice a un atacante cómo está montado tu servidor. A los errores <code>5xx</code> responde con un texto genérico y guarda el detalle en la consola o en un registro.</p>
+</div>
+
+<div class="callout nota">
+<p class="callout-title">📌 Nota · Express 4</p>
+<p>En Express 4 los errores de rutas <code>async</code> no llegaban solos al manejador: había que escribir <code>try/catch</code> y llamar a <code>next(error)</code> en cada ruta. Verás ese estilo en tutoriales antiguos.</p>
+</div>
+
+<p>Para que un error no tumbe todo el proceso, Node también permite escuchar fallos globales, pero eso se ve en proyectos grandes. Lo importante ahora es que cada ruta tenga una salida segura. Más detalles en la <a href="https://expressjs.com/es/guide/error-handling.html" target="_blank" rel="noopener">guía de manejo de errores de Express</a>.</p>
+
+<h2 id="validar"><span class="n">3.</span>Validar la entrada</h2>
+
+<p>La regla de oro: <strong>todo lo que llega de fuera es sospechoso</strong>. Puede venir vacío, con el tipo equivocado, enorme o con mala intención. Validar significa comprobar los datos <strong>antes</strong> de usarlos y rechazar con <code>400</code> si no cumplen.</p>
+<div class="code">
+  <div class="code-head"><span>validar.js</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>export function validarTarea(datos) {
+  const errores = [];
+
+  if (typeof datos?.titulo !== &quot;string&quot; || datos.titulo.trim() === &quot;&quot;) {
+    errores.push(&quot;titulo obligatorio&quot;);
+  } else if (datos.titulo.length &gt; 100) {
+    errores.push(&quot;titulo demasiado largo&quot;);
+  }
+  if (datos.hecha !== undefined &amp;&amp; typeof datos.hecha !== &quot;boolean&quot;) {
+    errores.push(&quot;hecha debe ser booleano&quot;);
+  }
+  return errores;
+}</code></pre>
+</div>
+
+<div class="code">
+  <div class="code-head"><span>index.js</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>app.post(&quot;/tareas&quot;, (req, res) =&gt; {
+  const errores = validarTarea(req.body);
+  if (errores.length &gt; 0) {
+    return res.status(400).json({ error: &quot;Datos inválidos&quot;, detalles: errores });
+  }
+  // ... crear la tarea con datos ya comprobados
+});</code></pre>
+</div>
+
+<p>Devolver una <strong>lista</strong> de problemas (no solo el primero) le ahorra al cliente enviar la petición una y otra vez. Practica con este editor:</p>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ Un validador</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:360px">&lt;script&gt;
+function validarUsuario(u) {
+  const errores = [];
+  if (typeof u?.nombre !== "string" || u.nombre.trim() === "") errores.push("nombre obligatorio");
+  if (!Number.isInteger(u?.edad) || u.edad &lt; 0 || u.edad &gt; 120) errores.push("edad entre 0 y 120");
+  if (typeof u?.correo !== "string" || !u.correo.includes("@")) errores.push("correo inválido");
+  return errores;
+}
+
+console.log(validarUsuario({ nombre: "Ana", edad: 30, correo: "ana@correo.com" }));
+console.log(validarUsuario({ nombre: " ", edad: -5 }));
+console.log(validarUsuario(null));
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Cuando el proyecto crezca</p>
+<p>Escribir validaciones a mano está bien para empezar. En proyectos grandes se usan librerías de validación (por ejemplo <code>zod</code>) que describen la forma de los datos una sola vez. Se instalan con <code>npm install</code> como viste en la lección 3.</p>
+</div>
+
+
+<h2 id="seguridad"><span class="n">4.</span>CORS y buenas prácticas básicas</h2>
+
+<p>Cuando una página web en <code>https://mi-sitio.com</code> intenta llamar a tu API en <code>https://api.mi-sitio.com</code>, el <strong>navegador</strong> bloquea la respuesta por la <strong>política del mismo origen</strong>, salvo que tu servidor diga explícitamente que lo permite. Ese permiso se llama <strong>CORS</strong> (<em>Cross-Origin Resource Sharing</em>) y se da con cabeceras de respuesta. Hay una explicación completa en <a href="https://developer.mozilla.org/es/docs/Web/HTTP/CORS" target="_blank" rel="noopener">MDN</a>.</p>
+<p>La forma más simple en Express es el paquete oficial <code>cors</code>:</p>
+<div class="code">
+  <div class="code-head"><span>Terminal</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>npm install cors</code></pre>
+</div>
+
+<div class="code">
+  <div class="code-head"><span>index.js</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>import cors from &quot;cors&quot;;
+
+// Solo estos sitios podrán llamar a tu API desde un navegador
+app.use(cors({ origin: [&quot;https://mi-sitio.com&quot;, &quot;http://localhost:5173&quot;] }));</code></pre>
+</div>
+
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · CORS no es seguridad del servidor</p>
+<p>CORS solo le indica a los <strong>navegadores</strong> qué páginas pueden leer tus respuestas. <code>curl</code>, otro servidor o un script ignoran CORS por completo. Si una ruta es privada, necesita autenticación de verdad, no solo CORS.</p>
+</div>
+
+<p>Un uso peligroso es <code>cors()</code> sin opciones (permite cualquier origen): vale mientras pruebas, pero en producción limita la lista.</p>
+<h3>Lista de buenas prácticas básicas</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>Práctica</th><th>Por qué</th></tr></thead>
+<tbody><tr><td><strong>Validar toda entrada</strong></td><td>Evita datos corruptos y muchos ataques.</td></tr><tr><td><strong>Limitar el tamaño del cuerpo</strong>: <code>express.json({ limit: "100kb" })</code></td><td>Impide que alguien te mande una carga enorme.</td></tr><tr><td><strong>Secretos en variables de entorno</strong></td><td>Nunca en el código ni en Git (lección 6).</td></tr><tr><td><strong>No filtrar errores internos</strong></td><td>Los detalles ayudan a un atacante.</td></tr><tr><td><strong>Cabeceras de seguridad</strong> con el paquete <code>helmet</code>: <code>app.use(helmet())</code></td><td>Activa protecciones recomendadas con una línea.</td></tr><tr><td><strong>Limitar peticiones</strong> (paquete <code>express-rate-limit</code>)</td><td>Frena abusos y fuerza bruta.</td></tr><tr><td><strong>Usar HTTPS</strong> en producción</td><td>Cifra los datos en el camino; la plataforma de despliegue suele encargarse.</td></tr><tr><td><strong>Revisar dependencias</strong>: <code>npm audit</code></td><td>Detecta vulnerabilidades conocidas.</td></tr><tr><td><strong>Nunca construir consultas con texto del usuario</strong></td><td>Evita la inyección (por ejemplo, SQL) cuando uses bases de datos.</td></tr></tbody>
+</table></div>
+
+<div class="callout nota">
+<p class="callout-title">📌 Nota · Contraseñas y sesiones</p>
+<p>Guardar usuarios con contraseña (hashing, tokens, sesiones) es un tema propio y delicado. Si algún día lo necesitas, usa soluciones probadas en lugar de inventar la tuya.</p>
+</div>
+
+
+<h2 id="errores"><span class="n">5.</span>Errores frecuentes</h2>
+<ul><li><strong>Devolver el <em>stack trace</em></strong> o el mensaje interno al cliente: revela cómo funciona tu servidor.</li><li><strong>Responder 200 con un cuerpo de error</strong>: usa el código de estado correcto.</li><li><strong>Tragarse el error</strong> en un <code>catch</code> vacío: el problema desaparece del registro y nadie se entera.</li><li><strong>No validar el cuerpo</strong> y confiar en que «el cliente enviará lo correcto».</li><li><strong>Creer que CORS protege tu API</strong>: solo afecta a los navegadores.</li><li><strong>Dejar <code>cors()</code> abierto</strong> a cualquier origen en producción.</li><li><strong>Poner el manejador de errores antes de las rutas</strong>: debe ser el último <code>app.use</code>.</li></ul>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li><code>4xx</code> = culpa del cliente; <code>5xx</code> = culpa del servidor.</li><li>Express 5 envía solo al manejador los errores de rutas <code>async</code>; en Express 4 había que usar <code>next(err)</code>.</li><li>Manejador de errores: <code>(err, req, res, next)</code>, siempre al final.</li><li>Un error propio puede llevar <code>status</code> para que el manejador responda con el código correcto.</li><li>A los <code>5xx</code> responde algo genérico y registra el detalle en el servidor.</li><li>Valida toda entrada y devuelve una lista de problemas con <code>400</code>.</li><li>CORS permite o niega a páginas de otro origen leer tus respuestas; limita los orígenes.</li><li>Buenas prácticas: validar, limitar el cuerpo, secretos en <code>.env</code>, <code>helmet</code>, límite de peticiones, HTTPS y <code>npm audit</code>.</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">6.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td>Manejador de errores</td><td>Middleware de cuatro parámetros que centraliza las respuestas de error.</td></tr><tr><td>Validar</td><td>Comprobar que los datos cumplen las reglas antes de usarlos.</td></tr><tr><td>Origen</td><td>Combinación de protocolo, dominio y puerto de una página web.</td></tr><tr><td>CORS</td><td>Mecanismo con cabeceras que permite a un navegador usar recursos de otro origen.</td></tr><tr><td>Stack trace</td><td>Lista de llamadas que muestra dónde ocurrió un error.</td></tr><tr><td>Rate limiting</td><td>Limitar cuántas peticiones puede hacer un cliente en un tiempo.</td></tr><tr><td><code>helmet</code></td><td>Paquete que añade cabeceras HTTP de seguridad.</td></tr><tr><td>Inyección</td><td>Ataque que introduce instrucciones maliciosas dentro de un dato de entrada.</td></tr></tbody>
+</table></div>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>Un cliente envía un JSON sin el campo obligatorio. ¿Qué código corresponde?</p><ul class="opts"><li><button type="button" class="opt">200</button></li><li><button type="button" class="opt" data-ok>400</button></li><li><button type="button" class="opt">404</button></li><li><button type="button" class="opt">500</button></li></ul><p class="explain" hidden>Los datos inválidos son un error del cliente: <code>400 Bad Request</code>.</p></div>
+<div class="quiz-q"><p>¿Cuántos parámetros tiene un manejador de errores de Express?</p><ul class="opts"><li><button type="button" class="opt">Dos</button></li><li><button type="button" class="opt">Tres</button></li><li><button type="button" class="opt" data-ok>Cuatro</button></li><li><button type="button" class="opt">Uno</button></li></ul><p class="explain" hidden><code>(err, req, res, next)</code>: Express lo reconoce por tener cuatro.</p></div>
+<div class="quiz-q"><p>¿Qué debes mostrar al cliente cuando ocurre un error <code>500</code>?</p><ul class="opts"><li><button type="button" class="opt">El stack trace completo</button></li><li><button type="button" class="opt">El mensaje interno del error</button></li><li><button type="button" class="opt" data-ok>Un mensaje genérico, guardando el detalle en el servidor</button></li><li><button type="button" class="opt">Nada, cerrar la conexión</button></li></ul><p class="explain" hidden>Los detalles internos ayudan a un atacante; regístralos pero no los expongas.</p></div>
+<div class="quiz-q"><p>¿Qué protege realmente CORS?</p><ul class="opts"><li><button type="button" class="opt">Tu servidor frente a cualquier cliente</button></li><li><button type="button" class="opt" data-ok>A los navegadores: qué páginas pueden leer respuestas de otro origen</button></li><li><button type="button" class="opt">Las contraseñas</button></li><li><button type="button" class="opt">La base de datos</button></li></ul><p class="explain" hidden>Solo los navegadores aplican CORS; <code>curl</code> u otro servidor lo ignoran.</p></div>
+<div class="quiz-q"><p>¿Cuál es la mejor práctica con una clave secreta de API?</p><ul class="opts"><li><button type="button" class="opt">Escribirla en el código</button></li><li><button type="button" class="opt">Subirla a GitHub</button></li><li><button type="button" class="opt" data-ok>Guardarla en una variable de entorno fuera de Git</button></li><li><button type="button" class="opt">Ponerla en el JavaScript del navegador</button></li></ul><p class="explain" hidden>Los secretos van en variables de entorno y en archivos que no se suben a Git.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="node-07">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../06-consumir-apis/"><small>← Anterior</small>Consumir APIs con fetch y variables de entorno</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de Node.js y APIs · Lección 7 · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&amp;title=%5BError%5D%20Lecci%C3%B3n%207%3A%20Errores%2C%20validaci%C3%B3n%20y%20seguridad%20b%C3%A1sica%20%C2%B7%20Curso%20de%20Node.js%20y%20APIs&amp;pagina=https://cacg-code.github.io/PRACTICAS-HTML/node/07-errores-y-seguridad/" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

@@ -1,0 +1,551 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Proyecto: API de tareas · Curso de Node.js y APIs</title>
+  <meta name="description" content="Proyecto final de Node.js: una API REST de tareas con Express, validación, filtros y paginación, almacenamiento en archivo JSON y preparada para desplegar.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/node/proyecto-api-tareas/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Proyecto: API de tareas · Curso de Node.js y APIs">
+  <meta property="og:description" content="Proyecto final de Node.js: una API REST de tareas con Express, validación, filtros y paginación, almacenamiento en archivo JSON y preparada para desplegar.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/node/proyecto-api-tareas/">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de Node.js y APIs</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap lesson-layout" id="contenido">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#que">Qué vas a construir</a></li><li><a href="#plan">Plan: la arquitectura</a></li><li><a href="#inicio">Paso 1: crear el proyecto</a></li><li><a href="#puras">Paso 2: validar, filtrar y paginar</a></li><li><a href="#almacen">Paso 3: el almacén en un archivo JSON</a></li><li><a href="#errores-mod">Paso 4: errores y rutas</a></li><li><a href="#arranque">Paso 5: ensamblar y arrancar</a></li><li><a href="#probar">Paso 6: probarla de punta a punta</a></li><li><a href="#calidad">Revisión de calidad</a></li><li><a href="#publicar">Publicarla</a></li><li><a href="#retos">Retos para ir más lejos</a></li><li><a href="#siguiente">Qué sigue en tu camino</a></li><li><a href="#errores">Errores frecuentes</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de Node.js y APIs</a> › Proyecto final</div>
+        <h1>Proyecto: API de tareas</h1>
+        <ul class="meta"><li>⏱ 180 minutos</li><li>📶 Nivel: intermedio</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Organizar una API en módulos con responsabilidades claras.</li><li>Combinar Express, <code>Router</code>, validación y un manejador de errores central.</li><li>Guardar y recuperar datos en un archivo JSON con <code>fs/promises</code>.</li><li>Filtrar y paginar resultados a partir de la query.</li><li>Dejar el proyecto listo para desplegar.</li></ul>
+</div>
+
+<h2 id="que"><span class="n">1.</span>Qué vas a construir</h2>
+
+<p>Vas a crear una <strong>API REST de tareas</strong> completa y lista para publicar: se pueden crear, listar (con filtros y paginación), editar y borrar tareas; los datos se <strong>guardan en un archivo JSON</strong> y sobreviven a un reinicio; las entradas se <strong>validan</strong>; los errores se responden en JSON coherente; y está preparada para <strong>desplegarse</strong>. Reúne todo el curso en un solo proyecto.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Función de la API</th><th>Lo que aplicas</th><th>Lección</th></tr></thead>
+<tbody><tr><td>Arrancar el proyecto, scripts y dependencias</td><td><code>npm</code>, <code>package.json</code>, <code>.gitignore</code></td><td>3</td></tr><tr><td>Dividir el código en módulos</td><td>ES Modules, <code>import</code> y <code>export</code></td><td>2</td></tr><tr><td>Guardar y leer tareas en un archivo</td><td><code>fs/promises</code>, <code>path</code>, JSON</td><td>2</td></tr><tr><td>Rutas, <code>Router</code> y middleware</td><td>Express</td><td>4</td></tr><tr><td>CRUD completo con códigos de estado</td><td>Verbos HTTP, REST</td><td>5</td></tr><tr><td>Configuración por variables de entorno</td><td><code>process.env</code>, <code>.env</code></td><td>6</td></tr><tr><td>Validación, manejo de errores y CORS</td><td>Errores y seguridad</td><td>7</td></tr><tr><td>Ruta de salud y script <code>start</code></td><td>Despliegue</td><td>8</td></tr></tbody>
+</table></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Cómo trabajar</p>
+<p>Construye <strong>paso a paso</strong> y prueba con <code>curl</code> (o Thunder Client) después de cada paso. Si algo falla, el error está en lo último que cambiaste.</p>
+</div>
+
+<p>Los endpoints finales serán:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Método y ruta</th><th>Qué hace</th><th>Éxito</th></tr></thead>
+<tbody><tr><td><code>GET /salud</code></td><td>Comprueba que la API vive</td><td><code>200</code></td></tr><tr><td><code>GET /tareas?hecha=&amp;q=&amp;prioridad=&amp;pagina=&amp;limite=</code></td><td>Lista con filtros y paginación</td><td><code>200</code></td></tr><tr><td><code>GET /tareas/:id</code></td><td>Una tarea</td><td><code>200</code></td></tr><tr><td><code>POST /tareas</code></td><td>Crea una tarea</td><td><code>201</code></td></tr><tr><td><code>PATCH /tareas/:id</code></td><td>Modifica campos de una tarea</td><td><code>200</code></td></tr><tr><td><code>DELETE /tareas/:id</code></td><td>Borra una tarea</td><td><code>204</code></td></tr></tbody>
+</table></div>
+
+
+<h2 id="plan"><span class="n">2.</span>Plan: la arquitectura</h2>
+
+<p>En vez de un solo archivo gigante, separa responsabilidades. Cada módulo hace <strong>una cosa</strong> y es fácil de probar:</p>
+<div class="code">
+  <div class="code-head"><span>Estructura del proyecto</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>api-tareas/
+├── package.json
+├── .gitignore            ← node_modules, .env, datos/
+├── .env.example
+├── datos/
+│   └── tareas.json       ← se crea solo
+└── src/
+    ├── index.js          ← arranque: lee la config y escucha en el puerto
+    ├── app.js            ← crea y configura la aplicación Express
+    ├── config.js         ← lee las variables de entorno
+    ├── almacen.js        ← guarda y lee tareas (archivo JSON)
+    ├── validar.js        ← validarTarea
+    ├── consultas.js      ← filtrarTareas y paginar
+    ├── errores.js        ← crearErrorHttp y manejarErrores
+    └── rutas/
+        └── tareas.js     ← el Router de /tareas</code></pre>
+</div>
+
+<p>El truco de diseño es que <strong>las funciones puras</strong> (validar, filtrar, paginar) no saben nada de Express ni del disco, y que el <strong>almacén recibe sus funciones de lectura y escritura</strong> como argumentos. Así puedes comprobarlas sin arrancar el servidor, igual que en los ejercicios del curso:</p>
+<div class="flow"><div class="node"><strong>Ruta</strong><span>Express</span></div><div class="arrow">→<code>validar</code></div><div class="node"><strong>Lógica pura</strong><span>validar, filtrar, paginar</span></div><div class="arrow">→<code>almacén</code></div><div class="node"><strong>Archivo JSON</strong><span>datos/tareas.json</span></div></div>
+
+<h2 id="inicio"><span class="n">3.</span>Paso 1: crear el proyecto</h2>
+
+<div class="code">
+  <div class="code-head"><span>Terminal</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>mkdir api-tareas
+cd api-tareas
+npm init -y
+npm install express cors
+mkdir src src/rutas datos</code></pre>
+</div>
+
+<p>Edita <code>package.json</code> para usar ES Modules y añade los scripts:</p>
+<div class="code">
+  <div class="code-head"><span>package.json (fragmento)</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>&quot;type&quot;: &quot;module&quot;,
+&quot;scripts&quot;: {
+  &quot;start&quot;: &quot;node src/index.js&quot;,
+  &quot;dev&quot;: &quot;node --watch --env-file=.env src/index.js&quot;
+},
+&quot;engines&quot;: { &quot;node&quot;: &quot;&gt;=20&quot; }</code></pre>
+</div>
+
+<div class="code">
+  <div class="code-head"><span>.gitignore</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>node_modules
+.env
+datos/</code></pre>
+</div>
+
+<div class="code">
+  <div class="code-head"><span>.env.example</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>PORT=3000
+ORIGENES=http://localhost:5173
+NODE_ENV=development</code></pre>
+</div>
+
+<p>Copia <code>.env.example</code> como <code>.env</code> (ya está en <code>.gitignore</code>). Después crea <code>src/config.js</code>:</p>
+<div class="code">
+  <div class="code-head"><span>src/config.js</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>export function leerConfig(env = process.env) {
+  return {
+    puerto: Number(env.PORT) || 3000,
+    esProduccion: env.NODE_ENV === &quot;production&quot;,
+    origenes: (env.ORIGENES ?? &quot;&quot;)
+      .split(&quot;,&quot;)
+      .map((o) =&gt; o.trim())
+      .filter(Boolean),
+  };
+}</code></pre>
+</div>
+
+
+<h2 id="puras"><span class="n">4.</span>Paso 2: validar, filtrar y paginar</h2>
+
+<p>Estas tres piezas son funciones puras: reciben datos y devuelven datos. En el ejercicio de este proyecto las escribirás tú y las comprobarás en el navegador; aquí tienes su forma.</p>
+<div class="code">
+  <div class="code-head"><span>src/validar.js</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>export function validarTarea(datos, parcial = false) {
+  const errores = [];
+  const t = datos?.titulo;
+
+  if (t === undefined &amp;&amp; parcial) {
+    // en PATCH el título es opcional
+  } else if (typeof t !== &quot;string&quot; || t.trim() === &quot;&quot;) {
+    errores.push(&quot;titulo obligatorio&quot;);
+  } else if (t.length &gt; 100) {
+    errores.push(&quot;titulo demasiado largo&quot;);
+  }
+  if (datos?.hecha !== undefined &amp;&amp; typeof datos.hecha !== &quot;boolean&quot;) {
+    errores.push(&quot;hecha debe ser booleano&quot;);
+  }
+  if (datos?.prioridad !== undefined &amp;&amp; ![&quot;baja&quot;, &quot;media&quot;, &quot;alta&quot;].includes(datos.prioridad)) {
+    errores.push(&quot;prioridad invalida&quot;);
+  }
+  return errores;
+}</code></pre>
+</div>
+
+<div class="code">
+  <div class="code-head"><span>src/consultas.js</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>export function filtrarTareas(tareas, query = {}) {
+  return tareas.filter((t) =&gt; {
+    if (query.hecha !== undefined &amp;&amp; t.hecha !== (query.hecha === &quot;true&quot;)) return false;
+    if (query.prioridad !== undefined &amp;&amp; t.prioridad !== query.prioridad) return false;
+    if (query.q &amp;&amp; !t.titulo.toLowerCase().includes(String(query.q).toLowerCase())) return false;
+    return true;
+  });
+}
+
+export function paginar(items, pagina, limite) {
+  let p = Math.floor(Number(pagina));
+  let l = Math.floor(Number(limite));
+  if (!(p &gt;= 1)) p = 1;
+  if (!(l &gt;= 1)) l = 10;
+  l = Math.min(l, 50);
+
+  const inicio = (p - 1) * l;
+  return {
+    datos: items.slice(inicio, inicio + l),
+    total: items.length,
+    pagina: p,
+    limite: l,
+    paginas: Math.max(1, Math.ceil(items.length / l)),
+  };
+}</code></pre>
+</div>
+
+<div class="callout nota">
+<p class="callout-title">📌 Nota · Por qué se convierte cada valor</p>
+<p>Los parámetros de la query llegan como <strong>texto</strong> (<code>"2"</code>, <code>"true"</code>). Todas las conversiones y valores por defecto están en estas funciones, no repartidos por las rutas.</p>
+</div>
+
+
+<h2 id="almacen"><span class="n">5.</span>Paso 3: el almacén en un archivo JSON</h2>
+
+<p>El almacén guarda la lista de tareas como JSON. Recibe <strong>cómo leer y cómo escribir</strong>, así que no depende del disco directamente:</p>
+<div class="code">
+  <div class="code-head"><span>src/almacen.js</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>import { readFile, writeFile, mkdir } from &quot;node:fs/promises&quot;;
+import path from &quot;node:path&quot;;
+
+export function crearAlmacen(leer, escribir) {
+  async function cargar() {
+    try {
+      return JSON.parse(await leer());
+    } catch (error) {
+      if (error.code === &quot;ENOENT&quot;) return [];   // aún no existe el archivo
+      throw error;
+    }
+  }
+
+  async function guardar(tareas) {
+    await escribir(JSON.stringify(tareas, null, 2));
+  }
+
+  return {
+    listar: cargar,
+
+    async crear(datos) {
+      const tareas = await cargar();
+      const id = tareas.reduce((max, t) =&gt; Math.max(max, t.id), 0) + 1;
+      const nueva = { id, ...datos };
+      tareas.push(nueva);
+      await guardar(tareas);
+      return nueva;
+    },
+
+    async actualizar(id, cambios) {
+      const tareas = await cargar();
+      const i = tareas.findIndex((t) =&gt; t.id === id);
+      if (i === -1) return null;
+      tareas[i] = { ...tareas[i], ...cambios, id };
+      await guardar(tareas);
+      return tareas[i];
+    },
+
+    async borrar(id) {
+      const tareas = await cargar();
+      const i = tareas.findIndex((t) =&gt; t.id === id);
+      if (i === -1) return false;
+      tareas.splice(i, 1);
+      await guardar(tareas);
+      return true;
+    },
+  };
+}
+
+// El almacén real: usa un archivo en la carpeta datos/
+export function crearAlmacenEnArchivo() {
+  const archivo = path.join(import.meta.dirname, &quot;..&quot;, &quot;datos&quot;, &quot;tareas.json&quot;);
+  return crearAlmacen(
+    () =&gt; readFile(archivo, &quot;utf8&quot;),
+    async (texto) =&gt; {
+      await mkdir(path.dirname(archivo), { recursive: true });
+      await writeFile(archivo, texto);
+    }
+  );
+}</code></pre>
+</div>
+
+<p>Fíjate en el id nuevo: <strong>máximo actual + 1</strong>, no «cantidad + 1». Así, tras borrar tareas o reiniciar el servidor, nunca se repite un id existente.</p>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · Límites de este diseño</p>
+<p>Un archivo JSON sirve para aprender y para proyectos muy pequeños. Si dos peticiones escriben a la vez pueden pisarse, y en muchas plataformas de despliegue el disco se borra al reiniciar (lección 8). Una base de datos resuelve ambos problemas: es tu siguiente paso.</p>
+</div>
+
+
+<h2 id="errores-mod"><span class="n">6.</span>Paso 4: errores y rutas</h2>
+
+<div class="code">
+  <div class="code-head"><span>src/errores.js</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>export function crearErrorHttp(estado, mensaje) {
+  const error = new Error(mensaje);
+  error.status = estado;
+  return error;
+}
+
+export function manejarErrores(err, req, res, next) {
+  const estado = err.status ?? 500;
+  if (estado &gt;= 500) console.error(err);
+  res.status(estado).json({
+    error: estado &gt;= 500 ? &quot;Error interno del servidor&quot; : err.message,
+    ...(err.detalles ? { detalles: err.detalles } : {}),
+  });
+}</code></pre>
+</div>
+
+<p>Ahora el <code>Router</code>. Recibe el almacén como argumento, por lo que las rutas no saben dónde se guardan los datos:</p>
+<div class="code">
+  <div class="code-head"><span>src/rutas/tareas.js</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>import express from &quot;express&quot;;
+import { validarTarea } from &quot;../validar.js&quot;;
+import { filtrarTareas, paginar } from &quot;../consultas.js&quot;;
+import { crearErrorHttp } from &quot;../errores.js&quot;;
+
+function leerId(req) {
+  const id = Number(req.params.id);
+  if (!Number.isInteger(id) || id &lt; 1) {
+    throw crearErrorHttp(400, &quot;El id debe ser un número entero positivo&quot;);
+  }
+  return id;
+}
+
+function lanzarSiInvalido(errores) {
+  if (errores.length &gt; 0) {
+    const error = crearErrorHttp(400, &quot;Datos inválidos&quot;);
+    error.detalles = errores;
+    throw error;
+  }
+}
+
+export function crearRutasTareas(almacen) {
+  const router = express.Router();
+
+  router.get(&quot;/&quot;, async (req, res) =&gt; {
+    const todas = await almacen.listar();
+    const filtradas = filtrarTareas(todas, req.query);
+    res.json(paginar(filtradas, req.query.pagina, req.query.limite));
+  });
+
+  router.get(&quot;/:id&quot;, async (req, res) =&gt; {
+    const id = leerId(req);
+    const tarea = (await almacen.listar()).find((t) =&gt; t.id === id);
+    if (!tarea) throw crearErrorHttp(404, &quot;Tarea no encontrada&quot;);
+    res.json(tarea);
+  });
+
+  router.post(&quot;/&quot;, async (req, res) =&gt; {
+    lanzarSiInvalido(validarTarea(req.body));
+    const { titulo, hecha = false, prioridad = &quot;media&quot; } = req.body;
+    const nueva = await almacen.crear({ titulo: titulo.trim(), hecha, prioridad });
+    res.status(201).json(nueva);
+  });
+
+  router.patch(&quot;/:id&quot;, async (req, res) =&gt; {
+    const id = leerId(req);
+    lanzarSiInvalido(validarTarea(req.body, true));
+    const { titulo, hecha, prioridad } = req.body;
+    const cambios = {};
+    if (titulo !== undefined) cambios.titulo = titulo.trim();
+    if (hecha !== undefined) cambios.hecha = hecha;
+    if (prioridad !== undefined) cambios.prioridad = prioridad;
+
+    const actualizada = await almacen.actualizar(id, cambios);
+    if (!actualizada) throw crearErrorHttp(404, &quot;Tarea no encontrada&quot;);
+    res.json(actualizada);
+  });
+
+  router.delete(&quot;/:id&quot;, async (req, res) =&gt; {
+    const borrada = await almacen.borrar(leerId(req));
+    if (!borrada) throw crearErrorHttp(404, &quot;Tarea no encontrada&quot;);
+    res.sendStatus(204);
+  });
+
+  return router;
+}</code></pre>
+</div>
+
+<div class="callout nota">
+<p class="callout-title">📌 Nota · Rutas limpias gracias a Express 5</p>
+<p>Las rutas son <code>async</code> y simplemente hacen <code>throw</code>: Express 5 envía esos errores al manejador central. Si usas Express 4, tendrías que envolver cada ruta con <code>try/catch</code> y <code>next(error)</code>.</p>
+</div>
+
+<p>Más información sobre <code>Router</code> en <a href="https://expressjs.com/es/guide/routing.html" target="_blank" rel="noopener">la guía de enrutamiento de Express</a>.</p>
+
+<h2 id="arranque"><span class="n">7.</span>Paso 5: ensamblar y arrancar</h2>
+
+<div class="code">
+  <div class="code-head"><span>src/app.js</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>import express from &quot;express&quot;;
+import cors from &quot;cors&quot;;
+import { crearRutasTareas } from &quot;./rutas/tareas.js&quot;;
+import { manejarErrores } from &quot;./errores.js&quot;;
+
+export function crearApp(almacen, config) {
+  const app = express();
+  const inicio = Date.now();
+
+  app.use(cors({ origin: config.origenes.length &gt; 0 ? config.origenes : false }));
+  app.use(express.json({ limit: &quot;100kb&quot; }));
+
+  app.get(&quot;/salud&quot;, (req, res) =&gt; {
+    res.json({ estado: &quot;ok&quot;, uptimeSegundos: Math.floor((Date.now() - inicio) / 1000) });
+  });
+
+  app.use(&quot;/tareas&quot;, crearRutasTareas(almacen));
+
+  app.use((req, res) =&gt; res.status(404).json({ error: &quot;Ruta no encontrada&quot; }));
+  app.use(manejarErrores);
+
+  return app;
+}</code></pre>
+</div>
+
+<div class="code">
+  <div class="code-head"><span>src/index.js</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>import { leerConfig } from &quot;./config.js&quot;;
+import { crearAlmacenEnArchivo } from &quot;./almacen.js&quot;;
+import { crearApp } from &quot;./app.js&quot;;
+
+const config = leerConfig();
+const app = crearApp(crearAlmacenEnArchivo(), config);
+
+app.listen(config.puerto, () =&gt; {
+  console.log(`API de tareas en http://localhost:${config.puerto}`);
+});</code></pre>
+</div>
+
+<div class="code">
+  <div class="code-head"><span>Terminal</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>npm run dev</code></pre>
+</div>
+<div class="code">
+  <div class="code-head"><span>Salida esperada</span></div>
+<pre><code>API de tareas en http://localhost:3000</code></pre>
+</div>
+
+<p>Una consecuencia de este diseño: <code>crearApp</code> recibe el almacén, así que en pruebas puedes darle uno falso en memoria sin tocar el disco.</p>
+
+<h2 id="probar"><span class="n">8.</span>Paso 6: probarla de punta a punta</h2>
+
+<div class="code">
+  <div class="code-head"><span>Terminal (macOS, Linux, Git Bash)</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>curl http://localhost:3000/salud
+curl -X POST http://localhost:3000/tareas -H &quot;Content-Type: application/json&quot; -d &#x27;{&quot;titulo&quot;:&quot;Estudiar Express&quot;,&quot;prioridad&quot;:&quot;alta&quot;}&#x27;
+curl -X POST http://localhost:3000/tareas -H &quot;Content-Type: application/json&quot; -d &#x27;{&quot;titulo&quot;:&quot;&quot;}&#x27;
+curl &quot;http://localhost:3000/tareas?prioridad=alta&amp;limite=5&quot;
+curl -X PATCH http://localhost:3000/tareas/1 -H &quot;Content-Type: application/json&quot; -d &#x27;{&quot;hecha&quot;:true}&#x27;
+curl -X DELETE http://localhost:3000/tareas/1 -i
+curl http://localhost:3000/tareas/abc</code></pre>
+</div>
+<div class="code">
+  <div class="code-head"><span>Salida esperada</span></div>
+<pre><code>{&quot;estado&quot;:&quot;ok&quot;,&quot;uptimeSegundos&quot;:12}
+{&quot;id&quot;:1,&quot;titulo&quot;:&quot;Estudiar Express&quot;,&quot;hecha&quot;:false,&quot;prioridad&quot;:&quot;alta&quot;}
+{&quot;error&quot;:&quot;Datos inválidos&quot;,&quot;detalles&quot;:[&quot;titulo obligatorio&quot;]}
+{&quot;datos&quot;:[{&quot;id&quot;:1,&quot;titulo&quot;:&quot;Estudiar Express&quot;,&quot;hecha&quot;:false,&quot;prioridad&quot;:&quot;alta&quot;}],&quot;total&quot;:1,&quot;pagina&quot;:1,&quot;limite&quot;:5,&quot;paginas&quot;:1}
+{&quot;id&quot;:1,&quot;titulo&quot;:&quot;Estudiar Express&quot;,&quot;hecha&quot;:true,&quot;prioridad&quot;:&quot;alta&quot;}
+HTTP/1.1 204 No Content
+{&quot;error&quot;:&quot;El id debe ser un número entero positivo&quot;}</code></pre>
+</div>
+
+<p>Después de crear una tarea, abre <code>datos/tareas.json</code>: verás tus datos. Detén el servidor, vuelve a arrancarlo y comprueba que siguen ahí. En PowerShell recuerda usar <code>curl.exe</code> y escapar las comillas, o prueba con Thunder Client.</p>
+
+<h2 id="calidad"><span class="n">9.</span>Revisión de calidad</h2>
+
+<p>Antes de dar el proyecto por terminado, recórrelo con esta lista:</p>
+<ul class="checklist">
+<li><label><input type="checkbox"><span>Cada ruta responde el <strong>código de estado correcto</strong> (201 al crear, 204 al borrar, 400, 404).</span></label></li>
+<li><label><input type="checkbox"><span>Un <code>POST</code> con datos inválidos devuelve <code>400</code> con la lista de <code>detalles</code>.</span></label></li>
+<li><label><input type="checkbox"><span>Provocar un error interno <strong>no</strong> muestra detalles al cliente, pero sí en la consola.</span></label></li>
+<li><label><input type="checkbox"><span>Los datos <strong>sobreviven</strong> a reiniciar el servidor.</span></label></li>
+<li><label><input type="checkbox"><span><code>git status</code> no muestra <code>.env</code>, <code>node_modules</code> ni <code>datos/</code>.</span></label></li>
+<li><label><input type="checkbox"><span>El puerto sale de <code>PORT</code> y <code>npm start</code> funciona tras <code>npm ci</code>.</span></label></li>
+<li><label><input type="checkbox"><span>Existe <code>/salud</code> y un <code>.env.example</code> con los nombres de las variables.</span></label></li>
+<li><label><input type="checkbox"><span>El 404 y el manejador de errores son lo <strong>último</strong> registrado en <code>app.js</code>.</span></label></li>
+</ul>
+
+<h2 id="publicar"><span class="n">10.</span>Publicarla</h2>
+
+<p>Sigue los pasos de la lección 8: sube el repositorio a GitHub, crea el servicio web en una plataforma, usa <code>npm ci</code> como instalación y <code>npm start</code> como arranque, y define <code>NODE_ENV=production</code> y <code>ORIGENES</code> en el panel. Prueba <code>/salud</code> con la URL pública.</p>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · Recuerda el disco efímero</p>
+<p>Si la plataforma borra el disco al reiniciar, tus tareas se perderán. Para el portafolio basta con que la API funcione y lo expliques; si quieres datos persistentes de verdad, el siguiente paso es una base de datos.</p>
+</div>
+
+
+<h2 id="retos"><span class="n">11.</span>Retos para ir más lejos</h2>
+
+<ul>
+<li><strong>Ordenar:</strong> <code>GET /tareas?orden=titulo</code> y <code>?orden=-titulo</code> (descendente).</li>
+<li><strong>PUT:</strong> añade el reemplazo completo de una tarea.</li>
+<li><strong>Fecha límite:</strong> campo opcional <code>limite</code> validado como <code>AAAA-MM-DD</code>.</li>
+<li><strong>Pruebas automáticas:</strong> Node trae un ejecutor de pruebas integrado, <a href="https://nodejs.org/api/test.html" target="_blank" rel="noopener"><code>node:test</code></a>. Escribe pruebas para <code>validarTarea</code> y <code>crearAlmacen</code> y ejecútalas con <code>node --test</code>.</li>
+<li><strong>Cuentas de usuario:</strong> que cada persona vea solo sus tareas (autenticación).</li>
+<li><strong>Un frontend:</strong> una página con <code>fetch</code> que use tu API (acuérdate de CORS).</li>
+</ul>
+
+<h2 id="siguiente"><span class="n">12.</span>Qué sigue en tu camino</h2>
+
+<p>Con este proyecto ya dominas los cimientos del <em>backend</em> con Node. Para seguir:</p>
+<ul>
+<li><strong>Bases de datos:</strong> sustituir el archivo JSON por una base de datos (relacional como PostgreSQL o SQLite, o documental como MongoDB). Es el paso más natural.</li>
+<li><strong>Autenticación:</strong> registro, inicio de sesión, contraseñas con hash y tokens.</li>
+<li><strong>TypeScript:</strong> añade tipos a tu código para detectar errores antes de ejecutarlo.</li>
+<li><strong>Documentar la API:</strong> describir tus rutas con un estándar como OpenAPI.</li>
+<li><strong>Conectarla con React:</strong> usa el <a href="../../react/">curso de React</a> para construir la interfaz que consume tu API.</li>
+</ul>
+
+<h2 id="errores"><span class="n">13.</span>Errores frecuentes</h2>
+<ul><li><strong>Todo en un solo archivo</strong>: pronto es imposible de mantener. Separa módulos.</li><li><strong>Calcular el id con <code>length + 1</code></strong>: se repiten ids tras borrar. Usa el máximo + 1.</li><li><strong>Olvidar <code>await</code> en el almacén</strong>: respondes antes de guardar y devuelves promesas en vez de datos.</li><li><strong>Registrar el 404 o el manejador de errores antes de las rutas</strong>: capturan todo.</li><li><strong>Subir <code>datos/</code> o <code>.env</code> a Git</strong>.</li><li><strong>No convertir los parámetros de la query</strong>: <code>"2"</code> no es <code>2</code>.</li><li><strong>Fiarse del archivo JSON en producción</strong>: puede perderse o corromperse.</li></ul>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li>Separa la API en módulos: config, almacén, validación, consultas, errores, rutas y app.</li><li>Las funciones puras (validar, filtrar, paginar) son fáciles de probar y de reutilizar.</li><li>El almacén recibe sus funciones de lectura y escritura: no depende del disco.</li><li>Id nuevo = máximo actual + 1.</li><li><code>express.Router()</code> agrupa las rutas de un recurso y se monta con <code>app.use</code>.</li><li>Rutas <code>async</code> que lanzan errores: Express 5 los envía al manejador central.</li><li>Orden en <code>app.js</code>: CORS, <code>express.json</code>, rutas, 404 y manejador de errores.</li><li>Listo para producción: <code>start</code>, <code>PORT</code>, <code>/salud</code>, <code>.env.example</code> y <code>.gitignore</code>.</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">14.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td>Router</td><td>Mini aplicación de Express que agrupa las rutas de un recurso.</td></tr><tr><td>Función pura</td><td>Función que solo depende de sus argumentos y no modifica nada fuera de ella.</td></tr><tr><td>Inyección de dependencias</td><td>Pasar a una función las piezas que necesita (como leer y escribir) en lugar de crearlas dentro.</td></tr><tr><td>Paginación</td><td>Dividir una lista larga en páginas de tamaño fijo.</td></tr><tr><td>Persistencia</td><td>Capacidad de conservar los datos tras apagar el programa.</td></tr><tr><td>Capas</td><td>Separación del código por responsabilidad: rutas, lógica y almacenamiento.</td></tr><tr><td>Endpoint</td><td>Combinación de método y ruta que ofrece la API.</td></tr><tr><td>Backend</td><td>Parte de una aplicación que corre en el servidor.</td></tr></tbody>
+</table></div>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>¿Por qué se calcula el id nuevo como «máximo + 1» y no como «cantidad + 1»?</p><ul class="opts"><li><button type="button" class="opt">Es más rápido</button></li><li><button type="button" class="opt" data-ok>Para no repetir ids tras borrar tareas</button></li><li><button type="button" class="opt">Porque lo exige Express</button></li><li><button type="button" class="opt">Para ordenar las tareas</button></li></ul><p class="explain" hidden>Si hay ids 1 y 3 (se borró el 2), «cantidad + 1» daría 3 y chocaría; el máximo + 1 da 4.</p></div>
+<div class="quiz-q"><p>¿Para qué sirve <code>express.Router()</code>?</p><ul class="opts"><li><button type="button" class="opt">Para abrir otro puerto</button></li><li><button type="button" class="opt" data-ok>Para agrupar las rutas de un recurso en un módulo</button></li><li><button type="button" class="opt">Para validar datos</button></li><li><button type="button" class="opt">Para guardar archivos</button></li></ul><p class="explain" hidden>Permite escribir las rutas de <code>/tareas</code> aparte y montarlas con <code>app.use("/tareas", router)</code>.</p></div>
+<div class="quiz-q"><p>¿Qué ventaja tiene que el almacén reciba <code>leer</code> y <code>escribir</code> como argumentos?</p><ul class="opts"><li><button type="button" class="opt">Ninguna</button></li><li><button type="button" class="opt" data-ok>Se puede probar sin tocar el disco</button></li><li><button type="button" class="opt">Es obligatorio en Node</button></li><li><button type="button" class="opt">Hace el archivo más pequeño</button></li></ul><p class="explain" hidden>En las pruebas se le pasan funciones falsas en memoria.</p></div>
+<div class="quiz-q"><p>¿Dónde deben registrarse el 404 y el manejador de errores?</p><ul class="opts"><li><button type="button" class="opt">Al principio de <code>app.js</code></button></li><li><button type="button" class="opt">Antes de <code>express.json()</code></button></li><li><button type="button" class="opt" data-ok>Al final, después de las rutas</button></li><li><button type="button" class="opt">En <code>package.json</code></button></li></ul><p class="explain" hidden>Si se registran antes, capturarían todas las peticiones.</p></div>
+<div class="quiz-q"><p>¿Qué problema tiene un archivo JSON como almacén en producción?</p><ul class="opts"><li><button type="button" class="opt">No admite números</button></li><li><button type="button" class="opt" data-ok>Puede perderse en plataformas con disco efímero y no gestiona escrituras simultáneas</button></li><li><button type="button" class="opt">Express no lo lee</button></li><li><button type="button" class="opt">Es ilegal</button></li></ul><p class="explain" hidden>Para datos serios se usa una base de datos.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="node-P">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../08-despliegue/"><small>← Anterior</small>Despliegue de tu API</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de Node.js y APIs · Proyecto final · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&amp;title=%5BError%5D%20Proyecto%3A%20API%20de%20tareas%20%C2%B7%20Curso%20de%20Node.js%20y%20APIs&amp;pagina=https://cacg-code.github.io/PRACTICAS-HTML/node/proyecto-api-tareas/" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

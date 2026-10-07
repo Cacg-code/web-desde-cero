@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lección 7: SQLite y PostgreSQL en la práctica · Curso de Bases de datos con SQL</title>
+  <meta name="description" content="Instala y usa SQLite y PostgreSQL, conoce sus diferencias de sintaxis y aprende a conectarlos desde Node.js, con un traductor de dialectos interactivo.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/bd/07-sqlite-y-postgresql/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#0e7490">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Lección 7: SQLite y PostgreSQL en la práctica · Curso de Bases de datos con SQL">
+  <meta property="og:description" content="Instala y usa SQLite y PostgreSQL, conoce sus diferencias de sintaxis y aprende a conectarlos desde Node.js, con un traductor de dialectos interactivo.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/bd/07-sqlite-y-postgresql/">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+  <style>
+    .sqlsim select, .sqlsim input[type="number"] { padding: .5rem .6rem; border: 1px solid var(--border); border-radius: 8px; background: var(--bg); color: var(--text); font: inherit; max-width: 100%; }
+    .sqlsim .sql-out { margin: 0; padding: .8rem 1rem; border-radius: 10px; background: var(--code-bg); color: var(--code-text); font-family: var(--mono); font-size: .88rem; line-height: 1.6; white-space: pre-wrap; overflow-wrap: anywhere; }
+    .sqlsim .msg { margin: 0; font-weight: 600; }
+    .sqlsim .msg.err { color: #b91c1c; }
+    .sqlsim .msg.okk { color: #15803d; }
+    :root[data-theme="dark"] .sqlsim .msg.err { color: #fca5a5; }
+    :root[data-theme="dark"] .sqlsim .msg.okk { color: #86efac; }
+    @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .sqlsim .msg.err { color: #fca5a5; } :root:not([data-theme="light"]) .sqlsim .msg.okk { color: #86efac; } }
+    .sqlsim .w-row button { cursor: pointer; }
+    .sqlsim .w-row label { display: inline-flex; gap: .4rem; align-items: center; }
+    .sqlsim td.hl, .sqlsim th.hl, .sqlsim tr.hl td { background: color-mix(in srgb, var(--accent) 22%, transparent); }
+    .sqlsim tr.gone td { text-decoration: line-through; opacity: .5; }
+    .sqlsim tr.new td { background: color-mix(in srgb, #22c55e 22%, transparent); }
+    .sqlsim tr.chg td { background: color-mix(in srgb, #f59e0b 25%, transparent); }
+  </style>
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Bases de datos con SQL</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap lesson-layout" id="contenido">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#dos">Dos motores, dos filosofías</a></li><li><a href="#sqlite">SQLite en la práctica</a></li><li><a href="#postgres">PostgreSQL en la práctica</a></li><li><a href="#dif">Diferencias de sintaxis que debes conocer</a></li><li><a href="#laboratorio">Pruébalo: traductor de SQLite a PostgreSQL</a></li><li><a href="#node">Conectar desde Node.js</a></li><li><a href="#errores">Errores frecuentes</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de Bases de datos con SQL</a> › Lección 7</div>
+        <h1>SQLite y PostgreSQL en la práctica</h1>
+        <ul class="meta"><li>⏱ 55 minutos</li><li>📶 Nivel: principiante</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Explicar las diferencias de arquitectura entre <strong>SQLite</strong> y <strong>PostgreSQL</strong>.</li><li>Usar las terminales <code>sqlite3</code> y <code>psql</code>.</li><li>Adaptar el SQL entre los dos motores.</li><li>Conectar una aplicación de Node.js a cada uno con consultas parametrizadas.</li></ul>
+</div>
+
+<h2 id="dos"><span class="n">1.</span>Dos motores, dos filosofías</h2>
+
+<p>SQL es el lenguaje; <strong>SQLite</strong> y <strong>PostgreSQL</strong> son dos programas (motores) que lo entienden. Lo que aprendiste hasta aquí sirve para ambos, con pequeñas diferencias que verás en esta lección.</p>
+<div class="table-wrap"><table>
+<thead><tr><th></th><th>SQLite</th><th>PostgreSQL</th></tr></thead>
+<tbody>
+<tr><td>Arquitectura</td><td>Una biblioteca: la base de datos es <strong>un solo archivo</strong>; no hay servidor</td><td>Cliente-servidor: un <strong>servidor</strong> que escucha y al que te conectas</td></tr>
+<tr><td>Instalación</td><td>Casi nula (viene en muchos sistemas)</td><td>Hay que instalar y configurar el servidor</td></tr>
+<tr><td>Usuarios y permisos</td><td>No tiene (los permisos son los del archivo)</td><td>Roles, contraseñas y permisos por tabla</td></tr>
+<tr><td>Concurrencia</td><td>Muchas lecturas; una escritura a la vez</td><td>Muchos usuarios leyendo y escribiendo a la vez</td></tr>
+<tr><td>Tipos</td><td>Flexibles: la columna sugiere el tipo, no lo impone</td><td>Estrictos: rechaza un texto en una columna entera</td></tr>
+<tr><td>Ideal para</td><td>Aprender, apps móviles y de escritorio, prototipos y sitios pequeños</td><td>Aplicaciones web con muchos usuarios y datos importantes</td></tr>
+</tbody></table></div>
+<p>Una buena ruta: <strong>aprende y prototipa con SQLite</strong> y pasa a PostgreSQL cuando tu aplicación necesite varios usuarios y control de acceso. Como el SQL básico es el mismo, el cambio es pequeño.</p>
+
+<h2 id="sqlite"><span class="n">2.</span>SQLite en la práctica</h2>
+
+<p>Descarga las «command-line tools» desde <a href="https://www.sqlite.org/download.html" target="_blank" rel="noopener">sqlite.org/download</a> (en macOS ya viene instalado; en Linux, <code>sudo apt install sqlite3</code>). Comprueba la instalación abriendo una terminal:</p>
+<div class="code">
+  <div class="code-head"><span>Abrir o crear una base de datos</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>sqlite3 tienda.db</code></pre>
+</div>
+
+<p>Si <code>tienda.db</code> no existe, se crea al guardar algo. Dentro del programa escribes SQL terminado en <code>;</code> y <strong>comandos de punto</strong> (sin <code>;</code>) que controlan el programa:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Comando</th><th>Para qué sirve</th></tr></thead>
+<tbody>
+<tr><td><code>.help</code></td><td>Ver todos los comandos</td></tr>
+<tr><td><code>.tables</code></td><td>Listar las tablas</td></tr>
+<tr><td><code>.schema productos</code></td><td>Ver el <code>CREATE TABLE</code> de una tabla</td></tr>
+<tr><td><code>.headers on</code> y <code>.mode column</code></td><td>Mostrar los resultados con encabezados y en columnas</td></tr>
+<tr><td><code>.read tienda.sql</code></td><td>Ejecutar un archivo de SQL</td></tr>
+<tr><td><code>.quit</code></td><td>Salir</td></tr>
+</tbody></table></div>
+<p>Un flujo de trabajo típico: escribes tu esquema en <code>tienda.sql</code>, lo cargas con <code>.read</code> y consultas. También puedes ejecutar una instrucción sin entrar al programa:</p>
+<div class="code">
+  <div class="code-head"><span>Ejecutar una consulta desde la terminal</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>sqlite3 -header -column tienda.db "SELECT nombre, precio FROM productos WHERE precio &gt; 100 ORDER BY precio;"</code></pre>
+</div>
+
+<p>Con los datos de la tienda, esa consulta devuelve:</p>
+<p><strong>Resultado esperado</strong></p>
+<div class="table-wrap"><table>
+<thead><tr><th>nombre</th><th>precio</th></tr></thead>
+<tbody><tr><td>Teclado</td><td>120.00</td></tr><tr><td>Webcam</td><td>150.00</td></tr><tr><td>Monitor FHD</td><td>650.00</td></tr><tr><td>Monitor 4K</td><td>899.00</td></tr></tbody>
+</table></div>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Recuerda las claves foráneas</p>
+<p>En SQLite, cada vez que abras una conexión debes ejecutar <code>PRAGMA foreign_keys = ON;</code> si quieres que se cumplan (lección 5). En PostgreSQL ya lo están.</p>
+</div>
+
+<h2 id="postgres"><span class="n">3.</span>PostgreSQL en la práctica</h2>
+
+<p>Instálalo desde <a href="https://www.postgresql.org/download/" target="_blank" rel="noopener">postgresql.org/download</a> (el instalador de Windows incluye <code>psql</code> y un panel gráfico). Durante la instalación elegirás una contraseña para el usuario administrador <code>postgres</code>: guárdala. El servidor se queda funcionando en segundo plano.</p>
+<div class="code">
+  <div class="code-head"><span>Conectarte con psql</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>psql -U postgres</code></pre>
+</div>
+
+<p>Igual que SQLite, <code>psql</code> tiene sus propios comandos, que empiezan por una barra invertida:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Comando</th><th>Para qué sirve</th></tr></thead>
+<tbody>
+<tr><td><code>\l</code></td><td>Listar las bases de datos</td></tr>
+<tr><td><code>\c tienda</code></td><td>Conectarte a la base <code>tienda</code></td></tr>
+<tr><td><code>\dt</code></td><td>Listar las tablas</td></tr>
+<tr><td><code>\d productos</code></td><td>Describir una tabla</td></tr>
+<tr><td><code>\i tienda.sql</code></td><td>Ejecutar un archivo de SQL</td></tr>
+<tr><td><code>\q</code></td><td>Salir</td></tr>
+</tbody></table></div>
+<p>Aquí, además de las tablas, creas la <strong>base de datos</strong> y un <strong>usuario propio</strong> para tu aplicación (no uses <code>postgres</code> en tus programas):</p>
+<div class="code">
+  <div class="code-head"><span>Preparar una base para la tienda</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">CREATE</span> DATABASE tienda;
+<span class="tk-tag">CREATE</span> ROLE tienda_app LOGIN PASSWORD <span class="tk-val">'cambia-esta-clave'</span>;
+GRANT <span class="tk-tag">ALL</span> PRIVILEGES <span class="tk-tag">ON</span> DATABASE tienda <span class="tk-tag">TO</span> tienda_app;</code></pre>
+</div>
+
+<p>Con la base creada, tu esquema casi no cambia. Lo único que debes adaptar es la sintaxis que ves en la siguiente sección.</p>
+<h2 id="dif"><span class="n">4.</span>Diferencias de sintaxis que debes conocer</h2>
+
+<p>La mayor parte del SQL es idéntico. Estas son las diferencias que más te encontrarás:</p>
+<div class="code">
+  <div class="code-head"><span>Funciones comunes en SQLite (resultado verificado)</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">SELECT</span> <span class="tk-val">'Teclado'</span> <span class="tk-tag">LIKE</span> <span class="tk-val">'tec%'</span> <span class="tk-tag">AS</span> coincide,
+       <span class="tk-val">'Mon'</span> || <span class="tk-val">'itor'</span>      <span class="tk-tag">AS</span> junto,
+       typeof(<span class="tk-attr">1</span>)            <span class="tk-tag">AS</span> tipo1,
+       typeof(<span class="tk-val">'1'</span>)          <span class="tk-tag">AS</span> tipo2;</code></pre>
+</div>
+<p><strong>Resultado esperado</strong></p>
+<div class="table-wrap"><table>
+<thead><tr><th>coincide</th><th>junto</th><th>tipo1</th><th>tipo2</th></tr></thead>
+<tbody><tr><td>1</td><td>Monitor</td><td>integer</td><td>text</td></tr></tbody>
+</table></div>
+
+<p><code>LIKE</code> y <code>||</code> funcionan igual en ambos motores, pero en PostgreSQL <code>LIKE</code> distingue mayúsculas y para ignorarlas se usa <code>ILIKE</code>. En el siguiente laboratorio tienes la lista de equivalencias.</p>
+<p>Sobre los tipos: SQLite acepta un texto en una columna <code>INTEGER</code> y lo guarda tal cual:</p>
+<div class="code">
+  <div class="code-head"><span>Tipado flexible de SQLite</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">CREATE</span> <span class="tk-tag">TABLE</span> prueba (n <span class="tk-tag">INTEGER</span>);
+<span class="tk-tag">INSERT</span> <span class="tk-tag">INTO</span> prueba <span class="tk-tag">VALUES</span> (<span class="tk-val">'hola'</span>);
+<span class="tk-tag">SELECT</span> n, typeof(n) <span class="tk-tag">AS</span> tipo <span class="tk-tag">FROM</span> prueba;</code></pre>
+</div>
+<p><strong>Resultado esperado</strong></p>
+<div class="table-wrap"><table>
+<thead><tr><th>n</th><th>tipo</th></tr></thead>
+<tbody><tr><td>hola</td><td>text</td></tr></tbody>
+</table></div>
+
+<p>PostgreSQL rechazaría esa inserción con <code>invalid input syntax for type integer: "hola"</code>. Es una ventaja: los errores se detectan al guardar, no meses después.</p>
+<h2 id="laboratorio"><span class="n">5.</span>Pruébalo: traductor de SQLite a PostgreSQL</h2>
+
+<p>Elige una tarea y mira cómo se escribe en cada motor. Úsalo como chuleta cuando cambies de uno a otro.</p>
+<div class="widget sqlsim" data-sim="dialect">
+  <div class="w-head">🔄 Traductor de dialectos</div>
+  <div class="w-body">
+    <div class="w-row"><label for="d-tarea">Tarea</label><select id="d-tarea"></select></div>
+    <p class="msg" style="font-weight:400" id="d-nota"></p>
+    <p style="margin:0;font-weight:600">SQLite</p>
+    <pre class="sql-out" id="d-sqlite"></pre>
+    <p style="margin:0;font-weight:600">PostgreSQL</p>
+    <pre class="sql-out" id="d-pg"></pre>
+  </div>
+</div>
+
+<h2 id="node"><span class="n">6.</span>Conectar desde Node.js</h2>
+
+<p>Tu aplicación se conecta a la base de datos con una <strong>biblioteca</strong>. El patrón es el mismo en ambos motores: abrir la conexión, enviar la consulta con <strong>parámetros</strong> (nunca pegando valores en el texto; lo verás en la lección 8) y recibir un arreglo de filas. Los ejemplos usan módulos ES (<code>"type": "module"</code> en tu <code>package.json</code>).</p>
+<p><strong>SQLite</strong> con <code>better-sqlite3</code> (<code>npm install better-sqlite3</code>). Es síncrono y muy simple:</p>
+<div class="code">
+  <div class="code-head"><span>sqlite.js</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>import Database from 'better-sqlite3';
+
+const db = new Database('tienda.db');
+db.pragma('foreign_keys = ON');
+
+const minimo = 100;
+const filas = db.prepare('SELECT nombre, precio FROM productos WHERE precio &gt; ?').all(minimo);
+console.log(filas);</code></pre>
+</div>
+
+<p><strong>PostgreSQL</strong> con <code>pg</code> (<code>npm install pg</code>). Es asíncrono y usa un <em>pool</em> de conexiones:</p>
+<div class="code">
+  <div class="code-head"><span>postgres.js</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>import pg from 'pg';
+
+const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
+
+const minimo = 100;
+const { rows } = await pool.query(
+  'SELECT nombre, precio FROM productos WHERE precio &gt; $1',
+  [minimo]
+);
+console.log(rows);
+await pool.end();</code></pre>
+</div>
+
+<p>La variable <code>DATABASE_URL</code> tiene este aspecto (los datos son ejemplos): <code>postgres://tienda_app:cambia-esta-clave@localhost:5432/tienda</code>. Va en una <strong>variable de entorno</strong> o en un archivo <code>.env</code> que no se sube a Git.</p>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · Los marcadores cambian</p>
+<p>SQLite usa <code>?</code> como marcador de parámetro; PostgreSQL usa <code>$1</code>, <code>$2</code>… Es otra diferencia que debes recordar al mover código de un motor a otro.</p>
+</div>
+
+<h2 id="errores"><span class="n">7.</span>Errores frecuentes</h2>
+<ul><li><strong>Copiar un <code>CREATE TABLE</code> de un motor a otro sin adaptarlo</strong> (<code>AUTOINCREMENT</code>, <code>SERIAL</code>, <code>GENERATED … AS IDENTITY</code>).</li><li><strong>Terminar un comando de punto con <code>;</code></strong> en SQLite (<code>.tables;</code>) o escribir SQL sin <code>;</code> final: el programa se queda esperando.</li><li><strong>Usar <code>LIKE</code> en PostgreSQL esperando que ignore mayúsculas:</strong> necesitas <code>ILIKE</code>.</li><li><strong>No activar <code>PRAGMA foreign_keys = ON</code></strong> en SQLite al conectar desde tu programa.</li><li><strong>Conectar tu aplicación como <code>postgres</code></strong> (administrador): crea un rol propio con los permisos justos.</li><li><strong>Escribir la contraseña de la base dentro del código</strong> y subirla a un repositorio: usa variables de entorno.</li><li><strong>Mezclar marcadores:</strong> <code>?</code> en <code>pg</code> o <code>$1</code> en <code>better-sqlite3</code> da error.</li><li><strong>Olvidar cerrar el pool</strong> (<code>pool.end()</code>) en un script: el programa no termina.</li></ul>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li>SQLite es un archivo sin servidor, perfecto para aprender y prototipar; PostgreSQL es un servidor para aplicaciones con muchos usuarios.</li><li>Mismo SQL en lo esencial; cambian los identificadores automáticos, <code>ILIKE</code>, funciones de fecha y el tipado (flexible frente a estricto).</li><li>SQLite: <code>sqlite3 tienda.db</code>, <code>.tables</code>, <code>.schema</code>, <code>.read</code>, <code>.quit</code>.</li><li>PostgreSQL: <code>psql -U postgres</code>, <code>\l</code>, <code>\c</code>, <code>\dt</code>, <code>\d</code>, <code>\i</code>, <code>\q</code>.</li><li>En PostgreSQL crea una base y un rol propio para tu app; no uses el administrador.</li><li>En Node.js: <code>better-sqlite3</code> (parámetros <code>?</code>) y <code>pg</code> (parámetros <code>$1</code>).</li><li>Guarda la cadena de conexión en una variable de entorno, no en el código.</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">8.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td>Motor de base de datos</td><td>Programa que guarda los datos y ejecuta las consultas SQL (SQLite, PostgreSQL, MySQL…).</td></tr><tr><td>Cliente-servidor</td><td>Arquitectura en la que un servidor atiende las peticiones de varios clientes que se conectan a él.</td></tr><tr><td>psql</td><td>Terminal interactiva de PostgreSQL.</td></tr><tr><td>Comando de punto</td><td>Orden propia del programa <code>sqlite3</code> que empieza con <code>.</code> y no es SQL.</td></tr><tr><td>Rol</td><td>Usuario o grupo de PostgreSQL con permisos propios.</td></tr><tr><td>Cadena de conexión</td><td>Texto con usuario, clave, servidor, puerto y base a la que conectarse.</td></tr><tr><td>Pool de conexiones</td><td>Conjunto de conexiones abiertas que se reutilizan entre consultas.</td></tr><tr><td>Tipado estricto</td><td>Cuando el motor rechaza valores que no corresponden al tipo de la columna.</td></tr></tbody>
+</table></div>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>¿Dónde guarda SQLite una base de datos?</p><ul class="opts"><li><button type="button" class="opt">En un servidor remoto obligatoriamente</button></li><li><button type="button" class="opt" data-ok>En un único archivo</button></li><li><button type="button" class="opt">En la memoria RAM solamente</button></li><li><button type="button" class="opt">En el navegador</button></li></ul><p class="explain" hidden>SQLite es una biblioteca: la base entera es un archivo (<code>tienda.db</code>).</p></div>
+<div class="quiz-q"><p>¿Cuál de estos es un motor cliente-servidor?</p><ul class="opts"><li><button type="button" class="opt">SQLite</button></li><li><button type="button" class="opt" data-ok>PostgreSQL</button></li><li><button type="button" class="opt">Un archivo CSV</button></li><li><button type="button" class="opt">Una hoja de cálculo</button></li></ul><p class="explain" hidden>PostgreSQL funciona como un servidor al que se conectan los clientes.</p></div>
+<div class="quiz-q"><p>¿Qué comando de <code>psql</code> lista las tablas?</p><ul class="opts"><li><button type="button" class="opt"><code>.tables</code></button></li><li><button type="button" class="opt" data-ok><code>\dt</code></button></li><li><button type="button" class="opt"><code>SHOW TABLES;</code></button></li><li><button type="button" class="opt"><code>\q</code></button></li></ul><p class="explain" hidden><code>.tables</code> es de SQLite; en <code>psql</code> se usa <code>\dt</code>.</p></div>
+<div class="quiz-q"><p>¿Cómo se escribe un marcador de parámetro en el paquete <code>pg</code> de Node.js?</p><ul class="opts"><li><button type="button" class="opt"><code>?</code></button></li><li><button type="button" class="opt" data-ok><code>$1</code></button></li><li><button type="button" class="opt"><code>:valor</code> con espacios</button></li><li><button type="button" class="opt"><code>%s</code></button></li></ul><p class="explain" hidden><code>pg</code> usa <code>$1</code>, <code>$2</code>…; <code>better-sqlite3</code> usa <code>?</code>.</p></div>
+<div class="quiz-q"><p>¿Dónde conviene guardar la contraseña de la base de datos de tu aplicación?</p><ul class="opts"><li><button type="button" class="opt">Escrita en el código fuente</button></li><li><button type="button" class="opt" data-ok>En una variable de entorno</button></li><li><button type="button" class="opt">En un comentario HTML</button></li><li><button type="button" class="opt">En el nombre de la tabla</button></li></ul><p class="explain" hidden>Las credenciales no deben subirse al repositorio; se leen de variables de entorno.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="bd-07">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../06-agrupar-y-resumir/ejercicio.html"><small>← Anterior</small>Ejercicio de la lección 6</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de Bases de datos con SQL · Lección 7 · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&title=%5BError%5D%20Lecci%C3%B3n%207%3A%20SQLite%20y%20PostgreSQL%20en%20la%20pr%C3%A1ctica%20%C2%B7%20Curso%20de%20Bases%20de%20datos%20con%20SQL&pagina=https%3A//cacg-code.github.io/PRACTICAS-HTML/bd/07-sqlite-y-postgresql/" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+  <script>
+
+(function () {
+  var w = document.querySelector('[data-sim="dialect"]'); if (!w) return;
+  var T = [{"t": "Identificador automático", "n": "SQLite lo genera con INTEGER PRIMARY KEY; PostgreSQL usa una columna identity.", "a": "CREATE TABLE clientes (\n  id INTEGER PRIMARY KEY,\n  nombre TEXT NOT NULL\n);", "b": "CREATE TABLE clientes (\n  id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,\n  nombre TEXT NOT NULL\n);"}, {"t": "Buscar sin distinguir mayúsculas", "n": "En SQLite LIKE ya ignora mayúsculas con letras ASCII; en PostgreSQL LIKE las distingue.", "a": "SELECT * FROM productos\nWHERE nombre LIKE '%mon%';", "b": "SELECT * FROM productos\nWHERE nombre ILIKE '%mon%';"}, {"t": "Fecha y hora actuales", "n": "SQLite no tiene una función now().", "a": "SELECT datetime('now');", "b": "SELECT now();"}, {"t": "Valores verdadero/falso", "n": "SQLite guarda 0 y 1 en una columna entera; PostgreSQL tiene el tipo BOOLEAN.", "a": "activo INTEGER NOT NULL DEFAULT 1\n  CHECK (activo IN (0, 1))", "b": "activo BOOLEAN NOT NULL DEFAULT TRUE"}, {"t": "Ver las tablas", "n": "Son comandos del programa, no SQL.", "a": ".tables", "b": "\\dt"}, {"t": "Ver la estructura de una tabla", "n": "Comandos del programa, no SQL.", "a": ".schema productos", "b": "\\d productos"}, {"t": "Parámetros desde Node.js", "n": "Cada biblioteca usa su propio marcador.", "a": "db.prepare(\n  'SELECT * FROM productos WHERE precio > ?'\n).all(100);", "b": "await pool.query(\n  'SELECT * FROM productos WHERE precio > $1',\n  [100]\n);"}, {"t": "Versión del motor", "n": "Útil para saber qué funciones tienes disponibles.", "a": "SELECT sqlite_version();", "b": "SELECT version();"}];
+  var $ = function (s) { return w.querySelector(s); };
+  var sel = $('#d-tarea');
+  sel.innerHTML = T.map(function (x, i) { return '<option value="' + i + '">' + x.t + '</option>'; }).join('');
+  function draw() { var x = T[+sel.value]; $('#d-nota').textContent = x.n; $('#d-sqlite').textContent = x.a; $('#d-pg').textContent = x.b; }
+  sel.addEventListener('change', draw);
+  draw();
+})();
+
+  </script>
+</body>
+</html>

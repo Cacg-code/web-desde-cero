@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lección 5: Relaciones y JOIN · Curso de Bases de datos con SQL</title>
+  <meta name="description" content="Relaciona tablas con claves foráneas y combínalas con INNER JOIN y LEFT JOIN: relaciones uno a muchos y muchos a muchos, con un laboratorio interactivo.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/bd/05-relaciones-y-join/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#0e7490">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Lección 5: Relaciones y JOIN · Curso de Bases de datos con SQL">
+  <meta property="og:description" content="Relaciona tablas con claves foráneas y combínalas con INNER JOIN y LEFT JOIN: relaciones uno a muchos y muchos a muchos, con un laboratorio interactivo.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/bd/05-relaciones-y-join/">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+  <style>
+    .sqlsim select, .sqlsim input[type="number"] { padding: .5rem .6rem; border: 1px solid var(--border); border-radius: 8px; background: var(--bg); color: var(--text); font: inherit; max-width: 100%; }
+    .sqlsim .sql-out { margin: 0; padding: .8rem 1rem; border-radius: 10px; background: var(--code-bg); color: var(--code-text); font-family: var(--mono); font-size: .88rem; line-height: 1.6; white-space: pre-wrap; overflow-wrap: anywhere; }
+    .sqlsim .msg { margin: 0; font-weight: 600; }
+    .sqlsim .msg.err { color: #b91c1c; }
+    .sqlsim .msg.okk { color: #15803d; }
+    :root[data-theme="dark"] .sqlsim .msg.err { color: #fca5a5; }
+    :root[data-theme="dark"] .sqlsim .msg.okk { color: #86efac; }
+    @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .sqlsim .msg.err { color: #fca5a5; } :root:not([data-theme="light"]) .sqlsim .msg.okk { color: #86efac; } }
+    .sqlsim .w-row button { cursor: pointer; }
+    .sqlsim .w-row label { display: inline-flex; gap: .4rem; align-items: center; }
+    .sqlsim td.hl, .sqlsim th.hl, .sqlsim tr.hl td { background: color-mix(in srgb, var(--accent) 22%, transparent); }
+    .sqlsim tr.gone td { text-decoration: line-through; opacity: .5; }
+    .sqlsim tr.new td { background: color-mix(in srgb, #22c55e 22%, transparent); }
+    .sqlsim tr.chg td { background: color-mix(in srgb, #f59e0b 25%, transparent); }
+  </style>
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Bases de datos con SQL</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap lesson-layout" id="contenido">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#porque">Por qué separar los datos en varias tablas</a></li><li><a href="#fk">Claves foráneas: REFERENCES</a></li><li><a href="#relaciones">Tipos de relaciones</a></li><li><a href="#inner">INNER JOIN: unir filas que coinciden</a></li><li><a href="#left">LEFT JOIN: conservar todo el lado izquierdo</a></li><li><a href="#varias">Unir tres o más tablas</a></li><li><a href="#laboratorio">Pruébalo: laboratorio de JOIN</a></li><li><a href="#errores">Errores frecuentes</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de Bases de datos con SQL</a> › Lección 5</div>
+        <h1>Relaciones y JOIN</h1>
+        <ul class="meta"><li>⏱ 60 minutos</li><li>📶 Nivel: principiante</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Crear <strong>claves foráneas</strong> con <code>REFERENCES</code> y entender la integridad referencial.</li><li>Distinguir relaciones uno a muchos y muchos a muchos.</li><li>Unir tablas con <code>INNER JOIN</code> y <code>LEFT JOIN</code>.</li><li>Encontrar filas sin relación con <code>LEFT JOIN … IS NULL</code>.</li></ul>
+</div>
+
+<h2 id="porque"><span class="n">1.</span>Por qué separar los datos en varias tablas</h2>
+
+<p>En la lección 4 viste la regla «un dato, un lugar». Si cada pedido repitiera el nombre y el correo del cliente, un cambio de correo obligaría a tocar muchas filas. La solución es guardar al cliente <strong>una sola vez</strong> y, en el pedido, solo su <code>id</code>. Ese <code>id</code> escrito en otra tabla se llama <strong>clave foránea</strong>.</p>
+<p>Usaremos cuatro tablas. <code>productos</code> ya la conoces; las otras tres son nuevas (<code>clientes</code> es una versión simplificada de la de la lección 4):</p>
+<div class="flow"><span>clientes</span><span>tiene</span><span>pedidos</span><span>contiene</span><span>lineas_pedido</span><span>apunta a</span><span>productos</span></div>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · Los datos de ejemplo</p>
+<p>En esta lección y en las siguientes hay 4 clientes (Ana, Luis, Marta y Diego), 4 pedidos y 7 líneas de pedido. Diego todavía <strong>no ha comprado nada</strong>: lo usaremos para ver qué hace cada tipo de JOIN.</p>
+</div>
+
+<h2 id="fk"><span class="n">2.</span>Claves foráneas: REFERENCES</h2>
+
+<p>Una clave foránea es una columna cuyo valor debe existir como clave primaria en otra tabla. Se declara con <code>REFERENCES</code>:</p>
+<div class="code">
+  <div class="code-head"><span>Tablas relacionadas</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">CREATE</span> <span class="tk-tag">TABLE</span> clientes (
+  id     <span class="tk-tag">INTEGER</span> <span class="tk-tag">PRIMARY</span> <span class="tk-tag">KEY</span>,
+  nombre <span class="tk-tag">TEXT</span> <span class="tk-tag">NOT</span> <span class="tk-tag">NULL</span>,
+  email  <span class="tk-tag">TEXT</span> <span class="tk-tag">NOT</span> <span class="tk-tag">NULL</span> <span class="tk-tag">UNIQUE</span>
+);
+
+<span class="tk-tag">CREATE</span> <span class="tk-tag">TABLE</span> pedidos (
+  id         <span class="tk-tag">INTEGER</span> <span class="tk-tag">PRIMARY</span> <span class="tk-tag">KEY</span>,
+  cliente_id <span class="tk-tag">INTEGER</span> <span class="tk-tag">NOT</span> <span class="tk-tag">NULL</span> <span class="tk-tag">REFERENCES</span> clientes(id),
+  fecha      <span class="tk-tag">TEXT</span>    <span class="tk-tag">NOT</span> <span class="tk-tag">NULL</span>
+);
+
+<span class="tk-tag">CREATE</span> <span class="tk-tag">TABLE</span> lineas_pedido (
+  pedido_id   <span class="tk-tag">INTEGER</span> <span class="tk-tag">NOT</span> <span class="tk-tag">NULL</span> <span class="tk-tag">REFERENCES</span> pedidos(id),
+  producto_id <span class="tk-tag">INTEGER</span> <span class="tk-tag">NOT</span> <span class="tk-tag">NULL</span> <span class="tk-tag">REFERENCES</span> productos(id),
+  cantidad    <span class="tk-tag">INTEGER</span> <span class="tk-tag">NOT</span> <span class="tk-tag">NULL</span> <span class="tk-tag">CHECK</span> (cantidad &gt; <span class="tk-attr">0</span>),
+  <span class="tk-tag">PRIMARY</span> <span class="tk-tag">KEY</span> (pedido_id, producto_id)
+);</code></pre>
+</div>
+
+<p>Lee <code>cliente_id INTEGER NOT NULL REFERENCES clientes(id)</code> como: «cada pedido pertenece a un cliente que debe existir en <code>clientes</code>». Con esto la base de datos <strong>protege la integridad</strong>: no deja crear un pedido para un cliente inexistente.</p>
+<div class="code">
+  <div class="code-head"><span>Intento de pedido para un cliente que no existe</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">INSERT</span> <span class="tk-tag">INTO</span> pedidos (cliente_id, fecha)
+<span class="tk-tag">VALUES</span> (<span class="tk-attr">99</span>, <span class="tk-val">'2026-10-05'</span>);</code></pre>
+</div>
+<p><strong>Resultado esperado</strong> (error real de SQLite):</p>
+<pre class="sql-out">Error: FOREIGN KEY constraint failed</pre>
+
+<p>Lo mismo ocurre al revés: no puedes borrar un cliente que aún tiene pedidos.</p>
+<div class="code">
+  <div class="code-head"><span>Borrar un cliente con pedidos</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">DELETE</span> <span class="tk-tag">FROM</span> clientes <span class="tk-tag">WHERE</span> id = <span class="tk-attr">1</span>;</code></pre>
+</div>
+<p><strong>Resultado esperado</strong> (error real de SQLite):</p>
+<pre class="sql-out">Error: FOREIGN KEY constraint failed</pre>
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · SQLite y PostgreSQL</p>
+<p>PostgreSQL siempre hace cumplir las claves foráneas. <strong>SQLite las ignora por defecto</strong>: debes activarlas en cada conexión con <code>PRAGMA foreign_keys = ON;</code>. Los errores de esta lección salen con esa opción activada.</p>
+</div>
+
+<h2 id="relaciones"><span class="n">3.</span>Tipos de relaciones</h2>
+
+<p>Según cuántas filas de una tabla se asocian con filas de otra, hay tres tipos:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Relación</th><th>Ejemplo</th><th>Cómo se guarda</th></tr></thead>
+<tbody>
+<tr><td>Uno a muchos</td><td>Un cliente tiene muchos pedidos</td><td>Clave foránea en el lado «muchos»: <code>pedidos.cliente_id</code></td></tr>
+<tr><td>Muchos a muchos</td><td>Un pedido incluye varios productos y un producto aparece en varios pedidos</td><td>Una <strong>tabla intermedia</strong> con dos claves foráneas: <code>lineas_pedido</code></td></tr>
+<tr><td>Uno a uno</td><td>Un usuario tiene un perfil</td><td>Clave foránea con <code>UNIQUE</code> (poco frecuente)</td></tr>
+</tbody></table></div>
+<p>En <code>lineas_pedido</code>, la clave primaria es la <strong>pareja</strong> <code>(pedido_id, producto_id)</code>: un producto solo puede aparecer una vez en un mismo pedido, con su cantidad. Estos son los datos:</p>
+<p><strong>Contenido de lineas_pedido</strong></p>
+<div class="table-wrap"><table>
+<thead><tr><th>pedido_id</th><th>producto_id</th><th>cantidad</th></tr></thead>
+<tbody><tr><td>1</td><td>1</td><td>1</td></tr><tr><td>1</td><td>2</td><td>1</td></tr><tr><td>2</td><td>5</td><td>1</td></tr><tr><td>3</td><td>7</td><td>1</td></tr><tr><td>3</td><td>8</td><td>2</td></tr><tr><td>4</td><td>6</td><td>2</td></tr><tr><td>4</td><td>2</td><td>3</td></tr></tbody>
+</table></div>
+<p>Hasta aquí solo vemos números. Para ver nombres hay que <strong>unir</strong> las tablas.</p>
+<h2 id="inner"><span class="n">4.</span>INNER JOIN: unir filas que coinciden</h2>
+
+<p><code>JOIN</code> combina filas de dos tablas según una condición, escrita tras <code>ON</code>. Con <code>INNER JOIN</code> (o solo <code>JOIN</code>) quedan únicamente las filas que <strong>tienen pareja</strong> en ambas tablas.</p>
+<div class="code">
+  <div class="code-head"><span>Cada pedido con el nombre de su cliente</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">SELECT</span> c.nombre, p.id <span class="tk-tag">AS</span> pedido, p.fecha
+<span class="tk-tag">FROM</span> clientes c
+<span class="tk-tag">INNER</span> <span class="tk-tag">JOIN</span> pedidos p <span class="tk-tag">ON</span> p.cliente_id = c.id
+<span class="tk-tag">ORDER</span> <span class="tk-tag">BY</span> p.id;</code></pre>
+</div>
+
+<p><code>c</code> y <code>p</code> son <strong>alias</strong> de tabla: abreviaturas para no repetir nombres largos y evitar ambigüedades (<code>c.id</code> frente a <code>p.id</code>). <code>AS pedido</code> renombra la columna en el resultado.</p>
+<p><strong>Resultado esperado</strong></p>
+<div class="table-wrap"><table>
+<thead><tr><th>nombre</th><th>pedido</th><th>fecha</th></tr></thead>
+<tbody><tr><td>Ana Torres</td><td>1</td><td>2026-09-01</td></tr><tr><td>Ana Torres</td><td>2</td><td>2026-09-15</td></tr><tr><td>Luis Pérez</td><td>3</td><td>2026-09-20</td></tr><tr><td>Marta Ruiz</td><td>4</td><td>2026-10-02</td></tr></tbody>
+</table></div>
+<p>Diego no aparece: no tiene pedidos, así que no hay pareja para él.</p>
+<h2 id="left"><span class="n">5.</span>LEFT JOIN: conservar todo el lado izquierdo</h2>
+
+<p><code>LEFT JOIN</code> conserva <strong>todas las filas de la tabla izquierda</strong> (la de <code>FROM</code>) aunque no tengan pareja; en ese caso las columnas de la derecha valen <code>NULL</code>.</p>
+<div class="code">
+  <div class="code-head"><span>Todos los clientes, tengan o no pedidos</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">SELECT</span> c.nombre, p.id <span class="tk-tag">AS</span> pedido, p.fecha
+<span class="tk-tag">FROM</span> clientes c
+<span class="tk-tag">LEFT</span> <span class="tk-tag">JOIN</span> pedidos p <span class="tk-tag">ON</span> p.cliente_id = c.id
+<span class="tk-tag">ORDER</span> <span class="tk-tag">BY</span> c.id, p.id;</code></pre>
+</div>
+<p><strong>Resultado esperado</strong></p>
+<div class="table-wrap"><table>
+<thead><tr><th>nombre</th><th>pedido</th><th>fecha</th></tr></thead>
+<tbody><tr><td>Ana Torres</td><td>1</td><td>2026-09-01</td></tr><tr><td>Ana Torres</td><td>2</td><td>2026-09-15</td></tr><tr><td>Luis Pérez</td><td>3</td><td>2026-09-20</td></tr><tr><td>Marta Ruiz</td><td>4</td><td>2026-10-02</td></tr><tr><td>Diego Soto</td><td><em>NULL</em></td><td><em>NULL</em></td></tr></tbody>
+</table></div>
+
+<p>Esto permite una consulta muy útil: <strong>encontrar lo que no tiene relación</strong>, filtrando las filas con <code>NULL</code> en la tabla de la derecha (recuerda usar <code>IS NULL</code>, no <code>= NULL</code>).</p>
+<div class="code">
+  <div class="code-head"><span>Clientes que nunca han comprado</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">SELECT</span> c.nombre
+<span class="tk-tag">FROM</span> clientes c
+<span class="tk-tag">LEFT</span> <span class="tk-tag">JOIN</span> pedidos p <span class="tk-tag">ON</span> p.cliente_id = c.id
+<span class="tk-tag">WHERE</span> p.id <span class="tk-tag">IS</span> <span class="tk-tag">NULL</span>;</code></pre>
+</div>
+<p><strong>Resultado esperado</strong></p>
+<div class="table-wrap"><table>
+<thead><tr><th>nombre</th></tr></thead>
+<tbody><tr><td>Diego Soto</td></tr></tbody>
+</table></div>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · ¿Y RIGHT y FULL JOIN?</p>
+<p><code>RIGHT JOIN</code> es el espejo de <code>LEFT JOIN</code> y <code>FULL JOIN</code> conserva ambos lados. PostgreSQL los admite siempre; SQLite solo desde la versión 3.39. En la práctica casi siempre basta con reordenar las tablas y usar <code>LEFT JOIN</code>.</p>
+</div>
+
+<h2 id="varias"><span class="n">6.</span>Unir tres o más tablas</h2>
+
+<p>Puedes encadenar <code>JOIN</code>. Para saber qué contiene el pedido 4 hay que pasar por la tabla intermedia:</p>
+<div class="code">
+  <div class="code-head"><span>Detalle del pedido 4</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">SELECT</span> p.id <span class="tk-tag">AS</span> pedido, pr.nombre <span class="tk-tag">AS</span> producto, l.cantidad, pr.precio
+<span class="tk-tag">FROM</span> pedidos p
+<span class="tk-tag">JOIN</span> lineas_pedido l <span class="tk-tag">ON</span> l.pedido_id  = p.id
+<span class="tk-tag">JOIN</span> productos pr    <span class="tk-tag">ON</span> pr.id        = l.producto_id
+<span class="tk-tag">WHERE</span> p.id = <span class="tk-attr">4</span>;</code></pre>
+</div>
+<p><strong>Resultado esperado</strong></p>
+<div class="table-wrap"><table>
+<thead><tr><th>pedido</th><th>producto</th><th>cantidad</th><th>precio</th></tr></thead>
+<tbody><tr><td>4</td><td>Ratón</td><td>3</td><td>45.50</td></tr><tr><td>4</td><td>Altavoz</td><td>2</td><td>99.00</td></tr></tbody>
+</table></div>
+
+<p>Y con cuatro tablas obtienes el historial completo de compras:</p>
+<div class="code">
+  <div class="code-head"><span>Quién compró qué y cuándo</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">SELECT</span> c.nombre, p.fecha, pr.nombre <span class="tk-tag">AS</span> producto, l.cantidad
+<span class="tk-tag">FROM</span> clientes c
+<span class="tk-tag">JOIN</span> pedidos p        <span class="tk-tag">ON</span> p.cliente_id  = c.id
+<span class="tk-tag">JOIN</span> lineas_pedido l  <span class="tk-tag">ON</span> l.pedido_id   = p.id
+<span class="tk-tag">JOIN</span> productos pr     <span class="tk-tag">ON</span> pr.id         = l.producto_id
+<span class="tk-tag">ORDER</span> <span class="tk-tag">BY</span> p.fecha, pr.nombre;</code></pre>
+</div>
+<p><strong>Resultado esperado</strong></p>
+<div class="table-wrap"><table>
+<thead><tr><th>nombre</th><th>fecha</th><th>producto</th><th>cantidad</th></tr></thead>
+<tbody><tr><td>Ana Torres</td><td>2026-09-01</td><td>Ratón</td><td>1</td></tr><tr><td>Ana Torres</td><td>2026-09-01</td><td>Teclado</td><td>1</td></tr><tr><td>Ana Torres</td><td>2026-09-15</td><td>Webcam</td><td>1</td></tr><tr><td>Luis Pérez</td><td>2026-09-20</td><td>Cable HDMI</td><td>2</td></tr><tr><td>Luis Pérez</td><td>2026-09-20</td><td>Monitor 4K</td><td>1</td></tr><tr><td>Marta Ruiz</td><td>2026-10-02</td><td>Altavoz</td><td>2</td></tr><tr><td>Marta Ruiz</td><td>2026-10-02</td><td>Ratón</td><td>3</td></tr></tbody>
+</table></div>
+
+<p>Si ves filas de más o repetidas, casi siempre falta o sobra una condición <code>ON</code>.</p>
+<h2 id="laboratorio"><span class="n">7.</span>Pruébalo: laboratorio de JOIN</h2>
+
+<p>Cambia el tipo de unión y observa qué filas aparecen. Las filas con <code>NULL</code> (clientes sin pedido) se resaltan. Los resultados son los de SQLite real sobre estos datos.</p>
+<div class="widget sqlsim" data-sim="join">
+  <div class="w-head">🔗 Laboratorio de JOIN: clientes y pedidos</div>
+  <div class="w-body">
+    <div class="w-row">
+      <label for="j-tipo">Tipo de unión</label>
+      <select id="j-tipo"><option value="inner">INNER JOIN</option><option value="left">LEFT JOIN</option></select>
+      <label><input type="checkbox" id="j-null"> Solo sin pareja (<code>WHERE p.id IS NULL</code>)</label>
+    </div>
+    <pre class="sql-out" id="j-sql"></pre>
+    <p class="msg" id="j-msg" aria-live="polite"></p>
+    <div class="table-wrap" style="margin:0"><table id="j-tabla"><thead></thead><tbody></tbody></table></div>
+  </div>
+</div>
+<div class="callout ejemplo">
+<p class="callout-title">🧪 Ejemplo · Experimentos</p>
+<p>1) Con <code>INNER JOIN</code> cuenta las filas y localiza a Diego: no está. 2) Cambia a <code>LEFT JOIN</code>: aparece con <code>NULL</code>. 3) Marca «Solo sin pareja» con <code>INNER JOIN</code>: no queda ninguna fila, porque el inner solo conserva parejas. 4) Haz lo mismo con <code>LEFT JOIN</code>: queda solo Diego.</p>
+</div>
+
+<h2 id="errores"><span class="n">8.</span>Errores frecuentes</h2>
+<ul><li><strong>Olvidar la condición <code>ON</code>:</strong> sin ella cada fila se combina con todas las de la otra tabla (producto cartesiano) y el resultado explota.</li><li><strong>Columnas ambiguas:</strong> escribir <code>id</code> cuando ambas tablas lo tienen da error. Usa <code>c.id</code> o <code>p.id</code>.</li><li><strong>Esperar a Diego con <code>INNER JOIN</code>:</strong> si quieres conservar filas sin pareja, usa <code>LEFT JOIN</code>.</li><li><strong>Filtrar el lado derecho de un <code>LEFT JOIN</code> en <code>WHERE</code>:</strong> una condición como <code>WHERE p.fecha &gt; '2026-09-10'</code> descarta las filas <code>NULL</code> y lo convierte en un <code>INNER JOIN</code>. Si debe afectar a la unión, ponla en el <code>ON</code>.</li><li><strong>Comparar con <code>= NULL</code></strong> en lugar de <code>IS NULL</code>: nunca encuentra nada.</li><li><strong>Olvidar <code>PRAGMA foreign_keys = ON</code> en SQLite:</strong> las claves foráneas no se comprueban y puedes crear datos huérfanos.</li><li><strong>Unir por la columna equivocada</strong> (<code>p.id = c.id</code> en lugar de <code>p.cliente_id = c.id</code>): da resultados que parecen válidos pero son incorrectos.</li></ul>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li>Una <strong>clave foránea</strong> es una columna que apunta a la clave primaria de otra tabla: <code>cliente_id INTEGER REFERENCES clientes(id)</code>.</li><li>Impide datos huérfanos: no se crea un pedido de un cliente inexistente ni se borra un cliente con pedidos. En SQLite activa <code>PRAGMA foreign_keys = ON</code>.</li><li>Uno a muchos: la clave foránea va en el lado «muchos». Muchos a muchos: tabla intermedia con dos claves foráneas.</li><li><code>INNER JOIN … ON …</code> devuelve solo las filas con pareja en ambas tablas.</li><li><code>LEFT JOIN</code> conserva todas las filas de la tabla izquierda; sin pareja, las columnas de la derecha son <code>NULL</code>.</li><li><code>LEFT JOIN … WHERE derecha.id IS NULL</code> encuentra filas sin relación (clientes sin pedidos).</li><li>Usa alias cortos (<code>c</code>, <code>p</code>) y califica las columnas (<code>c.nombre</code>) cuando unes varias tablas.</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">9.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td>Clave foránea</td><td>Columna que guarda la clave primaria de una fila de otra tabla para relacionarlas.</td></tr><tr><td>Integridad referencial</td><td>Garantía de que toda clave foránea apunta a una fila que existe.</td></tr><tr><td>JOIN</td><td>Operación que combina filas de dos tablas según una condición.</td></tr><tr><td>INNER JOIN</td><td>Unión que conserva solo las filas con pareja en ambas tablas.</td></tr><tr><td>LEFT JOIN</td><td>Unión que conserva todas las filas de la tabla izquierda; completa con <code>NULL</code> si no hay pareja.</td></tr><tr><td>Alias</td><td>Nombre corto temporal para una tabla o columna (<code>clientes c</code>, <code>AS pedido</code>).</td></tr><tr><td>Tabla intermedia</td><td>Tabla que implementa una relación muchos a muchos con dos claves foráneas.</td></tr><tr><td>Producto cartesiano</td><td>Todas las combinaciones posibles entre filas de dos tablas; aparece al omitir la condición del JOIN.</td></tr></tbody>
+</table></div>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>¿Qué hace <code>cliente_id INTEGER REFERENCES clientes(id)</code>?</p><ul class="opts"><li><button type="button" class="opt">Crea un cliente nuevo</button></li><li><button type="button" class="opt" data-ok>Obliga a que el valor exista como <code>id</code> en <code>clientes</code></button></li><li><button type="button" class="opt">Hace que el cliente sea único</button></li><li><button type="button" class="opt">Copia el nombre del cliente</button></li></ul><p class="explain" hidden>Es una clave foránea: la base de datos rechaza valores que no correspondan a un cliente existente.</p></div>
+<div class="quiz-q"><p>¿Cómo se representa una relación muchos a muchos entre pedidos y productos?</p><ul class="opts"><li><button type="button" class="opt">Con una lista de productos en cada pedido</button></li><li><button type="button" class="opt" data-ok>Con una tabla intermedia que tiene una clave foránea a cada tabla</button></li><li><button type="button" class="opt">Repitiendo el producto en la tabla pedidos</button></li><li><button type="button" class="opt">No se puede representar</button></li></ul><p class="explain" hidden>La tabla intermedia (<code>lineas_pedido</code>) convierte la relación en dos relaciones uno a muchos.</p></div>
+<div class="quiz-q"><p>Con 4 clientes, de los cuales uno no tiene pedidos, ¿qué diferencia hay entre <code>INNER JOIN</code> y <code>LEFT JOIN</code> de clientes a pedidos?</p><ul class="opts"><li><button type="button" class="opt">Ninguna</button></li><li><button type="button" class="opt" data-ok><code>LEFT JOIN</code> también devuelve al cliente sin pedidos, con <code>NULL</code></button></li><li><button type="button" class="opt"><code>INNER JOIN</code> devuelve más filas</button></li><li><button type="button" class="opt"><code>LEFT JOIN</code> da error</button></li></ul><p class="explain" hidden>El <code>LEFT JOIN</code> conserva todas las filas de la izquierda; el <code>INNER JOIN</code> solo las que tienen pareja.</p></div>
+<div class="quiz-q"><p>¿Cómo encuentras los clientes que nunca han hecho un pedido?</p><ul class="opts"><li><button type="button" class="opt"><code>INNER JOIN</code> y <code>WHERE p.id = NULL</code></button></li><li><button type="button" class="opt" data-ok><code>LEFT JOIN</code> y <code>WHERE p.id IS NULL</code></button></li><li><button type="button" class="opt"><code>SELECT * FROM clientes WHERE pedidos = 0</code></button></li><li><button type="button" class="opt">Borrando los pedidos</button></li></ul><p class="explain" hidden>Se unen con <code>LEFT JOIN</code> y se queda con las filas sin pareja usando <code>IS NULL</code>.</p></div>
+<div class="quiz-q"><p>¿Qué ocurre si olvidas la condición <code>ON</code> en un JOIN?</p><ul class="opts"><li><button type="button" class="opt">Se une por la clave primaria automáticamente</button></li><li><button type="button" class="opt" data-ok>Cada fila se combina con todas las de la otra tabla</button></li><li><button type="button" class="opt">Devuelve cero filas</button></li><li><button type="button" class="opt">Solo se muestran las columnas del lado izquierdo</button></li></ul><p class="explain" hidden>Sin condición se obtiene el producto cartesiano: filas de más y sin sentido.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="bd-05">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../04-disenar-tablas/ejercicio.html"><small>← Anterior</small>Ejercicio de la lección 4</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de Bases de datos con SQL · Lección 5 · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&title=%5BError%5D%20Lecci%C3%B3n%205%3A%20Relaciones%20y%20JOIN%20%C2%B7%20Curso%20de%20Bases%20de%20datos%20con%20SQL&pagina=https%3A//cacg-code.github.io/PRACTICAS-HTML/bd/05-relaciones-y-join/" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+  <script>
+
+(function () {
+  var w = document.querySelector('[data-sim="join"]'); if (!w) return;
+  var D = {"inner": {"sql": "SELECT c.nombre, p.id AS pedido, p.fecha\nFROM clientes c\nINNER JOIN pedidos p ON p.cliente_id = c.id\nORDER BY p.id;", "head": ["nombre", "pedido", "fecha"], "rows": [["Ana Torres", 1, "2026-09-01"], ["Ana Torres", 2, "2026-09-15"], ["Luis Pérez", 3, "2026-09-20"], ["Marta Ruiz", 4, "2026-10-02"]]}, "left": {"sql": "SELECT c.nombre, p.id AS pedido, p.fecha\nFROM clientes c\nLEFT JOIN pedidos p ON p.cliente_id = c.id\nORDER BY c.id, p.id;", "head": ["nombre", "pedido", "fecha"], "rows": [["Ana Torres", 1, "2026-09-01"], ["Ana Torres", 2, "2026-09-15"], ["Luis Pérez", 3, "2026-09-20"], ["Marta Ruiz", 4, "2026-10-02"], ["Diego Soto", null, null]]}, "innernull": {"sql": "SELECT c.nombre\nFROM clientes c\nINNER JOIN pedidos p ON p.cliente_id = c.id\nWHERE p.id IS NULL;", "head": ["nombre"], "rows": []}, "leftnull": {"sql": "SELECT c.nombre\nFROM clientes c\nLEFT JOIN pedidos p ON p.cliente_id = c.id\nWHERE p.id IS NULL;", "head": ["nombre"], "rows": [["Diego Soto"]]}};
+  var $ = function (s) { return w.querySelector(s); };
+  var esc = function (v) { return v === null ? '<em>NULL</em>' : String(v).replace(/&/g, '&amp;').replace(/</g, '&lt;'); };
+  function draw() {
+    var k = $('#j-tipo').value + ($('#j-null').checked ? 'null' : '');
+    var d = D[k];
+    $('#j-sql').textContent = d.sql;
+    $('#j-tabla thead').innerHTML = '<tr>' + d.head.map(function (h) { return '<th>' + esc(h) + '</th>'; }).join('') + '</tr>';
+    $('#j-tabla tbody').innerHTML = d.rows.map(function (r) {
+      var nul = r.some(function (v) { return v === null; });
+      return '<tr' + (nul ? ' class="chg"' : '') + '>' + r.map(function (v) { return '<td>' + esc(v) + '</td>'; }).join('') + '</tr>';
+    }).join('');
+    $('#j-msg').textContent = d.rows.length + (d.rows.length === 1 ? ' fila' : ' filas') + (d.rows.length === 0 ? ': el INNER JOIN solo conserva parejas, así que no puede haber filas sin pareja.' : '.');
+    $('#j-msg').className = 'msg okk';
+  }
+  $('#j-tipo').addEventListener('change', draw);
+  $('#j-null').addEventListener('change', draw);
+  draw();
+})();
+
+  </script>
+</body>
+</html>

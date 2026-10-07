@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ejercicio · Consumir APIs con fetch y variables de entorno · Curso de Node.js y APIs</title>
+  <meta name="description" content="Ejercicio práctico de: Consumir APIs con fetch y variables de entorno.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/node/06-consumir-apis/ejercicio.html">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Ejercicio · Consumir APIs con fetch y variables de entorno · Curso de Node.js y APIs">
+  <meta property="og:description" content="Ejercicio práctico de: Consumir APIs con fetch y variables de entorno.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/node/06-consumir-apis/ejercicio.html">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de Node.js y APIs</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap" id="contenido" style="max-width:820px;padding-top:2rem;padding-bottom:3rem">
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de Node.js y APIs</a> › <a href="./">Lección 6</a> › Ejercicio</div>
+        <h1>Ejercicio: Consumir APIs con fetch y variables de entorno</h1>
+        <ul class="meta"><li>⏱ 60 minutos</li><li>📶 Nivel: intermedio</li></ul>
+      </header>
+
+      <h2>Objetivo</h2>
+      <p>Consultar una API real desde un script de Node, guardar la configuración en un <code>.env</code> y escribir en JavaScript puro las utilidades que sostienen ese trabajo.</p>
+
+      <h3>Cómo se trabaja</h3>
+      <p>La <strong>parte A</strong> es práctica real en tu terminal (necesita internet). La <strong>parte B</strong> son cuatro funciones de JavaScript puro: un lector de <code>.env</code>, un constructor de URLs, un <code>obtenerJson</code> al que se le pasa <code>fetch</code> como argumento (así se puede probar sin red) y un lector de configuración. Pega solo el JavaScript, sin <code>&lt;script&gt;</code>.</p>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ Prueba tu código aquí (opcional)</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:300px">&lt;script&gt;
+// Escribe aquí y prueba con console.log
+function parsearEnv(texto) {
+  // ...
+}
+
+console.log(parsearEnv("A=1\nB=2"));
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+
+      <h2>Pasos</h2>
+      <p>Marca cada paso a medida que lo completes. Tu avance se guarda en este navegador.</p>
+      <div class="progress" aria-hidden="true"><div></div></div>
+      <p id="progreso-texto" style="color:var(--muted);font-size:.9rem" aria-live="polite"></p>
+      <ul class="checklist"><li><label><input type="checkbox" id="p1"><span><strong>Parte A.</strong> Crea un proyecto con <code>"type": "module"</code> y un <code>.env</code> con <code>PORT=4000</code> y <code>NOMBRE=tu nombre</code>. Añade <code>.env</code> a <code>.gitignore</code> y crea <code>.env.example</code>.</span></label></li><li><label><input type="checkbox" id="p2"><span><strong>Parte A.</strong> Escribe <code>config.js</code> que muestre el puerto y el nombre; ejecútalo con <code>node --env-file=.env config.js</code>.</span></label></li><li><label><input type="checkbox" id="p3"><span><strong>Parte A.</strong> Escribe <code>todos.js</code> que pida <code>https://jsonplaceholder.typicode.com/todos?_limit=5</code>, compruebe <code>ok</code> y muestre los títulos.</span></label></li><li><label><input type="checkbox" id="p4"><span><strong>Parte A.</strong> Pide un recurso inexistente (<code>/todos/99999</code>) y comprueba que tu código muestra un error claro en lugar de fallar en silencio.</span></label></li><li><label><input type="checkbox" id="p5"><span><strong>Parte A.</strong> Haz un <code>POST</code> a <code>/posts</code> con un JSON y muestra el id que devuelve la API.</span></label></li><li><label><input type="checkbox" id="p6"><span><strong>Parte B.</strong> Escribe <code>parsearEnv</code> y <code>construirUrl</code>.</span></label></li><li><label><input type="checkbox" id="p7"><span><strong>Parte B.</strong> Escribe <code>obtenerJson(fetchFn, url)</code> y <code>leerConfig(env)</code>. Pasa los ocho puntos.</span></label></li></ul>
+      <details><summary>💡 Pista 1: ¿tu .env no se carga?</summary><p>Comprueba que ejecutas el comando desde la carpeta que contiene <code>.env</code> y que usas Node 20.6 o superior (<code>node -v</code>).</p>
+</details>
+<details><summary>💡 Pista 2: parsearEnv</summary><p><code>l.indexOf("=")</code> te da la posición del primer igual. Clave: <code>l.slice(0, i)</code>. Valor: <code>l.slice(i + 1)</code>.</p>
+</details>
+<details><summary>💡 Pista 3: obtenerJson</summary><p>Es una función <code>async</code>. Recibe <code>fetchFn</code> en lugar de usar <code>fetch</code> directamente para que se pueda sustituir en las pruebas.</p>
+</details>
+
+      <section class="checker" id="comprobador" aria-labelledby="t-chk">
+        <h2 id="t-chk">🔎 Comprueba tu trabajo</h2>
+        <p>Pega tu código y pulsa <strong>Comprobar</strong>. La revisión ocurre en tu navegador; nada se envía a ningún sitio. Cada punto en rojo incluye una pista. Pega solo el JavaScript, <strong>sin</strong> las etiquetas <code>&lt;script&gt;</code>.</p>
+        <label for="chk-code">Tu código de JavaScript</label>
+        <textarea id="chk-code" rows="10" spellcheck="false" placeholder="Pega aquí tus funciones"></textarea>
+        <div class="chk-actions"><button class="btn" type="button" id="chk-run">Comprobar</button><button class="icon-btn" type="button" id="chk-clear">Limpiar</button></div>
+        <p class="chk-sum" id="chk-sum" aria-live="polite"></p>
+        <ul class="chk-list" id="chk-list"></ul>
+        <script type="application/json" id="checks">{"mode": "js", "scaffold": "", "width": 800, "checks": [{"d": "`parsearEnv` convierte líneas `CLAVE=valor` en un objeto", "h": "Divide el texto por saltos de línea y cada línea por el primer `=`.", "t": "var r=parsearEnv(\"PORT=4000\\nMODO=dev\");return r.PORT===\"4000\" && r.MODO===\"dev\""}, {"d": "`parsearEnv` ignora comentarios (`#`) y líneas vacías", "h": "Haz `trim()` a cada línea y salta las vacías o que empiecen por `#`.", "t": "var r=parsearEnv(\"# hola\\n\\nA=1\\n   # otro\\nB=2\\n\");return Object.keys(r).length===2 && r.A===\"1\" && r.B===\"2\""}, {"d": "`parsearEnv` conserva los `=` del valor y quita comillas", "h": "Corta solo en el primer `=` (`indexOf`). Si el valor empieza y termina con comillas, quítalas.", "t": "var r=parsearEnv(\"URL=http://x.com/?a=1\\nNOMBRE=\\\"Ana Pérez\\\"\\nK = v \");return r.URL===\"http://x.com/?a=1\" && r.NOMBRE===\"Ana Pérez\" && r.K===\"v\""}, {"d": "`construirUrl` añade los parámetros codificados", "h": "Usa `new URLSearchParams(...)` y `toString()`. Los espacios salen como `+`.", "t": "return construirUrl(\"https://x.com/api\",{q:\"hola mundo\",pagina:2})===\"https://x.com/api?q=hola+mundo&pagina=2\""}, {"d": "`construirUrl` omite valores `undefined` o `null` y no añade `?` si no hay parámetros", "h": "Recorre `Object.entries` y filtra. Si la cadena de parámetros queda vacía, devuelve solo la base.", "t": "return construirUrl(\"https://x.com\",{})===\"https://x.com\" && construirUrl(\"https://x.com\",{a:undefined,b:null})===\"https://x.com\" && construirUrl(\"https://x.com\",{a:1,b:undefined})===\"https://x.com?a=1\""}, {"d": "`obtenerJson` devuelve el JSON cuando la respuesta es correcta", "h": "Llama a `await fetchFn(url)`, comprueba `ok` y devuelve `await respuesta.json()`.", "t": "var llamado=null;var f=async function(u){llamado=u;return {ok:true,status:200,json:async function(){return {x:1}}}};var r=await obtenerJson(f,\"http://a\");return r.x===1 && llamado===\"http://a\""}, {"d": "`obtenerJson` lanza un `Error` con `HTTP <código>` si `ok` es falso", "h": "`throw new Error(\"HTTP \" + respuesta.status)`.", "t": "var f=async function(){return {ok:false,status:404,json:async function(){return {}}}};try{await obtenerJson(f,\"http://a\");return false}catch(e){return e instanceof Error && e.message===\"HTTP 404\"}"}, {"d": "`leerConfig` aplica valores por defecto y convierte el puerto a número", "h": "`Number(env.PORT)` da `NaN` si es inválido: en ese caso usa 3000. El modo por defecto es `\"development\"`.", "t": "var a=leerConfig({});var b=leerConfig({PORT:\"8080\",NODE_ENV:\"production\"});var c=leerConfig({PORT:\"abc\"});return a.puerto===3000 && a.modo===\"development\" && b.puerto===8080 && b.modo===\"production\" && c.puerto===3000"}]}</script>
+      </section>
+      <details>
+        <summary>✅ Ver una solución posible</summary>
+        <p>Intenta resolverlo antes de mirar. Tu versión puede ser distinta y también correcta.</p>
+        <div class="code">
+  <div class="code-head"><span>utilidades.js</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>function parsearEnv(texto) {
+  const resultado = {};
+  for (const linea of texto.split(&quot;\n&quot;)) {
+    const l = linea.trim();
+    if (l === &quot;&quot; || l.startsWith(&quot;#&quot;)) continue;
+    const i = l.indexOf(&quot;=&quot;);
+    if (i === -1) continue;
+    const clave = l.slice(0, i).trim();
+    let valor = l.slice(i + 1).trim();
+    if (valor.length &gt;= 2 &amp;&amp; valor.startsWith(&#x27;&quot;&#x27;) &amp;&amp; valor.endsWith(&#x27;&quot;&#x27;)) {
+      valor = valor.slice(1, -1);
+    }
+    resultado[clave] = valor;
+  }
+  return resultado;
+}
+
+function construirUrl(base, params) {
+  const limpio = {};
+  for (const [k, v] of Object.entries(params)) {
+    if (v !== undefined &amp;&amp; v !== null) limpio[k] = v;
+  }
+  const query = new URLSearchParams(limpio).toString();
+  return query ? base + &quot;?&quot; + query : base;
+}
+
+async function obtenerJson(fetchFn, url) {
+  const respuesta = await fetchFn(url);
+  if (!respuesta.ok) {
+    throw new Error(&quot;HTTP &quot; + respuesta.status);
+  }
+  return respuesta.json();
+}
+
+function leerConfig(env) {
+  return {
+    puerto: Number(env.PORT) || 3000,
+    modo: env.NODE_ENV ?? &quot;development&quot;,
+  };
+}</code></pre>
+</div>
+
+      </details>
+      <div class="callout consejo">
+<p class="callout-title">💡 🏁 Reto extra (opcional)</p>
+<p>Amplía <code>obtenerJson</code> para que reintente hasta 3 veces si el estado es 500 o superior (pero no si es 4xx), esperando un poco entre intentos.</p>
+</div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="./"><small>← Anterior</small>Volver a lección 6</a>
+        <a class="next" href="../07-errores-y-seguridad/"><small>Siguiente →</small>Errores, validación y seguridad básica</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de Node.js y APIs · Ejercicio de lección 6 · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&amp;title=%5BError%5D%20Ejercicio%20%C2%B7%20Consumir%20APIs%20con%20fetch%20y%20variables%20de%20entorno%20%C2%B7%20Curso%20de%20Node.js%20y%20APIs&amp;pagina=https://cacg-code.github.io/PRACTICAS-HTML/node/06-consumir-apis/ejercicio.html" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

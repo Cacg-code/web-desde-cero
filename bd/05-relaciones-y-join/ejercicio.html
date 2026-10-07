@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ejercicio · Relaciones y JOIN · Curso de Bases de datos con SQL</title>
+  <meta name="description" content="Ejercicio práctico de: Relaciones y JOIN.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/bd/05-relaciones-y-join/ejercicio.html">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#0e7490">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Ejercicio · Relaciones y JOIN · Curso de Bases de datos con SQL">
+  <meta property="og:description" content="Ejercicio práctico de: Relaciones y JOIN.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/bd/05-relaciones-y-join/ejercicio.html">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+  <style>
+    .sqlsim select, .sqlsim input[type="number"] { padding: .5rem .6rem; border: 1px solid var(--border); border-radius: 8px; background: var(--bg); color: var(--text); font: inherit; max-width: 100%; }
+    .sqlsim .sql-out { margin: 0; padding: .8rem 1rem; border-radius: 10px; background: var(--code-bg); color: var(--code-text); font-family: var(--mono); font-size: .88rem; line-height: 1.6; white-space: pre-wrap; overflow-wrap: anywhere; }
+    .sqlsim .msg { margin: 0; font-weight: 600; }
+    .sqlsim .msg.err { color: #b91c1c; }
+    .sqlsim .msg.okk { color: #15803d; }
+    :root[data-theme="dark"] .sqlsim .msg.err { color: #fca5a5; }
+    :root[data-theme="dark"] .sqlsim .msg.okk { color: #86efac; }
+    @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .sqlsim .msg.err { color: #fca5a5; } :root:not([data-theme="light"]) .sqlsim .msg.okk { color: #86efac; } }
+    .sqlsim .w-row button { cursor: pointer; }
+    .sqlsim .w-row label { display: inline-flex; gap: .4rem; align-items: center; }
+    .sqlsim td.hl, .sqlsim th.hl, .sqlsim tr.hl td { background: color-mix(in srgb, var(--accent) 22%, transparent); }
+    .sqlsim tr.gone td { text-decoration: line-through; opacity: .5; }
+    .sqlsim tr.new td { background: color-mix(in srgb, #22c55e 22%, transparent); }
+    .sqlsim tr.chg td { background: color-mix(in srgb, #f59e0b 25%, transparent); }
+  </style>
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Bases de datos con SQL</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap" id="contenido" style="max-width:820px;padding-top:2rem;padding-bottom:3rem">
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de Bases de datos con SQL</a> › <a href="./">Lección 5</a> › Ejercicio</div>
+        <h1>Ejercicio: Relaciones y JOIN</h1>
+        <ul class="meta"><li>⏱ 35 minutos</li><li>📶 Nivel: principiante</li></ul>
+      </header>
+
+      <h2>Objetivo</h2>
+      <p>Consultar datos repartidos en varias tablas con <code>JOIN</code>, encontrar filas sin relación y comprobar que las claves foráneas protegen los datos.</p>
+
+      <h3>Cómo se trabaja</h3>
+      <p>Si usas SQLite en tu equipo, escribe primero <code>PRAGMA foreign_keys = ON;</code> y carga las tablas y datos de esta lección (cópialos de los bloques de código). También puedes resolverlo en papel y comparar con la solución.</p>
+
+      <h2>Pasos</h2>
+      <p>Marca cada paso a medida que lo completes. Tu avance se guarda en este navegador.</p>
+      <div class="progress" aria-hidden="true"><div></div></div>
+      <p id="progreso-texto" style="color:var(--muted);font-size:.9rem" aria-live="polite"></p>
+      <ul class="checklist"><li><label><input type="checkbox" id="p1"><span>Escribe una consulta que muestre los pedidos (id y fecha) de <strong>Ana Torres</strong>, usando <code>JOIN</code> entre <code>pedidos</code> y <code>clientes</code>.</span></label></li><li><label><input type="checkbox" id="p2"><span>Lista los clientes que <strong>no han hecho ningún pedido</strong>.</span></label></li><li><label><input type="checkbox" id="p3"><span>Muestra el contenido del <strong>pedido 3</strong>: nombre del producto, cantidad y precio.</span></label></li><li><label><input type="checkbox" id="p4"><span>Muestra, sin repetir, los nombres de los clientes que han comprado algún producto de la categoría <code>Periféricos</code>.</span></label></li><li><label><input type="checkbox" id="p5"><span>Intenta insertar una línea del pedido 1 con <code>producto_id = 99</code> y lee el error.</span></label></li></ul>
+      <details><summary>💡 Pista 1: las condiciones</summary><p>La condición del <code>ON</code> une las tablas; el <code>WHERE</code> filtra (por ejemplo el nombre del cliente).</p></details>
+      <details><summary>💡 Pista 2: el paso 4</summary><p>Necesitas las cuatro tablas: <code>clientes → pedidos → lineas_pedido → productos</code>. <code>DISTINCT</code> evita que un cliente salga varias veces.</p></details>
+      <details>
+        <summary>✅ Ver una solución posible</summary>
+        <p>Intenta resolverlo antes de mirar. Tu versión puede ser distinta y también correcta.</p>
+<div class="code">
+  <div class="code-head"><span>Paso 1</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">SELECT</span> p.id <span class="tk-tag">AS</span> pedido, p.fecha
+<span class="tk-tag">FROM</span> pedidos p
+<span class="tk-tag">JOIN</span> clientes c <span class="tk-tag">ON</span> c.id = p.cliente_id
+<span class="tk-tag">WHERE</span> c.nombre = <span class="tk-val">'Ana Torres'</span>;</code></pre>
+</div>
+<p><strong>Resultado esperado</strong></p>
+<div class="table-wrap"><table>
+<thead><tr><th>pedido</th><th>fecha</th></tr></thead>
+<tbody><tr><td>1</td><td>2026-09-01</td></tr><tr><td>2</td><td>2026-09-15</td></tr></tbody>
+</table></div>
+<div class="code">
+  <div class="code-head"><span>Paso 2</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">SELECT</span> c.nombre
+<span class="tk-tag">FROM</span> clientes c
+<span class="tk-tag">LEFT</span> <span class="tk-tag">JOIN</span> pedidos p <span class="tk-tag">ON</span> p.cliente_id = c.id
+<span class="tk-tag">WHERE</span> p.id <span class="tk-tag">IS</span> <span class="tk-tag">NULL</span>;</code></pre>
+</div>
+<p><strong>Resultado esperado</strong></p>
+<div class="table-wrap"><table>
+<thead><tr><th>nombre</th></tr></thead>
+<tbody><tr><td>Diego Soto</td></tr></tbody>
+</table></div>
+<div class="code">
+  <div class="code-head"><span>Paso 3</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">SELECT</span> pr.nombre <span class="tk-tag">AS</span> producto, l.cantidad, pr.precio
+<span class="tk-tag">FROM</span> lineas_pedido l
+<span class="tk-tag">JOIN</span> productos pr <span class="tk-tag">ON</span> pr.id = l.producto_id
+<span class="tk-tag">WHERE</span> l.pedido_id = <span class="tk-attr">3</span>;</code></pre>
+</div>
+<p><strong>Resultado esperado</strong></p>
+<div class="table-wrap"><table>
+<thead><tr><th>producto</th><th>cantidad</th><th>precio</th></tr></thead>
+<tbody><tr><td>Monitor 4K</td><td>1</td><td>899.00</td></tr><tr><td>Cable HDMI</td><td>2</td><td>15.00</td></tr></tbody>
+</table></div>
+<div class="code">
+  <div class="code-head"><span>Paso 4</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">SELECT</span> <span class="tk-tag">DISTINCT</span> c.nombre
+<span class="tk-tag">FROM</span> clientes c
+<span class="tk-tag">JOIN</span> pedidos p       <span class="tk-tag">ON</span> p.cliente_id = c.id
+<span class="tk-tag">JOIN</span> lineas_pedido l <span class="tk-tag">ON</span> l.pedido_id  = p.id
+<span class="tk-tag">JOIN</span> productos pr    <span class="tk-tag">ON</span> pr.id        = l.producto_id
+<span class="tk-tag">WHERE</span> pr.categoria = <span class="tk-val">'Periféricos'</span>;</code></pre>
+</div>
+<p><strong>Resultado esperado</strong></p>
+<div class="table-wrap"><table>
+<thead><tr><th>nombre</th></tr></thead>
+<tbody><tr><td>Ana Torres</td></tr><tr><td>Marta Ruiz</td></tr></tbody>
+</table></div>
+<div class="code">
+  <div class="code-head"><span>Paso 5</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">INSERT</span> <span class="tk-tag">INTO</span> lineas_pedido (pedido_id, producto_id, cantidad)
+<span class="tk-tag">VALUES</span> (<span class="tk-attr">1</span>, <span class="tk-attr">99</span>, <span class="tk-attr">1</span>);</code></pre>
+</div>
+<p><strong>Resultado esperado</strong> (error real de SQLite):</p>
+<pre class="sql-out">Error: FOREIGN KEY constraint failed</pre>
+
+      </details>
+      <div class="callout consejo">
+<p class="callout-title">💡 🏁 Reto extra (opcional)</p>
+<p>Muestra cada pedido con el nombre del cliente y el total de unidades que contiene. Pista: necesitarás <code>SUM(l.cantidad)</code> y <code>GROUP BY p.id</code>, que verás en la lección siguiente.</p>
+</div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="./"><small>← Anterior</small>Volver a lección 5</a>
+        <a class="next" href="../06-agrupar-y-resumir/"><small>Siguiente →</small>Lección 6: Agrupar y resumir</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de Bases de datos con SQL · Ejercicio de lección 5 · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&title=%5BError%5D%20Ejercicio%20%C2%B7%20Relaciones%20y%20JOIN%20%C2%B7%20Curso%20de%20Bases%20de%20datos%20con%20SQL&pagina=https%3A//cacg-code.github.io/PRACTICAS-HTML/bd/05-relaciones-y-join/ejercicio.html" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

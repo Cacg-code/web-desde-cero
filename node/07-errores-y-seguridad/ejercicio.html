@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ejercicio · Errores, validación y seguridad básica · Curso de Node.js y APIs</title>
+  <meta name="description" content="Ejercicio práctico de: Errores, validación y seguridad básica.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/node/07-errores-y-seguridad/ejercicio.html">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Ejercicio · Errores, validación y seguridad básica · Curso de Node.js y APIs">
+  <meta property="og:description" content="Ejercicio práctico de: Errores, validación y seguridad básica.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/node/07-errores-y-seguridad/ejercicio.html">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de Node.js y APIs</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap" id="contenido" style="max-width:820px;padding-top:2rem;padding-bottom:3rem">
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de Node.js y APIs</a> › <a href="./">Lección 7</a> › Ejercicio</div>
+        <h1>Ejercicio: Errores, validación y seguridad básica</h1>
+        <ul class="meta"><li>⏱ 60 minutos</li><li>📶 Nivel: intermedio</li></ul>
+      </header>
+
+      <h2>Objetivo</h2>
+      <p>Añadir validación, un manejador de errores y CORS a la API de tareas, y escribir en JavaScript puro las funciones que los sostienen.</p>
+
+      <h3>Cómo se trabaja</h3>
+      <p>La <strong>parte A</strong> es práctica real en tu terminal: parte de tu API de la lección 5 (o crea una nueva). La <strong>parte B</strong> son tres funciones de JavaScript puro que luego puedes usar tal cual en el servidor. Pega solo el JavaScript, sin <code>&lt;script&gt;</code>.</p>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ Prueba tu código aquí (opcional)</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:300px">&lt;script&gt;
+// Escribe aquí y prueba con console.log
+function validarTarea(datos) {
+  // ...
+}
+
+console.log(validarTarea({ titulo: "" }));
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+
+      <h2>Pasos</h2>
+      <p>Marca cada paso a medida que lo completes. Tu avance se guarda en este navegador.</p>
+      <div class="progress" aria-hidden="true"><div></div></div>
+      <p id="progreso-texto" style="color:var(--muted);font-size:.9rem" aria-live="polite"></p>
+      <ul class="checklist"><li><label><input type="checkbox" id="p1"><span><strong>Parte A.</strong> Crea <code>validar.js</code> y <code>errores.js</code> con las funciones de la lección, y úsalas en <code>POST /tareas</code>.</span></label></li><li><label><input type="checkbox" id="p2"><span><strong>Parte A.</strong> Registra al final un 404 en JSON y <code>manejarErrores</code>. Fuerza un error (<code>throw new Error("prueba")</code> en una ruta) y comprueba que el cliente solo ve el mensaje genérico mientras la consola muestra el detalle.</span></label></li><li><label><input type="checkbox" id="p3"><span><strong>Parte A.</strong> Envía un <code>POST</code> inválido con <code>curl</code> y comprueba el <code>400</code> con la lista de detalles.</span></label></li><li><label><input type="checkbox" id="p4"><span><strong>Parte A.</strong> Instala <code>cors</code> y permite solo <code>http://localhost:5173</code>. Limita el cuerpo con <code>express.json({ limit: "100kb" })</code>.</span></label></li><li><label><input type="checkbox" id="p5"><span><strong>Parte A.</strong> Ejecuta <code>npm audit</code> y revisa el resultado.</span></label></li><li><label><input type="checkbox" id="p6"><span><strong>Parte B.</strong> Escribe <code>validarTarea(datos)</code>.</span></label></li><li><label><input type="checkbox" id="p7"><span><strong>Parte B.</strong> Escribe <code>crearErrorHttp</code> y <code>formatearError</code>. Pasa los ocho puntos.</span></label></li></ul>
+      <details><summary>💡 Pista 1: ¿el manejador no se ejecuta?</summary><p>Debe registrarse <strong>después</strong> de todas las rutas y tener exactamente cuatro parámetros, aunque no uses <code>next</code>.</p>
+</details>
+<details><summary>💡 Pista 2: validarTarea con null</summary><p>Usa encadenamiento opcional: <code>datos?.titulo</code>. Así no falla si <code>datos</code> es <code>null</code>.</p>
+</details>
+<details><summary>💡 Pista 3: formatearError</summary><p>Calcula <code>estado = err.status ?? 500</code>. Solo se oculta el mensaje cuando <code>esProduccion</code> es verdadero <em>y</em> <code>estado &gt;= 500</code>.</p>
+</details>
+
+      <section class="checker" id="comprobador" aria-labelledby="t-chk">
+        <h2 id="t-chk">🔎 Comprueba tu trabajo</h2>
+        <p>Pega tu código y pulsa <strong>Comprobar</strong>. La revisión ocurre en tu navegador; nada se envía a ningún sitio. Cada punto en rojo incluye una pista. Pega solo el JavaScript, <strong>sin</strong> las etiquetas <code>&lt;script&gt;</code>.</p>
+        <label for="chk-code">Tu código de JavaScript</label>
+        <textarea id="chk-code" rows="10" spellcheck="false" placeholder="Pega aquí tus funciones"></textarea>
+        <div class="chk-actions"><button class="btn" type="button" id="chk-run">Comprobar</button><button class="icon-btn" type="button" id="chk-clear">Limpiar</button></div>
+        <p class="chk-sum" id="chk-sum" aria-live="polite"></p>
+        <ul class="chk-list" id="chk-list"></ul>
+        <script type="application/json" id="checks">{"mode": "js", "scaffold": "", "width": 800, "checks": [{"d": "`validarTarea` devuelve una lista vacía con datos correctos", "h": "Si todo está bien, el array de errores queda vacío.", "t": "return validarTarea({titulo:\"Comprar pan\"}).length===0 && validarTarea({titulo:\"Hola\",hecha:true,prioridad:\"alta\"}).length===0"}, {"d": "`validarTarea` exige un título de texto no vacío", "h": "Comprueba `typeof` y `trim()`. Debe aceptar `null` y `undefined` sin fallar.", "t": "var a=validarTarea({});var b=validarTarea({titulo:\"   \"});var c=validarTarea({titulo:5});var d=validarTarea(null);return a.join()===\"titulo obligatorio\" && b.join()===\"titulo obligatorio\" && c.join()===\"titulo obligatorio\" && d.join()===\"titulo obligatorio\""}, {"d": "`validarTarea` rechaza títulos de más de 100 caracteres", "h": "Mensaje exacto: `titulo demasiado largo`.", "t": "var r=validarTarea({titulo:\"a\".repeat(101)});var ok=validarTarea({titulo:\"a\".repeat(100)});return r.join()===\"titulo demasiado largo\" && ok.length===0"}, {"d": "`validarTarea` comprueba `hecha` (booleano) y `prioridad` (baja, media o alta)", "h": "Solo se validan si vienen definidas. Mensajes: `hecha debe ser booleano` y `prioridad invalida`.", "t": "return validarTarea({titulo:\"x\",hecha:\"si\"}).join()===\"hecha debe ser booleano\" && validarTarea({titulo:\"x\",prioridad:\"urgente\"}).join()===\"prioridad invalida\" && validarTarea({titulo:\"x\",prioridad:\"media\"}).length===0"}, {"d": "`validarTarea` acumula todos los errores en el orden titulo, hecha, prioridad", "h": "No uses `return` en cuanto encuentres el primero: agrega al array y devuélvelo al final.", "t": "return validarTarea({hecha:1,prioridad:\"x\"}).join(\"|\")===\"titulo obligatorio|hecha debe ser booleano|prioridad invalida\""}, {"d": "`crearErrorHttp` devuelve un `Error` con `status` y mensaje", "h": "`const e = new Error(mensaje); e.status = estado; return e;`", "t": "var e=crearErrorHttp(404,\"No existe\");return e instanceof Error && e.status===404 && e.message===\"No existe\""}, {"d": "`formatearError` usa el `status` del error (500 por defecto)", "h": "Devuelve `{ estado, cuerpo: { error: mensaje } }`. Sin `status`, el estado es 500.", "t": "var a=formatearError(crearErrorHttp(404,\"No existe\"),false);var b=formatearError(new Error(\"boom\"),false);return a.estado===404 && a.cuerpo.error===\"No existe\" && b.estado===500 && b.cuerpo.error===\"boom\""}, {"d": "`formatearError` oculta el detalle de los errores 5xx en producción", "h": "Con `esProduccion` en `true` y estado >= 500, el mensaje es `Error interno del servidor`; los 4xx conservan su mensaje.", "t": "var a=formatearError(new Error(\"fallo secreto\"),true);var b=formatearError(crearErrorHttp(400,\"Datos inválidos\"),true);return a.estado===500 && a.cuerpo.error===\"Error interno del servidor\" && b.estado===400 && b.cuerpo.error===\"Datos inválidos\""}]}</script>
+      </section>
+      <details>
+        <summary>✅ Ver una solución posible</summary>
+        <p>Intenta resolverlo antes de mirar. Tu versión puede ser distinta y también correcta.</p>
+        <div class="code">
+  <div class="code-head"><span>errores-y-validacion.js</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>function validarTarea(datos) {
+  const errores = [];
+
+  if (typeof datos?.titulo !== &quot;string&quot; || datos.titulo.trim() === &quot;&quot;) {
+    errores.push(&quot;titulo obligatorio&quot;);
+  } else if (datos.titulo.length &gt; 100) {
+    errores.push(&quot;titulo demasiado largo&quot;);
+  }
+  if (datos?.hecha !== undefined &amp;&amp; typeof datos.hecha !== &quot;boolean&quot;) {
+    errores.push(&quot;hecha debe ser booleano&quot;);
+  }
+  if (datos?.prioridad !== undefined &amp;&amp; ![&quot;baja&quot;, &quot;media&quot;, &quot;alta&quot;].includes(datos.prioridad)) {
+    errores.push(&quot;prioridad invalida&quot;);
+  }
+  return errores;
+}
+
+function crearErrorHttp(estado, mensaje) {
+  const error = new Error(mensaje);
+  error.status = estado;
+  return error;
+}
+
+function formatearError(err, esProduccion) {
+  const estado = err.status ?? 500;
+  const ocultar = esProduccion &amp;&amp; estado &gt;= 500;
+  return {
+    estado,
+    cuerpo: { error: ocultar ? &quot;Error interno del servidor&quot; : err.message },
+  };
+}</code></pre>
+</div>
+
+      </details>
+      <div class="callout consejo">
+<p class="callout-title">💡 🏁 Reto extra (opcional)</p>
+<p>Añade a <code>validarTarea</code> una regla de fecha límite opcional (<code>limite</code>) que debe ser un texto con formato <code>AAAA-MM-DD</code> y una fecha real. Pista: <code>new Date(...)</code> y <code>Number.isNaN</code>.</p>
+</div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="./"><small>← Anterior</small>Volver a lección 7</a>
+        <a class="next" href="../08-despliegue/"><small>Siguiente →</small>Despliegue de tu API</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de Node.js y APIs · Ejercicio de lección 7 · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&amp;title=%5BError%5D%20Ejercicio%20%C2%B7%20Errores%2C%20validaci%C3%B3n%20y%20seguridad%20b%C3%A1sica%20%C2%B7%20Curso%20de%20Node.js%20y%20APIs&amp;pagina=https://cacg-code.github.io/PRACTICAS-HTML/node/07-errores-y-seguridad/ejercicio.html" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Proyecto final: base de datos de una tienda · Curso de Bases de datos con SQL</title>
+  <meta name="description" content="Proyecto final del curso: diseña, crea, opera y consulta la base de datos completa de una tienda (clientes, productos, pedidos e informes) y protégela.">
+  <link rel="canonical" href="https://cacg-code.github.io/PRACTICAS-HTML/bd/proyecto-tienda/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#0e7490">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Proyecto final: base de datos de una tienda · Curso de Bases de datos con SQL">
+  <meta property="og:description" content="Proyecto final del curso: diseña, crea, opera y consulta la base de datos completa de una tienda (clientes, productos, pedidos e informes) y protégela.">
+  <meta property="og:url" content="https://cacg-code.github.io/PRACTICAS-HTML/bd/proyecto-tienda/">
+  <meta property="og:image" content="https://cacg-code.github.io/PRACTICAS-HTML/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+  <style>
+    .sqlsim select, .sqlsim input[type="number"] { padding: .5rem .6rem; border: 1px solid var(--border); border-radius: 8px; background: var(--bg); color: var(--text); font: inherit; max-width: 100%; }
+    .sqlsim .sql-out { margin: 0; padding: .8rem 1rem; border-radius: 10px; background: var(--code-bg); color: var(--code-text); font-family: var(--mono); font-size: .88rem; line-height: 1.6; white-space: pre-wrap; overflow-wrap: anywhere; }
+    .sqlsim .msg { margin: 0; font-weight: 600; }
+    .sqlsim .msg.err { color: #b91c1c; }
+    .sqlsim .msg.okk { color: #15803d; }
+    :root[data-theme="dark"] .sqlsim .msg.err { color: #fca5a5; }
+    :root[data-theme="dark"] .sqlsim .msg.okk { color: #86efac; }
+    @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .sqlsim .msg.err { color: #fca5a5; } :root:not([data-theme="light"]) .sqlsim .msg.okk { color: #86efac; } }
+    .sqlsim .w-row button { cursor: pointer; }
+    .sqlsim .w-row label { display: inline-flex; gap: .4rem; align-items: center; }
+    .sqlsim td.hl, .sqlsim th.hl, .sqlsim tr.hl td { background: color-mix(in srgb, var(--accent) 22%, transparent); }
+    .sqlsim tr.gone td { text-decoration: line-through; opacity: .5; }
+    .sqlsim tr.new td { background: color-mix(in srgb, #22c55e 22%, transparent); }
+    .sqlsim tr.chg td { background: color-mix(in srgb, #f59e0b 25%, transparent); }
+  </style>
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Bases de datos con SQL</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap lesson-layout" id="contenido">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#encargo">El encargo</a></li><li><a href="#diseno">Paso 1: diseñar el modelo</a></li><li><a href="#crear">Paso 2: crear la base de datos</a></li><li><a href="#operar">Paso 3: registrar un pedido con una transacción</a></li><li><a href="#informes">Paso 4: los informes</a></li><li><a href="#proteger">Paso 5: proteger la base</a></li><li><a href="#laboratorio">Pruébalo: panel de informes</a></li><li><a href="#errores">Errores frecuentes</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de Bases de datos con SQL</a> › Proyecto final</div>
+        <h1>Proyecto: base de datos de una tienda</h1>
+        <ul class="meta"><li>⏱ 90 minutos</li><li>📶 Nivel: principiante</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Diseñar un modelo de datos con varias tablas relacionadas.</li><li>Crear la base con un script reproducible y operarla con transacciones.</li><li>Escribir informes con <code>JOIN</code>, <code>GROUP BY</code> y <code>HAVING</code>.</li><li>Aplicar medidas básicas de seguridad y copias.</li></ul>
+</div>
+
+<h2 id="encargo"><span class="n">1.</span>El encargo</h2>
+
+<p>Una pequeña tienda de tecnología de tu ciudad lleva sus ventas en un cuaderno y quiere pasarlas a una <strong>base de datos</strong>. Te pide poder:</p>
+<ul>
+<li>Guardar el <strong>catálogo</strong> de productos con su categoría, precio y stock.</li>
+<li>Registrar a sus <strong>clientes</strong>, sin repetir sus datos.</li>
+<li>Anotar cada <strong>pedido</strong> con los productos y cantidades que incluye, y descontar el stock.</li>
+<li>Obtener <strong>informes</strong>: cuánto vende, quién compra más, qué se vende más y qué no se mueve.</li>
+<li>Estar <strong>protegida</strong>: datos coherentes, permisos limitados y copias de seguridad.</li>
+</ul>
+<p>Es justo lo que has aprendido en las ocho lecciones. Aquí lo reúnes en un único proyecto, que funciona en <strong>SQLite</strong> (y con pocos cambios en PostgreSQL).</p>
+<div class="flow"><span>1. Diseñar</span><span>2. Crear</span><span>3. Operar</span><span>4. Informar</span><span>5. Proteger</span></div>
+
+<h2 id="diseno"><span class="n">2.</span>Paso 1: diseñar el modelo</h2>
+
+<p>Antes de escribir SQL, decide qué <strong>entidades</strong> hay y cómo se relacionan. Del encargo salen cuatro:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Tabla</th><th>Qué guarda</th><th>Clave y restricciones</th></tr></thead>
+<tbody>
+<tr><td><code>productos</code></td><td>Catálogo: nombre, categoría, precio, stock</td><td><code>id</code> PK; <code>NOT NULL</code> en casi todo; <code>stock DEFAULT 0</code></td></tr>
+<tr><td><code>clientes</code></td><td>Nombre y correo</td><td><code>id</code> PK; <code>email UNIQUE</code></td></tr>
+<tr><td><code>pedidos</code></td><td>Una compra: quién y cuándo</td><td><code>cliente_id</code> FK a <code>clientes</code></td></tr>
+<tr><td><code>lineas_pedido</code></td><td>Qué productos y cuántos hay en cada pedido</td><td>PK compuesta <code>(pedido_id, producto_id)</code>; dos FK; <code>CHECK (cantidad &gt; 0)</code></td></tr>
+</tbody></table></div>
+<p>Las relaciones son: <strong>un cliente tiene muchos pedidos</strong> (uno a muchos) y <strong>un pedido contiene muchos productos y un producto está en muchos pedidos</strong> (muchos a muchos, resuelto con <code>lineas_pedido</code>).</p>
+<div class="flow"><span>clientes 1</span><span>a muchos</span><span>pedidos</span><span>1 a muchos</span><span>lineas_pedido</span><span>muchos a 1</span><span>productos</span></div>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo · Una decisión de diseño</p>
+<p>El precio del producto está en <code>productos</code>, no en la línea del pedido. Pero entonces, si el precio cambia mañana, los informes de ventas pasadas cambiarían. En una tienda real guardarías también el <strong>precio vendido</strong> en <code>lineas_pedido</code>. Es un buen reto para el ejercicio.</p>
+</div>
+
+<h2 id="crear"><span class="n">3.</span>Paso 2: crear la base de datos</h2>
+
+<p>Guarda todo en un único archivo <code>tienda.sql</code>. El script se puede ejecutar las veces que quieras: las líneas <code>DROP TABLE IF EXISTS</code> (en orden inverso a las dependencias) empiezan siempre desde cero. Este código se ha ejecutado de verdad en SQLite: crea 4 tablas con 8 productos, 4 clientes, 4 pedidos y 7 líneas.</p>
+<div class="code">
+  <div class="code-head"><span>tienda.sql</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">PRAGMA</span> foreign_keys = <span class="tk-tag">ON</span>;
+
+<span class="tk-tag">DROP</span> <span class="tk-tag">TABLE</span> <span class="tk-tag">IF</span> <span class="tk-tag">EXISTS</span> lineas_pedido;
+<span class="tk-tag">DROP</span> <span class="tk-tag">TABLE</span> <span class="tk-tag">IF</span> <span class="tk-tag">EXISTS</span> pedidos;
+<span class="tk-tag">DROP</span> <span class="tk-tag">TABLE</span> <span class="tk-tag">IF</span> <span class="tk-tag">EXISTS</span> clientes;
+<span class="tk-tag">DROP</span> <span class="tk-tag">TABLE</span> <span class="tk-tag">IF</span> <span class="tk-tag">EXISTS</span> productos;
+
+<span class="tk-tag">CREATE</span> <span class="tk-tag">TABLE</span> productos (
+  id        <span class="tk-tag">INTEGER</span> <span class="tk-tag">PRIMARY</span> <span class="tk-tag">KEY</span>,
+  nombre    <span class="tk-tag">TEXT</span>    <span class="tk-tag">NOT</span> <span class="tk-tag">NULL</span>,
+  categoria <span class="tk-tag">TEXT</span>    <span class="tk-tag">NOT</span> <span class="tk-tag">NULL</span>,
+  precio    <span class="tk-tag">NUMERIC</span> <span class="tk-tag">NOT</span> <span class="tk-tag">NULL</span>,
+  stock     <span class="tk-tag">INTEGER</span> <span class="tk-tag">NOT</span> <span class="tk-tag">NULL</span> <span class="tk-tag">DEFAULT</span> <span class="tk-attr">0</span>
+);
+
+<span class="tk-tag">CREATE</span> <span class="tk-tag">TABLE</span> clientes (
+  id     <span class="tk-tag">INTEGER</span> <span class="tk-tag">PRIMARY</span> <span class="tk-tag">KEY</span>,
+  nombre <span class="tk-tag">TEXT</span> <span class="tk-tag">NOT</span> <span class="tk-tag">NULL</span>,
+  email  <span class="tk-tag">TEXT</span> <span class="tk-tag">NOT</span> <span class="tk-tag">NULL</span> <span class="tk-tag">UNIQUE</span>
+);
+
+<span class="tk-tag">CREATE</span> <span class="tk-tag">TABLE</span> pedidos (
+  id         <span class="tk-tag">INTEGER</span> <span class="tk-tag">PRIMARY</span> <span class="tk-tag">KEY</span>,
+  cliente_id <span class="tk-tag">INTEGER</span> <span class="tk-tag">NOT</span> <span class="tk-tag">NULL</span> <span class="tk-tag">REFERENCES</span> clientes(id),
+  fecha      <span class="tk-tag">TEXT</span>    <span class="tk-tag">NOT</span> <span class="tk-tag">NULL</span>
+);
+
+<span class="tk-tag">CREATE</span> <span class="tk-tag">TABLE</span> lineas_pedido (
+  pedido_id   <span class="tk-tag">INTEGER</span> <span class="tk-tag">NOT</span> <span class="tk-tag">NULL</span> <span class="tk-tag">REFERENCES</span> pedidos(id),
+  producto_id <span class="tk-tag">INTEGER</span> <span class="tk-tag">NOT</span> <span class="tk-tag">NULL</span> <span class="tk-tag">REFERENCES</span> productos(id),
+  cantidad    <span class="tk-tag">INTEGER</span> <span class="tk-tag">NOT</span> <span class="tk-tag">NULL</span> <span class="tk-tag">CHECK</span> (cantidad &gt; <span class="tk-attr">0</span>),
+  <span class="tk-tag">PRIMARY</span> <span class="tk-tag">KEY</span> (pedido_id, producto_id)
+);
+
+<span class="tk-tag">INSERT</span> <span class="tk-tag">INTO</span> productos (id, nombre, categoria, precio, stock) <span class="tk-tag">VALUES</span>
+  (<span class="tk-attr">1</span>, <span class="tk-val">'Teclado'</span>,     <span class="tk-val">'Periféricos'</span>, <span class="tk-attr">120.00</span>,  <span class="tk-attr">15</span>),
+  (<span class="tk-attr">2</span>, <span class="tk-val">'Ratón'</span>,       <span class="tk-val">'Periféricos'</span>,  <span class="tk-attr">45.50</span>,  <span class="tk-attr">40</span>),
+  (<span class="tk-attr">3</span>, <span class="tk-val">'Monitor FHD'</span>, <span class="tk-val">'Pantallas'</span>,   <span class="tk-attr">650.00</span>,   <span class="tk-attr">8</span>),
+  (<span class="tk-attr">4</span>, <span class="tk-val">'Auriculares'</span>, <span class="tk-val">'Audio'</span>,        <span class="tk-attr">89.90</span>,   <span class="tk-attr">0</span>),
+  (<span class="tk-attr">5</span>, <span class="tk-val">'Webcam'</span>,      <span class="tk-val">'Periféricos'</span>, <span class="tk-attr">150.00</span>,  <span class="tk-attr">12</span>),
+  (<span class="tk-attr">6</span>, <span class="tk-val">'Altavoz'</span>,     <span class="tk-val">'Audio'</span>,        <span class="tk-attr">99.00</span>,  <span class="tk-attr">25</span>),
+  (<span class="tk-attr">7</span>, <span class="tk-val">'Monitor 4K'</span>,  <span class="tk-val">'Pantallas'</span>,   <span class="tk-attr">899.00</span>,   <span class="tk-attr">3</span>),
+  (<span class="tk-attr">8</span>, <span class="tk-val">'Cable HDMI'</span>,  <span class="tk-val">'Accesorios'</span>,   <span class="tk-attr">15.00</span>, <span class="tk-attr">100</span>);
+
+<span class="tk-tag">INSERT</span> <span class="tk-tag">INTO</span> clientes (id, nombre, email) <span class="tk-tag">VALUES</span>
+  (<span class="tk-attr">1</span>, <span class="tk-val">'Ana Torres'</span>,  <span class="tk-val">'ana@correo.com'</span>),
+  (<span class="tk-attr">2</span>, <span class="tk-val">'Luis Pérez'</span>,  <span class="tk-val">'luis@correo.com'</span>),
+  (<span class="tk-attr">3</span>, <span class="tk-val">'Marta Ruiz'</span>,  <span class="tk-val">'marta@correo.com'</span>),
+  (<span class="tk-attr">4</span>, <span class="tk-val">'Diego Soto'</span>,  <span class="tk-val">'diego@correo.com'</span>);
+
+<span class="tk-tag">INSERT</span> <span class="tk-tag">INTO</span> pedidos (id, cliente_id, fecha) <span class="tk-tag">VALUES</span>
+  (<span class="tk-attr">1</span>, <span class="tk-attr">1</span>, <span class="tk-val">'2026-09-01'</span>),
+  (<span class="tk-attr">2</span>, <span class="tk-attr">1</span>, <span class="tk-val">'2026-09-15'</span>),
+  (<span class="tk-attr">3</span>, <span class="tk-attr">2</span>, <span class="tk-val">'2026-09-20'</span>),
+  (<span class="tk-attr">4</span>, <span class="tk-attr">3</span>, <span class="tk-val">'2026-10-02'</span>);
+
+<span class="tk-tag">INSERT</span> <span class="tk-tag">INTO</span> lineas_pedido (pedido_id, producto_id, cantidad) <span class="tk-tag">VALUES</span>
+  (<span class="tk-attr">1</span>, <span class="tk-attr">1</span>, <span class="tk-attr">1</span>), (<span class="tk-attr">1</span>, <span class="tk-attr">2</span>, <span class="tk-attr">1</span>),
+  (<span class="tk-attr">2</span>, <span class="tk-attr">5</span>, <span class="tk-attr">1</span>),
+  (<span class="tk-attr">3</span>, <span class="tk-attr">7</span>, <span class="tk-attr">1</span>), (<span class="tk-attr">3</span>, <span class="tk-attr">8</span>, <span class="tk-attr">2</span>),
+  (<span class="tk-attr">4</span>, <span class="tk-attr">6</span>, <span class="tk-attr">2</span>), (<span class="tk-attr">4</span>, <span class="tk-attr">2</span>, <span class="tk-attr">3</span>);</code></pre>
+</div>
+<div class="code">
+  <div class="code-head"><span>Cargarlo</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>sqlite3 tienda.db ".read tienda.sql"</code></pre>
+</div>
+
+<p>Comprueba que todo entró bien:</p>
+<p><strong>Resultado esperado: conteo de filas</strong></p>
+<div class="table-wrap"><table>
+<thead><tr><th>productos</th><th>clientes</th><th>pedidos</th><th>lineas</th></tr></thead>
+<tbody><tr><td>8</td><td>4</td><td>4</td><td>7</td></tr></tbody>
+</table></div>
+
+<h2 id="operar"><span class="n">4.</span>Paso 3: registrar un pedido con una transacción</h2>
+
+<p>Registrar un pedido toca varias tablas: crear el pedido, añadir sus líneas y descontar el stock. Si algo falla a medias, la tienda quedaría con datos incoherentes. Por eso se hace dentro de una <strong>transacción</strong> (lección 3): todo se guarda, o no se guarda nada.</p>
+<div class="code">
+  <div class="code-head"><span>Diego compra 1 Monitor FHD y 2 Ratones</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">BEGIN</span>;
+
+<span class="tk-tag">INSERT</span> <span class="tk-tag">INTO</span> pedidos (id, cliente_id, fecha)
+<span class="tk-tag">VALUES</span> (<span class="tk-attr">5</span>, <span class="tk-attr">4</span>, <span class="tk-val">'2026-10-06'</span>);
+
+<span class="tk-tag">INSERT</span> <span class="tk-tag">INTO</span> lineas_pedido (pedido_id, producto_id, cantidad)
+<span class="tk-tag">VALUES</span> (<span class="tk-attr">5</span>, <span class="tk-attr">3</span>, <span class="tk-attr">1</span>), (<span class="tk-attr">5</span>, <span class="tk-attr">2</span>, <span class="tk-attr">2</span>);
+
+<span class="tk-tag">UPDATE</span> productos <span class="tk-tag">SET</span> stock = stock - <span class="tk-attr">1</span> <span class="tk-tag">WHERE</span> id = <span class="tk-attr">3</span>;
+<span class="tk-tag">UPDATE</span> productos <span class="tk-tag">SET</span> stock = stock - <span class="tk-attr">2</span> <span class="tk-tag">WHERE</span> id = <span class="tk-attr">2</span>;
+
+<span class="tk-tag">COMMIT</span>;</code></pre>
+</div>
+
+<p>Si cualquiera de las instrucciones falla, ejecutas <code>ROLLBACK;</code> en lugar de <code>COMMIT;</code> y la base queda como estaba. Después de la transacción:</p>
+<p><strong>Stock actualizado (antes: Ratón 40, Monitor FHD 8)</strong></p>
+<div class="table-wrap"><table>
+<thead><tr><th>id</th><th>nombre</th><th>stock</th></tr></thead>
+<tbody><tr><td>2</td><td>Ratón</td><td>38</td></tr><tr><td>3</td><td>Monitor FHD</td><td>7</td></tr></tbody>
+</table></div>
+<p><strong>El pedido nuevo</strong></p>
+<div class="table-wrap"><table>
+<thead><tr><th>pedido</th><th>nombre</th><th>total</th></tr></thead>
+<tbody><tr><td>5</td><td>Diego Soto</td><td>741.00</td></tr></tbody>
+</table></div>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · PostgreSQL</p>
+<p>Allí lo normal es no escribir el <code>id</code>: lo genera la base (columna identity) y lo recuperas con <code>INSERT … RETURNING id</code> para usarlo en las líneas. En SQLite también puedes usar <code>last_insert_rowid()</code>.</p>
+</div>
+
+<h2 id="informes"><span class="n">5.</span>Paso 4: los informes</h2>
+
+<p>Los informes son consultas que combinan todo lo aprendido: <code>JOIN</code>, <code>GROUP BY</code>, <code>HAVING</code> y <code>LEFT JOIN … IS NULL</code>. Los resultados que ves son los de la base original (sin el pedido nuevo del paso anterior).</p>
+<h3>Pedidos con cliente e importe</h3>
+<div class="code">
+  <div class="code-head"><span>Pedidos con cliente e importe</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">SELECT</span> p.id <span class="tk-tag">AS</span> pedido, c.nombre, p.fecha,
+       <span class="tk-tag">SUM</span>(l.cantidad * pr.precio) <span class="tk-tag">AS</span> total
+<span class="tk-tag">FROM</span> pedidos p
+<span class="tk-tag">JOIN</span> clientes c       <span class="tk-tag">ON</span> c.id        = p.cliente_id
+<span class="tk-tag">JOIN</span> lineas_pedido l  <span class="tk-tag">ON</span> l.pedido_id = p.id
+<span class="tk-tag">JOIN</span> productos pr     <span class="tk-tag">ON</span> pr.id       = l.producto_id
+<span class="tk-tag">GROUP</span> <span class="tk-tag">BY</span> p.id
+<span class="tk-tag">ORDER</span> <span class="tk-tag">BY</span> p.id;</code></pre>
+</div>
+<p><strong>Resultado esperado</strong></p>
+<div class="table-wrap"><table>
+<thead><tr><th>pedido</th><th>nombre</th><th>fecha</th><th>total</th></tr></thead>
+<tbody><tr><td>1</td><td>Ana Torres</td><td>2026-09-01</td><td>165.50</td></tr><tr><td>2</td><td>Ana Torres</td><td>2026-09-15</td><td>150.00</td></tr><tr><td>3</td><td>Luis Pérez</td><td>2026-09-20</td><td>929.00</td></tr><tr><td>4</td><td>Marta Ruiz</td><td>2026-10-02</td><td>334.50</td></tr></tbody>
+</table></div>
+
+<h3>Gasto por cliente (incluye a quien no compró)</h3>
+<div class="code">
+  <div class="code-head"><span>Gasto por cliente (incluye a quien no compró)</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">SELECT</span> c.nombre,
+       <span class="tk-tag">COUNT</span>(<span class="tk-tag">DISTINCT</span> p.id) <span class="tk-tag">AS</span> pedidos,
+       COALESCE(<span class="tk-tag">SUM</span>(l.cantidad * pr.precio), <span class="tk-attr">0</span>) <span class="tk-tag">AS</span> gasto
+<span class="tk-tag">FROM</span> clientes c
+<span class="tk-tag">LEFT</span> <span class="tk-tag">JOIN</span> pedidos p       <span class="tk-tag">ON</span> p.cliente_id = c.id
+<span class="tk-tag">LEFT</span> <span class="tk-tag">JOIN</span> lineas_pedido l <span class="tk-tag">ON</span> l.pedido_id  = p.id
+<span class="tk-tag">LEFT</span> <span class="tk-tag">JOIN</span> productos pr    <span class="tk-tag">ON</span> pr.id        = l.producto_id
+<span class="tk-tag">GROUP</span> <span class="tk-tag">BY</span> c.id
+<span class="tk-tag">ORDER</span> <span class="tk-tag">BY</span> gasto <span class="tk-tag">DESC</span>;</code></pre>
+</div>
+<p><strong>Resultado esperado</strong></p>
+<div class="table-wrap"><table>
+<thead><tr><th>nombre</th><th>pedidos</th><th>gasto</th></tr></thead>
+<tbody><tr><td>Luis Pérez</td><td>1</td><td>929.00</td></tr><tr><td>Marta Ruiz</td><td>1</td><td>334.50</td></tr><tr><td>Ana Torres</td><td>2</td><td>315.50</td></tr><tr><td>Diego Soto</td><td>0</td><td>0.00</td></tr></tbody>
+</table></div>
+
+<h3>Productos más vendidos</h3>
+<div class="code">
+  <div class="code-head"><span>Productos más vendidos</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">SELECT</span> pr.nombre <span class="tk-tag">AS</span> producto,
+       <span class="tk-tag">SUM</span>(l.cantidad) <span class="tk-tag">AS</span> unidades,
+       <span class="tk-tag">SUM</span>(l.cantidad * pr.precio) <span class="tk-tag">AS</span> ingresos
+<span class="tk-tag">FROM</span> lineas_pedido l
+<span class="tk-tag">JOIN</span> productos pr <span class="tk-tag">ON</span> pr.id = l.producto_id
+<span class="tk-tag">GROUP</span> <span class="tk-tag">BY</span> pr.id
+<span class="tk-tag">ORDER</span> <span class="tk-tag">BY</span> unidades <span class="tk-tag">DESC</span>, ingresos <span class="tk-tag">DESC</span>;</code></pre>
+</div>
+<p><strong>Resultado esperado</strong></p>
+<div class="table-wrap"><table>
+<thead><tr><th>producto</th><th>unidades</th><th>ingresos</th></tr></thead>
+<tbody><tr><td>Ratón</td><td>4</td><td>182.00</td></tr><tr><td>Altavoz</td><td>2</td><td>198.00</td></tr><tr><td>Cable HDMI</td><td>2</td><td>30.00</td></tr><tr><td>Monitor 4K</td><td>1</td><td>899.00</td></tr><tr><td>Webcam</td><td>1</td><td>150.00</td></tr><tr><td>Teclado</td><td>1</td><td>120.00</td></tr></tbody>
+</table></div>
+
+<h3>Ingresos por categoría</h3>
+<div class="code">
+  <div class="code-head"><span>Ingresos por categoría</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">SELECT</span> pr.categoria,
+       <span class="tk-tag">SUM</span>(l.cantidad * pr.precio) <span class="tk-tag">AS</span> ingresos
+<span class="tk-tag">FROM</span> lineas_pedido l
+<span class="tk-tag">JOIN</span> productos pr <span class="tk-tag">ON</span> pr.id = l.producto_id
+<span class="tk-tag">GROUP</span> <span class="tk-tag">BY</span> pr.categoria
+<span class="tk-tag">ORDER</span> <span class="tk-tag">BY</span> ingresos <span class="tk-tag">DESC</span>;</code></pre>
+</div>
+<p><strong>Resultado esperado</strong></p>
+<div class="table-wrap"><table>
+<thead><tr><th>categoria</th><th>ingresos</th></tr></thead>
+<tbody><tr><td>Pantallas</td><td>899.00</td></tr><tr><td>Periféricos</td><td>452.00</td></tr><tr><td>Audio</td><td>198.00</td></tr><tr><td>Accesorios</td><td>30.00</td></tr></tbody>
+</table></div>
+
+<h3>Productos que nunca se han vendido</h3>
+<div class="code">
+  <div class="code-head"><span>Productos que nunca se han vendido</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">SELECT</span> pr.nombre, pr.stock
+<span class="tk-tag">FROM</span> productos pr
+<span class="tk-tag">LEFT</span> <span class="tk-tag">JOIN</span> lineas_pedido l <span class="tk-tag">ON</span> l.producto_id = pr.id
+<span class="tk-tag">WHERE</span> l.pedido_id <span class="tk-tag">IS</span> <span class="tk-tag">NULL</span>;</code></pre>
+</div>
+<p><strong>Resultado esperado</strong></p>
+<div class="table-wrap"><table>
+<thead><tr><th>nombre</th><th>stock</th></tr></thead>
+<tbody><tr><td>Monitor FHD</td><td>8</td></tr><tr><td>Auriculares</td><td>0</td></tr></tbody>
+</table></div>
+
+<h3>Ingresos por mes</h3>
+<div class="code">
+  <div class="code-head"><span>Ingresos por mes</span><button class="copy" type="button">Copiar</button></div>
+<pre><code><span class="tk-tag">SELECT</span> substr(p.fecha, <span class="tk-attr">1</span>, <span class="tk-attr">7</span>) <span class="tk-tag">AS</span> mes,
+       <span class="tk-tag">COUNT</span>(<span class="tk-tag">DISTINCT</span> p.id) <span class="tk-tag">AS</span> pedidos,
+       <span class="tk-tag">SUM</span>(l.cantidad * pr.precio) <span class="tk-tag">AS</span> ingresos
+<span class="tk-tag">FROM</span> pedidos p
+<span class="tk-tag">JOIN</span> lineas_pedido l <span class="tk-tag">ON</span> l.pedido_id = p.id
+<span class="tk-tag">JOIN</span> productos pr    <span class="tk-tag">ON</span> pr.id       = l.producto_id
+<span class="tk-tag">GROUP</span> <span class="tk-tag">BY</span> mes
+<span class="tk-tag">ORDER</span> <span class="tk-tag">BY</span> mes;</code></pre>
+</div>
+<p><strong>Resultado esperado</strong></p>
+<div class="table-wrap"><table>
+<thead><tr><th>mes</th><th>pedidos</th><th>ingresos</th></tr></thead>
+<tbody><tr><td>2026-09</td><td>3</td><td>1244.50</td></tr><tr><td>2026-10</td><td>1</td><td>334.50</td></tr></tbody>
+</table></div>
+
+<div class="callout importante">
+<p class="callout-title">⚠️ Importante · Fechas en PostgreSQL</p>
+<p>El informe por mes usa <code>substr(fecha, 1, 7)</code> porque en el proyecto la fecha es texto <code>AAAA-MM-DD</code>. En PostgreSQL con una columna <code>DATE</code> usarías <code>to_char(fecha, 'YYYY-MM')</code> o <code>date_trunc('month', fecha)</code>.</p>
+</div>
+
+<h2 id="proteger"><span class="n">6.</span>Paso 5: proteger la base</h2>
+
+<p>Un proyecto terminado no es solo el que consulta bien. Antes de darlo por cerrado revisa:</p>
+<ul>
+<li><strong>Integridad:</strong> <code>PRAGMA foreign_keys = ON</code> en cada conexión (SQLite) y <code>NOT NULL</code>, <code>UNIQUE</code> y <code>CHECK</code> donde correspondan.</li>
+<li><strong>Inyección:</strong> la aplicación solo usa consultas parametrizadas; ningún valor del usuario se pega en el SQL.</li>
+<li><strong>Permisos:</strong> la aplicación no usa la cuenta de administrador (rol con <code>GRANT</code> solo de lo necesario).</li>
+<li><strong>Datos personales:</strong> si añades usuarios con contraseña, guarda solo el hash (bcrypt o Argon2).</li>
+<li><strong>Copias:</strong> un comando de respaldo programado y una restauración probada.</li>
+</ul>
+<h2 id="laboratorio"><span class="n">7.</span>Pruébalo: panel de informes</h2>
+
+<p>Este panel reúne los informes del proyecto. Elige uno para ver su consulta y su resultado (ejecutado en SQLite real sobre los datos de <code>tienda.sql</code>).</p>
+<div class="widget sqlsim" data-sim="informes">
+  <div class="w-head">📈 Panel de informes de la tienda</div>
+  <div class="w-body">
+    <div class="w-row"><label for="r-inf">Informe</label><select id="r-inf" style="flex:1 1 100%;min-width:0;width:100%"></select></div>
+    <pre class="sql-out" id="r-sql"></pre>
+    <p class="msg okk" id="r-msg" aria-live="polite"></p>
+    <div class="table-wrap" style="margin:0"><table id="r-tabla"><thead></thead><tbody></tbody></table></div>
+  </div>
+</div>
+
+<h2 id="errores"><span class="n">8.</span>Errores frecuentes</h2>
+<ul><li><strong>Empezar a escribir tablas sin diseñar antes</strong> las entidades y relaciones: luego hay que rehacer todo.</li><li><strong>Olvidar <code>PRAGMA foreign_keys = ON</code></strong> al cargar el script y al conectar desde la aplicación.</li><li><strong>Cargar datos antes de crear las tablas relacionadas</strong>, o crear las tablas en orden incorrecto: primero las que no dependen de otras.</li><li><strong>Registrar un pedido sin transacción:</strong> un fallo deja el pedido sin líneas o el stock sin descontar.</li><li><strong>Informes con <code>INNER JOIN</code> que ocultan clientes o productos sin ventas:</strong> usa <code>LEFT JOIN</code> cuando haya que incluirlos.</li><li><strong>Sumar importes tras un <code>JOIN</code> que repite filas</strong> (por ejemplo, unir pedidos con líneas y sumar un campo del pedido).</li><li><strong>No guardar el script <code>.sql</code></strong> y modificar la base a mano: no se puede reproducir.</li><li><strong>No probar la restauración de la copia.</strong></li></ul>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li>Un proyecto de base de datos sigue cinco pasos: <strong>diseñar, crear, operar, informar y proteger</strong>.</li><li>Diseña primero: entidades, relaciones (uno a muchos, muchos a muchos), claves y restricciones.</li><li>Guarda el esquema y los datos en un script <code>.sql</code> que se pueda ejecutar de nuevo; es la documentación de tu diseño.</li><li>Las operaciones que tocan varias tablas van en una <strong>transacción</strong>: <code>BEGIN; … COMMIT;</code> o <code>ROLLBACK;</code>.</li><li>Los informes combinan <code>JOIN</code>, <code>GROUP BY</code>, <code>HAVING</code> y <code>LEFT JOIN … IS NULL</code>.</li><li>Protege: claves foráneas activas, consultas parametrizadas, rol con pocos permisos, hash de contraseñas y copias probadas.</li><li>Con pocos cambios (identificadores, fechas, <code>ILIKE</code>) el mismo proyecto funciona en PostgreSQL.</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">9.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td>Modelo de datos</td><td>Descripción de las tablas, sus columnas y las relaciones entre ellas.</td></tr><tr><td>Esquema</td><td>Conjunto de definiciones de las tablas y restricciones de una base de datos.</td></tr><tr><td>Script SQL</td><td>Archivo <code>.sql</code> con instrucciones que se pueden ejecutar para reconstruir la base.</td></tr><tr><td>Transacción</td><td>Grupo de operaciones que se aplican todas o ninguna.</td></tr><tr><td>Informe</td><td>Consulta que resume datos para tomar decisiones (ventas, stock, clientes…).</td></tr><tr><td>Ticket promedio</td><td>Importe medio de cada pedido.</td></tr><tr><td>Datos huérfanos</td><td>Filas que apuntan a otra fila que ya no existe; las claves foráneas lo evitan.</td></tr><tr><td>Respaldo</td><td>Copia de seguridad de la base que permite restaurarla tras un fallo.</td></tr></tbody>
+</table></div>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>¿Cuál es el primer paso de un proyecto de base de datos?</p><ul class="opts"><li><button type="button" class="opt">Escribir los informes</button></li><li><button type="button" class="opt" data-ok>Diseñar las entidades y sus relaciones</button></li><li><button type="button" class="opt">Crear los usuarios</button></li><li><button type="button" class="opt">Hacer la copia de seguridad</button></li></ul><p class="explain" hidden>Un buen diseño evita rehacer tablas y datos más adelante.</p></div>
+<div class="quiz-q"><p>En la tienda, ¿cómo se relacionan <code>pedidos</code> y <code>productos</code>?</p><ul class="opts"><li><button type="button" class="opt">Uno a uno</button></li><li><button type="button" class="opt" data-ok>Muchos a muchos, mediante <code>lineas_pedido</code></button></li><li><button type="button" class="opt">No se relacionan</button></li><li><button type="button" class="opt">Uno a muchos, con el producto dentro del pedido</button></li></ul><p class="explain" hidden>Un pedido incluye varios productos y un producto aparece en varios pedidos.</p></div>
+<div class="quiz-q"><p>¿Por qué se registra un pedido dentro de una transacción?</p><ul class="opts"><li><button type="button" class="opt">Para que sea más rápido</button></li><li><button type="button" class="opt" data-ok>Para que se guarde todo o nada, sin dejar datos a medias</button></li><li><button type="button" class="opt">Porque SQL lo obliga</button></li><li><button type="button" class="opt">Para ocultar el pedido</button></li></ul><p class="explain" hidden>Si falla una instrucción, <code>ROLLBACK</code> deja la base como estaba.</p></div>
+<div class="quiz-q"><p>¿Qué informe usa <code>LEFT JOIN … WHERE l.pedido_id IS NULL</code> en el proyecto?</p><ul class="opts"><li><button type="button" class="opt">Ingresos por mes</button></li><li><button type="button" class="opt" data-ok>Productos que nunca se han vendido</button></li><li><button type="button" class="opt">Pedidos con su importe</button></li><li><button type="button" class="opt">Gasto por cliente</button></li></ul><p class="explain" hidden>Conserva todos los productos y se queda con los que no tienen ninguna línea de pedido.</p></div>
+<div class="quiz-q"><p>¿Qué debe hacer la aplicación para evitar la inyección SQL?</p><ul class="opts"><li><button type="button" class="opt">Pegar los datos del usuario en el SQL</button></li><li><button type="button" class="opt" data-ok>Usar consultas parametrizadas</button></li><li><button type="button" class="opt">Usar siempre la cuenta de administrador</button></li><li><button type="button" class="opt">Mostrar el error al usuario</button></li></ul><p class="explain" hidden>Los parámetros separan los datos de las instrucciones.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="bd-P">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../08-seguridad/ejercicio.html"><small>← Anterior</small>Ejercicio de la lección 8</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Curso de Bases de datos con SQL · Proyecto final · Material elaborado con ayuda de inteligencia artificial.<span class="foot-links"><a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new?template=error.yml&title=%5BError%5D%20Proyecto%20final%3A%20base%20de%20datos%20de%20una%20tienda%20%C2%B7%20Curso%20de%20Bases%20de%20datos%20con%20SQL&pagina=https%3A//cacg-code.github.io/PRACTICAS-HTML/bd/proyecto-tienda/" target="_blank" rel="noopener">Reportar un error en esta página</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/PRACTICAS-HTML/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+  <script>
+
+(function () {
+  var w = document.querySelector('[data-sim="informes"]'); if (!w) return;
+  var D = [{"sql": "SELECT p.id AS pedido, c.nombre, p.fecha,\n       SUM(l.cantidad * pr.precio) AS total\nFROM pedidos p\nJOIN clientes c       ON c.id        = p.cliente_id\nJOIN lineas_pedido l  ON l.pedido_id = p.id\nJOIN productos pr     ON pr.id       = l.producto_id\nGROUP BY p.id\nORDER BY p.id;", "head": ["pedido", "nombre", "fecha", "total"], "rows": [[1, "Ana Torres", "2026-09-01", "165.50"], [2, "Ana Torres", "2026-09-15", "150.00"], [3, "Luis Pérez", "2026-09-20", "929.00"], [4, "Marta Ruiz", "2026-10-02", "334.50"]], "t": "Pedidos con cliente e importe"}, {"sql": "SELECT c.nombre,\n       COUNT(DISTINCT p.id) AS pedidos,\n       COALESCE(SUM(l.cantidad * pr.precio), 0) AS gasto\nFROM clientes c\nLEFT JOIN pedidos p       ON p.cliente_id = c.id\nLEFT JOIN lineas_pedido l ON l.pedido_id  = p.id\nLEFT JOIN productos pr    ON pr.id        = l.producto_id\nGROUP BY c.id\nORDER BY gasto DESC;", "head": ["nombre", "pedidos", "gasto"], "rows": [["Luis Pérez", 1, "929.00"], ["Marta Ruiz", 1, "334.50"], ["Ana Torres", 2, "315.50"], ["Diego Soto", 0, "0.00"]], "t": "Gasto por cliente (incluye a quien no compró)"}, {"sql": "SELECT pr.nombre AS producto,\n       SUM(l.cantidad) AS unidades,\n       SUM(l.cantidad * pr.precio) AS ingresos\nFROM lineas_pedido l\nJOIN productos pr ON pr.id = l.producto_id\nGROUP BY pr.id\nORDER BY unidades DESC, ingresos DESC;", "head": ["producto", "unidades", "ingresos"], "rows": [["Ratón", 4, "182.00"], ["Altavoz", 2, "198.00"], ["Cable HDMI", 2, "30.00"], ["Monitor 4K", 1, "899.00"], ["Webcam", 1, "150.00"], ["Teclado", 1, "120.00"]], "t": "Productos más vendidos"}, {"sql": "SELECT pr.categoria,\n       SUM(l.cantidad * pr.precio) AS ingresos\nFROM lineas_pedido l\nJOIN productos pr ON pr.id = l.producto_id\nGROUP BY pr.categoria\nORDER BY ingresos DESC;", "head": ["categoria", "ingresos"], "rows": [["Pantallas", "899.00"], ["Periféricos", "452.00"], ["Audio", "198.00"], ["Accesorios", "30.00"]], "t": "Ingresos por categoría"}, {"sql": "SELECT pr.nombre, pr.stock\nFROM productos pr\nLEFT JOIN lineas_pedido l ON l.producto_id = pr.id\nWHERE l.pedido_id IS NULL;", "head": ["nombre", "stock"], "rows": [["Monitor FHD", 8], ["Auriculares", 0]], "t": "Productos que nunca se han vendido"}, {"sql": "SELECT substr(p.fecha, 1, 7) AS mes,\n       COUNT(DISTINCT p.id) AS pedidos,\n       SUM(l.cantidad * pr.precio) AS ingresos\nFROM pedidos p\nJOIN lineas_pedido l ON l.pedido_id = p.id\nJOIN productos pr    ON pr.id       = l.producto_id\nGROUP BY mes\nORDER BY mes;", "head": ["mes", "pedidos", "ingresos"], "rows": [["2026-09", 3, "1244.50"], ["2026-10", 1, "334.50"]], "t": "Ingresos por mes"}];
+  var $ = function (s) { return w.querySelector(s); };
+  var esc = function (v) { return v === null ? '<em>NULL</em>' : String(v).replace(/&/g, '&amp;').replace(/</g, '&lt;'); };
+  var sel = $('#r-inf');
+  sel.innerHTML = D.map(function (x, i) { return '<option value="' + i + '">' + x.t + '</option>'; }).join('');
+  function draw() {
+    var d = D[+sel.value];
+    $('#r-sql').textContent = d.sql;
+    $('#r-tabla thead').innerHTML = '<tr>' + d.head.map(function (h) { return '<th>' + esc(h) + '</th>'; }).join('') + '</tr>';
+    $('#r-tabla tbody').innerHTML = d.rows.map(function (r) { return '<tr>' + r.map(function (v) { return '<td>' + esc(v) + '</td>'; }).join('') + '</tr>'; }).join('');
+    $('#r-msg').textContent = d.rows.length + (d.rows.length === 1 ? ' fila.' : ' filas.');
+  }
+  sel.addEventListener('change', draw);
+  draw();
+})();
+
+  </script>
+</body>
+</html>
