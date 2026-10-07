@@ -1,11 +1,11 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ejercicio · Introducción a CSS · Curso de HTML</title>
-  <meta name="description" content="Ejercicio práctico de: Introducción a CSS." />
-  <link rel="stylesheet" href="../assets/estilos.css" />
+  <meta name="description" content="Ejercicio práctico de: Introducción a CSS.">
+  <link rel="stylesheet" href="../assets/estilos.css">
 </head>
 <body>
   <header class="topbar">
@@ -30,12 +30,22 @@
       <p>Marca cada paso a medida que lo completes. Tu avance se guarda en este navegador.</p>
       <div class="progress" aria-hidden="true"><div></div></div>
       <p id="progreso-texto" style="color:var(--muted);font-size:.9rem" aria-live="polite"></p>
-      <ul class="checklist"><li><label><input type="checkbox" id="p1" /><span>Crea una carpeta con <code>index.html</code> y <code>estilos.css</code>. Enlaza el CSS con <code>&lt;link&gt;</code> en el <code>&lt;head&gt;</code>.</span></label></li><li><label><input type="checkbox" id="p2" /><span>Usa cualquiera de tus páginas anteriores (o la plantilla semántica de la lección 6) como base.</span></label></li><li><label><input type="checkbox" id="p3" /><span>En <code>estilos.css</code>, define variables en <code>:root</code> para un color principal y un color de fondo.</span></label></li><li><label><input type="checkbox" id="p4" /><span>Añade <code>* { box-sizing: border-box; }</code> y estiliza <code>body</code> con tipografía, <code>line-height</code> y colores.</span></label></li><li><label><input type="checkbox" id="p5" /><span>Dale estilo a <code>h1</code>, <code>h2</code> y <code>a</code> (color y, en los enlaces, <code>:hover</code>).</span></label></li><li><label><input type="checkbox" id="p6" /><span>Convierte tu menú <code>&lt;nav&gt;</code> en una barra horizontal con <code>display: flex</code> y <code>gap</code>.</span></label></li><li><label><input type="checkbox" id="p7" /><span>Crea una clase <code>.tarjeta</code> con <code>padding</code>, <code>border</code>, <code>border-radius</code> y <code>margin</code>, y aplícala a tus <code>&lt;article&gt;</code>.</span></label></li><li><label><input type="checkbox" id="p8" /><span>Añade una transición suave a las tarjetas o botones al pasar el cursor.</span></label></li><li><label><input type="checkbox" id="p9" /><span>Agrega una media query para que, en pantallas de 600 px o menos, el menú pase a columna.</span></label></li><li><label><input type="checkbox" id="p10" /><span>Abre la página, redimensiona la ventana y usa <kbd>F12</kbd> para inspeccionar tus reglas.</span></label></li></ul>
+      <ul class="checklist"><li><label><input type="checkbox" id="p1"><span>Crea una carpeta con <code>index.html</code> y <code>estilos.css</code>. Enlaza el CSS con <code>&lt;link&gt;</code> en el <code>&lt;head&gt;</code>.</span></label></li><li><label><input type="checkbox" id="p2"><span>Usa cualquiera de tus páginas anteriores (o la plantilla semántica de la lección 6) como base.</span></label></li><li><label><input type="checkbox" id="p3"><span>En <code>estilos.css</code>, define variables en <code>:root</code> para un color principal y un color de fondo.</span></label></li><li><label><input type="checkbox" id="p4"><span>Añade <code>* { box-sizing: border-box; }</code> y estiliza <code>body</code> con tipografía, <code>line-height</code> y colores.</span></label></li><li><label><input type="checkbox" id="p5"><span>Dale estilo a <code>h1</code>, <code>h2</code> y <code>a</code> (color y, en los enlaces, <code>:hover</code>).</span></label></li><li><label><input type="checkbox" id="p6"><span>Convierte tu menú <code>&lt;nav&gt;</code> en una barra horizontal con <code>display: flex</code> y <code>gap</code>.</span></label></li><li><label><input type="checkbox" id="p7"><span>Crea una clase <code>.tarjeta</code> con <code>padding</code>, <code>border</code>, <code>border-radius</code> y <code>margin</code>, y aplícala a tus <code>&lt;article&gt;</code>.</span></label></li><li><label><input type="checkbox" id="p8"><span>Añade una transición suave a las tarjetas o botones al pasar el cursor.</span></label></li><li><label><input type="checkbox" id="p9"><span>Agrega una media query para que, en pantallas de 600 px o menos, el menú pase a columna.</span></label></li><li><label><input type="checkbox" id="p10"><span>Abre la página, redimensiona la ventana y usa <kbd>F12</kbd> para inspeccionar tus reglas.</span></label></li></ul>
       <details><summary>💡 Pista 1: mi CSS no se aplica</summary><p>Revisa que el <code>href</code> del <code>&lt;link&gt;</code> apunte al archivo correcto, que el archivo esté guardado y que recargues con <kbd>Ctrl</kbd> + <kbd>F5</kbd>. Después busca llaves o puntos y coma que falten.</p>
 </details>
 <details><summary>💡 Pista 2: el menú no queda horizontal</summary><p><code>display: flex</code> va en el contenedor de los elementos, es decir, en el <code>&lt;ul&gt;</code>, no en cada <code>&lt;li&gt;</code>.</p>
 </details>
 
+      <section class="checker" id="comprobador" aria-labelledby="t-chk">
+        <h2 id="t-chk">🔎 Comprueba tu trabajo</h2>
+        <p>Pega tu código y pulsa <strong>Comprobar</strong>. La revisión ocurre en tu navegador; nada se envía a ningún sitio. Cada punto en rojo incluye una pista.</p>
+        <label for="chk-code">Tu código CSS</label>
+        <textarea id="chk-code" rows="10" spellcheck="false" placeholder="Pega aquí el contenido de tu archivo estilos.css"></textarea>
+        <div class="chk-actions"><button class="btn" type="button" id="chk-run">Comprobar</button><button class="icon-btn" type="button" id="chk-clear">Limpiar</button></div>
+        <p class="chk-sum" id="chk-sum" aria-live="polite"></p>
+        <ul class="chk-list" id="chk-list"></ul>
+        <script type="application/json" id="checks">{"mode": "css", "checks": [{"raw": ":root\\s*\\{[^}]*--[\\w-]+\\s*:", "d": "Define variables en :root", "h": "Ej.: :root { --principal: #4f46e5; }"}, {"raw": "var\\(\\s*--[\\w-]+", "d": "Usa var(--…) al menos una vez", "h": "Ej.: color: var(--principal);"}, {"raw": "box-sizing\\s*:\\s*border-box", "d": "Incluye box-sizing: border-box", "h": "Agrega * { box-sizing: border-box; }"}, {"raw": "(^|[\\s}])body\\s*\\{", "d": "Estiliza body (tipografía o colores)", "h": "Escribe una regla body { … }."}, {"raw": "display\\s*:\\s*flex", "d": "El menú usa display: flex", "h": "Ej.: nav ul { display: flex; gap: 16px; }"}, {"raw": "gap\\s*:", "d": "Usa gap para separar elementos", "h": "Agrega gap: 16px; al contenedor flex."}, {"raw": "\\.tarjeta\\s*\\{[^}]*padding[^}]*\\}", "d": "Define la clase .tarjeta con padding y border-radius", "h": "Ej.: .tarjeta { padding: 16px; border-radius: 12px; }"}, {"raw": ":hover", "d": "Tiene un estado :hover", "h": "Ej.: .tarjeta:hover { … }"}, {"raw": "transition\\s*:", "d": "Usa transition", "h": "Ej.: transition: transform .2s;"}, {"raw": "@media\\s*\\([^)]*\\)", "d": "Tiene una media query", "h": "Ej.: @media (max-width: 600px) { … }"}]}</script>
+      </section>
       <details>
         <summary>✅ Ver una solución de ejemplo (estilos.css)</summary>
         <p>Intenta resolverlo antes de mirar. Tu versión puede ser distinta y también correcta.</p>

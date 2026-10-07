@@ -172,4 +172,78 @@
       setTimeout(step, 600);
     }
   }
+
+  // ---------- Comprobador de ejercicios ----------
+  var cfgEl = document.getElementById('checks');
+  if (cfgEl) {
+    var cfg = JSON.parse(cfgEl.textContent);
+    var cta = document.getElementById('chk-code'), clist = document.getElementById('chk-list'), csum = document.getElementById('chk-sum');
+    var ckey = 'borrador:' + location.pathname;
+    var saved2 = store.get(ckey); if (saved2) cta.value = saved2;
+    cta.addEventListener('input', function () { store.set(ckey, cta.value); });
+
+    var q = function (doc, sel) { try { return [].slice.call(doc.querySelectorAll(sel)); } catch (e) { return []; } };
+    var special = {
+      anclas: function (doc) {
+        var l = q(doc, 'a[href^="#"]').filter(function (a) { return a.getAttribute('href').length > 1; });
+        return l.length > 0 && l.every(function (a) { return doc.getElementById(a.getAttribute('href').slice(1)); });
+      },
+      labels: function (doc) {
+        var l = q(doc, 'label[for]');
+        return l.length > 0 && l.every(function (x) { var t = doc.getElementById(x.getAttribute('for')); return t && /^(input|select|textarea)$/i.test(t.tagName); });
+      },
+      names: function (doc) {
+        var f = q(doc, 'input, select, textarea').filter(function (e) { return !/^(submit|reset|button)$/i.test(e.getAttribute('type') || ''); });
+        return f.length > 0 && f.every(function (e) { return (e.getAttribute('name') || '').trim() !== ''; });
+      },
+      img: function (doc) {
+        var l = q(doc, 'img');
+        return l.length > 0 && l.every(function (i) { return i.getAttribute('src') && i.hasAttribute('alt') && (i.getAttribute('alt').trim() !== '' || i.getAttribute('alt') === '') ; }) && l.some(function (i) { return i.getAttribute('alt').trim() !== '' && i.getAttribute('width') && i.getAttribute('height'); });
+      },
+      secciones: function (doc) { return q(doc, 'table thead').length > 0 && q(doc, 'table tbody').length > 0 && q(doc, 'table tfoot').length > 0; },
+      radios: function (doc) {
+        return q(doc, 'fieldset').some(function (f) {
+          var r = q(f, 'input[type="radio"]'); return f.querySelector('legend') && r.length >= 2 && r.every(function (x) { return x.getAttribute('name') === r[0].getAttribute('name') && r[0].getAttribute('name'); });
+        });
+      },
+      botones: function (doc) { return q(doc, 'button[type="submit"]').length > 0 && q(doc, 'button[type="reset"]').length > 0; },
+      nav: function (doc) { return q(doc, 'nav[aria-label]').some(function (n) { return n.querySelectorAll('a').length >= 3; }); },
+      sections: function (doc) { var s = q(doc, 'main section').filter(function (x) { return x.querySelector('h2'); }); return s.length >= 2; },
+      sections3: function (doc) { var s = q(doc, 'section').filter(function (x) { return x.querySelector('h2'); }); return s.length >= 3; },
+      estructura: function (doc) { return q(doc, 'body > header, body header').length > 0 && q(doc, 'main').length > 0 && q(doc, 'footer').length > 0; }
+    };
+    var test = function (c, src, doc) {
+      if (c.t && special[c.t]) return special[c.t](doc);
+      if (c.raw) return new RegExp(c.raw, 'im').test(src);
+      var els = q(doc, c.sel);
+      if (c.attr) els = els.filter(function (e) { var v = e.getAttribute(c.attr); return v !== null && v.trim() !== ''; });
+      if (c.text) { var re = new RegExp(c.text); els = els.filter(function (e) { return re.test(e.textContent); }); }
+      var min = c.min == null ? 1 : c.min;
+      return els.length >= min && (c.max == null || els.length <= c.max);
+    };
+    var run = function () {
+      var src = cta.value;
+      clist.innerHTML = ''; csum.className = 'chk-sum';
+      if (!src.trim()) { csum.textContent = 'Pega primero tu código en el cuadro de arriba.'; return; }
+      var doc = new DOMParser().parseFromString(src, 'text/html');
+      var ok = 0;
+      cfg.checks.forEach(function (c, i) {
+        var pass = false; try { pass = !!test(c, src, doc); } catch (e) {}
+        if (pass) ok++;
+        var li = document.createElement('li'); li.style.setProperty('--i', i);
+        if (pass) li.className = 'ok';
+        var d = document.createElement('span'); d.textContent = c.d;
+        var h = document.createElement('span'); h.className = 'hint'; h.textContent = '💡 ' + c.h;
+        li.appendChild(d); li.appendChild(h); clist.appendChild(li);
+      });
+      var all = ok === cfg.checks.length;
+      csum.textContent = all ? '🎉 ¡Todo correcto! Cumples los ' + ok + ' puntos.' : ok + ' de ' + cfg.checks.length + ' puntos cumplidos. Revisa las pistas en rojo.';
+      if (all) csum.className = 'chk-sum all';
+    };
+    document.getElementById('chk-run').addEventListener('click', run);
+    document.getElementById('chk-clear').addEventListener('click', function () { cta.value = ''; store.set(ckey, ''); clist.innerHTML = ''; csum.textContent = ''; csum.className = 'chk-sum'; });
+    cta.addEventListener('keydown', function (e) {
+      if (e.key === 'Tab' && !e.shiftKey) { e.preventDefault(); var st = cta.selectionStart; cta.value = cta.value.slice(0, st) + '  ' + cta.value.slice(cta.selectionEnd); cta.selectionStart = cta.selectionEnd = st + 2; }
+    });
+  }
 })();

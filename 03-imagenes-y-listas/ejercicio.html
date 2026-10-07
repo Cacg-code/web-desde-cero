@@ -1,11 +1,11 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ejercicio de la lección 3 · Curso de HTML</title>
-  <meta name="description" content="Ejercicio práctico: crea una página «Top 5» con una imagen y listas." />
-  <link rel="stylesheet" href="../assets/estilos.css" />
+  <meta name="description" content="Ejercicio práctico: crea una página «Top 5» con una imagen y listas.">
+  <link rel="stylesheet" href="../assets/estilos.css">
 </head>
 <body>
   <header class="topbar">
@@ -32,16 +32,16 @@
       <p id="progreso-texto" style="color:var(--muted);font-size:.9rem" aria-live="polite"></p>
 
       <ul class="checklist">
-        <li><label><input type="checkbox" id="p1" /><span>Crea una carpeta con <code>top5.html</code> y una subcarpeta <code>img</code>.</span></label></li>
-        <li><label><input type="checkbox" id="p2" /><span>Guarda dentro de <code>img</code> una imagen tuya o libre de derechos, con nombre en minúsculas y sin espacios.</span></label></li>
-        <li><label><input type="checkbox" id="p3" /><span>Escribe el esqueleto, un <code>&lt;h1&gt;</code> con el tema y un párrafo de introducción.</span></label></li>
-        <li><label><input type="checkbox" id="p4" /><span>Inserta la imagen con <code>src</code>, un <code>alt</code> descriptivo, <code>width</code> y <code>height</code>.</span></label></li>
-        <li><label><input type="checkbox" id="p5" /><span>Envuélvela en <code>&lt;figure&gt;</code> con un <code>&lt;figcaption&gt;</code>.</span></label></li>
-        <li><label><input type="checkbox" id="p6" /><span>Crea tu ranking con una lista ordenada <code>&lt;ol&gt;</code> de 5 elementos.</span></label></li>
-        <li><label><input type="checkbox" id="p7" /><span>Dentro de uno de los elementos, anida una lista <code>&lt;ul&gt;</code> con 2 motivos para elegirlo.</span></label></li>
-        <li><label><input type="checkbox" id="p8" /><span>Agrega una lista de descripción <code>&lt;dl&gt;</code> con 2 datos (por ejemplo, año y autor).</span></label></li>
-        <li><label><input type="checkbox" id="p9" /><span>Convierte los 5 elementos del ranking en enlaces hacia un sitio externo o hacia secciones de tu página.</span></label></li>
-        <li><label><input type="checkbox" id="p10" /><span>Abre la página y comprueba que la imagen se vea. Cambia a propósito la ruta para ver cómo aparece el <code>alt</code>.</span></label></li>
+        <li><label><input type="checkbox" id="p1"><span>Crea una carpeta con <code>top5.html</code> y una subcarpeta <code>img</code>.</span></label></li>
+        <li><label><input type="checkbox" id="p2"><span>Guarda dentro de <code>img</code> una imagen tuya o libre de derechos, con nombre en minúsculas y sin espacios.</span></label></li>
+        <li><label><input type="checkbox" id="p3"><span>Escribe el esqueleto, un <code>&lt;h1&gt;</code> con el tema y un párrafo de introducción.</span></label></li>
+        <li><label><input type="checkbox" id="p4"><span>Inserta la imagen con <code>src</code>, un <code>alt</code> descriptivo, <code>width</code> y <code>height</code>.</span></label></li>
+        <li><label><input type="checkbox" id="p5"><span>Envuélvela en <code>&lt;figure&gt;</code> con un <code>&lt;figcaption&gt;</code>.</span></label></li>
+        <li><label><input type="checkbox" id="p6"><span>Crea tu ranking con una lista ordenada <code>&lt;ol&gt;</code> de 5 elementos.</span></label></li>
+        <li><label><input type="checkbox" id="p7"><span>Dentro de uno de los elementos, anida una lista <code>&lt;ul&gt;</code> con 2 motivos para elegirlo.</span></label></li>
+        <li><label><input type="checkbox" id="p8"><span>Agrega una lista de descripción <code>&lt;dl&gt;</code> con 2 datos (por ejemplo, año y autor).</span></label></li>
+        <li><label><input type="checkbox" id="p9"><span>Convierte los 5 elementos del ranking en enlaces hacia un sitio externo o hacia secciones de tu página.</span></label></li>
+        <li><label><input type="checkbox" id="p10"><span>Abre la página y comprueba que la imagen se vea. Cambia a propósito la ruta para ver cómo aparece el <code>alt</code>.</span></label></li>
       </ul>
 
       <details>
@@ -52,6 +52,17 @@
         <summary>💡 Pista 2: mi lista anidada se ve rara</summary>
         <p>La lista interna debe estar <strong>dentro</strong> del <code>&lt;li&gt;</code> que la contiene, antes de su <code>&lt;/li&gt;</code> de cierre. Revisa la sección «Listas anidadas» de la <a href="index.html#anidadas">lección</a>.</p>
       </details>
+
+      <section class="checker" id="comprobador" aria-labelledby="t-chk">
+        <h2 id="t-chk">🔎 Comprueba tu trabajo</h2>
+        <p>Pega tu código y pulsa <strong>Comprobar</strong>. La revisión ocurre en tu navegador; nada se envía a ningún sitio. Cada punto en rojo incluye una pista.</p>
+        <label for="chk-code">Tu código HTML (el archivo completo)</label>
+        <textarea id="chk-code" rows="10" spellcheck="false" placeholder="Pega aquí el contenido completo de tu archivo .html"></textarea>
+        <div class="chk-actions"><button class="btn" type="button" id="chk-run">Comprobar</button><button class="icon-btn" type="button" id="chk-clear">Limpiar</button></div>
+        <p class="chk-sum" id="chk-sum" aria-live="polite"></p>
+        <ul class="chk-list" id="chk-list"></ul>
+        <script type="application/json" id="checks">{"mode": "html", "checks": [{"sel": "img", "attr": "alt", "t": "img", "d": "La imagen tiene src, alt, width y height", "h": "Ej.: <img src=\"img/foto.jpg\" alt=\"Descripción\" width=\"480\" height=\"288\">"}, {"sel": "figure img", "d": "La imagen está dentro de <figure> con <figcaption>", "h": "Envuelve la imagen en <figure> y agrega <figcaption>."}, {"sel": "figure figcaption", "text": "\\S", "d": "Hay un <figcaption> con texto", "h": "Escribe la leyenda dentro de <figcaption>."}, {"sel": "ol > li", "min": 5, "d": "Hay una lista ordenada <ol> con al menos 5 <li>", "h": "Tu ranking va en <ol> con cinco <li>."}, {"sel": "ol li ul li", "min": 2, "d": "Hay una lista <ul> anidada dentro de un <li>", "h": "Pon <ul> con 2 motivos dentro de uno de los <li> del ranking."}, {"sel": "dl dt", "d": "Hay una lista de descripción <dl> con <dt> y <dd>", "h": "Usa <dl><dt>País<\/dt><dd>Perú<\/dd><\/dl>."}, {"sel": "dl dd", "min": 2, "d": "La lista de descripción tiene al menos dos <dd>", "h": "Agrega dos datos con <dt> y <dd>."}, {"sel": "ol li a[href]", "d": "Al menos un elemento del ranking es enlace", "h": "Envuelve el texto de un <li> con <a href=\"…\">."}]}</script>
+      </section>
 
       <details>
         <summary>✅ Ver una solución de ejemplo</summary>

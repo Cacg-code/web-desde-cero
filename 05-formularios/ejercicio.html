@@ -1,11 +1,11 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ejercicio · Formularios · Curso de HTML</title>
-  <meta name="description" content="Ejercicio práctico de: Formularios." />
-  <link rel="stylesheet" href="../assets/estilos.css" />
+  <meta name="description" content="Ejercicio práctico de: Formularios.">
+  <link rel="stylesheet" href="../assets/estilos.css">
 </head>
 <body>
   <header class="topbar">
@@ -30,12 +30,22 @@
       <p>Marca cada paso a medida que lo completes. Tu avance se guarda en este navegador.</p>
       <div class="progress" aria-hidden="true"><div></div></div>
       <p id="progreso-texto" style="color:var(--muted);font-size:.9rem" aria-live="polite"></p>
-      <ul class="checklist"><li><label><input type="checkbox" id="p1" /><span>Crea <code>contacto.html</code> con el esqueleto completo y el título «Contacto».</span></label></li><li><label><input type="checkbox" id="p2" /><span>Agrega un <code>&lt;form&gt;</code> con <code>method="post"</code> y un <code>action</code> cualquiera (por ejemplo <code>/enviar</code>).</span></label></li><li><label><input type="checkbox" id="p3" /><span>Crea campos de <strong>nombre</strong> (<code>text</code>) y <strong>correo</strong> (<code>email</code>), cada uno con su <code>&lt;label for&gt;</code> e <code>id</code>, y ambos <code>required</code> y con <code>name</code>.</span></label></li><li><label><input type="checkbox" id="p4" /><span>Agrega un campo de <strong>fecha preferida</strong> (<code>type="date"</code>) y otro de <strong>teléfono</strong> (<code>type="tel"</code>).</span></label></li><li><label><input type="checkbox" id="p5" /><span>Agrega un <code>&lt;select&gt;</code> con tres opciones para «Motivo del contacto».</span></label></li><li><label><input type="checkbox" id="p6" /><span>Agrega un grupo <code>radio</code> dentro de <code>&lt;fieldset&gt;</code> con <code>&lt;legend&gt;</code>: «¿Cómo prefieres que te respondamos?» (correo o teléfono).</span></label></li><li><label><input type="checkbox" id="p7" /><span>Agrega un <code>&lt;textarea&gt;</code> para el mensaje, con <code>minlength="10"</code>.</span></label></li><li><label><input type="checkbox" id="p8" /><span>Agrega un <code>checkbox</code> obligatorio para aceptar el aviso de privacidad.</span></label></li><li><label><input type="checkbox" id="p9" /><span>Agrega un botón <code>submit</code> con un texto claro y un botón <code>reset</code>.</span></label></li><li><label><input type="checkbox" id="p10" /><span>Abre el archivo en el navegador y prueba enviarlo vacío: deben aparecer los avisos de validación.</span></label></li></ul>
+      <ul class="checklist"><li><label><input type="checkbox" id="p1"><span>Crea <code>contacto.html</code> con el esqueleto completo y el título «Contacto».</span></label></li><li><label><input type="checkbox" id="p2"><span>Agrega un <code>&lt;form&gt;</code> con <code>method="post"</code> y un <code>action</code> cualquiera (por ejemplo <code>/enviar</code>).</span></label></li><li><label><input type="checkbox" id="p3"><span>Crea campos de <strong>nombre</strong> (<code>text</code>) y <strong>correo</strong> (<code>email</code>), cada uno con su <code>&lt;label for&gt;</code> e <code>id</code>, y ambos <code>required</code> y con <code>name</code>.</span></label></li><li><label><input type="checkbox" id="p4"><span>Agrega un campo de <strong>fecha preferida</strong> (<code>type="date"</code>) y otro de <strong>teléfono</strong> (<code>type="tel"</code>).</span></label></li><li><label><input type="checkbox" id="p5"><span>Agrega un <code>&lt;select&gt;</code> con tres opciones para «Motivo del contacto».</span></label></li><li><label><input type="checkbox" id="p6"><span>Agrega un grupo <code>radio</code> dentro de <code>&lt;fieldset&gt;</code> con <code>&lt;legend&gt;</code>: «¿Cómo prefieres que te respondamos?» (correo o teléfono).</span></label></li><li><label><input type="checkbox" id="p7"><span>Agrega un <code>&lt;textarea&gt;</code> para el mensaje, con <code>minlength="10"</code>.</span></label></li><li><label><input type="checkbox" id="p8"><span>Agrega un <code>checkbox</code> obligatorio para aceptar el aviso de privacidad.</span></label></li><li><label><input type="checkbox" id="p9"><span>Agrega un botón <code>submit</code> con un texto claro y un botón <code>reset</code>.</span></label></li><li><label><input type="checkbox" id="p10"><span>Abre el archivo en el navegador y prueba enviarlo vacío: deben aparecer los avisos de validación.</span></label></li></ul>
       <details><summary>💡 Pista 1: al hacer clic en el texto no pasa nada</summary><p>Revisa que el <code>for</code> del <code>&lt;label&gt;</code> sea idéntico al <code>id</code> del <code>&lt;input&gt;</code>, mayúsculas incluidas.</p>
 </details>
 <details><summary>💡 Pista 2: los radios me dejan marcar los dos</summary><p>Los dos <code>&lt;input type="radio"&gt;</code> deben tener el mismo <code>name</code>, por ejemplo <code>name="respuesta"</code>, y cada uno un <code>value</code> distinto.</p>
 </details>
 
+      <section class="checker" id="comprobador" aria-labelledby="t-chk">
+        <h2 id="t-chk">🔎 Comprueba tu trabajo</h2>
+        <p>Pega tu código y pulsa <strong>Comprobar</strong>. La revisión ocurre en tu navegador; nada se envía a ningún sitio. Cada punto en rojo incluye una pista.</p>
+        <label for="chk-code">Tu código HTML (el archivo completo)</label>
+        <textarea id="chk-code" rows="10" spellcheck="false" placeholder="Pega aquí el contenido completo de tu archivo .html"></textarea>
+        <div class="chk-actions"><button class="btn" type="button" id="chk-run">Comprobar</button><button class="icon-btn" type="button" id="chk-clear">Limpiar</button></div>
+        <p class="chk-sum" id="chk-sum" aria-live="polite"></p>
+        <ul class="chk-list" id="chk-list"></ul>
+        <script type="application/json" id="checks">{"mode": "html", "checks": [{"sel": "form[method=\"post\" i]", "d": "Hay un <form> con method=\"post\"", "h": "Escribe <form action=\"/enviar\" method=\"post\">."}, {"t": "labels", "d": "Cada <label for> coincide con el id de un campo", "h": "El for del label debe ser idéntico al id del input."}, {"t": "names", "d": "Los campos llevan atributo name", "h": "Todo input, select y textarea necesita name para enviarse."}, {"sel": "input[type=\"email\"][required]", "d": "Hay un campo type=\"email\" obligatorio", "h": "Ej.: <input type=\"email\" id=\"correo\" name=\"correo\" required>"}, {"sel": "input[type=\"text\"][required]", "d": "Hay un campo de texto obligatorio", "h": "Ej.: <input type=\"text\" … required>"}, {"sel": "input[type=\"date\"]", "d": "Hay un campo type=\"date\"", "h": "Agrega <input type=\"date\">."}, {"sel": "input[type=\"tel\"]", "d": "Hay un campo type=\"tel\"", "h": "Agrega <input type=\"tel\">."}, {"sel": "select option", "min": 3, "d": "Hay un <select> con al menos 3 <option>", "h": "Agrega tres <option> dentro de <select>."}, {"t": "radios", "d": "Hay un grupo de radios dentro de <fieldset> con <legend>", "h": "Usa <fieldset><legend>…<\/legend> y dos input type=\"radio\" con el mismo name."}, {"sel": "textarea[minlength]", "d": "El <textarea> tiene minlength", "h": "Ej.: <textarea minlength=\"10\">"}, {"sel": "input[type=\"checkbox\"][required]", "d": "Hay un checkbox obligatorio", "h": "Ej.: <input type=\"checkbox\" required>"}, {"t": "botones", "d": "Hay un botón submit y un botón reset", "h": "Agrega <button type=\"submit\"> y <button type=\"reset\">."}]}</script>
+      </section>
       <details>
         <summary>✅ Ver una solución de ejemplo</summary>
         <p>Intenta resolverlo antes de mirar. Tu versión puede ser distinta y también correcta.</p>

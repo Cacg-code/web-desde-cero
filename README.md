@@ -5,7 +5,7 @@ Curso gratuito en español para aprender HTML paso a paso, pensado para principi
 - **Apuntes** con recuadros de notas, advertencias, consejos y glosario
 - **Práctica en vivo**: editores donde cambias el código y ves el resultado al instante
 - **Autoevaluación** con respuesta inmediata y explicación
-- **Ejercicio práctico** con pasos, pistas y solución de ejemplo
+- **Ejercicio práctico** con pasos, pistas, solución de ejemplo y un **comprobador automático**: pegas tu código y te dice qué cumple y qué falta
 - Marca de progreso guardada en tu navegador
 
 ## Cómo usarlo

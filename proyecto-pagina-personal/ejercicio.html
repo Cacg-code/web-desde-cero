@@ -1,11 +1,11 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ejercicio · Proyecto: tu página personal · Curso de HTML</title>
-  <meta name="description" content="Ejercicio práctico de: Proyecto: tu página personal." />
-  <link rel="stylesheet" href="../assets/estilos.css" />
+  <meta name="description" content="Ejercicio práctico de: Proyecto: tu página personal.">
+  <link rel="stylesheet" href="../assets/estilos.css">
 </head>
 <body>
   <header class="topbar">
@@ -30,12 +30,22 @@
       <p>Marca cada paso a medida que lo completes. Tu avance se guarda en este navegador.</p>
       <div class="progress" aria-hidden="true"><div></div></div>
       <p id="progreso-texto" style="color:var(--muted);font-size:.9rem" aria-live="polite"></p>
-      <ul class="checklist"><li><label><input type="checkbox" id="p1" /><span>Escribe el propósito de tu página en una frase y la lista de secciones.</span></label></li><li><label><input type="checkbox" id="p2" /><span>Prepara tu contenido: textos, una imagen optimizada y datos de contacto.</span></label></li><li><label><input type="checkbox" id="p3" /><span>Crea la carpeta del proyecto con <code>index.html</code>, <code>css/estilos.css</code> e <code>img/</code>.</span></label></li><li><label><input type="checkbox" id="p4" /><span>Escribe el HTML con <code>header</code>, <code>nav</code>, <code>main</code> (con al menos 3 <code>section</code>) y <code>footer</code>.</span></label></li><li><label><input type="checkbox" id="p5" /><span>Incluye una imagen con <code>alt</code>, una lista, una tabla con <code>caption</code> y un formulario con <code>label</code>.</span></label></li><li><label><input type="checkbox" id="p6" /><span>Enlaza el menú con las secciones usando <code>#id</code>.</span></label></li><li><label><input type="checkbox" id="p7" /><span>Crea tu CSS: variables, tipografía, menú con flexbox, tarjetas y una media query.</span></label></li><li><label><input type="checkbox" id="p8" /><span>Recorre la página con la tecla <kbd>Tab</kbd> y comprueba el foco.</span></label></li><li><label><input type="checkbox" id="p9" /><span>Pasa tu código por el validador de HTML y corrige los errores.</span></label></li><li><label><input type="checkbox" id="p10" /><span>Publícala en GitHub Pages y comprueba que todo funcione en línea.</span></label></li><li><label><input type="checkbox" id="p11" /><span>Comparte el enlace con alguien y pídele su opinión.</span></label></li></ul>
+      <ul class="checklist"><li><label><input type="checkbox" id="p1"><span>Escribe el propósito de tu página en una frase y la lista de secciones.</span></label></li><li><label><input type="checkbox" id="p2"><span>Prepara tu contenido: textos, una imagen optimizada y datos de contacto.</span></label></li><li><label><input type="checkbox" id="p3"><span>Crea la carpeta del proyecto con <code>index.html</code>, <code>css/estilos.css</code> e <code>img/</code>.</span></label></li><li><label><input type="checkbox" id="p4"><span>Escribe el HTML con <code>header</code>, <code>nav</code>, <code>main</code> (con al menos 3 <code>section</code>) y <code>footer</code>.</span></label></li><li><label><input type="checkbox" id="p5"><span>Incluye una imagen con <code>alt</code>, una lista, una tabla con <code>caption</code> y un formulario con <code>label</code>.</span></label></li><li><label><input type="checkbox" id="p6"><span>Enlaza el menú con las secciones usando <code>#id</code>.</span></label></li><li><label><input type="checkbox" id="p7"><span>Crea tu CSS: variables, tipografía, menú con flexbox, tarjetas y una media query.</span></label></li><li><label><input type="checkbox" id="p8"><span>Recorre la página con la tecla <kbd>Tab</kbd> y comprueba el foco.</span></label></li><li><label><input type="checkbox" id="p9"><span>Pasa tu código por el validador de HTML y corrige los errores.</span></label></li><li><label><input type="checkbox" id="p10"><span>Publícala en GitHub Pages y comprueba que todo funcione en línea.</span></label></li><li><label><input type="checkbox" id="p11"><span>Comparte el enlace con alguien y pídele su opinión.</span></label></li></ul>
       <details><summary>💡 Pista 1: no sé qué poner en mi página</summary><p>Responde en voz alta: «Quién soy, qué hago, qué me gusta, cómo me encuentran». Cada respuesta es una sección. Empieza con textos cortos y amplíalos después.</p>
 </details>
 <details><summary>💡 Pista 2: algo se ve bien en mi computadora pero no en línea</summary><p>Revisa mayúsculas, minúsculas y rutas relativas. Prueba abrir la dirección de la imagen directamente en el navegador para saber si está en el lugar esperado.</p>
 </details>
 
+      <section class="checker" id="comprobador" aria-labelledby="t-chk">
+        <h2 id="t-chk">🔎 Comprueba tu trabajo</h2>
+        <p>Pega tu código y pulsa <strong>Comprobar</strong>. La revisión ocurre en tu navegador; nada se envía a ningún sitio. Cada punto en rojo incluye una pista.</p>
+        <label for="chk-code">Tu código HTML (el archivo completo)</label>
+        <textarea id="chk-code" rows="10" spellcheck="false" placeholder="Pega aquí el contenido completo de tu archivo .html"></textarea>
+        <div class="chk-actions"><button class="btn" type="button" id="chk-run">Comprobar</button><button class="icon-btn" type="button" id="chk-clear">Limpiar</button></div>
+        <p class="chk-sum" id="chk-sum" aria-live="polite"></p>
+        <ul class="chk-list" id="chk-list"></ul>
+        <script type="application/json" id="checks">{"mode": "html", "checks": [{"sel": "html", "attr": "lang", "d": "<html> declara el idioma", "h": "Agrega lang=\"es\" a <html>."}, {"sel": "meta[name=\"viewport\"]", "d": "Incluye meta viewport", "h": "Agrega la etiqueta meta viewport en el <head>."}, {"sel": "link[rel=\"stylesheet\"]", "d": "Enlaza una hoja de estilos", "h": "Ej.: <link rel=\"stylesheet\" href=\"css/estilos.css\">"}, {"sel": "head title", "text": "\\S", "d": "Hay un <title> con texto", "h": "Escribe el título de tu página."}, {"sel": "h1", "min": 1, "max": 1, "d": "Hay un único <h1>", "h": "Usa un solo <h1>."}, {"t": "estructura", "d": "Tiene <header>, <main> y <footer>", "h": "Estructura la página con etiquetas semánticas."}, {"sel": "main", "min": 1, "max": 1, "d": "Hay exactamente un <main>", "h": "Una página debe tener un solo <main>."}, {"sel": "nav a[href^=\"#\"]", "min": 3, "d": "El menú tiene al menos 3 enlaces internos (#id)", "h": "Ej.: <a href=\"#contacto\">Contacto<\/a>"}, {"t": "anclas", "d": "Los enlaces internos apuntan a un id que existe", "h": "Cada href=\"#x\" necesita un id=\"x\"."}, {"t": "sections3", "d": "Hay al menos 3 <section> con <h2>", "h": "Crea Sobre mí, Intereses, Proyectos o Contacto."}, {"t": "img", "d": "Las imágenes tienen alt", "h": "Cada <img> necesita alt."}, {"sel": "ul li, ol li", "d": "Incluye una lista", "h": "Agrega <ul> o <ol> con <li>."}, {"sel": "table caption", "d": "Incluye una tabla con <caption>", "h": "Agrega una tabla con <caption> y <th scope>."}, {"t": "labels", "d": "El formulario tiene labels que coinciden con los campos", "h": "Cada label for debe coincidir con el id del campo."}, {"sel": "form button[type=\"submit\"]", "d": "El formulario tiene un botón de envío", "h": "Agrega <button type=\"submit\">."}]}</script>
+      </section>
       <details>
         <summary>✅ Ver el esqueleto mínimo</summary>
         <p>Intenta resolverlo antes de mirar. Tu versión puede ser distinta y también correcta.</p>

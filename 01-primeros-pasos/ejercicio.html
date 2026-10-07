@@ -1,11 +1,11 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ejercicio de la lección 1 · Curso de HTML</title>
-  <meta name="description" content="Ejercicio práctico: crea tu primera página web con HTML." />
-  <link rel="stylesheet" href="../assets/estilos.css" />
+  <meta name="description" content="Ejercicio práctico: crea tu primera página web con HTML.">
+  <link rel="stylesheet" href="../assets/estilos.css">
 </head>
 <body>
   <header class="topbar">
@@ -32,14 +32,14 @@
       <p id="progreso-texto" style="color:var(--muted);font-size:.9rem" aria-live="polite"></p>
 
       <ul class="checklist">
-        <li><label><input type="checkbox" id="p1" /><span>Crea una carpeta y dentro un archivo llamado <code>index.html</code>.</span></label></li>
-        <li><label><input type="checkbox" id="p2" /><span>Escribe el esqueleto: <code>doctype</code>, <code>html</code> con <code>lang="es"</code>, <code>head</code> y <code>body</code>.</span></label></li>
-        <li><label><input type="checkbox" id="p3" /><span>En el <code>head</code>, añade <code>charset</code>, <code>viewport</code> y un <code>title</code> con tu nombre.</span></label></li>
-        <li><label><input type="checkbox" id="p4" /><span>En el <code>body</code>, escribe un título <code>&lt;h1&gt;</code> con tu nombre.</span></label></li>
-        <li><label><input type="checkbox" id="p5" /><span>Añade dos párrafos <code>&lt;p&gt;</code>: uno sobre quién eres y otro sobre por qué quieres aprender HTML.</span></label></li>
-        <li><label><input type="checkbox" id="p6" /><span>Pon una palabra clave en <code>&lt;strong&gt;</code> dentro de uno de los párrafos.</span></label></li>
-        <li><label><input type="checkbox" id="p7" /><span>Agrega un comentario <code>&lt;!-- --&gt;</code> que diga «Mi primera página».</span></label></li>
-        <li><label><input type="checkbox" id="p8" /><span>Guarda el archivo y ábrelo en tu navegador. Comprueba que el comentario <strong>no</strong> se ve.</span></label></li>
+        <li><label><input type="checkbox" id="p1"><span>Crea una carpeta y dentro un archivo llamado <code>index.html</code>.</span></label></li>
+        <li><label><input type="checkbox" id="p2"><span>Escribe el esqueleto: <code>doctype</code>, <code>html</code> con <code>lang="es"</code>, <code>head</code> y <code>body</code>.</span></label></li>
+        <li><label><input type="checkbox" id="p3"><span>En el <code>head</code>, añade <code>charset</code>, <code>viewport</code> y un <code>title</code> con tu nombre.</span></label></li>
+        <li><label><input type="checkbox" id="p4"><span>En el <code>body</code>, escribe un título <code>&lt;h1&gt;</code> con tu nombre.</span></label></li>
+        <li><label><input type="checkbox" id="p5"><span>Añade dos párrafos <code>&lt;p&gt;</code>: uno sobre quién eres y otro sobre por qué quieres aprender HTML.</span></label></li>
+        <li><label><input type="checkbox" id="p6"><span>Pon una palabra clave en <code>&lt;strong&gt;</code> dentro de uno de los párrafos.</span></label></li>
+        <li><label><input type="checkbox" id="p7"><span>Agrega un comentario <code>&lt;!-- --&gt;</code> que diga «Mi primera página».</span></label></li>
+        <li><label><input type="checkbox" id="p8"><span>Guarda el archivo y ábrelo en tu navegador. Comprueba que el comentario <strong>no</strong> se ve.</span></label></li>
       </ul>
 
       <details>
@@ -50,6 +50,17 @@
         <summary>💡 Pista 2: mi página se ve en blanco</summary>
         <p>Revisa que el contenido esté dentro de <code>&lt;body&gt;</code> y no dentro de <code>&lt;head&gt;</code>, y que hayas guardado el archivo antes de recargar con <kbd>F5</kbd>.</p>
       </details>
+
+      <section class="checker" id="comprobador" aria-labelledby="t-chk">
+        <h2 id="t-chk">🔎 Comprueba tu trabajo</h2>
+        <p>Pega tu código y pulsa <strong>Comprobar</strong>. La revisión ocurre en tu navegador; nada se envía a ningún sitio. Cada punto en rojo incluye una pista.</p>
+        <label for="chk-code">Tu código HTML (el archivo completo)</label>
+        <textarea id="chk-code" rows="10" spellcheck="false" placeholder="Pega aquí el contenido completo de tu archivo .html"></textarea>
+        <div class="chk-actions"><button class="btn" type="button" id="chk-run">Comprobar</button><button class="icon-btn" type="button" id="chk-clear">Limpiar</button></div>
+        <p class="chk-sum" id="chk-sum" aria-live="polite"></p>
+        <ul class="chk-list" id="chk-list"></ul>
+        <script type="application/json" id="checks">{"mode": "html", "checks": [{"sel": "html", "attr": "lang", "d": "Declara el idioma con <html lang=\"es\">", "h": "Agrega lang=\"es\" a la etiqueta <html>."}, {"sel": "head meta[charset]", "d": "El head incluye meta charset", "h": "Agrega <meta charset=\"UTF-8\"> dentro de <head>."}, {"sel": "head meta[name=\"viewport\"]", "d": "El head incluye meta viewport", "h": "Agrega <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">."}, {"sel": "head title", "text": "\\S", "d": "Tiene un <title> con texto", "h": "Escribe tu nombre dentro de <title>."}, {"sel": "body h1", "min": 1, "max": 1, "d": "Hay exactamente un <h1>", "h": "Usa un solo <h1> con tu nombre dentro de <body>."}, {"sel": "body p", "min": 2, "d": "Hay al menos dos párrafos <p>", "h": "Escribe un párrafo sobre quién eres y otro sobre por qué quieres aprender HTML."}, {"sel": "body p strong", "d": "Usas <strong> dentro de un párrafo", "h": "Envuelve una palabra clave con <strong>…<\/strong> dentro de un <p>."}, {"raw": "\u003c!--[\\s\\S]*?-->", "d": "Incluye un comentario HTML", "h": "Agrega \u003c!-- Mi primera página -->."}]}</script>
+      </section>
 
       <details>
         <summary>✅ Ver una solución de ejemplo</summary>
