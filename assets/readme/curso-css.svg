@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="330" height="384" viewBox="339 0 330 384" role="img" aria-label="Seis cursos: HTML, CSS, JavaScript, React, Node.js y Bases de datos"><style>.t{font-family:Segoe UI,Helvetica,Arial,sans-serif}.fl{animation:f 5s ease-in-out infinite}@keyframes f{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}.sh{animation:s 4s linear infinite}@keyframes s{0%{transform:translateX(-340px)}100%{transform:translateX(340px)}}</style><defs>
+<linearGradient id="g0" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e34f26"/><stop offset="1" stop-color="#f97316"/></linearGradient><clipPath id="k0"><rect width="306" height="360" rx="22"/></clipPath>
+<linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1572b6"/><stop offset="1" stop-color="#38bdf8"/></linearGradient><clipPath id="k1"><rect width="306" height="360" rx="22"/></clipPath>
+<linearGradient id="g2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d4a017"/><stop offset="1" stop-color="#fde047"/></linearGradient><clipPath id="k2"><rect width="306" height="360" rx="22"/></clipPath>
+<linearGradient id="g3" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0ea5e9"/><stop offset="1" stop-color="#67e8f9"/></linearGradient><clipPath id="k3"><rect width="306" height="360" rx="22"/></clipPath>
+<linearGradient id="g4" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#15803d"/><stop offset="1" stop-color="#86efac"/></linearGradient><clipPath id="k4"><rect width="306" height="360" rx="22"/></clipPath>
+<linearGradient id="g5" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7c3aed"/><stop offset="1" stop-color="#c4b5fd"/></linearGradient><clipPath id="k5"><rect width="306" height="360" rx="22"/></clipPath>
+</defs>
+<g transform="translate(351 12)"><g class="fl" style="animation-delay:0.4s"><rect width="306" height="360" rx="22" fill="#14172b" stroke="url(#g1)" stroke-width="3"/>
+<g clip-path="url(#k1)"><rect width="306" height="100" fill="url(#g1)"/><rect class="sh" x="0" y="0" width="60" height="100" fill="#fff" opacity=".18" transform="skewX(-20)" style="animation-delay:0.6s"/></g>
+<text class="t" x="24" y="68" font-size="40" font-weight="800" fill="#fff" opacity=".9">{ }</text>
+<text class="t" x="286" y="40" font-size="14" font-weight="700" fill="#fff" text-anchor="end" opacity=".9">CURSO 2</text>
+<text class="t" x="24" y="148" font-size="30" font-weight="800" fill="#fff">CSS</text><text class="t" x="24" y="174" font-size="17" fill="#38bdf8" font-weight="600">Estilo</text>
+<text class="t" x="24" y="214" font-size="14.5" fill="#cbd2f0"><tspan fill="#38bdf8">✔ </tspan>Selectores y la caja</text>
+<text class="t" x="24" y="242" font-size="14.5" fill="#cbd2f0"><tspan fill="#38bdf8">✔ </tspan>Flexbox, Grid, responsivo</text>
+<text class="t" x="24" y="270" font-size="14.5" fill="#cbd2f0"><tspan fill="#38bdf8">✔ </tspan>Animaciones y temas</text>
+<text class="t" x="24" y="316" font-size="15" font-weight="700" fill="#fff">🏆 Landing responsiva</text><line x1="24" y1="327" x2="282" y2="327" stroke="#2b3158"/><text class="t" x="24" y="348" font-size="13" fill="#9aa1c4">11 lecciones + proyecto · ≈ 12 h</text></g></g>
+</svg>

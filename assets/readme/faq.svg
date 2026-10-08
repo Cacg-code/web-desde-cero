@@ -1,40 +1,37 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="330" viewBox="0 0 1000 330" role="img" aria-label="Preguntas frecuentes: ocho preguntas con respuesta corta, desplegadas en las secciones de abajo"><style>.t{font-family:Segoe UI,Helvetica,Arial,sans-serif}.fl{animation:fl 6s ease-in-out infinite}@keyframes fl{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
-.pu{transform-box:fill-box;transform-origin:center;animation:pu 2s ease-in-out infinite}@keyframes pu{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}</style>
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="430" viewBox="0 0 1000 430" role="img" aria-label="Preguntas frecuentes: ocho preguntas con su respuesta corta; la respuesta completa está en los desplegables de abajo"><style>.t{font-family:Segoe UI,Helvetica,Arial,sans-serif}.fl{animation:fl 6s ease-in-out infinite}@keyframes fl{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}</style>
 <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#14172b"/><stop offset="1" stop-color="#1e1b4b"/></linearGradient>
 <linearGradient id="gr" x1="0" x2="1"><stop offset="0" stop-color="#6366f1"/><stop offset="1" stop-color="#ec4899"/></linearGradient></defs>
-<style>.q{animation:q 16s infinite}@keyframes q{0%,100%{stroke-opacity:.35;fill:#161a33}2%,10%{stroke-opacity:1;fill:#312e81}12%{stroke-opacity:.35;fill:#161a33}}
-.a{animation:a 16s infinite;opacity:0}@keyframes a{0%,2%{opacity:0;transform:translateX(-8px)}4%,10%{opacity:1;transform:translateX(0)}12%,100%{opacity:0}}
-.ch{animation:ch 16s infinite;transform-box:fill-box;transform-origin:center}@keyframes ch{0%,100%{transform:rotate(0)}2%,10%{transform:rotate(90deg)}12%{transform:rotate(0)}}</style>
-<rect width="1000" height="330" rx="22" fill="url(#bg)"/><g class="t">
-<g><rect class="q" style="animation-delay:0s" x="24" y="24" width="464" height="64" rx="14" fill="#161a33" stroke="#818cf8" stroke-width="1.5"/>
-<text x="50" y="52" font-size="15" font-weight="700" fill="#fff">¿Necesito saber programar?</text>
-<text class="a" style="animation-delay:0s" x="50" y="75" font-size="13" fill="#fde68a">No: HTML empieza desde cero.</text>
-<text class="ch" style="animation-delay:0s" x="456" y="62" font-size="22" fill="#818cf8">›</text></g>
-<g><rect class="q" style="animation-delay:2s" x="512" y="24" width="464" height="64" rx="14" fill="#161a33" stroke="#818cf8" stroke-width="1.5"/>
-<text x="538" y="52" font-size="15" font-weight="700" fill="#fff">¿Qué necesito para empezar?</text>
-<text class="a" style="animation-delay:2s" x="538" y="75" font-size="13" fill="#fde68a">Solo un navegador moderno.</text>
-<text class="ch" style="animation-delay:2s" x="944" y="62" font-size="22" fill="#818cf8">›</text></g>
-<g><rect class="q" style="animation-delay:4s" x="24" y="100" width="464" height="64" rx="14" fill="#161a33" stroke="#818cf8" stroke-width="1.5"/>
-<text x="50" y="128" font-size="15" font-weight="700" fill="#fff">¿Se guarda mi progreso?</text>
-<text class="a" style="animation-delay:4s" x="50" y="151" font-size="13" fill="#fde68a">Sí, en tu navegador (con respaldo).</text>
-<text class="ch" style="animation-delay:4s" x="456" y="138" font-size="22" fill="#818cf8">›</text></g>
-<g><rect class="q" style="animation-delay:6s" x="512" y="100" width="464" height="64" rx="14" fill="#161a33" stroke="#818cf8" stroke-width="1.5"/>
-<text x="538" y="128" font-size="15" font-weight="700" fill="#fff">¿Funciona sin internet?</text>
-<text class="a" style="animation-delay:6s" x="538" y="151" font-size="13" fill="#fde68a">En parte: instálalo como app.</text>
-<text class="ch" style="animation-delay:6s" x="944" y="138" font-size="22" fill="#818cf8">›</text></g>
-<g><rect class="q" style="animation-delay:8s" x="24" y="176" width="464" height="64" rx="14" fill="#161a33" stroke="#818cf8" stroke-width="1.5"/>
-<text x="50" y="204" font-size="15" font-weight="700" fill="#fff">¿Cómo funciona el comprobador?</text>
-<text class="a" style="animation-delay:8s" x="50" y="227" font-size="13" fill="#fde68a">Revisa tu código en el navegador.</text>
-<text class="ch" style="animation-delay:8s" x="456" y="214" font-size="22" fill="#818cf8">›</text></g>
-<g><rect class="q" style="animation-delay:10s" x="512" y="176" width="464" height="64" rx="14" fill="#161a33" stroke="#818cf8" stroke-width="1.5"/>
-<text x="538" y="204" font-size="15" font-weight="700" fill="#fff">¿Cuánto tarda cada curso?</text>
-<text class="a" style="animation-delay:10s" x="538" y="227" font-size="13" fill="#fde68a">Entre 10 y 14 horas cada uno.</text>
-<text class="ch" style="animation-delay:10s" x="944" y="214" font-size="22" fill="#818cf8">›</text></g>
-<g><rect class="q" style="animation-delay:12s" x="24" y="252" width="464" height="64" rx="14" fill="#161a33" stroke="#818cf8" stroke-width="1.5"/>
-<text x="50" y="280" font-size="15" font-weight="700" fill="#fff">¿Cuánto cuesta? ¿Lo uso en clase?</text>
-<text class="a" style="animation-delay:12s" x="50" y="303" font-size="13" fill="#fde68a">Gratis · MIT y CC BY 4.0.</text>
-<text class="ch" style="animation-delay:12s" x="456" y="290" font-size="22" fill="#818cf8">›</text></g>
-<g><rect class="q" style="animation-delay:14s" x="512" y="252" width="464" height="64" rx="14" fill="#161a33" stroke="#818cf8" stroke-width="1.5"/>
-<text x="538" y="280" font-size="15" font-weight="700" fill="#fff">Encontré un error</text>
-<text class="a" style="animation-delay:14s" x="538" y="303" font-size="13" fill="#fde68a">Abre un issue: es lo mejor.</text>
-<text class="ch" style="animation-delay:14s" x="944" y="290" font-size="22" fill="#818cf8">›</text></g></g></svg>
+<style>.q{animation:q 16s infinite}@keyframes q{0%,100%{fill:#0f1224}2%,10%{fill:#25285a}12%{fill:#0f1224}}.ar{animation:ar 2s ease-in-out infinite}@keyframes ar{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}</style>
+<rect width="1000" height="430" rx="22" fill="url(#bg)"/><g class="t"><g><rect class="q" style="animation-delay:0s" x="24" y="24" width="464" height="78" rx="16" fill="#0f1224" stroke="#22c55e" stroke-opacity=".55" stroke-width="1.5"/>
+<rect x="24" y="38" width="4" height="50" rx="2" fill="#22c55e"/>
+<circle cx="70" cy="63.0" r="24" fill="#22c55e" fill-opacity=".18" stroke="#22c55e"/><text x="70" y="72.0" text-anchor="middle" font-size="24">🌱</text>
+<text x="108" y="59.0" font-size="15.5" font-weight="700" fill="#fff">¿Necesito saber programar?</text><text x="108" y="81.0" font-size="13" fill="#a5b4fc">No: HTML empieza desde cero.</text></g>
+<g><rect class="q" style="animation-delay:2s" x="512" y="24" width="464" height="78" rx="16" fill="#0f1224" stroke="#38bdf8" stroke-opacity=".55" stroke-width="1.5"/>
+<rect x="512" y="38" width="4" height="50" rx="2" fill="#38bdf8"/>
+<circle cx="558" cy="63.0" r="24" fill="#38bdf8" fill-opacity=".18" stroke="#38bdf8"/><text x="558" y="72.0" text-anchor="middle" font-size="24">🧰</text>
+<text x="596" y="59.0" font-size="15.5" font-weight="700" fill="#fff">¿Qué necesito para empezar?</text><text x="596" y="81.0" font-size="13" fill="#a5b4fc">Solo un navegador moderno.</text></g>
+<g><rect class="q" style="animation-delay:4s" x="24" y="116" width="464" height="78" rx="16" fill="#0f1224" stroke="#818cf8" stroke-opacity=".55" stroke-width="1.5"/>
+<rect x="24" y="130" width="4" height="50" rx="2" fill="#818cf8"/>
+<circle cx="70" cy="155.0" r="24" fill="#818cf8" fill-opacity=".18" stroke="#818cf8"/><text x="70" y="164.0" text-anchor="middle" font-size="24">💾</text>
+<text x="108" y="151.0" font-size="15.5" font-weight="700" fill="#fff">¿Se guarda mi progreso?</text><text x="108" y="173.0" font-size="13" fill="#a5b4fc">Sí, en tu navegador (con respaldo).</text></g>
+<g><rect class="q" style="animation-delay:6s" x="512" y="116" width="464" height="78" rx="16" fill="#0f1224" stroke="#a78bfa" stroke-opacity=".55" stroke-width="1.5"/>
+<rect x="512" y="130" width="4" height="50" rx="2" fill="#a78bfa"/>
+<circle cx="558" cy="155.0" r="24" fill="#a78bfa" fill-opacity=".18" stroke="#a78bfa"/><text x="558" y="164.0" text-anchor="middle" font-size="24">📡</text>
+<text x="596" y="151.0" font-size="15.5" font-weight="700" fill="#fff">¿Funciona sin internet?</text><text x="596" y="173.0" font-size="13" fill="#a5b4fc">En parte: instálalo como app.</text></g>
+<g><rect class="q" style="animation-delay:8s" x="24" y="208" width="464" height="78" rx="16" fill="#0f1224" stroke="#14b8a6" stroke-opacity=".55" stroke-width="1.5"/>
+<rect x="24" y="222" width="4" height="50" rx="2" fill="#14b8a6"/>
+<circle cx="70" cy="247.0" r="24" fill="#14b8a6" fill-opacity=".18" stroke="#14b8a6"/><text x="70" y="256.0" text-anchor="middle" font-size="24">✅</text>
+<text x="108" y="243.0" font-size="15.5" font-weight="700" fill="#fff">¿Cómo funciona el comprobador?</text><text x="108" y="265.0" font-size="13" fill="#a5b4fc">Revisa tu código en el navegador.</text></g>
+<g><rect class="q" style="animation-delay:10s" x="512" y="208" width="464" height="78" rx="16" fill="#0f1224" stroke="#f59e0b" stroke-opacity=".55" stroke-width="1.5"/>
+<rect x="512" y="222" width="4" height="50" rx="2" fill="#f59e0b"/>
+<circle cx="558" cy="247.0" r="24" fill="#f59e0b" fill-opacity=".18" stroke="#f59e0b"/><text x="558" y="256.0" text-anchor="middle" font-size="24">⏱️</text>
+<text x="596" y="243.0" font-size="15.5" font-weight="700" fill="#fff">¿Cuánto tarda cada curso?</text><text x="596" y="265.0" font-size="13" fill="#a5b4fc">Entre 10 y 14 horas cada uno.</text></g>
+<g><rect class="q" style="animation-delay:12s" x="24" y="300" width="464" height="78" rx="16" fill="#0f1224" stroke="#ec4899" stroke-opacity=".55" stroke-width="1.5"/>
+<rect x="24" y="314" width="4" height="50" rx="2" fill="#ec4899"/>
+<circle cx="70" cy="339.0" r="24" fill="#ec4899" fill-opacity=".18" stroke="#ec4899"/><text x="70" y="348.0" text-anchor="middle" font-size="24">🎁</text>
+<text x="108" y="335.0" font-size="15.5" font-weight="700" fill="#fff">¿Cuánto cuesta? ¿Lo uso en clase?</text><text x="108" y="357.0" font-size="13" fill="#a5b4fc">Gratis · MIT y CC BY 4.0.</text></g>
+<g><rect class="q" style="animation-delay:14s" x="512" y="300" width="464" height="78" rx="16" fill="#0f1224" stroke="#f43f5e" stroke-opacity=".55" stroke-width="1.5"/>
+<rect x="512" y="314" width="4" height="50" rx="2" fill="#f43f5e"/>
+<circle cx="558" cy="339.0" r="24" fill="#f43f5e" fill-opacity=".18" stroke="#f43f5e"/><text x="558" y="348.0" text-anchor="middle" font-size="24">🐞</text>
+<text x="596" y="335.0" font-size="15.5" font-weight="700" fill="#fff">Encontré un error</text><text x="596" y="357.0" font-size="13" fill="#a5b4fc">Abre un issue: es lo mejor.</text></g>
+<g class="ar"><text x="500" y="416" text-anchor="middle" font-size="13" fill="#9aa1c4">Toca una pregunta abajo para ver la respuesta completa ↓</text></g></g></svg>

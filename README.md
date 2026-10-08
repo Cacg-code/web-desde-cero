@@ -48,9 +48,19 @@ Sigue el orden: cada curso se apoya en el anterior.
 
 <div align="center">
 
-<img src="assets/readme/cursos.svg" alt="Seis cursos: HTML, CSS, JavaScript, React, Node.js y Bases de datos" width="100%">
+<p align="center">
+<a href="https://cacg-code.github.io/web-desde-cero/html/"><img src="assets/readme/curso-html.svg" alt="Curso de HTML" width="32%"></a>
+<a href="https://cacg-code.github.io/web-desde-cero/css/"><img src="assets/readme/curso-css.svg" alt="Curso de CSS" width="32%"></a>
+<a href="https://cacg-code.github.io/web-desde-cero/javascript/"><img src="assets/readme/curso-javascript.svg" alt="Curso de JavaScript" width="32%"></a>
+</p>
 
-**[▶ Empezar HTML](https://cacg-code.github.io/web-desde-cero/html/)** &nbsp;·&nbsp; **[▶ Empezar CSS](https://cacg-code.github.io/web-desde-cero/css/)** &nbsp;·&nbsp; **[▶ Empezar JavaScript](https://cacg-code.github.io/web-desde-cero/javascript/)** &nbsp;·&nbsp; **[▶ Empezar React](https://cacg-code.github.io/web-desde-cero/react/)** &nbsp;·&nbsp; **[▶ Node.js](https://cacg-code.github.io/web-desde-cero/node/)** &nbsp;·&nbsp; **[▶ Bases de datos](https://cacg-code.github.io/web-desde-cero/bd/)**
+<p align="center">
+<a href="https://cacg-code.github.io/web-desde-cero/react/"><img src="assets/readme/curso-react.svg" alt="Curso de React" width="32%"></a>
+<a href="https://cacg-code.github.io/web-desde-cero/node/"><img src="assets/readme/curso-node.svg" alt="Curso de Node.js" width="32%"></a>
+<a href="https://cacg-code.github.io/web-desde-cero/bd/"><img src="assets/readme/curso-bd.svg" alt="Curso de Bases de datos" width="32%"></a>
+</p>
+
+<sub>Toca una tarjeta para empezar el curso.</sub>
 
 </div>
 
@@ -90,9 +100,7 @@ Sigue el orden: cada curso se apoya en el anterior.
 
 <img src="assets/readme/leccion.svg" alt="Cada lección: lee, prueba, evalúate, practica y comprueba" width="100%">
 
-⚡ Editores en vivo y **consola** en JavaScript &nbsp;·&nbsp; 🔍 **Comprobador** de ejercicios<br>
-💾 Borrador y progreso guardados &nbsp;·&nbsp; 🌗 Modo claro y oscuro<br>
-♿ Accesible (teclado, contraste) &nbsp;·&nbsp; 📱 Celular, tableta y escritorio
+<img src="assets/readme/leccion-extras.svg" alt="Editores en vivo y consola, comprobador, borrador guardado, modo claro y oscuro, accesible, celular tableta y escritorio" width="100%">
 
 </div>
 
@@ -100,9 +108,19 @@ Sigue el orden: cada curso se apoya en el anterior.
 
 <div align="center">
 
-<img src="assets/readme/temario.svg" alt="Temario: 60 lecciones y 6 proyectos en HTML, CSS, JavaScript, React, Node.js y Bases de datos" width="100%">
+<p align="center">
+<a href="https://cacg-code.github.io/web-desde-cero/html/"><img src="assets/readme/tema-html.svg" alt="Temario de HTML" width="32%"></a>
+<a href="https://cacg-code.github.io/web-desde-cero/css/"><img src="assets/readme/tema-css.svg" alt="Temario de CSS" width="32%"></a>
+<a href="https://cacg-code.github.io/web-desde-cero/javascript/"><img src="assets/readme/tema-javascript.svg" alt="Temario de JavaScript" width="32%"></a>
+</p>
 
-**[▶ HTML](https://cacg-code.github.io/web-desde-cero/html/)** &nbsp;·&nbsp; **[▶ CSS](https://cacg-code.github.io/web-desde-cero/css/)** &nbsp;·&nbsp; **[▶ JavaScript](https://cacg-code.github.io/web-desde-cero/javascript/)** &nbsp;·&nbsp; **[▶ React](https://cacg-code.github.io/web-desde-cero/react/)** &nbsp;·&nbsp; **[▶ Node.js](https://cacg-code.github.io/web-desde-cero/node/)** &nbsp;·&nbsp; **[▶ Bases de datos](https://cacg-code.github.io/web-desde-cero/bd/)**
+<p align="center">
+<a href="https://cacg-code.github.io/web-desde-cero/react/"><img src="assets/readme/tema-react.svg" alt="Temario de React" width="32%"></a>
+<a href="https://cacg-code.github.io/web-desde-cero/node/"><img src="assets/readme/tema-node.svg" alt="Temario de Node.js" width="32%"></a>
+<a href="https://cacg-code.github.io/web-desde-cero/bd/"><img src="assets/readme/tema-bd.svg" alt="Temario de Bases de datos" width="32%"></a>
+</p>
+
+<sub>Toca una tarjeta para abrir el curso · abajo, el temario con enlace a cada lección.</sub>
 
 </div>
 
@@ -150,9 +168,7 @@ Sigue el orden: cada curso se apoya en el anterior.
 
 <div align="center">
 
-🏅 **XP y niveles** (8 títulos) &nbsp;·&nbsp; 🔥 **Rachas** con 🛡️ escudos &nbsp;·&nbsp; 🎯 **Meta semanal**<br>
-🧠 **Reto del día** (+25 XP) &nbsp;·&nbsp; 🎨 **Temas y avatares** que se desbloquean al subir de nivel<br>
-📄 **Chuletas imprimibles** al terminar un curso &nbsp;·&nbsp; 📤 **Insignia para compartir** &nbsp;·&nbsp; 💾 **Código de respaldo**
+<img src="assets/readme/progreso-extras.svg" alt="XP y niveles, rachas, meta semanal, reto del día, temas, chuletas, insignia y código de respaldo" width="100%">
 
 </div>
 
@@ -359,8 +375,6 @@ Entra con tu cuenta de GitHub desde el panel **Mi comunidad** y tu progreso se g
 
 </div>
 
-✍️ **Escribe el código tú**, no lo copies · 💥 **Rompe cosas** en los editores para ver qué pasa · ⏱️ **Una lección al día** mejor que cinco de golpe · 🔁 **Repite el ejercicio** sin mirar la solución.
-
 ## ❓ FAQ
 
 <div align="center">
@@ -370,19 +384,19 @@ Entra con tu cuenta de GitHub desde el panel **Mi comunidad** y tu progreso se g
 </div>
 
 <details>
-<summary><b>¿Necesito saber programar?</b></summary>
+<summary><b>🌱 ¿Necesito saber programar?</b></summary>
 
 <br>No. El curso de HTML empieza desde cero y no asume nada. CSS pide haber hecho HTML, JavaScript pide saber maquetar una página, React pide saber JavaScript (funciones, arrays y objetos), Node.js pide JavaScript y Bases de datos no exige nada previo (en la lección de SQLite se instala una herramienta); todos lo indican al inicio.
 </details>
 
 <details>
-<summary><b>¿Qué necesito para empezar?</b></summary>
+<summary><b>🧰 ¿Qué necesito para empezar?</b></summary>
 
 <br>Solo un navegador moderno (Chrome, Firefox, Edge o Safari). Los editores y la consola están dentro de cada lección. Cuando quieras trabajar en tus propios proyectos, instala un editor como [Cursor](https://cursor.com/) (con [guía oficial](https://docs.cursor.com/)) o [VS Code](https://code.visualstudio.com/).
 </details>
 
 <details>
-<summary><b>¿Se guarda mi progreso? ¿Es fiable?</b></summary>
+<summary><b>💾 ¿Se guarda mi progreso? ¿Es fiable?</b></summary>
 
 <br>Sí, pero **vive solo en tu navegador** (almacenamiento local del sitio), no en un servidor. Eso significa:
 
@@ -396,31 +410,31 @@ Si el navegador bloquea el almacenamiento, el curso sigue funcionando; solo que 
 </details>
 
 <details>
-<summary><b>¿Funciona sin internet?</b></summary>
+<summary><b>📡 ¿Funciona sin internet?</b></summary>
 
 <br>En parte. El sitio se puede **instalar como app** (menú del navegador → «Instalar») y las páginas que ya visitaste se abren sin conexión. También puedes clonar el repositorio (o descargarlo en ZIP) y abrir `index.html` con doble clic. Los ejemplos que consultan una API externa y los ejercicios de Node.js y SQL en tu computadora necesitan conexión o instalar Node.js.
 </details>
 
 <details>
-<summary><b>¿Cómo funciona el comprobador de ejercicios?</b></summary>
+<summary><b>✅ ¿Cómo funciona el comprobador de ejercicios?</b></summary>
 
 <br>Pegas tu código y el curso lo analiza **en tu navegador**: comprueba requisitos concretos (por ejemplo, «tiene un `<h1>`» o «la imagen tiene `alt`») y marca cuáles cumples y cuáles faltan, con una pista. No envía tu código a ningún sitio.
 </details>
 
 <details>
-<summary><b>¿Cuánto tarda cada curso?</b></summary>
+<summary><b>⏱️ ¿Cuánto tarda cada curso?</b></summary>
 
 <br>HTML ≈ 10 h, CSS ≈ 12 h, JavaScript ≈ 14 h, React ≈ 14 h, Node.js ≈ 14 h y Bases de datos ≈ 12 h. Lo ideal es **una lección al día**: mejor constancia que maratones.
 </details>
 
 <details>
-<summary><b>¿Cuánto cuesta y puedo usarlo en clase?</b></summary>
+<summary><b>🎁 ¿Cuánto cuesta y puedo usarlo en clase?</b></summary>
 
 <br>Es gratis y de código abierto. El código va con licencia MIT y el contenido educativo va con [CC BY 4.0](LICENSE-CONTENIDO.md): puedes usarlo y compartirlo en clase citando la fuente.
 </details>
 
 <details>
-<summary><b>Encontré un error o algo no se entiende</b></summary>
+<summary><b>🐞 Encontré un error o algo no se entiende</b></summary>
 
 <br>Avísame con un [reporte de error](https://github.com/Cacg-code/web-desde-cero/issues/new?template=error.yml) o una [duda](https://github.com/Cacg-code/web-desde-cero/issues/new?template=duda.yml). Es la mejor forma de mejorar el curso.
 </details>

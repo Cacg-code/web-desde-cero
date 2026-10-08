@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="230" viewBox="0 0 1000 230" role="img" aria-label="XP y niveles, rachas con escudos, meta semanal, reto del día, temas y avatares, chuletas imprimibles, insignia y código de respaldo"><style>.t{font-family:Segoe UI,Helvetica,Arial,sans-serif}.fl{animation:fl 6s ease-in-out infinite}@keyframes fl{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}</style>
+<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#14172b"/><stop offset="1" stop-color="#1e1b4b"/></linearGradient>
+<linearGradient id="gr" x1="0" x2="1"><stop offset="0" stop-color="#6366f1"/><stop offset="1" stop-color="#ec4899"/></linearGradient></defs><rect width="1000" height="230" rx="22" fill="url(#bg)"/><g class="t"><g class="fl" style="animation-delay:0.00s"><rect x="24.0" y="24" width="227.5" height="84" rx="16" fill="#0f1224" stroke="#818cf8" stroke-opacity=".55" stroke-width="1.5"/>
+<rect x="24.0" y="38" width="4" height="56" rx="2" fill="#818cf8"/>
+<circle cx="70.0" cy="66.0" r="24" fill="#818cf8" fill-opacity=".18" stroke="#818cf8"/><text x="70.0" y="75.0" text-anchor="middle" font-size="24">🏅</text>
+<text x="108.0" y="63.0" font-size="15" font-weight="700" fill="#fff">XP y niveles</text><text x="108.0" y="84.0" font-size="12.5" fill="#a5b4fc">8 títulos</text></g>
+<g class="fl" style="animation-delay:0.45s"><rect x="265.5" y="24" width="227.5" height="84" rx="16" fill="#0f1224" stroke="#f59e0b" stroke-opacity=".55" stroke-width="1.5"/>
+<rect x="265.5" y="38" width="4" height="56" rx="2" fill="#f59e0b"/>
+<circle cx="311.5" cy="66.0" r="24" fill="#f59e0b" fill-opacity=".18" stroke="#f59e0b"/><text x="311.5" y="75.0" text-anchor="middle" font-size="24">🔥</text>
+<text x="349.5" y="63.0" font-size="15" font-weight="700" fill="#fff">Rachas</text><text x="349.5" y="84.0" font-size="12.5" fill="#a5b4fc">con escudos 🛡️</text></g>
+<g class="fl" style="animation-delay:0.90s"><rect x="507.0" y="24" width="227.5" height="84" rx="16" fill="#0f1224" stroke="#22c55e" stroke-opacity=".55" stroke-width="1.5"/>
+<rect x="507.0" y="38" width="4" height="56" rx="2" fill="#22c55e"/>
+<circle cx="553.0" cy="66.0" r="24" fill="#22c55e" fill-opacity=".18" stroke="#22c55e"/><text x="553.0" y="75.0" text-anchor="middle" font-size="24">🎯</text>
+<text x="591.0" y="63.0" font-size="15" font-weight="700" fill="#fff">Meta semanal</text><text x="591.0" y="84.0" font-size="12.5" fill="#a5b4fc">constancia</text></g>
+<g class="fl" style="animation-delay:1.35s"><rect x="748.5" y="24" width="227.5" height="84" rx="16" fill="#0f1224" stroke="#ec4899" stroke-opacity=".55" stroke-width="1.5"/>
+<rect x="748.5" y="38" width="4" height="56" rx="2" fill="#ec4899"/>
+<circle cx="794.5" cy="66.0" r="24" fill="#ec4899" fill-opacity=".18" stroke="#ec4899"/><text x="794.5" y="75.0" text-anchor="middle" font-size="24">🧠</text>
+<text x="832.5" y="63.0" font-size="15" font-weight="700" fill="#fff">Reto del día</text><text x="832.5" y="84.0" font-size="12.5" fill="#a5b4fc">+25 XP</text></g>
+<g class="fl" style="animation-delay:1.80s"><rect x="24.0" y="122" width="227.5" height="84" rx="16" fill="#0f1224" stroke="#38bdf8" stroke-opacity=".55" stroke-width="1.5"/>
+<rect x="24.0" y="136" width="4" height="56" rx="2" fill="#38bdf8"/>
+<circle cx="70.0" cy="164.0" r="24" fill="#38bdf8" fill-opacity=".18" stroke="#38bdf8"/><text x="70.0" y="173.0" text-anchor="middle" font-size="24">🎨</text>
+<text x="108.0" y="161.0" font-size="15" font-weight="700" fill="#fff">Temas y avatares</text><text x="108.0" y="182.0" font-size="12.5" fill="#a5b4fc">se desbloquean</text></g>
+<g class="fl" style="animation-delay:2.25s"><rect x="265.5" y="122" width="227.5" height="84" rx="16" fill="#0f1224" stroke="#a78bfa" stroke-opacity=".55" stroke-width="1.5"/>
+<rect x="265.5" y="136" width="4" height="56" rx="2" fill="#a78bfa"/>
+<circle cx="311.5" cy="164.0" r="24" fill="#a78bfa" fill-opacity=".18" stroke="#a78bfa"/><text x="311.5" y="173.0" text-anchor="middle" font-size="24">📄</text>
+<text x="349.5" y="161.0" font-size="15" font-weight="700" fill="#fff">Chuletas</text><text x="349.5" y="182.0" font-size="12.5" fill="#a5b4fc">imprimibles</text></g>
+<g class="fl" style="animation-delay:2.70s"><rect x="507.0" y="122" width="227.5" height="84" rx="16" fill="#0f1224" stroke="#f97316" stroke-opacity=".55" stroke-width="1.5"/>
+<rect x="507.0" y="136" width="4" height="56" rx="2" fill="#f97316"/>
+<circle cx="553.0" cy="164.0" r="24" fill="#f97316" fill-opacity=".18" stroke="#f97316"/><text x="553.0" y="173.0" text-anchor="middle" font-size="24">📤</text>
+<text x="591.0" y="161.0" font-size="15" font-weight="700" fill="#fff">Insignia</text><text x="591.0" y="182.0" font-size="12.5" fill="#a5b4fc">para compartir</text></g>
+<g class="fl" style="animation-delay:3.15s"><rect x="748.5" y="122" width="227.5" height="84" rx="16" fill="#0f1224" stroke="#14b8a6" stroke-opacity=".55" stroke-width="1.5"/>
+<rect x="748.5" y="136" width="4" height="56" rx="2" fill="#14b8a6"/>
+<circle cx="794.5" cy="164.0" r="24" fill="#14b8a6" fill-opacity=".18" stroke="#14b8a6"/><text x="794.5" y="173.0" text-anchor="middle" font-size="24">💾</text>
+<text x="832.5" y="161.0" font-size="15" font-weight="700" fill="#fff">Código de respaldo</text><text x="832.5" y="182.0" font-size="12.5" fill="#a5b4fc">pasa tu progreso</text></g>
+</g></svg>

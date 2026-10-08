@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="230" viewBox="0 0 1000 230" role="img" aria-label="Editores en vivo y consola, comprobador, borrador guardado, modo claro y oscuro, accesible, celular tableta y escritorio"><style>.t{font-family:Segoe UI,Helvetica,Arial,sans-serif}.fl{animation:fl 6s ease-in-out infinite}@keyframes fl{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}</style>
+<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#14172b"/><stop offset="1" stop-color="#1e1b4b"/></linearGradient>
+<linearGradient id="gr" x1="0" x2="1"><stop offset="0" stop-color="#6366f1"/><stop offset="1" stop-color="#ec4899"/></linearGradient></defs><rect width="1000" height="230" rx="22" fill="url(#bg)"/><g class="t"><g class="fl" style="animation-delay:0.00s"><rect x="24.0" y="24" width="308.0" height="84" rx="16" fill="#0f1224" stroke="#818cf8" stroke-opacity=".55" stroke-width="1.5"/>
+<rect x="24.0" y="38" width="4" height="56" rx="2" fill="#818cf8"/>
+<circle cx="70.0" cy="66.0" r="24" fill="#818cf8" fill-opacity=".18" stroke="#818cf8"/><text x="70.0" y="75.0" text-anchor="middle" font-size="24">⚡</text>
+<text x="108.0" y="63.0" font-size="15" font-weight="700" fill="#fff">Editores en vivo</text><text x="108.0" y="84.0" font-size="12.5" fill="#a5b4fc">y consola en JavaScript</text></g>
+<g class="fl" style="animation-delay:0.45s"><rect x="346.0" y="24" width="308.0" height="84" rx="16" fill="#0f1224" stroke="#f59e0b" stroke-opacity=".55" stroke-width="1.5"/>
+<rect x="346.0" y="38" width="4" height="56" rx="2" fill="#f59e0b"/>
+<circle cx="392.0" cy="66.0" r="24" fill="#f59e0b" fill-opacity=".18" stroke="#f59e0b"/><text x="392.0" y="75.0" text-anchor="middle" font-size="24">🔍</text>
+<text x="430.0" y="63.0" font-size="15" font-weight="700" fill="#fff">Comprobador</text><text x="430.0" y="84.0" font-size="12.5" fill="#a5b4fc">de ejercicios</text></g>
+<g class="fl" style="animation-delay:0.90s"><rect x="668.0" y="24" width="308.0" height="84" rx="16" fill="#0f1224" stroke="#22c55e" stroke-opacity=".55" stroke-width="1.5"/>
+<rect x="668.0" y="38" width="4" height="56" rx="2" fill="#22c55e"/>
+<circle cx="714.0" cy="66.0" r="24" fill="#22c55e" fill-opacity=".18" stroke="#22c55e"/><text x="714.0" y="75.0" text-anchor="middle" font-size="24">💾</text>
+<text x="752.0" y="63.0" font-size="15" font-weight="700" fill="#fff">Borrador y progreso</text><text x="752.0" y="84.0" font-size="12.5" fill="#a5b4fc">guardados</text></g>
+<g class="fl" style="animation-delay:1.35s"><rect x="24.0" y="122" width="308.0" height="84" rx="16" fill="#0f1224" stroke="#ec4899" stroke-opacity=".55" stroke-width="1.5"/>
+<rect x="24.0" y="136" width="4" height="56" rx="2" fill="#ec4899"/>
+<circle cx="70.0" cy="164.0" r="24" fill="#ec4899" fill-opacity=".18" stroke="#ec4899"/><text x="70.0" y="173.0" text-anchor="middle" font-size="24">🌗</text>
+<text x="108.0" y="161.0" font-size="15" font-weight="700" fill="#fff">Modo claro</text><text x="108.0" y="182.0" font-size="12.5" fill="#a5b4fc">y oscuro</text></g>
+<g class="fl" style="animation-delay:1.80s"><rect x="346.0" y="122" width="308.0" height="84" rx="16" fill="#0f1224" stroke="#38bdf8" stroke-opacity=".55" stroke-width="1.5"/>
+<rect x="346.0" y="136" width="4" height="56" rx="2" fill="#38bdf8"/>
+<circle cx="392.0" cy="164.0" r="24" fill="#38bdf8" fill-opacity=".18" stroke="#38bdf8"/><text x="392.0" y="173.0" text-anchor="middle" font-size="24">♿</text>
+<text x="430.0" y="161.0" font-size="15" font-weight="700" fill="#fff">Accesible</text><text x="430.0" y="182.0" font-size="12.5" fill="#a5b4fc">teclado y contraste</text></g>
+<g class="fl" style="animation-delay:2.25s"><rect x="668.0" y="122" width="308.0" height="84" rx="16" fill="#0f1224" stroke="#a78bfa" stroke-opacity=".55" stroke-width="1.5"/>
+<rect x="668.0" y="136" width="4" height="56" rx="2" fill="#a78bfa"/>
+<circle cx="714.0" cy="164.0" r="24" fill="#a78bfa" fill-opacity=".18" stroke="#a78bfa"/><text x="714.0" y="173.0" text-anchor="middle" font-size="24">📱</text>
+<text x="752.0" y="161.0" font-size="15" font-weight="700" fill="#fff">Celular, tableta</text><text x="752.0" y="182.0" font-size="12.5" fill="#a5b4fc">y escritorio</text></g>
+</g></svg>
