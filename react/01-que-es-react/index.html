@@ -177,6 +177,10 @@ npm install
 npm run dev</code></pre>
 </div>
 <p>Vite te dará una dirección local (normalmente <code>http://localhost:5173</code>). Necesitas tener <strong>Node.js</strong> instalado. En la lección 11 recorrerás el proyecto completo y cómo publicarlo.</p>
+<div class="callout nota">
+<p class="callout-title">📌 Nota · Versiones de React</p>
+<p>Los editores de este curso cargan <strong>React 18.3.1</strong> en el navegador (React 19 ya no se distribuye como archivo suelto). Un proyecto nuevo con Vite instala <strong>React 19</strong>. Todo lo que ves aquí funciona igual en ambas; lo nuevo de la 19 es opcional para empezar: <code>ref</code> como prop normal (sin <code>forwardRef</code>), <code>&lt;Contexto&gt;</code> como proveedor directo, acciones de formulario con <code>useActionState</code> y el compilador de React, que reduce la necesidad de <code>useMemo</code> y <code>useCallback</code> a mano. Cuando salgas del editor, consulta <a href="https://react.dev" target="_blank" rel="noopener">react.dev</a>.</p>
+</div>
 <div class="table-wrap"><table>
 <thead><tr><th>Archivo o carpeta</th><th>Para qué sirve</th></tr></thead>
 <tbody><tr><td><code>index.html</code></td><td>La única página HTML. Contiene el <code>&lt;div id="root"&gt;</code>.</td></tr><tr><td><code>src/main.jsx</code></td><td>El punto de entrada: monta <code>&lt;App /&gt;</code> en el <code>#root</code>.</td></tr><tr><td><code>src/App.jsx</code></td><td>Tu componente principal. Aquí empiezas a escribir.</td></tr><tr><td><code>package.json</code></td><td>La lista de dependencias y de comandos (<code>dev</code>, <code>build</code>…).</td></tr><tr><td><code>node_modules/</code></td><td>Las bibliotecas descargadas. <strong>No se sube a Git.</strong></td></tr></tbody>

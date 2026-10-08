@@ -63,7 +63,7 @@
         <div class="chk-actions"><button class="btn" type="button" id="chk-run">Comprobar</button><button class="icon-btn" type="button" id="chk-clear">Limpiar</button></div>
         <p class="chk-sum" id="chk-sum" aria-live="polite"></p>
         <ul class="chk-list" id="chk-list"></ul>
-        <script type="application/json" id="checks">{"mode": "text", "label": "Tus archivos de configuración", "ph": "Pega aquí tu vite.config.js y, debajo, tu deploy.yml", "checks": [{"d": "El `vite.config.js` importa `defineConfig` de Vite", "h": "Escribe `import { defineConfig } from \"vite\";`.", "raw": "import\\s*\\{\\s*defineConfig\\s*\\}\\s*from\\s*[\"']vite[\"']"}, {"d": "Importa el plugin de React", "h": "Escribe `import react from \"@vitejs/plugin-react\";`.", "raw": "from\\s*[\"']@vitejs/plugin-react[\"']"}, {"d": "Activa el plugin: `plugins: [react()]`", "h": "Dentro de `defineConfig` añade `plugins: [react()]`.", "raw": "plugins\\s*:\\s*\\[\\s*react\\(\\)\\s*\\]"}, {"d": "Define la ruta base de GitHub Pages (por ejemplo, `base: \"/mi-app/\"`)", "h": "Añade `base: \"/nombre-del-repositorio/\"` con barras al inicio y al final.", "raw": "base\\s*:\\s*[\"']/[\\w.-]+/[\"']"}, {"d": "El flujo se activa con un push a `main`", "h": "Usa `on: push: branches: [main]`.", "raw": "branches\\s*:\\s*\\[\\s*main\\s*\\]"}, {"d": "Incluye `actions/checkout` y la instalación de dependencias", "h": "Usa `actions/checkout@v4` y `run: npm ci` (o `npm install`).", "raw": "actions/checkout@v\\d+", "n": 1}, {"d": "Ejecuta `npm run build`", "h": "Añade el paso `- run: npm run build`.", "raw": "run\\s*:\\s*npm\\s+run\\s+build"}, {"d": "Sube y despliega la carpeta `dist`", "h": "Usa `actions/upload-pages-artifact` con `path: dist` y `actions/deploy-pages`.", "raw": "path\\s*:\\s*\\.?/?dist"}, {"d": "Usa `actions/deploy-pages`", "h": "El último paso es `uses: actions/deploy-pages@v4`.", "raw": "actions/deploy-pages@v\\d+"}]}</script>
+        <script type="application/json" id="checks">{"mode": "text", "label": "Tus archivos de configuración", "ph": "Pega aquí tu vite.config.js y, debajo, tu deploy.yml", "checks": [{"d": "El `vite.config.js` importa `defineConfig` de Vite", "h": "Escribe `import { defineConfig } from \"vite\";`.", "raw": "import\\s*\\{\\s*defineConfig\\s*\\}\\s*from\\s*[\"']vite[\"']"}, {"d": "Importa el plugin de React", "h": "Escribe `import react from \"@vitejs/plugin-react\";`.", "raw": "from\\s*[\"']@vitejs/plugin-react[\"']"}, {"d": "Activa el plugin: `plugins: [react()]`", "h": "Dentro de `defineConfig` añade `plugins: [react()]`.", "raw": "plugins\\s*:\\s*\\[\\s*react\\(\\)\\s*\\]"}, {"d": "Define la ruta base de GitHub Pages (por ejemplo, `base: \"/mi-app/\"`)", "h": "Añade `base: \"/nombre-del-repositorio/\"` con barras al inicio y al final.", "raw": "base\\s*:\\s*[\"']/[\\w.-]+/[\"']"}, {"d": "El flujo se activa con un push a `main`", "h": "Usa `on: push: branches: [main]`.", "raw": "branches\\s*:\\s*\\[\\s*main\\s*\\]"}, {"d": "Incluye `actions/checkout` y la instalación de dependencias", "h": "Usa `actions/checkout@v7` y `run: npm ci` (o `npm install`).", "raw": "actions/checkout@v\\d+", "n": 1}, {"d": "Ejecuta `npm run build`", "h": "Añade el paso `- run: npm run build`.", "raw": "run\\s*:\\s*npm\\s+run\\s+build"}, {"d": "Sube y despliega la carpeta `dist`", "h": "Usa `actions/upload-pages-artifact` con `path: dist` y `actions/deploy-pages`.", "raw": "path\\s*:\\s*\\.?/?dist"}, {"d": "Usa `actions/deploy-pages`", "h": "El último paso es `uses: actions/deploy-pages@v5`.", "raw": "actions/deploy-pages@v\\d+"}]}</script>
       </section>
       <details>
         <summary>✅ Ver una solución posible</summary>
@@ -94,16 +94,16 @@ jobs:
     environment:
       name: github-pages
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
-          node-version: 20
+          node-version: 24
       - run: npm ci
       - run: npm run build
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: dist
-      - uses: actions/deploy-pages@v4</code></pre>
+      - uses: actions/deploy-pages@v5</code></pre>
 </div>
 
       </details>
