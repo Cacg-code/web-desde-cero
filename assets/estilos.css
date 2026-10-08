@@ -822,3 +822,5 @@ html:root[data-skin="neon"][data-theme="dark"] { --accent: #f0abfc; --accent-sof
 .pp-rank small { color: var(--muted); }
 #pp-com input { padding: .5rem .7rem; border: 1px solid var(--border); border-radius: 10px; background: var(--bg); color: var(--text); font: inherit; }
 #pp-com .pp-actions { margin: .6rem 0 0; }
+
+@media(max-width:480px){pre.sql-out{white-space:pre-wrap;overflow-wrap:anywhere}}
