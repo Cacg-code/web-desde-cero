@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS moderno: dialog, oklch y más · Extra de CSS</title>
+  <meta name="description" content="dialog y popover nativos, oklch, color-mix, light-dark, @property y funciones con soporte parcial como scroll-driven, anchor positioning y view transitions.">
+  <link rel="canonical" href="https://cacg-code.github.io/web-desde-cero/css/extra-css-moderno/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="CSS moderno: dialog, oklch y más">
+  <meta property="og:description" content="dialog y popover nativos, oklch, color-mix, light-dark, @property y funciones con soporte parcial como scroll-driven, anchor positioning y view transitions.">
+  <meta property="og:url" content="https://cacg-code.github.io/web-desde-cero/css/extra-css-moderno/">
+  <meta property="og:image" content="https://cacg-code.github.io/web-desde-cero/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de CSS</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap lesson-layout" id="contenido">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta página</h4>
+      <ol><li><a href="#dialog">dialog y popover</a></li><li><a href="#color">oklch, color-mix y light-dark</a></li><li><a href="#property">@property</a></li><li><a href="#parcial">Soporte parcial</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de CSS</a> › Extra opcional</div>
+        <h1>CSS moderno: dialog, oklch y más</h1>
+        <ul class="meta"><li>⏱ 30 minutos</li><li>📶 Nivel: intermedio</li><li>⭐ Extra opcional (no cuenta para el progreso)</li></ul>
+      </header>
+<div class="callout importante">
+<p class="callout-title">⚠️ Soporte de navegadores</p>
+<p>Estas funciones son modernas. Antes de usarlas en un proyecto real, comprueba el soporte en <a href="https://developer.mozilla.org/es/" target="_blank" rel="noopener">MDN</a> y en <a href="https://caniuse.com/" target="_blank" rel="noopener">Can I use</a>. Todo funciona en las versiones actuales de Chrome, Edge, Firefox y Safari salvo lo marcado como <strong>soporte parcial</strong>.</p>
+</div>
+<h2 id="dialog"><span class="n">1.</span>&lt;dialog&gt; y popover: ventanas nativas</h2>
+<p>El elemento <code>&lt;dialog&gt;</code> es una ventana modal nativa: trae foco, tecla Esc y fondo (<code>::backdrop</code>). El atributo <code>popover</code> crea paneles que se abren con un botón y se cierran al pulsar fuera, sin una línea de JS.</p>
+<div class="playground">
+  <div class="pg-head"><span>✏️ Popover nativo</span><button type="button" data-reset>Restablecer</button></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;style&gt;
+  body { font-family: sans-serif; padding: 12px; }
+  [popover] { padding: 16px; border: 0; border-radius: 12px; box-shadow: 0 8px 30px #0004; }
+  [popover]::backdrop { background: #0003; }
+&lt;/style&gt;
+&lt;button popovertarget="info"&gt;Abrir panel&lt;/button&gt;
+&lt;div id="info" popover&gt;
+  &lt;strong&gt;Hola&lt;/strong&gt;&lt;p&gt;Me cierro con Esc o al pulsar fuera.&lt;/p&gt;
+  &lt;button popovertarget="info" popovertargetaction="hide"&gt;Cerrar&lt;/button&gt;
+&lt;/div&gt;</textarea></div>
+    <div><label>Resultado</label><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div>
+  </div>
+</div>
+<div class="code">
+  <div class="code-head"><span>Dialog modal (necesita una línea de JS)</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>&lt;dialog id="modal"&gt;
+  &lt;p&gt;¿Seguro que quieres continuar?&lt;/p&gt;
+  &lt;form method="dialog"&gt;&lt;button&gt;Cancelar&lt;/button&gt;&lt;button value="ok"&gt;Aceptar&lt;/button&gt;&lt;/form&gt;
+&lt;/dialog&gt;
+&lt;button onclick="modal.showModal()"&gt;Abrir&lt;/button&gt;</code></pre>
+</div>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo</p>
+<p>Usa <code>&lt;dialog&gt;</code> con <code>showModal()</code> para bloquear el resto de la página, y <code>popover</code> para menús y avisos ligeros. Ambos son accesibles por defecto, algo difícil de lograr con un <code>div</code> a mano.</p>
+</div>
+
+<h2 id="color"><span class="n">2.</span>Colores modernos: oklch(), color-mix() y light-dark()</h2>
+<p><code>oklch(luminosidad croma tono)</code> describe colores como los percibimos: cambiar la luminosidad no altera el tono, ideal para paletas. <code>color-mix()</code> mezcla dos colores y <code>light-dark()</code> elige uno según el tema del usuario.</p>
+<div class="playground">
+  <div class="pg-head"><span>✏️ Paleta con oklch y light-dark</span><button type="button" data-reset>Restablecer</button></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;style&gt;
+  :root { color-scheme: light dark; --marca: oklch(60% 0.2 280); }
+  body { font-family: sans-serif; padding: 12px;
+         background: light-dark(#fff, #1b1b22); color: light-dark(#222, #eee); }
+  .caja { padding: 12px; margin: 6px 0; border-radius: 8px; }
+  .a { background: var(--marca); color: #fff; }
+  .b { background: oklch(80% 0.2 280); color: #000; }
+  .c { background: color-mix(in oklch, var(--marca), white 50%); color: #000; }
+&lt;/style&gt;
+&lt;div class="caja a"&gt;Marca&lt;/div&gt;
+&lt;div class="caja b"&gt;Misma tonalidad, más clara&lt;/div&gt;
+&lt;div class="caja c"&gt;Marca mezclada con blanco&lt;/div&gt;</textarea></div>
+    <div><label>Resultado</label><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div>
+  </div>
+</div>
+<div class="callout consejo">
+<p class="callout-title">💡 Truco</p>
+<p>Define un solo color de marca y deriva los demás con <code>color-mix()</code> o cambiando la luminosidad en <code>oklch()</code>: tu sistema de variables (lección 11) se vuelve más corto.</p>
+</div>
+
+<h2 id="property"><span class="n">3.</span>@property: variables con tipo</h2>
+<p>Las variables normales son texto, por eso no se pueden animar. Con <code>@property</code> declaras su tipo y el navegador puede <strong>transicionarlas</strong>.</p>
+<div class="playground">
+  <div class="pg-head"><span>✏️ Degradado animado</span><button type="button" data-reset>Restablecer</button></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de código">&lt;style&gt;
+  @property --angulo { syntax: "&lt;angle&gt;"; inherits: false; initial-value: 0deg; }
+  .caja { height: 120px; border-radius: 12px;
+          background: linear-gradient(var(--angulo), #4f46e5, #ec4899);
+          animation: gira 4s linear infinite; }
+  @keyframes gira { to { --angulo: 360deg; } }
+&lt;/style&gt;
+&lt;div class="caja"&gt;&lt;/div&gt;</textarea></div>
+    <div><label>Resultado</label><iframe class="pg-out" sandbox="" title="Resultado en vivo"></iframe></div>
+  </div>
+</div>
+
+<h2 id="parcial"><span class="n">4.</span>Funciones con soporte parcial o reciente</h2>
+<p>Estas tres son muy prometedoras, pero <strong>no están disponibles igual en todos los navegadores</strong>. Úsalas como mejora progresiva (la página debe verse bien sin ellas) y verifica el soporte actual.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Función</th><th>Para qué sirve</th><th>Documentación</th></tr></thead>
+<tbody>
+<tr><td>Animaciones por scroll (<code>animation-timeline: scroll()</code>)</td><td>Animar según el desplazamiento, sin JS</td><td><a href="https://developer.mozilla.org/es/docs/Web/CSS/animation-timeline" target="_blank" rel="noopener">MDN</a></td></tr>
+<tr><td>Anchor positioning (<code>anchor-name</code>, <code>position-anchor</code>)</td><td>Anclar tooltips y menús a otro elemento</td><td><a href="https://developer.mozilla.org/es/docs/Web/CSS/CSS_anchor_positioning" target="_blank" rel="noopener">MDN</a></td></tr>
+<tr><td>View transitions (<code>document.startViewTransition()</code>)</td><td>Transiciones animadas entre estados o páginas</td><td><a href="https://developer.mozilla.org/es/docs/Web/API/View_Transition_API" target="_blank" rel="noopener">MDN</a></td></tr>
+</tbody></table></div>
+<div class="code">
+  <div class="code-head"><span>Mejora progresiva con @supports</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>@supports (animation-timeline: scroll()) {
+  .barra { animation: crece linear; animation-timeline: scroll(); }
+}
+/* Si no hay soporte, la barra simplemente no se anima. */</code></pre>
+</div>
+<div class="callout importante">
+<p class="callout-title">⚠️ Regla de oro</p>
+<p>Nunca dejes que una función con soporte parcial rompa el contenido: encapsúlala en <code>@supports</code> y asegúrate de que sin ella todo siga funcionando.</p>
+</div>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li><code>&lt;dialog&gt;</code> y <code>popover</code> dan ventanas accesibles sin librerías.</li><li><code>oklch()</code>, <code>color-mix()</code> y <code>light-dark()</code> simplifican paletas y temas.</li><li><code>@property</code> permite animar variables con tipo.</li><li>Scroll-driven animations, anchor positioning y view transitions: soporte parcial; usa <code>@supports</code> y verifica en MDN.</li></ul>
+</section>
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta.</p>
+<div class="quiz-q"><p>¿Qué atributo crea un panel que se cierra al pulsar fuera?</p><ul class="opts"><li><button type="button" class="opt"><code>modal</code></button></li><li><button type="button" class="opt" data-ok><code>popover</code></button></li><li><button type="button" class="opt"><code>float</code></button></li></ul><div class="explain" hidden></div></div>
+<div class="quiz-q"><p>¿Qué hace <code>light-dark(a, b)</code>?</p><ul class="opts"><li><button type="button" class="opt">Mezcla dos colores</button></li><li><button type="button" class="opt" data-ok>Elige <code>a</code> en tema claro y <code>b</code> en oscuro</button></li><li><button type="button" class="opt">Oscurece el color</button></li></ul><div class="explain" hidden></div></div>
+<div class="quiz-q"><p>¿Para qué sirve <code>@property</code>?</p><ul class="opts"><li><button type="button" class="opt" data-ok>Declarar el tipo de una variable para poder animarla</button></li><li><button type="button" class="opt">Importar fuentes</button></li><li><button type="button" class="opt">Crear clases</button></li></ul><div class="explain" hidden></div></div>
+<div class="quiz-q"><p>Con una función de soporte parcial, lo correcto es…</p><ul class="opts"><li><button type="button" class="opt">Usarla sin más</button></li><li><button type="button" class="opt" data-ok>Encapsularla en <code>@supports</code> y verificar el soporte</button></li><li><button type="button" class="opt">Evitar siempre el CSS moderno</button></li></ul><div class="explain" hidden></div></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+      <nav class="pager" aria-label="Navegación">
+        <a href="../"><small>← Volver</small>Índice del curso</a>
+        <a class="next" href="../../javascript/extra-js-moderno/"><small>Otro extra →</small>JavaScript moderno</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Extra opcional · Material de estudio gratuito, hecho por un estudiante con ayuda de inteligencia artificial como aporte a la comunidad. Contrástalo con la documentación oficial.<span class="foot-links"><a href="https://github.com/Cacg-code/web-desde-cero/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/web-desde-cero/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

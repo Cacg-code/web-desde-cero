@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JavaScript moderno: Intl, copias y groupBy · Extra de JavaScript</title>
+  <meta name="description" content="Intl para fechas, moneda y listas; toSorted, toReversed, with, toSpliced; Object.groupBy y Map.groupBy.">
+  <link rel="canonical" href="https://cacg-code.github.io/web-desde-cero/javascript/extra-js-moderno/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="JavaScript moderno: Intl, copias y groupBy">
+  <meta property="og:description" content="Intl para fechas, moneda y listas; toSorted, toReversed, with, toSpliced; Object.groupBy y Map.groupBy.">
+  <meta property="og:url" content="https://cacg-code.github.io/web-desde-cero/javascript/extra-js-moderno/">
+  <meta property="og:image" content="https://cacg-code.github.io/web-desde-cero/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Curso de JavaScript</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap lesson-layout" id="contenido">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta página</h4>
+      <ol><li><a href="#intl">Intl</a></li><li><a href="#copias">Arrays sin mutar</a></li><li><a href="#group">groupBy</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Curso de JavaScript</a> › Extra opcional</div>
+        <h1>JavaScript moderno: Intl, copias y groupBy</h1>
+        <ul class="meta"><li>⏱ 30 minutos</li><li>📶 Nivel: intermedio</li><li>⭐ Extra opcional (no cuenta para el progreso)</li></ul>
+      </header>
+<div class="callout importante">
+<p class="callout-title">⚠️ Soporte</p>
+<p>Todo lo de esta página está disponible en las versiones actuales de los navegadores principales y en Node LTS. Si apuntas a navegadores antiguos, consulta <a href="https://caniuse.com/" target="_blank" rel="noopener">Can I use</a>.</p>
+</div>
+<h2 id="intl"><span class="n">1.</span>Intl: fechas, monedas y listas sin librerías</h2>
+<p><code>Intl</code> formatea números, fechas y listas según el idioma. Para precios en soles usa <code>Intl.NumberFormat</code> con <code>currency: "PEN"</code>.</p>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ Formatos con Intl</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:240px">&lt;script&gt;
+const precio = new Intl.NumberFormat("es-PE", { style: "currency", currency: "PEN" });
+console.log(precio.format(1234.5));
+
+const fecha = new Intl.DateTimeFormat("es-PE", { dateStyle: "full" });
+console.log(fecha.format(new Date()));
+
+const lista = new Intl.ListFormat("es", { style: "long", type: "conjunction" });
+console.log(lista.format(["HTML", "CSS", "JavaScript"]));
+
+const rel = new Intl.RelativeTimeFormat("es", { numeric: "auto" });
+console.log(rel.format(-1, "day"), "·", rel.format(3, "hour"));
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo</p>
+<p>Crea el formateador una vez y reutilízalo: es más rápido que llamar a <code>toLocaleString()</code> en cada iteración.</p>
+</div>
+
+<h2 id="copias"><span class="n">2.</span>Arrays: toSorted, toReversed, with y toSpliced</h2>
+<p>Los métodos clásicos <code>sort()</code> y <code>reverse()</code> <strong>modifican</strong> el array original. Las versiones nuevas devuelven <strong>una copia</strong> y dejan el original intacto, clave en React y en cualquier código que evite mutaciones.</p>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ Sin mutar el original</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:240px">&lt;script&gt;
+const notas = [14, 9, 18, 12];
+console.log(notas.toSorted((a, b) =&gt; a - b));   // ordenado
+console.log(notas.toReversed());                 // invertido
+console.log(notas.with(1, 20));                  // cambia la posición 1
+console.log(notas.toSpliced(0, 1));              // quita el primero
+console.log("original:", notas);                 // sigue igual
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+
+<h2 id="group"><span class="n">3.</span>Agrupar: Object.groupBy y Map.groupBy</h2>
+<p>Agrupar elementos por una clave era un <code>reduce</code> largo. Ahora es una sola llamada.</p>
+<div class="playground js" data-js>
+  <div class="pg-head"><span>▶ Agrupar productos por categoría</span><span class="pg-actions"><button type="button" data-run>Ejecutar</button><button type="button" data-reset>Restablecer</button></span></div>
+  <div class="pg-body">
+    <div><label>Código (edítalo y pulsa Ejecutar)</label><textarea class="pg-code" spellcheck="false" aria-label="Editor de JavaScript" style="height:240px">&lt;script&gt;
+const productos = [
+  { nombre: "Taladro", cat: "herramientas" },
+  { nombre: "Martillo", cat: "herramientas" },
+  { nombre: "Cemento", cat: "obra" },
+];
+const porCat = Object.groupBy(productos, (p) =&gt; p.cat);
+console.log(porCat);
+console.log(porCat.herramientas.length, "herramientas");
+&lt;/script&gt;</textarea></div>
+    <div><label>Página (resultado)</label><div class="pg-frame"></div></div>
+  </div>
+  <div class="pg-console"><div class="pg-console-head"><span>Consola</span><button type="button" data-clear>Limpiar</button></div><div class="pg-log" role="log" aria-live="polite"></div></div>
+</div>
+<div class="callout importante">
+<p class="callout-title">⚠️ Nota</p>
+<p><code>Object.groupBy</code> devuelve un objeto sin prototipo. Si necesitas claves que no sean texto, usa <code>Map.groupBy</code>.</p>
+</div>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li><code>Intl.NumberFormat</code>, <code>DateTimeFormat</code>, <code>ListFormat</code> y <code>RelativeTimeFormat</code> formatean según el idioma.</li><li><code>toSorted</code>, <code>toReversed</code>, <code>with</code> y <code>toSpliced</code> no mutan el original.</li><li><code>Object.groupBy</code> y <code>Map.groupBy</code> agrupan en una sola llamada.</li></ul>
+</section>
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta.</p>
+<div class="quiz-q"><p>¿Qué diferencia hay entre <code>sort()</code> y <code>toSorted()</code>?</p><ul class="opts"><li><button type="button" class="opt" data-ok><code>toSorted()</code> devuelve una copia y no modifica el original</button></li><li><button type="button" class="opt">Ninguna</button></li><li><button type="button" class="opt"><code>sort()</code> no ordena números</button></li></ul><div class="explain" hidden></div></div>
+<div class="quiz-q"><p>¿Cómo formateas un precio en soles?</p><ul class="opts"><li><button type="button" class="opt" data-ok><code>Intl.NumberFormat("es-PE", {style:"currency", currency:"PEN"})</code></button></li><li><button type="button" class="opt"><code>Math.money()</code></button></li><li><button type="button" class="opt"><code>Date.format()</code></button></li></ul><div class="explain" hidden></div></div>
+<div class="quiz-q"><p>¿Qué hace <code>Object.groupBy(lista, fn)</code>?</p><ul class="opts"><li><button type="button" class="opt">Ordena la lista</button></li><li><button type="button" class="opt" data-ok>Agrupa los elementos según la clave que devuelve <code>fn</code></button></li><li><button type="button" class="opt">Elimina duplicados</button></li></ul><div class="explain" hidden></div></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+      <nav class="pager" aria-label="Navegación">
+        <a href="../"><small>← Volver</small>Índice del curso</a>
+        <a class="next" href="../../css/extra-css-moderno/"><small>Otro extra →</small>CSS moderno</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Extra opcional · Material de estudio gratuito, hecho por un estudiante con ayuda de inteligencia artificial como aporte a la comunidad. Contrástalo con la documentación oficial.<span class="foot-links"><a href="https://github.com/Cacg-code/web-desde-cero/issues/new/choose" target="_blank" rel="noopener">Sugerencias y dudas</a> · <a href="https://github.com/Cacg-code/web-desde-cero/blob/main/LICENSE" target="_blank" rel="noopener">Licencia</a></span></footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>
