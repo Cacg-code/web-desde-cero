@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="290" viewBox="0 0 1000 290" role="img" aria-label="Comunidad: entra con GitHub, apodo, avatar, reto diario y clasificación semanal en la nube"><style>.t{font-family:Segoe UI,Helvetica,Arial,sans-serif}.fl{animation:fl 6s ease-in-out infinite}@keyframes fl{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+.pu{transform-box:fill-box;transform-origin:center;animation:pu 2s ease-in-out infinite}@keyframes pu{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}</style>
+<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#14172b"/><stop offset="1" stop-color="#1e1b4b"/></linearGradient>
+<linearGradient id="gr" x1="0" x2="1"><stop offset="0" stop-color="#6366f1"/><stop offset="1" stop-color="#ec4899"/></linearGradient></defs>
+<style>.bar{transform-box:fill-box;transform-origin:left;animation:b 6s ease-in-out infinite}@keyframes b{0%{transform:scaleX(.05)}50%,90%{transform:scaleX(1)}100%{transform:scaleX(.05)}}
+.me{animation:me 2.4s ease-in-out infinite}@keyframes me{0%,100%{stroke-opacity:.4}50%{stroke-opacity:1}}</style>
+<rect width="1000" height="290" rx="22" fill="url(#bg)"/>
+<g class="t"><g class="fl"><rect x="30" y="30" width="300" height="230" rx="18" fill="#0f1224" stroke="#818cf8" stroke-opacity=".6"/>
+<circle cx="180" cy="100" r="34" fill="#1f2440" stroke="#818cf8" stroke-width="2"/><text x="180" y="113" text-anchor="middle" font-size="36">🚀</text>
+<text x="180" y="156" text-anchor="middle" font-size="17" font-weight="800" fill="#fff">Mi comunidad</text>
+<rect x="70" y="176" width="220" height="40" rx="20" fill="#24292f" stroke="#6e7681"/><text x="180" y="202" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">Entrar con GitHub</text>
+<text x="180" y="244" text-anchor="middle" font-size="12" fill="#9aa1c4">Opcional · el curso va igual sin cuenta</text></g>
+<rect x="350" y="30" width="620" height="230" rx="18" fill="#0f1224" stroke="#ec4899" stroke-opacity=".5"/>
+<text x="374" y="64" font-size="17" font-weight="800" fill="#fff">🏆 Clasificación semanal</text><text x="946" y="64" text-anchor="end" font-size="12" fill="#9aa1c4">XP de la semana</text>
+<g><rect class="" x="374" y="82" width="572" height="34" rx="12" fill="#161a33" stroke="#818cf8" stroke-opacity=".4"/>
+<text x="392" y="105" font-size="13" font-weight="800" fill="#fde047">1</text><text x="418" y="106" font-size="18">🦊</text><text x="450" y="105" font-size="14" font-weight="700" fill="#e0e7ff">Ana</text>
+<rect x="540" y="93" width="320" height="12" rx="6" fill="#1f2440"/><rect class="bar" style="animation-delay:0.0s" x="540" y="93" width="320" height="12" rx="6" fill="url(#gr)"/>
+<text x="930" y="105" text-anchor="end" font-size="13" fill="#c7d2fe">940 XP</text></g>
+<g><rect class="" x="374" y="124" width="572" height="34" rx="12" fill="#161a33" stroke="#818cf8" stroke-opacity=".4"/>
+<text x="392" y="147" font-size="13" font-weight="800" fill="#fde047">2</text><text x="418" y="148" font-size="18">🐼</text><text x="450" y="147" font-size="14" font-weight="700" fill="#e0e7ff">Luis</text>
+<rect x="540" y="135" width="320" height="12" rx="6" fill="#1f2440"/><rect class="bar" style="animation-delay:0.2s" x="540" y="135" width="278" height="12" rx="6" fill="url(#gr)"/>
+<text x="930" y="147" text-anchor="end" font-size="13" fill="#c7d2fe">820 XP</text></g>
+<g><rect class="" x="374" y="166" width="572" height="34" rx="12" fill="#161a33" stroke="#818cf8" stroke-opacity=".4"/>
+<text x="392" y="189" font-size="13" font-weight="800" fill="#fde047">3</text><text x="418" y="190" font-size="18">🦉</text><text x="450" y="189" font-size="14" font-weight="700" fill="#e0e7ff">Sofía</text>
+<rect x="540" y="177" width="320" height="12" rx="6" fill="#1f2440"/><rect class="bar" style="animation-delay:0.4s" x="540" y="177" width="259" height="12" rx="6" fill="url(#gr)"/>
+<text x="930" y="189" text-anchor="end" font-size="13" fill="#c7d2fe">760 XP</text></g>
+<g><rect class="me" x="374" y="208" width="572" height="34" rx="12" fill="#312e81" stroke="#818cf8" stroke-opacity=".4"/>
+<text x="392" y="231" font-size="13" font-weight="800" fill="#fde047">4</text><text x="418" y="232" font-size="18">🚀</text><text x="450" y="231" font-size="14" font-weight="700" fill="#e0e7ff">Tú</text>
+<rect x="540" y="219" width="320" height="12" rx="6" fill="#1f2440"/><rect class="bar" style="animation-delay:0.6000000000000001s" x="540" y="219" width="208" height="12" rx="6" fill="url(#gr)"/>
+<text x="930" y="231" text-anchor="end" font-size="13" fill="#c7d2fe">610 XP</text></g></g></svg>

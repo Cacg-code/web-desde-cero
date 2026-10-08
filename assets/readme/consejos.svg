@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="210" viewBox="0 0 1000 210" role="img" aria-label="Consejos: escribe el código tú, rompe cosas, una lección al día, repite el ejercicio"><style>.t{font-family:Segoe UI,Helvetica,Arial,sans-serif}.fl{animation:fl 6s ease-in-out infinite}@keyframes fl{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+.pu{transform-box:fill-box;transform-origin:center;animation:pu 2s ease-in-out infinite}@keyframes pu{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}</style>
+<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#14172b"/><stop offset="1" stop-color="#1e1b4b"/></linearGradient>
+<linearGradient id="gr" x1="0" x2="1"><stop offset="0" stop-color="#6366f1"/><stop offset="1" stop-color="#ec4899"/></linearGradient></defs>
+<style>.sh{animation:sh 8s infinite}@keyframes sh{0%,100%{transform:translateY(0)}5%{transform:translateY(-10px)}12%{transform:translateY(0)}}.ic{transform-box:fill-box;transform-origin:center;animation:ic 8s infinite}@keyframes ic{0%,100%{transform:rotate(0)}6%{transform:rotate(-14deg) scale(1.2)}12%{transform:rotate(10deg)}18%{transform:rotate(0)}}</style>
+<rect width="1000" height="210" rx="22" fill="url(#bg)"/><g class="t"><g class="sh" style="animation-delay:0s"><rect x="24" y="30" width="226" height="150" rx="18" fill="#0f1224" stroke="#818cf8" stroke-opacity=".6" stroke-width="1.5"/>
+<rect x="24" y="30" width="226" height="6" rx="3" fill="#818cf8"/>
+<text class="ic" x="137" y="92" text-anchor="middle" font-size="38" style="animation-delay:0s">✍️</text>
+<text x="137" y="128" text-anchor="middle" font-size="16.5" font-weight="800" fill="#fff">Escribe el código tú</text><text x="137" y="152" text-anchor="middle" font-size="12.5" fill="#a5b4fc">no lo copies</text></g><g class="sh" style="animation-delay:2s"><rect x="265" y="30" width="226" height="150" rx="18" fill="#0f1224" stroke="#f43f5e" stroke-opacity=".6" stroke-width="1.5"/>
+<rect x="265" y="30" width="226" height="6" rx="3" fill="#f43f5e"/>
+<text class="ic" x="378" y="92" text-anchor="middle" font-size="38" style="animation-delay:2s">💥</text>
+<text x="378" y="128" text-anchor="middle" font-size="16.5" font-weight="800" fill="#fff">Rompe cosas</text><text x="378" y="152" text-anchor="middle" font-size="12.5" fill="#a5b4fc">en los editores y mira qué pasa</text></g><g class="sh" style="animation-delay:4s"><rect x="506" y="30" width="226" height="150" rx="18" fill="#0f1224" stroke="#22c55e" stroke-opacity=".6" stroke-width="1.5"/>
+<rect x="506" y="30" width="226" height="6" rx="3" fill="#22c55e"/>
+<text class="ic" x="619" y="92" text-anchor="middle" font-size="38" style="animation-delay:4s">⏱️</text>
+<text x="619" y="128" text-anchor="middle" font-size="16.5" font-weight="800" fill="#fff">Una lección al día</text><text x="619" y="152" text-anchor="middle" font-size="12.5" fill="#a5b4fc">mejor que cinco de golpe</text></g><g class="sh" style="animation-delay:6s"><rect x="747" y="30" width="226" height="150" rx="18" fill="#0f1224" stroke="#eab308" stroke-opacity=".6" stroke-width="1.5"/>
+<rect x="747" y="30" width="226" height="6" rx="3" fill="#eab308"/>
+<text class="ic" x="860" y="92" text-anchor="middle" font-size="38" style="animation-delay:6s">🔁</text>
+<text x="860" y="128" text-anchor="middle" font-size="16.5" font-weight="800" fill="#fff">Repite el ejercicio</text><text x="860" y="152" text-anchor="middle" font-size="12.5" fill="#a5b4fc">sin mirar la solución</text></g></g></svg>

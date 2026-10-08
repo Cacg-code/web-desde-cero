@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="230" viewBox="0 0 1000 230" role="img" aria-label="Acerca de este material: hecho por un estudiante con IA, sin títulos, contrástalo con MDN, avisa de errores"><style>.t{font-family:Segoe UI,Helvetica,Arial,sans-serif}.fl{animation:fl 6s ease-in-out infinite}@keyframes fl{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+.pu{transform-box:fill-box;transform-origin:center;animation:pu 2s ease-in-out infinite}@keyframes pu{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}</style>
+<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#14172b"/><stop offset="1" stop-color="#1e1b4b"/></linearGradient>
+<linearGradient id="gr" x1="0" x2="1"><stop offset="0" stop-color="#6366f1"/><stop offset="1" stop-color="#ec4899"/></linearGradient></defs>
+<rect width="1000" height="230" rx="22" fill="url(#bg)"/>
+<g class="t"><g class="fl" style="animation-delay:0.0s"><rect x="30" y="30" width="296" height="170" rx="18" fill="#0f1224" stroke="#818cf8" stroke-opacity=".6"/>
+<circle cx="78" cy="82" r="28" fill="#818cf8" fill-opacity=".2" stroke="#818cf8"/><text x="78" y="92" text-anchor="middle" font-size="28">🎓</text>
+<text x="122" y="80" font-size="18" font-weight="800" fill="#fff">Hecho por un estudiante</text><text x="122" y="102" font-size="13" fill="#a5b4fc">con ayuda de IA</text>
+<text x="52" y="142" font-size="13.5" fill="#cbd5e1">Aporte gratuito a la comunidad</text><text x="52" y="164" font-size="13.5" fill="#cbd5e1">de desarrolladores.</text></g><g class="fl" style="animation-delay:0.6s"><rect x="352" y="30" width="296" height="170" rx="18" fill="#0f1224" stroke="#f59e0b" stroke-opacity=".6"/>
+<circle cx="400" cy="82" r="28" fill="#f59e0b" fill-opacity=".2" stroke="#f59e0b"/><text x="400" y="92" text-anchor="middle" font-size="28">📜</text>
+<text x="444" y="80" font-size="18" font-weight="800" fill="#fff">Sin títulos</text><text x="444" y="102" font-size="13" fill="#a5b4fc">ni certificados</text>
+<text x="374" y="142" font-size="13.5" fill="#cbd5e1">No es un curso oficial y puede</text><text x="374" y="164" font-size="13.5" fill="#cbd5e1">tener errores. Contrástalo.</text></g><g class="fl" style="animation-delay:1.2s"><rect x="674" y="30" width="296" height="170" rx="18" fill="#0f1224" stroke="#22c55e" stroke-opacity=".6"/>
+<circle cx="722" cy="82" r="28" fill="#22c55e" fill-opacity=".2" stroke="#22c55e"/><text x="722" y="92" text-anchor="middle" font-size="28">🔍</text>
+<text x="766" y="80" font-size="18" font-weight="800" fill="#fff">Verifica y avisa</text><text x="766" y="102" font-size="13" fill="#a5b4fc">MDN y docs oficiales</text>
+<text x="696" y="142" font-size="13.5" fill="#cbd5e1">Si ves algo mal, abre un</text><text x="696" y="164" font-size="13.5" fill="#cbd5e1">issue: así mejora el curso.</text></g></g></svg>

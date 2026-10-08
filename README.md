@@ -144,6 +144,12 @@ Sigue el orden: cada curso se apoya en el anterior.
 
 <div align="center">
 
+<img src="assets/readme/progreso.svg" alt="XP y niveles, racha, meta semanal, reto del día y temas" width="100%">
+
+</div>
+
+<div align="center">
+
 🏅 **XP y niveles** (8 títulos) &nbsp;·&nbsp; 🔥 **Rachas** con 🛡️ escudos &nbsp;·&nbsp; 🎯 **Meta semanal**<br>
 🧠 **Reto del día** (+25 XP) &nbsp;·&nbsp; 🎨 **Temas y avatares** que se desbloquean al subir de nivel<br>
 📄 **Chuletas imprimibles** al terminar un curso &nbsp;·&nbsp; 📤 **Insignia para compartir** &nbsp;·&nbsp; 💾 **Código de respaldo**
@@ -154,9 +160,21 @@ Pulsa el chip de XP de la barra superior para abrir **Mi progreso**. Todo se gua
 
 ## 🙋 Acerca de este material
 
+<div align="center">
+
+<img src="assets/readme/acerca.svg" alt="Hecho por un estudiante con IA, sin títulos, verifica y avisa" width="100%">
+
+</div>
+
 Lo hace **un estudiante** con ayuda de inteligencia artificial, como aporte gratuito a la comunidad de desarrolladores: no es un curso oficial, no da títulos ni certificados y puede tener errores. Contrástalo con [MDN](https://developer.mozilla.org/es/) y la documentación oficial, y si ves algo mal, [avísame](https://github.com/Cacg-code/web-desde-cero/issues/new/choose).
 
 ## 🌐 Comunidad
+
+<div align="center">
+
+<img src="assets/readme/comunidad.svg" alt="Entrar con GitHub y clasificación semanal" width="100%">
+
+</div>
 
 Entra con tu cuenta de GitHub desde el panel **Mi comunidad** y tu progreso se guarda en la nube: apodo, avatar, reto diario y clasificación semanal. Es opcional: el curso funciona igual sin cuenta. El esquema de la base de datos está en [`backend/supabase.sql`](backend/supabase.sql).
 
@@ -335,9 +353,21 @@ Entra con tu cuenta de GitHub desde el panel **Mi comunidad** y tu progreso se g
 
 ## 💡 Consejos
 
+<div align="center">
+
+<img src="assets/readme/consejos.svg" alt="Cuatro consejos para aprender mejor" width="100%">
+
+</div>
+
 ✍️ **Escribe el código tú**, no lo copies · 💥 **Rompe cosas** en los editores para ver qué pasa · ⏱️ **Una lección al día** mejor que cinco de golpe · 🔁 **Repite el ejercicio** sin mirar la solución.
 
 ## ❓ FAQ
+
+<div align="center">
+
+<img src="assets/readme/faq.svg" alt="Preguntas frecuentes" width="100%">
+
+</div>
 
 <details>
 <summary><b>¿Necesito saber programar?</b></summary>

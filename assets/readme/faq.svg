@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="330" viewBox="0 0 1000 330" role="img" aria-label="Preguntas frecuentes: ocho preguntas con respuesta corta, desplegadas en las secciones de abajo"><style>.t{font-family:Segoe UI,Helvetica,Arial,sans-serif}.fl{animation:fl 6s ease-in-out infinite}@keyframes fl{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+.pu{transform-box:fill-box;transform-origin:center;animation:pu 2s ease-in-out infinite}@keyframes pu{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}</style>
+<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#14172b"/><stop offset="1" stop-color="#1e1b4b"/></linearGradient>
+<linearGradient id="gr" x1="0" x2="1"><stop offset="0" stop-color="#6366f1"/><stop offset="1" stop-color="#ec4899"/></linearGradient></defs>
+<style>.q{animation:q 16s infinite}@keyframes q{0%,100%{stroke-opacity:.35;fill:#161a33}2%,10%{stroke-opacity:1;fill:#312e81}12%{stroke-opacity:.35;fill:#161a33}}
+.a{animation:a 16s infinite;opacity:0}@keyframes a{0%,2%{opacity:0;transform:translateX(-8px)}4%,10%{opacity:1;transform:translateX(0)}12%,100%{opacity:0}}
+.ch{animation:ch 16s infinite;transform-box:fill-box;transform-origin:center}@keyframes ch{0%,100%{transform:rotate(0)}2%,10%{transform:rotate(90deg)}12%{transform:rotate(0)}}</style>
+<rect width="1000" height="330" rx="22" fill="url(#bg)"/><g class="t">
+<g><rect class="q" style="animation-delay:0s" x="24" y="24" width="464" height="64" rx="14" fill="#161a33" stroke="#818cf8" stroke-width="1.5"/>
+<text x="50" y="52" font-size="15" font-weight="700" fill="#fff">¿Necesito saber programar?</text>
+<text class="a" style="animation-delay:0s" x="50" y="75" font-size="13" fill="#fde68a">No: HTML empieza desde cero.</text>
+<text class="ch" style="animation-delay:0s" x="456" y="62" font-size="22" fill="#818cf8">›</text></g>
+<g><rect class="q" style="animation-delay:2s" x="512" y="24" width="464" height="64" rx="14" fill="#161a33" stroke="#818cf8" stroke-width="1.5"/>
+<text x="538" y="52" font-size="15" font-weight="700" fill="#fff">¿Qué necesito para empezar?</text>
+<text class="a" style="animation-delay:2s" x="538" y="75" font-size="13" fill="#fde68a">Solo un navegador moderno.</text>
+<text class="ch" style="animation-delay:2s" x="944" y="62" font-size="22" fill="#818cf8">›</text></g>
+<g><rect class="q" style="animation-delay:4s" x="24" y="100" width="464" height="64" rx="14" fill="#161a33" stroke="#818cf8" stroke-width="1.5"/>
+<text x="50" y="128" font-size="15" font-weight="700" fill="#fff">¿Se guarda mi progreso?</text>
+<text class="a" style="animation-delay:4s" x="50" y="151" font-size="13" fill="#fde68a">Sí, en tu navegador (con respaldo).</text>
+<text class="ch" style="animation-delay:4s" x="456" y="138" font-size="22" fill="#818cf8">›</text></g>
+<g><rect class="q" style="animation-delay:6s" x="512" y="100" width="464" height="64" rx="14" fill="#161a33" stroke="#818cf8" stroke-width="1.5"/>
+<text x="538" y="128" font-size="15" font-weight="700" fill="#fff">¿Funciona sin internet?</text>
+<text class="a" style="animation-delay:6s" x="538" y="151" font-size="13" fill="#fde68a">En parte: instálalo como app.</text>
+<text class="ch" style="animation-delay:6s" x="944" y="138" font-size="22" fill="#818cf8">›</text></g>
+<g><rect class="q" style="animation-delay:8s" x="24" y="176" width="464" height="64" rx="14" fill="#161a33" stroke="#818cf8" stroke-width="1.5"/>
+<text x="50" y="204" font-size="15" font-weight="700" fill="#fff">¿Cómo funciona el comprobador?</text>
+<text class="a" style="animation-delay:8s" x="50" y="227" font-size="13" fill="#fde68a">Revisa tu código en el navegador.</text>
+<text class="ch" style="animation-delay:8s" x="456" y="214" font-size="22" fill="#818cf8">›</text></g>
+<g><rect class="q" style="animation-delay:10s" x="512" y="176" width="464" height="64" rx="14" fill="#161a33" stroke="#818cf8" stroke-width="1.5"/>
+<text x="538" y="204" font-size="15" font-weight="700" fill="#fff">¿Cuánto tarda cada curso?</text>
+<text class="a" style="animation-delay:10s" x="538" y="227" font-size="13" fill="#fde68a">Entre 10 y 14 horas cada uno.</text>
+<text class="ch" style="animation-delay:10s" x="944" y="214" font-size="22" fill="#818cf8">›</text></g>
+<g><rect class="q" style="animation-delay:12s" x="24" y="252" width="464" height="64" rx="14" fill="#161a33" stroke="#818cf8" stroke-width="1.5"/>
+<text x="50" y="280" font-size="15" font-weight="700" fill="#fff">¿Cuánto cuesta? ¿Lo uso en clase?</text>
+<text class="a" style="animation-delay:12s" x="50" y="303" font-size="13" fill="#fde68a">Gratis · MIT y CC BY 4.0.</text>
+<text class="ch" style="animation-delay:12s" x="456" y="290" font-size="22" fill="#818cf8">›</text></g>
+<g><rect class="q" style="animation-delay:14s" x="512" y="252" width="464" height="64" rx="14" fill="#161a33" stroke="#818cf8" stroke-width="1.5"/>
+<text x="538" y="280" font-size="15" font-weight="700" fill="#fff">Encontré un error</text>
+<text class="a" style="animation-delay:14s" x="538" y="303" font-size="13" fill="#fde68a">Abre un issue: es lo mejor.</text>
+<text class="ch" style="animation-delay:14s" x="944" y="290" font-size="22" fill="#818cf8">›</text></g></g></svg>
