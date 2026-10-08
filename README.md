@@ -348,7 +348,7 @@ Entra con tu cuenta de GitHub desde el panel **Mi comunidad** y tu progreso se g
 <details>
 <summary><b>¿Qué necesito para empezar?</b></summary>
 
-<br>Solo un navegador moderno (Chrome, Firefox, Edge o Safari). Los editores y la consola están dentro de cada lección. Cuando quieras trabajar en tus propios proyectos, instala un editor como [VS Code](https://code.visualstudio.com/).
+<br>Solo un navegador moderno (Chrome, Firefox, Edge o Safari). Los editores y la consola están dentro de cada lección. Cuando quieras trabajar en tus propios proyectos, instala un editor como [Cursor](https://cursor.com/) (con [guía oficial](https://docs.cursor.com/)) o [VS Code](https://code.visualstudio.com/).
 </details>
 
 <details>
