@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="330" height="2384" viewBox="0 0 330 2384" role="img" aria-label="Cursos"><style>.t{font-family:Segoe UI,Helvetica,Arial,sans-serif}.fl{animation:f 5s ease-in-out infinite}@keyframes f{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}.sh{animation:s 4s linear infinite}@keyframes s{0%{transform:translateX(-340px)}100%{transform:translateX(340px)}}</style><svg x="0" y="0" width="330" height="384" viewBox="0 0 330 384" overflow="hidden"><defs>
+<linearGradient id="c0_g0" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e34f26"/><stop offset="1" stop-color="#f97316"/></linearGradient><clipPath id="c0_k0"><rect width="306" height="360" rx="22"/></clipPath>
+<linearGradient id="c0_g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1572b6"/><stop offset="1" stop-color="#38bdf8"/></linearGradient><clipPath id="c0_k1"><rect width="306" height="360" rx="22"/></clipPath>
+<linearGradient id="c0_g2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d4a017"/><stop offset="1" stop-color="#fde047"/></linearGradient><clipPath id="c0_k2"><rect width="306" height="360" rx="22"/></clipPath>
+<linearGradient id="c0_g3" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0ea5e9"/><stop offset="1" stop-color="#67e8f9"/></linearGradient><clipPath id="c0_k3"><rect width="306" height="360" rx="22"/></clipPath>
+<linearGradient id="c0_g4" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#15803d"/><stop offset="1" stop-color="#86efac"/></linearGradient><clipPath id="c0_k4"><rect width="306" height="360" rx="22"/></clipPath>
+<linearGradient id="c0_g5" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7c3aed"/><stop offset="1" stop-color="#c4b5fd"/></linearGradient><clipPath id="c0_k5"><rect width="306" height="360" rx="22"/></clipPath>
+</defs>
+<g transform="translate(12 12)"><g class="fl" style="animation-delay:0.0s"><rect width="306" height="360" rx="22" fill="#14172b" stroke="url(#c0_g0)" stroke-width="3"/>
+<g clip-path="url(#c0_k0)"><rect width="306" height="100" fill="url(#c0_g0)"/><rect class="sh" x="0" y="0" width="60" height="100" fill="#fff" opacity=".18" transform="skewX(-20)" style="animation-delay:0.0s"/></g>
+<text class="t" x="24" y="68" font-size="40" font-weight="800" fill="#fff" opacity=".9">&lt;/&gt;</text>
+<text class="t" x="286" y="40" font-size="14" font-weight="700" fill="#fff" text-anchor="end" opacity=".9">CURSO 1</text>
+<text class="t" x="24" y="148" font-size="30" font-weight="800" fill="#fff">HTML</text><text class="t" x="24" y="174" font-size="17" fill="#f97316" font-weight="600">Estructura</text>
+<text class="t" x="24" y="214" font-size="14.5" fill="#cbd2f0"><tspan fill="#f97316">✔ </tspan>Texto, enlaces y tablas</text>
+<text class="t" x="24" y="242" font-size="14.5" fill="#cbd2f0"><tspan fill="#f97316">✔ </tspan>Formularios y multimedia</text>
+<text class="t" x="24" y="270" font-size="14.5" fill="#cbd2f0"><tspan fill="#f97316">✔ </tspan>Accesibilidad, SEO y Git</text>
+<text class="t" x="24" y="316" font-size="15" font-weight="700" fill="#fff">🏆 Tu página personal</text><line x1="24" y1="327" x2="282" y2="327" stroke="#2b3158"/><text class="t" x="24" y="348" font-size="13" fill="#9aa1c4">11 lecciones + proyecto · ≈ 10 h</text></g></g>
+</svg><svg x="0" y="400" width="330" height="384" viewBox="339 0 330 384" overflow="hidden"><defs>
+<linearGradient id="c1_g0" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e34f26"/><stop offset="1" stop-color="#f97316"/></linearGradient><clipPath id="c1_k0"><rect width="306" height="360" rx="22"/></clipPath>
+<linearGradient id="c1_g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1572b6"/><stop offset="1" stop-color="#38bdf8"/></linearGradient><clipPath id="c1_k1"><rect width="306" height="360" rx="22"/></clipPath>
+<linearGradient id="c1_g2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d4a017"/><stop offset="1" stop-color="#fde047"/></linearGradient><clipPath id="c1_k2"><rect width="306" height="360" rx="22"/></clipPath>
+<linearGradient id="c1_g3" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0ea5e9"/><stop offset="1" stop-color="#67e8f9"/></linearGradient><clipPath id="c1_k3"><rect width="306" height="360" rx="22"/></clipPath>
+<linearGradient id="c1_g4" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#15803d"/><stop offset="1" stop-color="#86efac"/></linearGradient><clipPath id="c1_k4"><rect width="306" height="360" rx="22"/></clipPath>
+<linearGradient id="c1_g5" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7c3aed"/><stop offset="1" stop-color="#c4b5fd"/></linearGradient><clipPath id="c1_k5"><rect width="306" height="360" rx="22"/></clipPath>
+</defs>
+<g transform="translate(351 12)"><g class="fl" style="animation-delay:0.4s"><rect width="306" height="360" rx="22" fill="#14172b" stroke="url(#c1_g1)" stroke-width="3"/>
+<g clip-path="url(#c1_k1)"><rect width="306" height="100" fill="url(#c1_g1)"/><rect class="sh" x="0" y="0" width="60" height="100" fill="#fff" opacity=".18" transform="skewX(-20)" style="animation-delay:0.6s"/></g>
+<text class="t" x="24" y="68" font-size="40" font-weight="800" fill="#fff" opacity=".9">{ }</text>
+<text class="t" x="286" y="40" font-size="14" font-weight="700" fill="#fff" text-anchor="end" opacity=".9">CURSO 2</text>
+<text class="t" x="24" y="148" font-size="30" font-weight="800" fill="#fff">CSS</text><text class="t" x="24" y="174" font-size="17" fill="#38bdf8" font-weight="600">Estilo</text>
+<text class="t" x="24" y="214" font-size="14.5" fill="#cbd2f0"><tspan fill="#38bdf8">✔ </tspan>Selectores y la caja</text>
+<text class="t" x="24" y="242" font-size="14.5" fill="#cbd2f0"><tspan fill="#38bdf8">✔ </tspan>Flexbox, Grid, responsivo</text>
+<text class="t" x="24" y="270" font-size="14.5" fill="#cbd2f0"><tspan fill="#38bdf8">✔ </tspan>Animaciones y temas</text>
+<text class="t" x="24" y="316" font-size="15" font-weight="700" fill="#fff">🏆 Landing responsiva</text><line x1="24" y1="327" x2="282" y2="327" stroke="#2b3158"/><text class="t" x="24" y="348" font-size="13" fill="#9aa1c4">11 lecciones + proyecto · ≈ 12 h</text></g></g>
+</svg><svg x="0" y="800" width="330" height="384" viewBox="678 0 330 384" overflow="hidden"><defs>
+<linearGradient id="c2_g0" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e34f26"/><stop offset="1" stop-color="#f97316"/></linearGradient><clipPath id="c2_k0"><rect width="306" height="360" rx="22"/></clipPath>
+<linearGradient id="c2_g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1572b6"/><stop offset="1" stop-color="#38bdf8"/></linearGradient><clipPath id="c2_k1"><rect width="306" height="360" rx="22"/></clipPath>
+<linearGradient id="c2_g2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d4a017"/><stop offset="1" stop-color="#fde047"/></linearGradient><clipPath id="c2_k2"><rect width="306" height="360" rx="22"/></clipPath>
+<linearGradient id="c2_g3" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0ea5e9"/><stop offset="1" stop-color="#67e8f9"/></linearGradient><clipPath id="c2_k3"><rect width="306" height="360" rx="22"/></clipPath>
+<linearGradient id="c2_g4" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#15803d"/><stop offset="1" stop-color="#86efac"/></linearGradient><clipPath id="c2_k4"><rect width="306" height="360" rx="22"/></clipPath>
+<linearGradient id="c2_g5" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7c3aed"/><stop offset="1" stop-color="#c4b5fd"/></linearGradient><clipPath id="c2_k5"><rect width="306" height="360" rx="22"/></clipPath>
+</defs>
+<g transform="translate(690 12)"><g class="fl" style="animation-delay:0.8s"><rect width="306" height="360" rx="22" fill="#14172b" stroke="url(#c2_g2)" stroke-width="3"/>
+<g clip-path="url(#c2_k2)"><rect width="306" height="100" fill="url(#c2_g2)"/><rect class="sh" x="0" y="0" width="60" height="100" fill="#fff" opacity=".18" transform="skewX(-20)" style="animation-delay:1.2s"/></g>
+<text class="t" x="24" y="68" font-size="40" font-weight="800" fill="#fff" opacity=".9">JS</text>
+<text class="t" x="286" y="40" font-size="14" font-weight="700" fill="#fff" text-anchor="end" opacity=".9">CURSO 3</text>
+<text class="t" x="24" y="148" font-size="30" font-weight="800" fill="#fff">JavaScript</text><text class="t" x="24" y="174" font-size="17" fill="#fde047" font-weight="600">Lógica</text>
+<text class="t" x="24" y="214" font-size="14.5" fill="#cbd2f0"><tspan fill="#fde047">✔ </tspan>Variables y funciones</text>
+<text class="t" x="24" y="242" font-size="14.5" fill="#cbd2f0"><tspan fill="#fde047">✔ </tspan>DOM y eventos</text>
+<text class="t" x="24" y="270" font-size="14.5" fill="#cbd2f0"><tspan fill="#fde047">✔ </tspan>Asincronía y APIs</text>
+<text class="t" x="24" y="316" font-size="15" font-weight="700" fill="#fff">🏆 App de tareas</text><line x1="24" y1="327" x2="282" y2="327" stroke="#2b3158"/><text class="t" x="24" y="348" font-size="13" fill="#9aa1c4">11 lecciones + proyecto · ≈ 14 h</text></g></g>
+</svg><svg x="0" y="1200" width="330" height="384" viewBox="0 384 330 384" overflow="hidden"><defs>
+<linearGradient id="c3_g0" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e34f26"/><stop offset="1" stop-color="#f97316"/></linearGradient><clipPath id="c3_k0"><rect width="306" height="360" rx="22"/></clipPath>
+<linearGradient id="c3_g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1572b6"/><stop offset="1" stop-color="#38bdf8"/></linearGradient><clipPath id="c3_k1"><rect width="306" height="360" rx="22"/></clipPath>
+<linearGradient id="c3_g2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d4a017"/><stop offset="1" stop-color="#fde047"/></linearGradient><clipPath id="c3_k2"><rect width="306" height="360" rx="22"/></clipPath>
+<linearGradient id="c3_g3" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0ea5e9"/><stop offset="1" stop-color="#67e8f9"/></linearGradient><clipPath id="c3_k3"><rect width="306" height="360" rx="22"/></clipPath>
+<linearGradient id="c3_g4" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#15803d"/><stop offset="1" stop-color="#86efac"/></linearGradient><clipPath id="c3_k4"><rect width="306" height="360" rx="22"/></clipPath>
+<linearGradient id="c3_g5" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7c3aed"/><stop offset="1" stop-color="#c4b5fd"/></linearGradient><clipPath id="c3_k5"><rect width="306" height="360" rx="22"/></clipPath>
+</defs>
+<g transform="translate(12 396)"><g class="fl" style="animation-delay:1.2s"><rect width="306" height="360" rx="22" fill="#14172b" stroke="url(#c3_g3)" stroke-width="3"/>
+<g clip-path="url(#c3_k3)"><rect width="306" height="100" fill="url(#c3_g3)"/><rect class="sh" x="0" y="0" width="60" height="100" fill="#fff" opacity=".18" transform="skewX(-20)" style="animation-delay:1.8s"/></g>
+<text class="t" x="24" y="68" font-size="40" font-weight="800" fill="#fff" opacity=".9">⚛</text>
+<text class="t" x="286" y="40" font-size="14" font-weight="700" fill="#fff" text-anchor="end" opacity=".9">CURSO 4</text>
+<text class="t" x="24" y="148" font-size="30" font-weight="800" fill="#fff">React</text><text class="t" x="24" y="174" font-size="17" fill="#67e8f9" font-weight="600">Interfaces</text>
+<text class="t" x="24" y="214" font-size="14.5" fill="#cbd2f0"><tspan fill="#67e8f9">✔ </tspan>JSX, componentes y props</text>
+<text class="t" x="24" y="242" font-size="14.5" fill="#cbd2f0"><tspan fill="#67e8f9">✔ </tspan>Estado y efectos</text>
+<text class="t" x="24" y="270" font-size="14.5" fill="#cbd2f0"><tspan fill="#67e8f9">✔ </tspan>Context y datos reales</text>
+<text class="t" x="24" y="316" font-size="15" font-weight="700" fill="#fff">🏆 Carrito de compras</text><line x1="24" y1="327" x2="282" y2="327" stroke="#2b3158"/><text class="t" x="24" y="348" font-size="13" fill="#9aa1c4">11 lecciones + proyecto · ≈ 14 h</text></g></g>
+</svg><svg x="0" y="1600" width="330" height="384" viewBox="339 384 330 384" overflow="hidden"><defs>
+<linearGradient id="c4_g0" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e34f26"/><stop offset="1" stop-color="#f97316"/></linearGradient><clipPath id="c4_k0"><rect width="306" height="360" rx="22"/></clipPath>
+<linearGradient id="c4_g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1572b6"/><stop offset="1" stop-color="#38bdf8"/></linearGradient><clipPath id="c4_k1"><rect width="306" height="360" rx="22"/></clipPath>
+<linearGradient id="c4_g2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d4a017"/><stop offset="1" stop-color="#fde047"/></linearGradient><clipPath id="c4_k2"><rect width="306" height="360" rx="22"/></clipPath>
+<linearGradient id="c4_g3" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0ea5e9"/><stop offset="1" stop-color="#67e8f9"/></linearGradient><clipPath id="c4_k3"><rect width="306" height="360" rx="22"/></clipPath>
+<linearGradient id="c4_g4" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#15803d"/><stop offset="1" stop-color="#86efac"/></linearGradient><clipPath id="c4_k4"><rect width="306" height="360" rx="22"/></clipPath>
+<linearGradient id="c4_g5" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7c3aed"/><stop offset="1" stop-color="#c4b5fd"/></linearGradient><clipPath id="c4_k5"><rect width="306" height="360" rx="22"/></clipPath>
+</defs>
+<g transform="translate(351 396)"><g class="fl" style="animation-delay:1.6s"><rect width="306" height="360" rx="22" fill="#14172b" stroke="url(#c4_g4)" stroke-width="3"/>
+<g clip-path="url(#c4_k4)"><rect width="306" height="100" fill="url(#c4_g4)"/><rect class="sh" x="0" y="0" width="60" height="100" fill="#fff" opacity=".18" transform="skewX(-20)" style="animation-delay:2.4s"/></g>
+<text class="t" x="24" y="68" font-size="40" font-weight="800" fill="#fff" opacity=".9">⬢</text>
+<text class="t" x="286" y="40" font-size="14" font-weight="700" fill="#fff" text-anchor="end" opacity=".9">CURSO 5</text>
+<text class="t" x="24" y="148" font-size="30" font-weight="800" fill="#fff">Node.js</text><text class="t" x="24" y="174" font-size="17" fill="#86efac" font-weight="600">Servidores</text>
+<text class="t" x="24" y="214" font-size="14.5" fill="#cbd2f0"><tspan fill="#86efac">✔ </tspan>Módulos, npm y Express</text>
+<text class="t" x="24" y="242" font-size="14.5" fill="#cbd2f0"><tspan fill="#86efac">✔ </tspan>API REST con verbos</text>
+<text class="t" x="24" y="270" font-size="14.5" fill="#cbd2f0"><tspan fill="#86efac">✔ </tspan>Seguridad y despliegue</text>
+<text class="t" x="24" y="316" font-size="15" font-weight="700" fill="#fff">🏆 API de tareas</text><line x1="24" y1="327" x2="282" y2="327" stroke="#2b3158"/><text class="t" x="24" y="348" font-size="13" fill="#9aa1c4">8 lecciones + proyecto · ≈ 14 h</text></g></g>
+</svg><svg x="0" y="2000" width="330" height="384" viewBox="678 384 330 384" overflow="hidden"><defs>
+<linearGradient id="c5_g0" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e34f26"/><stop offset="1" stop-color="#f97316"/></linearGradient><clipPath id="c5_k0"><rect width="306" height="360" rx="22"/></clipPath>
+<linearGradient id="c5_g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1572b6"/><stop offset="1" stop-color="#38bdf8"/></linearGradient><clipPath id="c5_k1"><rect width="306" height="360" rx="22"/></clipPath>
+<linearGradient id="c5_g2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d4a017"/><stop offset="1" stop-color="#fde047"/></linearGradient><clipPath id="c5_k2"><rect width="306" height="360" rx="22"/></clipPath>
+<linearGradient id="c5_g3" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0ea5e9"/><stop offset="1" stop-color="#67e8f9"/></linearGradient><clipPath id="c5_k3"><rect width="306" height="360" rx="22"/></clipPath>
+<linearGradient id="c5_g4" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#15803d"/><stop offset="1" stop-color="#86efac"/></linearGradient><clipPath id="c5_k4"><rect width="306" height="360" rx="22"/></clipPath>
+<linearGradient id="c5_g5" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7c3aed"/><stop offset="1" stop-color="#c4b5fd"/></linearGradient><clipPath id="c5_k5"><rect width="306" height="360" rx="22"/></clipPath>
+</defs>
+<g transform="translate(690 396)"><g class="fl" style="animation-delay:2.0s"><rect width="306" height="360" rx="22" fill="#14172b" stroke="url(#c5_g5)" stroke-width="3"/>
+<g clip-path="url(#c5_k5)"><rect width="306" height="100" fill="url(#c5_g5)"/><rect class="sh" x="0" y="0" width="60" height="100" fill="#fff" opacity=".18" transform="skewX(-20)" style="animation-delay:3.0s"/></g>
+<text class="t" x="24" y="68" font-size="40" font-weight="800" fill="#fff" opacity=".9">🗄</text>
+<text class="t" x="286" y="40" font-size="14" font-weight="700" fill="#fff" text-anchor="end" opacity=".9">CURSO 6</text>
+<text class="t" x="24" y="148" font-size="30" font-weight="800" fill="#fff">Bases de datos</text><text class="t" x="24" y="174" font-size="17" fill="#c4b5fd" font-weight="600">Datos</text>
+<text class="t" x="24" y="214" font-size="14.5" fill="#cbd2f0"><tspan fill="#c4b5fd">✔ </tspan>SELECT, INSERT, UPDATE</text>
+<text class="t" x="24" y="242" font-size="14.5" fill="#cbd2f0"><tspan fill="#c4b5fd">✔ </tspan>Diseño de tablas y JOIN</text>
+<text class="t" x="24" y="270" font-size="14.5" fill="#cbd2f0"><tspan fill="#c4b5fd">✔ </tspan>SQLite y PostgreSQL</text>
+<text class="t" x="24" y="316" font-size="15" font-weight="700" fill="#fff">🏆 Base de datos de tienda</text><line x1="24" y1="327" x2="282" y2="327" stroke="#2b3158"/><text class="t" x="24" y="348" font-size="13" fill="#9aa1c4">8 lecciones + proyecto · ≈ 12 h</text></g></g>
+</svg></svg>

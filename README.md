@@ -49,16 +49,10 @@ Sigue el orden: cada curso se apoya en el anterior.
 <div align="center">
 
 <p align="center">
-<a href="https://cacg-code.github.io/web-desde-cero/html/"><img src="assets/readme/curso-html.svg" alt="Curso de HTML" width="32%"></a>
-<a href="https://cacg-code.github.io/web-desde-cero/css/"><img src="assets/readme/curso-css.svg" alt="Curso de CSS" width="32%"></a>
-<a href="https://cacg-code.github.io/web-desde-cero/javascript/"><img src="assets/readme/curso-javascript.svg" alt="Curso de JavaScript" width="32%"></a>
+<a href="https://cacg-code.github.io/web-desde-cero/"><picture><source media="(max-width: 600px)" srcset="assets/readme/m-cursos-m.svg"><img src="assets/readme/m-cursos-d.svg" alt="Seis cursos: HTML, CSS, JavaScript, React, Node.js y Bases de datos" width="100%"></picture></a>
 </p>
 
-<p align="center">
-<a href="https://cacg-code.github.io/web-desde-cero/react/"><img src="assets/readme/curso-react.svg" alt="Curso de React" width="32%"></a>
-<a href="https://cacg-code.github.io/web-desde-cero/node/"><img src="assets/readme/curso-node.svg" alt="Curso de Node.js" width="32%"></a>
-<a href="https://cacg-code.github.io/web-desde-cero/bd/"><img src="assets/readme/curso-bd.svg" alt="Curso de Bases de datos" width="32%"></a>
-</p>
+<p align="center"><sub><a href="https://cacg-code.github.io/web-desde-cero/html/">HTML</a> · <a href="https://cacg-code.github.io/web-desde-cero/css/">CSS</a> · <a href="https://cacg-code.github.io/web-desde-cero/javascript/">JavaScript</a> · <a href="https://cacg-code.github.io/web-desde-cero/react/">React</a> · <a href="https://cacg-code.github.io/web-desde-cero/node/">Node.js</a> · <a href="https://cacg-code.github.io/web-desde-cero/bd/">Bases de datos</a></sub></p>
 
 <sub>Toca una tarjeta para empezar el curso.</sub>
 
@@ -109,15 +103,7 @@ Sigue el orden: cada curso se apoya en el anterior.
 <div align="center">
 
 <p align="center">
-<a href="https://cacg-code.github.io/web-desde-cero/html/"><img src="assets/readme/tema-html.svg" alt="Temario de HTML" width="32%"></a>
-<a href="https://cacg-code.github.io/web-desde-cero/css/"><img src="assets/readme/tema-css.svg" alt="Temario de CSS" width="32%"></a>
-<a href="https://cacg-code.github.io/web-desde-cero/javascript/"><img src="assets/readme/tema-javascript.svg" alt="Temario de JavaScript" width="32%"></a>
-</p>
-
-<p align="center">
-<a href="https://cacg-code.github.io/web-desde-cero/react/"><img src="assets/readme/tema-react.svg" alt="Temario de React" width="32%"></a>
-<a href="https://cacg-code.github.io/web-desde-cero/node/"><img src="assets/readme/tema-node.svg" alt="Temario de Node.js" width="32%"></a>
-<a href="https://cacg-code.github.io/web-desde-cero/bd/"><img src="assets/readme/tema-bd.svg" alt="Temario de Bases de datos" width="32%"></a>
+<a href="https://cacg-code.github.io/web-desde-cero/"><picture><source media="(max-width: 600px)" srcset="assets/readme/m-temas-m.svg"><img src="assets/readme/m-temas-d.svg" alt="Temarios de los seis cursos" width="100%"></picture></a>
 </p>
 
 <sub>Toca una tarjeta para abrir el curso · abajo, el temario con enlace a cada lección.</sub>
