@@ -444,5 +444,111 @@
    "OWASP: inyección SQL",
    "https://owasp.org/www-community/attacks/SQL_Injection"
   ]
+ ],
+ "full-01": [
+  [
+   "Vite — server.proxy",
+   "https://vite.dev/config/server-options"
+  ],
+  [
+   "MDN — Fetch con credenciales",
+   "https://developer.mozilla.org/es/docs/Web/API/Fetch_API/Using_Fetch"
+  ],
+  [
+   "MDN — CORS",
+   "https://developer.mozilla.org/es/docs/Web/HTTP/Guides/CORS"
+  ],
+  [
+   "Vite — Variables de entorno",
+   "https://vite.dev/guide/env-and-mode"
+  ]
+ ],
+ "full-02": [
+  [
+   "React Router — Navegación",
+   "https://reactrouter.com/start/data/navigating"
+  ],
+  [
+   "React — createContext",
+   "https://react.dev/reference/react/createContext"
+  ],
+  [
+   "MDN — Atributo autocomplete",
+   "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Attributes/autocomplete"
+  ]
+ ],
+ "full-03": [
+  [
+   "TanStack Query",
+   "https://tanstack.com/query/latest"
+  ],
+  [
+   "React — Estado",
+   "https://react.dev/learn/managing-state"
+  ],
+  [
+   "MDN — Intl.DateTimeFormat",
+   "https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat"
+  ]
+ ],
+ "full-04": [
+  [
+   "multer",
+   "https://github.com/expressjs/multer"
+  ],
+  [
+   "MDN — FormData",
+   "https://developer.mozilla.org/es/docs/Web/API/FormData"
+  ],
+  [
+   "OWASP — Subida de archivos",
+   "https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html"
+  ],
+  [
+   "Cloudflare R2",
+   "https://developers.cloudflare.com/r2/"
+  ]
+ ],
+ "full-05": [
+  [
+   "Roadmap.sh — Frontend",
+   "https://roadmap.sh/frontend"
+  ],
+  [
+   "Exercism",
+   "https://exercism.org/"
+  ],
+  [
+   "freeCodeCamp",
+   "https://www.freecodecamp.org/espanol/"
+  ]
+ ],
+ "full-06": [
+  [
+   "SUNAT — Emprendedores (Perú)",
+   "https://www.sunat.gob.pe/"
+  ],
+  [
+   "Google Business Profile",
+   "https://www.google.com/business/"
+  ],
+  [
+   "web.dev — Lista de verificación",
+   "https://web.dev/"
+  ]
+ ],
+ "full-P": [
+  [
+   "web.dev — Aprende",
+   "https://web.dev/learn"
+  ],
+  [
+   "Roadmap.sh — Full Stack",
+   "https://roadmap.sh/full-stack"
+  ],
+  [
+   "Conventional Commits",
+   "https://www.conventionalcommits.org/es/v1.0.0/"
+  ]
  ]
 }

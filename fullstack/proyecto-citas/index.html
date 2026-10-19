@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Proyecto final: Proyecto: sistema de citas full-stack · Proyecto full stack</title>
+  <meta name="description" content="Un sistema de citas completo (página pública, panel y API) listo para vender.">
+  <link rel="canonical" href="https://cacg-code.github.io/web-desde-cero/fullstack/proyecto-citas/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Proyecto final: Proyecto: sistema de citas full-stack · Proyecto full stack">
+  <meta property="og:description" content="Un sistema de citas completo (página pública, panel y API) listo para vender.">
+  <meta property="og:url" content="https://cacg-code.github.io/web-desde-cero/fullstack/proyecto-citas/">
+  <meta property="og:image" content="https://cacg-code.github.io/web-desde-cero/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Proyecto full stack</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap lesson-layout" id="contenido">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#intro">Introducción</a></li><li><a href="#s1">Funcionalidades mínimas</a></li><li><a href="#s2">Requisitos técnicos</a></li><li><a href="#s3">Cómo trabajarlo (método)</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Proyecto full stack</a> › Proyecto final</div>
+        <h1>Proyecto: sistema de citas full-stack</h1>
+        <ul class="meta"><li>⏱ ≈ 10 horas</li><li>📶 Nivel: avanzado</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Unir front en React y API propia en un producto completo y publicado.</li><li>Trabajar como en un proyecto real: requisitos, pruebas, despliegue y documentación.</li></ul>
+</div>
+
+<div id="intro">
+<p>Este es tu <strong>proyecto final</strong> de desarrollo web: el sistema de citas de un negocio (una barbería, un consultorio, un spa) con panel de administración y página pública. Es el tipo de trabajo que puedes vender.</p>
+</div>
+
+<h2 id="s1"><span class="n">1.</span>Funcionalidades mínimas</h2>
+
+<ul><li><strong>Página pública</strong> del negocio: servicios con precios, horarios, mapa, botón de WhatsApp y formulario para pedir cita (sin cuenta).</li>
+  <li><strong>Panel privado</strong> (login): agenda por día/semana, crear/editar/cancelar citas, clientes con historial, servicios y precios.</li>
+  <li><strong>Reglas</strong>: sin solapamientos, horarios de atención, duración por servicio, estados de la cita.</li>
+  <li><strong>Reporte</strong>: ingresos del mes por servicio y clientes más frecuentes.</li>
+  <li><strong>Avisos</strong>: recordatorio por correo o enlace de WhatsApp preescrito.</li></ul>
+<h2 id="s2"><span class="n">2.</span>Requisitos técnicos</h2>
+
+<ul><li>React + Vite + React Router; diseño responsive y accesible (teclado, contraste, etiquetas).</li>
+  <li>API Express con las prácticas de la Parte 2; PostgreSQL o SQLite persistente; migraciones.</li>
+  <li>Pruebas: Vitest en la lógica del front y <code>node:test</code> en la API (≥ 20 en total); CI en GitHub Actions.</li>
+  <li>Seguridad revisada con la lista de b9; sin secretos en el repo; HTTPS y dominio.</li>
+  <li>Rendimiento: Lighthouse ≥ 90 en Rendimiento, Accesibilidad, Buenas prácticas y SEO en la página pública.</li>
+  <li>README con capturas, decisiones técnicas, cómo ejecutarlo y datos de prueba.</li></ul>
+<h2 id="s3"><span class="n">3.</span>Cómo trabajarlo (método)</h2>
+
+<ol><li><strong>Diseña</strong> pantallas en papel/Figma y el diagrama de la base de datos.</li>
+  <li>Divide en <strong>historias pequeñas</strong> ("el dueño puede crear una cita") y hazlas una por una, cada una con su commit y, si puedes, su rama + pull request.</li>
+  <li>Entrega un <strong>MVP</strong> pronto (login + crear/listar citas) y mejóralo en iteraciones.</li>
+  <li>Prueba con una persona real y corrige lo que le confunda.</li></ol>
+  <div class="callout consejo">
+<p class="callout-title">💡 Consejo</p>
+<p>Si lo terminas bien, tienes el producto base para ofrecer a negocios (con tu portafolio) y una pieza fuerte para entrevistas.</p>
+</div>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>¿Qué es un MVP?</p><ul class="opts"><li><button type="button" class="opt">La versión final</button></li><li><button type="button" class="opt" data-ok>La versión mínima que ya entrega valor</button></li><li><button type="button" class="opt">Un diseño</button></li></ul><p class="explain" hidden>Se publica pronto y se mejora con feedback.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="full-P">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../06-freelance-clientes-y-precios/"><small>← Anterior</small>Freelance: clientes, precios y entrega</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Proyecto full stack · Proyecto final · Material de estudio gratuito, hecho por un estudiante con ayuda de inteligencia artificial como aporte a la comunidad. Contrástalo con la documentación oficial.</footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lección 1: Conectar React con tu API · Proyecto full stack</title>
+  <meta name="description" content="Cliente de API único, proxy de Vite, CORS con cookies y variables VITE_.">
+  <link rel="canonical" href="https://cacg-code.github.io/web-desde-cero/fullstack/01-conectar-react-con-tu-api/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Lección 1: Conectar React con tu API · Proyecto full stack">
+  <meta property="og:description" content="Cliente de API único, proxy de Vite, CORS con cookies y variables VITE_.">
+  <meta property="og:url" content="https://cacg-code.github.io/web-desde-cero/fullstack/01-conectar-react-con-tu-api/">
+  <meta property="og:image" content="https://cacg-code.github.io/web-desde-cero/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Proyecto full stack</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap lesson-layout" id="contenido">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#intro">Introducción</a></li><li><a href="#s1">Un cliente de API único</a></li><li><a href="#s2">Opción A: proxy de Vite (recomendada en desarrollo)</a></li><li><a href="#s3">Opción B: orígenes distintos (producción típica)</a></li><li><a href="#s4">Variables de entorno en Vite</a></li><li><a href="#s5">Depurar la conexión</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Proyecto full stack</a> › Lección 1</div>
+        <h1>Conectar React con tu API</h1>
+        <ul class="meta"><li>⏱ 100 minutos</li><li>📶 Nivel: intermedio</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Llamar a la API desde React con cookies de sesión.</li><li>Configurar el proxy de Vite y CORS correctamente.</li></ul>
+</div>
+
+<div id="intro">
+<p>Ya tienes un front (React) y un back (Express). El full-stack es hacer que se hablen de forma segura. Dos piezas: <strong>cómo se hacen las peticiones</strong> y <strong>cómo se permiten</strong>.</p>
+</div>
+
+<h2 id="s1"><span class="n">1.</span>Un cliente de API único</h2>
+
+<p>Centraliza los <code>fetch</code> en un archivo: un solo lugar para la URL base, los errores y las cookies.</p>
+  <div class="code">
+  <div class="code-head"><span>js</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>// src/api.js
+const BASE = import.meta.env.VITE_API_URL ?? "";          // vacío = mismo origen (usa el proxy en desarrollo)
+
+export class ErrorApi extends Error {
+  constructor(estado, cuerpo) { super(cuerpo?.error ?? "Error " + estado); this.estado = estado; this.detalle = cuerpo?.detalle; }
+}
+
+async function pedir(ruta, { metodo = "GET", cuerpo } = {}) {
+  const r = await fetch(BASE + ruta, {
+    method: metodo,
+    credentials: "include",                                // envía y recibe la cookie de sesión
+    headers: cuerpo ? { "Content-Type": "application/json" } : undefined,
+    body: cuerpo ? JSON.stringify(cuerpo) : undefined,
+  });
+  const datos = r.status === 204 ? null : await r.json().catch(() => null);
+  if (!r.ok) throw new ErrorApi(r.status, datos);
+  return datos;
+}
+
+export const api = {
+  registro: (c) => pedir("/api/registro", { metodo: "POST", cuerpo: c }),
+  login:    (c) => pedir("/api/login", { metodo: "POST", cuerpo: c }),
+  logout:   () => pedir("/api/logout", { metodo: "POST" }),
+  citas: {
+    listar: () => pedir("/api/citas"),
+    crear:  (c) => pedir("/api/citas", { metodo: "POST", cuerpo: c }),
+    estado: (id, estado) => pedir("/api/citas/" + id, { metodo: "PATCH", cuerpo: { estado } }),
+    borrar: (id) => pedir("/api/citas/" + id, { metodo: "DELETE" }),
+  },
+};</code></pre>
+</div>
+<h2 id="s2"><span class="n">2.</span>Opción A: proxy de Vite (recomendada en desarrollo)</h2>
+
+<p>El navegador cree que front y API son el mismo origen (<code>localhost:5173</code>), y Vite reenvía <code>/api</code> a Express. Así no hay problemas de CORS ni de cookies en desarrollo.</p>
+  <div class="code">
+  <div class="code-head"><span>js</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>// vite.config.js
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+
+export default defineConfig({
+  plugins: [react()],
+  server: { proxy: { "/api": "http://localhost:3000" } },
+});</code></pre>
+</div>
+<h2 id="s3"><span class="n">3.</span>Opción B: orígenes distintos (producción típica)</h2>
+
+<p>Front en <code>https://citas.midominio.com</code> y API en <code>https://api.midominio.com</code>. Entonces:</p>
+  <ul><li>En el front: <code>VITE_API_URL=https://api.midominio.com</code> y <code>credentials: "include"</code>.</li>
+  <li>En la API: <code>cors({ origin: "https://citas.midominio.com", credentials: true })</code> (origen exacto, jamás <code>*</code>).</li>
+  <li>Cookie con <code>secure: true</code>. Si ambos comparten el dominio base (<code>midominio.com</code>), <code>SameSite=Lax</code> funciona porque son del mismo "sitio". Si son dominios totalmente distintos necesitarías <code>SameSite=None</code> y los navegadores bloquean cada vez más las cookies de terceros: evita ese diseño.</li></ul>
+  <p>Otra alternativa: servir el front compilado desde la misma app Express (<code>app.use(express.static("dist"))</code>) y tener un único origen y un único despliegue; es la opción más simple para proyectos pequeños.</p>
+<h2 id="s4"><span class="n">4.</span>Variables de entorno en Vite</h2>
+
+<p>Solo las que empiezan con <code>VITE_</code> llegan al navegador, y por eso <strong>son públicas</strong>. Nunca pongas allí claves privadas.</p>
+<h2 id="s5"><span class="n">5.</span>Depurar la conexión</h2>
+
+<p>Pestaña <strong>Network</strong> de DevTools: ¿la petición salió?, ¿qué estado devolvió?, ¿viaja la cookie (Request Headers → Cookie)?, ¿la respuesta trae <code>Set-Cookie</code>? Un error de CORS aparece en consola y la petición se ve "bloqueada".</p>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>credentials: "include" sirve para…</p><ul class="opts"><li><button type="button" class="opt" data-ok>Enviar y recibir cookies en peticiones fetch</button></li><li><button type="button" class="opt">Cifrar la petición</button></li><li><button type="button" class="opt">Evitar CORS</button></li></ul><p class="explain" hidden>Sin él la cookie de sesión no viaja.</p></div>
+<div class="quiz-q"><p>Las variables VITE_… son…</p><ul class="opts"><li><button type="button" class="opt">Privadas</button></li><li><button type="button" class="opt" data-ok>Visibles en el navegador (públicas)</button></li><li><button type="button" class="opt">Solo del servidor</button></li></ul><p class="explain" hidden>No pongas secretos en el front.</p></div>
+<div class="quiz-q"><p>Con credenciales, el origen de CORS debe ser…</p><ul class="opts"><li><button type="button" class="opt">"*"</button></li><li><button type="button" class="opt" data-ok>El origen exacto del front</button></li><li><button type="button" class="opt">Cualquiera</button></li></ul><p class="explain" hidden>El navegador rechaza "*" con cookies.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="full-01">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../"><small>← Volver</small>Temario del curso</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Proyecto full stack · Lección 1 · Material de estudio gratuito, hecho por un estudiante con ayuda de inteligencia artificial como aporte a la comunidad. Contrástalo con la documentación oficial.</footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

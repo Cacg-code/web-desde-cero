@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lección 4: Subir archivos e imágenes · Proyecto full stack</title>
+  <meta name="description" content="Subir imágenes desde el formulario y guardarlas de forma segura en la API.">
+  <link rel="canonical" href="https://cacg-code.github.io/web-desde-cero/fullstack/04-subir-archivos-e-imagenes/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Lección 4: Subir archivos e imágenes · Proyecto full stack">
+  <meta property="og:description" content="Subir imágenes desde el formulario y guardarlas de forma segura en la API.">
+  <meta property="og:url" content="https://cacg-code.github.io/web-desde-cero/fullstack/04-subir-archivos-e-imagenes/">
+  <meta property="og:image" content="https://cacg-code.github.io/web-desde-cero/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Proyecto full stack</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap lesson-layout" id="contenido">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#intro">Introducción</a></li><li><a href="#s1">Front: FormData</a></li><li><a href="#s2">Back: multer</a></li><li><a href="#s3">Dónde guardar</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Proyecto full stack</a> › Lección 4</div>
+        <h1>Subir archivos e imágenes</h1>
+        <ul class="meta"><li>⏱ 70 minutos</li><li>📶 Nivel: intermedio</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Recibir archivos en Express con límites y validación.</li><li>Mostrar las imágenes en el front.</li></ul>
+</div>
+
+<div id="intro">
+<p>Subir archivos es una de las funciones más peligrosas: un archivo puede ser enorme, falso o malicioso. Reglas: <strong>limitar tamaño, validar tipo real, renombrar y no ejecutar jamás</strong>.</p>
+</div>
+
+<h2 id="s1"><span class="n">1.</span>Front: FormData</h2>
+
+<div class="code">
+  <div class="code-head"><span>js</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>const f = new FormData();
+f.append("foto", archivo);                     // archivo viene de &lt;input type="file" accept="image/*">
+await fetch("/api/clientes/3/foto", { method: "POST", body: f, credentials: "include" });   // sin Content-Type: el navegador lo pone</code></pre>
+</div>
+<h2 id="s2"><span class="n">2.</span>Back: multer</h2>
+
+<div class="code">
+  <div class="code-head"><span>bash</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>npm install multer</code></pre>
+</div>
+  <div class="code">
+  <div class="code-head"><span>js</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>import multer from "multer";
+import path from "node:path";
+import crypto from "node:crypto";
+
+const PERMITIDOS = { "image/jpeg": ".jpg", "image/png": ".png", "image/webp": ".webp" };
+
+const subir = multer({
+  storage: multer.diskStorage({
+    destination: "subidas",
+    filename: (req, file, cb) => cb(null, crypto.randomUUID() + PERMITIDOS[file.mimetype]),   // nombre nuevo, extensión controlada
+  }),
+  limits: { fileSize: 2 * 1024 * 1024, files: 1 },                                           // 2 MB
+  fileFilter: (req, file, cb) => cb(null, file.mimetype in PERMITIDOS),
+});
+
+app.post("/api/clientes/:id/foto", exigirSesion, subir.single("foto"), (req, res) => {
+  if (!req.file) return res.status(400).json({ error: "Archivo no válido" });
+  db.prepare("UPDATE clientes SET foto = ? WHERE id = ? AND usuario_id = ?").run(req.file.filename, Number(req.params.id), req.usuarioId);
+  res.status(201).json({ foto: req.file.filename });
+});
+app.use("/fotos", express.static("subidas", { dotfiles: "deny", index: false }));</code></pre>
+</div>
+  <p><strong>Ojo:</strong> el <code>mimetype</code> lo declara el cliente y puede mentir. Para algo serio verifica los primeros bytes del archivo ("firma mágica": JPEG empieza por <code>FF D8 FF</code>, PNG por <code>89 50 4E 47</code>) o usa una librería de detección, y reprocesa la imagen (por ejemplo con <code>sharp</code>) para descartar contenido oculto.</p>
+<h2 id="s3"><span class="n">3.</span>Dónde guardar</h2>
+
+<ul><li>El disco de muchos hostings es efímero. Para producción usa almacenamiento de objetos: <strong>Cloudflare R2, Amazon S3, Supabase Storage</strong>. Guardas en la BD solo la clave/URL.</li>
+  <li>Archivos privados (documentos de clientes): URLs firmadas con vencimiento, no carpetas públicas.</li>
+  <li>Optimiza imágenes (WebP/AVIF, varios tamaños) para que el sitio sea rápido.</li></ul>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>El mimetype que envía el cliente…</p><ul class="opts"><li><button type="button" class="opt">Es confiable</button></li><li><button type="button" class="opt" data-ok>Puede falsificarse: verifica el contenido real</button></li><li><button type="button" class="opt">No existe</button></li></ul><p class="explain" hidden>Valida firma mágica o reprocesa la imagen.</p></div>
+<div class="quiz-q"><p>Un nombre de archivo subido debe…</p><ul class="opts"><li><button type="button" class="opt">Conservarse tal cual</button></li><li><button type="button" class="opt" data-ok>Generarse de nuevo en el servidor</button></li><li><button type="button" class="opt">Ser el del usuario</button></li></ul><p class="explain" hidden>Evita colisiones y rutas peligrosas.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="full-04">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../03-crud-completo-en-el-front/"><small>← Anterior</small>CRUD completo en el front</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Proyecto full stack · Lección 4 · Material de estudio gratuito, hecho por un estudiante con ayuda de inteligencia artificial como aporte a la comunidad. Contrástalo con la documentación oficial.</footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

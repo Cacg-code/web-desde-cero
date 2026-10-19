@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lección 2: Autenticación en el front · Proyecto full stack</title>
+  <meta name="description" content="Sesión en React: contexto de usuario, rutas protegidas y formularios de acceso.">
+  <link rel="canonical" href="https://cacg-code.github.io/web-desde-cero/fullstack/02-autenticacion-en-el-front/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Lección 2: Autenticación en el front · Proyecto full stack">
+  <meta property="og:description" content="Sesión en React: contexto de usuario, rutas protegidas y formularios de acceso.">
+  <meta property="og:url" content="https://cacg-code.github.io/web-desde-cero/fullstack/02-autenticacion-en-el-front/">
+  <meta property="og:image" content="https://cacg-code.github.io/web-desde-cero/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Proyecto full stack</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap lesson-layout" id="contenido">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#intro">Introducción</a></li><li><a href="#s1">Contexto de sesión</a></li><li><a href="#s2">Rutas protegidas</a></li><li><a href="#s3">Formulario de login con errores</a></li><li><a href="#s4">Sesión expirada</a></li><li><a href="#s5">Experiencia de usuario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Proyecto full stack</a> › Lección 2</div>
+        <h1>Autenticación en el front</h1>
+        <ul class="meta"><li>⏱ 100 minutos</li><li>📶 Nivel: intermedio</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Guardar el usuario en un contexto de React.</li><li>Proteger rutas y manejar sesiones expiradas.</li></ul>
+</div>
+
+<div id="intro">
+<p>El front no "autentica": solo <strong>refleja</strong> si el servidor te reconoce. La seguridad real vive en la API; el front decide qué pantalla mostrar. Ocultar un botón no protege nada.</p>
+</div>
+
+<h2 id="s1"><span class="n">1.</span>Contexto de sesión</h2>
+
+<p>Al cargar la app, pregunta al servidor "¿quién soy?". Añade a tu API una ruta <code>GET /api/yo</code> (protegida con <code>exigirSesion</code>) que devuelva <code>{ id, correo }</code>.</p>
+  <div class="code">
+  <div class="code-head"><span>jsx</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>// src/Sesion.jsx
+import { createContext, useContext, useEffect, useState } from "react";
+import { api, ErrorApi } from "./api";
+
+const Ctx = createContext(null);
+export const useSesion = () => useContext(Ctx);
+
+export function ProveedorSesion({ children }) {
+  const [usuario, setUsuario] = useState(null);
+  const [cargando, setCargando] = useState(true);
+
+  useEffect(() => {
+    api.yo().then(setUsuario).catch(() => setUsuario(null)).finally(() => setCargando(false));
+  }, []);
+
+  async function entrar(credenciales) {
+    await api.login(credenciales);
+    setUsuario(await api.yo());
+  }
+  async function salir() {
+    await api.logout();
+    setUsuario(null);
+  }
+  return &lt;Ctx.Provider value={{ usuario, cargando, entrar, salir }}>{children}&lt;/Ctx.Provider>;
+}</code></pre>
+</div>
+  <p>(Añade a <code>api</code>: <code>yo: () =&gt; pedir("/api/yo")</code>.)</p>
+<h2 id="s2"><span class="n">2.</span>Rutas protegidas</h2>
+
+<div class="code">
+  <div class="code-head"><span>jsx</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>import { Navigate, Outlet, useLocation } from "react-router";
+import { useSesion } from "./Sesion";
+
+export function RutaPrivada() {
+  const { usuario, cargando } = useSesion();
+  const ubicacion = useLocation();
+  if (cargando) return &lt;p>Cargando…&lt;/p>;
+  return usuario ? &lt;Outlet /> : &lt;Navigate to="/login" state={{ desde: ubicacion }} replace />;
+}
+
+// en el router:
+// &lt;Route element={&lt;RutaPrivada />}>
+//   &lt;Route path="/citas" element={&lt;Citas />} />
+// &lt;/Route></code></pre>
+</div>
+<h2 id="s3"><span class="n">3.</span>Formulario de login con errores</h2>
+
+<div class="code">
+  <div class="code-head"><span>jsx</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>function Login() {
+  const { entrar } = useSesion();
+  const navegar = useNavigate();
+  const [error, setError] = useState("");
+  const [enviando, setEnviando] = useState(false);
+
+  async function enviar(e) {
+    e.preventDefault();
+    const f = new FormData(e.currentTarget);
+    setEnviando(true); setError("");
+    try {
+      await entrar({ correo: f.get("correo"), clave: f.get("clave") });
+      navegar("/citas");
+    } catch (err) {
+      setError(err instanceof ErrorApi &amp;&amp; err.estado === 429 ? "Demasiados intentos. Espera unos minutos." : err.message);
+    } finally {
+      setEnviando(false);
+    }
+  }
+  return (
+    &lt;form onSubmit={enviar}>
+      &lt;label>Correo &lt;input name="correo" type="email" required autoComplete="username" />&lt;/label>
+      &lt;label>Clave &lt;input name="clave" type="password" required minLength={8} autoComplete="current-password" />&lt;/label>
+      &lt;button disabled={enviando}>{enviando ? "Entrando…" : "Entrar"}&lt;/button>
+      {error &amp;&amp; &lt;p role="alert">{error}&lt;/p>}
+    &lt;/form>
+  );
+}</code></pre>
+</div>
+<h2 id="s4"><span class="n">4.</span>Sesión expirada</h2>
+
+<p>Si una petición devuelve 401 en medio del uso, la sesión caducó: limpia el usuario y redirige a login. Una forma: que <code>pedir</code> lance un evento o que cada llamada capture <code>ErrorApi</code> con estado 401.</p>
+<h2 id="s5"><span class="n">5.</span>Experiencia de usuario</h2>
+
+<ul><li>Estados <strong>cargando / error / vacío / éxito</strong> en cada pantalla.</li>
+  <li><code>autoComplete</code> correcto para que los gestores de contraseñas funcionen.</li>
+  <li>Mensajes de error claros pero no reveladores.</li>
+  <li>Accesibilidad: <code>role="alert"</code> para anunciar errores, foco al primer campo con error.</li></ul>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>Ocultar un botón en React…</p><ul class="opts"><li><button type="button" class="opt">Protege la acción</button></li><li><button type="button" class="opt" data-ok>No protege: la API debe validar siempre</button></li><li><button type="button" class="opt">Es suficiente</button></li></ul><p class="explain" hidden>Cualquiera puede llamar la API directamente.</p></div>
+<div class="quiz-q"><p>¿Cómo sabe la app al cargar si hay sesión?</p><ul class="opts"><li><button type="button" class="opt">Lee localStorage</button></li><li><button type="button" class="opt" data-ok>Pregunta a la API (GET /api/yo)</button></li><li><button type="button" class="opt">Adivina</button></li></ul><p class="explain" hidden>La cookie HttpOnly no es legible desde JS.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="full-02">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../01-conectar-react-con-tu-api/"><small>← Anterior</small>Conectar React con tu API</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Proyecto full stack · Lección 2 · Material de estudio gratuito, hecho por un estudiante con ayuda de inteligencia artificial como aporte a la comunidad. Contrástalo con la documentación oficial.</footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

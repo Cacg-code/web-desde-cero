@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lección 3: CRUD completo en el front · Proyecto full stack</title>
+  <meta name="description" content="Listar, crear, editar y borrar desde React con estados de carga y error.">
+  <link rel="canonical" href="https://cacg-code.github.io/web-desde-cero/fullstack/03-crud-completo-en-el-front/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Lección 3: CRUD completo en el front · Proyecto full stack">
+  <meta property="og:description" content="Listar, crear, editar y borrar desde React con estados de carga y error.">
+  <meta property="og:url" content="https://cacg-code.github.io/web-desde-cero/fullstack/03-crud-completo-en-el-front/">
+  <meta property="og:image" content="https://cacg-code.github.io/web-desde-cero/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Proyecto full stack</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap lesson-layout" id="contenido">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#intro">Introducción</a></li><li><a href="#s1">Actualización optimista</a></li><li><a href="#s2">Mostrar errores de validación del servidor</a></li><li><a href="#s3">Un solo "pedir" y librerías de datos</a></li><li><a href="#s4">Accesibilidad y detalles</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Proyecto full stack</a> › Lección 3</div>
+        <h1>CRUD completo en el front</h1>
+        <ul class="meta"><li>⏱ 100 minutos</li><li>📶 Nivel: intermedio</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Listar, crear, editar y borrar con la API, con estados de carga y error.</li><li>Evitar estados inconsistentes con una pequeña capa de datos.</li></ul>
+</div>
+
+<div id="intro">
+<p>La pantalla principal de cualquier sistema es un CRUD (crear, leer, actualizar, borrar). La clave es no inventar estado local contradictorio con el del servidor: <strong>el servidor es la fuente de la verdad</strong>.</p>
+  <div class="code">
+  <div class="code-head"><span>jsx</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>import { useEffect, useState } from "react";
+import { api } from "./api";
+
+export function useCitas() {
+  const [citas, setCitas] = useState([]);
+  const [estado, setEstado] = useState("cargando");   // cargando | listo | error
+  const [error, setError] = useState("");
+
+  async function recargar() {
+    try { setCitas(await api.citas.listar()); setEstado("listo"); }
+    catch (e) { setError(e.message); setEstado("error"); }
+  }
+  useEffect(() => { recargar(); }, []);
+
+  async function crear(datos) {
+    const nueva = await api.citas.crear(datos);                  // lanza si hay error (lo muestra el formulario)
+    setCitas((c) => [...c, nueva].sort((a, b) => a.fecha.localeCompare(b.fecha)));
+  }
+  async function cambiarEstado(id, nuevo) {
+    const previo = citas;
+    setCitas((c) => c.map((x) => (x.id === id ? { ...x, estado: nuevo } : x)));   // optimista
+    try { await api.citas.estado(id, nuevo); }
+    catch { setCitas(previo); }                                   // revertir si falla
+  }
+  async function borrar(id) {
+    await api.citas.borrar(id);
+    setCitas((c) => c.filter((x) => x.id !== id));
+  }
+  return { citas, estado, error, recargar, crear, cambiarEstado, borrar };
+}</code></pre>
+</div>
+</div>
+
+<h2 id="s1"><span class="n">1.</span>Actualización optimista</h2>
+
+<p>Cambias la pantalla de inmediato (se siente rápido) y, si el servidor rechaza, revertes. Úsala en acciones de bajo riesgo (marcar completada); para pagos o borrados importantes espera la confirmación.</p>
+<h2 id="s2"><span class="n">2.</span>Mostrar errores de validación del servidor</h2>
+
+<p>La API devuelve <code>detalle: { cliente: ["..."] }</code>. Muéstralos junto a cada campo:</p>
+  <div class="code">
+  <div class="code-head"><span>jsx</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>{error?.detalle?.cliente &amp;&amp; &lt;small role="alert">{error.detalle.cliente[0]}&lt;/small>}</code></pre>
+</div>
+<h2 id="s3"><span class="n">3.</span>Un solo "pedir" y librerías de datos</h2>
+
+<p>Cuando la app crece (caché, reintentos, recarga al volver a la pestaña, paginación), se usa <strong>TanStack Query</strong>, que gestiona carga, error y caché por ti. Primero entiende el patrón manual; luego esa librería será obvia.</p>
+<h2 id="s4"><span class="n">4.</span>Accesibilidad y detalles</h2>
+
+<ul><li>Confirmar borrados (diálogo <code>&lt;dialog&gt;</code> accesible, no <code>alert</code>).</li>
+  <li>Botones con texto o <code>aria-label</code> ("Cancelar cita de Ana").</li>
+  <li>Evitar doble envío: deshabilita el botón mientras envía.</li>
+  <li>Formatear fechas con <code>Intl.DateTimeFormat("es-PE")</code>.</li></ul>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>La actualización optimista…</p><ul class="opts"><li><button type="button" class="opt">Espera siempre al servidor</button></li><li><button type="button" class="opt" data-ok>Cambia la UI primero y revierte si falla</button></li><li><button type="button" class="opt">Evita la API</button></li></ul><p class="explain" hidden>Útil en acciones de bajo riesgo.</p></div>
+<div class="quiz-q"><p>Fuente de la verdad de los datos:</p><ul class="opts"><li><button type="button" class="opt">El estado local de React</button></li><li><button type="button" class="opt" data-ok>El servidor/base de datos</button></li><li><button type="button" class="opt">localStorage</button></li></ul><p class="explain" hidden>El front es una vista de ellos.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="full-03">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../02-autenticacion-en-el-front/"><small>← Anterior</small>Autenticación en el front</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Proyecto full stack · Lección 3 · Material de estudio gratuito, hecho por un estudiante con ayuda de inteligencia artificial como aporte a la comunidad. Contrástalo con la documentación oficial.</footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>
