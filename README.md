@@ -85,7 +85,7 @@ Sigue el orden: cada curso se apoya en el anterior.
 ## 🗺️ Ruta
 
 <div align="center">
-  <img src="assets/readme/ruta.svg" alt="Ruta: HTML, CSS, JavaScript, Git, React, Node.js y bases de datos disponibles; proyecto full stack próximamente" width="100%">
+  <img src="assets/readme/ruta.svg" alt="Ruta: HTML, CSS, JavaScript, Git, React, Node.js y bases de datos y proyecto full stack disponibles" width="100%">
 </div>
 
 ## 🔁 Cada lección

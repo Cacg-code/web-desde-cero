@@ -52,6 +52,14 @@
       <div class="progress" aria-hidden="true"><div></div></div>
       <p id="progreso-texto" style="color:var(--muted);font-size:.9rem" aria-live="polite"></p>
       <ul class="checklist"><li><label><input type="checkbox" id="p1"><span>Subir una foto de cliente con límite de 2 MB</span></label></li><li><label><input type="checkbox" id="p2"><span>Probar subir un .exe renombrado a .jpg y ver cómo responde tu validación</span></label></li><li><label><input type="checkbox" id="p3"><span>Mostrar la foto en el front con &lt;img> y texto alternativo</span></label></li><li><label><input type="checkbox" id="p4"><span>Investigar cómo se guardaría en un bucket R2/S3</span></label></li></ul>
+      <h2>Cómo sé que está bien</h2>
+      <ul class="checks-list"><li>Una imagen válida de menos de 2 MB se sube y se muestra con su texto alternativo.</li><li>Un archivo de 5 MB responde 413.</li><li>Un ejecutable renombrado a .jpg es rechazado.</li><li>El nombre guardado no depende del nombre original.</li></ul>
+      <h2>Pistas</h2>
+      <details><summary>💡 Pista 1: multer devuelve "Unexpected field"</summary><p>El nombre del campo en <code>FormData.append("foto", …)</code> debe coincidir con <code>subir.single("foto")</code>.</p></details><details><summary>💡 Pista 2: La imagen no se ve en el front</summary><p>Comprueba la URL (<code>/fotos/archivo.jpg</code>) y que <code>express.static</code> apunte a la carpeta correcta. Mira Network: ¿es 404 o 200?</p></details><details><summary>💡 Pista 3: El .exe renombrado a .jpg pasó</summary><p>El mimetype lo declara el cliente. Añade la verificación de firma de bytes del ejemplo.</p></details>
+      <div class="callout consejo">
+<p class="callout-title">💡 🏁 Reto extra (opcional)</p>
+<p>Convierte cada imagen subida a WebP de 800 px de ancho con <code>sharp</code> antes de guardarla y compara el peso antes y después.</p>
+</div>
       <div class="callout consejo">
 <p class="callout-title">💡 Entrega</p>
 <p>Guarda tu práctica en tu carpeta del curso y, si quieres revisión, pásame el archivo o una captura.</p>

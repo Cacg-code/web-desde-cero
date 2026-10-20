@@ -37,7 +37,7 @@
   <main class="wrap lesson-layout" id="contenido">
     <nav class="toc" aria-label="Índice de la lección">
       <h4>En esta lección</h4>
-      <ol><li><a href="#intro">Introducción</a></li><li><a href="#s1">Funcionalidades mínimas</a></li><li><a href="#s2">Requisitos técnicos</a></li><li><a href="#s3">Cómo trabajarlo (método)</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+      <ol><li><a href="#intro">Introducción</a></li><li><a href="#s1">Funcionalidades mínimas</a></li><li><a href="#s2">Requisitos técnicos</a></li><li><a href="#s3">Cómo trabajarlo (método)</a></li><li><a href="#s4">Esquema de la base de datos (punto de partida)</a></li><li><a href="#s5">La regla central: sin solapamientos</a></li><li><a href="#s6">Endpoints sugeridos</a></li><li><a href="#s7">Plan en seis hitos</a></li><li><a href="#s8">Rúbrica de autoevaluación</a></li><li><a href="#s9">Cómo presentarlo a un cliente real</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
     </nav>
 
     <article>
@@ -80,11 +80,109 @@
 <p class="callout-title">💡 Consejo</p>
 <p>Si lo terminas bien, tienes el producto base para ofrecer a negocios (con tu portafolio) y una pieza fuerte para entrevistas.</p>
 </div>
+<h2 id="s4"><span class="n">4.</span>Esquema de la base de datos (punto de partida)</h2>
+
+<div class="code">
+  <div class="code-head"><span>sql</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>CREATE TABLE usuarios (
+  id INTEGER PRIMARY KEY,
+  correo TEXT NOT NULL UNIQUE,
+  clave_hash TEXT NOT NULL,
+  rol TEXT NOT NULL DEFAULT 'recepcion' CHECK (rol IN ('admin','recepcion'))
+);
+CREATE TABLE clientes (
+  id INTEGER PRIMARY KEY,
+  nombre TEXT NOT NULL,
+  telefono TEXT,
+  foto TEXT
+);
+CREATE TABLE servicios (
+  id INTEGER PRIMARY KEY,
+  nombre TEXT NOT NULL,
+  duracion_min INTEGER NOT NULL CHECK (duracion_min > 0),
+  precio_centimos INTEGER NOT NULL CHECK (precio_centimos >= 0)
+);
+CREATE TABLE citas (
+  id INTEGER PRIMARY KEY,
+  cliente_id INTEGER NOT NULL REFERENCES clientes(id),
+  servicio_id INTEGER NOT NULL REFERENCES servicios(id),
+  inicio TEXT NOT NULL,            -- ISO 8601: 2026-11-05T15:30
+  fin TEXT NOT NULL,
+  estado TEXT NOT NULL DEFAULT 'pendiente'
+    CHECK (estado IN ('pendiente','confirmada','cancelada','atendida'))
+);</code></pre>
+</div>
+<p>Guarda el dinero en <strong>céntimos enteros</strong> (nunca decimales flotantes) y las fechas en formato ISO.</p>
+<h2 id="s5"><span class="n">5.</span>La regla central: sin solapamientos</h2>
+
+<p>Dos citas se solapan si una empieza antes de que termine la otra. Esta es la comprobación, tanto en SQL como en una función pura que puedes probar:</p>
+<div class="code">
+  <div class="code-head"><span>js</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>// función pura (fácil de probar con node:test)
+export function seSolapan(a, b) {
+  return a.inicio &lt; b.fin &amp;&amp; b.inicio &lt; a.fin;
+}
+
+// en SQL: ¿hay alguna cita que choque con [nuevoInicio, nuevoFin)?
+// SELECT 1 FROM citas
+// WHERE estado &lt;> 'cancelada' AND inicio &lt; :nuevoFin AND fin > :nuevoInicio;</code></pre>
+</div>
+<p>Verifica la regla dentro de una transacción para que dos personas reservando a la vez no consigan la misma hora.</p>
+<h2 id="s6"><span class="n">6.</span>Endpoints sugeridos</h2>
+
+<div class="table-wrap"><table>
+<thead><tr><th>Ruta</th><th>Quién</th><th>Qué hace</th></tr></thead>
+<tbody>
+<tr><td><code>GET /api/publico/servicios</code></td><td>Cualquiera</td><td>Lista servicios y precios</td></tr>
+<tr><td><code>GET /api/publico/horarios?fecha=</code></td><td>Cualquiera</td><td>Horas libres de un día</td></tr>
+<tr><td><code>POST /api/publico/citas</code></td><td>Cualquiera (con límite de intentos)</td><td>Pide una cita</td></tr>
+<tr><td><code>POST /api/login</code>, <code>GET /api/yo</code></td><td>Personal</td><td>Sesión</td></tr>
+<tr><td><code>GET/PATCH/DELETE /api/citas</code></td><td>Sesión</td><td>Agenda del negocio</td></tr>
+<tr><td><code>GET /api/reportes/mes</code></td><td>Admin</td><td>Ingresos por servicio y clientes frecuentes</td></tr>
+</tbody></table></div>
+<h2 id="s7"><span class="n">7.</span>Plan en seis hitos</h2>
+
+<ol><li><strong>Hito 1:</strong> base de datos, API de servicios y página pública que los muestra.</li>
+<li><strong>Hito 2:</strong> login, <code>/api/yo</code> y rutas protegidas.</li>
+<li><strong>Hito 3:</strong> CRUD de citas con la regla de solapamiento y sus pruebas.</li>
+<li><strong>Hito 4:</strong> formulario público de cita y recordatorio por WhatsApp (enlace <code>wa.me</code> con texto).</li>
+<li><strong>Hito 5:</strong> reporte, roles y subida de foto de cliente.</li>
+<li><strong>Hito 6:</strong> pruebas, CI, Lighthouse, despliegue, dominio y README.</li></ol>
+<h2 id="s8"><span class="n">8.</span>Rúbrica de autoevaluación</h2>
+
+<div class="table-wrap"><table>
+<thead><tr><th>Área</th><th>Cumple cuando…</th></tr></thead>
+<tbody>
+<tr><td>Funciona</td><td>Un desconocido pide una cita y el dueño la ve en su panel</td></tr>
+<tr><td>Reglas</td><td>No se pueden crear dos citas en la misma hora</td></tr>
+<tr><td>Seguridad</td><td>Contraseñas con hash, sesión HttpOnly, consultas parametrizadas, límite de intentos</td></tr>
+<tr><td>Calidad</td><td>Al menos 20 pruebas pasando en CI</td></tr>
+<tr><td>Rendimiento y accesibilidad</td><td>Lighthouse ≥ 90 en la página pública</td></tr>
+<tr><td>Documentación</td><td>Otra persona levanta el proyecto solo con tu README</td></tr>
+</tbody></table></div>
+<h2 id="s9"><span class="n">9.</span>Cómo presentarlo a un cliente real</h2>
+
+<p>Prepara un recorrido de dos minutos: la página pública desde el celular, pedir una cita, ver la cita en el panel, cambiar su estado y el reporte del mes. Si lo grabas, tienes la pieza central de tu portafolio y de tu mensaje de ventas (ver la lección de freelance).</p>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li>El MVP es la versión mínima que ya entrega valor: publícalo pronto y mejóralo.</li><li>La regla de solapamiento es el corazón del sistema y se prueba con una función pura.</li><li>Dinero en céntimos enteros; fechas en ISO 8601.</li><li>Trabaja en historias pequeñas, cada una con su commit.</li><li>Prueba con una persona real y corrige lo que le confunda.</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">10.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td>MVP</td><td>Producto mínimo viable: lo mínimo que ya resuelve el problema.</td></tr><tr><td>Hito</td><td>Meta intermedia con un resultado comprobable.</td></tr><tr><td>Transacción</td><td>Grupo de operaciones de base de datos que se aplican todas o ninguna.</td></tr><tr><td>CI</td><td>Integración continua: pruebas automáticas en cada cambio.</td></tr><tr><td>ISO 8601</td><td>Formato estándar de fechas, por ejemplo <code>2026-11-05T15:30</code>.</td></tr></tbody>
+</table></div>
 
 <section class="quiz" id="quiz" aria-labelledby="t-quiz">
 <h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
 <p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
 <div class="quiz-q"><p>¿Qué es un MVP?</p><ul class="opts"><li><button type="button" class="opt">La versión final</button></li><li><button type="button" class="opt" data-ok>La versión mínima que ya entrega valor</button></li><li><button type="button" class="opt">Un diseño</button></li></ul><p class="explain" hidden>Se publica pronto y se mejora con feedback.</p></div>
+<div class="quiz-q"><p>Dos citas A y B se solapan cuando…</p><ul class="opts"><li><button type="button" class="opt" data-ok>A empieza antes de que termine B y B empieza antes de que termine A</button></li><li><button type="button" class="opt">Tienen el mismo cliente</button></li><li><button type="button" class="opt">Tienen el mismo servicio</button></li></ul><p class="explain" hidden><code>a.inicio &lt; b.fin &amp;&amp; b.inicio &lt; a.fin</code>.</p></div>
+<div class="quiz-q"><p>¿Cómo guardar precios?</p><ul class="opts"><li><button type="button" class="opt">Como decimales flotantes</button></li><li><button type="button" class="opt" data-ok>En céntimos enteros</button></li><li><button type="button" class="opt">Como texto libre</button></li></ul><p class="explain" hidden>Evita errores de redondeo.</p></div>
+<div class="quiz-q"><p>Dos personas reservan la misma hora a la vez. ¿Qué lo evita?</p><ul class="opts"><li><button type="button" class="opt">Rezar</button></li><li><button type="button" class="opt" data-ok>Comprobar el solapamiento dentro de una transacción</button></li><li><button type="button" class="opt">Un botón más grande</button></li></ul><p class="explain" hidden>La base de datos serializa las escrituras.</p></div>
+<div class="quiz-q"><p>El mejor orden de trabajo es…</p><ul class="opts"><li><button type="button" class="opt">Todo el diseño, luego todo el código</button></li><li><button type="button" class="opt" data-ok>Historias pequeñas completas, empezando por un MVP</button></li><li><button type="button" class="opt">Primero el reporte</button></li></ul><p class="explain" hidden>Entregar valor temprano reduce el riesgo.</p></div>
 <p class="quiz-score" aria-live="polite"></p>
 </section>
 

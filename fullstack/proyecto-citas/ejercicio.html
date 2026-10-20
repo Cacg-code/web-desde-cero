@@ -52,6 +52,14 @@
       <div class="progress" aria-hidden="true"><div></div></div>
       <p id="progreso-texto" style="color:var(--muted);font-size:.9rem" aria-live="polite"></p>
       <ul class="checklist"><li><label><input type="checkbox" id="p1"><span>Diseñar pantallas y base de datos</span></label></li><li><label><input type="checkbox" id="p2"><span>Construir el MVP (login, crear y listar citas)</span></label></li><li><label><input type="checkbox" id="p3"><span>Agregar clientes, servicios y reglas de horario</span></label></li><li><label><input type="checkbox" id="p4"><span>Crear la página pública con formulario de cita</span></label></li><li><label><input type="checkbox" id="p5"><span>Reporte de ingresos</span></label></li><li><label><input type="checkbox" id="p6"><span>Pruebas y CI</span></label></li><li><label><input type="checkbox" id="p7"><span>Publicar con dominio y HTTPS</span></label></li><li><label><input type="checkbox" id="p8"><span>Medir con Lighthouse y corregir</span></label></li><li><label><input type="checkbox" id="p9"><span>README final y revisión conmigo</span></label></li></ul>
+      <h2>Cómo sé que está bien</h2>
+      <ul class="checks-list"><li>Hay una URL pública y un usuario de prueba documentado.</li><li>La regla de solapamiento tiene pruebas, incluyendo el caso de borde.</li><li>El README explica cómo ejecutarlo y las decisiones técnicas.</li><li>Grabaste un video de 2 minutos mostrando el recorrido completo.</li></ul>
+      <h2>Pistas</h2>
+      <details><summary>💡 Pista 1: No sé por dónde empezar</summary><p>Haz solo el Hito 1: una tabla de servicios, una ruta que los lista y una página que los muestra. Con eso ya tienes algo desplegable.</p></details><details><summary>💡 Pista 2: El solapamiento falla en el borde</summary><p>Si una cita termina a las 15:00 y otra empieza a las 15:00 NO se solapan: usa comparaciones estrictas (<code>&lt;</code>, no <code>&lt;=</code>).</p></details><details><summary>💡 Pista 3: Lighthouse me da menos de 90</summary><p>Revisa tamaño de imágenes, fuentes bloqueantes, contraste y etiquetas de formularios; el informe lista cada punto con su arreglo.</p></details>
+      <div class="callout consejo">
+<p class="callout-title">💡 🏁 Reto extra (opcional)</p>
+<p>Agrega recordatorios: una pantalla "Citas de mañana" con un botón por cita que abra WhatsApp con el mensaje ya escrito (<code>https://wa.me/519XXXXXXXX?text=…</code>).</p>
+</div>
       <div class="callout consejo">
 <p class="callout-title">💡 Entrega</p>
 <p>Entrega el repositorio, la URL pública y un video corto de 2 minutos mostrando el sistema.</p>

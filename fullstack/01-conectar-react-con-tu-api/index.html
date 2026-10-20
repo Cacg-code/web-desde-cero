@@ -37,7 +37,7 @@
   <main class="wrap lesson-layout" id="contenido">
     <nav class="toc" aria-label="Índice de la lección">
       <h4>En esta lección</h4>
-      <ol><li><a href="#intro">Introducción</a></li><li><a href="#s1">Un cliente de API único</a></li><li><a href="#s2">Opción A: proxy de Vite (recomendada en desarrollo)</a></li><li><a href="#s3">Opción B: orígenes distintos (producción típica)</a></li><li><a href="#s4">Variables de entorno en Vite</a></li><li><a href="#s5">Depurar la conexión</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+      <ol><li><a href="#intro">Introducción</a></li><li><a href="#s1">Un cliente de API único</a></li><li><a href="#s2">Opción A: proxy de Vite (recomendada en desarrollo)</a></li><li><a href="#s3">Opción B: orígenes distintos (producción típica)</a></li><li><a href="#s4">Variables de entorno en Vite</a></li><li><a href="#s5">Depurar la conexión</a></li><li><a href="#s6">El flujo completo de una petición</a></li><li><a href="#s7">Qué es CORS y por qué existe</a></li><li><a href="#s8">Configuración de CORS en Express</a></li><li><a href="#s9">Errores típicos y su causa</a></li><li><a href="#s10">Un build de producción</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
     </nav>
 
     <article>
@@ -118,6 +118,62 @@ export default defineConfig({
 <h2 id="s5"><span class="n">5.</span>Depurar la conexión</h2>
 
 <p>Pestaña <strong>Network</strong> de DevTools: ¿la petición salió?, ¿qué estado devolvió?, ¿viaja la cookie (Request Headers → Cookie)?, ¿la respuesta trae <code>Set-Cookie</code>? Un error de CORS aparece en consola y la petición se ve "bloqueada".</p>
+<h2 id="s6"><span class="n">6.</span>El flujo completo de una petición</h2>
+
+<div class="flow"><div class="node"><strong>Componente React</strong><span>llama a api.citas.listar()</span></div><div class="arrow">→</div><div class="node"><strong>src/api.js</strong><span>fetch + credentials</span></div><div class="arrow">→</div><div class="node"><strong>Proxy de Vite</strong><span>/api → :3000</span></div><div class="arrow">→</div><div class="node"><strong>Express</strong><span>valida y responde JSON</span></div></div>
+<p>Si algo falla, el error está en uno de esos cuatro tramos. Depurar es descubrir en cuál: ¿la petición ni salió (componente)?, ¿salió pero a otra URL (api.js o proxy)?, ¿llegó y el servidor la rechazó (Express)?</p>
+<h2 id="s7"><span class="n">7.</span>Qué es CORS y por qué existe</h2>
+
+<p>El navegador impide, por seguridad, que una página de un origen (<code>https://a.com</code>) lea respuestas de otro origen (<code>https://b.com</code>) salvo que el servidor lo autorice con cabeceras. Un <strong>origen</strong> es la combinación de protocolo + dominio + puerto: <code>http://localhost:5173</code> y <code>http://localhost:3000</code> son orígenes distintos aunque estén en tu misma computadora.</p>
+<p>CORS no protege tu API (cualquiera puede llamarla con <code>curl</code>); protege al <em>usuario</em> de que una web ajena use su sesión en tu sitio. Por eso el error aparece en el navegador y no en Postman.</p>
+<h2 id="s8"><span class="n">8.</span>Configuración de CORS en Express</h2>
+
+<div class="code">
+  <div class="code-head"><span>js</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>import cors from "cors";
+
+const ORIGENES = (process.env.ORIGENES ?? "http://localhost:5173").split(",");
+
+app.use(cors({
+  origin(origen, cb) {
+    // peticiones sin origen (curl, servidor a servidor) se permiten; el resto debe estar en la lista
+    if (!origen || ORIGENES.includes(origen)) return cb(null, true);
+    cb(new Error("Origen no permitido"));
+  },
+  credentials: true,            // permite cookies; obliga a NO usar "*"
+}));</code></pre>
+</div>
+<p>Con una lista de orígenes en una variable de entorno cambias de desarrollo a producción sin tocar el código.</p>
+<h2 id="s9"><span class="n">9.</span>Errores típicos y su causa</h2>
+
+<div class="table-wrap"><table>
+<thead><tr><th>Lo que ves</th><th>Causa probable</th><th>Arreglo</th></tr></thead>
+<tbody>
+<tr><td><code>blocked by CORS policy</code></td><td>La API no lista el origen del front</td><td>Añádelo a <code>ORIGENES</code> o usa el proxy</td></tr>
+<tr><td>La respuesta llega pero la cookie no se guarda</td><td>Falta <code>credentials: "include"</code> o <code>credentials: true</code> en cors</td><td>Ponlo en ambos lados</td></tr>
+<tr><td><code>Access-Control-Allow-Origin: *</code> con cookies</td><td>El navegador lo rechaza</td><td>Usa el origen exacto</td></tr>
+<tr><td><code>404</code> en <code>/api/…</code> solo en desarrollo</td><td>El proxy no está configurado o no reiniciaste Vite</td><td>Revisa <code>vite.config.js</code> y reinicia</td></tr>
+<tr><td>Responde HTML en vez de JSON</td><td>La URL cayó en el servidor de Vite (<code>index.html</code>)</td><td>Verifica que la ruta empiece por <code>/api</code></td></tr>
+</tbody></table></div>
+<h2 id="s10"><span class="n">10.</span>Un build de producción</h2>
+
+<div class="code">
+  <div class="code-head"><span>bash</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>npm run build      # genera la carpeta dist/ con archivos estáticos
+npm run preview    # sirve dist/ en local para probarlo</code></pre>
+</div>
+<p>En producción no existe el proxy de Vite: o sirves <code>dist/</code> desde Express (mismo origen) o configuras <code>VITE_API_URL</code> y CORS. Decide antes de desplegar y pruébalo con <code>preview</code>.</p>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li>El front y la API se hablan por HTTP; un archivo <code>api.js</code> centraliza URL, cookies y errores.</li><li>En desarrollo, el proxy de Vite evita CORS; en producción, o mismo origen o CORS bien configurado.</li><li>Con cookies: <code>credentials: "include"</code> en el front y <code>credentials: true</code> + origen exacto en la API.</li><li>Las variables <code>VITE_…</code> son públicas: nada de secretos.</li><li>Network de DevTools es tu mejor herramienta para depurar la conexión.</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">11.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td>Origen</td><td>Protocolo + dominio + puerto de una página.</td></tr><tr><td>CORS</td><td>Mecanismo del navegador que decide si una página puede leer respuestas de otro origen.</td></tr><tr><td>Proxy</td><td>Intermediario que reenvía peticiones; en Vite, de <code>/api</code> a tu servidor.</td></tr><tr><td>Cookie de sesión</td><td>Pequeño dato que el servidor da al navegador para reconocerte en las siguientes peticiones.</td></tr><tr><td>Build</td><td>Versión optimizada de tu app lista para producción.</td></tr></tbody>
+</table></div>
 
 <section class="quiz" id="quiz" aria-labelledby="t-quiz">
 <h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
@@ -125,6 +181,9 @@ export default defineConfig({
 <div class="quiz-q"><p>credentials: "include" sirve para…</p><ul class="opts"><li><button type="button" class="opt" data-ok>Enviar y recibir cookies en peticiones fetch</button></li><li><button type="button" class="opt">Cifrar la petición</button></li><li><button type="button" class="opt">Evitar CORS</button></li></ul><p class="explain" hidden>Sin él la cookie de sesión no viaja.</p></div>
 <div class="quiz-q"><p>Las variables VITE_… son…</p><ul class="opts"><li><button type="button" class="opt">Privadas</button></li><li><button type="button" class="opt" data-ok>Visibles en el navegador (públicas)</button></li><li><button type="button" class="opt">Solo del servidor</button></li></ul><p class="explain" hidden>No pongas secretos en el front.</p></div>
 <div class="quiz-q"><p>Con credenciales, el origen de CORS debe ser…</p><ul class="opts"><li><button type="button" class="opt">"*"</button></li><li><button type="button" class="opt" data-ok>El origen exacto del front</button></li><li><button type="button" class="opt">Cualquiera</button></li></ul><p class="explain" hidden>El navegador rechaza "*" con cookies.</p></div>
+<div class="quiz-q"><p>¿Por qué <code>localhost:5173</code> y <code>localhost:3000</code> son orígenes distintos?</p><ul class="opts"><li><button type="button" class="opt" data-ok>Porque el puerto es parte del origen</button></li><li><button type="button" class="opt">Porque uno es React y otro Express</button></li><li><button type="button" class="opt">No lo son</button></li></ul><p class="explain" hidden>Origen = protocolo + dominio + puerto.</p></div>
+<div class="quiz-q"><p>El proxy de Vite sirve para…</p><ul class="opts"><li><button type="button" class="opt">Acelerar la API</button></li><li><button type="button" class="opt" data-ok>Que el navegador vea front y API como un solo origen en desarrollo</button></li><li><button type="button" class="opt">Cifrar las cookies</button></li></ul><p class="explain" hidden>Así no hay CORS en desarrollo.</p></div>
+<div class="quiz-q"><p>Tu API responde bien en Postman pero el navegador la bloquea. Lo más probable es…</p><ul class="opts"><li><button type="button" class="opt">La API está caída</button></li><li><button type="button" class="opt" data-ok>Falta configurar CORS para el origen del front</button></li><li><button type="button" class="opt">Postman miente</button></li></ul><p class="explain" hidden>CORS lo aplica el navegador, no Postman.</p></div>
 <p class="quiz-score" aria-live="polite"></p>
 </section>
 

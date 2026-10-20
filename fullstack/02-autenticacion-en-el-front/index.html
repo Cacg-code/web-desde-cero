@@ -37,7 +37,7 @@
   <main class="wrap lesson-layout" id="contenido">
     <nav class="toc" aria-label="Índice de la lección">
       <h4>En esta lección</h4>
-      <ol><li><a href="#intro">Introducción</a></li><li><a href="#s1">Contexto de sesión</a></li><li><a href="#s2">Rutas protegidas</a></li><li><a href="#s3">Formulario de login con errores</a></li><li><a href="#s4">Sesión expirada</a></li><li><a href="#s5">Experiencia de usuario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+      <ol><li><a href="#intro">Introducción</a></li><li><a href="#s1">Contexto de sesión</a></li><li><a href="#s2">Rutas protegidas</a></li><li><a href="#s3">Formulario de login con errores</a></li><li><a href="#s4">Sesión expirada</a></li><li><a href="#s5">Experiencia de usuario</a></li><li><a href="#s6">Qué ve cada usuario según su estado</a></li><li><a href="#s7">Volver a donde ibas tras el login</a></li><li><a href="#s8">Cerrar sesión y expirar de verdad</a></li><li><a href="#s9">Manejar el 401 en un solo lugar</a></li><li><a href="#s10">Roles: mostrar según el rol (con cuidado)</a></li><li><a href="#s11">Errores frecuentes</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
     </nav>
 
     <article>
@@ -148,12 +148,83 @@ export function RutaPrivada() {
   <li><code>autoComplete</code> correcto para que los gestores de contraseñas funcionen.</li>
   <li>Mensajes de error claros pero no reveladores.</li>
   <li>Accesibilidad: <code>role="alert"</code> para anunciar errores, foco al primer campo con error.</li></ul>
+<h2 id="s6"><span class="n">6.</span>Qué ve cada usuario según su estado</h2>
+
+<div class="table-wrap"><table>
+<thead><tr><th>Estado</th><th><code>cargando</code></th><th><code>usuario</code></th><th>Qué se muestra</th></tr></thead>
+<tbody>
+<tr><td>Comprobando sesión</td><td>true</td><td>null</td><td>Un indicador de carga (evita el parpadeo del login)</td></tr>
+<tr><td>Sin sesión</td><td>false</td><td>null</td><td>Redirige a <code>/login</code></td></tr>
+<tr><td>Con sesión</td><td>false</td><td>{ id, correo }</td><td>La pantalla pedida</td></tr>
+</tbody></table></div>
+<h2 id="s7"><span class="n">7.</span>Volver a donde ibas tras el login</h2>
+
+<p>La ruta privada guardó la ubicación en <code>state.desde</code>. Después de entrar, léela y redirige allí:</p>
+<div class="code">
+  <div class="code-head"><span>jsx</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>const ubicacion = useLocation();
+const destino = ubicacion.state?.desde?.pathname ?? "/citas";
+// ...
+await entrar({ correo, clave });
+navegar(destino, { replace: true });</code></pre>
+</div>
+<h2 id="s8"><span class="n">8.</span>Cerrar sesión y expirar de verdad</h2>
+
+<ul><li>Al salir, llama a <code>POST /api/logout</code> (el servidor borra la sesión) <strong>y</strong> limpia el usuario del contexto.</li>
+<li>Si el usuario tiene varias pestañas, la otra seguirá mostrando datos hasta su próxima petición; el 401 la sacará. Es normal.</li>
+<li>Borra del estado cualquier dato privado al salir (lista de citas, clientes) para que no se vea si entra otra persona en el mismo equipo.</li></ul>
+<h2 id="s9"><span class="n">9.</span>Manejar el 401 en un solo lugar</h2>
+
+<div class="code">
+  <div class="code-head"><span>js</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>// en api.js, dentro de pedir():
+if (r.status === 401 &amp;&amp; ruta !== "/api/login" &amp;&amp; ruta !== "/api/yo") {
+  window.dispatchEvent(new Event("sesion-expirada"));
+}
+
+// en ProveedorSesion:
+useEffect(() => {
+  const alExpirar = () => setUsuario(null);
+  window.addEventListener("sesion-expirada", alExpirar);
+  return () => window.removeEventListener("sesion-expirada", alExpirar);
+}, []);</code></pre>
+</div>
+<p>Como la ruta privada depende de <code>usuario</code>, al ponerlo en <code>null</code> React te lleva a <code>/login</code> sin más código.</p>
+<h2 id="s10"><span class="n">10.</span>Roles: mostrar según el rol (con cuidado)</h2>
+
+<p>Si tu API devuelve <code>rol</code> (<code>"admin"</code> o <code>"recepcion"</code>), puedes ocultar opciones. Es solo comodidad: la API debe volver a comprobar el rol en cada ruta. Un usuario curioso puede cambiar el JavaScript de su navegador, pero no puede saltarse el servidor.</p>
+<div class="code">
+  <div class="code-head"><span>jsx</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>function SoloAdmin({ children }) {
+  const { usuario } = useSesion();
+  return usuario?.rol === "admin" ? children : null;
+}</code></pre>
+</div>
+<h2 id="s11"><span class="n">11.</span>Errores frecuentes</h2>
+
+<ul><li><strong>Guardar la sesión en <code>localStorage</code>:</strong> cualquier script (XSS) puede leerla. La cookie <code>HttpOnly</code> no es legible desde JavaScript.</li>
+<li><strong>No esperar a <code>cargando</code>:</strong> redirigir antes de saber si hay sesión manda al login a usuarios que sí la tienen.</li>
+<li><strong>Mensajes distintos para "correo no existe" y "clave incorrecta":</strong> revelan qué correos están registrados.</li></ul>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li>El front solo refleja la sesión; la seguridad vive en la API.</li><li>Al cargar, pregunta <code>GET /api/yo</code> y guarda el resultado en un contexto.</li><li>Mientras <code>cargando</code> sea true, no redirijas.</li><li>Un 401 en medio del uso significa sesión caducada: limpia el usuario y vuelve a login.</li><li>Nunca guardes la sesión en <code>localStorage</code>; usa cookie <code>HttpOnly</code>.</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">12.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td>Contexto</td><td>Mecanismo de React para compartir datos con todos los componentes sin pasarlos uno a uno.</td></tr><tr><td>Ruta protegida</td><td>Ruta que solo se muestra si hay sesión; si no, redirige al login.</td></tr><tr><td>401</td><td>Código HTTP: no autenticado (no hay sesión válida).</td></tr><tr><td>403</td><td>Código HTTP: autenticado pero sin permiso.</td></tr><tr><td>HttpOnly</td><td>Atributo de cookie que impide leerla desde JavaScript.</td></tr></tbody>
+</table></div>
 
 <section class="quiz" id="quiz" aria-labelledby="t-quiz">
 <h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
 <p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
 <div class="quiz-q"><p>Ocultar un botón en React…</p><ul class="opts"><li><button type="button" class="opt">Protege la acción</button></li><li><button type="button" class="opt" data-ok>No protege: la API debe validar siempre</button></li><li><button type="button" class="opt">Es suficiente</button></li></ul><p class="explain" hidden>Cualquiera puede llamar la API directamente.</p></div>
 <div class="quiz-q"><p>¿Cómo sabe la app al cargar si hay sesión?</p><ul class="opts"><li><button type="button" class="opt">Lee localStorage</button></li><li><button type="button" class="opt" data-ok>Pregunta a la API (GET /api/yo)</button></li><li><button type="button" class="opt">Adivina</button></li></ul><p class="explain" hidden>La cookie HttpOnly no es legible desde JS.</p></div>
+<div class="quiz-q"><p>Un usuario sin permisos cambia el JavaScript de su navegador para mostrar un botón de admin. ¿Qué lo detiene?</p><ul class="opts"><li><button type="button" class="opt">Nada, ya es admin</button></li><li><button type="button" class="opt" data-ok>La API, que comprueba el rol en cada ruta</button></li><li><button type="button" class="opt">El proxy de Vite</button></li></ul><p class="explain" hidden>La autorización real se hace en el servidor.</p></div>
+<div class="quiz-q"><p>¿Qué código HTTP indica "sesión caducada o inexistente"?</p><ul class="opts"><li><button type="button" class="opt" data-ok>401</button></li><li><button type="button" class="opt">404</button></li><li><button type="button" class="opt">201</button></li></ul><p class="explain" hidden>401 = no autenticado.</p></div>
+<div class="quiz-q"><p>¿Por qué evitar <code>localStorage</code> para la sesión?</p><ul class="opts"><li><button type="button" class="opt">Es lento</button></li><li><button type="button" class="opt" data-ok>Un script malicioso (XSS) podría leerla</button></li><li><button type="button" class="opt">No funciona en móvil</button></li></ul><p class="explain" hidden>Las cookies HttpOnly no son accesibles desde JavaScript.</p></div>
 <p class="quiz-score" aria-live="polite"></p>
 </section>
 

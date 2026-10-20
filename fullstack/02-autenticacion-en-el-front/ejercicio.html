@@ -52,6 +52,14 @@
       <div class="progress" aria-hidden="true"><div></div></div>
       <p id="progreso-texto" style="color:var(--muted);font-size:.9rem" aria-live="polite"></p>
       <ul class="checklist"><li><label><input type="checkbox" id="p1"><span>Añadir GET /api/yo a la API</span></label></li><li><label><input type="checkbox" id="p2"><span>Crear ProveedorSesion y usarlo en toda la app</span></label></li><li><label><input type="checkbox" id="p3"><span>Proteger /citas con RutaPrivada</span></label></li><li><label><input type="checkbox" id="p4"><span>Redirigir a la página que querías ver tras iniciar sesión (state.desde)</span></label></li><li><label><input type="checkbox" id="p5"><span>Manejar el 401 por sesión expirada</span></label></li></ul>
+      <h2>Cómo sé que está bien</h2>
+      <ul class="checks-list"><li>Recargar la página mantiene la sesión.</li><li>Entrar a <code>/citas</code> sin sesión te lleva al login y, al entrar, de vuelta a <code>/citas</code>.</li><li>Con la API apagada, el login muestra un mensaje claro (no un error en blanco).</li><li>Los errores se anuncian con <code>role="alert"</code>.</li></ul>
+      <h2>Pistas</h2>
+      <details><summary>💡 Pista 1: GET /api/yo devuelve 401 siempre</summary><p>Revisa que el front envíe <code>credentials: "include"</code> y que la cookie se guardó tras el login (Application → Cookies).</p></details><details><summary>💡 Pista 2: Parpadea la pantalla de login</summary><p>No estás usando <code>cargando</code>: muestra "Cargando…" hasta que <code>yo()</code> termine.</p></details><details><summary>💡 Pista 3: Tras iniciar sesión no vuelve a la página anterior</summary><p>Pasa <code>state={{ desde: ubicacion }}</code> en <code>&lt;Navigate&gt;</code> y léelo en el login con <code>useLocation()</code>.</p></details>
+      <div class="callout consejo">
+<p class="callout-title">💡 🏁 Reto extra (opcional)</p>
+<p>Añade un botón "Cerrar sesión" que además limpie la lista de citas del estado, y un aviso "Tu sesión caducó" en la pantalla de login cuando llegaste por un 401.</p>
+</div>
       <div class="callout consejo">
 <p class="callout-title">💡 Entrega</p>
 <p>Guarda tu práctica en tu carpeta del curso y, si quieres revisión, pásame el archivo o una captura.</p>

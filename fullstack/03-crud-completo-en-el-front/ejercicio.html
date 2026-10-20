@@ -52,6 +52,14 @@
       <div class="progress" aria-hidden="true"><div></div></div>
       <p id="progreso-texto" style="color:var(--muted);font-size:.9rem" aria-live="polite"></p>
       <ul class="checklist"><li><label><input type="checkbox" id="p1"><span>Implementar useCitas y la pantalla de citas completa</span></label></li><li><label><input type="checkbox" id="p2"><span>Agregar edición de una cita (PATCH completo)</span></label></li><li><label><input type="checkbox" id="p3"><span>Añadir filtros por estado y búsqueda con los parámetros de la API</span></label></li><li><label><input type="checkbox" id="p4"><span>Implementar el borrado con diálogo de confirmación</span></label></li><li><label><input type="checkbox" id="p5"><span>Probar los errores: apaga la API y mira cómo reacciona la pantalla</span></label></li></ul>
+      <h2>Cómo sé que está bien</h2>
+      <ul class="checks-list"><li>Ves cargando, error, vacío y listo según el caso.</li><li>Crear, cambiar estado y borrar funcionan y la pantalla coincide con la base de datos tras recargar.</li><li>Los errores de validación aparecen junto a su campo.</li><li>El borrado pide confirmación con un diálogo accesible.</li></ul>
+      <h2>Pistas</h2>
+      <details><summary>💡 Pista 1: El filtro no cambia la lista</summary><p>Comprueba que filtras sobre el estado <code>citas</code> y que renderizas el resultado filtrado, no el original.</p></details><details><summary>💡 Pista 2: La cita nueva sale duplicada</summary><p>No agregues la cita al estado y además recargues la lista a la vez: elige una sola forma.</p></details><details><summary>💡 Pista 3: El diálogo de confirmación no se cierra</summary><p>Usa <code>dialog.showModal()</code> para abrir y <code>dialog.close()</code> al confirmar o cancelar; guarda la referencia con <code>useRef</code>.</p></details>
+      <div class="callout consejo">
+<p class="callout-title">💡 🏁 Reto extra (opcional)</p>
+<p>Guarda el filtro de estado y la búsqueda en la URL con <code>useSearchParams</code> y comprueba que recargar la página conserva el filtro.</p>
+</div>
       <div class="callout consejo">
 <p class="callout-title">💡 Entrega</p>
 <p>Guarda tu práctica en tu carpeta del curso y, si quieres revisión, pásame el archivo o una captura.</p>

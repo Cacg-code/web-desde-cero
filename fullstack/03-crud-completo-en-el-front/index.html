@@ -37,7 +37,7 @@
   <main class="wrap lesson-layout" id="contenido">
     <nav class="toc" aria-label="Índice de la lección">
       <h4>En esta lección</h4>
-      <ol><li><a href="#intro">Introducción</a></li><li><a href="#s1">Actualización optimista</a></li><li><a href="#s2">Mostrar errores de validación del servidor</a></li><li><a href="#s3">Un solo "pedir" y librerías de datos</a></li><li><a href="#s4">Accesibilidad y detalles</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+      <ol><li><a href="#intro">Introducción</a></li><li><a href="#s1">Actualización optimista</a></li><li><a href="#s2">Mostrar errores de validación del servidor</a></li><li><a href="#s3">Un solo "pedir" y librerías de datos</a></li><li><a href="#s4">Accesibilidad y detalles</a></li><li><a href="#s5">Los cuatro estados de toda pantalla de datos</a></li><li><a href="#s6">Formulario de creación con errores por campo</a></li><li><a href="#s7">Filtros y búsqueda: en el servidor o en el front</a></li><li><a href="#s8">Cuándo NO usar actualización optimista</a></li><li><a href="#s9">Probar los casos difíciles</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
     </nav>
 
     <article>
@@ -107,12 +107,93 @@ export function useCitas() {
   <li>Botones con texto o <code>aria-label</code> ("Cancelar cita de Ana").</li>
   <li>Evitar doble envío: deshabilita el botón mientras envía.</li>
   <li>Formatear fechas con <code>Intl.DateTimeFormat("es-PE")</code>.</li></ul>
+<h2 id="s5"><span class="n">5.</span>Los cuatro estados de toda pantalla de datos</h2>
+
+<p>Una pantalla no es solo "la lista". Diseña siempre estos cuatro casos:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Estado</th><th>Qué mostrar</th></tr></thead>
+<tbody>
+<tr><td>Cargando</td><td>Un esqueleto o "Cargando citas…" (con <code>aria-live="polite"</code>)</td></tr>
+<tr><td>Error</td><td>Mensaje claro y un botón "Reintentar" que llame a <code>recargar()</code></td></tr>
+<tr><td>Vacío</td><td>"Aún no tienes citas" con un botón para crear la primera</td></tr>
+<tr><td>Listo</td><td>La lista, con acciones</td></tr>
+</tbody></table></div>
+<div class="code">
+  <div class="code-head"><span>jsx</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>function Citas() {
+  const { citas, estado, error, recargar, borrar } = useCitas();
+  if (estado === "cargando") return &lt;p aria-live="polite">Cargando citas…&lt;/p>;
+  if (estado === "error") return &lt;div role="alert">&lt;p>{error}&lt;/p>&lt;button onClick={recargar}>Reintentar&lt;/button>&lt;/div>;
+  if (citas.length === 0) return &lt;p>Aún no tienes citas. Crea la primera.&lt;/p>;
+  return &lt;ul>{citas.map((c) => &lt;li key={c.id}>{c.cliente} · {c.fecha}&lt;/li>)}&lt;/ul>;
+}</code></pre>
+</div>
+<h2 id="s6"><span class="n">6.</span>Formulario de creación con errores por campo</h2>
+
+<div class="code">
+  <div class="code-head"><span>jsx</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>function FormCita({ alCrear }) {
+  const [errores, setErrores] = useState({});
+  const [enviando, setEnviando] = useState(false);
+
+  async function enviar(e) {
+    e.preventDefault();
+    const f = new FormData(e.currentTarget);
+    setEnviando(true); setErrores({});
+    try {
+      await alCrear({ cliente: f.get("cliente"), fecha: f.get("fecha") });
+      e.currentTarget.reset();
+    } catch (err) {
+      setErrores(err.detalle ?? { general: [err.message] });
+    } finally {
+      setEnviando(false);
+    }
+  }
+  return (
+    &lt;form onSubmit={enviar} noValidate>
+      &lt;label>Cliente &lt;input name="cliente" aria-invalid={!!errores.cliente} />&lt;/label>
+      {errores.cliente &amp;&amp; &lt;small role="alert">{errores.cliente[0]}&lt;/small>}
+      &lt;label>Fecha y hora &lt;input name="fecha" type="datetime-local" />&lt;/label>
+      {errores.fecha &amp;&amp; &lt;small role="alert">{errores.fecha[0]}&lt;/small>}
+      &lt;button disabled={enviando}>{enviando ? "Guardando…" : "Agendar"}&lt;/button>
+    &lt;/form>
+  );
+}</code></pre>
+</div>
+<h2 id="s7"><span class="n">7.</span>Filtros y búsqueda: en el servidor o en el front</h2>
+
+<ul><li><strong>Pocos datos (menos de unos cientos):</strong> trae todo y filtra en el front con <code>filter</code>. Es instantáneo.</li>
+<li><strong>Muchos datos:</strong> manda los filtros a la API como parámetros (<code>?estado=pendiente&amp;q=ana&amp;pagina=2</code>) y deja que la base de datos filtre. Así no descargas miles de filas.</li>
+<li>Guarda los filtros en la URL (<code>useSearchParams</code>) y podrás compartir o recargar sin perderlos.</li></ul>
+<h2 id="s8"><span class="n">8.</span>Cuándo NO usar actualización optimista</h2>
+
+<p>Si el servidor puede rechazar por una regla de negocio importante (por ejemplo, "esa hora ya está ocupada"), espera la respuesta antes de cambiar la pantalla. Mostrar "Cita confirmada" y luego revertirla confunde más que esperar medio segundo.</p>
+<h2 id="s9"><span class="n">9.</span>Probar los casos difíciles</h2>
+
+<ul><li>Apaga la API y recarga: ¿ves el error con "Reintentar"?</li>
+<li>Envía el formulario vacío: ¿cada campo muestra su mensaje?</li>
+<li>Haz doble clic rápido en "Agendar": ¿se crea solo una cita?</li>
+<li>Borra la última cita: ¿aparece el estado vacío?</li></ul>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li>El servidor es la fuente de la verdad; el estado local solo la refleja.</li><li>Toda pantalla de datos tiene cuatro estados: cargando, error, vacío y listo.</li><li>Actualización optimista solo en acciones de bajo riesgo, con reversión si falla.</li><li>Los errores de validación del servidor se muestran junto a cada campo.</li><li>Deshabilita el botón mientras envía para evitar duplicados.</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">10.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td>CRUD</td><td>Crear, leer (Read), actualizar y borrar: las cuatro operaciones básicas sobre datos.</td></tr><tr><td>Actualización optimista</td><td>Cambiar la pantalla antes de que el servidor confirme y revertir si falla.</td></tr><tr><td>Fuente de la verdad</td><td>El lugar donde vive el dato real (el servidor), frente a copias locales.</td></tr><tr><td>Esqueleto (skeleton)</td><td>Marcador visual con la forma del contenido mientras carga.</td></tr><tr><td>Parámetros de consulta</td><td>Parte de la URL tras <code>?</code> para filtrar o paginar.</td></tr></tbody>
+</table></div>
 
 <section class="quiz" id="quiz" aria-labelledby="t-quiz">
 <h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
 <p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
 <div class="quiz-q"><p>La actualización optimista…</p><ul class="opts"><li><button type="button" class="opt">Espera siempre al servidor</button></li><li><button type="button" class="opt" data-ok>Cambia la UI primero y revierte si falla</button></li><li><button type="button" class="opt">Evita la API</button></li></ul><p class="explain" hidden>Útil en acciones de bajo riesgo.</p></div>
 <div class="quiz-q"><p>Fuente de la verdad de los datos:</p><ul class="opts"><li><button type="button" class="opt">El estado local de React</button></li><li><button type="button" class="opt" data-ok>El servidor/base de datos</button></li><li><button type="button" class="opt">localStorage</button></li></ul><p class="explain" hidden>El front es una vista de ellos.</p></div>
+<div class="quiz-q"><p>Una lista vacía debe mostrar…</p><ul class="opts"><li><button type="button" class="opt">Nada</button></li><li><button type="button" class="opt" data-ok>Un mensaje que explique y ofrezca crear el primer elemento</button></li><li><button type="button" class="opt">Un error</button></li></ul><p class="explain" hidden>Vacío no es error: guía al usuario.</p></div>
+<div class="quiz-q"><p>Para una tabla con 50 000 filas conviene filtrar…</p><ul class="opts"><li><button type="button" class="opt">En el front con <code>filter</code></button></li><li><button type="button" class="opt" data-ok>En la API, con parámetros y la base de datos</button></li><li><button type="button" class="opt">No filtrar</button></li></ul><p class="explain" hidden>No descargues lo que no vas a mostrar.</p></div>
+<div class="quiz-q"><p>El usuario hace doble clic en "Agendar". Para evitar dos citas…</p><ul class="opts"><li><button type="button" class="opt">Confiar en que no pase</button></li><li><button type="button" class="opt" data-ok>Deshabilitar el botón mientras envía</button></li><li><button type="button" class="opt">Quitar la validación</button></li></ul><p class="explain" hidden>Un estado <code>enviando</code> lo previene.</p></div>
 <p class="quiz-score" aria-live="polite"></p>
 </section>
 

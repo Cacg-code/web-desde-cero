@@ -37,7 +37,7 @@
   <main class="wrap lesson-layout" id="contenido">
     <nav class="toc" aria-label="Índice de la lección">
       <h4>En esta lección</h4>
-      <ol><li><a href="#intro">Introducción</a></li><li><a href="#s1">Portafolio</a></li><li><a href="#s2">GitHub y LinkedIn</a></li><li><a href="#s3">Entrevistas técnicas</a></li><li><a href="#s4">Caminos</a></li><li><a href="#s5">Después de este curso</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+      <ol><li><a href="#intro">Introducción</a></li><li><a href="#s1">Portafolio</a></li><li><a href="#s2">GitHub y LinkedIn</a></li><li><a href="#s3">Entrevistas técnicas</a></li><li><a href="#s4">Caminos</a></li><li><a href="#s5">Después de este curso</a></li><li><a href="#s6">Anatomía de un README que vende</a></li><li><a href="#s7">Plantilla de descripción de proyecto</a></li><li><a href="#s8">Tu CV técnico en una página</a></li><li><a href="#s9">Cómo preparar una entrevista en una semana</a></li><li><a href="#s10">Preguntas frecuentes (y cómo pensarlas)</a></li><li><a href="#s11">Aprender en público</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
     </nav>
 
     <article>
@@ -77,11 +77,77 @@
 <h2 id="s5"><span class="n">5.</span>Después de este curso</h2>
 
 <p>TypeScript en profundidad, Next.js, PostgreSQL avanzado, Docker y despliegues, pruebas end-to-end (Playwright), patrones de diseño, arquitectura. El aprendizaje no termina: lo importante es construir cosas constantemente.</p>
+<h2 id="s6"><span class="n">6.</span>Anatomía de un README que vende</h2>
+
+<ol><li><strong>Título y una frase:</strong> qué es y para quién ("Sistema de citas para barberías").</li>
+<li><strong>Captura o GIF</strong> en la primera pantalla.</li>
+<li><strong>Enlace en vivo</strong> y usuario de prueba si hay login.</li>
+<li><strong>Tecnologías</strong> en una línea.</li>
+<li><strong>Cómo ejecutarlo</strong> en 3–5 comandos.</li>
+<li><strong>Decisiones técnicas:</strong> por qué elegiste X (esto es lo que preguntan en entrevistas).</li>
+<li><strong>Qué mejorarías</strong> con más tiempo: muestra criterio.</li></ol>
+<h2 id="s7"><span class="n">7.</span>Plantilla de descripción de proyecto</h2>
+
+<div class="code">
+  <div class="code-head"><span>md</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>## Sistema de citas para barberías
+Agenda online con panel de administración y página pública.
+
+**Problema:** las citas por WhatsApp se cruzaban y se olvidaban.
+**Solución:** reserva en línea con horarios, recordatorio y reporte mensual.
+**Stack:** React · Vite · Express · PostgreSQL · Vitest
+**Decisión clave:** sesiones con cookie HttpOnly en vez de JWT en localStorage,
+porque no hay apps móviles y reduce el riesgo de XSS.
+**Lo que aprendí:** modelar solapamientos de horario y escribir pruebas de la regla.
+
+Demo: https://… · Código: https://github.com/…</code></pre>
+</div>
+<h2 id="s8"><span class="n">8.</span>Tu CV técnico en una página</h2>
+
+<ul><li>Titular claro y enlaces (portafolio, GitHub, LinkedIn).</li>
+<li>Proyectos primero, con resultados verificables ("reduce de 5 a 1 clic el flujo de reserva").</li>
+<li>Tecnologías agrupadas, sin inventar niveles ("avanzado en todo" no convence).</li>
+<li>Una sola página, en PDF, con texto real (no imagen) para que los sistemas de selección lo lean.</li></ul>
+<h2 id="s9"><span class="n">9.</span>Cómo preparar una entrevista en una semana</h2>
+
+<div class="table-wrap"><table>
+<thead><tr><th>Día</th><th>Qué hacer</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>Repasa tus 3 proyectos: cada decisión y cada problema que resolviste</td></tr>
+<tr><td>2</td><td>Conceptos web: HTTP, DNS, cookies, CORS, REST</td></tr>
+<tr><td>3</td><td>JavaScript: closures, <code>this</code>, promesas, eventos</td></tr>
+<tr><td>4</td><td>React: estado, efectos, renderizado, claves</td></tr>
+<tr><td>5</td><td>SQL y seguridad básica (inyección, XSS, contraseñas)</td></tr>
+<tr><td>6</td><td>Dos ejercicios de código en voz alta, con cronómetro</td></tr>
+<tr><td>7</td><td>Simulacro completo y preguntas que tú harás a la empresa</td></tr>
+</tbody></table></div>
+<h2 id="s10"><span class="n">10.</span>Preguntas frecuentes (y cómo pensarlas)</h2>
+
+<ul><li><em>"Cuéntame de un bug difícil."</em> Estructura: contexto → síntoma → cómo lo investigaste → causa → qué cambiaste para que no vuelva.</li>
+<li><em>"¿Por qué React y no HTML simple?"</em> Responde según el problema: estado complejo, componentes reutilizables, equipo.</li>
+<li><em>"No sé."</em> Es válido si sigues con "pero lo abordaría así…". Inventar es peor.</li></ul>
+<h2 id="s11"><span class="n">11.</span>Aprender en público</h2>
+
+<p>Un artículo corto al mes ("Cómo arreglé un error de CORS con cookies") te obliga a entender de verdad y deja evidencia pública. No necesita ser perfecto: necesita ser honesto y útil.</p>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li>Pocos proyectos buenos valen más que muchos mediocres.</li><li>Cada proyecto: captura, demo, código, problema, tecnologías y decisiones.</li><li>El README es tu primera entrevista.</li><li>En entrevistas te preguntan el porqué de tus decisiones: conoce bien lo tuyo.</li><li>La experiencia real (clientes, código abierto) pesa más que otro curso.</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">12.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td>Portafolio</td><td>Conjunto de proyectos que demuestran lo que sabes hacer.</td></tr><tr><td>README</td><td>Archivo de presentación de un repositorio.</td></tr><tr><td>CV técnico</td><td>Currículum centrado en proyectos y habilidades verificables.</td></tr><tr><td>Código abierto</td><td>Software cuyo código es público; contribuir te da experiencia real.</td></tr><tr><td>Junior</td><td>Nivel de entrada: se espera criterio básico y ganas de aprender, no perfección.</td></tr></tbody>
+</table></div>
 
 <section class="quiz" id="quiz" aria-labelledby="t-quiz">
 <h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
 <p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
 <div class="quiz-q"><p>En el portafolio es preferible…</p><ul class="opts"><li><button type="button" class="opt">Muchos proyectos copiados</button></li><li><button type="button" class="opt" data-ok>Pocos proyectos bien terminados y explicados</button></li><li><button type="button" class="opt">Solo capturas</button></li></ul><p class="explain" hidden>Calidad sobre cantidad.</p></div>
+<div class="quiz-q"><p>¿Qué hace más fuerte a un proyecto de portafolio?</p><ul class="opts"><li><button type="button" class="opt">Muchas tecnologías sin explicar</button></li><li><button type="button" class="opt" data-ok>Un problema claro, demo en vivo y decisiones explicadas</button></li><li><button type="button" class="opt">Un diseño muy colorido</button></li></ul><p class="explain" hidden>Muestra el porqué, no solo el qué.</p></div>
+<div class="quiz-q"><p>Si no sabes responder una pregunta técnica…</p><ul class="opts"><li><button type="button" class="opt">Inventas algo</button></li><li><button type="button" class="opt" data-ok>Dices que no sabes y explicas cómo lo abordarías</button></li><li><button type="button" class="opt">Cambias de tema</button></li></ul><p class="explain" hidden>La honestidad con razonamiento suma.</p></div>
+<div class="quiz-q"><p>Tu CV en PDF debe tener…</p><ul class="opts"><li><button type="button" class="opt" data-ok>Texto real que se pueda seleccionar</button></li><li><button type="button" class="opt">Solo una imagen</button></li><li><button type="button" class="opt">Cinco páginas</button></li></ul><p class="explain" hidden>Los sistemas de selección leen texto.</p></div>
 <p class="quiz-score" aria-live="polite"></p>
 </section>
 

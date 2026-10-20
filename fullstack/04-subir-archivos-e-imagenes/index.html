@@ -37,7 +37,7 @@
   <main class="wrap lesson-layout" id="contenido">
     <nav class="toc" aria-label="Índice de la lección">
       <h4>En esta lección</h4>
-      <ol><li><a href="#intro">Introducción</a></li><li><a href="#s1">Front: FormData</a></li><li><a href="#s2">Back: multer</a></li><li><a href="#s3">Dónde guardar</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+      <ol><li><a href="#intro">Introducción</a></li><li><a href="#s1">Front: FormData</a></li><li><a href="#s2">Back: multer</a></li><li><a href="#s3">Dónde guardar</a></li><li><a href="#s4">Previsualizar antes de subir</a></li><li><a href="#s5">Verificar la firma real del archivo</a></li><li><a href="#s6">Respuestas de error de multer</a></li><li><a href="#s7">Servir las imágenes con seguridad</a></li><li><a href="#s8">Imágenes pesadas: optimiza</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
     </nav>
 
     <article>
@@ -99,12 +99,92 @@ app.use("/fotos", express.static("subidas", { dotfiles: "deny", index: false }))
 <ul><li>El disco de muchos hostings es efímero. Para producción usa almacenamiento de objetos: <strong>Cloudflare R2, Amazon S3, Supabase Storage</strong>. Guardas en la BD solo la clave/URL.</li>
   <li>Archivos privados (documentos de clientes): URLs firmadas con vencimiento, no carpetas públicas.</li>
   <li>Optimiza imágenes (WebP/AVIF, varios tamaños) para que el sitio sea rápido.</li></ul>
+<h2 id="s4"><span class="n">4.</span>Previsualizar antes de subir</h2>
+
+<p>Con <code>URL.createObjectURL</code> muestras la imagen elegida sin enviarla, y validas tamaño y tipo en el front para dar un aviso inmediato (la API vuelve a validar igual).</p>
+<div class="code">
+  <div class="code-head"><span>jsx</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>function SelectorFoto({ alElegir }) {
+  const [vista, setVista] = useState("");
+  const [aviso, setAviso] = useState("");
+
+  function cambiar(e) {
+    const archivo = e.target.files[0];
+    if (!archivo) return;
+    if (!["image/jpeg", "image/png", "image/webp"].includes(archivo.type)) return setAviso("Solo JPG, PNG o WebP.");
+    if (archivo.size > 2 * 1024 * 1024) return setAviso("Máximo 2 MB.");
+    setAviso(""); setVista(URL.createObjectURL(archivo)); alElegir(archivo);
+  }
+  return (
+    &lt;div>
+      &lt;input type="file" accept="image/jpeg,image/png,image/webp" onChange={cambiar} />
+      {aviso &amp;&amp; &lt;p role="alert">{aviso}&lt;/p>}
+      {vista &amp;&amp; &lt;img src={vista} alt="Vista previa de la foto elegida" width="120" />}
+    &lt;/div>
+  );
+}</code></pre>
+</div>
+<p>Validar en el front es comodidad; <strong>validar en la API es seguridad</strong>. Nunca confíes solo en lo primero.</p>
+<h2 id="s5"><span class="n">5.</span>Verificar la firma real del archivo</h2>
+
+<p>Los primeros bytes de un archivo dicen qué es de verdad, sin importar el nombre ni el <code>mimetype</code> que declare el cliente:</p>
+<div class="code">
+  <div class="code-head"><span>js</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>import { open } from "node:fs/promises";
+
+const FIRMAS = [
+  { tipo: "image/jpeg", bytes: [0xff, 0xd8, 0xff] },
+  { tipo: "image/png",  bytes: [0x89, 0x50, 0x4e, 0x47] },
+];
+
+async function tipoReal(ruta) {
+  const f = await open(ruta);
+  const { buffer } = await f.read(Buffer.alloc(4), 0, 4, 0);
+  await f.close();
+  return FIRMAS.find((x) => x.bytes.every((b, i) => buffer[i] === b))?.tipo ?? null;
+}
+
+// en la ruta, tras multer: si (await tipoReal(req.file.path)) no coincide, borra el archivo y responde 400</code></pre>
+</div>
+<h2 id="s6"><span class="n">6.</span>Respuestas de error de multer</h2>
+
+<p>Cuando el archivo supera el límite, multer lanza un error con <code>code: "LIMIT_FILE_SIZE"</code>. Captúralo en tu manejador de errores y responde <code>413</code> con un mensaje claro en vez de un error 500:</p>
+<div class="code">
+  <div class="code-head"><span>js</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>app.use((err, req, res, next) => {
+  if (err.code === "LIMIT_FILE_SIZE") return res.status(413).json({ error: "La imagen supera 2 MB" });
+  next(err);
+});</code></pre>
+</div>
+<h2 id="s7"><span class="n">7.</span>Servir las imágenes con seguridad</h2>
+
+<ul><li>Sirve la carpeta con <code>express.static</code> y <code>index: false</code>, para no listar el contenido.</li>
+<li>Agrega la cabecera <code>X-Content-Type-Options: nosniff</code> (helmet lo hace) para que el navegador no adivine tipos.</li>
+<li>Nunca guardes archivos subidos dentro de la carpeta del código; usa una carpeta aparte y, mejor aún, almacenamiento de objetos.</li>
+<li>No uses el nombre original del archivo: puede traer rutas (<code>../../</code>) o caracteres peligrosos.</li></ul>
+<h2 id="s8"><span class="n">8.</span>Imágenes pesadas: optimiza</h2>
+
+<p>Una foto de celular pesa 4–8 MB. Reduce a un ancho útil (800–1200 px) y convierte a WebP con una librería como <code>sharp</code> antes de guardarla. Tu sitio será más rápido y gastarás menos almacenamiento.</p>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li>Un archivo puede ser enorme, falso o malicioso: limita tamaño, valida tipo real, renombra.</li><li>El front usa <code>FormData</code> y no fija <code>Content-Type</code>.</li><li>El <code>mimetype</code> lo declara el cliente; la firma de los primeros bytes es más fiable.</li><li>No uses el nombre original ni guardes dentro de la carpeta del código.</li><li>En producción, usa almacenamiento de objetos (R2, S3, Supabase Storage).</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">9.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td>FormData</td><td>Objeto del navegador para enviar formularios con archivos.</td></tr><tr><td>multer</td><td>Middleware de Express que procesa archivos subidos.</td></tr><tr><td>mimetype</td><td>Tipo de contenido que declara el archivo (por ejemplo <code>image/png</code>).</td></tr><tr><td>Firma mágica</td><td>Primeros bytes que identifican el formato real de un archivo.</td></tr><tr><td>Almacenamiento de objetos</td><td>Servicio para guardar archivos por clave (S3, R2…), independiente del servidor.</td></tr></tbody>
+</table></div>
 
 <section class="quiz" id="quiz" aria-labelledby="t-quiz">
 <h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
 <p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
 <div class="quiz-q"><p>El mimetype que envía el cliente…</p><ul class="opts"><li><button type="button" class="opt">Es confiable</button></li><li><button type="button" class="opt" data-ok>Puede falsificarse: verifica el contenido real</button></li><li><button type="button" class="opt">No existe</button></li></ul><p class="explain" hidden>Valida firma mágica o reprocesa la imagen.</p></div>
 <div class="quiz-q"><p>Un nombre de archivo subido debe…</p><ul class="opts"><li><button type="button" class="opt">Conservarse tal cual</button></li><li><button type="button" class="opt" data-ok>Generarse de nuevo en el servidor</button></li><li><button type="button" class="opt">Ser el del usuario</button></li></ul><p class="explain" hidden>Evita colisiones y rutas peligrosas.</p></div>
+<div class="quiz-q"><p>¿Por qué no usar el nombre original del archivo subido?</p><ul class="opts"><li><button type="button" class="opt">Porque es más largo</button></li><li><button type="button" class="opt" data-ok>Puede traer rutas o caracteres peligrosos</button></li><li><button type="button" class="opt">Porque multer no lo permite</button></li></ul><p class="explain" hidden>Genera un nombre nuevo, por ejemplo con <code>randomUUID</code>.</p></div>
+<div class="quiz-q"><p>Si el archivo supera el límite, la respuesta correcta es…</p><ul class="opts"><li><button type="button" class="opt">500</button></li><li><button type="button" class="opt" data-ok>413 con un mensaje claro</button></li><li><button type="button" class="opt">200</button></li></ul><p class="explain" hidden>413 = contenido demasiado grande.</p></div>
+<div class="quiz-q"><p>¿Dónde guardar archivos en producción?</p><ul class="opts"><li><button type="button" class="opt">En la carpeta del código</button></li><li><button type="button" class="opt" data-ok>En almacenamiento de objetos, guardando solo la clave en la BD</button></li><li><button type="button" class="opt">En <code>localStorage</code></button></li></ul><p class="explain" hidden>El disco de muchos hostings es efímero.</p></div>
 <p class="quiz-score" aria-live="polite"></p>
 </section>
 
