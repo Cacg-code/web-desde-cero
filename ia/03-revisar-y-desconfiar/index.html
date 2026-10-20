@@ -37,7 +37,7 @@
   <main class="wrap lesson-layout" id="contenido">
     <nav class="toc" aria-label="Índice de la lección">
       <h4>En esta lección</h4>
-      <ol><li><a href="#intro">Introducción</a></li><li><a href="#s1">Lista de revisión del diff</a></li><li><a href="#s2">Paquetes inventados (slopsquatting)</a></li><li><a href="#s3">Los fallos de seguridad más comunes</a></li><li><a href="#s4">Prueba lo que te dieron</a></li><li><a href="#s5">Datos que nunca debes pegar</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+      <ol><li><a href="#intro">Introducción</a></li><li><a href="#s1">Lista de revisión del diff</a></li><li><a href="#s2">Paquetes inventados (slopsquatting)</a></li><li><a href="#s3">Los fallos de seguridad más comunes</a></li><li><a href="#s4">Prueba lo que te dieron</a></li><li><a href="#s5">Datos que nunca debes pegar</a></li><li><a href="#ejemplo">Ejemplo guiado: revisar un diff de 30 segundos</a></li><li><a href="#errores">Errores frecuentes</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
     </nav>
 
     <article>
@@ -97,12 +97,26 @@ test('ignora valores no numéricos', () => assert.equal(total([10, 'x']), 10));<
 
 <p>Lo que escribes en una herramienta de IA se envía a servidores de terceros. No pegues: claves y tokens, contraseñas, datos personales de clientes, código de tu empleador sin permiso. Si necesitas ayuda con un archivo de configuración, <strong>reemplaza los valores reales por marcadores</strong> (<code>TU_CLAVE_AQUI</code>). Revisa también las opciones de privacidad de cada herramienta (por ejemplo, si tus datos se usan para entrenar).</p>
 
+<h2 id="ejemplo"><span class="n">6.</span>Ejemplo guiado: revisar un diff de 30 segundos</h2>
+<p>La IA te propone este cambio para «guardar el correo del usuario». Léelo como revisor:</p><div class="code">
+  <div class="code-head"><span>js</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>app.post("/registro", (req, res) =&gt; {
+  const { correo, clave } = req.body;
+  db.exec(`INSERT INTO usuarios (correo, clave) VALUES ('${correo}', '${clave}')`);
+  res.json({ ok: true });
+});</code></pre>
+</div>
+<ul><li><strong>Seguridad:</strong> arma la consulta pegando texto (inyección SQL) → usa consultas con parámetros.</li><li><strong>Datos:</strong> guarda la clave tal cual → debe ir con hash (bcrypt/argon2).</li><li><strong>Validación:</strong> no comprueba que <code>correo</code> y <code>clave</code> existan ni su formato.</li><li><strong>Errores:</strong> si falla la BD, la ruta se cae sin responder.</li></ul>
+<p>El código «funciona» al probarlo una vez, y aun así es inaceptable. Por eso la revisión no es «¿corre?» sino «¿qué pasa con entradas hostiles, vacías o repetidas?».</p>
+<h2 id="errores"><span class="n">7.</span>Errores frecuentes</h2>
+<ul><li><strong>Aceptar un diff largo sin leerlo:</strong> pide cambios más pequeños para poder revisar de verdad.</li><li><strong>Confiar en paquetes que nombra la IA:</strong> verifica que existan, su descarga semanal y su repositorio antes de <code>npm install</code>.</li><li><strong>Dejar pasar «comentarios mentirosos»:</strong> la IA a veces escribe un comentario que dice una cosa y el código hace otra.</li><li><strong>Confundir «pasan las pruebas» con «está bien»:</strong> si la IA también escribió las pruebas, pueden estar probando lo equivocado.</li></ul>
+
 <section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
 <h2 id="t-apuntes">📒 Apuntes para llevar</h2>
 <ul><li>Revisar un diff: ¿lo pedí?, ¿lo entiendo?, ¿existe?, ¿casos límite?, ¿dependencias?, ¿secretos?</li><li>Verifica cada paquete con <code>npm view</code> antes de instalarlo: pueden ser <strong>inventados o maliciosos</strong>.</li><li>Claves siempre en variables de entorno; si se filtran, <strong>revócalas</strong>.</li><li>Pruebas con <code>node --test</code>: mejor si tú defines qué debe pasar.</li><li>No pegues secretos ni datos de terceros en herramientas de IA.</li></ul>
 </section>
 
-<h2 id="glosario"><span class="n">6.</span>Glosario</h2>
+<h2 id="glosario"><span class="n">8.</span>Glosario</h2>
 <div class="table-wrap"><table>
 <thead><tr><th>Término</th><th>Significado</th></tr></thead>
 <tbody><tr><td>Slopsquatting</td><td>Ataque que registra nombres de paquetes que la IA suele inventar.</td></tr><tr><td>Consulta parametrizada</td><td>SQL que separa la orden de los datos para evitar inyección.</td></tr><tr><td>Caso límite</td><td>Entrada extrema o rara: vacía, nula, enorme, con símbolos.</td></tr><tr><td>Prueba automatizada</td><td>Código que comprueba que otro código hace lo esperado.</td></tr><tr><td>Revocar una clave</td><td>Invalidarla en el proveedor y crear una nueva.</td></tr></tbody>

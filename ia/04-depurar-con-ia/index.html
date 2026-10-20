@@ -37,7 +37,7 @@
   <main class="wrap lesson-layout" id="contenido">
     <nav class="toc" aria-label="Índice de la lección">
       <h4>En esta lección</h4>
-      <ol><li><a href="#intro">Introducción</a></li><li><a href="#s1">El método de 5 pasos</a></li><li><a href="#s2">Qué pegar (y qué no)</a></li><li><a href="#s3">Herramientas de depuración que debes dominar igual</a></li><li><a href="#s4">Señales de que la IA te está llevando a un parche</a></li><li><a href="#s5">Cierra el ciclo con una prueba</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+      <ol><li><a href="#intro">Introducción</a></li><li><a href="#s1">El método de 5 pasos</a></li><li><a href="#s2">Qué pegar (y qué no)</a></li><li><a href="#s3">Herramientas de depuración que debes dominar igual</a></li><li><a href="#s4">Señales de que la IA te está llevando a un parche</a></li><li><a href="#s5">Cierra el ciclo con una prueba</a></li><li><a href="#ejemplo">Ejemplo guiado: depurar un error paso a paso</a></li><li><a href="#errores">Errores frecuentes</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
     </nav>
 
     <article>
@@ -86,12 +86,27 @@ Pregunta: dame 3 hipótesis y cómo comprobar cada una. No escribas código toda
 
 <p>Cuando encuentres la causa, escribe una prueba que <em>falle antes</em> del arreglo y <em>pase después</em>. Es la única garantía de que el error no regresa sin que te des cuenta.</p>
 
+<h2 id="ejemplo"><span class="n">6.</span>Ejemplo guiado: depurar un error paso a paso</h2>
+<p>Tu consola dice <code>TypeError: Cannot read properties of undefined (reading 'map')</code>. Un buen pedido de ayuda incluye todo esto:</p><div class="code">
+  <div class="code-head"><span>texto</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>Error (completo): TypeError: Cannot read properties of undefined (reading 'map')
+  at Lista (src/Lista.jsx:8:20)
+Qué esperaba: ver la lista de productos.
+Qué pasa: pantalla en blanco al cargar; con F5 a veces sí aparece.
+Ya probé: console.log(productos) -&gt; undefined en el primer render.
+Código: (pega Lista.jsx y el componente que la usa)
+Pregunta: explícame la causa antes de proponer el arreglo.</code></pre>
+</div>
+<p>«Con F5 a veces sí aparece» es la pista: los datos llegan <em>después</em> del primer render. La respuesta correcta no es «pon <code>?.</code> en todo», sino inicializar el estado con <code>[]</code> o mostrar «Cargando…». Pedir <strong>primero la causa</strong> te enseña; pedir solo el arreglo te deja igual de perdido la próxima vez.</p>
+<h2 id="errores"><span class="n">7.</span>Errores frecuentes</h2>
+<ul><li><strong>Pegar solo la última línea del error:</strong> el rastro (<em>stack trace</em>) dice en qué archivo y línea ocurrió.</li><li><strong>Aceptar el parche que «apaga» el error</strong> (un <code>try/catch</code> vacío) sin entender por qué ocurría.</li><li><strong>Cambiar varias cosas a la vez:</strong> si cambias tres cosas y se arregla, no sabes cuál lo hizo. Cambia una, prueba, repite.</li><li><strong>No reproducir antes de pedir ayuda:</strong> un error que no puedes repetir no se puede confirmar como arreglado.</li></ul>
+
 <section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
 <h2 id="t-apuntes">📒 Apuntes para llevar</h2>
 <ul><li>Método: <strong>reproducir → evidencia → hipótesis → comprobar → arreglar la causa + prueba</strong>.</li><li>Pide <strong>hipótesis y cómo verificarlas</strong>, no solo código.</li><li>Incluye lo que ya probaste y el error completo; quita secretos.</li><li>Desconfía de <code>try/catch</code> que silencia errores y de parches que no explican la causa.</li><li>Domina consola, Network y breakpoints: la IA no los reemplaza.</li></ul>
 </section>
 
-<h2 id="glosario"><span class="n">6.</span>Glosario</h2>
+<h2 id="glosario"><span class="n">8.</span>Glosario</h2>
 <div class="table-wrap"><table>
 <thead><tr><th>Término</th><th>Significado</th></tr></thead>
 <tbody><tr><td>Depurar</td><td>Encontrar y corregir la causa de un error.</td></tr><tr><td>Breakpoint</td><td>Punto donde el programa se detiene para inspeccionarlo.</td></tr><tr><td>Síntoma vs causa</td><td>Lo que se ve fallar vs. la razón real del fallo.</td></tr><tr><td>Reproducir</td><td>Lograr que el error ocurra de forma repetible.</td></tr><tr><td>Regresión</td><td>Error que vuelve a aparecer tras haberse arreglado.</td></tr></tbody>

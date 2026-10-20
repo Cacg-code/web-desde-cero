@@ -37,7 +37,7 @@
   <main class="wrap lesson-layout" id="contenido">
     <nav class="toc" aria-label="Índice de la lección">
       <h4>En esta lección</h4>
-      <ol><li><a href="#intro">Introducción</a></li><li><a href="#s1">Opciones de función</a></li><li><a href="#s2">Requisitos</a></li><li><a href="#s3">Rúbrica de autoevaluación</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+      <ol><li><a href="#intro">Introducción</a></li><li><a href="#s1">Opciones de función</a></li><li><a href="#s2">Requisitos</a></li><li><a href="#s3">Rúbrica de autoevaluación</a></li><li><a href="#ejemplo">Ejemplo guiado: cómo documentar el uso de IA en tu proyecto</a></li><li><a href="#errores">Errores frecuentes</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
     </nav>
 
     <article>
@@ -71,12 +71,27 @@
 <tr><td>Documentado</td><td>README, AGENTS.md y bitácora al día.</td></tr>
 </tbody></table></div>
 
+<h2 id="ejemplo"><span class="n">4.</span>Ejemplo guiado: cómo documentar el uso de IA en tu proyecto</h2>
+<p>Parte de tu entrega es una sección corta en el README. Un ejemplo de cómo se ve:</p><div class="code">
+  <div class="code-head"><span>markdown</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>## Cómo usé IA en este proyecto
+- Herramienta: editor con IA (chat + agente) para la función de filtros.
+- Qué le pedí: plan de cambios, tests de la función `filtrar` y refactor de `App.jsx`.
+- Qué rechacé o corregí: propuso una librería innecesaria (la quité) y un
+  filtro que no ignoraba tildes (lo reescribí y añadí un test).
+- Cómo verifiqué: `npm test` (12 pruebas), revisión manual con teclado y en móvil.
+- Qué aprendí: pedir primero el plan evitó que tocara archivos que no debía.</code></pre>
+</div>
+<p>Este texto demuestra criterio: muestra qué decidiste tú, cómo comprobaste y qué cambiarías. Es lo que un reclutador o cliente valora más que «lo hizo la IA» o «lo hice todo yo».</p>
+<h2 id="errores"><span class="n">5.</span>Errores frecuentes</h2>
+<ul><li><strong>Entregar sin pruebas ni rúbrica:</strong> usa la rúbrica de esta página; si no puedes marcar un punto, aún no está.</li><li><strong>Mejorar demasiadas cosas a la vez:</strong> elige una función y hazla bien; la profundidad se nota más que la cantidad.</li><li><strong>Dejar commits gigantes:</strong> un cambio por commit permite explicar y deshacer.</li><li><strong>Omitir qué corregiste a la IA:</strong> son esos cambios los que muestran que entiendes el código.</li></ul>
+
 <section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
 <h2 id="t-apuntes">📒 Apuntes para llevar</h2>
 <ul><li>Un buen flujo con IA: <strong>rama, plan, pruebas, cambio pequeño, revisión, commit, bitácora</strong>.</li><li>Las pruebas no deben depender de llamadas reales al modelo.</li><li>Tu bitácora demuestra criterio: muestra los errores de la IA que detectaste.</li></ul>
 </section>
 
-<h2 id="glosario"><span class="n">4.</span>Glosario</h2>
+<h2 id="glosario"><span class="n">6.</span>Glosario</h2>
 <div class="table-wrap"><table>
 <thead><tr><th>Término</th><th>Significado</th></tr></thead>
 <tbody><tr><td>Bitácora</td><td>Registro cronológico de decisiones y aprendizajes del proyecto.</td></tr><tr><td>Respuesta de reserva</td><td>Contenido alternativo cuando falla un servicio externo.</td></tr></tbody>

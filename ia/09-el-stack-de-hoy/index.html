@@ -37,7 +37,7 @@
   <main class="wrap lesson-layout" id="contenido">
     <nav class="toc" aria-label="Índice de la lección">
       <h4>En esta lección</h4>
-      <ol><li><a href="#intro">Introducción</a></li><li><a href="#s1">El mapa</a></li><li><a href="#s2">TypeScript en 30 segundos</a></li><li><a href="#s3">Cómo se mantienen actualizados los profesionales</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+      <ol><li><a href="#intro">Introducción</a></li><li><a href="#s1">El mapa</a></li><li><a href="#s2">TypeScript en 30 segundos</a></li><li><a href="#s3">Cómo se mantienen actualizados los profesionales</a></li><li><a href="#ejemplo">Ejemplo guiado: decidir tu stack sin perseguir modas</a></li><li><a href="#errores">Errores frecuentes</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
     </nav>
 
     <article>
@@ -88,12 +88,18 @@ completar({ id: 1, titulo: 'Estudiar' });   // ❌ El editor avisa: falta "hecha
 <ul><li><strong>Documentación oficial</strong> y notas de versión (<em>changelog</em>) de las herramientas que usan.</li><li><strong>Compatibilidad:</strong> antes de actualizar, lee los cambios que rompen compatibilidad (<em>breaking changes</em>). Para ver qué versión tienes: <code>npm ls</code>; para ver la última: <code>npm view paquete version</code>.</li><li><strong>Un proyecto pequeño por herramienta nueva:</strong> aprender leyendo no basta.</li><li><strong>Desconfía de tutoriales sin fecha</strong> y de respuestas de IA que no mencionan versión.</li><li><strong>Fija tus dependencias</strong> con <code>package-lock.json</code> y usa <code>npm ci</code> en despliegues.</li></ul>
 <div class="callout nota"><p class="callout-title">📌 Nota · No persigas todo</p><p>Una ruta razonable después de este curso: <strong>TypeScript → un framework full stack → pruebas → despliegue automático</strong>. Con tres de esas cuatro y un buen portafolio, estás en un nivel muy competitivo para un puesto inicial.</p></div>
 
+<h2 id="ejemplo"><span class="n">4.</span>Ejemplo guiado: decidir tu stack sin perseguir modas</h2>
+<p>Antes de adoptar una herramienta nueva, responde por escrito:</p><ul><li>¿Qué problema concreto de mi proyecto resuelve hoy?</li><li>¿Tiene documentación oficial actualizada y una comunidad activa (últimos commits, issues respondidos)?</li><li>¿Cuánto cuesta cuando crece y qué pasa si cambia de precio o desaparece?</li><li>¿Puedo sacar mis datos y mi código si me voy?</li><li>¿La entiendo lo suficiente para depurarla sin la IA?</li></ul>
+<p>Si no puedes contestar las dos primeras, es curiosidad, no necesidad: pruébala un fin de semana en una rama, no en el proyecto de un cliente.</p>
+<h2 id="errores"><span class="n">5.</span>Errores frecuentes</h2>
+<ul><li><strong>Cambiar de stack a mitad de proyecto</strong> porque salió algo nuevo.</li><li><strong>Elegir por lo que la IA conoce mejor</strong> sin ver si encaja contigo: herramientas muy nuevas pueden no estar en su entrenamiento y generar código desactualizado.</li><li><strong>Depender de un solo proveedor sin plan B:</strong> encapsula las llamadas (un solo archivo) para poder cambiarlo.</li><li><strong>Confiar en listas de «las mejores herramientas»</strong> sin fecha: caducan en meses. Contrasta con la documentación oficial.</li></ul>
+
 <section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
 <h2 id="t-apuntes">📒 Apuntes para llevar</h2>
 <ul><li>Cada herramienta resuelve un problema concreto: aprende el problema primero.</li><li>TypeScript es el siguiente paso natural y refuerza el trabajo con IA.</li><li>Tailwind y los frameworks se aprovechan mejor con una base sólida de CSS y React.</li><li>Usa versiones LTS y revisa el changelog antes de actualizar.</li><li>Un proyecto pequeño por herramienta es mejor que leer diez tutoriales.</li></ul>
 </section>
 
-<h2 id="glosario"><span class="n">4.</span>Glosario</h2>
+<h2 id="glosario"><span class="n">6.</span>Glosario</h2>
 <div class="table-wrap"><table>
 <thead><tr><th>Término</th><th>Significado</th></tr></thead>
 <tbody><tr><td>LTS</td><td>Versión de soporte a largo plazo, recomendada para producción.</td></tr><tr><td>Bundler</td><td>Herramienta que junta y optimiza tus archivos para publicar.</td></tr><tr><td>Tipos</td><td>Declaraciones de qué forma tienen los datos (texto, número, objeto).</td></tr><tr><td>E2E</td><td>Pruebas de extremo a extremo: simulan a un usuario real en el navegador.</td></tr><tr><td>Breaking change</td><td>Cambio de una librería que puede romper código que funcionaba.</td></tr></tbody>

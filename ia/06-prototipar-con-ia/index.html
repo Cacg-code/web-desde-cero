@@ -37,7 +37,7 @@
   <main class="wrap lesson-layout" id="contenido">
     <nav class="toc" aria-label="Índice de la lección">
       <h4>En esta lección</h4>
-      <ol><li><a href="#intro">Introducción</a></li><li><a href="#s1">Cuándo sí y cuándo no</a></li><li><a href="#s2">Cómo describir lo que quieres</a></li><li><a href="#s3">Del prototipo a tu código</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+      <ol><li><a href="#intro">Introducción</a></li><li><a href="#s1">Cuándo sí y cuándo no</a></li><li><a href="#s2">Cómo describir lo que quieres</a></li><li><a href="#s3">Del prototipo a tu código</a></li><li><a href="#ejemplo">Ejemplo guiado: auditar un prototipo en 10 minutos</a></li><li><a href="#errores">Errores frecuentes</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
     </nav>
 
     <article>
@@ -83,12 +83,18 @@ Tecnología: React + Vite + CSS simple (sin librerías de componentes).</code></
 <p>Muchas plataformas conectan base de datos o autenticación con un clic. Es cómodo, pero revisa de quién es la cuenta, dónde viven los datos del cliente y cuánto cuesta cuando el proyecto crece. Si trabajas para un cliente, eso debe estar a nombre del cliente.</p>
 <div class="callout nota"><p class="callout-title">📌 Nota · Licencias y honestidad</p><p>Si entregas algo a un cliente, di que usaste herramientas de IA para acelerar el trabajo y que tú lo revisaste y lo mantienes. Es honesto y profesional; lo que se cobra es tu criterio y tu responsabilidad.</p></div>
 
+<h2 id="ejemplo"><span class="n">4.</span>Ejemplo guiado: auditar un prototipo en 10 minutos</h2>
+<p>Exportaste una landing de un constructor. Antes de usarla, recorre esta lista:</p><ul><li><strong>Teclado:</strong> pulsa <kbd>Tab</kbd> por toda la página. ¿Se ve el foco? ¿Llegas a todos los botones?</li><li><strong>Imágenes:</strong> ¿tienen <code>alt</code>? ¿Pesan menos de 200 KB o son fotos de varios MB?</li><li><strong>Contraste:</strong> revisa texto claro sobre fondos claros (usa el comprobador de contraste del curso de CSS).</li><li><strong>Restos:</strong> busca «lorem», «ejemplo@», claves o URLs de prueba olvidadas con <code>git grep -n "lorem\|example"</code>.</li><li><strong>Dependencias:</strong> abre <code>package.json</code>; borra lo que no usas y verifica lo desconocido.</li></ul>
+<p>Si encuentras más de tres problemas, no es mala suerte: es el estado normal de un prototipo. Por eso se pule antes de entregar.</p>
+<h2 id="errores"><span class="n">5.</span>Errores frecuentes</h2>
+<ul><li><strong>Publicar el prototipo tal cual</strong> con datos y textos de ejemplo.</li><li><strong>Dejar la base de datos en la cuenta del constructor:</strong> el cliente queda atado a tu cuenta y a su plan.</li><li><strong>Pedir «hazlo más bonito» sin criterios:</strong> cada pedido rehace todo. Pide cambios concretos (espaciado, tamaño de título, un color).</li><li><strong>Saltarte el aprender:</strong> si el prototipo hace algo que no entiendes, ese es el tema que toca estudiar ahora.</li></ul>
+
 <section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
 <h2 id="t-apuntes">📒 Apuntes para llevar</h2>
 <ul><li>Los constructores sirven para <strong>prototipar y mostrar</strong>, no para entregar sin revisar.</li><li>Describe estructura, estilo, estados y tecnología; pide accesibilidad y móvil primero.</li><li>Pasa el código a tu repo, <strong>léelo, audítalo y límpialo</strong> antes de usarlo.</li><li>Datos y cuentas de un cliente deben estar a su nombre.</li><li>Sé transparente con el cliente sobre el uso de IA y asume la responsabilidad del resultado.</li></ul>
 </section>
 
-<h2 id="glosario"><span class="n">4.</span>Glosario</h2>
+<h2 id="glosario"><span class="n">6.</span>Glosario</h2>
 <div class="table-wrap"><table>
 <thead><tr><th>Término</th><th>Significado</th></tr></thead>
 <tbody><tr><td>Prototipo</td><td>Versión rápida para probar una idea, no el producto final.</td></tr><tr><td>Auditar</td><td>Revisar de forma sistemática calidad, seguridad y accesibilidad.</td></tr><tr><td>Móvil primero</td><td>Diseñar primero para pantallas pequeñas y luego ampliar.</td></tr></tbody>

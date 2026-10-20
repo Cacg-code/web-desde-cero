@@ -37,7 +37,7 @@
   <main class="wrap lesson-layout" id="contenido">
     <nav class="toc" aria-label="Índice de la lección">
       <h4>En esta lección</h4>
-      <ol><li><a href="#intro">Introducción</a></li><li><a href="#s1">Regla 1: la clave vive en el servidor</a></li><li><a href="#s2">Una llamada mínima desde Node</a></li><li><a href="#s3">Respuestas en JSON: pide, valida y no confíes</a></li><li><a href="#s4">Reglas primero, IA después</a></li><li><a href="#s5">Costos, límites y privacidad</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+      <ol><li><a href="#intro">Introducción</a></li><li><a href="#s1">Regla 1: la clave vive en el servidor</a></li><li><a href="#s2">Una llamada mínima desde Node</a></li><li><a href="#s3">Respuestas en JSON: pide, valida y no confíes</a></li><li><a href="#s4">Reglas primero, IA después</a></li><li><a href="#s5">Costos, límites y privacidad</a></li><li><a href="#ejemplo">Ejemplo guiado: llamar a un modelo desde el servidor</a></li><li><a href="#errores">Errores frecuentes</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
     </nav>
 
     <article>
@@ -119,12 +119,36 @@ export async function clasificar(texto) {
 <ul><li><strong>Se paga por uso</strong> (tokens de entrada y salida). Limita el largo de lo que envías (<code>slice</code>) y de lo que recibes (<code>max_tokens</code>).</li><li><strong>Límite por usuario</strong> en tu ruta, para que nadie vacíe tu saldo con un script.</li><li><strong>Presupuesto y alertas</strong> en el panel del proveedor.</li><li><strong>Cachea</strong> respuestas a preguntas repetidas.</li><li><strong>Privacidad:</strong> no envíes datos personales de más; avisa al usuario cuando hable con una IA y ofrece una persona de respaldo.</li><li><strong>Nunca</strong> dejes que el modelo invente precios, plazos o políticas: esos datos salen de tu base de datos o de un archivo tuyo.</li></ul>
 <div class="callout nota"><p class="callout-title">📌 Nota · Opciones de infraestructura</p><p>Si ya usas Cloudflare Workers (como en el curso de chatbots), puedes llamar a modelos desde el propio Worker con <em>Workers AI</em> y pasar el tráfico por <em>AI Gateway</em> para ver costos, límites y registros. Revisa los planes y límites vigentes en la documentación oficial antes de depender de ellos.</p></div>
 
+<h2 id="ejemplo"><span class="n">6.</span>Ejemplo guiado: llamar a un modelo desde el servidor</h2>
+<p>Regla central: la <strong>clave del proveedor vive en el servidor</strong>, nunca en el navegador. Esquema mínimo con Express:</p><div class="code">
+  <div class="code-head"><span>js</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>app.post("/api/resumir", limitarPeticiones, async (req, res) =&gt; {
+  const texto = String(req.body.texto ?? "").slice(0, 4000);   // límite de entrada
+  if (!texto.trim()) return res.status(400).json({ error: "Falta el texto" });
+  try {
+    const r = await fetch(process.env.URL_DEL_MODELO, {        // la URL y la clave vienen de variables de entorno
+      method: "POST",
+      headers: { "Content-Type": "application/json", Authorization: `Bearer ${process.env.CLAVE_IA}` },
+      body: JSON.stringify({ /* cuerpo según la documentación de tu proveedor */ }),
+      signal: AbortSignal.timeout(15000),                      // no esperes para siempre
+    });
+    if (!r.ok) throw new Error("Proveedor respondió " + r.status);
+    res.json({ resumen: (await r.json()) /* extrae el texto según tu proveedor */ });
+  } catch {
+    res.status(502).json({ error: "El resumen no está disponible ahora. Intenta de nuevo." });
+  }
+});</code></pre>
+</div>
+<p>Fíjate en lo que rodea a la llamada: <strong>límite de entrada, limitación de peticiones, tiempo máximo, error amable y clave en variables de entorno</strong>. La llamada al modelo es lo más fácil; lo demás es lo que evita facturas y abusos.</p>
+<h2 id="errores"><span class="n">7.</span>Errores frecuentes</h2>
+<ul><li><strong>Poner la clave en el código del front</strong> (aunque sea «solo para probar»): cualquiera la ve en DevTools y la usa a tu costa.</li><li><strong>No limitar peticiones ni tamaño:</strong> un solo usuario (o un script) puede gastar tu cuota del mes en minutos.</li><li><strong>Mostrar la respuesta del modelo como HTML</strong> sin sanearla: puede traer etiquetas o enlaces maliciosos.</li><li><strong>Asumir que la salida sigue tu formato:</strong> si esperas JSON, valida la estructura y ten un plan si viene mal.</li><li><strong>Enviar datos personales al modelo</strong> sin necesidad ni aviso al usuario.</li></ul>
+
 <section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
 <h2 id="t-apuntes">📒 Apuntes para llevar</h2>
 <ul><li>La clave de la API <strong>solo en el servidor</strong>; el navegador llama a tu ruta.</li><li>Guarda URL, clave y modelo en variables de entorno y usa timeout.</li><li>Pide JSON, <strong>valídalo</strong> y ten plan B si falla.</li><li>Arquitectura: <strong>reglas primero, IA para lo que no encaja, respuesta de reserva</strong>.</li><li>Controla costos: límites de entrada/salida, límite por usuario, presupuesto y caché.</li><li>Datos como precios y políticas salen de tu fuente de verdad, nunca del modelo.</li></ul>
 </section>
 
-<h2 id="glosario"><span class="n">6.</span>Glosario</h2>
+<h2 id="glosario"><span class="n">8.</span>Glosario</h2>
 <div class="table-wrap"><table>
 <thead><tr><th>Término</th><th>Significado</th></tr></thead>
 <tbody><tr><td>Token</td><td>Trozo de texto (palabra o parte) que el modelo procesa y por el que se cobra.</td></tr><tr><td>System prompt</td><td>Instrucción de rol que define cómo debe comportarse el modelo.</td></tr><tr><td>Salida estructurada</td><td>Respuesta que cumple un formato o esquema (por ejemplo, JSON).</td></tr><tr><td>Timeout</td><td>Tiempo máximo de espera antes de abortar una llamada.</td></tr><tr><td>Rate limit</td><td>Límite de peticiones por tiempo para evitar abuso.</td></tr></tbody>

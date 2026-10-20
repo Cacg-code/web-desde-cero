@@ -37,7 +37,7 @@
   <main class="wrap lesson-layout" id="contenido">
     <nav class="toc" aria-label="Índice de la lección">
       <h4>En esta lección</h4>
-      <ol><li><a href="#intro">Introducción</a></li><li><a href="#s1">Cómo funciona un modelo de lenguaje (lo mínimo que debes saber)</a></li><li><a href="#s2">Los 4 tipos de herramienta</a></li><li><a href="#s3">Cuál usar según la tarea</a></li><li><a href="#s4">Prepara tu entorno de práctica</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+      <ol><li><a href="#intro">Introducción</a></li><li><a href="#s1">Cómo funciona un modelo de lenguaje (lo mínimo que debes saber)</a></li><li><a href="#s2">Los 4 tipos de herramienta</a></li><li><a href="#s3">Cuál usar según la tarea</a></li><li><a href="#s4">Prepara tu entorno de práctica</a></li><li><a href="#ejemplo">Ejemplo guiado: la misma tarea con dos herramientas</a></li><li><a href="#errores">Errores frecuentes</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
     </nav>
 
     <article>
@@ -86,12 +86,18 @@ git switch -c practica-ia   # rama de prueba: si sale mal, la borras
 </code></pre>
 </div>
 
+<h2 id="ejemplo"><span class="n">5.</span>Ejemplo guiado: la misma tarea con dos herramientas</h2>
+<p>Tarea: «mi formulario deja enviar el correo vacío». Mira cómo cambia el trabajo según la herramienta:</p><ul><li><strong>Chat:</strong> pegas el HTML del formulario y la queja. Te explica la causa (falta <code>required</code> o la validación) y te da un fragmento. <em>Tú</em> lo copias, lo pruebas y decides.</li><li><strong>Editor con IA:</strong> seleccionas el formulario y pides el cambio. Ves un <em>diff</em> con líneas verdes y rojas; aceptas, rechazas o pides ajustes.</li><li><strong>Agente de terminal:</strong> le dices la tarea; lee los archivos, edita, ejecuta tus pruebas y te resume. Tú revisas con <code>git diff</code>.</li></ul>
+<p>Para esta tarea pequeña basta el chat o el editor. El agente se justifica cuando el cambio toca varios archivos. Usar la herramienta más grande para todo es lento y más difícil de revisar.</p>
+<h2 id="errores"><span class="n">6.</span>Errores frecuentes</h2>
+<ul><li><strong>Creer que «lo ejecutó, entonces funciona»:</strong> un chat no ejecuta nada y un agente puede ejecutar mal. La prueba la haces tú.</li><li><strong>Empezar sin Git:</strong> si el agente rompe algo y no hay commit previo, no tienes cómo volver.</li><li><strong>Coleccionar herramientas:</strong> cambiar cada semana de editor te quita más tiempo del que ahorra. Elige una y úsala un mes.</li><li><strong>Pegar secretos en el chat</strong> (claves, <code>.env</code>, datos de clientes): lo que pegas sale de tu computadora.</li></ul>
+
 <section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
 <h2 id="t-apuntes">📒 Apuntes para llevar</h2>
 <ul><li>Un LLM <strong>predice texto probable</strong>; no ejecuta ni comprueba tu código.</li><li>Sus tres límites: <strong>alucina, tiene fecha de corte y ve poco contexto</strong>.</li><li>Hay 4 tipos de herramienta: chat, editor con IA, agente de terminal y constructor de apps.</li><li>Trabaja siempre con <strong>Git</strong> y una rama de prueba para poder deshacer.</li><li>Aprende una herramienta bien antes de coleccionar muchas.</li></ul>
 </section>
 
-<h2 id="glosario"><span class="n">5.</span>Glosario</h2>
+<h2 id="glosario"><span class="n">7.</span>Glosario</h2>
 <div class="table-wrap"><table>
 <thead><tr><th>Término</th><th>Significado</th></tr></thead>
 <tbody><tr><td>LLM</td><td>Modelo de lenguaje grande: programa que genera texto (y código) prediciendo lo más probable.</td></tr><tr><td>Alucinación</td><td>Respuesta inventada que suena correcta.</td></tr><tr><td>Contexto</td><td>Todo lo que el modelo puede "ver" en ese momento: tu mensaje, archivos adjuntos, historial.</td></tr><tr><td>Agente</td><td>IA que no solo responde: usa herramientas (leer archivos, ejecutar comandos) para cumplir una tarea.</td></tr><tr><td>Diff</td><td>Vista de cambios que muestra líneas añadidas y quitadas antes de aceptarlas.</td></tr></tbody>

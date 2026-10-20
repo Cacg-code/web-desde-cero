@@ -37,7 +37,7 @@
   <main class="wrap lesson-layout" id="contenido">
     <nav class="toc" aria-label="Índice de la lección">
       <h4>En esta lección</h4>
-      <ol><li><a href="#intro">Introducción</a></li><li><a href="#s1">El ciclo de trabajo con un agente</a></li><li><a href="#s2">AGENTS.md: el manual de tu proyecto para la IA</a></li><li><a href="#s3">Permisos: tú tienes el control</a></li><li><a href="#s4">MCP: conectar la IA con tus herramientas</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+      <ol><li><a href="#intro">Introducción</a></li><li><a href="#s1">El ciclo de trabajo con un agente</a></li><li><a href="#s2">AGENTS.md: el manual de tu proyecto para la IA</a></li><li><a href="#s3">Permisos: tú tienes el control</a></li><li><a href="#s4">MCP: conectar la IA con tus herramientas</a></li><li><a href="#ejemplo">Ejemplo guiado: un AGENTS.md mínimo y útil</a></li><li><a href="#errores">Errores frecuentes</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
     </nav>
 
     <article>
@@ -96,12 +96,31 @@ API de tareas con Node 24 + Express 5 + SQLite. Front en React + Vite.
 <div class="table-wrap"><table><thead><tr><th>Ventaja</th><th>Riesgo</th></tr></thead><tbody><tr><td>Menos copiar y pegar; datos reales y actuales.</td><td>Cada servidor es código que ejecuta cosas con tus permisos y puede leer tus datos.</td></tr></tbody></table></div>
 <ul><li>Instala solo servidores de fuentes <strong>oficiales o muy conocidas</strong> y revisa qué permisos piden.</li><li>Dales <strong>acceso mínimo</strong>: una base de datos de pruebas y de solo lectura, no la de producción.</li><li>Empieza sin MCP. Añádelo cuando el copiar y pegar te estorbe de verdad.</li></ul>
 
+<h2 id="ejemplo"><span class="n">5.</span>Ejemplo guiado: un AGENTS.md mínimo y útil</h2>
+<p>Un archivo corto en la raíz le ahorra repetir lo mismo en cada sesión:</p><div class="code">
+  <div class="code-head"><span>markdown</span><button class="copy" type="button">Copiar</button></div>
+<pre><code># AGENTS.md
+## Comandos
+- Instalar: npm install
+- Desarrollo: npm run dev
+- Pruebas: npm test   (córrelas antes de dar por terminada una tarea)
+
+## Reglas
+- Usa JavaScript con módulos ES; no agregues TypeScript.
+- No instales dependencias sin avisarme.
+- Nunca leas ni modifiques .env.
+- Cambios pequeños: un tema por commit.</code></pre>
+</div>
+<p>Lo que va aquí son <strong>comandos y reglas que la IA no puede adivinar</strong>. Lo que ya está claro leyendo el código no hace falta repetirlo. Revísalo de vez en cuando: un AGENTS.md desactualizado confunde más que ayuda.</p>
+<h2 id="errores"><span class="n">6.</span>Errores frecuentes</h2>
+<ul><li><strong>Darle permisos totales por comodidad:</strong> aprueba comandos de uno en uno hasta que entiendas qué hace cada uno; nunca pidas «borrar todo y empezar de cero» sin Git.</li><li><strong>Conectar servidores MCP desconocidos:</strong> un MCP puede leer tus archivos o llamar a servicios; instala solo los que conoces y revisa qué permisos piden.</li><li><strong>AGENTS.md larguísimo:</strong> si pasa de una pantalla, la IA lo sigue peor. Deja lo esencial.</li><li><strong>Sesiones eternas:</strong> cuanto más largo el chat, más se pierde del contexto. Para una tarea nueva, abre una conversación nueva.</li></ul>
+
 <section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
 <h2 id="t-apuntes">📒 Apuntes para llevar</h2>
 <ul><li>Ciclo con agentes: <strong>rama → plan → cambio pequeño → pruebas → diff → commit</strong>.</li><li><code>AGENTS.md</code> da contexto estable: comandos, reglas y qué no tocar. Corto y concreto.</li><li>Revisa los permisos; desconfía de comandos destructivos y de modos sin confirmación.</li><li>La <strong>inyección de prompt</strong> existe: el agente puede obedecer texto malicioso que lee.</li><li>MCP conecta la IA con herramientas; dale <strong>mínimo acceso</strong> y fuentes confiables.</li></ul>
 </section>
 
-<h2 id="glosario"><span class="n">5.</span>Glosario</h2>
+<h2 id="glosario"><span class="n">7.</span>Glosario</h2>
 <div class="table-wrap"><table>
 <thead><tr><th>Término</th><th>Significado</th></tr></thead>
 <tbody><tr><td>Agente</td><td>IA que usa herramientas y ejecuta pasos hasta cumplir una tarea.</td></tr><tr><td>AGENTS.md</td><td>Archivo con instrucciones del proyecto para agentes de código.</td></tr><tr><td>MCP</td><td>Protocolo abierto para conectar modelos con herramientas y datos.</td></tr><tr><td>Inyección de prompt</td><td>Texto malicioso que intenta cambiar las instrucciones de la IA.</td></tr><tr><td>Linter</td><td>Herramienta que revisa estilo y errores comunes del código.</td></tr></tbody>

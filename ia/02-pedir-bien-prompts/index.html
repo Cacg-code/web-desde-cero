@@ -37,7 +37,7 @@
   <main class="wrap lesson-layout" id="contenido">
     <nav class="toc" aria-label="Índice de la lección">
       <h4>En esta lección</h4>
-      <ol><li><a href="#intro">Introducción</a></li><li><a href="#s1">La fórmula: contexto, tarea, restricciones, formato</a></li><li><a href="#s2">Pide un plan antes del código</a></li><li><a href="#s3">Da ejemplos y muestra lo que existe</a></li><li><a href="#s4">Itera con correcciones concretas</a></li><li><a href="#s5">Una tarea, un cambio, un commit</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+      <ol><li><a href="#intro">Introducción</a></li><li><a href="#s1">La fórmula: contexto, tarea, restricciones, formato</a></li><li><a href="#s2">Pide un plan antes del código</a></li><li><a href="#s3">Da ejemplos y muestra lo que existe</a></li><li><a href="#s4">Itera con correcciones concretas</a></li><li><a href="#s5">Una tarea, un cambio, un commit</a></li><li><a href="#ejemplo">Ejemplo guiado: de un pedido vago a uno verificable</a></li><li><a href="#errores">Errores frecuentes</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
     </nav>
 
     <article>
@@ -93,12 +93,26 @@
 
 <p>Pide cosas pequeñas y verificables. Después de cada una que funcione: pruébala y haz <code>git commit</code>. Así, si el siguiente pedido rompe algo, sabes exactamente dónde volver.</p>
 
+<h2 id="ejemplo"><span class="n">6.</span>Ejemplo guiado: de un pedido vago a uno verificable</h2>
+<p>Partimos de «agrega búsqueda a mi lista de tareas». Lo mejoramos en tres pasos:</p><div class="code">
+  <div class="code-head"><span>texto</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>1) Vago:       "agrega búsqueda"
+2) Con contexto: "Mi app es React 19 + Vite. Las tareas están en el estado `tareas` de App.jsx."
+3) Verificable:  "Agrega un input que filtre `tareas` por texto mientras escribo.
+                  Restricciones: sin librerías nuevas, mantén el estilo de App.css,
+                  ignora mayúsculas. Antes de editar, dime qué archivos tocarás.
+                  Criterio: con 'LEC' debe aparecer 'Leer un libro'.</code></pre>
+</div>
+<p>El paso 3 incluye <strong>contexto, tarea, restricciones y un criterio de éxito</strong>. Ese criterio es lo que luego pruebas tú en el navegador. Si no puedes escribir el criterio, todavía no sabes lo que quieres pedir.</p>
+<h2 id="errores"><span class="n">7.</span>Errores frecuentes</h2>
+<ul><li><strong>Pedir todo de una vez:</strong> «haz el login, el registro, el panel y los emails» produce código enorme que no puedes revisar. Divide.</li><li><strong>Describir el error de memoria:</strong> pega el mensaje completo y el archivo real; los detalles que omites son justo los que importan.</li><li><strong>Insistir con el mismo prompt:</strong> si falló dos veces, cambia el planteamiento (más contexto, un ejemplo, un plan primero) en vez de repetirlo.</li><li><strong>No decir qué no tocar:</strong> sin restricciones, la IA puede reescribir archivos que ya funcionaban.</li></ul>
+
 <section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
 <h2 id="t-apuntes">📒 Apuntes para llevar</h2>
 <ul><li>Un buen prompt tiene <strong>contexto, tarea, restricciones y formato</strong>.</li><li>Para cambios grandes, <strong>pide un plan primero</strong> y apruébalo.</li><li>Pega el <strong>error completo</strong> y adjunta los archivos reales; no describas de memoria.</li><li>Corrige con detalles concretos; si el chat se enreda, empieza uno nuevo con un resumen.</li><li>Una tarea pequeña por vez y un commit por cada una que funcione.</li></ul>
 </section>
 
-<h2 id="glosario"><span class="n">6.</span>Glosario</h2>
+<h2 id="glosario"><span class="n">8.</span>Glosario</h2>
 <div class="table-wrap"><table>
 <thead><tr><th>Término</th><th>Significado</th></tr></thead>
 <tbody><tr><td>Prompt</td><td>El mensaje o instrucción que le das a la IA.</td></tr><tr><td>Modo plan</td><td>Función donde la IA propone pasos sin modificar archivos hasta que apruebes.</td></tr><tr><td>Restricción</td><td>Límite que impones: librerías permitidas, estilo, qué no tocar.</td></tr><tr><td>Iterar</td><td>Mejorar el resultado con correcciones sucesivas.</td></tr></tbody>
