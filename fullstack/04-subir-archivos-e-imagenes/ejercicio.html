@@ -45,7 +45,7 @@
       <p>Recibir archivos en Express con límites y validación. Mostrar las imágenes en el front.</p>
 
       <h3>Cómo se trabaja</h3>
-      <p>Es práctica real en tu computadora, con tu propio proyecto. No hay comprobador automático: ve marcando cada paso y verifica el resultado tú mismo.</p>
+      <p>Es práctica real en tu computadora, con tu propio proyecto. Marca cada paso y verifica el resultado tú mismo. Al final tienes un comprobador que revisa en tu navegador que el código que pegues tenga las piezas clave.</p>
 
       <h2>Pasos</h2>
       <p>Marca cada paso a medida que lo completes. Tu avance se guarda en este navegador.</p>
@@ -54,6 +54,16 @@
       <ul class="checklist"><li><label><input type="checkbox" id="p1"><span>Subir una foto de cliente con límite de 2 MB</span></label></li><li><label><input type="checkbox" id="p2"><span>Probar subir un .exe renombrado a .jpg y ver cómo responde tu validación</span></label></li><li><label><input type="checkbox" id="p3"><span>Mostrar la foto en el front con &lt;img> y texto alternativo</span></label></li><li><label><input type="checkbox" id="p4"><span>Investigar cómo se guardaría en un bucket R2/S3</span></label></li></ul>
       <h2>Cómo sé que está bien</h2>
       <ul class="checks-list"><li>Una imagen válida de menos de 2 MB se sube y se muestra con su texto alternativo.</li><li>Un archivo de 5 MB responde 413.</li><li>Un ejecutable renombrado a .jpg es rechazado.</li><li>El nombre guardado no depende del nombre original.</li></ul>
+      <section class="checker" id="comprobador" aria-labelledby="t-chk">
+        <h2 id="t-chk">🔎 Comprueba tu trabajo</h2>
+        <p>Pega tu código y pulsa <strong>Comprobar</strong>. La revisión ocurre en tu navegador; nada se envía a ningún sitio. Revisa que estén las piezas clave, no que todo funcione: eso lo verificas ejecutando tu proyecto. Cada punto en rojo incluye una pista.</p>
+        <label for="chk-code">Tus archivos: el selector de foto (front) y la ruta con multer (API)</label>
+        <textarea id="chk-code" rows="12" spellcheck="false" placeholder="Pega aquí tu SelectorFoto y tu ruta de subida con multer"></textarea>
+        <div class="chk-actions"><button class="btn" type="button" id="chk-run">Comprobar</button><button class="icon-btn" type="button" id="chk-clear">Limpiar</button></div>
+        <p class="chk-sum" id="chk-sum" aria-live="polite"></p>
+        <ul class="chk-list" id="chk-list"></ul>
+        <script type="application/json" id="checks">{"mode": "text", "label": "Tus archivos: el selector de foto (front) y la ruta con multer (API)", "ph": "Pega aquí tu SelectorFoto y tu ruta de subida con multer", "checks": [{"d": "Envías el archivo con `FormData` y `append`", "h": "`const f = new FormData(); f.append(\"foto\", archivo);`.", "raw": "new\\s+FormData\\s*\\([\\s\\S]*\\.append\\s*\\("}, {"d": "El cuerpo del `fetch` es el `FormData` (sin fijar `Content-Type`)", "h": "Usa `body: f` y deja que el navegador ponga `multipart/form-data`.", "raw": "body\\s*:\\s*f\\b"}, {"d": "El `input` es de tipo archivo y filtra con `accept`", "h": "`<input type=\"file\" accept=\"image/jpeg,image/png,image/webp\" />`.", "raw": "type\\s*=\\s*[\\\"']file[\\\"'][^>]*accept|accept[^>]*type\\s*=\\s*[\\\"']file[\\\"']"}, {"d": "Validas el tamaño en el front antes de enviar", "h": "Comprueba `archivo.size > 2 * 1024 * 1024`.", "raw": "\\.size\\s*>"}, {"d": "Muestras una vista previa con `URL.createObjectURL`", "h": "`setVista(URL.createObjectURL(archivo))`.", "raw": "createObjectURL"}, {"d": "En la API usas `multer`", "h": "`import multer from \"multer\"` y `subir.single(\"foto\")`.", "raw": "multer"}, {"d": "Limitas el tamaño con `limits: { fileSize }`", "h": "`limits: { fileSize: 2 * 1024 * 1024 }`.", "raw": "fileSize"}, {"d": "Filtras tipos permitidos (`fileFilter`)", "h": "Acepta solo `image/jpeg`, `image/png`, `image/webp`.", "raw": "fileFilter"}, {"d": "El nombre guardado lo generas tú (`randomUUID`)", "h": "No uses el nombre original: `crypto.randomUUID() + extensión`.", "raw": "randomUUID"}, {"d": "Respondes 413 cuando el archivo es demasiado grande", "h": "Maneja `err.code === \"LIMIT_FILE_SIZE\"` con `status(413)`.", "raw": "LIMIT_FILE_SIZE"}]}</script>
+      </section>
       <h2>Pistas</h2>
       <details><summary>💡 Pista 1: multer devuelve "Unexpected field"</summary><p>El nombre del campo en <code>FormData.append("foto", …)</code> debe coincidir con <code>subir.single("foto")</code>.</p></details><details><summary>💡 Pista 2: La imagen no se ve en el front</summary><p>Comprueba la URL (<code>/fotos/archivo.jpg</code>) y que <code>express.static</code> apunte a la carpeta correcta. Mira Network: ¿es 404 o 200?</p></details><details><summary>💡 Pista 3: El .exe renombrado a .jpg pasó</summary><p>El mimetype lo declara el cliente. Añade la verificación de firma de bytes del ejemplo.</p></details>
       <div class="callout consejo">

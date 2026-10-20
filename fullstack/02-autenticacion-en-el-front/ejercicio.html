@@ -45,7 +45,7 @@
       <p>Guardar el usuario en un contexto de React. Proteger rutas y manejar sesiones expiradas.</p>
 
       <h3>Cómo se trabaja</h3>
-      <p>Es práctica real en tu computadora, con tu propio proyecto. No hay comprobador automático: ve marcando cada paso y verifica el resultado tú mismo.</p>
+      <p>Es práctica real en tu computadora, con tu propio proyecto. Marca cada paso y verifica el resultado tú mismo. Al final tienes un comprobador que revisa en tu navegador que el código que pegues tenga las piezas clave.</p>
 
       <h2>Pasos</h2>
       <p>Marca cada paso a medida que lo completes. Tu avance se guarda en este navegador.</p>
@@ -54,6 +54,16 @@
       <ul class="checklist"><li><label><input type="checkbox" id="p1"><span>Añadir GET /api/yo a la API</span></label></li><li><label><input type="checkbox" id="p2"><span>Crear ProveedorSesion y usarlo en toda la app</span></label></li><li><label><input type="checkbox" id="p3"><span>Proteger /citas con RutaPrivada</span></label></li><li><label><input type="checkbox" id="p4"><span>Redirigir a la página que querías ver tras iniciar sesión (state.desde)</span></label></li><li><label><input type="checkbox" id="p5"><span>Manejar el 401 por sesión expirada</span></label></li></ul>
       <h2>Cómo sé que está bien</h2>
       <ul class="checks-list"><li>Recargar la página mantiene la sesión.</li><li>Entrar a <code>/citas</code> sin sesión te lleva al login y, al entrar, de vuelta a <code>/citas</code>.</li><li>Con la API apagada, el login muestra un mensaje claro (no un error en blanco).</li><li>Los errores se anuncian con <code>role="alert"</code>.</li></ul>
+      <section class="checker" id="comprobador" aria-labelledby="t-chk">
+        <h2 id="t-chk">🔎 Comprueba tu trabajo</h2>
+        <p>Pega tu código y pulsa <strong>Comprobar</strong>. La revisión ocurre en tu navegador; nada se envía a ningún sitio. Revisa que estén las piezas clave, no que todo funcione: eso lo verificas ejecutando tu proyecto. Cada punto en rojo incluye una pista.</p>
+        <label for="chk-code">Tus archivos: Sesion.jsx, RutaPrivada y Login</label>
+        <textarea id="chk-code" rows="12" spellcheck="false" placeholder="Pega aquí tu Sesion.jsx, tu RutaPrivada y tu formulario de login"></textarea>
+        <div class="chk-actions"><button class="btn" type="button" id="chk-run">Comprobar</button><button class="icon-btn" type="button" id="chk-clear">Limpiar</button></div>
+        <p class="chk-sum" id="chk-sum" aria-live="polite"></p>
+        <ul class="chk-list" id="chk-list"></ul>
+        <script type="application/json" id="checks">{"mode": "text", "label": "Tus archivos: Sesion.jsx, RutaPrivada y Login", "ph": "Pega aquí tu Sesion.jsx, tu RutaPrivada y tu formulario de login", "checks": [{"d": "Creas un contexto de sesión con `createContext`", "h": "Escribe `const Ctx = createContext(null);`.", "raw": "createContext\\s*\\("}, {"d": "Exportas un hook `useSesion` con `useContext`", "h": "`export const useSesion = () => useContext(Ctx);`.", "raw": "useSesion\\s*=|function\\s+useSesion"}, {"d": "Al cargar la app preguntas quién eres (`api.yo()`) dentro de `useEffect`", "h": "En un `useEffect` llama a `api.yo()` y guarda el usuario.", "raw": "useEffect[\\s\\S]*api\\.yo\\s*\\("}, {"d": "Hay estado `cargando` para no parpadear al refrescar", "h": "Crea `const [cargando, setCargando] = useState(true)` y ponlo en `false` al terminar.", "raw": "setCargando"}, {"d": "Funciones que llaman a `api.login` y `api.logout`", "h": "Llama a la API y luego actualiza el usuario con `setUsuario`.", "raw": "api\\.logout"}, {"d": "`RutaPrivada` usa `<Navigate>` y `<Outlet>`", "h": "Si no hay usuario, `<Navigate to=\"/login\" replace />`; si hay, `<Outlet />`.", "raw": "<Navigate\\b[\\s\\S]*<Outlet|<Outlet[\\s\\S]*<Navigate"}, {"d": "Recuerdas a dónde iba el usuario (`useLocation` / `state`)", "h": "Pasa `state={{ desde: ubicacion }}` y léelo tras el login.", "raw": "useLocation\\s*\\("}, {"d": "El formulario usa `preventDefault`", "h": "Añade `e.preventDefault()` al inicio del manejador.", "raw": "preventDefault\\s*\\("}, {"d": "Manejas el error con `try/catch/finally`", "h": "Muestra el mensaje con `setError` y apaga `enviando` en `finally`.", "raw": "finally\\s*\\{"}, {"d": "Navegas tras entrar (`navegar(...)`)", "h": "Usa `useNavigate()` y llama `navegar(\"/citas\")` al terminar.", "raw": "navegar\\s*\\(|navigate\\s*\\("}]}</script>
+      </section>
       <h2>Pistas</h2>
       <details><summary>💡 Pista 1: GET /api/yo devuelve 401 siempre</summary><p>Revisa que el front envíe <code>credentials: "include"</code> y que la cookie se guardó tras el login (Application → Cookies).</p></details><details><summary>💡 Pista 2: Parpadea la pantalla de login</summary><p>No estás usando <code>cargando</code>: muestra "Cargando…" hasta que <code>yo()</code> termine.</p></details><details><summary>💡 Pista 3: Tras iniciar sesión no vuelve a la página anterior</summary><p>Pasa <code>state={{ desde: ubicacion }}</code> en <code>&lt;Navigate&gt;</code> y léelo en el login con <code>useLocation()</code>.</p></details>
       <div class="callout consejo">

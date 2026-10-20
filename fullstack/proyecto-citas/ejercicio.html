@@ -45,7 +45,7 @@
       <p>Unir front en React y API propia en un producto completo y publicado. Trabajar como en un proyecto real: requisitos, pruebas, despliegue y documentación.</p>
 
       <h3>Cómo se trabaja</h3>
-      <p>Es práctica real en tu computadora, con tu propio proyecto. No hay comprobador automático: ve marcando cada paso y verifica el resultado tú mismo.</p>
+      <p>Es práctica real en tu computadora, con tu propio proyecto. Marca cada paso y verifica el resultado tú mismo. Al final tienes un comprobador que revisa en tu navegador que el código que pegues tenga las piezas clave.</p>
 
       <h2>Pasos</h2>
       <p>Marca cada paso a medida que lo completes. Tu avance se guarda en este navegador.</p>
@@ -54,6 +54,16 @@
       <ul class="checklist"><li><label><input type="checkbox" id="p1"><span>Diseñar pantallas y base de datos</span></label></li><li><label><input type="checkbox" id="p2"><span>Construir el MVP (login, crear y listar citas)</span></label></li><li><label><input type="checkbox" id="p3"><span>Agregar clientes, servicios y reglas de horario</span></label></li><li><label><input type="checkbox" id="p4"><span>Crear la página pública con formulario de cita</span></label></li><li><label><input type="checkbox" id="p5"><span>Reporte de ingresos</span></label></li><li><label><input type="checkbox" id="p6"><span>Pruebas y CI</span></label></li><li><label><input type="checkbox" id="p7"><span>Publicar con dominio y HTTPS</span></label></li><li><label><input type="checkbox" id="p8"><span>Medir con Lighthouse y corregir</span></label></li><li><label><input type="checkbox" id="p9"><span>README final y revisión conmigo</span></label></li></ul>
       <h2>Cómo sé que está bien</h2>
       <ul class="checks-list"><li>Hay una URL pública y un usuario de prueba documentado.</li><li>La regla de solapamiento tiene pruebas, incluyendo el caso de borde.</li><li>El README explica cómo ejecutarlo y las decisiones técnicas.</li><li>Grabaste un video de 2 minutos mostrando el recorrido completo.</li></ul>
+      <section class="checker" id="comprobador" aria-labelledby="t-chk">
+        <h2 id="t-chk">🔎 Comprueba tu trabajo</h2>
+        <p>Pega tu código y pulsa <strong>Comprobar</strong>. La revisión ocurre en tu navegador; nada se envía a ningún sitio. Revisa que estén las piezas clave, no que todo funcione: eso lo verificas ejecutando tu proyecto. Cada punto en rojo incluye una pista.</p>
+        <label for="chk-code">Tu README.md del proyecto</label>
+        <textarea id="chk-code" rows="12" spellcheck="false" placeholder="Pega aquí el contenido de tu README.md"></textarea>
+        <div class="chk-actions"><button class="btn" type="button" id="chk-run">Comprobar</button><button class="icon-btn" type="button" id="chk-clear">Limpiar</button></div>
+        <p class="chk-sum" id="chk-sum" aria-live="polite"></p>
+        <ul class="chk-list" id="chk-list"></ul>
+        <script type="application/json" id="checks">{"mode": "text", "label": "Tu README.md del proyecto", "ph": "Pega aquí el contenido de tu README.md", "checks": [{"d": "Incluye la URL pública del proyecto", "h": "Añade el enlace `https://...` donde está publicado.", "raw": "https?://"}, {"d": "Documenta un usuario de prueba", "h": "Escribe un correo y una clave de demostración (nunca reales).", "raw": "(usuario|correo|email)[^\\n]*(prueba|demo)|(prueba|demo)[^\\n]*(usuario|correo|email)"}, {"d": "Explica cómo ejecutarlo (`npm install`, `npm run`)", "h": "Pon los comandos en un bloque de código.", "raw": "npm\\s+(install|i|run|start|ci)\\b"}, {"d": "Explica las decisiones técnicas", "h": "Una sección «Decisiones técnicas» con el porqué de tu stack.", "raw": "decisi(ón|on|ones)"}, {"d": "Menciona las pruebas y cómo correrlas", "h": "Escribe `npm test` y qué cubren.", "raw": "\\b(pruebas|tests?)\\b"}, {"d": "Describe la regla de solapamiento de citas", "h": "Explica cuándo dos citas se solapan y el caso de borde.", "raw": "solap"}, {"d": "Tiene secciones con títulos (`##`)", "h": "Organiza el README con encabezados `##`.", "raw": "^##\\s+\\S", "n": 3}, {"d": "Incluye una captura o imagen", "h": "Añade `![captura](ruta.png)`.", "raw": "!\\[[^\\]]*\\]\\("}]}</script>
+      </section>
       <h2>Pistas</h2>
       <details><summary>💡 Pista 1: No sé por dónde empezar</summary><p>Haz solo el Hito 1: una tabla de servicios, una ruta que los lista y una página que los muestra. Con eso ya tienes algo desplegable.</p></details><details><summary>💡 Pista 2: El solapamiento falla en el borde</summary><p>Si una cita termina a las 15:00 y otra empieza a las 15:00 NO se solapan: usa comparaciones estrictas (<code>&lt;</code>, no <code>&lt;=</code>).</p></details><details><summary>💡 Pista 3: Lighthouse me da menos de 90</summary><p>Revisa tamaño de imágenes, fuentes bloqueantes, contraste y etiquetas de formularios; el informe lista cada punto con su arreglo.</p></details>
       <div class="callout consejo">
