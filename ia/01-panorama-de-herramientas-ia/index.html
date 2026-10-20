@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lección 1: El panorama: qué herramientas de IA existen para programar · Programar con IA</title>
+  <meta name="description" content="Qué es un asistente de código, los 4 tipos de herramienta y cuál usar según la tarea.">
+  <link rel="canonical" href="https://cacg-code.github.io/web-desde-cero/ia/01-panorama-de-herramientas-ia/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Lección 1: El panorama: qué herramientas de IA existen para programar · Programar con IA">
+  <meta property="og:description" content="Qué es un asistente de código, los 4 tipos de herramienta y cuál usar según la tarea.">
+  <meta property="og:url" content="https://cacg-code.github.io/web-desde-cero/ia/01-panorama-de-herramientas-ia/">
+  <meta property="og:image" content="https://cacg-code.github.io/web-desde-cero/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Programar con IA</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap lesson-layout" id="contenido">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#intro">Introducción</a></li><li><a href="#s1">Cómo funciona un modelo de lenguaje (lo mínimo que debes saber)</a></li><li><a href="#s2">Los 4 tipos de herramienta</a></li><li><a href="#s3">Cuál usar según la tarea</a></li><li><a href="#s4">Prepara tu entorno de práctica</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Programar con IA</a> › Lección 1</div>
+        <h1>El panorama: qué herramientas de IA existen para programar</h1>
+        <ul class="meta"><li>⏱ 45 minutos</li><li>📶 Nivel: básico</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Explicar en pocas palabras cómo "piensa" un modelo de lenguaje y por qué se equivoca.</li><li>Distinguir los 4 tipos de herramienta: chat, editor con IA, agente de terminal y constructor de apps.</li><li>Elegir una herramienta según la tarea y montar tu entorno de práctica.</li></ul>
+</div>
+
+<div id="intro">
+<p>Programar con IA no es "pedirle a un robot que haga tu tarea". Es trabajar con un <strong>ayudante muy rápido que no entiende tu proyecto, a veces inventa cosas y nunca se cansa</strong>. Quien sabe programar lo aprovecha el doble; quien no sabe, no puede notar cuándo se equivoca. Por eso este nivel va <em>después</em> de HTML, CSS, JavaScript, React, Node y SQL.</p>
+</div>
+
+<h2 id="s1"><span class="n">1.</span>Cómo funciona un modelo de lenguaje (lo mínimo que debes saber)</h2>
+
+<p>Un <strong>modelo de lenguaje grande (LLM)</strong> fue entrenado con enormes cantidades de texto y código. Cuando le escribes, calcula <em>qué texto es más probable que siga</em>. No ejecuta tu código, no "sabe" si algo funciona: predice algo que <em>se parece</em> a una buena respuesta. De ahí salen sus tres límites:</p>
+<ul><li><strong>Alucinaciones:</strong> puede inventar funciones, opciones o paquetes que no existen y decirlo con total seguridad.</li><li><strong>Conocimiento con fecha:</strong> sabe lo que había hasta su entrenamiento. Las versiones nuevas de una librería pueden no estar en su memoria.</li><li><strong>Contexto limitado:</strong> solo "ve" lo que cabe en la conversación o lo que la herramienta le muestra de tu proyecto.</li></ul>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo</p>
+<p>Regla de oro de este nivel: <strong>la IA propone, tú decides</strong>. Todo lo que entra a tu proyecto lo entiendes, lo pruebas y lo puedes explicar.</p>
+</div>
+<h2 id="s2"><span class="n">2.</span>Los 4 tipos de herramienta</h2>
+
+<div class="table-wrap"><table><thead><tr><th>Tipo</th><th>Ejemplos (2026)</th><th>Sirve para</th></tr></thead><tbody>
+<tr><td><strong>Chat</strong></td><td>ChatGPT, Claude, Gemini</td><td>Preguntar, entender un error, comparar opciones, planificar. No toca tus archivos: tú copias y pegas.</td></tr>
+<tr><td><strong>Editor con IA</strong></td><td>Cursor, GitHub Copilot (en VS Code), Windsurf</td><td>Autocompletar mientras escribes, chatear sobre tu código abierto y pedir cambios en varios archivos con un diff que tú aceptas o rechazas.</td></tr>
+<tr><td><strong>Agente de terminal</strong></td><td>Claude Code, Codex, Gemini CLI</td><td>Recibe una tarea ("agrega validación al formulario"), lee tu proyecto, edita archivos, ejecuta comandos y pruebas, y te muestra qué hizo.</td></tr>
+<tr><td><strong>Constructor de apps</strong></td><td>v0, Lovable, Bolt, Replit</td><td>Generan una app o interfaz completa desde una descripción. Ideal para prototipos; el código final conviene revisarlo y hacerlo tuyo.</td></tr>
+</tbody></table></div>
+<div class="callout nota"><p class="callout-title">📌 Nota · Esto cambia rápido</p><p>Los nombres, planes y precios se mueven cada pocos meses. Lo que dura son los <strong>conceptos</strong> (contexto, revisión, pruebas, permisos). Antes de pagar algo, revisa la página oficial; casi todas tienen plan gratuito o de prueba limitado.</p></div>
+<h2 id="s3"><span class="n">3.</span>Cuál usar según la tarea</h2>
+
+<ul><li><strong>"No entiendo este error / concepto"</strong> → chat.</li><li><strong>"Escribo una función y quiero que me ayude"</strong> → editor con IA (autocompletado + chat).</li><li><strong>"Tarea con varios pasos en varios archivos"</strong> → editor en modo agente o agente de terminal, con tu repositorio en Git para poder deshacer.</li><li><strong>"Quiero ver una idea funcionando hoy"</strong> → constructor de apps y luego pasas el código a tu proyecto.</li></ul>
+<p>Empieza con <strong>una sola herramienta</strong>: el editor <a href="https://cursor.com/" target="_blank" rel="noopener">Cursor</a> que ya recomendamos en el curso sirve para chat, autocompletado y agente. Aprender una a fondo vale más que probar diez.</p>
+<h2 id="s4"><span class="n">4.</span>Prepara tu entorno de práctica</h2>
+
+<ol><li>Crea (o reutiliza) un proyecto pequeño con <strong>Git</strong>: la IA va a hacer cambios y necesitas poder volver atrás con <code>git restore</code> o <code>git reset</code>.</li><li>Haz un <code>commit</code> antes de cada sesión con IA.</li><li>Revisa que tu <code>.gitignore</code> incluya <code>.env</code> y <code>node_modules</code>: nunca debe subirse un secreto.</li><li>Abre el proyecto en tu editor y activa el chat de la IA.</li></ol>
+<div class="code">
+  <div class="code-head"><span>bash</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>git status            # que esté limpio
+git switch -c practica-ia   # rama de prueba: si sale mal, la borras
+</code></pre>
+</div>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li>Un LLM <strong>predice texto probable</strong>; no ejecuta ni comprueba tu código.</li><li>Sus tres límites: <strong>alucina, tiene fecha de corte y ve poco contexto</strong>.</li><li>Hay 4 tipos de herramienta: chat, editor con IA, agente de terminal y constructor de apps.</li><li>Trabaja siempre con <strong>Git</strong> y una rama de prueba para poder deshacer.</li><li>Aprende una herramienta bien antes de coleccionar muchas.</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">5.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td>LLM</td><td>Modelo de lenguaje grande: programa que genera texto (y código) prediciendo lo más probable.</td></tr><tr><td>Alucinación</td><td>Respuesta inventada que suena correcta.</td></tr><tr><td>Contexto</td><td>Todo lo que el modelo puede "ver" en ese momento: tu mensaje, archivos adjuntos, historial.</td></tr><tr><td>Agente</td><td>IA que no solo responde: usa herramientas (leer archivos, ejecutar comandos) para cumplir una tarea.</td></tr><tr><td>Diff</td><td>Vista de cambios que muestra líneas añadidas y quitadas antes de aceptarlas.</td></tr></tbody>
+</table></div>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>¿Por qué un modelo puede inventar una función que no existe?</p><ul class="opts"><li><button type="button" class="opt">Porque está roto</button></li><li><button type="button" class="opt" data-ok>Porque predice texto probable, no comprueba que sea real</button></li><li><button type="button" class="opt">Porque no tiene internet</button></li><li><button type="button" class="opt">Porque usa un lenguaje distinto</button></li></ul><p class="explain" hidden>Genera lo que "suena" bien; no verifica contra la documentación ni ejecuta el código.</p></div>
+<div class="quiz-q"><p>¿Qué herramienta es la más adecuada para entender un error que no conoces?</p><ul class="opts"><li><button type="button" class="opt">Un constructor de apps</button></li><li><button type="button" class="opt" data-ok>Un chat</button></li><li><button type="button" class="opt">Ninguna</button></li><li><button type="button" class="opt">Un agente sin Git</button></li></ul><p class="explain" hidden>El chat sirve para explicar y comparar sin tocar tus archivos.</p></div>
+<div class="quiz-q"><p>¿Qué debes hacer antes de dejar que un agente edite tu proyecto?</p><ul class="opts"><li><button type="button" class="opt">Nada</button></li><li><button type="button" class="opt">Borrar el .gitignore</button></li><li><button type="button" class="opt" data-ok>Hacer un commit o una rama para poder deshacer</button></li><li><button type="button" class="opt">Pegar tus claves en el chat</button></li></ul><p class="explain" hidden>Con Git puedes revertir cualquier cambio malo.</p></div>
+<div class="quiz-q"><p>¿Qué dura más tiempo que los nombres de las herramientas?</p><ul class="opts"><li><button type="button" class="opt">Los precios</button></li><li><button type="button" class="opt" data-ok>Los conceptos: contexto, revisión, pruebas y permisos</button></li><li><button type="button" class="opt">Los logos</button></li><li><button type="button" class="opt">Las promociones</button></li></ul><p class="explain" hidden>Las herramientas cambian; el método de trabajo se mantiene.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="ia-01">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../"><small>← Volver</small>Temario del curso</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Programar con IA · Lección 1 · Material de estudio gratuito, hecho por un estudiante con ayuda de inteligencia artificial como aporte a la comunidad. Contrástalo con la documentación oficial.</footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

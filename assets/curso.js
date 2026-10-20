@@ -750,9 +750,11 @@
       { tot: 12, id: 'js', pre: 'js-', name: 'JavaScript', dir: 'javascript/', home: 'javascript/', emoji: '⚙️' },
       { tot: 12, id: 'react', pre: 'react-', name: 'React', dir: 'react/', home: 'react/', emoji: '⚛️' },
       { tot: 9, id: 'node', pre: 'node-', name: 'Node.js', dir: 'node/', home: 'node/', emoji: '🟢' },
-      { tot: 9, id: 'bd', pre: 'bd-', name: 'Bases de datos', dir: 'bd/', home: 'bd/', emoji: '🗄️' }
+      { tot: 9, id: 'bd', pre: 'bd-', name: 'Bases de datos', dir: 'bd/', home: 'bd/', emoji: '🗄️' },
+      { tot: 10, id: 'ia', pre: 'ia-', name: 'Programar con IA', dir: 'ia/', home: 'ia/', emoji: '🤖' },
+      { tot: 7, id: 'fullstack', pre: 'full-', name: 'Proyecto full stack', dir: 'fullstack/', home: 'fullstack/', emoji: '🚀' }
     ];
-    var DIRS = { css: 1, javascript: 1, react: 1, node: 1, bd: 1, html: 1 };
+    var DIRS = { css: 1, javascript: 1, react: 1, node: 1, bd: 1, html: 1, ia: 1, fullstack: 1 };
     var data = null; // { courses: [{...c, lessons:[{path,title,key}]}] }
     var load = function () {
       return fetch(BASE + 'indice.json').then(function (r) { return r.json(); }).then(function (idx) {

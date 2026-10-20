@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lección 6: Prototipar con IA y pasar el código a tu proyecto · Programar con IA</title>
+  <meta name="description" content="Cuándo usar constructores como v0, Lovable o Bolt, y cómo convertir un prototipo en código tuyo.">
+  <link rel="canonical" href="https://cacg-code.github.io/web-desde-cero/ia/06-prototipar-con-ia/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Lección 6: Prototipar con IA y pasar el código a tu proyecto · Programar con IA">
+  <meta property="og:description" content="Cuándo usar constructores como v0, Lovable o Bolt, y cómo convertir un prototipo en código tuyo.">
+  <meta property="og:url" content="https://cacg-code.github.io/web-desde-cero/ia/06-prototipar-con-ia/">
+  <meta property="og:image" content="https://cacg-code.github.io/web-desde-cero/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Programar con IA</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap lesson-layout" id="contenido">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#intro">Introducción</a></li><li><a href="#s1">Cuándo sí y cuándo no</a></li><li><a href="#s2">Cómo describir lo que quieres</a></li><li><a href="#s3">Del prototipo a tu código</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Programar con IA</a> › Lección 6</div>
+        <h1>Prototipar con IA y pasar el código a tu proyecto</h1>
+        <ul class="meta"><li>⏱ 40 minutos</li><li>📶 Nivel: básico</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Elegir cuándo conviene un prototipo generado y cuándo no.</li><li>Describir una interfaz para obtener un buen prototipo.</li><li>Pasar el código a tu repositorio, limpiarlo y entenderlo antes de usarlo.</li></ul>
+</div>
+
+<div id="intro">
+<p>Los <strong>constructores de apps con IA</strong> (v0, Lovable, Bolt, Replit y similares) convierten una descripción en una interfaz o app funcionando en minutos. Son perfectos para <strong>ver una idea antes de invertir horas</strong> o para enseñarle algo a un cliente. No son una forma de evitar entender lo que construyes.</p>
+</div>
+
+<h2 id="s1"><span class="n">1.</span>Cuándo sí y cuándo no</h2>
+
+<div class="table-wrap"><table><thead><tr><th>Sí conviene</th><th>No conviene (todavía)</th></tr></thead><tbody>
+<tr><td>Probar rápido 3 ideas de diseño.</td><td>Sistemas con pagos, datos sensibles o reglas de negocio complejas.</td></tr>
+<tr><td>Maqueta para mostrar al cliente antes de cotizar.</td><td>Entregar el resultado directo, sin revisar, como trabajo final.</td></tr>
+<tr><td>Generar un componente base para pulir tú.</td><td>Aprender: te saltas justo lo que necesitas practicar.</td></tr>
+</tbody></table></div>
+<h2 id="s2"><span class="n">2.</span>Cómo describir lo que quieres</h2>
+
+<p>Aplica lo del prompt: contexto, tarea, restricciones. Para interfaces, agrega <strong>estructura, estilo y estados</strong>:</p>
+<div class="code">
+  <div class="code-head"><span>texto</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>Landing para una barbería en Huaral.
+Secciones: hero con botón "Reservar", servicios con precios de ejemplo, galería, mapa, WhatsApp flotante.
+Estilo: oscuro, acentos dorados, tipografía grande, móvil primero.
+Estados: botón con foco visible, textos con buen contraste, imágenes con alt.
+Tecnología: React + Vite + CSS simple (sin librerías de componentes).</code></pre>
+</div>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo</p>
+<p>Pide cosas que ya conoces del curso (accesibilidad, móvil primero, HTML semántico). Si no las pides, muchas veces no vienen.</p>
+</div>
+<h2 id="s3"><span class="n">3.</span>Del prototipo a tu código</h2>
+
+<ol><li><strong>Exporta o conecta con GitHub</strong> (la mayoría lo permite) y clónalo en tu máquina.</li><li><strong>Ejecútalo</strong>: <code>npm install</code> (tras verificar dependencias), <code>npm run dev</code>.</li><li><strong>Léelo</strong>: estructura de carpetas, componentes, qué librerías usó. Elimina lo que no necesitas.</li><li><strong>Audítalo</strong>: accesibilidad (¿teclado? ¿contraste?), rendimiento (imágenes pesadas), SEO básico, claves o textos de ejemplo olvidados.</li><li><strong>Hazlo tuyo</strong>: renombra, ordena y añade <code>AGENTS.md</code> y pruebas. Desde aquí lo mantienes tú.</li></ol>
+<p>Muchas plataformas conectan base de datos o autenticación con un clic. Es cómodo, pero revisa de quién es la cuenta, dónde viven los datos del cliente y cuánto cuesta cuando el proyecto crece. Si trabajas para un cliente, eso debe estar a nombre del cliente.</p>
+<div class="callout nota"><p class="callout-title">📌 Nota · Licencias y honestidad</p><p>Si entregas algo a un cliente, di que usaste herramientas de IA para acelerar el trabajo y que tú lo revisaste y lo mantienes. Es honesto y profesional; lo que se cobra es tu criterio y tu responsabilidad.</p></div>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li>Los constructores sirven para <strong>prototipar y mostrar</strong>, no para entregar sin revisar.</li><li>Describe estructura, estilo, estados y tecnología; pide accesibilidad y móvil primero.</li><li>Pasa el código a tu repo, <strong>léelo, audítalo y límpialo</strong> antes de usarlo.</li><li>Datos y cuentas de un cliente deben estar a su nombre.</li><li>Sé transparente con el cliente sobre el uso de IA y asume la responsabilidad del resultado.</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">4.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td>Prototipo</td><td>Versión rápida para probar una idea, no el producto final.</td></tr><tr><td>Auditar</td><td>Revisar de forma sistemática calidad, seguridad y accesibilidad.</td></tr><tr><td>Móvil primero</td><td>Diseñar primero para pantallas pequeñas y luego ampliar.</td></tr></tbody>
+</table></div>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>¿Para qué sirve mejor un constructor de apps con IA?</p><ul class="opts"><li><button type="button" class="opt">Para entregar sin revisar</button></li><li><button type="button" class="opt" data-ok>Para prototipar una idea rápido y luego mejorarla</button></li><li><button type="button" class="opt">Para reemplazar a Git</button></li><li><button type="button" class="opt">Para guardar contraseñas</button></li></ul><p class="explain" hidden>Ahorra tiempo al inicio; el criterio y la revisión siguen siendo tuyos.</p></div>
+<div class="quiz-q"><p>Después de exportar un prototipo, ¿qué haces primero?</p><ul class="opts"><li><button type="button" class="opt">Publicarlo</button></li><li><button type="button" class="opt" data-ok>Ejecutarlo, leer el código y auditarlo</button></li><li><button type="button" class="opt">Borrar el README</button></li><li><button type="button" class="opt">Pagar el plan más caro</button></li></ul><p class="explain" hidden>No publiques código que no entiendes.</p></div>
+<div class="quiz-q"><p>Si el proyecto es de un cliente, la cuenta de la base de datos debe estar…</p><ul class="opts"><li><button type="button" class="opt">A tu nombre para siempre</button></li><li><button type="button" class="opt" data-ok>A nombre del cliente</button></li><li><button type="button" class="opt">En un correo falso</button></li><li><button type="button" class="opt">Sin dueño</button></li></ul><p class="explain" hidden>El cliente debe poder controlar sus datos.</p></div>
+<div class="quiz-q"><p>Es buena idea pedir en el prompt…</p><ul class="opts"><li><button type="button" class="opt">Solo "bonito"</button></li><li><button type="button" class="opt" data-ok>Accesibilidad, móvil primero, estados y tecnología</button></li><li><button type="button" class="opt">Nada</button></li><li><button type="button" class="opt">Que use la mayor cantidad de librerías</button></li></ul><p class="explain" hidden>Lo que no pides, a menudo no viene.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="ia-06">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../05-agentes-contexto-y-mcp/"><small>← Anterior</small>Agentes, AGENTS.md y MCP: trabajar con IA que actúa</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Programar con IA · Lección 6 · Material de estudio gratuito, hecho por un estudiante con ayuda de inteligencia artificial como aporte a la comunidad. Contrástalo con la documentación oficial.</footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

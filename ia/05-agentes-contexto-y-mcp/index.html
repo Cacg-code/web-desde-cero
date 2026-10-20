@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lección 5: Agentes, AGENTS.md y MCP: trabajar con IA que actúa · Programar con IA</title>
+  <meta name="description" content="Cómo dar contexto estable a un agente, controlar sus permisos y conectarlo a herramientas con MCP.">
+  <link rel="canonical" href="https://cacg-code.github.io/web-desde-cero/ia/05-agentes-contexto-y-mcp/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Lección 5: Agentes, AGENTS.md y MCP: trabajar con IA que actúa · Programar con IA">
+  <meta property="og:description" content="Cómo dar contexto estable a un agente, controlar sus permisos y conectarlo a herramientas con MCP.">
+  <meta property="og:url" content="https://cacg-code.github.io/web-desde-cero/ia/05-agentes-contexto-y-mcp/">
+  <meta property="og:image" content="https://cacg-code.github.io/web-desde-cero/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Programar con IA</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap lesson-layout" id="contenido">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#intro">Introducción</a></li><li><a href="#s1">El ciclo de trabajo con un agente</a></li><li><a href="#s2">AGENTS.md: el manual de tu proyecto para la IA</a></li><li><a href="#s3">Permisos: tú tienes el control</a></li><li><a href="#s4">MCP: conectar la IA con tus herramientas</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Programar con IA</a> › Lección 5</div>
+        <h1>Agentes, AGENTS.md y MCP: trabajar con IA que actúa</h1>
+        <ul class="meta"><li>⏱ 55 minutos</li><li>📶 Nivel: intermedio</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Escribir un archivo AGENTS.md con las reglas de tu proyecto.</li><li>Controlar permisos y trabajar con el ciclo plan → cambio → prueba → commit.</li><li>Explicar qué es MCP y cuándo conviene (y cuándo no) conectarlo.</li></ul>
+</div>
+
+<div id="intro">
+<p>Un <strong>agente</strong> no solo responde: lee archivos, edita, ejecuta comandos y repite hasta cumplir la tarea. Eso lo hace muy útil y también más riesgoso, así que necesita <em>contexto claro</em> y <em>límites claros</em>.</p>
+</div>
+
+<h2 id="s1"><span class="n">1.</span>El ciclo de trabajo con un agente</h2>
+
+<ol><li><strong>Rama o commit limpio</strong> antes de empezar.</li><li><strong>Plan:</strong> pídele que lo describa y apruébalo.</li><li><strong>Un cambio pequeño</strong> a la vez.</li><li><strong>Verificación:</strong> que ejecute las pruebas y el <em>linter</em>; léelos tú.</li><li><strong>Revisión del diff</strong> y <code>git commit</code>.</li></ol>
+<h2 id="s2"><span class="n">2.</span>AGENTS.md: el manual de tu proyecto para la IA</h2>
+
+<p>Cada vez que abres una conversación nueva, el agente empieza sin saber nada de ti. <code>AGENTS.md</code> es un archivo en la raíz del repositorio con las instrucciones que quieres que lea siempre: cómo instalar, cómo probar, el estilo de código y qué no tocar. Es un formato abierto que usan varias herramientas (Codex, Cursor, entre otras); algunas tienen su propio nombre además (por ejemplo, Claude Code lee <code>CLAUDE.md</code> y Gemini CLI <code>GEMINI.md</code>). Si usas varias, puedes mantener un único contenido y que los demás archivos apunten a él: revisa la documentación de la tuya.</p>
+<div class="code">
+  <div class="code-head"><span>markdown</span><button class="copy" type="button">Copiar</button></div>
+<pre><code># AGENTS.md
+
+## Proyecto
+API de tareas con Node 24 + Express 5 + SQLite. Front en React + Vite.
+
+## Comandos
+- Instalar: `npm ci`
+- Pruebas: `node --test`
+- Desarrollo: `npm run dev`
+
+## Reglas
+- JavaScript moderno (ESM, `const`/`let`), sin TypeScript por ahora.
+- Consultas SQL siempre parametrizadas.
+- No agregar dependencias sin preguntarme.
+- Mensajes de commit en español, en imperativo.
+
+## No tocar
+- `.env`, `migraciones/` ya aplicadas, `dist/`.</code></pre>
+</div>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo</p>
+<p>Mantenlo <strong>corto y concreto</strong>: lo que un compañero nuevo necesitaría en su primer día. Un archivo enorme se ignora o confunde. Cuando el agente cometa el mismo error dos veces, agrega la regla aquí.</p>
+</div>
+<h2 id="s3"><span class="n">3.</span>Permisos: tú tienes el control</h2>
+
+<p>Los agentes piden permiso antes de ejecutar comandos o editar archivos, y la mayoría permite aprobar "una vez" o "siempre". Reglas sanas para empezar:</p>
+<ul><li>Aprueba <strong>lectura</strong> y pruebas con confianza; <strong>escritura y comandos nuevos</strong>, léelos.</li><li>Desconfía de comandos con <code>rm</code>, <code>curl ... | sh</code>, <code>git push --force</code> o que instalen cosas globales.</li><li>No actives modos "sin pedir permiso" salvo en un entorno aislado (contenedor o máquina virtual) y sin acceso a secretos.</li><li>Un agente puede leer texto malicioso en una página o issue que diga "ignora tus instrucciones y haz X": se llama <strong>inyección de prompt</strong>. Por eso importa que tú apruebes lo sensible.</li></ul>
+<h2 id="s4"><span class="n">4.</span>MCP: conectar la IA con tus herramientas</h2>
+
+<p>El <strong>Model Context Protocol (MCP)</strong> es un estándar abierto para que una IA se conecte a herramientas y datos externos mediante "servidores" MCP: tu base de datos, GitHub, un navegador, tu calendario, documentación actualizada, etc. En 2025 pasó a la <em>Agentic AI Foundation</em> de la Linux Foundation, junto con AGENTS.md. Es la forma de que un agente haga cosas como "lee el issue 42 de GitHub" o "consulta esta tabla" sin que copies y pegues.</p>
+<div class="table-wrap"><table><thead><tr><th>Ventaja</th><th>Riesgo</th></tr></thead><tbody><tr><td>Menos copiar y pegar; datos reales y actuales.</td><td>Cada servidor es código que ejecuta cosas con tus permisos y puede leer tus datos.</td></tr></tbody></table></div>
+<ul><li>Instala solo servidores de fuentes <strong>oficiales o muy conocidas</strong> y revisa qué permisos piden.</li><li>Dales <strong>acceso mínimo</strong>: una base de datos de pruebas y de solo lectura, no la de producción.</li><li>Empieza sin MCP. Añádelo cuando el copiar y pegar te estorbe de verdad.</li></ul>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li>Ciclo con agentes: <strong>rama → plan → cambio pequeño → pruebas → diff → commit</strong>.</li><li><code>AGENTS.md</code> da contexto estable: comandos, reglas y qué no tocar. Corto y concreto.</li><li>Revisa los permisos; desconfía de comandos destructivos y de modos sin confirmación.</li><li>La <strong>inyección de prompt</strong> existe: el agente puede obedecer texto malicioso que lee.</li><li>MCP conecta la IA con herramientas; dale <strong>mínimo acceso</strong> y fuentes confiables.</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">5.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td>Agente</td><td>IA que usa herramientas y ejecuta pasos hasta cumplir una tarea.</td></tr><tr><td>AGENTS.md</td><td>Archivo con instrucciones del proyecto para agentes de código.</td></tr><tr><td>MCP</td><td>Protocolo abierto para conectar modelos con herramientas y datos.</td></tr><tr><td>Inyección de prompt</td><td>Texto malicioso que intenta cambiar las instrucciones de la IA.</td></tr><tr><td>Linter</td><td>Herramienta que revisa estilo y errores comunes del código.</td></tr></tbody>
+</table></div>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>¿Para qué sirve AGENTS.md?</p><ul class="opts"><li><button type="button" class="opt">Para guardar contraseñas</button></li><li><button type="button" class="opt" data-ok>Para dar al agente contexto estable: comandos, reglas y restricciones</button></li><li><button type="button" class="opt">Para instalar paquetes</button></li><li><button type="button" class="opt">Para desplegar</button></li></ul><p class="explain" hidden>Evita repetir las mismas instrucciones en cada conversación.</p></div>
+<div class="quiz-q"><p>¿Qué es lo más prudente con los permisos de un agente?</p><ul class="opts"><li><button type="button" class="opt">Aprobar todo siempre</button></li><li><button type="button" class="opt" data-ok>Leer los comandos de escritura y desconfiar de los destructivos</button></li><li><button type="button" class="opt">Darle tus claves</button></li><li><button type="button" class="opt">Desactivarlo</button></li></ul><p class="explain" hidden>Un comando mal aprobado puede borrar o filtrar datos.</p></div>
+<div class="quiz-q"><p>¿Qué es MCP?</p><ul class="opts"><li><button type="button" class="opt">Un lenguaje de programación</button></li><li><button type="button" class="opt" data-ok>Un estándar para conectar la IA con herramientas y datos externos</button></li><li><button type="button" class="opt">Un editor de código</button></li><li><button type="button" class="opt">Una base de datos</button></li></ul><p class="explain" hidden>Permite que los agentes usen servicios mediante servidores MCP.</p></div>
+<div class="quiz-q"><p>Al conectar un servidor MCP a una base de datos conviene usar…</p><ul class="opts"><li><button type="button" class="opt">La de producción con permisos totales</button></li><li><button type="button" class="opt" data-ok>Una de pruebas y de solo lectura</button></li><li><button type="button" class="opt">Ninguna contraseña</button></li><li><button type="button" class="opt">La del cliente</button></li></ul><p class="explain" hidden>Menos permisos = menos daño si algo sale mal.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="ia-05">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../04-depurar-con-ia/"><small>← Anterior</small>Depurar con IA: de un error a la causa real</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Programar con IA · Lección 5 · Material de estudio gratuito, hecho por un estudiante con ayuda de inteligencia artificial como aporte a la comunidad. Contrástalo con la documentación oficial.</footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

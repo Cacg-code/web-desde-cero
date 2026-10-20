@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lección 7: IA dentro de tu app: llamar a un modelo desde Node · Programar con IA</title>
+  <meta name="description" content="Llama a un modelo de lenguaje desde tu servidor, protege la clave, pide JSON y controla costos y errores.">
+  <link rel="canonical" href="https://cacg-code.github.io/web-desde-cero/ia/07-ia-dentro-de-tu-app/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Lección 7: IA dentro de tu app: llamar a un modelo desde Node · Programar con IA">
+  <meta property="og:description" content="Llama a un modelo de lenguaje desde tu servidor, protege la clave, pide JSON y controla costos y errores.">
+  <meta property="og:url" content="https://cacg-code.github.io/web-desde-cero/ia/07-ia-dentro-de-tu-app/">
+  <meta property="og:image" content="https://cacg-code.github.io/web-desde-cero/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Programar con IA</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap lesson-layout" id="contenido">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#intro">Introducción</a></li><li><a href="#s1">Regla 1: la clave vive en el servidor</a></li><li><a href="#s2">Una llamada mínima desde Node</a></li><li><a href="#s3">Respuestas en JSON: pide, valida y no confíes</a></li><li><a href="#s4">Reglas primero, IA después</a></li><li><a href="#s5">Costos, límites y privacidad</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Programar con IA</a> › Lección 7</div>
+        <h1>IA dentro de tu app: llamar a un modelo desde Node</h1>
+        <ul class="meta"><li>⏱ 60 minutos</li><li>📶 Nivel: avanzado</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Llamar a la API de un modelo desde Node sin exponer la clave.</li><li>Pedir una respuesta en JSON y validarla antes de usarla.</li><li>Controlar costos, límites y fallos con un diseño de "reglas primero, IA después".</li></ul>
+</div>
+
+<div id="intro">
+<p>Hasta ahora usaste la IA <em>para programar</em>. Ahora la vas a poner <em>dentro</em> de lo que programas: clasificar mensajes, resumir textos, extraer datos de un pedido escrito libremente. El patrón es siempre el mismo: tu <strong>servidor</strong> habla con el modelo, nunca el navegador.</p>
+</div>
+
+<h2 id="s1"><span class="n">1.</span>Regla 1: la clave vive en el servidor</h2>
+
+<p>Si pones la clave de la API en el JavaScript del navegador, cualquiera puede verla en las herramientas de desarrollo y usarla a tu costa. La clave va en una variable de entorno de tu servidor (Node, un Cloudflare Worker, etc.) y el front llama a <em>tu</em> ruta:</p>
+<div class="code">
+  <div class="code-head"><span>texto</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>Navegador  →  POST /api/clasificar (tu servidor, con límite y validación)
+                      →  API del modelo (con la clave secreta)</code></pre>
+</div>
+<h2 id="s2"><span class="n">2.</span>Una llamada mínima desde Node</h2>
+
+<p>Muchos proveedores aceptan un formato de "chat" muy parecido. Para que el código no dependa de uno solo, guarda URL, clave y modelo en variables de entorno (consulta en la documentación de tu proveedor los valores y los nombres vigentes):</p>
+<div class="code">
+  <div class="code-head"><span>javascript</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>// ia.js  (Node 24: fetch ya viene incluido)
+const { IA_URL, IA_KEY, IA_MODELO } = process.env;
+
+export async function preguntar(mensajes, { maxTokens = 300 } = {}) {
+  const r = await fetch(IA_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${IA_KEY}` },
+    body: JSON.stringify({ model: IA_MODELO, messages: mensajes, max_tokens: maxTokens }),
+    signal: AbortSignal.timeout(15_000),   // no esperes para siempre
+  });
+  if (!r.ok) throw new Error(`IA respondió ${r.status}`);
+  const datos = await r.json();
+  return datos.choices[0].message.content;   // el formato exacto depende del proveedor
+}</code></pre>
+</div>
+<div class="code">
+  <div class="code-head"><span>bash</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>node --env-file=.env servidor.js</code></pre>
+</div>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo</p>
+<p>Cada proveedor tiene su propio formato de respuesta. Lee su guía oficial, o usa su paquete (SDK) oficial de JavaScript si prefieres no armar el <code>fetch</code> a mano.</p>
+</div>
+<h2 id="s3"><span class="n">3.</span>Respuestas en JSON: pide, valida y no confíes</h2>
+
+<p>Para usar la respuesta en tu programa necesitas datos, no prosa. Pide un formato fijo y <strong>valídalo siempre</strong>: el modelo puede devolver texto extra o un campo inventado. Varios proveedores ofrecen "salida estructurada" con un esquema; si la tienes, úsala y valida igualmente.</p>
+<div class="code">
+  <div class="code-head"><span>javascript</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>const CATEGORIAS = ['pedido', 'consulta', 'reclamo', 'otro'];
+
+export async function clasificar(texto) {
+  const salida = await preguntar([
+    { role: 'system', content: 'Clasifica el mensaje. Responde SOLO JSON: {"categoria": "pedido|consulta|reclamo|otro"}' },
+    { role: 'user', content: texto.slice(0, 500) },      // limita lo que envías
+  ]);
+  try {
+    const { categoria } = JSON.parse(salida);
+    return CATEGORIAS.includes(categoria) ? categoria : 'otro';
+  } catch {
+    return 'otro';                                       // plan B si el JSON viene roto
+  }
+}</code></pre>
+</div>
+<h2 id="s4"><span class="n">4.</span>Reglas primero, IA después</h2>
+
+<p>La IA cuesta, tarda y a veces falla. Diseña así: <strong>1)</strong> reglas simples (palabras clave, botones, expresiones regulares) resuelven lo común; <strong>2)</strong> solo lo que no encaja pasa al modelo; <strong>3)</strong> si el modelo falla o tarda, hay una respuesta de reserva. Es la misma arquitectura de la lección 22 del curso de chatbots.</p>
+<h2 id="s5"><span class="n">5.</span>Costos, límites y privacidad</h2>
+
+<ul><li><strong>Se paga por uso</strong> (tokens de entrada y salida). Limita el largo de lo que envías (<code>slice</code>) y de lo que recibes (<code>max_tokens</code>).</li><li><strong>Límite por usuario</strong> en tu ruta, para que nadie vacíe tu saldo con un script.</li><li><strong>Presupuesto y alertas</strong> en el panel del proveedor.</li><li><strong>Cachea</strong> respuestas a preguntas repetidas.</li><li><strong>Privacidad:</strong> no envíes datos personales de más; avisa al usuario cuando hable con una IA y ofrece una persona de respaldo.</li><li><strong>Nunca</strong> dejes que el modelo invente precios, plazos o políticas: esos datos salen de tu base de datos o de un archivo tuyo.</li></ul>
+<div class="callout nota"><p class="callout-title">📌 Nota · Opciones de infraestructura</p><p>Si ya usas Cloudflare Workers (como en el curso de chatbots), puedes llamar a modelos desde el propio Worker con <em>Workers AI</em> y pasar el tráfico por <em>AI Gateway</em> para ver costos, límites y registros. Revisa los planes y límites vigentes en la documentación oficial antes de depender de ellos.</p></div>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li>La clave de la API <strong>solo en el servidor</strong>; el navegador llama a tu ruta.</li><li>Guarda URL, clave y modelo en variables de entorno y usa timeout.</li><li>Pide JSON, <strong>valídalo</strong> y ten plan B si falla.</li><li>Arquitectura: <strong>reglas primero, IA para lo que no encaja, respuesta de reserva</strong>.</li><li>Controla costos: límites de entrada/salida, límite por usuario, presupuesto y caché.</li><li>Datos como precios y políticas salen de tu fuente de verdad, nunca del modelo.</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">6.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td>Token</td><td>Trozo de texto (palabra o parte) que el modelo procesa y por el que se cobra.</td></tr><tr><td>System prompt</td><td>Instrucción de rol que define cómo debe comportarse el modelo.</td></tr><tr><td>Salida estructurada</td><td>Respuesta que cumple un formato o esquema (por ejemplo, JSON).</td></tr><tr><td>Timeout</td><td>Tiempo máximo de espera antes de abortar una llamada.</td></tr><tr><td>Rate limit</td><td>Límite de peticiones por tiempo para evitar abuso.</td></tr></tbody>
+</table></div>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>¿Dónde debe estar la clave de la API de IA?</p><ul class="opts"><li><button type="button" class="opt">En el JavaScript del navegador</button></li><li><button type="button" class="opt" data-ok>En variables de entorno del servidor</button></li><li><button type="button" class="opt">En el README</button></li><li><button type="button" class="opt">En una imagen</button></li></ul><p class="explain" hidden>Cualquier cosa del navegador es visible para el usuario.</p></div>
+<div class="quiz-q"><p>El modelo devolvió JSON roto. ¿Qué haces?</p><ul class="opts"><li><button type="button" class="opt">Mostrar el error al cliente</button></li><li><button type="button" class="opt" data-ok>Capturar el error y usar una respuesta de reserva</button></li><li><button type="button" class="opt">Reiniciar el servidor</button></li><li><button type="button" class="opt">Confiar y seguir</button></li></ul><p class="explain" hidden>Siempre hay que validar y tener plan B.</p></div>
+<div class="quiz-q"><p>¿Quién debe decidir el precio de un producto en un bot?</p><ul class="opts"><li><button type="button" class="opt">El modelo</button></li><li><button type="button" class="opt" data-ok>Tu base de datos o catálogo</button></li><li><button type="button" class="opt">El cliente</button></li><li><button type="button" class="opt">Un número al azar</button></li></ul><p class="explain" hidden>Los modelos pueden inventar datos; los precios son datos tuyos.</p></div>
+<div class="quiz-q"><p>¿Qué ayuda a que nadie gaste tu saldo de IA?</p><ul class="opts"><li><button type="button" class="opt">Más tokens</button></li><li><button type="button" class="opt" data-ok>Límite por usuario y presupuesto con alertas</button></li><li><button type="button" class="opt">Quitar el timeout</button></li><li><button type="button" class="opt">Un nombre largo de ruta</button></li></ul><p class="explain" hidden>Sin límites, un script puede vaciar tu cuenta.</p></div>
+<div class="quiz-q"><p>Aplicar "reglas primero, IA después" significa…</p><ul class="opts"><li><button type="button" class="opt">Usar IA para todo</button></li><li><button type="button" class="opt" data-ok>Resolver lo común con reglas y llamar al modelo solo lo demás</button></li><li><button type="button" class="opt">No usar nunca IA</button></li><li><button type="button" class="opt">Poner la IA en el navegador</button></li></ul><p class="explain" hidden>Es más barato, rápido y predecible.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="ia-07">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../06-prototipar-con-ia/"><small>← Anterior</small>Prototipar con IA y pasar el código a tu proyecto</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Programar con IA · Lección 7 · Material de estudio gratuito, hecho por un estudiante con ayuda de inteligencia artificial como aporte a la comunidad. Contrástalo con la documentación oficial.</footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

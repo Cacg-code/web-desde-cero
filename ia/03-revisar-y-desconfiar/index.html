@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lección 3: Revisar, probar y desconfiar: seguridad con código de IA · Programar con IA</title>
+  <meta name="description" content="Cómo revisar un diff, probar lo generado y evitar fallos de seguridad típicos del código de IA.">
+  <link rel="canonical" href="https://cacg-code.github.io/web-desde-cero/ia/03-revisar-y-desconfiar/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Lección 3: Revisar, probar y desconfiar: seguridad con código de IA · Programar con IA">
+  <meta property="og:description" content="Cómo revisar un diff, probar lo generado y evitar fallos de seguridad típicos del código de IA.">
+  <meta property="og:url" content="https://cacg-code.github.io/web-desde-cero/ia/03-revisar-y-desconfiar/">
+  <meta property="og:image" content="https://cacg-code.github.io/web-desde-cero/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Programar con IA</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap lesson-layout" id="contenido">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#intro">Introducción</a></li><li><a href="#s1">Lista de revisión del diff</a></li><li><a href="#s2">Paquetes inventados (slopsquatting)</a></li><li><a href="#s3">Los fallos de seguridad más comunes</a></li><li><a href="#s4">Prueba lo que te dieron</a></li><li><a href="#s5">Datos que nunca debes pegar</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Programar con IA</a> › Lección 3</div>
+        <h1>Revisar, probar y desconfiar: seguridad con código de IA</h1>
+        <ul class="meta"><li>⏱ 55 minutos</li><li>📶 Nivel: intermedio</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Revisar un diff con una lista de comprobación antes de aceptarlo.</li><li>Detectar paquetes y funciones inventadas, y secretos mal manejados.</li><li>Escribir una prueba rápida con el ejecutor de pruebas de Node.</li></ul>
+</div>
+
+<div id="intro">
+<p>El código de IA suele <em>verse</em> perfecto: ordenado, con comentarios y nombres claros. Eso es parte del problema, porque baja tu guardia. Tu trabajo pasa de "escribir" a <strong>revisar</strong>, y revisar bien es una habilidad que se entrena.</p>
+</div>
+
+<h2 id="s1"><span class="n">1.</span>Lista de revisión del diff</h2>
+
+<ol><li><strong>¿Pedí esto?</strong> Que no haya cambios en archivos que no mencionaste ni "mejoras" no pedidas.</li><li><strong>¿Lo entiendo línea por línea?</strong> Si no, pídele que lo explique o simplifícalo. Código que no entiendes es deuda.</li><li><strong>¿Existe todo lo que usa?</strong> Funciones, métodos y opciones: contrástalos con MDN o la documentación oficial.</li><li><strong>¿Casos límite?</strong> Lista vacía, valor nulo, texto muy largo, usuario sin permiso.</li><li><strong>¿Dependencias nuevas?</strong> Cada una es riesgo y mantenimiento. ¿De verdad hace falta?</li><li><strong>¿Secretos o datos personales expuestos?</strong></li></ol>
+<h2 id="s2"><span class="n">2.</span>Paquetes inventados (slopsquatting)</h2>
+
+<p>Los modelos a veces recomiendan un paquete de npm que <strong>no existe</strong>. Los atacantes lo saben: registran esos nombres con código malicioso y esperan a que alguien ejecute <code>npm install</code>. Antes de instalar algo que la IA sugirió:</p>
+<div class="code">
+  <div class="code-head"><span>bash</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>npm view nombre-del-paquete          # ¿existe? ¿versión, fecha, autor?
+npm view nombre-del-paquete time     # ¿cuándo se publicó? (muy reciente = sospecha)
+# y revisa descargas semanales y el repositorio en npmjs.com / GitHub</code></pre>
+</div>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo</p>
+<p>Si el paquete tiene pocas descargas, se creó hace días o su nombre se parece a uno famoso con una letra distinta, <strong>no lo instales</strong>.</p>
+</div>
+<h2 id="s3"><span class="n">3.</span>Los fallos de seguridad más comunes</h2>
+
+<ul><li><strong>Claves en el código</strong> (<code>const API_KEY = "sk-..."</code>). Van en variables de entorno y <code>.env</code> está en <code>.gitignore</code>. Si una clave se subió a GitHub, <strong>revócala y crea otra</strong>: borrarla del commit no basta.</li><li><strong>SQL armado con texto</strong> (<code>"... WHERE id=" + id</code>): usa consultas parametrizadas (lo viste en el nivel de bases de datos).</li><li><strong>Falta de validación</strong> en lo que llega del usuario, y <strong>falta de autorización</strong> ("¿este usuario puede borrar esto?").</li><li><strong>CORS abierto a todo</strong> (<code>*</code>) con cookies o datos privados.</li><li><strong>Contraseñas sin hash</strong> o con un hash débil.</li></ul>
+<h2 id="s4"><span class="n">4.</span>Prueba lo que te dieron</h2>
+
+<p>Ejecutar el código una vez no es probarlo. Node trae un ejecutor de pruebas, sin instalar nada:</p>
+<div class="code">
+  <div class="code-head"><span>javascript</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>// total.test.js
+import { test } from 'node:test';
+import assert from 'node:assert/strict';
+import { total } from './total.js';
+
+test('suma precios', () => assert.equal(total([10, 5]), 15));
+test('lista vacía da 0', () => assert.equal(total([]), 0));
+test('ignora valores no numéricos', () => assert.equal(total([10, 'x']), 10));</code></pre>
+</div>
+<div class="code">
+  <div class="code-head"><span>bash</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>node --test</code></pre>
+</div>
+<p>Una buena práctica: <strong>escribe tú las pruebas (o al menos revísalas) antes de pedir el código</strong>. Así la IA tiene un objetivo verificable y tú un juez que no depende de ella. Si tu proyecto usa Vite, <a href="https://vitest.dev/" target="_blank" rel="noopener">Vitest</a> cumple el mismo papel.</p>
+<h2 id="s5"><span class="n">5.</span>Datos que nunca debes pegar</h2>
+
+<p>Lo que escribes en una herramienta de IA se envía a servidores de terceros. No pegues: claves y tokens, contraseñas, datos personales de clientes, código de tu empleador sin permiso. Si necesitas ayuda con un archivo de configuración, <strong>reemplaza los valores reales por marcadores</strong> (<code>TU_CLAVE_AQUI</code>). Revisa también las opciones de privacidad de cada herramienta (por ejemplo, si tus datos se usan para entrenar).</p>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li>Revisar un diff: ¿lo pedí?, ¿lo entiendo?, ¿existe?, ¿casos límite?, ¿dependencias?, ¿secretos?</li><li>Verifica cada paquete con <code>npm view</code> antes de instalarlo: pueden ser <strong>inventados o maliciosos</strong>.</li><li>Claves siempre en variables de entorno; si se filtran, <strong>revócalas</strong>.</li><li>Pruebas con <code>node --test</code>: mejor si tú defines qué debe pasar.</li><li>No pegues secretos ni datos de terceros en herramientas de IA.</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">6.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td>Slopsquatting</td><td>Ataque que registra nombres de paquetes que la IA suele inventar.</td></tr><tr><td>Consulta parametrizada</td><td>SQL que separa la orden de los datos para evitar inyección.</td></tr><tr><td>Caso límite</td><td>Entrada extrema o rara: vacía, nula, enorme, con símbolos.</td></tr><tr><td>Prueba automatizada</td><td>Código que comprueba que otro código hace lo esperado.</td></tr><tr><td>Revocar una clave</td><td>Invalidarla en el proveedor y crear una nueva.</td></tr></tbody>
+</table></div>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>La IA te sugiere instalar un paquete que no conoces. ¿Qué haces primero?</p><ul class="opts"><li><button type="button" class="opt">npm install de una vez</button></li><li><button type="button" class="opt" data-ok>npm view y revisar fecha, descargas y repositorio</button></li><li><button type="button" class="opt">Pegar tu .env en el chat</button></li><li><button type="button" class="opt">Nada, la IA nunca se equivoca</button></li></ul><p class="explain" hidden>Puede no existir o ser un paquete malicioso con nombre parecido.</p></div>
+<div class="quiz-q"><p>Subiste por error una clave a GitHub. ¿Qué haces?</p><ul class="opts"><li><button type="button" class="opt">Borrar el archivo y listo</button></li><li><button type="button" class="opt" data-ok>Revocar la clave y generar una nueva</button></li><li><button type="button" class="opt">Cambiar el nombre del repo</button></li><li><button type="button" class="opt">Ignorarlo</button></li></ul><p class="explain" hidden>Aunque la borres, ya quedó en el historial y pudo ser copiada.</p></div>
+<div class="quiz-q"><p>¿Qué comando ejecuta las pruebas integradas de Node?</p><ul class="opts"><li><button type="button" class="opt">npm build</button></li><li><button type="button" class="opt" data-ok>node --test</button></li><li><button type="button" class="opt">node --check-all</button></li><li><button type="button" class="opt">npx probar</button></li></ul><p class="explain" hidden>Node incluye un ejecutor de pruebas desde hace varias versiones.</p></div>
+<div class="quiz-q"><p>¿Qué es mejor para obtener código confiable?</p><ul class="opts"><li><button type="button" class="opt">Aceptar todo si se ve bien</button></li><li><button type="button" class="opt" data-ok>Definir pruebas y revisar el diff antes de aceptar</button></li><li><button type="button" class="opt">Pedir "hazlo seguro" y confiar</button></li><li><button type="button" class="opt">Evitar Git</button></li></ul><p class="explain" hidden>Pruebas + revisión dan un criterio independiente de la IA.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="ia-03">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../02-pedir-bien-prompts/"><small>← Anterior</small>Pedir bien: prompts que funcionan al programar</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Programar con IA · Lección 3 · Material de estudio gratuito, hecho por un estudiante con ayuda de inteligencia artificial como aporte a la comunidad. Contrástalo con la documentación oficial.</footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

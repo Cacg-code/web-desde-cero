@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Proyecto final: Proyecto: añade una función con IA a tu proyecto · Programar con IA</title>
+  <meta name="description" content="Usa un agente con AGENTS.md para añadir una función a tu proyecto, con pruebas, revisión y bitácora.">
+  <link rel="canonical" href="https://cacg-code.github.io/web-desde-cero/ia/proyecto-mejora-con-ia/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Proyecto final: Proyecto: añade una función con IA a tu proyecto · Programar con IA">
+  <meta property="og:description" content="Usa un agente con AGENTS.md para añadir una función a tu proyecto, con pruebas, revisión y bitácora.">
+  <meta property="og:url" content="https://cacg-code.github.io/web-desde-cero/ia/proyecto-mejora-con-ia/">
+  <meta property="og:image" content="https://cacg-code.github.io/web-desde-cero/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Programar con IA</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap lesson-layout" id="contenido">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#intro">Introducción</a></li><li><a href="#s1">Opciones de función</a></li><li><a href="#s2">Requisitos</a></li><li><a href="#s3">Rúbrica de autoevaluación</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Programar con IA</a> › Proyecto final</div>
+        <h1>Proyecto: añade una función con IA a tu proyecto</h1>
+        <ul class="meta"><li>⏱ ≈ 4 horas</li><li>📶 Nivel: avanzado</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Aplicar todo el método de trabajo con IA en un proyecto real.</li><li>Añadir una función con pruebas, revisión de seguridad y commits limpios.</li><li>Documentar el proceso en una bitácora que puedas mostrar en entrevistas.</li></ul>
+</div>
+
+<div id="intro">
+<p>Este proyecto junta todo el nivel: eliges un proyecto tuyo (la API de tareas, la tienda, el sistema de citas…) y le añades <strong>una función nueva</strong> trabajando con IA como un profesional: con contexto, plan, pruebas, revisión y bitácora.</p>
+</div>
+
+<h2 id="s1"><span class="n">1.</span>Opciones de función</h2>
+
+<ul><li><strong>Clasificador de mensajes</strong> (lección 7) para ordenar pedidos, consultas y reclamos.</li><li><strong>Resumen automático</strong> de un texto largo (con límite de tamaño y costo).</li><li><strong>Búsqueda en lenguaje natural</strong> sobre tus productos: la IA convierte la frase en filtros que tu código valida.</li><li><strong>Generador de descripciones</strong> de producto que el administrador revisa antes de publicar.</li></ul>
+<h2 id="s2"><span class="n">2.</span>Requisitos</h2>
+
+<ol><li>Rama propia y <code>AGENTS.md</code> actualizado.</li><li>Plan escrito (aprobado por ti) antes de programar.</li><li>Pruebas automatizadas que no llamen al modelo real.</li><li>Clave en el servidor, límite de uso y respuesta de reserva.</li><li>Revisión de seguridad con la lista de la lección 3.</li><li>Commits pequeños con mensajes claros.</li><li><code>BITACORA-IA.md</code> con: prompts importantes, errores de la IA que detectaste, decisiones tuyas y qué aprendiste.</li></ol>
+<h2 id="s3"><span class="n">3.</span>Rúbrica de autoevaluación</h2>
+
+<div class="table-wrap"><table><thead><tr><th>Criterio</th><th>Logrado cuando…</th></tr></thead><tbody>
+<tr><td>Funciona</td><td>Se puede probar desde la interfaz o con una petición de ejemplo.</td></tr>
+<tr><td>Seguro</td><td>No hay secretos en Git; se valida la entrada; hay límite de uso.</td></tr>
+<tr><td>Robusto</td><td>Si la IA falla o responde mal, la app sigue funcionando.</td></tr>
+<tr><td>Entendido</td><td>Puedes explicar cada archivo cambiado sin mirar.</td></tr>
+<tr><td>Documentado</td><td>README, AGENTS.md y bitácora al día.</td></tr>
+</tbody></table></div>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li>Un buen flujo con IA: <strong>rama, plan, pruebas, cambio pequeño, revisión, commit, bitácora</strong>.</li><li>Las pruebas no deben depender de llamadas reales al modelo.</li><li>Tu bitácora demuestra criterio: muestra los errores de la IA que detectaste.</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">4.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td>Bitácora</td><td>Registro cronológico de decisiones y aprendizajes del proyecto.</td></tr><tr><td>Respuesta de reserva</td><td>Contenido alternativo cuando falla un servicio externo.</td></tr></tbody>
+</table></div>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>¿Por qué las pruebas no deben llamar al modelo real?</p><ul class="opts"><li><button type="button" class="opt">Porque es ilegal</button></li><li><button type="button" class="opt" data-ok>Porque serían lentas, costosas e impredecibles</button></li><li><button type="button" class="opt">Porque Node no lo permite</button></li><li><button type="button" class="opt">Porque rompen Git</button></li></ul><p class="explain" hidden>Se usan versiones falsas para que sean rápidas y repetibles.</p></div>
+<div class="quiz-q"><p>¿Qué demuestra mejor tu criterio en una entrevista?</p><ul class="opts"><li><button type="button" class="opt">Que la IA lo hizo todo</button></li><li><button type="button" class="opt" data-ok>Una bitácora con errores detectados y decisiones tuyas</button></li><li><button type="button" class="opt">Un repositorio sin commits</button></li><li><button type="button" class="opt">Un proyecto sin README</button></li></ul><p class="explain" hidden>Muestra que revisas y decides.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="ia-P">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../09-el-stack-de-hoy/"><small>← Anterior</small>El stack de hoy: herramientas modernas que verás en los empleos</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Programar con IA · Proyecto final · Material de estudio gratuito, hecho por un estudiante con ayuda de inteligencia artificial como aporte a la comunidad. Contrástalo con la documentación oficial.</footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

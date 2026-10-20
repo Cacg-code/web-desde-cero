@@ -229,6 +229,11 @@ app.use(cors({ origin: [&quot;https://mi-sitio.com&quot;, &quot;http://localhost
 <h2 id="errores"><span class="n">5.</span>Errores frecuentes</h2>
 <ul><li><strong>Devolver el <em>stack trace</em></strong> o el mensaje interno al cliente: revela cómo funciona tu servidor.</li><li><strong>Responder 200 con un cuerpo de error</strong>: usa el código de estado correcto.</li><li><strong>Tragarse el error</strong> en un <code>catch</code> vacío: el problema desaparece del registro y nadie se entera.</li><li><strong>No validar el cuerpo</strong> y confiar en que «el cliente enviará lo correcto».</li><li><strong>Creer que CORS protege tu API</strong>: solo afecta a los navegadores.</li><li><strong>Dejar <code>cors()</code> abierto</strong> a cualquier origen en producción.</li><li><strong>Poner el manejador de errores antes de las rutas</strong>: debe ser el último <code>app.use</code>.</li></ul>
 
+<div class="callout nota">
+<p class="callout-title">🤖 Con IA · Código de IA y seguridad</p>
+<p>El código generado por IA suele omitir validación, dejar claves en el código o abrir CORS a todo. Usa esta lección como <strong>lista de revisión</strong> y consulta <a href="../../ia/03-revisar-y-desconfiar/">Revisar, probar y desconfiar</a>.</p>
+</div>
+
 <section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
 <h2 id="t-apuntes">📒 Apuntes para llevar</h2>
 <ul><li><code>4xx</code> = culpa del cliente; <code>5xx</code> = culpa del servidor.</li><li>Express 5 envía solo al manejador los errores de rutas <code>async</code>; en Express 4 había que usar <code>next(err)</code>.</li><li>Manejador de errores: <code>(err, req, res, next)</code>, siempre al final.</li><li>Un error propio puede llevar <code>status</code> para que el manejador responda con el código correcto.</li><li>A los <code>5xx</code> responde algo genérico y registra el detalle en el servidor.</li><li>Valida toda entrada y devuelve una lista de problemas con <code>400</code>.</li><li>CORS permite o niega a páginas de otro origen leer tus respuestas; limita los orígenes.</li><li>Buenas prácticas: validar, limitar el cuerpo, secretos en <code>.env</code>, <code>helmet</code>, límite de peticiones, HTTPS y <code>npm audit</code>.</li></ul>

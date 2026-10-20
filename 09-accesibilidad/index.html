@@ -224,6 +224,11 @@
 <h2 id="errores"><span class="n">9.</span>Errores frecuentes</h2>
 <ul><li><strong>Quitar el contorno de foco</strong> con <code>outline: none</code>.</li><li><strong>Usar <code>&lt;div&gt;</code> o <code>&lt;span&gt;</code> como botones o enlaces.</strong></li><li><strong>Enlaces como «haz clic aquí»</strong> o «leer más» sin contexto.</li><li><strong>Imágenes sin <code>alt</code></strong>, o con <code>alt</code> como «imagen1».</li><li><strong>Campos solo con <code>placeholder</code></strong>, sin <code>&lt;label&gt;</code>.</li><li><strong>Texto gris claro sobre fondo blanco.</strong></li><li><strong>Mensajes de error solo en rojo</strong>, sin texto que los explique.</li><li><strong>Abusar de ARIA</strong> o usarlo para tapar un HTML mal escrito.</li><li><strong>Saltar niveles de títulos</strong> para lograr un tamaño de letra.</li></ul>
 
+<div class="callout nota">
+<p class="callout-title">🤖 Con IA · Auditar con IA, decidir tú</p>
+<p>Una IA puede sugerir textos <code>alt</code> o detectar contrastes bajos, pero <strong>no ve tu página como una persona</strong>. Complementa con Lighthouse y con navegación por teclado, y revisa cada texto alternativo antes de publicarlo.</p>
+</div>
+
 <section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
 <h2 id="t-apuntes">📒 Apuntes para llevar</h2>
 <ul><li>La accesibilidad beneficia a todos: personas con discapacidad permanente, temporal o situacional.</li><li>Los principios WCAG son <strong>P</strong>erceptible, <strong>O</strong>perable, <strong>C</strong>omprensible y <strong>R</strong>obusto (POUR).</li><li>HTML semántico bien escrito resuelve la mayor parte: landmarks, títulos en orden, <code>lang</code>, <code>button</code> y <code>a</code>.</li><li>Contraste mínimo AA: <strong>4.5:1</strong> en texto normal y <strong>3:1</strong> en texto grande. No uses solo el color para dar información.</li><li>Todo debe ser operable con teclado, con foco siempre visible y un enlace «saltar al contenido».</li><li>Los errores de formulario se enlazan con <code>aria-describedby</code> y se anuncian con <code>role="alert"</code>.</li><li>ARIA: primero HTML nativo; <code>aria-label</code>, <code>aria-live</code> y <code>aria-hidden</code> en casos puntuales.</li><li>Prueba con teclado, zoom al 200%, un lector de pantalla y herramientas como Lighthouse.</li></ul>

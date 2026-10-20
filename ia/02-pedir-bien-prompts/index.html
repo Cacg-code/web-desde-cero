@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lección 2: Pedir bien: prompts que funcionan al programar · Programar con IA</title>
+  <meta name="description" content="La fórmula contexto + tarea + restricciones + formato, y cómo iterar sin perder el hilo.">
+  <link rel="canonical" href="https://cacg-code.github.io/web-desde-cero/ia/02-pedir-bien-prompts/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Lección 2: Pedir bien: prompts que funcionan al programar · Programar con IA">
+  <meta property="og:description" content="La fórmula contexto + tarea + restricciones + formato, y cómo iterar sin perder el hilo.">
+  <meta property="og:url" content="https://cacg-code.github.io/web-desde-cero/ia/02-pedir-bien-prompts/">
+  <meta property="og:image" content="https://cacg-code.github.io/web-desde-cero/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Programar con IA</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap lesson-layout" id="contenido">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#intro">Introducción</a></li><li><a href="#s1">La fórmula: contexto, tarea, restricciones, formato</a></li><li><a href="#s2">Pide un plan antes del código</a></li><li><a href="#s3">Da ejemplos y muestra lo que existe</a></li><li><a href="#s4">Itera con correcciones concretas</a></li><li><a href="#s5">Una tarea, un cambio, un commit</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Programar con IA</a> › Lección 2</div>
+        <h1>Pedir bien: prompts que funcionan al programar</h1>
+        <ul class="meta"><li>⏱ 50 minutos</li><li>📶 Nivel: básico</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Escribir prompts con contexto, tarea, restricciones y formato esperado.</li><li>Pedir un plan antes del código y dividir tareas grandes en pasos pequeños.</li><li>Iterar con correcciones concretas en vez de empezar de cero.</li></ul>
+</div>
+
+<div id="intro">
+<p>La calidad de la respuesta depende, sobre todo, de la calidad de lo que pides. Un buen prompt para programar se parece mucho a una buena <strong>descripción de tarea para un compañero que acaba de llegar al proyecto</strong>: no conoce nada, así que tienes que contarle lo importante.</p>
+</div>
+
+<h2 id="s1"><span class="n">1.</span>La fórmula: contexto, tarea, restricciones, formato</h2>
+
+<div class="table-wrap"><table><thead><tr><th>Parte</th><th>Qué incluyes</th><th>Ejemplo</th></tr></thead><tbody>
+<tr><td><strong>Contexto</strong></td><td>Tecnología, versión, qué hay hecho</td><td>"Proyecto con Node 24 y Express 5, sin TypeScript."</td></tr>
+<tr><td><strong>Tarea</strong></td><td>Una cosa concreta</td><td>"Agrega una ruta <code>DELETE /tareas/:id</code>."</td></tr>
+<tr><td><strong>Restricciones</strong></td><td>Qué sí y qué no</td><td>"Sin librerías nuevas. Mantén el estilo de <code>rutas/tareas.js</code>."</td></tr>
+<tr><td><strong>Formato</strong></td><td>Cómo quieres la respuesta</td><td>"Muéstrame solo el cambio y una frase explicando."</td></tr>
+</tbody></table></div>
+<p>Compara estos dos pedidos:</p>
+<div class="code">
+  <div class="code-head"><span>texto</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>❌  "hazme un login"
+
+✅  "Estoy en un proyecto Express 5 con SQLite (better-sqlite3).
+    Tarea: agrega POST /login que reciba email y password en JSON.
+    Restricciones: guarda contraseñas con bcrypt, responde 401 si fallan,
+    no uses librerías de sesión todavía, sigue el estilo de rutas/tareas.js.
+    Formato: primero un plan de 3-5 pasos; no escribas código hasta que yo diga 'sigue'."</code></pre>
+</div>
+<h2 id="s2"><span class="n">2.</span>Pide un plan antes del código</h2>
+
+<p>Cuando la tarea toca varios archivos, pide primero un <strong>plan</strong>: qué archivos cambiará y en qué orden. Revisarlo toma un minuto y evita 20 minutos de código en la dirección equivocada. Muchos editores y agentes tienen un "modo plan" justo para esto.</p>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo</p>
+<p>Frase útil: <strong>"Antes de escribir código, dime qué dudas tienes y qué archivos tocarías."</strong> Obliga a la IA a mostrar sus suposiciones.</p>
+</div>
+<h2 id="s3"><span class="n">3.</span>Da ejemplos y muestra lo que existe</h2>
+
+<ul><li>Pega el <strong>error completo</strong> (no tu resumen) y el trozo de código involucrado.</li><li>Si quieres un formato, da <strong>un ejemplo</strong> de entrada y salida: "con <code>[1,2,3]</code> debe devolver <code>6</code>".</li><li>En un editor con IA, <strong>adjunta los archivos relevantes</strong> (en Cursor se mencionan con <code>@archivo</code>) en lugar de describirlos de memoria.</li><li>Si usas una librería reciente, pega el enlace o el fragmento de su documentación: así no depende de lo que recuerde.</li></ul>
+<h2 id="s4"><span class="n">4.</span>Itera con correcciones concretas</h2>
+
+<p>Si el resultado no sirve, no digas "está mal". Di <em>qué</em> está mal:</p>
+<ul><li>"Usaste <code>var</code>; en este proyecto usamos <code>const</code> y <code>let</code>."</li><li>"Esta función hace dos cosas; sepárala en dos."</li><li>"Falla cuando la lista está vacía. Agrega ese caso."</li></ul>
+<p>Si la conversación se enreda, <strong>abre una nueva</strong> con un resumen corto de lo decidido. Los chats muy largos pierden precisión y cuestan más.</p>
+<h2 id="s5"><span class="n">5.</span>Una tarea, un cambio, un commit</h2>
+
+<p>Pide cosas pequeñas y verificables. Después de cada una que funcione: pruébala y haz <code>git commit</code>. Así, si el siguiente pedido rompe algo, sabes exactamente dónde volver.</p>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li>Un buen prompt tiene <strong>contexto, tarea, restricciones y formato</strong>.</li><li>Para cambios grandes, <strong>pide un plan primero</strong> y apruébalo.</li><li>Pega el <strong>error completo</strong> y adjunta los archivos reales; no describas de memoria.</li><li>Corrige con detalles concretos; si el chat se enreda, empieza uno nuevo con un resumen.</li><li>Una tarea pequeña por vez y un commit por cada una que funcione.</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">6.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td>Prompt</td><td>El mensaje o instrucción que le das a la IA.</td></tr><tr><td>Modo plan</td><td>Función donde la IA propone pasos sin modificar archivos hasta que apruebes.</td></tr><tr><td>Restricción</td><td>Límite que impones: librerías permitidas, estilo, qué no tocar.</td></tr><tr><td>Iterar</td><td>Mejorar el resultado con correcciones sucesivas.</td></tr></tbody>
+</table></div>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>¿Cuál es un prompt mejor?</p><ul class="opts"><li><button type="button" class="opt">"arregla mi código"</button></li><li><button type="button" class="opt" data-ok>"Con Node 24 y Express 5 esta ruta devuelve 500; aquí está el error completo y el archivo. Explica la causa y propón un cambio mínimo"</button></li><li><button type="button" class="opt">"haz una app"</button></li><li><button type="button" class="opt">"no funciona"</button></li></ul><p class="explain" hidden>Da contexto, el error real, el archivo y el resultado esperado.</p></div>
+<div class="quiz-q"><p>¿Para qué sirve pedir un plan antes del código?</p><ul class="opts"><li><button type="button" class="opt">Para gastar más</button></li><li><button type="button" class="opt" data-ok>Para revisar el enfoque y los archivos afectados antes de que se escriba nada</button></li><li><button type="button" class="opt">Para evitar usar Git</button></li><li><button type="button" class="opt">Para que responda más lento</button></li></ul><p class="explain" hidden>Corregir un plan es más barato que corregir código ya escrito.</p></div>
+<div class="quiz-q"><p>Si una conversación larga se enreda, lo mejor es…</p><ul class="opts"><li><button type="button" class="opt">Insistir más fuerte</button></li><li><button type="button" class="opt" data-ok>Abrir una nueva con un resumen de lo decidido</button></li><li><button type="button" class="opt">Borrar el proyecto</button></li><li><button type="button" class="opt">Cambiar de lenguaje</button></li></ul><p class="explain" hidden>Un contexto limpio da respuestas más precisas.</p></div>
+<div class="quiz-q"><p>¿Qué hacer después de que un cambio pedido funciona?</p><ul class="opts"><li><button type="button" class="opt">Pedir diez cambios más sin probar</button></li><li><button type="button" class="opt" data-ok>Probarlo y hacer commit</button></li><li><button type="button" class="opt">Cerrar el editor</button></li><li><button type="button" class="opt">Olvidarlo</button></li></ul><p class="explain" hidden>Los commits pequeños permiten volver atrás con precisión.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="ia-02">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../01-panorama-de-herramientas-ia/"><small>← Anterior</small>El panorama: qué herramientas de IA existen para programar</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Programar con IA · Lección 2 · Material de estudio gratuito, hecho por un estudiante con ayuda de inteligencia artificial como aporte a la comunidad. Contrástalo con la documentación oficial.</footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

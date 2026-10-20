@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lección 4: Depurar con IA: de un error a la causa real · Programar con IA</title>
+  <meta name="description" content="Un método de 5 pasos para usar la IA como compañero de depuración sin perder el criterio.">
+  <link rel="canonical" href="https://cacg-code.github.io/web-desde-cero/ia/04-depurar-con-ia/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Lección 4: Depurar con IA: de un error a la causa real · Programar con IA">
+  <meta property="og:description" content="Un método de 5 pasos para usar la IA como compañero de depuración sin perder el criterio.">
+  <meta property="og:url" content="https://cacg-code.github.io/web-desde-cero/ia/04-depurar-con-ia/">
+  <meta property="og:image" content="https://cacg-code.github.io/web-desde-cero/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Programar con IA</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap lesson-layout" id="contenido">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#intro">Introducción</a></li><li><a href="#s1">El método de 5 pasos</a></li><li><a href="#s2">Qué pegar (y qué no)</a></li><li><a href="#s3">Herramientas de depuración que debes dominar igual</a></li><li><a href="#s4">Señales de que la IA te está llevando a un parche</a></li><li><a href="#s5">Cierra el ciclo con una prueba</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Programar con IA</a> › Lección 4</div>
+        <h1>Depurar con IA: de un error a la causa real</h1>
+        <ul class="meta"><li>⏱ 45 minutos</li><li>📶 Nivel: intermedio</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Reproducir un error y reunir la información que la IA necesita.</li><li>Pedir hipótesis en vez de "arreglos" y comprobarlas una por una.</li><li>Evitar el ciclo de parches que tapan el síntoma.</li></ul>
+</div>
+
+<div id="intro">
+<p>Depurar es el mejor uso de la IA para quien aprende: un error críptico se convierte en una explicación en español. Pero hay una trampa: pegar el error, copiar el arreglo y repetir. Así el proyecto se llena de parches y tú no aprendes qué pasó.</p>
+</div>
+
+<h2 id="s1"><span class="n">1.</span>El método de 5 pasos</h2>
+
+<ol><li><strong>Reproduce.</strong> Encuentra los pasos exactos que provocan el error. Sin reproducción no hay forma de saber si lo arreglaste.</li><li><strong>Reúne evidencia.</strong> Mensaje de error completo, la línea indicada, la versión de Node o del navegador, y qué cambió desde la última vez que funcionó.</li><li><strong>Pide hipótesis, no código.</strong> "Dame 3 causas posibles ordenadas de más a menos probable y cómo comprobar cada una."</li><li><strong>Comprueba una hipótesis por vez</strong> con <code>console.log</code>, el depurador del navegador o una prueba.</li><li><strong>Arregla la causa, no el síntoma</strong>, y añade una prueba para que no vuelva.</li></ol>
+<h2 id="s2"><span class="n">2.</span>Qué pegar (y qué no)</h2>
+
+<div class="code">
+  <div class="code-head"><span>texto</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>Contexto: Express 5 + Node 24. Al llamar GET /tareas/abc devuelve 500.
+Esperado: 400 con { error: "id inválido" }.
+Error completo:
+TypeError: Cannot read properties of undefined (reading 'titulo')
+    at rutas/tareas.js:18:30
+Código (líneas 10-25): ...
+Ya probé: console.log(req.params) muestra { id: 'abc' }.
+Pregunta: dame 3 hipótesis y cómo comprobar cada una. No escribas código todavía.</code></pre>
+</div>
+<p>Fíjate en que incluye lo que ya probaste. Evita que la IA te sugiera lo obvio y le da pistas reales. Recuerda quitar claves y datos privados antes de pegar.</p>
+<h2 id="s3"><span class="n">3.</span>Herramientas de depuración que debes dominar igual</h2>
+
+<ul><li><strong>Consola del navegador</strong> (pestañas Console y Network): ve errores de JavaScript, peticiones fallidas y sus respuestas. Puedes copiar una petición como <em>cURL</em> y pedirle a la IA que la analice.</li><li><strong>Puntos de interrupción</strong> (<em>breakpoints</em>) en las herramientas de desarrollo o en tu editor: detienen el programa y te dejan ver cada variable.</li><li><strong><code>console.table()</code> y <code>console.log</code> con etiqueta</strong>: <code>console.log('tarea:', tarea)</code> es más útil que <code>console.log(tarea)</code>.</li><li><strong>Los agentes</strong> pueden ejecutar tus pruebas y leer la salida solos; aun así, léela tú también.</li></ul>
+<h2 id="s4"><span class="n">4.</span>Señales de que la IA te está llevando a un parche</h2>
+
+<ul><li>Te propone envolver todo en <code>try/catch</code> que ignora el error.</li><li>Agrega <code>?.</code> o valores por defecto en todas partes sin explicar por qué el dato falta.</li><li>La solución cambia algo que no tiene relación con el error.</li><li>Tras 3 intentos fallidos sigue dando variantes de lo mismo: es hora de <strong>reiniciar el chat</strong> con un mejor resumen o de depurar a mano.</li></ul>
+<div class="callout consejo">
+<p class="callout-title">💡 Consejo</p>
+<p>Truco de "patito de goma": antes de pedir ayuda, explica el problema en voz alta o por escrito. Muchas veces encuentras la causa mientras lo redactas, y el texto ya sirve de prompt.</p>
+</div>
+<h2 id="s5"><span class="n">5.</span>Cierra el ciclo con una prueba</h2>
+
+<p>Cuando encuentres la causa, escribe una prueba que <em>falle antes</em> del arreglo y <em>pase después</em>. Es la única garantía de que el error no regresa sin que te des cuenta.</p>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li>Método: <strong>reproducir → evidencia → hipótesis → comprobar → arreglar la causa + prueba</strong>.</li><li>Pide <strong>hipótesis y cómo verificarlas</strong>, no solo código.</li><li>Incluye lo que ya probaste y el error completo; quita secretos.</li><li>Desconfía de <code>try/catch</code> que silencia errores y de parches que no explican la causa.</li><li>Domina consola, Network y breakpoints: la IA no los reemplaza.</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">6.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td>Depurar</td><td>Encontrar y corregir la causa de un error.</td></tr><tr><td>Breakpoint</td><td>Punto donde el programa se detiene para inspeccionarlo.</td></tr><tr><td>Síntoma vs causa</td><td>Lo que se ve fallar vs. la razón real del fallo.</td></tr><tr><td>Reproducir</td><td>Lograr que el error ocurra de forma repetible.</td></tr><tr><td>Regresión</td><td>Error que vuelve a aparecer tras haberse arreglado.</td></tr></tbody>
+</table></div>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>¿Qué es mejor pedirle primero a la IA ante un error?</p><ul class="opts"><li><button type="button" class="opt">"Arréglalo"</button></li><li><button type="button" class="opt" data-ok>Hipótesis ordenadas y cómo comprobar cada una</button></li><li><button type="button" class="opt">"Reescribe todo"</button></li><li><button type="button" class="opt">Que borre la función</button></li></ul><p class="explain" hidden>Las hipótesis te enseñan y evitan parches a ciegas.</p></div>
+<div class="quiz-q"><p>¿Qué indica un parche y no una solución?</p><ul class="opts"><li><button type="button" class="opt">Una prueba nueva</button></li><li><button type="button" class="opt" data-ok>Un try/catch que ignora el error</button></li><li><button type="button" class="opt">Explicar la causa</button></li><li><button type="button" class="opt">Reproducir el fallo</button></li></ul><p class="explain" hidden>Silenciar el error esconde el problema.</p></div>
+<div class="quiz-q"><p>Tras 3 intentos fallidos con la IA, lo recomendable es…</p><ul class="opts"><li><button type="button" class="opt">Seguir igual</button></li><li><button type="button" class="opt" data-ok>Reiniciar el chat con mejor resumen o depurar a mano</button></li><li><button type="button" class="opt">Cambiar de computadora</button></li><li><button type="button" class="opt">Rendirse</button></li></ul><p class="explain" hidden>El contexto se contaminó; conviene empezar limpio.</p></div>
+<div class="quiz-q"><p>¿Qué garantiza que un error no vuelva?</p><ul class="opts"><li><button type="button" class="opt">Un comentario</button></li><li><button type="button" class="opt" data-ok>Una prueba que falle antes y pase después</button></li><li><button type="button" class="opt">Reiniciar el servidor</button></li><li><button type="button" class="opt">Cerrar el archivo</button></li></ul><p class="explain" hidden>La prueba automatizada detecta la regresión.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="ia-04">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../03-revisar-y-desconfiar/"><small>← Anterior</small>Revisar, probar y desconfiar: seguridad con código de IA</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Programar con IA · Lección 4 · Material de estudio gratuito, hecho por un estudiante con ayuda de inteligencia artificial como aporte a la comunidad. Contrástalo con la documentación oficial.</footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

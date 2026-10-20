@@ -210,6 +210,11 @@
 <h2 id="errores"><span class="n">8.</span>Errores frecuentes</h2>
 <ul><li><strong>Olvidar la etiqueta <code>viewport</code></strong> y preguntarse por qué las media queries no funcionan en el celular.</li><li><strong>Anchos fijos en <code>px</code></strong> (<code>width: 960px</code>): causan scroll horizontal.</li><li><strong>Mezclar <code>min-width</code> y <code>max-width</code></strong> sin plan y que las reglas se pisen.</li><li><strong>Ocultar contenido en móvil</strong> (<code>display: none</code>) en lugar de reorganizarlo.</li><li><strong>Texto demasiado pequeño</strong> en móvil (menos de 16px).</li><li><strong>Botones y enlaces diminutos:</strong> el área táctil mínima recomendada es ~44×44px.</li><li><strong>Probar solo en tu pantalla.</strong></li></ul>
 
+<div class="callout nota">
+<p class="callout-title">🤖 Con IA · Revisar tu diseño en varios anchos</p>
+<p>Pega tu CSS y pide a una IA una lista de posibles problemas en pantallas de 360, 768 y 1280 px. Luego <strong>compruébalo tú</strong> en el modo dispositivo de las herramientas de desarrollo: la IA no ve tu página, solo lee tu código.</p>
+</div>
+
 <section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
 <h2 id="t-apuntes">📒 Apuntes para llevar</h2>
 <ul><li>Diseño responsivo = layout fluido + contenido flexible + media queries.</li><li>Imprescindible: <code>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</code>.</li><li><strong>Mobile-first</strong>: estilos base para móvil y <code>@media (min-width: …)</code> para añadir mejoras.</li><li>Las media queries también detectan <code>prefers-color-scheme</code>, <code>prefers-reduced-motion</code>, <code>hover</code> y <code>print</code>.</li><li>Elige los puntos de ruptura donde <strong>tu diseño</strong> se rompe, no los de dispositivos concretos.</li><li><code>min()</code>, <code>max()</code>, <code>clamp()</code> y <code>calc()</code> permiten valores fluidos sin media queries.</li><li><code>img { max-width: 100%; height: auto }</code> y <code>aspect-ratio</code>/<code>object-fit</code> mantienen las imágenes ordenadas.</li><li>Las container queries adaptan un componente al tamaño de su contenedor.</li></ul>

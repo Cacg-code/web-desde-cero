@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lección 9: El stack de hoy: herramientas modernas que verás en los empleos · Programar con IA</title>
+  <meta name="description" content="Vite, TypeScript, Tailwind, Node LTS, pruebas y despliegue: qué son, para qué sirven y cuándo aprenderlos.">
+  <link rel="canonical" href="https://cacg-code.github.io/web-desde-cero/ia/09-el-stack-de-hoy/">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Desarrollo web desde cero">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:title" content="Lección 9: El stack de hoy: herramientas modernas que verás en los empleos · Programar con IA">
+  <meta property="og:description" content="Vite, TypeScript, Tailwind, Node LTS, pruebas y despliegue: qué son, para qué sirven y cuándo aprenderlos.">
+  <meta property="og:url" content="https://cacg-code.github.io/web-desde-cero/ia/09-el-stack-de-hoy/">
+  <meta property="og:image" content="https://cacg-code.github.io/web-desde-cero/assets/img/compartir.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cursos gratuitos de desarrollo web: HTML, CSS y JavaScript">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../assets/estilos.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <a class="brand" href="../"><span class="brand-logo">&lt;/&gt;</span> Programar con IA</a>
+    <div class="topbar-actions">
+      <a class="icon-btn nav-cursos" href="../../" style="text-decoration:none">Todos los cursos</a>
+      <a class="icon-btn" href="ejercicio.html" style="text-decoration:none">Ir al ejercicio →</a>
+      <button class="icon-btn" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">◐ Tema</button>
+    </div>
+  </header>
+
+  <main class="wrap lesson-layout" id="contenido">
+    <nav class="toc" aria-label="Índice de la lección">
+      <h4>En esta lección</h4>
+      <ol><li><a href="#intro">Introducción</a></li><li><a href="#s1">El mapa</a></li><li><a href="#s2">TypeScript en 30 segundos</a></li><li><a href="#s3">Cómo se mantienen actualizados los profesionales</a></li><li><a href="#apuntes">Apuntes para llevar</a></li><li><a href="#glosario">Glosario</a></li><li><a href="#quiz">Comprueba lo aprendido</a></li></ol>
+    </nav>
+
+    <article>
+      <header class="lesson-head">
+        <div class="breadcrumb"><a href="../">Programar con IA</a> › Lección 9</div>
+        <h1>El stack de hoy: herramientas modernas que verás en los empleos</h1>
+        <ul class="meta"><li>⏱ 50 minutos</li><li>📶 Nivel: intermedio</li><li>🧩 Incluye ejercicio</li></ul>
+      </header>
+<div class="callout consejo">
+<p class="callout-title">💡 🎯 Al terminar esta lección podrás…</p>
+<ul><li>Reconocer las herramientas modernas más comunes de un proyecto web.</li><li>Saber qué problema resuelve cada una y cuándo conviene.</li><li>Crear tu propio plan de aprendizaje de 3 herramientas.</li></ul>
+</div>
+
+<div id="intro">
+<p>En una oferta de trabajo o un repositorio ajeno verás muchas siglas. No tienes que aprenderlas todas: tienes que saber <strong>qué problema resuelve cada una</strong> y elegir con criterio. Todo lo que aprendiste en el curso sigue siendo la base de todas ellas.</p>
+</div>
+
+<h2 id="s1"><span class="n">1.</span>El mapa</h2>
+
+<div class="table-wrap"><table><thead><tr><th>Herramienta</th><th>Problema que resuelve</th><th>Cuándo aprenderla</th></tr></thead><tbody>
+<tr><td><strong>Vite</strong></td><td>Servidor de desarrollo rápido y empaquetado para proyectos de front (React, Vue, etc.).</td><td>Ya la usas en el nivel de React.</td></tr>
+<tr><td><strong>TypeScript</strong></td><td>JavaScript con tipos: el editor y el compilador detectan errores antes de ejecutar. Casi estándar en equipos.</td><td>Cuando domines JavaScript y React. Es el siguiente paso natural.</td></tr>
+<tr><td><strong>Tailwind CSS</strong></td><td>Estilos con clases utilitarias (<code>p-4 text-lg</code>) directamente en el HTML/JSX.</td><td>Cuando entiendas bien CSS; sin base, solo escondes lo que no sabes.</td></tr>
+<tr><td><strong>Frameworks full stack</strong> (Next.js, Astro, React Router, Nuxt, SvelteKit)</td><td>Rutas, renderizado en servidor, datos y despliegue integrados.</td><td>Tras React y Node; elige uno y haz un proyecto.</td></tr>
+<tr><td><strong>Node LTS</strong></td><td>Entorno de ejecución de JavaScript en el servidor. Usa siempre una versión LTS (soporte a largo plazo).</td><td>Ya la usas. Las versiones cambian cada año: revisa la actual en nodejs.org.</td></tr>
+<tr><td><strong>Bun, Deno</strong></td><td>Alternativas a Node con herramientas integradas.</td><td>Para curiosear; Node sigue siendo lo más pedido.</td></tr>
+<tr><td><strong>Vitest / Playwright</strong></td><td>Pruebas de unidad y pruebas de extremo a extremo en navegador real.</td><td>Cuando tengas un proyecto que quieras proteger.</td></tr>
+<tr><td><strong>ESLint / Prettier</strong></td><td>Detectan errores de estilo y formatean el código automáticamente.</td><td>Desde el primer proyecto serio.</td></tr>
+<tr><td><strong>GitHub Actions</strong></td><td>Automatiza pruebas y despliegue en cada <code>push</code>.</td><td>Cuando despliegues proyectos reales.</td></tr>
+<tr><td><strong>Cloudflare, Vercel, Netlify, GitHub Pages</strong></td><td>Alojamiento con despliegue desde Git, muchos con plan gratuito.</td><td>Ya has publicado con Pages; prueba otro con funciones de servidor.</td></tr>
+<tr><td><strong>Docker</strong></td><td>Empaqueta tu app con todo lo que necesita para correr igual en cualquier máquina.</td><td>Cuando trabajes en equipo o despliegues en servidores propios.</td></tr>
+</tbody></table></div>
+<h2 id="s2"><span class="n">2.</span>TypeScript en 30 segundos</h2>
+
+<div class="code">
+  <div class="code-head"><span>typescript</span><button class="copy" type="button">Copiar</button></div>
+<pre><code>type Tarea = { id: number; titulo: string; hecha: boolean };
+
+function completar(t: Tarea): Tarea {
+  return { ...t, hecha: true };
+}
+
+completar({ id: 1, titulo: 'Estudiar' });   // ❌ El editor avisa: falta "hecha"</code></pre>
+</div>
+<p>Las IA programan muy bien en TypeScript, y los tipos sirven de <strong>red de seguridad</strong> contra errores del código generado: si algo no encaja, el editor lo marca antes de ejecutar.</p>
+<h2 id="s3"><span class="n">3.</span>Cómo se mantienen actualizados los profesionales</h2>
+
+<ul><li><strong>Documentación oficial</strong> y notas de versión (<em>changelog</em>) de las herramientas que usan.</li><li><strong>Compatibilidad:</strong> antes de actualizar, lee los cambios que rompen compatibilidad (<em>breaking changes</em>). Para ver qué versión tienes: <code>npm ls</code>; para ver la última: <code>npm view paquete version</code>.</li><li><strong>Un proyecto pequeño por herramienta nueva:</strong> aprender leyendo no basta.</li><li><strong>Desconfía de tutoriales sin fecha</strong> y de respuestas de IA que no mencionan versión.</li><li><strong>Fija tus dependencias</strong> con <code>package-lock.json</code> y usa <code>npm ci</code> en despliegues.</li></ul>
+<div class="callout nota"><p class="callout-title">📌 Nota · No persigas todo</p><p>Una ruta razonable después de este curso: <strong>TypeScript → un framework full stack → pruebas → despliegue automático</strong>. Con tres de esas cuatro y un buen portafolio, estás en un nivel muy competitivo para un puesto inicial.</p></div>
+
+<section class="apuntes" id="apuntes" aria-labelledby="t-apuntes">
+<h2 id="t-apuntes">📒 Apuntes para llevar</h2>
+<ul><li>Cada herramienta resuelve un problema concreto: aprende el problema primero.</li><li>TypeScript es el siguiente paso natural y refuerza el trabajo con IA.</li><li>Tailwind y los frameworks se aprovechan mejor con una base sólida de CSS y React.</li><li>Usa versiones LTS y revisa el changelog antes de actualizar.</li><li>Un proyecto pequeño por herramienta es mejor que leer diez tutoriales.</li></ul>
+</section>
+
+<h2 id="glosario"><span class="n">4.</span>Glosario</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Término</th><th>Significado</th></tr></thead>
+<tbody><tr><td>LTS</td><td>Versión de soporte a largo plazo, recomendada para producción.</td></tr><tr><td>Bundler</td><td>Herramienta que junta y optimiza tus archivos para publicar.</td></tr><tr><td>Tipos</td><td>Declaraciones de qué forma tienen los datos (texto, número, objeto).</td></tr><tr><td>E2E</td><td>Pruebas de extremo a extremo: simulan a un usuario real en el navegador.</td></tr><tr><td>Breaking change</td><td>Cambio de una librería que puede romper código que funcionaba.</td></tr></tbody>
+</table></div>
+
+<section class="quiz" id="quiz" aria-labelledby="t-quiz">
+<h2 id="t-quiz">🧠 Comprueba lo aprendido</h2>
+<p>Elige una respuesta en cada pregunta. Verás al instante si acertaste y por qué.</p>
+<div class="quiz-q"><p>¿Qué problema principal resuelve TypeScript?</p><ul class="opts"><li><button type="button" class="opt">Hace más bonito el CSS</button></li><li><button type="button" class="opt" data-ok>Detecta errores de tipos antes de ejecutar</button></li><li><button type="button" class="opt">Aloja tu sitio</button></li><li><button type="button" class="opt">Crea bases de datos</button></li></ul><p class="explain" hidden>Añade tipos a JavaScript.</p></div>
+<div class="quiz-q"><p>¿Qué versión de Node conviene usar en proyectos reales?</p><ul class="opts"><li><button type="button" class="opt">La más nueva siempre</button></li><li><button type="button" class="opt" data-ok>Una LTS</button></li><li><button type="button" class="opt">La más antigua</button></li><li><button type="button" class="opt">Cualquiera</button></li></ul><p class="explain" hidden>Las LTS tienen soporte y estabilidad prolongados.</p></div>
+<div class="quiz-q"><p>Antes de actualizar una librería importante hay que…</p><ul class="opts"><li><button type="button" class="opt">Actualizar sin leer</button></li><li><button type="button" class="opt" data-ok>Leer el changelog por breaking changes</button></li><li><button type="button" class="opt">Borrar el package.json</button></li><li><button type="button" class="opt">Reinstalar Node</button></li></ul><p class="explain" hidden>Un cambio puede romper tu código.</p></div>
+<div class="quiz-q"><p>¿Para qué sirve <code>npm ci</code> en un despliegue?</p><ul class="opts"><li><button type="button" class="opt">Para instalar versiones nuevas al azar</button></li><li><button type="button" class="opt" data-ok>Para instalar exactamente lo del package-lock.json</button></li><li><button type="button" class="opt">Para borrar el proyecto</button></li><li><button type="button" class="opt">Para crear una base de datos</button></li></ul><p class="explain" hidden>Da instalaciones reproducibles.</p></div>
+<p class="quiz-score" aria-live="polite"></p>
+</section>
+
+<div class="complete"><button class="btn" type="button" data-complete="ia-09">Marcar como completada</button><p>Tu progreso se guarda en este navegador y se refleja en el índice del curso.</p></div>
+
+<div class="callout consejo">
+<p class="callout-title">💡 🚀 ¡Ahora te toca!</p>
+<p>La práctica fija lo aprendido. Pasa al ejercicio de esta lección.</p>
+<p><a class="btn" href="ejercicio.html">Ir al ejercicio</a></p></div>
+
+      <nav class="pager" aria-label="Navegación entre lecciones">
+        <a href="../08-aprender-con-ia-y-etica/"><small>← Anterior</small>Aprender con IA sin dejar de aprender (y hacerlo con ética)</a>
+        <a class="next" href="ejercicio.html"><small>Siguiente →</small>Ejercicio de esta lección</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">Programar con IA · Lección 9 · Material de estudio gratuito, hecho por un estudiante con ayuda de inteligencia artificial como aporte a la comunidad. Contrástalo con la documentación oficial.</footer>
+  <script src="../../assets/curso.js"></script>
+</body>
+</html>

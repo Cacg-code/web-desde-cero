@@ -550,5 +550,103 @@
    "Conventional Commits",
    "https://www.conventionalcommits.org/es/v1.0.0/"
   ]
+ ],
+ "ia-01": [
+  [
+   "GitHub Copilot: documentación",
+   "https://docs.github.com/copilot"
+  ],
+  [
+   "Cursor: documentación",
+   "https://docs.cursor.com/"
+  ],
+  [
+   "Gemini CLI (repositorio oficial)",
+   "https://github.com/google-gemini/gemini-cli"
+  ]
+ ],
+ "ia-03": [
+  [
+   "Node.js: ejecutor de pruebas",
+   "https://nodejs.org/api/test.html"
+  ],
+  [
+   "npm: comando view",
+   "https://docs.npmjs.com/cli/commands/npm-view"
+  ],
+  [
+   "OWASP Top 10",
+   "https://owasp.org/www-project-top-ten/"
+  ]
+ ],
+ "ia-04": [
+  [
+   "MDN: depuración",
+   "https://developer.mozilla.org/es/docs/Learn_web_development/Core/Scripting/What_went_wrong"
+  ]
+ ],
+ "ia-05": [
+  [
+   "AGENTS.md (formato abierto)",
+   "https://agents.md/"
+  ],
+  [
+   "Model Context Protocol",
+   "https://modelcontextprotocol.io/"
+  ],
+  [
+   "Claude Code: documentación",
+   "https://docs.claude.com/en/docs/claude-code/overview"
+  ]
+ ],
+ "ia-06": [
+  [
+   "Lighthouse (Chrome)",
+   "https://developer.chrome.com/docs/lighthouse/overview"
+  ],
+  [
+   "MDN: accesibilidad",
+   "https://developer.mozilla.org/es/docs/Web/Accessibility"
+  ]
+ ],
+ "ia-07": [
+  [
+   "MDN: fetch",
+   "https://developer.mozilla.org/es/docs/Web/API/Fetch_API"
+  ],
+  [
+   "Cloudflare Workers AI",
+   "https://developers.cloudflare.com/workers-ai/"
+  ],
+  [
+   "Cloudflare AI Gateway",
+   "https://developers.cloudflare.com/ai-gateway/"
+  ]
+ ],
+ "ia-09": [
+  [
+   "Node.js: versiones y LTS",
+   "https://nodejs.org/es/about/previous-releases"
+  ],
+  [
+   "Vite",
+   "https://vite.dev/"
+  ],
+  [
+   "TypeScript",
+   "https://www.typescriptlang.org/docs/"
+  ],
+  [
+   "Tailwind CSS",
+   "https://tailwindcss.com/docs"
+  ],
+  [
+   "Vitest",
+   "https://vitest.dev/"
+  ],
+  [
+   "Playwright",
+   "https://playwright.dev/"
+  ]
  ]
 }
