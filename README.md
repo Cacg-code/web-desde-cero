@@ -23,7 +23,7 @@
 
 *Se abre en tu navegador. Sin cuentas, sin descargas, sin instalar nada. Instalable como app y con progreso, niveles y rachas.*
 
-<img src="assets/readme/cifras.svg" alt="6 cursos, 60 lecciones, 6 proyectos, unas 75 horas, gratis" width="100%">
+<img src="assets/readme/cifras.svg" alt="8 cursos, 75 lecciones, 8 proyectos, unas 106 horas, gratis" width="100%">
 
 </div>
 
@@ -98,7 +98,7 @@ Sigue el orden: cada curso se apoya en el anterior.
 
 </div>
 
-### 📚 Temario completo · 60 lecciones y 6 proyectos
+### 📚 Temario completo · 75 lecciones y 8 proyectos
 
 <div align="center">
 
@@ -437,8 +437,8 @@ cd web-desde-cero
 <summary><b>📁 Estructura</b></summary>
 
 ```text
-index.html        Portada con los 6 cursos, la ruta y el panel de progreso
-html/ css/ javascript/ react/ node/ bd/   Una carpeta por curso (lecciones + proyecto)
+index.html        Portada con los 8 cursos, la ruta y el panel de progreso
+html/ css/ javascript/ react/ node/ bd/ ia/ fullstack/   Una carpeta por curso (lecciones + proyecto)
 chuletas/         Chuletas imprimibles que se desbloquean al completar un curso
 NN-nombre/        Lecciones del curso de HTML
 assets/           Estilos, script, GIFs, imágenes y multimedia
