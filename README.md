@@ -52,7 +52,7 @@ Sigue el orden: cada curso se apoya en el anterior.
 <a href="https://cacg-code.github.io/web-desde-cero/"><picture><source media="(max-width: 600px)" srcset="assets/readme/m-cursos-m.svg"><img src="assets/readme/m-cursos-d.svg" alt="Seis cursos: HTML, CSS, JavaScript, React, Node.js y Bases de datos" width="100%"></picture></a>
 </p>
 
-<p align="center"><sub><a href="https://cacg-code.github.io/web-desde-cero/html/">HTML</a> · <a href="https://cacg-code.github.io/web-desde-cero/css/">CSS</a> · <a href="https://cacg-code.github.io/web-desde-cero/javascript/">JavaScript</a> · <a href="https://cacg-code.github.io/web-desde-cero/react/">React</a> · <a href="https://cacg-code.github.io/web-desde-cero/node/">Node.js</a> · <a href="https://cacg-code.github.io/web-desde-cero/bd/">Bases de datos</a></sub></p>
+<p align="center"><sub><a href="https://cacg-code.github.io/web-desde-cero/html/">HTML</a> · <a href="https://cacg-code.github.io/web-desde-cero/css/">CSS</a> · <a href="https://cacg-code.github.io/web-desde-cero/javascript/">JavaScript</a> · <a href="https://cacg-code.github.io/web-desde-cero/react/">React</a> · <a href="https://cacg-code.github.io/web-desde-cero/node/">Node.js</a> · <a href="https://cacg-code.github.io/web-desde-cero/bd/">Bases de datos</a> · <a href="https://cacg-code.github.io/web-desde-cero/ia/">Programar con IA</a> · <a href="https://cacg-code.github.io/web-desde-cero/fullstack/">Proyecto full stack</a></sub></p>
 
 <sub>Toca una tarjeta para empezar el curso.</sub>
 
